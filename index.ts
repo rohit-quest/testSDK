@@ -1,3 +1,4 @@
-import Login from "./src/components/Login";
+import './src/index.css';
+import QuestLogin from './src/components/Login';
 
-export { Login }
+export { QuestLogin }
