@@ -1,11 +1,11 @@
 import React from 'react'
-import { OnBoarding } from '..'
+import { OnBoarding, QuestLogin } from '..'
 
 
 function App() {
   return (
     <div>
-      <OnBoarding />
+     <OnBoarding />
     </div>
   )
 }
