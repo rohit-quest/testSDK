@@ -1,5 +1,5 @@
 class config {
-    static BACKEND_URL = 'http://localhost:8081/'
+    static BACKEND_URL = 'https://staging.questprotocol.xyz/'
 }
 
 export default config;
