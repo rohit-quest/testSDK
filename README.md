@@ -24,6 +24,54 @@ For comprehensive usage instructions, configuration options, and examples, pleas
 
 To see the Quest React SDK in action, check out our [live demo](link-to-your-demo) or explore the example folder in this repository for sample usage.
 
+## Props of Login component
+
+The `QuestLogin` component accepts the following props:
+
+- `googleClientId` (string, required): The Google Client ID for OAuth 2.0 authentication.
+
+- `redirectUri` (string, required for google): The URI where users will be redirected after authentication.(this URL should match the one configured in your OAuth provider).
+
+- `redirectURL` (string, required): The URL where users will be redirected after authentication. 
+
+- `entityId` (string, required): An entity identifier for your application.
+
+- `apiKey` (string, required): An API key for your application.
+
+- `apiSecret` (string, required): An API secret for your application.
+
+- `btnColor` (string, optional): The background color of the login button. Defaults to a platform-specific color if not specified.
+
+- `email` (boolean, optional): If `true`, includes an option for users to log in with their email.
+
+- `google` (boolean, optional): If `true`, includes an option for users to log in with Google.
+
+- `btnTextColor` (string, optional): The text color of the login button. Defaults to a platform-specific color if not specified.
+
+- `textColor` (string, optional): The text color of other UI elements in the component. Defaults to a platform-specific color if not specified.
+
+- `backgroundColor` (string, optional): The background color of the entire component. Defaults to a platform-specific color if not specified.
+
+- `font` (string, optional): The font style for text in the component. Defaults to a platform-specific font if not specified.
+
+### Example Usage
+
+```jsx
+<QuestLogin
+  font='script'
+  textColor='blue'
+  btnTextColor="white"
+  btnColor="#8B0000"
+  backgroundColor="gray"
+  googleClientId="103xxxxxxxxxxxxxxxxxxxxxxa.apps.googleusercontent.com"
+  entityId="e-xxxxxxx-xxxx-xxxw16"
+  redirectUri="http:xxxxxxxxxx"
+  redirectURL="http:xxxxxxx"
+  apiKey="k-xxxxxxxxxxxxxxxxxxxxxx"
+  apiSecret="s-xxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxx-xxxxxxxxxxx"
+/>
+```
+
 ## Contributing
 
 We welcome contributions from the community! If you find a bug, have an idea for an enhancement, or want to contribute code, please refer to our [contribution guidelines](link-to-contributing-guidelines).
