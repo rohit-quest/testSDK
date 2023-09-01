@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "Jost", sans-serif
+}
+.q-btn-white {
+  border-radius: 8px;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.no-underline {
+  text-decoration: none;
+}
+.q-helper-text {
+  font-style: normal;
+  font-weight: normal !important;
+  font-size: 12px !important;
+  line-height: 16px !important;
+}
+.q-text-grey-1 {
+  color: #757575;
+}
+.q-text-black {
+  color:#0000 !important;
+}
+.q-link {
+  font-style: normal;
+  font-weight: normal !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+  text-decoration: none !important;
+}
+.q-button-sm {
+  font-style: normal;
+  font-weight: 600 !important;
+}
+.q-fw-normal {
+  font-weight: normal !important;
+}
+.continue-btn {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.quest-loader {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(3px);
+  z-index: 999;
+}
+
+.inputStyle{
+  width: 50% !important;
+  height: 56px;
+  border-radius: 7px;
+  border: 0px;
+  margin-left: 8px;
+  margin-right: 8px;
+  background: #dddddd;
+  font-size: 20px;
+  color: rgb(0, 0, 0)
+}
