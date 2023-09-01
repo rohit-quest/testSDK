@@ -30,7 +30,7 @@ The `QuestLogin` component accepts the following props:
 
 - `googleClientId` (string, required): The Google Client ID for OAuth 2.0 authentication.
 
-- `redirectUri` (string, required for google): The URI where users will be redirected after authentication.(this URL should match the one configured in your OAuth provider).
+- `redirectUri` (string, required for google): The URI where users will be redirected after authentication.(this URL should match the one configured in your OAuth provider)  [Google Console](https://console.cloud.google.com/apis/credentials/oauthclient).
 
 - `redirectURL` (string, required): The URL where users will be redirected after authentication. 
 
