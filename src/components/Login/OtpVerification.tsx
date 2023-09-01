@@ -159,6 +159,14 @@ function OtpVerification({
             numInputs={6}
             renderInput={(props) => <input {...props} />}
           />
+           {OTP.length < 6 && OTP.length > 0 && (
+            <p className="m-2 mt-2 flex items-center text-red-500">
+              <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2">
+                !
+              </span>
+              Please enter a valid OTP
+            </p>
+          )}
         </div>
       </div>
       <div
