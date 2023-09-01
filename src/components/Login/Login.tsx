@@ -18,6 +18,8 @@ interface QuestLoginProps {
   google?: boolean;
   btnTextColor?: string;
   textColor?: string;
+  backgroundColor?: string;
+  font?: string;
 }
 
 const QuestLogin: React.FC<QuestLoginProps> = ({
@@ -32,6 +34,8 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   google,
   btnTextColor,
   textColor,
+  backgroundColor,
+  font,
 }) => {
   const [isEmail, setIsEmail] = useState<boolean>(false);
   const [isGoogle, setIsGoogle] = useState<boolean>(false);
@@ -57,10 +61,14 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
               setFontFamily(data?.fontFamily || 'sans-serif');
               setGradient(
                 data?.backgroundColor?.includes('linear-gradient') ||
-                data?.backgroundColor?.includes('radial-gradient')
+                  data?.backgroundColor?.includes('radial-gradient')
               );
             } else {
-              setBgColor('#ffffff');
+              if (backgroundColor) {
+                setBgColor(backgroundColor);
+              } else {
+                setBgColor('#ffffff');
+              }
               setFontFamily('sans-serif');
               setGradient(false);
             }
@@ -68,13 +76,20 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
         })
         .catch((err) => {
           console.log(err);
-          setBgColor('#ffffff');
+          if (backgroundColor) {
+            setBgColor(backgroundColor);
+          } else {
+            setBgColor('#ffffff');
+          }
           setFontFamily('sans-serif');
           setGradient(false);
         });
     }
 
     if (btnColor) setBgColor(btnColor);
+    if (backgroundColor) setBgColor(backgroundColor);
+    if (font) setFontFamily(font);
+
     setIsEmail(email || false);
     setIsGoogle(google || false);
 
@@ -82,13 +97,11 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
       setIsGoogle(true);
       setIsEmail(true);
     }
-
-  }, [entityId, btnColor, email, google, btnTextColor]);
+  }, [entityId, btnColor, backgroundColor, email, google, btnTextColor]);
 
   return (
     <>
       <ToastContainer />
-     
       <div className="flex items-center justify-center h-screen">
         <div
           style={{
@@ -132,12 +145,16 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                     entityId,
                     handleOtp,
                     redirectUri,
+                    btnTextColor,
                   }}
                 />
                 {!otpScreen && isGoogle && (
                   <div className="mt-5 flex items-center justify-between">
                     <div className="flex-grow border-2 border-solid border-gray-700"></div>
-                    <span style={{ color: textColor, fontFamily }} className="whitespace-no-wrap px-4">
+                    <span
+                      style={{ color: textColor, fontFamily }}
+                      className="whitespace-no-wrap px-4"
+                    >
                       Or Continue With
                     </span>
                     <div className="flex-grow border-2 border-solid border-gray-700"></div>
