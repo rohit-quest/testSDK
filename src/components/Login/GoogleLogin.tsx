@@ -66,8 +66,9 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
           General.shareInstance.setUserId(res.data.userId);
           window.location.href = redirectURL;
         } else if (res.data.success === false) {
+          console.log(res.data.error);
           toast.error(
-            "Unable to login, try logging again. Please contact us in Discord if the issue persists"
+            "Unable to login" + "\n" + `${res.data.error}`
           );
         }
       })

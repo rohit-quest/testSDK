@@ -12,6 +12,7 @@ interface EmailLoginProps {
   handleOtp: (otp: boolean) => void;
   entityId: string;
   textColor?: string;
+  btnTextColor?: string;
   fontFamily?: string;
   apiKey: string;
   apiSecret: string;
@@ -26,6 +27,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   fontFamily,
   apiKey,
   apiSecret,
+  btnTextColor,
 }) => {
   const [sendOTP, setSendOTP] = useState(false);
   const [email, setEmail] = useState('');
@@ -102,7 +104,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
               </p>
             )}
             <div
-              style={{ backgroundColor: btnColor, fontFamily }}
+              style={{ backgroundColor: btnColor, fontFamily, color: btnTextColor }}
               onClick={sendOTPfunction}
               className={`mt-5 continue-btn h-14 pl-4 pr-4 rounded-lg border px-3 bg-black text-white focus:ring focus:ring-blue-300 flex items-center justify-center`}
             >
@@ -121,6 +123,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
           redirectURL={redirectURL}
           entityId={entityId}
           email={email}
+          btnTextColor={btnTextColor}
         />
       )}
     </div>

@@ -16,6 +16,7 @@ interface OtpVerificationProps {
   entityId: string;
   apiKey: string;
   apiSecret: string;
+  btnTextColor?: string;
 }
 
 function OtpVerification({
@@ -27,6 +28,7 @@ function OtpVerification({
   entityId,
   apiKey,
   apiSecret,
+  btnTextColor,
 }: OtpVerificationProps): JSX.Element {
   const [OTP, setOTP] = useState<string>("");
   const [sec, setsec] = useState<number>(300);
@@ -174,6 +176,7 @@ function OtpVerification({
           backgroundColor: btnColor,
           fontFamily,
           marginTop: "15%",
+          color: btnTextColor
         }}
         className={`text-24 continue-btn h-14 pl-4 pr-4 rounded-lg border px-3 bg-black text-white focus:ring focus:ring-blue-300 flex items-center justify-center`}
         onClick={verifyOTPfunction}
