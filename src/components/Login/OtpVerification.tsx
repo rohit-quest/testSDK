@@ -5,7 +5,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import config from "../../config";
 import Loader from "./Loader";
-import General from "../General";
+import { useContext } from "react";
+import QuestContext from "../QuestWrapper";
 
 interface OtpVerificationProps {
   textColor?: string;
@@ -34,6 +35,7 @@ function OtpVerification({
   const [sec, setsec] = useState<number>(300);
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const ref = useRef<number | null>(null);
+  const { setUser } = useContext(QuestContext.Context);
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
@@ -84,8 +86,10 @@ function OtpVerification({
 
       if (response.data.success) {
         toast.success("Congratulations!!!" + "\n" + "Successfully Logged in");
-        General.shareInstance.setToken(response.data.token);
-        General.shareInstance.setUserId(response.data.userId);
+        setUser({
+          userId: response.data.userId,
+          token: response.data.token
+        })
         window.location.href = redirectURL;
       } else {
         toast.error("Login failed" + "\n" + response.data.error);
