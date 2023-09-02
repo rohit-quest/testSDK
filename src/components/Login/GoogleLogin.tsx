@@ -3,9 +3,10 @@ import { googleSvg } from '../../assets/images';
 import axios from 'axios';
 import config from '../../config';
 import queryString from 'query-string';
-import General from '../General';
 import Loader from './Loader';
 import { toast } from 'react-toastify';
+import { useContext } from "react";
+import QuestContext from "../QuestWrapper";
 
 interface GoogleLoginProps {
   btnTextColor?: string;
@@ -35,6 +36,7 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const params = queryString.parse(window.location.search);
   const googleCode = params.code as string;
+  const { setUser } = useContext(QuestContext.Context);
 
   useEffect(() => {
     if (googleCode) {
@@ -62,8 +64,10 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
       .then((res) => {
         if (res.data.success === true) {
           toast.success("Congratulations!!!" + "\n" + "Successfully Logged in");
-          General.shareInstance.setToken(res.data.token);
-          General.shareInstance.setUserId(res.data.userId);
+          setUser({
+            userId: res.data.userId,
+            token: res.data.token
+          })
           window.location.href = redirectURL;
         } else if (res.data.success === false) {
           console.log(res.data.error);

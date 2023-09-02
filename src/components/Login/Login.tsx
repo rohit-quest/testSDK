@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { useContext } from "react";
+import QuestContext from '../QuestWrapper';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import config from '../../config';
 import EmailLogin from './EmailLogin';
 import GoogleLogin from './GoogleLogin';
 import { ToastContainer } from 'react-toastify';
-
-interface QuestLoginProps {
+export interface QuestLoginProps {
   googleClientId: string;
   redirectUri: string;
   redirectURL: string;
-  entityId: string;
-  apiKey: string;
-  apiSecret: string;
   btnColor?: string;
   email?: boolean;
   google?: boolean;
@@ -26,9 +24,6 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   googleClientId,
   redirectUri,
   redirectURL,
-  entityId,
-  apiKey,
-  apiSecret,
   btnColor,
   email,
   google,
@@ -43,6 +38,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   const [fontFamily, setFontFamily] = useState<string>('sans-serif');
   const [gradient, setGradient] = useState<boolean>(false);
   const [otpScreen, setOtpScreen] = useState<boolean>(false);
+  const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
 
   const handleOtp = (val: boolean) => {
     setOtpScreen(val);

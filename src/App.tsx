@@ -8,6 +8,7 @@ function App() {
      <OnBoarding />
     </div>
   )
+  
 }
 
 export default App;

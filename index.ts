@@ -1,5 +1,6 @@
 import './src/index.css';
 import QuestLogin from './src/components/Login/Login';
 import OnBoarding from './src/components/Onboarding';
+import { QuestProvider } from './src/components/QuestWrapper';
 
-export { QuestLogin, OnBoarding };
+export {QuestProvider, QuestLogin, OnBoarding, };
