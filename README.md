@@ -55,21 +55,24 @@ The `QuestLogin` component accepts the following props:
 - `font` (string, optional): The font style for text in the component. Defaults to a platform-specific font if not specified.
 
 ### Example Usage
+You have to import the css too along with the components. 
+```
+import '@questlabs/react-sdk/dist/style.css';
+```
 
 ```jsx
-<QuestLogin
-  font='script'
-  textColor='blue'
-  btnTextColor="white"
-  btnColor="#8B0000"
-  backgroundColor="gray"
-  googleClientId="103xxxxxxxxxxxxxxxxxxxxxxa.apps.googleusercontent.com"
-  entityId="e-xxxxxxx-xxxx-xxxw16"
-  redirectUri="http:xxxxxxxxxx"
-  redirectURL="http:xxxxxxx"
-  apiKey="k-xxxxxxxxxxxxxxxxxxxxxx"
-  apiSecret="s-xxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxx-xxxxxxxxxxx"
-/>
+<QuestProvider apiKey="k-xxxxxxxxxxxxxxxxxxxxxx" apiSecret="s-xxxxxxxxxxxxxxx-xxxxxxxxxxxx" entityId="e-xxxxxxx-xxxx-xxxw16">
+  <QuestLogin
+    font='script'
+    textColor='blue'
+    btnTextColor="white"
+    btnColor="#8B0000"
+    backgroundColor="gray"
+    googleClientId="103xxxxxxxxxxxxxxxxxxxxxxa.apps.googleusercontent.com"
+    redirectUri="http:xxxxxxxxxx"
+    redirectURL="http:xxxxxxx"
+  />
+</QuestProvider>
 ```
 
 ## Contributing
