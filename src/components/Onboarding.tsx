@@ -17,6 +17,10 @@ interface QuestLoginProps {
     setAnswer?: any;
     customComponents?: any;
     customComponentPositions?: number;
+    inputBorder?: string;
+    btnSize?: string;
+    headingSize?: string;
+    descSize?: string;
     inputFieldType?: object;
     apiKey?: string;
     apiSecret?: string;
@@ -44,7 +48,11 @@ function OnBoarding(props: QuestLoginProps) {
         color,
         bgColor,
         inputBgColor,
+        inputBorder,
+        btnSize,
         btnColor,
+        headingSize,
+        descSize,
         headingScreen,
         singleChoose,
         multiChoice,
@@ -70,6 +78,10 @@ function OnBoarding(props: QuestLoginProps) {
         inputBgColor: inputBgColor || "",
         singleChoose: singleChoose || "",
         multiChoice: multiChoice || "",
+        inputBorder: inputBorder || "",
+        btnSize: btnSize || "",
+        headingSize: headingSize || "",
+        descSize: descSize || "",
     });
 
     const [heading, setHeading] = useState<any>(headingScreen || {});
@@ -223,7 +235,7 @@ function OnBoarding(props: QuestLoginProps) {
                         name="normalInput"
                         className="bg-gray-100 border-none outline-none text-sm rounded h-32 focus:ring-blue-500 focus:ring-1 w-full p-3"
                         placeholder={question}
-                        style={{ backgroundColor: onboardingData?.inputBgColor }}
+                        style={{ backgroundColor: onboardingData?.inputBgColor, border: onboardingData?.inputBorder }}
                         onChange={(e) => handleUpdate(e, criteriaId, "")}
                         value={answer[criteriaId]}
                     />
@@ -234,7 +246,7 @@ function OnBoarding(props: QuestLoginProps) {
                         name="normalInput"
                         className="bg-gray-100 border-none outline-none text-sm rounded focus:ring-blue-500 focus:ring-1 w-full p-3"
                         placeholder={question}
-                        style={{ backgroundColor: onboardingData?.inputBgColor }}
+                        style={{ backgroundColor: onboardingData?.inputBgColor, border: onboardingData?.inputBorder }}
                         onChange={(e) => handleUpdate(e, criteriaId, "")}
                         value={answer[criteriaId]}
                     />
@@ -270,7 +282,7 @@ function OnBoarding(props: QuestLoginProps) {
                     name="dateInput"
                     value={answer[criteriaId]}
                     className="bg-gray-100 border-none outline-none text-sm rounded focus:ring-blue-500 focus:ring-1 w-full p-3"
-                    style={{ backgroundColor: onboardingData?.inputBgColor }}
+                    style={{ backgroundColor: onboardingData?.inputBgColor, border: onboardingData?.inputBorder }}
                     onChange={(e) => handleUpdate(e, criteriaId, "")}
                 />
             </div>
@@ -512,26 +524,26 @@ function OnBoarding(props: QuestLoginProps) {
             {formdata.length > 0 &&
                 (typeof heading == "object" && !!heading.name ? (
                     <div>
-                        <h3 className="w-100 text-center pt-8 text-4xl font-bold">
+                        <h3 className="w-100 text-center pt-8 text-4xl font-bold" style={{fontSize:onboardingData?.headingSize}}>
                             {heading?.name}
                         </h3>
-                        <h4 className="w-100 text-center">{heading?.desc}</h4>
+                        <h4 className="w-100 text-center" style={{fontSize: onboardingData?.descSize}}>{heading?.desc}</h4>
                     </div>
                 ) : !!heading[currentPage] ? (
                     <div>
-                        <h3 className="w-100 text-center pt-8 text-4xl font-bold">
+                        <h3 className="w-100 text-center pt-8 text-4xl font-bold" style={{fontSize:onboardingData?.headingSize}}>
                             {heading[currentPage]?.name}
                         </h3>
-                        <h4 className="w-100 text-center">
+                        <h4 className="w-100 text-center" style={{fontSize: onboardingData?.descSize}}>
                             {heading[currentPage]?.desc}
                         </h4>
                     </div>
                 ) : (
                     <div>
-                        <h3 className="w-100 text-center pt-8 text-4xl font-bold">
+                        <h3 className="w-100 text-center pt-8 text-4xl font-bold" style={{fontSize:onboardingData?.headingSize}}>
                             {heading[0]?.name}
                         </h3>
-                        <h4 className="w-100 text-center">
+                        <h4 className="w-100 text-center" style={{fontSize: onboardingData?.descSize}}>
                             {heading[0]?.desc}
                         </h4>
                     </div>
@@ -685,6 +697,7 @@ function OnBoarding(props: QuestLoginProps) {
                                 disabled={!btnFlag}
                                 style={{
                                     backgroundColor: onboardingData?.btnColor,
+                                    width: onboardingData?.btnSize
                                 }}
                             >
                                 Continue
