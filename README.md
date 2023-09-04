@@ -6,7 +6,7 @@ Welcome to the Quest React SDK repository! This library provides a set of reusab
 
 - **Login Component**: Our login component offers a straightforward way to integrate secure user authentication into your React applications. Easily customize the login UI with a variety of options and flow to match your project's requirements.
 
-- **Onboarding**: In addition to the login component, we provide a collection of other React components and utilities that can enhance your application's functionality and user experience.
+- **Onboarding**: In addition to the login component, we provide Onboarding component which contains quizzes for users.
 
 ## Getting Started
 
