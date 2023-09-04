@@ -66,6 +66,72 @@ import '@questlabs/react-sdk/dist/style.css';
 </QuestProvider>
 ```
 
+## Props of Onboarding component
+
+The `QuestLogin` component accepts the following props:
+
+- `token` (string, required): A userToken which you get after login need to pass here to fetch the data.
+- `questId` (string, required):  This take a particular questId to fetch the data.
+- `answer` (useState property(get), required): To read all answer.
+- `setAnswer` (useState property(set), required): To set all the answer according to their id's.
+- `color` (string, optional): To set a color in all lebels.
+- `bgColor` (string, optional): To set the background color on the webpage.
+- `headingSize` (string, optional): To add a fontSize of headings.
+- `descSize` (string, optional): To add a fontSize of description.
+- `inputFieldType` (object, optional): By this we add the type of a specific input box. Eg. {"ec-d176b702-2a05-4394-83ce-a1657e26dfd9": "textArea"} //The input box of that particular id is set as textarea.
+- `btnColor` (string, optional): To add a color to all buttons.
+- `btnSize` (string, optional): Give a size of your buttons
+- `inputBgColor` (string, optional): To add a background color in all input fields.
+- `inputBorder` (string, optional): To set border property of input boxes.
+- `singleChoice` (string, optional): Select a single-choice design, it can be `modal1` or `modal2`, initially it selected `modal1`.
+- `multiChoice` (string, optional): Select a multi-choice design, it can be `modal1` or `modal2`, initially it selected `modal1`.
+- `design` (arrar of array, optional): Using this field we can divide questions into screens, rearrange the questions. Eg. [ [ 2, 3 ], [ 1, 4 ] ] //It means 2nd and 3rd show on 1st screen and 1st and 4th show on 2nd screens.
+- `headingScreen` (array of array / object, optional): Using this field we can add a heading in all screens or add different headings for different screens. Eg. 1. [ { name: “n1”, desc: “d1” }, { name: “n2”, desc: “d2” } ] // It means n1 and d1 show on 1st screen and n2 and d2 show on 2nd screens. 2. { name: “n1”, desc: “d1” } //  It means n1 and d1 show on all screen
+- `answers` (callback function, optional): It’s a callback function to get an answer
+- `customComponents` (component, optional): To pass a custom component if you want.
+- `customComponentPositions` (number, optional): To set a position of your custom component.
+- `getAnswers` (callback function, optional): To get all the answer after completion of all required questions.
+
+### Example Usage
+You have to wrap the components inside QuestProvider and You have to import the CSS too along with the components. 
+```
+import '@questlabs/react-sdk/dist/style.css';
+```
+
+```jsx
+<QuestProvider
+  apiKey="k-xxxxxxxxxxxxxxxxx"
+  apiSecret="s-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
+  entityId="e-xxxxxxxxxxxx"
+>
+  <OnBoarding
+    questId="q-xxxxxxxxxxxxxx"
+    userId="u-xxxxxxxxxxxxxx"
+    token="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxI"
+    answer={answer}
+    setAnswer={setAnswer}
+    color="black"
+    bgColor="gray"
+    headingSize="24px"
+    descSize="18px"
+    inputFieldType={{
+      "ec-xxxxxxxxxxxxxxxxx": "textArea",
+    }}
+    btnColor="#0284fe"
+    btnSize="200px"
+    inputBgColor="#e5e7eb"
+    inputBorder="1px solid gray"
+    singleChoose="modal1"
+    multiChoice="modal2"
+    design={[[1, 2], [3, 4, 5], [6, 7]]}
+    headingScreen={{name : "n1", desc : "d1"}}
+    customComponents={<CustomButton />}
+    customComponentPositions={5}
+    getAnswers={printAnswer}
+  />
+</QuestProvider>
+```
+
 ## Contributing
 
 We welcome contributions from the community! If you find a bug, have an idea for an enhancement, or want to contribute code, please refer to our [contribution guidelines](link-to-contributing-guidelines).
