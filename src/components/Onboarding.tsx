@@ -514,7 +514,7 @@ function OnBoarding(props: QuestLoginProps) {
         });
         getAnswers(ansArr);
     }
-    console.log(answer);
+    
     return (
         <div
             style={{ background: onboardingData?.bgColor }}
