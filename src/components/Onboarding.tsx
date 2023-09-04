@@ -12,6 +12,7 @@ interface QuestLoginProps {
     headingScreen?: any;
     singleChoose?: string;
     multiChoice?: string;
+    screenHeight?: string;
     getAnswers?: Function;
     answer?: any;
     setAnswer?: any;
@@ -55,6 +56,7 @@ function OnBoarding(props: QuestLoginProps) {
         headingScreen,
         singleChoose,
         multiChoice,
+        screenHeight,
         getAnswers,
         answer,
         setAnswer,
@@ -78,6 +80,7 @@ function OnBoarding(props: QuestLoginProps) {
         btnSize: btnSize || "",
         headingSize: headingSize || "",
         descSize: descSize || "",
+        screenHeight: screenHeight || "",
     });
 
     const [heading, setHeading] = useState<any>(headingScreen || {});
@@ -517,8 +520,8 @@ function OnBoarding(props: QuestLoginProps) {
     
     return (
         <div
-            style={{ background: onboardingData?.bgColor }}
-            className="min-h-screen"
+            style={{ background: onboardingData?.bgColor, height:onboardingData?.screenHeight }}
+            className="h-fit"
         >
             {formdata.length > 0 &&
                 (typeof heading == "object" && !!heading.name ? (
@@ -555,7 +558,7 @@ function OnBoarding(props: QuestLoginProps) {
                                     formdata[num - 1]?.question || "",
                                     formdata[num - 1]?.required || false,
                                     formdata[num - 1].criteriaId || "",
-                                    num,
+                                    num - 1,
                                     formdata[num - 1]?.placeholder || formdata[num - 1]?.question || "",
                                 )
                               : formdata[num - 1].type == "USER_INPUT_DATE"
@@ -563,7 +566,7 @@ function OnBoarding(props: QuestLoginProps) {
                                     formdata[num - 1]?.question || "",
                                     formdata[num - 1]?.required || false,
                                     formdata[num - 1].criteriaId || "",
-                                    num
+                                    num - 1
                                 )
                               : formdata[num - 1].type ==
                                 "USER_INPUT_SINGLE_CHOICE"
@@ -573,14 +576,14 @@ function OnBoarding(props: QuestLoginProps) {
                                         formdata[num - 1]?.question || "",
                                         formdata[num - 1]?.required || false,
                                         formdata[num - 1].criteriaId || "",
-                                        num
+                                        num - 1
                                     )
                                   : singleChoiceOne(
                                         formdata[num - 1].options || [],
                                         formdata[num - 1]?.question || "",
                                         formdata[num - 1]?.required || false,
                                         formdata[num - 1].criteriaId || "",
-                                        num
+                                        num - 1
                                     )
                               : formdata[num - 1].type ==
                                 "USER_INPUT_MULTI_CHOICE"
@@ -590,14 +593,14 @@ function OnBoarding(props: QuestLoginProps) {
                                         formdata[num - 1]?.question || "",
                                         formdata[num - 1]?.required || false,
                                         formdata[num - 1].criteriaId || "",
-                                        index
+                                        num - 1
                                     )
                                   : multiChoiceOne(
                                         formdata[num - 1].options || [],
                                         formdata[num - 1]?.question || "",
                                         formdata[num - 1]?.required || false,
                                         formdata[num - 1].criteriaId || "",
-                                        index
+                                        num - 1
                                     )
                               : null)
                       )
