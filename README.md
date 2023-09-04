@@ -14,11 +14,7 @@ To get started using the Quest React SDK, follow these simple steps:
 
 1. **Installation**: Add the SDK to your project by including it as a dependency. Detailed installation instructions can be found in the documentation.
 
-2. **Usage**: Integrate the login component into your application, configure it to work with your authentication system, and start providing a seamless login experience for your users.
-
-## Documentation
-
-For comprehensive usage instructions, configuration options, and examples, please refer to our [documentation](link-to-your-documentation).
+2. **Usage**: import the CSS, import the QuestProvider component, pass the required props to it (apiKey, apiSecret, entityId). now add the component inside, pass the props and you are good to go! 
 
 ## Example
 
