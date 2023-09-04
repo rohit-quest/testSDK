@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import config from "../config";
 import axios from "axios";
-
+import { useContext } from "react";
+import QuestContext from '../components/QuestWrapper';
 interface QuestLoginProps {
     design?: any;
     color?: string;
@@ -11,7 +12,6 @@ interface QuestLoginProps {
     headingScreen?: any;
     singleChoose?: string;
     multiChoice?: string;
-    entityId?: string;
     getAnswers?: Function;
     answer?: any;
     setAnswer?: any;
@@ -22,8 +22,6 @@ interface QuestLoginProps {
     headingSize?: string;
     descSize?: string;
     inputFieldType?: object;
-    apiKey?: string;
-    apiSecret?: string;
     userId?: string;
     token?: string;
     questId?: string;
@@ -35,6 +33,7 @@ interface FormData {
     options?: [string];
     criteriaId?: string;
     required?: boolean;
+    placeholder?: string,
 }
 
 interface Answer {
@@ -62,9 +61,6 @@ function OnBoarding(props: QuestLoginProps) {
         customComponents,
         customComponentPositions,
         inputFieldType,
-        apiKey,
-        apiSecret,
-        entityId,
         userId,
         token,
         questId,
@@ -89,6 +85,7 @@ function OnBoarding(props: QuestLoginProps) {
     const [currentPage, setCurrentPage] = useState<number>(0);
     // const [answer, setAnswer] = useState<any>({});
     const [btnFlag, setButtonFlag] = useState<boolean>(false);
+    const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
 
     useEffect(() => {
         if (entityId) {
@@ -98,16 +95,16 @@ function OnBoarding(props: QuestLoginProps) {
                 userId: userId,
                 token: token, // Replace with your actual token
             };
-            const request = `https://staging.questprotocol.xyz/api/entities/${entityId}/quests/${questId}?userId=${userId}`;
+            const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}`;
             axios.get(request, { headers: headers }).then((res) => {
                 let response = res.data;
                 let criterias = response?.eligibilityData?.map(
                     (criteria: {
                         data: {
                             criteriaType: any;
-                            metadata: { title: any; options: any };
+                            metadata: { title: any; options: any, isOptional: any, placeholder: any };
                             criteriaId: string;
-                            isOptional: boolean;
+                            
                         };
                     }) => {
                         return {
@@ -115,7 +112,8 @@ function OnBoarding(props: QuestLoginProps) {
                             question: criteria?.data?.metadata?.title,
                             options: criteria?.data?.metadata?.options || [],
                             criteriaId: criteria?.data?.criteriaId,
-                            required: !criteria?.data?.isOptional,
+                            required: !criteria?.data?.metadata?.isOptional,
+                            placeholder: !criteria?.data?.metadata?.placeholder,
                         };
                     }
                 );
@@ -211,7 +209,8 @@ function OnBoarding(props: QuestLoginProps) {
         question: string,
         required: boolean,
         criteriaId: string,
-        index: number
+        index: number,
+        placeholder: string,
     ) => {
         return (
             <div className="py-3" key={criteriaId}>
@@ -233,8 +232,8 @@ function OnBoarding(props: QuestLoginProps) {
                     <textarea
                         id="normalInput"
                         name="normalInput"
+                        placeholder={placeholder}
                         className="bg-gray-100 border-none outline-none text-sm rounded h-32 focus:ring-blue-500 focus:ring-1 w-full p-3"
-                        placeholder={question}
                         style={{ backgroundColor: onboardingData?.inputBgColor, border: onboardingData?.inputBorder }}
                         onChange={(e) => handleUpdate(e, criteriaId, "")}
                         value={answer[criteriaId]}
@@ -245,10 +244,10 @@ function OnBoarding(props: QuestLoginProps) {
                         id="normalInput"
                         name="normalInput"
                         className="bg-gray-100 border-none outline-none text-sm rounded focus:ring-blue-500 focus:ring-1 w-full p-3"
-                        placeholder={question}
                         style={{ backgroundColor: onboardingData?.inputBgColor, border: onboardingData?.inputBorder }}
                         onChange={(e) => handleUpdate(e, criteriaId, "")}
                         value={answer[criteriaId]}
+                        placeholder={placeholder}
                     />
                 }
             </div>
@@ -556,7 +555,8 @@ function OnBoarding(props: QuestLoginProps) {
                                     formdata[num - 1]?.question || "",
                                     formdata[num - 1]?.required || false,
                                     formdata[num - 1].criteriaId || "",
-                                    index
+                                    index,
+                                    formdata[num - 1]?.placeholder || formdata[num - 1]?.question || "",
                                 )
                               : formdata[num - 1].type == "USER_INPUT_DATE"
                               ? dateInput(
@@ -607,7 +607,8 @@ function OnBoarding(props: QuestLoginProps) {
                                     data?.question || "",
                                     data?.required || false,
                                     data.criteriaId || "",
-                                    index
+                                    index,
+                                    data?.placeholder || data?.question || "",
                                 )
                               : data.type == "USER_INPUT_DATE"
                               ? dateInput(
