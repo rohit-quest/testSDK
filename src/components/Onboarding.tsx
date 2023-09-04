@@ -113,7 +113,7 @@ function OnBoarding(props: QuestLoginProps) {
                             options: criteria?.data?.metadata?.options || [],
                             criteriaId: criteria?.data?.criteriaId,
                             required: !criteria?.data?.metadata?.isOptional,
-                            placeholder: !criteria?.data?.metadata?.placeholder,
+                            placeholder: criteria?.data?.metadata?.placeholder,
                         };
                     }
                 );
@@ -555,7 +555,7 @@ function OnBoarding(props: QuestLoginProps) {
                                     formdata[num - 1]?.question || "",
                                     formdata[num - 1]?.required || false,
                                     formdata[num - 1].criteriaId || "",
-                                    index,
+                                    num,
                                     formdata[num - 1]?.placeholder || formdata[num - 1]?.question || "",
                                 )
                               : formdata[num - 1].type == "USER_INPUT_DATE"
@@ -563,7 +563,7 @@ function OnBoarding(props: QuestLoginProps) {
                                     formdata[num - 1]?.question || "",
                                     formdata[num - 1]?.required || false,
                                     formdata[num - 1].criteriaId || "",
-                                    index
+                                    num
                                 )
                               : formdata[num - 1].type ==
                                 "USER_INPUT_SINGLE_CHOICE"
@@ -573,14 +573,14 @@ function OnBoarding(props: QuestLoginProps) {
                                         formdata[num - 1]?.question || "",
                                         formdata[num - 1]?.required || false,
                                         formdata[num - 1].criteriaId || "",
-                                        index
+                                        num
                                     )
                                   : singleChoiceOne(
                                         formdata[num - 1].options || [],
                                         formdata[num - 1]?.question || "",
                                         formdata[num - 1]?.required || false,
                                         formdata[num - 1].criteriaId || "",
-                                        index
+                                        num
                                     )
                               : formdata[num - 1].type ==
                                 "USER_INPUT_MULTI_CHOICE"
@@ -656,7 +656,7 @@ function OnBoarding(props: QuestLoginProps) {
                     checkDesignCriteria() ? (
                         <div className="flex justify-between pt-3">
                             <button
-                                className="text-black border-2 border-gray-800 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-4 py-2 mr-2 mb-2 md:px-10"
+                                className="text-black border-2 border-gray-800 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-4 py-2 mr-2 mb-2 min-w-[120px] md:px-10 md:min-w-[150px]"
                                 onClick={() =>
                                     currentPage > 0 &&
                                     setCurrentPage(currentPage - 1)
@@ -667,13 +667,14 @@ function OnBoarding(props: QuestLoginProps) {
                                         currentPage == 0
                                             ? "context-menu"
                                             : "pointer",
+                                    border: `2px solid ${onboardingData?.btnColor}`
                                 }}
                             >
                                 {" "}
                                 Previous
                             </button>
                             <button
-                                className="text-white bg-black hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-4 py-2 mb-2 md:px-10"
+                                className="text-white bg-black hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-4 py-2 mb-2 min-w-[120px] md:px-10 md:min-w-[150px]"
                                 onClick={() =>
                                     currentPage !=
                                     onboardingData.design.length - 1
