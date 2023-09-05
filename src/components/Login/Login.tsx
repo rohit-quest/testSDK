@@ -96,7 +96,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   }, [entityId, btnColor, backgroundColor, email, google, btnTextColor]);
 
   return (
-    <>
+    <div className='questLabs' >
       <ToastContainer />
       <div className="flex items-center justify-center h-screen">
         <div
@@ -197,7 +197,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
