@@ -79,7 +79,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
     <div>
       {showLoader && <Loader />}
       {!sendOTP && (
-        <>
+        <div className='questLabs'>
           <div style={{ marginTop: '8%' }} className="mt-5">
             <h4 style={{ color: textColor, fontFamily }} className="mb-3 text-left text-18 font-normal">
               Email
@@ -111,7 +111,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
               Continue
             </div>
           </div>
-        </>
+        </div>
       )}
       {sendOTP && (
         <OtpVerification

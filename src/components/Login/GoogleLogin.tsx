@@ -5,8 +5,8 @@ import config from '../../config';
 import queryString from 'query-string';
 import Loader from './Loader';
 import { toast } from 'react-toastify';
-import { useContext } from "react";
-import QuestContext from "../QuestWrapper";
+import { useContext } from 'react';
+import QuestContext from '../QuestWrapper';
 
 interface GoogleLoginProps {
   btnTextColor?: string;
@@ -63,17 +63,15 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
       )
       .then((res) => {
         if (res.data.success === true) {
-          toast.success("Congratulations!!!" + "\n" + "Successfully Logged in");
+          toast.success('Congratulations!!!' + '\n' + 'Successfully Logged in');
           setUser({
             userId: res.data.userId,
-            token: res.data.token
-          })
+            token: res.data.token,
+          });
           window.location.href = redirectURL;
         } else if (res.data.success === false) {
           console.log(res.data.error);
-          toast.error(
-            "Unable to login" + "\n" + `${res.data.error}`
-          );
+          toast.error('Unable to login' + '\n' + `${res.data.error}`);
         }
       })
       .catch((err) => {
@@ -86,24 +84,26 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
   }
 
   return (
-    <div className="relative mt-5">
-      {showLoader && <Loader />}
-      <a
-        href={`https://accounts.google.com/o/oauth2/auth?client_id=${googleClientId}&redirect_uri=${redirectUri}&scope=profile%20email&response_type=code`}
-      >
-        <div
-          style={{
-            border: '2px solid black',
-            backgroundColor: btnColor,
-            fontFamily,
-            color: btnTextColor,
-          }}
-          className={`h-14 text-18 p-3 flex items-center justify-center rounded-lg text-black`}
+    <div className="questLabs">
+      <div className="relative mt-5">
+        {showLoader && <Loader />}
+        <a
+          href={`https://accounts.google.com/o/oauth2/auth?client_id=${googleClientId}&redirect_uri=${redirectUri}&scope=profile%20email&response_type=code`}
         >
-          Sign in with Google
-          <img className="ml-auto" src={googleSvg} alt="google-logo" />
-        </div>
-      </a>
+          <div
+            style={{
+              border: '2px solid black',
+              backgroundColor: btnColor,
+              fontFamily,
+              color: btnTextColor,
+            }}
+            className={`h-14 text-18 p-3 flex items-center justify-center rounded-lg text-black`}
+          >
+            Sign in with Google
+            <img className="ml-auto" src={googleSvg} alt="google-logo" />
+          </div>
+        </a>
+      </div>
     </div>
   );
 }

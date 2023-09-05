@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 const Loader: FC = () => {
   return (
-    <>
+    <div className='questLabs'>
       <div className="quest-loader fixed inset-0 flex justify-center items-center z-50">
         <div className="absolute inset-0"></div>
         <div>
@@ -18,7 +18,7 @@ const Loader: FC = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

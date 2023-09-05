@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
-import OTPInput from "react-otp-input";
-import axios from "axios";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import config from "../../config";
-import Loader from "./Loader";
-import { useContext } from "react";
-import QuestContext from "../QuestWrapper";
+import React, { useEffect, useRef, useState } from 'react';
+import OTPInput from 'react-otp-input';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import config from '../../config';
+import Loader from './Loader';
+import { useContext } from 'react';
+import QuestContext from '../QuestWrapper';
 
 interface OtpVerificationProps {
   textColor?: string;
@@ -31,7 +31,7 @@ function OtpVerification({
   apiSecret,
   btnTextColor,
 }: OtpVerificationProps): JSX.Element {
-  const [OTP, setOTP] = useState<string>("");
+  const [OTP, setOTP] = useState<string>('');
   const [sec, setsec] = useState<number>(300);
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const ref = useRef<number | null>(null);
@@ -39,7 +39,7 @@ function OtpVerification({
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
-  
+
     function timer() {
       if (sec <= 0) {
         clearInterval(intervalId);
@@ -49,16 +49,16 @@ function OtpVerification({
         }, 1000);
       }
     }
-  
+
     timer();
-  
+
     return () => {
       clearInterval(intervalId);
     };
-  }, [sec]);  
+  }, [sec]);
 
   function modifyTime(num: number): string {
-    return num < 10 ? "0" + num : num.toString();
+    return num < 10 ? '0' + num : num.toString();
   }
 
   const handleChange = (otp: string): void => {
@@ -67,7 +67,7 @@ function OtpVerification({
 
   async function verifyOTPfunction(): Promise<void> {
     if (OTP.length !== 6) {
-      toast.error("Login failed" + "\n" + "res.data.error");
+      toast.error('Login failed' + '\n' + 'res.data.error');
       return;
     }
 
@@ -85,14 +85,14 @@ function OtpVerification({
       );
 
       if (response.data.success) {
-        toast.success("Congratulations!!!" + "\n" + "Successfully Logged in");
+        toast.success('Congratulations!!!' + '\n' + 'Successfully Logged in');
         setUser({
           userId: response.data.userId,
-          token: response.data.token
-        })
+          token: response.data.token,
+        });
         window.location.href = redirectURL;
       } else {
-        toast.error("Login failed" + "\n" + response.data.error);
+        toast.error('Login failed' + '\n' + response.data.error);
       }
     } catch (error) {
       console.error(error);
@@ -128,64 +128,66 @@ function OtpVerification({
   }
 
   return (
-    <div style={{ padding: "3%" }} className="embeded-otp">
-      {showLoader && <Loader />}
-      <h1
-        style={{ color: textColor, fontFamily }}
-        className="font-bold text-4xl text-center"
-      >
-        Please Enter OTP
-      </h1>
-      <div style={{ marginTop: "5%" }}>
-        {sec === 0 ? (
-          <div
-            style={{ color: textColor, fontFamily, fontSize: "18px" }}
-            className="text-center"
-            onClick={sendOTPfunction}
-          >
-            we have sent you one time password to your email{" "}
-            <span className="font-bold">Resend</span>
-          </div>
-        ) : (
-          <div
-            style={{ color: textColor, fontFamily, fontSize: "18px" }}
-            className="text-center"
-          >
-            we have sent you one time password to your email{" "}
-            <span className="font-bold">
-            {modifyTime(Math.floor(sec / 60))}:{modifyTime(sec % 60)}
-            </span>
-          </div>
-        )}
-        <div style={{ marginTop: "10%" }} className="mt-5">
-          <OTPInput
-            onChange={handleChange}
-            value={OTP}
-            inputStyle="inputStyle"
-            numInputs={6}
-            renderInput={(props) => <input {...props} />}
-          />
-           {OTP.length < 6 && OTP.length > 0 && (
-            <p className="m-2 mt-2 flex items-center text-red-500">
-              <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2">
-                !
+    <div className="questLabs">
+      <div style={{ padding: '3%' }} className="embeded-otp">
+        {showLoader && <Loader />}
+        <h1
+          style={{ color: textColor, fontFamily }}
+          className="font-bold text-4xl text-center"
+        >
+          Please Enter OTP
+        </h1>
+        <div style={{ marginTop: '5%' }}>
+          {sec === 0 ? (
+            <div
+              style={{ color: textColor, fontFamily, fontSize: '18px' }}
+              className="text-center"
+              onClick={sendOTPfunction}
+            >
+              we have sent you one time password to your email{' '}
+              <span className="font-bold">Resend</span>
+            </div>
+          ) : (
+            <div
+              style={{ color: textColor, fontFamily, fontSize: '18px' }}
+              className="text-center"
+            >
+              we have sent you one time password to your email{' '}
+              <span className="font-bold">
+                {modifyTime(Math.floor(sec / 60))}:{modifyTime(sec % 60)}
               </span>
-              Please enter a valid OTP
-            </p>
+            </div>
           )}
+          <div style={{ marginTop: '10%' }} className="mt-5">
+            <OTPInput
+              onChange={handleChange}
+              value={OTP}
+              inputStyle="inputStyle"
+              numInputs={6}
+              renderInput={(props) => <input {...props} />}
+            />
+            {OTP.length < 6 && OTP.length > 0 && (
+              <p className="m-2 mt-2 flex items-center text-red-500">
+                <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2">
+                  !
+                </span>
+                Please enter a valid OTP
+              </p>
+            )}
+          </div>
         </div>
-      </div>
-      <div
-        style={{
-          backgroundColor: btnColor,
-          fontFamily,
-          marginTop: "15%",
-          color: btnTextColor
-        }}
-        className={`text-24 continue-btn h-14 pl-4 pr-4 rounded-lg border px-3 bg-black text-white focus:ring focus:ring-blue-300 flex items-center justify-center`}
-        onClick={verifyOTPfunction}
-      >
-        Verify OTP
+        <div
+          style={{
+            backgroundColor: btnColor,
+            fontFamily,
+            marginTop: '15%',
+            color: btnTextColor,
+          }}
+          className={`text-24 continue-btn h-14 pl-4 pr-4 rounded-lg border px-3 bg-black text-white focus:ring focus:ring-blue-300 flex items-center justify-center`}
+          onClick={verifyOTPfunction}
+        >
+          Verify OTP
+        </div>
       </div>
     </div>
   );
