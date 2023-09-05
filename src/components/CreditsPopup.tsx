@@ -18,6 +18,7 @@ const CreditsPopup: FC<PopupProps> = ({ isOpen, onClose, headingText, descText, 
   if (!isOpen) return null;
 
   return ReactDOM.createPortal(
+    <div className='questLabs'>
     <div className="popup-overlay">
       <div className="popup w-full h-full backdrop-blur-sm absolute flex items-center justify-center">
         <div className='w-96 bg-white rounded-xl shadow-lg relative p-6'>
@@ -34,7 +35,7 @@ const CreditsPopup: FC<PopupProps> = ({ isOpen, onClose, headingText, descText, 
             }
         </div>
       </div>
-    </div>,
+    </div></div>,
     document.getElementById('root')!
   );
 };

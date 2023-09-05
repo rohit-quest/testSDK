@@ -519,6 +519,7 @@ function OnBoarding(props: QuestLoginProps) {
     }
     
     return (
+        <div className="questLabs">
         <div
             style={{ background: onboardingData?.bgColor, height:onboardingData?.screenHeight }}
             className="h-fit"
@@ -710,6 +711,7 @@ function OnBoarding(props: QuestLoginProps) {
                         </div>
                     ))}
             </div>
+        </div>
         </div>
     );
 }
