@@ -1,4 +1,4 @@
-.questLabs *, .questLabs :before, .questLabs :after {
+*, .questLabs :before, .questLabs :after {
   box-sizing: border-box;
   border-width: 0;
   border-style: solid;
@@ -8,7 +8,7 @@
 :before, .questLabs :after {
   --tw-content: ""
 }
-.questLabs 
+
 html {
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;
@@ -19,7 +19,7 @@ html {
   font-feature-settings: normal;
   font-variation-settings: normal
 }
-.questLabs 
+
 body {
   margin: 0;
   line-height: inherit
