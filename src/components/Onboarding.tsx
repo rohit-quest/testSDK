@@ -107,7 +107,7 @@ function OnBoarding(props: QuestLoginProps) {
                             criteriaType: any;
                             metadata: { title: any; options: any, isOptional: any, placeholder: any };
                             criteriaId: string;
-                            
+
                         };
                     }) => {
                         return {
@@ -232,26 +232,26 @@ function OnBoarding(props: QuestLoginProps) {
                 </label>
                 {
                     (!!inputFieldType && inputFieldType[criteriaId] == "textArea") ?
-                    <textarea
-                        id="normalInput"
-                        name="normalInput"
-                        placeholder={placeholder}
-                        className="bg-gray-100 border-none outline-none text-sm rounded h-32 focus:ring-blue-500 focus:ring-1 w-full p-3"
-                        style={{ backgroundColor: onboardingData?.inputBgColor, border: onboardingData?.inputBorder }}
-                        onChange={(e) => handleUpdate(e, criteriaId, "")}
-                        value={answer[criteriaId]}
-                    />
-                    :
-                    <input
-                        type="text"
-                        id="normalInput"
-                        name="normalInput"
-                        className="bg-gray-100 border-none outline-none text-sm rounded focus:ring-blue-500 focus:ring-1 w-full p-3"
-                        style={{ backgroundColor: onboardingData?.inputBgColor, border: onboardingData?.inputBorder }}
-                        onChange={(e) => handleUpdate(e, criteriaId, "")}
-                        value={answer[criteriaId]}
-                        placeholder={placeholder}
-                    />
+                        <textarea
+                            id="normalInput"
+                            name="normalInput"
+                            placeholder={placeholder}
+                            className="bg-gray-100 border-none outline-none text-sm rounded h-32 focus:ring-blue-500 focus:ring-1 w-full p-3"
+                            style={{ backgroundColor: onboardingData?.inputBgColor, border: onboardingData?.inputBorder }}
+                            onChange={(e) => handleUpdate(e, criteriaId, "")}
+                            value={answer[criteriaId]}
+                        />
+                        :
+                        <input
+                            type="text"
+                            id="normalInput"
+                            name="normalInput"
+                            className="bg-gray-100 border-none outline-none text-sm rounded focus:ring-blue-500 focus:ring-1 w-full p-3"
+                            style={{ backgroundColor: onboardingData?.inputBgColor, border: onboardingData?.inputBorder }}
+                            onChange={(e) => handleUpdate(e, criteriaId, "")}
+                            value={answer[criteriaId]}
+                            placeholder={placeholder}
+                        />
                 }
             </div>
         );
@@ -517,198 +517,200 @@ function OnBoarding(props: QuestLoginProps) {
         });
         getAnswers(ansArr);
     }
-    
+
     return (
-        <div
-            style={{ background: onboardingData?.bgColor, height:onboardingData?.screenHeight }}
-            className="h-fit"
-        >
-            {formdata.length > 0 &&
-                (typeof heading == "object" && !!heading.name ? (
-                    <div>
-                        <h3 className="w-100 text-center pt-8 text-4xl font-bold" style={{fontSize:onboardingData?.headingSize}}>
-                            {heading?.name}
-                        </h3>
-                        <h4 className="w-100 text-center" style={{fontSize: onboardingData?.descSize}}>{heading?.desc}</h4>
-                    </div>
-                ) : !!heading[currentPage] ? (
-                    <div>
-                        <h3 className="w-100 text-center pt-8 text-4xl font-bold" style={{fontSize:onboardingData?.headingSize}}>
-                            {heading[currentPage]?.name}
-                        </h3>
-                        <h4 className="w-100 text-center" style={{fontSize: onboardingData?.descSize}}>
-                            {heading[currentPage]?.desc}
-                        </h4>
-                    </div>
-                ) : (
-                    <div>
-                        <h3 className="w-100 text-center pt-8 text-4xl font-bold" style={{fontSize:onboardingData?.headingSize}}>
-                            {heading[0]?.name}
-                        </h3>
-                        <h4 className="w-100 text-center" style={{fontSize: onboardingData?.descSize}}>
-                            {heading[0]?.desc}
-                        </h4>
-                    </div>
-                ))}
-            <div className="p-8 max-w-screen-md m-auto">
-                {onboardingData?.design.length > 0 && checkDesignCriteria()
-                    ? onboardingData?.design[currentPage].map((num: number, index: number) =>
-                          (formdata[num - 1].type == "USER_INPUT_TEXT"
-                              ? normalInput(
-                                    formdata[num - 1]?.question || "",
-                                    formdata[num - 1]?.required || false,
-                                    formdata[num - 1].criteriaId || "",
-                                    num - 1,
-                                    formdata[num - 1]?.placeholder || formdata[num - 1]?.question || "",
-                                )
-                              : formdata[num - 1].type == "USER_INPUT_DATE"
-                              ? dateInput(
+        <div className="questLabs">
+            <div
+                style={{ background: onboardingData?.bgColor, height: onboardingData?.screenHeight }}
+                className="h-fit"
+            >
+                {formdata.length > 0 &&
+                    (typeof heading == "object" && !!heading.name ? (
+                        <div>
+                            <h3 className="w-100 text-center pt-8 text-4xl font-bold" style={{ fontSize: onboardingData?.headingSize }}>
+                                {heading?.name}
+                            </h3>
+                            <h4 className="w-100 text-center" style={{ fontSize: onboardingData?.descSize }}>{heading?.desc}</h4>
+                        </div>
+                    ) : !!heading[currentPage] ? (
+                        <div>
+                            <h3 className="w-100 text-center pt-8 text-4xl font-bold" style={{ fontSize: onboardingData?.headingSize }}>
+                                {heading[currentPage]?.name}
+                            </h3>
+                            <h4 className="w-100 text-center" style={{ fontSize: onboardingData?.descSize }}>
+                                {heading[currentPage]?.desc}
+                            </h4>
+                        </div>
+                    ) : (
+                        <div>
+                            <h3 className="w-100 text-center pt-8 text-4xl font-bold" style={{ fontSize: onboardingData?.headingSize }}>
+                                {heading[0]?.name}
+                            </h3>
+                            <h4 className="w-100 text-center" style={{ fontSize: onboardingData?.descSize }}>
+                                {heading[0]?.desc}
+                            </h4>
+                        </div>
+                    ))}
+                <div className="p-8 max-w-screen-md m-auto">
+                    {onboardingData?.design.length > 0 && checkDesignCriteria()
+                        ? onboardingData?.design[currentPage].map((num: number, index: number) =>
+                        (formdata[num - 1].type == "USER_INPUT_TEXT"
+                            ? normalInput(
+                                formdata[num - 1]?.question || "",
+                                formdata[num - 1]?.required || false,
+                                formdata[num - 1].criteriaId || "",
+                                num - 1,
+                                formdata[num - 1]?.placeholder || formdata[num - 1]?.question || "",
+                            )
+                            : formdata[num - 1].type == "USER_INPUT_DATE"
+                                ? dateInput(
                                     formdata[num - 1]?.question || "",
                                     formdata[num - 1]?.required || false,
                                     formdata[num - 1].criteriaId || "",
                                     num - 1
                                 )
-                              : formdata[num - 1].type ==
-                                "USER_INPUT_SINGLE_CHOICE"
-                              ? !!singleChoose && singleChoose == "modal2"
-                                  ? singleChoiceTwo(
-                                        formdata[num - 1].options || [],
-                                        formdata[num - 1]?.question || "",
-                                        formdata[num - 1]?.required || false,
-                                        formdata[num - 1].criteriaId || "",
-                                        num - 1
-                                    )
-                                  : singleChoiceOne(
-                                        formdata[num - 1].options || [],
-                                        formdata[num - 1]?.question || "",
-                                        formdata[num - 1]?.required || false,
-                                        formdata[num - 1].criteriaId || "",
-                                        num - 1
-                                    )
-                              : formdata[num - 1].type ==
-                                "USER_INPUT_MULTI_CHOICE"
-                              ? !!multiChoice && multiChoice == "modal2"
-                                  ? multiChoiceTwo(
-                                        formdata[num - 1].options || [],
-                                        formdata[num - 1]?.question || "",
-                                        formdata[num - 1]?.required || false,
-                                        formdata[num - 1].criteriaId || "",
-                                        num - 1
-                                    )
-                                  : multiChoiceOne(
-                                        formdata[num - 1].options || [],
-                                        formdata[num - 1]?.question || "",
-                                        formdata[num - 1]?.required || false,
-                                        formdata[num - 1].criteriaId || "",
-                                        num - 1
-                                    )
-                              : null)
-                      )
-                    : formdata?.map((data, index) =>
-                          data.type == "USER_INPUT_TEXT"
-                              ? normalInput(
+                                : formdata[num - 1].type ==
+                                    "USER_INPUT_SINGLE_CHOICE"
+                                    ? !!singleChoose && singleChoose == "modal2"
+                                        ? singleChoiceTwo(
+                                            formdata[num - 1].options || [],
+                                            formdata[num - 1]?.question || "",
+                                            formdata[num - 1]?.required || false,
+                                            formdata[num - 1].criteriaId || "",
+                                            num - 1
+                                        )
+                                        : singleChoiceOne(
+                                            formdata[num - 1].options || [],
+                                            formdata[num - 1]?.question || "",
+                                            formdata[num - 1]?.required || false,
+                                            formdata[num - 1].criteriaId || "",
+                                            num - 1
+                                        )
+                                    : formdata[num - 1].type ==
+                                        "USER_INPUT_MULTI_CHOICE"
+                                        ? !!multiChoice && multiChoice == "modal2"
+                                            ? multiChoiceTwo(
+                                                formdata[num - 1].options || [],
+                                                formdata[num - 1]?.question || "",
+                                                formdata[num - 1]?.required || false,
+                                                formdata[num - 1].criteriaId || "",
+                                                num - 1
+                                            )
+                                            : multiChoiceOne(
+                                                formdata[num - 1].options || [],
+                                                formdata[num - 1]?.question || "",
+                                                formdata[num - 1]?.required || false,
+                                                formdata[num - 1].criteriaId || "",
+                                                num - 1
+                                            )
+                                        : null)
+                        )
+                        : formdata?.map((data, index) =>
+                            data.type == "USER_INPUT_TEXT"
+                                ? normalInput(
                                     data?.question || "",
                                     data?.required || false,
                                     data.criteriaId || "",
                                     index,
                                     data?.placeholder || data?.question || "",
                                 )
-                              : data.type == "USER_INPUT_DATE"
-                              ? dateInput(
-                                    data?.question || "",
-                                    data?.required || false,
-                                    data.criteriaId || "",
-                                    index
-                                )
-                              : data.type == "USER_INPUT_SINGLE_CHOICE"
-                              ? !!singleChoose && singleChoose == "modal2"
-                                  ? singleChoiceTwo(
-                                        data.options || [],
+                                : data.type == "USER_INPUT_DATE"
+                                    ? dateInput(
                                         data?.question || "",
                                         data?.required || false,
                                         data.criteriaId || "",
                                         index
                                     )
-                                  : singleChoiceOne(
-                                        data.options || [],
-                                        data?.question || "",
-                                        data?.required || false,
-                                        data.criteriaId || "",
-                                        index
-                                    )
-                              : data.type == "USER_INPUT_MULTI_CHOICE"
-                              ? !!multiChoice && multiChoice == "modal2"
-                                  ? multiChoiceTwo(
-                                        data.options || [],
-                                        data?.question || "",
-                                        data?.required || false,
-                                        data.criteriaId || "",
-                                        index
-                                    )
-                                  : multiChoiceOne(
-                                        data.options || [],
-                                        data?.question || "",
-                                        data?.required || false,
-                                        data.criteriaId || "",
-                                        index
-                                    )
-                              : null
-                      )}
-                {formdata.length > 0 &&
-                    (onboardingData?.design.length > 0 &&
-                    checkDesignCriteria() ? (
-                        <div className="flex justify-between pt-3">
-                            <button
-                                className="text-black border-2 border-gray-800 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-4 py-2 mr-2 mb-2 min-w-[120px] md:px-10 md:min-w-[150px]"
-                                onClick={() =>
-                                    currentPage > 0 &&
-                                    setCurrentPage(currentPage - 1)
-                                }
-                                style={{
-                                    opacity: currentPage == 0 ? "0" : "1",
-                                    cursor:
-                                        currentPage == 0
-                                            ? "context-menu"
-                                            : "pointer",
-                                    border: `2px solid ${onboardingData?.btnColor}`
-                                }}
-                            >
-                                {" "}
-                                Previous
-                            </button>
-                            <button
-                                className="text-white bg-black hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-4 py-2 mb-2 min-w-[120px] md:px-10 md:min-w-[150px]"
-                                onClick={() =>
-                                    currentPage !=
-                                    onboardingData.design.length - 1
-                                        ? setCurrentPage(currentPage + 1)
-                                        : returnAnswers()
-                                }
-                                disabled={!btnFlag}
-                                style={{
-                                    backgroundColor: onboardingData?.btnColor,
-                                }}
-                            >
-                                {currentPage == onboardingData.design.length - 1
-                                    ? "Continue"
-                                    : "Next"}
-                            </button>
-                        </div>
-                    ) : (
-                        <div className="pt-3">
-                            <button
-                                className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-xl px-5 py-2.5 mr-2 mb-2 w-full"
-                                onClick={returnAnswers}
-                                disabled={!btnFlag}
-                                style={{
-                                    backgroundColor: onboardingData?.btnColor,
-                                    width: onboardingData?.btnSize
-                                }}
-                            >
-                                Continue
-                            </button>
-                        </div>
-                    ))}
+                                    : data.type == "USER_INPUT_SINGLE_CHOICE"
+                                        ? !!singleChoose && singleChoose == "modal2"
+                                            ? singleChoiceTwo(
+                                                data.options || [],
+                                                data?.question || "",
+                                                data?.required || false,
+                                                data.criteriaId || "",
+                                                index
+                                            )
+                                            : singleChoiceOne(
+                                                data.options || [],
+                                                data?.question || "",
+                                                data?.required || false,
+                                                data.criteriaId || "",
+                                                index
+                                            )
+                                        : data.type == "USER_INPUT_MULTI_CHOICE"
+                                            ? !!multiChoice && multiChoice == "modal2"
+                                                ? multiChoiceTwo(
+                                                    data.options || [],
+                                                    data?.question || "",
+                                                    data?.required || false,
+                                                    data.criteriaId || "",
+                                                    index
+                                                )
+                                                : multiChoiceOne(
+                                                    data.options || [],
+                                                    data?.question || "",
+                                                    data?.required || false,
+                                                    data.criteriaId || "",
+                                                    index
+                                                )
+                                            : null
+                        )}
+                    {formdata.length > 0 &&
+                        (onboardingData?.design.length > 0 &&
+                            checkDesignCriteria() ? (
+                            <div className="flex justify-between pt-3">
+                                <button
+                                    className="text-black border-2 border-gray-800 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-4 py-2 mr-2 mb-2 min-w-[120px] md:px-10 md:min-w-[150px]"
+                                    onClick={() =>
+                                        currentPage > 0 &&
+                                        setCurrentPage(currentPage - 1)
+                                    }
+                                    style={{
+                                        opacity: currentPage == 0 ? "0" : "1",
+                                        cursor:
+                                            currentPage == 0
+                                                ? "context-menu"
+                                                : "pointer",
+                                        border: `2px solid ${onboardingData?.btnColor}`
+                                    }}
+                                >
+                                    {" "}
+                                    Previous
+                                </button>
+                                <button
+                                    className="text-white bg-black hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-4 py-2 mb-2 min-w-[120px] md:px-10 md:min-w-[150px]"
+                                    onClick={() =>
+                                        currentPage !=
+                                            onboardingData.design.length - 1
+                                            ? setCurrentPage(currentPage + 1)
+                                            : returnAnswers()
+                                    }
+                                    disabled={!btnFlag}
+                                    style={{
+                                        backgroundColor: onboardingData?.btnColor,
+                                    }}
+                                >
+                                    {currentPage == onboardingData.design.length - 1
+                                        ? "Continue"
+                                        : "Next"}
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="pt-3">
+                                <button
+                                    className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-xl px-5 py-2.5 mr-2 mb-2 w-full"
+                                    onClick={returnAnswers}
+                                    disabled={!btnFlag}
+                                    style={{
+                                        backgroundColor: onboardingData?.btnColor,
+                                        width: onboardingData?.btnSize
+                                    }}
+                                >
+                                    Continue
+                                </button>
+                            </div>
+                        ))}
+                </div>
             </div>
         </div>
     );
