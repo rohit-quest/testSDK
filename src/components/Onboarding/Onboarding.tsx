@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import config from "../config";
+import config from "../../config";
 import axios from "axios";
 import { useContext } from "react";
-import QuestContext from '../components/QuestWrapper';
+import QuestContext from '../QuestWrapper';
 interface QuestLoginProps {
     design?: any;
     color?: string;
