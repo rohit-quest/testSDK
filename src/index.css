@@ -4,6 +4,8 @@
   border-style: solid;
   border-color: #e5e7eb
 }
+@tailwind components;
+@tailwind utilities;
 .questLabs 
 :before, .questLabs :after {
   --tw-content: ""
