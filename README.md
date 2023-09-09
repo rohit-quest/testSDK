@@ -68,7 +68,7 @@ import '@questlabs/react-sdk/dist/style.css';
 
 ## Props of Onboarding component
 
-The `QuestLogin` component accepts the following props:
+The `Onboarding` component accepts the following props:
 
 - `token` (string, required): A userToken which you get after login need to pass here to fetch the data.
 - `questId` (string, required):  This take a particular questId to fetch the data.
@@ -131,6 +131,21 @@ import '@questlabs/react-sdk/dist/style.css';
   />
 </QuestProvider>
 ```
+
+## Props of Feedback component
+
+The `Onboarding` component accepts the following props:
+
+- `token` (string, required): A userToken which you get after login need to pass here to fetch the data.
+- `questId` (string, required):  This take a particular questId to fetch the data.
+- `userId` (string, required): This is your quest User ID.
+- `textColor` (string, optional): To set a color of the text.
+- `bgColor` (string, optional): To set the background color on the webpage.
+- `btnColor` (string, optional): To add a color to all buttons.
+- `btnTextColor` (string, optional): The text color of the login button. Defaults to a platform-specific color if not specified.
+- `font` (string, optional): The font style for text in the component. Defaults to a platform-specific font if not specified.
+- `heading` (string, required): heading of the component
+- `subheading` (string, required): sub heading of the component
 
 ## Contributing
 
