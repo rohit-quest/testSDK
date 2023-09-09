@@ -18,7 +18,6 @@ interface FeedbackProps {
   getAnswers?: Function;
   answer?: any;
   setAnswer?: any;
-  short?: boolean;
   supportUrl?: string;
 }
 
@@ -37,7 +36,6 @@ const Feedback: React.FC<FeedbackProps> = ({
   bgColor,
   answer,
   setAnswer,
-  short,
   supportUrl,
 }) => {
   interface FormDataItem {
@@ -50,9 +48,9 @@ const Feedback: React.FC<FeedbackProps> = ({
   }
   const [rating, setRating] = useState<number>(0);
   const [comment, setComment] = useState<string>('');
-  const [shortFeedback, setShortFeedback] = useState<boolean>(false);
   const [likePopup, setLikePopup] = useState<boolean>(false);
   const [formdata, setFormdata] = useState<FormDataItem[]>([]);
+  const [gradient, setGradient] = useState<boolean>(false);
   const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
   const whiteStar = (
     <svg
@@ -161,12 +159,15 @@ const Feedback: React.FC<FeedbackProps> = ({
 
   const handleRatingChange2 = (rating: number) => {
     setRating(rating);
-    setLikePopup(true)
+    setLikePopup(true);
   };
 
   useEffect(() => {
-    if (short) {
-      setShortFeedback(true);
+    if (bgColor) {
+      setGradient(
+        bgColor?.includes('linear-gradient') ||
+          bgColor?.includes('radial-gradient')
+      );
     }
     if (entityId) {
       const headers = {
@@ -191,7 +192,6 @@ const Feedback: React.FC<FeedbackProps> = ({
         });
         criterias = Array.isArray(criterias) ? criterias : [];
         setFormdata([...criterias]);
-        console.log('formdata', criterias);
         let ansArray: any = {};
         criterias.forEach((criteria: any) => {
           if (criteria.type === 'USER_INPUT_MULTI_CHOICE') {
@@ -206,7 +206,6 @@ const Feedback: React.FC<FeedbackProps> = ({
         });
 
         setAnswer({ ...answer, ...ansArray });
-        console.log('ans', { ...answer, ...ansArray });
       });
     }
   }, []);
@@ -249,14 +248,11 @@ const Feedback: React.FC<FeedbackProps> = ({
   }
 
   function handleShort() {
-    const ans = [
-        comment,
-        rating,
-    ]
+    const ans = [comment, rating];
     if (getAnswers) {
-        getAnswers(ans);
-      }
-  }   
+      getAnswers(ans);
+    }
+  }
 
   const normalInput = (question: string, criteriaId: string) => {
     return (
@@ -309,189 +305,386 @@ const Feedback: React.FC<FeedbackProps> = ({
         justifyContent: 'center',
       }}
     >
-      {!shortFeedback ? (
-        <div
-          style={{
-            width: '534px',
-            height: '700px',
-            borderRadius: '10px',
-            boxShadow: '0px 0px 6px 0px #00000073',
-            padding: '3%',
-            backgroundColor: bgColor,
-          }}
-          className="max-w-md mx-auto border rounded-lg shadow-lg"
-        >
-          <h2
-            className="text-2xl font-bold text-center mb-1"
-            style={{ fontFamily: font, color: textColor, fontSize: '28px' }}
-          >
-            {heading}
-          </h2>
-          <p
-            className="text-gray-600 mb-2 text-center"
-            style={{ fontFamily: font, color: textColor, fontSize: '18px' }}
-          >
-            {subHeading}
-          </p>
-
-          <form>
-            {formdata.length > 0 &&
-              formdata.map((data: any) => {
-                if (data.type === 'USER_INPUT_TEXT') {
-                  return normalInput(
-                    data.question || '',
-                    data.criteriaId || '',
-                  );
-                } else if (data.type === 'USER_INPUT_MULTI_CHOICE') {
-                  return (
-                    <div className="mb-4">
-                      <label
-                        style={{
-                          fontWeight: '500',
-                          fontFamily: font,
-                          color: textColor,
-                        }}
-                        className="pb-2 block text-gray-600 font-semibold"
-                      >
-                        Rating Scale
-                      </label>
-                      <div style={{ padding: '2% 0% 2%' }} className="flex p-2">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <button
-                            style={{
-                              width: '40px',
-                              height: '40px',
-                              lineHeight: '40px',
-                            }}
-                            key={star}
-                            type="button"
-                            onClick={() =>
-                              handleRatingChange(data.criteriaId, star)
-                            }
-                            className={`mr-2 text-2xl ${
-                              star <= rating ? 'text-black' : 'text-gray-300'
-                            }`}
-                          >
-                            {star <= rating ? blackStar : whiteStar}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                }
-              })}
-            <div
-              style={{
-                backgroundColor: btnColor,
-                color: btnTextColor,
-                fontFamily: font,
-              }}
-              onClick={returnAnswers}
-              className="mt-5 continue-btn h-14 pl-4 pr-4 rounded-lg border px-3 bg-black text-white focus:ring focus:ring-blue-300 flex items-center justify-center"
-            >
-              Submit
-            </div>
-          </form>
-        </div>
-      ) : (
-        <div
-          style={{
-            width: '625px',
-            borderRadius: '10px',
-            boxShadow: '0px 0px 6px 0px #00000073',
-            padding: '1.5% 2%',
-            fontFamily: font,
-            color: textColor,
-            backgroundColor: bgColor
-          }}
-          className="questLabs"
-        >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            <div style={{ flex: 1 }}>
-              <h4 style={{ fontSize: '20px', fontWeight: '600' , fontFamily: font, color: textColor,}}>
-                Are these results helpful?
-              </h4>
-              <p style={{ fontSize: '18px', fontFamily: font, color: textColor, }}>
-                Your feedback helps us improve search results
-              </p>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor:'pointer' }}>
-              <span onClick={() => setLikePopup(true)}>{like}</span>
-              <span onClick={() => setLikePopup(true)}>{dislike}</span>
-            </div>
-          </div>
-          <div style={{ marginTop: '5%' }} className="mb-4">
-            <label
-              style={{
-                fontWeight: '500',
-                fontFamily: font,
-                color: textColor,
-              }}
-              className="pb-2 block text-gray-600 font-semibold"
-            >
-              Rating Scale
-            </label>
-            <div style={{ padding: '2% 0% 2%' }} className="flex p-2">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <button
-                  style={{
-                    width: '40px',
-                    height: '40px',
-                    lineHeight: '40px',
-                  }}
-                  key={star}
-                  type="button"
-                  onClick={() => handleRatingChange2(star)}
-                  className={`mr-2 text-2xl ${
-                    star <= rating ? 'text-black' : 'text-gray-300'
-                  }`}
-                >
-                  {star <= rating ? blackStar : whiteStar}
-                </button>
-              ))}
-            </div>
-          </div>
-          {likePopup && (
+      <div
+        style={{
+          width: '534px',
+          height: '700px',
+          borderRadius: '10px',
+          boxShadow: '0px 0px 6px 0px #00000073',
+          padding: '2% 3%',
+          ...(gradient
+            ? { backgroundImage: bgColor }
+            : { backgroundColor: bgColor }),
+        }}
+        className="max-w-md mx-auto border rounded-lg shadow-lg"
+      >
+        {formdata.length > 0 ? (
+          formdata[0].type !== 'LIKE_DISLIKE' &&
+          formdata[0].type !== 'RATING' ? (
             <div className='questLabs'>
-              <div>
-                <div style={{ marginTop: '1.5rem' }} className="flex items-center space-x-2">
-                    <div style={{ width: '2rem', height: '2rem', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        {tick}
-                    </div>
-                    <p style={{ color: '#00A96D' }}>Thanks again for your feedback.</p>
-                    </div>
-                    <p style={{ margin: '5% 0% 1% 0%', fontSize: '18px', fontFamily: font, color: textColor, }} className="mt-4 block text-gray-600">Tell us more</p>
-                    <input
-                        style={{ height: '60px' }}
-                        placeholder="Comments (optional)"
-                        type="text"
-                        className="w-full mx-auto p-6 border-2 border-black rounded-lg w-full px-3 py-2 rounded-lg"
-                        value={comment}
-                        maxLength={200}
-                        onChange={(e) => setComment(e.target.value)}
-                    />
-                    <div style={{ marginTop: '2%', fontSize: '16px', textAlign: 'right' }}>{comment.length}/200</div>
-                    <div style={{ marginTop: '5%' }} className="mx-auto p-6 rounded-lg bg-gray-100 w-full px-3 py-3 rounded-lg">
-                    We’re unable to respond directly to your feedback. If you have a customer support inquiry, please{' '}
-                    <span onClick={()=> window.location.href = `${supportUrl}`} style={{ fontWeight: '600', textDecoration: 'underline' }}>
-                        contact customer support.
-                    </span>
-                    </div>
-                        <div style={{ marginTop: '1.5rem', width: "100%", display:"flex" , justifyContent:'end', cursor:'pointer'}}>
-                            <button onClick={handleShort} style={{ fontSize: '18px', backgroundColor: 'white', color: 'black', border: '2px solid black', borderRadius: '50px', padding: '8px 24px', marginRight: '1rem' }}>Skip</button>
-                            <button onClick={handleShort} style={{ fontSize: '18px', backgroundColor: btnColor ? btnColor : "black", color: 'white', borderRadius: '50px', padding: '8px 24px' }}>Submit</button>
+              <h2
+                className="text-2xl font-bold text-center mb-1"
+                style={{ fontFamily: font, color: textColor, fontSize: '28px' }}
+              >
+                {heading}
+              </h2>
+              <p
+                className="text-gray-600 mb-2 text-center"
+                style={{ fontFamily: font, color: textColor, fontSize: '18px' }}
+              >
+                {subHeading}
+              </p>
+              <form>
+                {formdata.map((data: any) => {
+                  if (data.type === 'USER_INPUT_TEXT') {
+                    return normalInput(
+                      data.question || '',
+                      data.criteriaId || ''
+                    );
+                  } else if (data.type === 'RATING') {
+                    return (
+                      <div className="mb-4">
+                        <label
+                          style={{
+                            fontWeight: '500',
+                            fontFamily: font,
+                            color: textColor,
+                          }}
+                          className="pb-2 block text-gray-600 font-semibold"
+                        >
+                          Rating Scale
+                        </label>
+                        <div
+                          style={{ padding: '2% 0% 2%' }}
+                          className="flex p-2"
+                        >
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <button
+                              style={{
+                                width: '40px',
+                                height: '40px',
+                                lineHeight: '40px',
+                              }}
+                              key={star}
+                              type="button"
+                              onClick={() =>
+                                handleRatingChange(data.criteriaId, star)
+                              }
+                              className={`mr-2 text-2xl ${
+                                star <= rating ? 'text-black' : 'text-gray-300'
+                              }`}
+                            >
+                              {star <= rating ? blackStar : whiteStar}
+                            </button>
+                          ))}
                         </div>
+                      </div>
+                    );
+                  }
+                })}
+                <div
+                  style={{
+                    backgroundColor: btnColor,
+                    color: btnTextColor,
+                    fontFamily: font,
+                  }}
+                  onClick={returnAnswers}
+                  className="mt-5 continue-btn h-14 pl-4 pr-4 rounded-lg border px-3 bg-black text-white focus:ring focus:ring-blue-300 flex items-center justify-center"
+                >
+                  Submit
                 </div>
+              </form>
             </div>
-          )}
-        </div>
-      )}
+          ) : formdata[0].type === 'LIKE_DISLIKE' ? (
+            <div className='questLabs'>
+              {!likePopup && <div 
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <div style={{ flex: 1 }}>
+                  <h4
+                    style={{
+                      fontSize: '20px',
+                      fontWeight: '600',
+                      fontFamily: font,
+                      color: textColor,
+                    }}
+                  >
+                    Are these results helpful?
+                  </h4>
+                  <p
+                    style={{
+                      fontSize: '18px',
+                      fontFamily: font,
+                      color: textColor,
+                    }}
+                  >
+                    Your feedback helps us improve search results
+                  </p>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <span onClick={() => setLikePopup(true)}>{like}</span>
+                  <span onClick={() => setLikePopup(true)}>{dislike}</span>
+                </div>
+              </div>}
+              {likePopup && (
+                <div className="questLabs">
+                  <div>
+                    <div className="flex items-center space-x-2">
+                      <div
+                        style={{
+                          width: '2rem',
+                          height: '2rem',
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        {tick}
+                      </div>
+                      <p className="p-2" style={{ color: '#00A96D' }}>
+                        Thanks again for your feedback.
+                      </p>
+                    </div>
+                    <p
+                      style={{
+                        margin: '5% 0% 1% 0%',
+                        fontSize: '18px',
+                        fontFamily: font,
+                        color: textColor,
+                      }}
+                      className="mt-4 block text-gray-600"
+                    >
+                      Tell us more
+                    </p>
+                    <input
+                      style={{ height: '60px' }}
+                      placeholder="Comments (optional)"
+                      type="text"
+                      className="w-full mx-auto p-6 border-2 border-black rounded-lg w-full px-3 py-2 rounded-lg"
+                      value={comment}
+                      maxLength={200}
+                      onChange={(e) => setComment(e.target.value)}
+                    />
+                    <div
+                      style={{
+                        marginTop: '2%',
+                        fontSize: '16px',
+                        textAlign: 'right',
+                      }}
+                    >
+                      {comment.length}/200
+                    </div>
+                    <div
+                      style={{ marginTop: '5%' }}
+                      className="mx-auto p-6 rounded-lg bg-gray-100 w-full px-3 py-3 rounded-lg"
+                    >
+                      We’re unable to respond directly to your feedback. If you
+                      have a customer support inquiry, please{' '}
+                      <span
+                        onClick={() => (window.location.href = `${supportUrl}`)}
+                        style={{
+                          fontWeight: '600',
+                          textDecoration: 'underline',
+                        }}
+                      >
+                        contact customer support.
+                      </span>
+                    </div>
+                    <div
+                      style={{
+                        marginTop: '1.5rem',
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'end',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <button
+                        onClick={handleShort}
+                        style={{
+                          fontSize: '18px',
+                          backgroundColor: 'white',
+                          color: 'black',
+                          border: '2px solid black',
+                          borderRadius: '50px',
+                          padding: '8px 24px',
+                          marginRight: '1rem',
+                        }}
+                      >
+                        Skip
+                      </button>
+                      <button
+                        onClick={handleShort}
+                        style={{
+                          fontSize: '18px',
+                          backgroundColor: btnColor ? btnColor : 'black',
+                          color: 'white',
+                          borderRadius: '50px',
+                          padding: '8px 24px',
+                        }}
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : formdata[0].type === 'RATING' ? (
+            <div className='questLabs'>
+              <div className="mb-4">
+                <label
+                  style={{
+                    fontWeight: '500',
+                    fontFamily: font,
+                    color: textColor,
+                  }}
+                  className="pb-2 block text-gray-600 font-semibold"
+                >
+                  Rating Scale
+                </label>
+                <div style={{ padding: '2% 0% 2%' }} className="flex p-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      style={{
+                        width: '40px',
+                        height: '40px',
+                        lineHeight: '40px',
+                      }}
+                      key={star}
+                      type="button"
+                      onClick={() => handleRatingChange2(star)}
+                      className={`mr-2 text-2xl ${
+                        star <= rating ? 'text-black' : 'text-gray-300'
+                      }`}
+                    >
+                      {star <= rating ? blackStar : whiteStar}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              {likePopup && (
+                <div className="questLabs">
+                  <div>
+                    <div className="flex items-center space-x-2">
+                      <div
+                        style={{
+                          width: '2rem',
+                          height: '2rem',
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        {tick}
+                      </div>
+                      <p className="p-2" style={{ color: '#00A96D' }}>
+                        Thanks again for your feedback.
+                      </p>
+                    </div>
+                    <p
+                      style={{
+                        margin: '5% 0% 1% 0%',
+                        fontSize: '18px',
+                        fontFamily: font,
+                        color: textColor,
+                      }}
+                      className="mt-4 block text-gray-600"
+                    >
+                      Tell us more
+                    </p>
+                    <input
+                      style={{ height: '60px' }}
+                      placeholder="Comments (optional)"
+                      type="text"
+                      className="w-full mx-auto p-6 border-2 border-black rounded-lg w-full px-3 py-2 rounded-lg"
+                      value={comment}
+                      maxLength={200}
+                      onChange={(e) => setComment(e.target.value)}
+                    />
+                    <div
+                      style={{
+                        marginTop: '2%',
+                        fontSize: '16px',
+                        textAlign: 'right',
+                      }}
+                    >
+                      {comment.length}/200
+                    </div>
+                    <div
+                      style={{ marginTop: '5%' }}
+                      className="mx-auto p-6 rounded-lg bg-gray-100 w-full px-3 py-3 rounded-lg"
+                    >
+                      We’re unable to respond directly to your feedback. If you
+                      have a customer support inquiry, please{' '}
+                      <span
+                        onClick={() => (window.location.href = `${supportUrl}`)}
+                        style={{
+                          fontWeight: '600',
+                          textDecoration: 'underline',
+                        }}
+                      >
+                        contact customer support.
+                      </span>
+                    </div>
+                    <div
+                      style={{
+                        marginTop: '1.5rem',
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'end',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <button
+                        onClick={handleShort}
+                        style={{
+                          fontSize: '18px',
+                          backgroundColor: 'white',
+                          color: 'black',
+                          border: '2px solid black',
+                          borderRadius: '50px',
+                          padding: '8px 24px',
+                          marginRight: '1rem',
+                        }}
+                      >
+                        Skip
+                      </button>
+                      <button
+                        onClick={handleShort}
+                        style={{
+                          fontSize: '18px',
+                          backgroundColor: btnColor ? btnColor : 'black',
+                          color: 'white',
+                          borderRadius: '50px',
+                          padding: '8px 24px',
+                        }}
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : null
+        ) : (
+          <p className='text-center'>Form data is empty</p>
+        )}
+      </div>
     </div>
   );
 };
