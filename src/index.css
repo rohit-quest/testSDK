@@ -1,5 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Kanit&family=Neucha&family=Roboto:wght@100;400;500&family=Xanh+Mono&display=swap");
 @tailwind components;
 @tailwind utilities;
+
+*, .questLabs :before, .questLabs :after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: #e5e7eb
+}
+@tailwind components;
+@tailwind utilities;
+.questLabs 
+:before, .questLabs :after {
+  --tw-content: ""
+}
+
 
 
 @keyframes scrollAnimation {
@@ -277,7 +292,3 @@
     height: auto;
 }
 
-
-.questLabs [hidden] {
-    display: none;
-}

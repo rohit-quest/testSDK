@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import ReactDOM from 'react-dom';
-import creditBanner from "../assets/images/creditBanner.png";
-import cross from "../assets/images/cross.png"
+import creditBanner from "../../assets/images/creditBanner.png";
+import cross from "../../assets/images/cross.png"
 
 interface PopupProps {
   isOpen: boolean;
@@ -35,7 +35,8 @@ const CreditsPopup: FC<PopupProps> = ({ isOpen, onClose, headingText, descText, 
             }
           </div>
         </div>
-      </div></div>,
+      </div>
+    </div>,
     document.getElementById('root')!
   );
 };
