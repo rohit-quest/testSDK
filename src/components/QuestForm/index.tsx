@@ -7,7 +7,7 @@ import enterPng from '../../assets/images/enter.png';
 export const QuestForm = (props: questFormPropType) => {
 
     const {
-        userId = "", questId = "", token = "", setAnswer = (() => {
+        userId = "", questId = "", shadowColor= "rgba(128, 128, 128, 0.56)",token = "", setAnswer = (() => {
         }), onSubmit = (() => {
         })
     } = props;
@@ -199,7 +199,7 @@ export const QuestForm = (props: questFormPropType) => {
                                return prev;
                            })
                        }}
-                       className='h-[35px] text-black py-5 focus:border-none focus:outline-none'/>)
+                       className='h-[35px] text-black !py-2 !px-2 focus:border-none focus:outline-none'/>)
     }
 
     const DateInput = ({setFill}: { setFill: React.Dispatch<React.SetStateAction<string>> }) => {
@@ -275,7 +275,7 @@ export const QuestForm = (props: questFormPropType) => {
 
         return (<>
             {!!criteria.length && (
-                <div className={`${anime} flex absolute justify-center items-start gap-12 flex-col p-10`}>
+                <div style={{boxShadow: `0 0 5px ${shadowColor}`}} className={`${anime} w-[40%] radius rounded-[10px] flex absolute justify-center items-start gap-12 flex-col p-10`}>
                     <h4 className={`font-normal text-[${descSize}]`}>{subj?.title}</h4>
                     <div>
                         {(() => {
@@ -304,7 +304,7 @@ export const QuestForm = (props: questFormPropType) => {
                                 setAnime("scroll-animation-rev")
                                 setPage(c => c - 1)
                             }}
-                            className={`w-[165px]  text-[24px] h-14 px-11 py-6 rounded-lg border justify-center items-center gap-2 inline-flex`}>Previos
+                            className={`w-[165px] bg-white  text-[24px] h-14 px-11 py-6 rounded-lg border justify-center items-center gap-2 inline-flex`}>Previos
                         </button>}
                         {page < criteria.length && <button
                             onClick={() => {
@@ -344,7 +344,7 @@ export const QuestForm = (props: questFormPropType) => {
             }
         }
         return (<>
-            {!!subject && (<div className={'absolute flex justify-center items-start gap-12 flex-col p-10 ' + anime}>
+            {!!subject && (<div style={{boxShadow: `0 0 5px ${shadowColor}`}} className={'absolute rounded-[10px] flex justify-center items-start gap-12 shadow-[0px_0px_0px_black] flex-col p-10 ' + anime}>
                 <h2 className={`font-bold text-xl text-[${color}]`}>{subject?.data.title}</h2>
                 <h4 className={`font-normal text-[${headingSize}]`}>{subject.data.description}</h4>
                 <div className='flex items-center gap-10'>
@@ -371,7 +371,7 @@ export const QuestForm = (props: questFormPropType) => {
             <div style={{
                 backgroundColor: bgColor,
                 color: color,
-            }} className={`relative !w-[100%] h-[95vh] flex justify-${alignment} items-center`}>
+            }} className={`relative !w-[100%] h-[95vh] flex justify-${alignment} items-center px-10`}>
                 {(page < 0) ? <FirstPage/> : <Survey/>}
             </div>
         </div>
