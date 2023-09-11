@@ -11,7 +11,6 @@ export interface questFormPropType {
     screenHeight?: string;
     answer?: any;
     setAnswer: React.Dispatch<React.SetStateAction<Array<{ question: string, answer: string | Array<string> }>>>;
-    inputBorder?: string;
     headingSize?: string;
     descSize?: string;
     inputFieldType?: object;
@@ -19,6 +18,7 @@ export interface questFormPropType {
     token?: string;
     questId?: string;
     onSubmit?: () => void
+    shadowColor?: string;
 }
 
 export interface metadata {
