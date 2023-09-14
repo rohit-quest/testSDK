@@ -1,13 +1,14 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import QuestContext from '../../components/QuestWrapper';
-import {ApiResponse, fetchQuestions, metadata, questFormPropType} from "./response.ts";
+import { ApiResponse, fetchQuestions, metadata, questFormPropType } from "./response.ts";
 import enterPng from '../../assets/images/enter.png';
+import "./form.css";
 
 
 export const QuestForm = (props: questFormPropType) => {
 
     const {
-        userId = "", questId = "", shadowColor= "rgba(128, 128, 128, 0.56)",token = "", setAnswer = (() => {
+        userId = "", questId = "", shadowColor = "rgba(128, 128, 128, 0.56)", token = "", setAnswer = (() => {
         }), onSubmit = (() => {
         })
     } = props;
@@ -26,62 +27,62 @@ export const QuestForm = (props: questFormPropType) => {
         headingSize = "24px", descSize = "24px"
     } = props;
     const setData = async () => {
-        const res = await fetchQuestions({...headers, userId, questId, token});
+        const res = await fetchQuestions({ ...headers, userId, questId, token });
         if (!res?.success) return;
         setSubject(res);
         let crts = res?.eligibilityData.map(e => ({
             ...e.data.metadata, ...e.data
         }))
         setCriteria(crts);
-        setAnswer(crts.map(({title, options}) => ({question: title, answer: options || ""})))
+        setAnswer(crts.map(({ title, options }) => ({ question: title, answer: options || "" })))
     }
     const [anime, setAnime] = useState<"scroll-animation" | "scroll-animation-rev" | "">("")
 
     // @ts-ignore
-    const TextArea = ({setFill, title = ""}: {
+    const TextArea = ({ setFill, title = "" }: {
         setFill: React.Dispatch<React.SetStateAction<string>>,
         title: string
     }) => {
-        return (<textarea cols={60} placeholder={"enter the " + title} className='!p-[10px]'
-                          onChange={(e) => {
-                              setFill(e.target.value)
-                              setAnswer(prev => {
-                                  prev[page].answer = e.target.value;
-                                  return prev;
-                              })
-                          }}
-                          style={{color: color, border: `1px solid ${inputBorderColor}`, backgroundColor: bgColor}}
-                          rows={5}></textarea>)
+        return (<textarea cols={60} placeholder={"enter the " + title} className='q-form-text-area'
+            onChange={(e) => {
+                setFill(e.target.value)
+                setAnswer(prev => {
+                    prev[page].answer = e.target.value;
+                    return prev;
+                })
+            }}
+            style={{ color: color, border: `1px solid ${inputBorderColor}`, backgroundColor: bgColor }}
+            rows={5}></textarea>)
     }
 
     // @ts-ignore
-    const Radio = ({setFill, options = ["option1", "option2", "option3"]}: {
+    const Radio = ({ setFill, options = ["option1", "option2", "option3"] }: {
         setFill: React.Dispatch<React.SetStateAction<string>>,
         options: Array<string>
     }) => {
 
-        return (<div className="flex gap-x-12 gap-y-2 flex-wrap">
+        return (<div className="q-form-radio">
             {options.map((option: string, id: number) => (
-                <div className="flex items-center mb-3" key={id}>
+                <div className="q-form-radio-flex" key={id}>
                     <input id={`sct${id}`} type="radio" value={option}
-                           defaultChecked={(!!values[page]?.length) && values[page] == option}
-                           onChange={(e) => {
-                               setFill(e.target.value)
-                               setValues(prev => {
-                                   prev[page] = e.target.value;
-                                   return prev;
-                               })
-                               setAnswer(prev => {
-                                   prev[page].answer = e.target.value;
-                                   return prev;
-                               })
-                           }}
-                           name="default-radio"
-                           className="h-4 w-4 accent-black  bg-grey-700 text-red-500 rounded cursor-pointer"
+                        defaultChecked={(!!values[page]?.length) && values[page] == option}
+                        onChange={(e) => {
+                            setFill(e.target.value)
+                            setValues(prev => {
+                                prev[page] = e.target.value;
+                                return prev;
+                            })
+                            setAnswer(prev => {
+                                prev[page].answer = e.target.value;
+                                return prev;
+                            })
+                        }}
+                        name="default-radio"
+                        className="q-form-radio-input"
                     />
                     <label
                         htmlFor={`sct${id}`}
-                        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-500"
+                        className="q-form-radio-label"
                     >
                         {option}
                     </label>
@@ -90,7 +91,7 @@ export const QuestForm = (props: questFormPropType) => {
         </div>)
     }
 
-    const Multi = ({setFill, options = ["option1", "option2", "option3"]}: {
+    const Multi = ({ setFill, options = ["option1", "option2", "option3"] }: {
         setFill: React.Dispatch<React.SetStateAction<string>>,
         options: Array<string>
     }) => {
@@ -102,13 +103,8 @@ export const QuestForm = (props: questFormPropType) => {
             }
         }, []);
 
-        return (<div className="py-3">
-            <p
-                className="block mb-1 font-medium"
-                style={{color: color}}
-            >
-            </p>
-            <ul className="flex flex-wrap w-full gap-3">
+        return (<div className="q-form-multi">
+            <ul className="q-form-multi-ul">
                 {options.map((option: string, id: number) => (
                     <li key={id}>
                         <input
@@ -116,7 +112,7 @@ export const QuestForm = (props: questFormPropType) => {
                             id={`mct${id}`}
                             value={option}
                             defaultChecked={(!!values[page]?.length) && values[page].includes(option)}
-                            className="hidden peer"
+                            className="q-form-multi-li"
                             onChange={(e) => {
                                 setFill(e.target.value)
                                 setValues(prev => {
@@ -159,10 +155,10 @@ export const QuestForm = (props: questFormPropType) => {
                         />
                         <label
                             htmlFor={`mct${id}`}
-                            className="inline-flex items-center justify-between px-5 py-1 text-gray-800 bg-white border-2 border-gray-800 rounded-2xl cursor-pointer peer-checked:border-gray-800 peer-checked:bg-gray-800 peer-checked:font-bold peer-checked:text-white hover:text-gray-600 hover:bg-gray-50"
+                            className="q-form-multi-for"
                         >
-                            <div className="block">
-                                <div className="text-sm">{option}</div>
+                            <div className="q-form-multi-block">
+                                <div className="q-form-text-sm">{option}</div>
                             </div>
                         </label>
                     </li>
@@ -171,7 +167,7 @@ export const QuestForm = (props: questFormPropType) => {
         </div>)
     }
 
-    const NormalInput = ({title = "", setFill}: {
+    const NormalInput = ({ title = "", setFill }: {
         title: string,
         setFill: React.Dispatch<React.SetStateAction<string>>
     }) => {
@@ -186,23 +182,23 @@ export const QuestForm = (props: questFormPropType) => {
             }
         }, []);
         return (<input placeholder={"Enter Your " + title}
-                       style={{color: color, border: `1px solid ${inputBorderColor}`, backgroundColor: bgColor}}
-                       ref={input}
-                       onChange={(e) => {
-                           setFill(e.target.value)
-                           setValues(prev => {
-                               prev[page] = e.target.value;
-                               return prev
-                           })
-                           setAnswer(prev => {
-                               prev[page].answer = e.target.value;
-                               return prev;
-                           })
-                       }}
-                       className='h-[35px] text-black text-[24px] !py-2  focus:border-none focus:outline-none'/>)
+            style={{ color: color, border: `1px solid ${inputBorderColor}`, backgroundColor: bgColor }}
+            ref={input}
+            onChange={(e) => {
+                setFill(e.target.value)
+                setValues(prev => {
+                    prev[page] = e.target.value;
+                    return prev
+                })
+                setAnswer(prev => {
+                    prev[page].answer = e.target.value;
+                    return prev;
+                })
+            }}
+            className='q-form-normal-input' />)
     }
 
-    const DateInput = ({setFill}: { setFill: React.Dispatch<React.SetStateAction<string>> }) => {
+    const DateInput = ({ setFill }: { setFill: React.Dispatch<React.SetStateAction<string>> }) => {
         const input = useRef<HTMLInputElement>(null);
         useEffect(() => {
             if (!!input.current) {
@@ -214,22 +210,22 @@ export const QuestForm = (props: questFormPropType) => {
         }, []);
         return (
             <div className="py-3">
-                <label className="block mb-1 font-medium" htmlFor="dateInput" style={{color: color}}>
+                <label className="q-form-date-label" htmlFor="dateInput" style={{ color: color }}>
                 </label>
                 <input type="date" id="dateInput" name="dateInput" ref={input}
-                       style={{color: color, border: `1px solid ${inputBorderColor}`, backgroundColor: bgColor}}
-                       className="bg-gray-100 border-none outline-none text-sm rounded focus:ring-blue-500 focus:ring-1 w-full p-3"
-                       onChange={(e) => {
-                           setFill(e.target.value)
-                           setValues(prev => {
-                               prev[page] = e.target.value;
-                               return prev
-                           })
-                           setAnswer(prev => {
-                               prev[page].answer = e.target.value;
-                               return prev;
-                           })
-                       }}
+                    style={{ color: color, border: `1px solid ${inputBorderColor}`, backgroundColor: bgColor }}
+                    className="q-form-date-input"
+                    onChange={(e) => {
+                        setFill(e.target.value)
+                        setValues(prev => {
+                            prev[page] = e.target.value;
+                            return prev
+                        })
+                        setAnswer(prev => {
+                            prev[page].answer = e.target.value;
+                            return prev;
+                        })
+                    }}
                 />
             </div>
         );
@@ -275,36 +271,36 @@ export const QuestForm = (props: questFormPropType) => {
 
         return (<>
             {!!criteria.length && (
-                <div style={{boxShadow: `0 0 5px ${shadowColor}`}} className={`${anime} w-fit radius rounded-[10px] flex absolute justify-center items-start gap-12 flex-col p-10`}>
-                    <h4 className={`font-normal text-[${descSize}]`}>{subj?.title}</h4>
+                <div style={{ boxShadow: `0 0 5px ${shadowColor}` }} className={`${anime} q-form-survey`}>
+                    <h4 className={`q-form-survey-h4`} style={{ fontSize: descSize }}>{subj?.title}</h4>
                     <div>
                         {(() => {
                             switch (subj.criteriaType) {
                                 case "":
-                                    return <NormalInput setFill={setFill} title={subj?.title}/>
+                                    return <NormalInput setFill={setFill} title={subj?.title} />
                                 case "USER_INPUT_TEXT":
-                                    return <NormalInput setFill={setFill} title={subj?.title}/>
+                                    return <NormalInput setFill={setFill} title={subj?.title} />
                                 case "USER_INPUT_MULTI_CHOICE":
-                                    return <Multi options={subj.options} setFill={setFill}/>
+                                    return <Multi options={subj.options} setFill={setFill} />
                                 case "USER_INPUT_SINGLE_CHOICE":
-                                    return <Radio options={subj.options} setFill={setFill}/>
+                                    return <Radio options={subj.options} setFill={setFill} />
                                 case "USER_INPUT_DATE":
-                                    return <DateInput setFill={setFill}/>
+                                    return <DateInput setFill={setFill} />
                                 case "USER_INPUT_TEXT_AREA":
-                                    return <TextArea setFill={setFill} title={subj.title}/>
-                                default :
-                                    return <NormalInput setFill={setFill} title={subj?.title}/>
+                                    return <TextArea setFill={setFill} title={subj.title} />
+                                default:
+                                    return <NormalInput setFill={setFill} title={subj?.title} />
                             }
                         })()}
-                        <div className='text-red-600'>{!allowNext && `please fill the ${subj.title}`}</div>
+                        <div style={{ color: "red" }}>{!allowNext && `please fill the ${subj.title}`}</div>
                     </div>
-                    <div className='flex items-center gap-10'>
+                    <div className='q-form-survey-div'>
                         {page > 0 && page < criteria.length - 1 && <button
                             onClick={() => {
                                 setAnime("scroll-animation-rev")
                                 setPage(c => c - 1)
                             }}
-                            className={`w-[165px] bg-white  text-[24px] h-14 px-11 py-6 rounded-lg border border-solid border-[grey] justify-center items-center gap-2 inline-flex`}>Previous
+                            className={`q-form-survey-prev`}>Previous
                         </button>}
                         {page < criteria.length && <button
                             onClick={() => {
@@ -316,12 +312,12 @@ export const QuestForm = (props: questFormPropType) => {
                                     setNext(false)
                                 }
                             }}
-                            className={`w-[165px] h-14 px-11 py-6 rounded-lg border justify-center items-center gap-2 inline-flex !text-white !bg-black text-[24px]`}>
+                            className={`q-form-survey-next`}>
                             {criteria.length - 1 == page ? "Back To Home" : "Next"}
                         </button>}
-                        <div className='flex whitespace-nowrap gap-5 font-[300] items-center'>
+                        <div className='q-form-survey-enter'>
                             Press Enter
-                            <img className='w-8' src={enterPng} alt=''/></div>
+                            <img className='w-8' src={enterPng} alt='' /></div>
                     </div>
                 </div>)}
         </>)
@@ -344,16 +340,16 @@ export const QuestForm = (props: questFormPropType) => {
             }
         }
         return (<>
-            {!!subject && (<div style={{boxShadow: `0 0 5px ${shadowColor}`}} className={'absolute rounded-[10px] flex justify-center items-start gap-12 shadow-[0px_0px_0px_black] flex-col p-10 ' + anime}>
-                <h2 className={`font-bold text-xl text-[${color}]`}>{subject?.data.title}</h2>
-                <h4 className={`font-normal text-[${headingSize}]`}>{subject.data.description}</h4>
-                <div className='flex items-center gap-10'>
+            {!!subject && (<div style={{ boxShadow: `0 0 5px ${shadowColor}` }} className={'q-form-first ' + anime}>
+                <h2 className={`q-form-first-h2`} style={{ color }}>{subject?.data.title}</h2>
+                <h4 style={{ color, fontSize: headingSize }} className={`q-form-font-normal`}>{subject.data.description}</h4>
+                <div className='q-form-first-div'>
                     <button
                         onClick={() => setPage(c => c + 1)}
-                        className={`w-[165px] text-[24px] h-14 px-11 py-6 !text-white !bg-black rounded-lg border justify-center items-center gap-2 inline-flex`}>Next
+                        className={`q-form-first-next`}>Next
                     </button>
-                    <div className='flex whitespace-nowrap gap-5 font-[300] items-center'>Press Enter
-                        <img className='w-8' src={enterPng} alt=''/></div>
+                    <div className='q-form-first-enter'>Press Enter
+                        <img width={"35px"} src={enterPng} alt='' /></div>
                 </div>
             </div>)}
         </>)
@@ -363,16 +359,18 @@ export const QuestForm = (props: questFormPropType) => {
     useEffect(() => {
         setData()
     }, [])
+
     return (
-        <div className='questLabs flex flex-col h-[100vh]'>
+        <div className='q-form'>
             {progressBar &&
-                <div style={{width: `${String((page + 1) / (criteria.length - 1) * 100)}vw`}}
-                     className={`h-2 bg-blue-700 fixed`}></div>}
+                <div style={{ width: `${String((page + 1) / (criteria.length - 1) * 100)}vw` }}
+                    className={`q-form-progress`}></div>}
             <div style={{
                 backgroundColor: bgColor,
                 color: color,
-            }} className={`relative !w-[100%] h-[95vh] flex justify-${alignment} items-center px-10`}>
-                {(page < 0) ? <FirstPage/> : <Survey/>}
+                justifyContent: alignment
+            }} className={`q-form-div`}>
+                {(page < 0) ? <FirstPage /> : <Survey />}
             </div>
         </div>
     );
