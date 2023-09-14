@@ -199,7 +199,7 @@ export const QuestForm = (props: questFormPropType) => {
                                return prev;
                            })
                        }}
-                       className='h-[35px] text-black !py-2 !px-2 focus:border-none focus:outline-none'/>)
+                       className='h-[35px] text-black text-[24px] !py-2  focus:border-none focus:outline-none'/>)
     }
 
     const DateInput = ({setFill}: { setFill: React.Dispatch<React.SetStateAction<string>> }) => {
@@ -275,7 +275,7 @@ export const QuestForm = (props: questFormPropType) => {
 
         return (<>
             {!!criteria.length && (
-                <div style={{boxShadow: `0 0 5px ${shadowColor}`}} className={`${anime} w-[40%] radius rounded-[10px] flex absolute justify-center items-start gap-12 flex-col p-10`}>
+                <div style={{boxShadow: `0 0 5px ${shadowColor}`}} className={`${anime} w-fit radius rounded-[10px] flex absolute justify-center items-start gap-12 flex-col p-10`}>
                     <h4 className={`font-normal text-[${descSize}]`}>{subj?.title}</h4>
                     <div>
                         {(() => {
@@ -304,7 +304,7 @@ export const QuestForm = (props: questFormPropType) => {
                                 setAnime("scroll-animation-rev")
                                 setPage(c => c - 1)
                             }}
-                            className={`w-[165px] bg-white  text-[24px] h-14 px-11 py-6 rounded-lg border justify-center items-center gap-2 inline-flex`}>Previos
+                            className={`w-[165px] bg-white  text-[24px] h-14 px-11 py-6 rounded-lg border border-solid border-[grey] justify-center items-center gap-2 inline-flex`}>Previous
                         </button>}
                         {page < criteria.length && <button
                             onClick={() => {
@@ -316,7 +316,7 @@ export const QuestForm = (props: questFormPropType) => {
                                     setNext(false)
                                 }
                             }}
-                            className={`w-[165px] h-14 px-11 py-6 rounded-lg border justify-center items-center gap-2 inline-flex !text-white !bg-black`}>
+                            className={`w-[165px] h-14 px-11 py-6 rounded-lg border justify-center items-center gap-2 inline-flex !text-white !bg-black text-[24px]`}>
                             {criteria.length - 1 == page ? "Back To Home" : "Next"}
                         </button>}
                         <div className='flex whitespace-nowrap gap-5 font-[300] items-center'>
