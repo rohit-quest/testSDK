@@ -273,7 +273,7 @@ export const QuestForm = (props: questFormPropType) => {
             {!!criteria.length && (
                 <div style={{ boxShadow: `0 0 5px ${shadowColor}` }} className={`${anime} q-form-survey`}>
                     <h4 className={`q-form-survey-h4`} style={{ fontSize: descSize }}>{subj?.title}</h4>
-                    <div>
+                    <div className='q-form-survey-input-div'>
                         {(() => {
                             switch (subj.criteriaType) {
                                 case "":
