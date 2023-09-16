@@ -52,6 +52,7 @@
   background-position: center;
 }
 .container-q-badge .image-inside-hexagon {
+  transform: scale(0.9);
   position: absolute;
   top: 0;
   left: 0;
