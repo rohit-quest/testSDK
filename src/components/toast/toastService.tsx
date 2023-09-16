@@ -1,7 +1,7 @@
 import React, {useState, useEffect, JSX} from 'react';
 import {createRoot} from 'react-dom/client';
-import streak from "./assets/images/streak.png";
-import xButton from "./assets/images/xButton.png";
+import streak from "../../assets/images/streak.png";
+import xButton from "../../assets/images/xButton.png";
 
 interface ToastProps {
     message: string;

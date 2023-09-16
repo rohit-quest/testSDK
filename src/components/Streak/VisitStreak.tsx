@@ -1,6 +1,6 @@
 import './VisitStreak.css';
-import streakBg from '../assets/images/streakHexa.png';
-import streak from '../assets/images/streak.png';
+import streakBg from '../../assets/images/streakHexa.png';
+import streak from '../../assets/images/streak.png';
 
 
 export const VisitStreak = () => {
