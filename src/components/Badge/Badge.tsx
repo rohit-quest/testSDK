@@ -45,9 +45,7 @@ const Badge:React.FC<BadgeProps> = ({userId, token}) => {
         headers: headers,
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data.success) {
-          console.log(res.data);
             setData(res.data.data);
         }
       })
@@ -63,7 +61,7 @@ const Badge:React.FC<BadgeProps> = ({userId, token}) => {
 
   return (
     <div className="q-parent-container">
-      {data.length === 0 ? ( // Check if there's no data
+      {data.length === 0 ? (
         <div className="no-badge-q" style={{ textAlign: 'center' }}>
           No badges found
         </div>
