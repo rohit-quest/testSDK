@@ -223,7 +223,7 @@
     border-radius: 0.5rem;
     border: 1px solid grey;
     height: 3.5rem;
-    width: 165px;
+    width: fit-content;
     font-size: 24px;
 }
 
@@ -273,7 +273,7 @@
     background: black;
     color: white;
     font-size: 24px;
-    width: 165px;
+    width: fit-content;
     font-size: 24px;
 }
 

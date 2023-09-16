@@ -306,6 +306,9 @@ export const QuestForm = (props: questFormPropType) => {
                             onClick={() => {
                                 if (subj.isOptional || fillVal) {
                                     setAnime("scroll-animation")
+                                    if(page==criteria.length-1)
+                                        setPage(-1);
+                                    else
                                     setPage(c => c + 1)
                                     setFill("");
                                 } else {
