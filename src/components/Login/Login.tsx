@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useContext } from "react";
+import { useContext } from 'react';
 import QuestContext from '../QuestWrapper';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
@@ -96,9 +96,9 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   }, [entityId, btnColor, backgroundColor, email, google, btnTextColor]);
 
   return (
-    <div className='questLabs' >
+    <div className="questLabs">
       <ToastContainer />
-      <div className="flex items-center justify-center h-screen">
+      <div className="q-parent-container">
         <div
           style={{
             ...(gradient
@@ -115,21 +115,35 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
             {!otpScreen && (
               <>
                 <h1
-                  className="font-bold text-4xl text-center"
-                  style={{ color: textColor, fontFamily }}
+                  style={{
+                    fontWeight: 'bold',
+                    fontSize: '2rem',
+                    textAlign: 'center',
+                    color: textColor,
+                    fontFamily: fontFamily,
+                  }}
                 >
                   Welcome Back
                 </h1>
                 <h4
-                  className="font-normal mb-4 text-center"
-                  style={{ color: textColor, fontFamily }}
+                  style={{
+                    fontWeight: 'normal',
+                    marginBottom: '1rem',
+                    textAlign: 'center',
+                    color: textColor,
+                    fontFamily: fontFamily,
+                  }}
                 >
                   Welcome Back, Please enter your details
                 </h4>
               </>
             )}
             {isEmail && (
-              <div className="w-full">
+              <div
+                style={{
+                  width: '100%',
+                }}
+              >
                 <EmailLogin
                   {...{
                     textColor,
@@ -145,15 +159,40 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   }}
                 />
                 {!otpScreen && isGoogle && (
-                  <div className="mt-5 flex items-center justify-between">
-                    <div className="flex-grow border-2 border-solid border-gray-700"></div>
+                  <div
+                    style={{
+                      marginTop: '1.25rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <div
+                      style={{
+                        flexGrow: 1,
+                        borderWidth: '1px',
+                        borderStyle: 'solid',
+                        borderColor: 'gray',
+                      }}
+                    ></div>
                     <span
-                      style={{ color: textColor, fontFamily }}
-                      className="whitespace-no-wrap px-4"
+                      style={{
+                        color: textColor,
+                        fontFamily,
+                        whiteSpace: 'nowrap',
+                        padding: '0.5rem',
+                      }}
                     >
                       Or Continue With
                     </span>
-                    <div className="flex-grow border-2 border-solid border-gray-700"></div>
+                    <div
+                      style={{
+                        flexGrow: 1,
+                        borderWidth: '1px',
+                        borderStyle: 'solid',
+                        borderColor: 'gray',
+                      }}
+                    ></div>
                   </div>
                 )}
                 {!otpScreen && isGoogle && (
@@ -189,8 +228,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
               />
             )}
             <p
-              className="mt-3 text-sm text-center"
-              style={{ color: textColor, fontFamily }}
+              style={{ marginTop: '0.75rem', fontSize: '0.875rem', textAlign: 'center', color: textColor, fontFamily }}
             >
               ** Powered by Quest Labs
             </p>

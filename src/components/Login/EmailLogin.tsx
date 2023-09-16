@@ -80,24 +80,22 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
       {showLoader && <Loader />}
       {!sendOTP && (
         <div className='questLabs'>
-          <div style={{ marginTop: '8%' }} className="mt-5">
-            <h4 style={{ color: textColor, fontFamily }} className="mb-3 text-left text-18 font-normal">
+          <div style={{ marginTop: '8%' }}>
+            <h4 style={{ color: textColor, fontFamily }} className="q-h4">
               Email
             </h4>
             <input
-              style={{ paddingLeft: '10px' }}
+              style={{ paddingLeft: '10px', height:"50px" }}
               type="text"
               placeholder="Enter your email id"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               onKeyUp={handlesubmit}
-              className={`w-full h-14 pl-10 pr-14 rounded-lg border ${
-                isValidEmail ? 'border-gray-300' : 'border-red-500'
-              } focus:ring ${isValidEmail ? 'focus:ring-blue-300' : 'focus:ring-red-300'}`}
+              className="q-input-box"
             />
             {!isValidEmail && (
-              <p className="mt-2 flex items-center text-red-500">
-                <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2">
+              <p style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', color: '#f00' }}>
+                <span className="q-err">
                   !
                 </span>
                 Please enter a valid email id
@@ -106,7 +104,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
             <div
               style={{ backgroundColor: btnColor, fontFamily, color: btnTextColor }}
               onClick={sendOTPfunction}
-              className={`mt-5 continue-btn h-14 pl-4 pr-4 rounded-lg border px-3 bg-black text-white focus:ring focus:ring-blue-300 flex items-center justify-center`}
+              className="q-btn-continue"
             >
               Continue
             </div>
