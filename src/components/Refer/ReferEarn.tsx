@@ -35,7 +35,6 @@ export const ReferShare = ({isOpen = true, onClose, questId = "", userId = "", t
                     <p className='q-referShare-content-msg'>Share with your community</p>
                     <div className='q-referShare-content-social'>
                         <img onClick={()=>shareOnPlatform(shareCode,'twitter')} src={twitterPng} className='q-referShare-content-social-img' alt=""/>
-                        <img onClick={()=>shareOnPlatform(shareCode,'discord')} src={discordPng} className='q-referShare-content-social-img' alt=""/>
                         <img onClick={()=>shareOnPlatform(shareCode,'telegram')} src={telegramPng} className='q-referShare-content-social-img' alt=""/>
                     </div>
                 </div>

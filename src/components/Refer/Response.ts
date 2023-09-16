@@ -3,20 +3,9 @@ import config from "../../config";
 
 export type referProp = { isOpen: boolean, onClose: Function, questId: string, userId: string, token: string }
 
-const generateDiscordOAuth2Link = () => {
-    const redirectUri = 'http://localhost:5173/';
-    const scopes = ['bot', 'applications.commands'];
 
-    const discordOAuth2Link = `https://discord.com/api/oauth2/authorize?client_id=${config.DISCORD_CLIENT_ID}&scope=${scopes.join('%20')}&permissions=0&redirect_uri=${encodeURIComponent(redirectUri)}`;
-
-    return discordOAuth2Link;
-};
-
-// Example usage:
-const discordLink = generateDiscordOAuth2Link();
-export const shareOnPlatform = (text: string, platform: "discord"|"twitter"|"telegram"): void => {
+export const shareOnPlatform = (text: string, platform: "twitter"|"telegram"): void => {
     const platforms = {
-        discord: generateDiscordOAuth2Link(),
         twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,
         telegram: `https://t.me/share/url?url=${encodeURIComponent(text)}`,
     };
