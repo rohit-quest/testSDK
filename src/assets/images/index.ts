@@ -6,6 +6,5 @@ import blackStar from './blackStar.svg';
 import tick from './tick.svg';
 import like from './like.svg';
 import disLike from './disLike.svg';
-import creditCHeck from './creditCheck.png';
 
-export { googleImg, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like,creditCHeck };
+export { googleImg, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like };
