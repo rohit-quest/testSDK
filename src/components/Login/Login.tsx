@@ -7,6 +7,7 @@ import config from '../../config';
 import EmailLogin from './EmailLogin';
 import GoogleLogin from './GoogleLogin';
 import { ToastContainer } from 'react-toastify';
+import './Login.css';
 export interface QuestLoginProps {
   googleClientId: string;
   redirectUri: string;
