@@ -4,6 +4,7 @@ import 'react-tooltip/dist/react-tooltip.css';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import config from '../../config';
 import QuestContext from '../QuestWrapper';
+import './Badge.css';
 
 interface BadgeProps {
   userId: string;
