@@ -132,43 +132,46 @@ function OtpVerification({
       <div style={{ padding: '3%' }} className="embeded-otp">
         {showLoader && <Loader />}
         <h1
-          style={{ color: textColor, fontFamily }}
-          className="font-bold text-4xl text-center"
+          style={{
+            fontWeight: 'bold',
+            fontSize: '2rem',
+            textAlign: 'center',
+            color: textColor,
+            fontFamily: fontFamily,
+          }}
         >
           Please Enter OTP
         </h1>
         <div style={{ marginTop: '5%' }}>
           {sec === 0 ? (
             <div
-              style={{ color: textColor, fontFamily, fontSize: '18px' }}
-              className="text-center"
+              style={{ color: textColor,textAlign:"center", fontFamily, fontSize: '18px' }}
               onClick={sendOTPfunction}
             >
               we have sent you one time password to your email{' '}
-              <span className="font-bold">Resend</span>
+              <span style={{fontWeight:"bold"}}>Resend</span>
             </div>
           ) : (
             <div
-              style={{ color: textColor, fontFamily, fontSize: '18px' }}
-              className="text-center"
+              style={{ color: textColor,textAlign:"center", fontFamily, fontSize: '18px' }}
             >
               we have sent you one time password to your email{' '}
-              <span className="font-bold">
+              <span style={{fontWeight:"bold"}}>
                 {modifyTime(Math.floor(sec / 60))}:{modifyTime(sec % 60)}
               </span>
             </div>
           )}
-          <div style={{ marginTop: '10%' }} className="mt-5">
+          <div style={{ marginTop: '10%' }}>
             <OTPInput
               onChange={handleChange}
               value={OTP}
-              inputStyle="inputStyle"
+              inputStyle="q-inputStyle"
               numInputs={6}
               renderInput={(props) => <input {...props} />}
             />
             {OTP.length < 6 && OTP.length > 0 && (
-              <p className="m-2 mt-2 flex items-center text-red-500">
-                <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center mr-2">
+              <p style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', color: '#f00' }}>
+                <span className="q-err">
                   !
                 </span>
                 Please enter a valid OTP
@@ -183,7 +186,7 @@ function OtpVerification({
             marginTop: '15%',
             color: btnTextColor,
           }}
-          className={`text-24 continue-btn h-14 pl-4 pr-4 rounded-lg border px-3 bg-black text-white focus:ring focus:ring-blue-300 flex items-center justify-center`}
+          className="q-btn-continue"
           onClick={verifyOTPfunction}
         >
           Verify OTP
