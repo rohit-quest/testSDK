@@ -46,7 +46,9 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
 
   const sendOTPfunction = () => {
     if (!isValidEmail || email.length === 0) {
-      toast.error('Invalid email address' + '\n' + 'Please check your email address');
+      toast.error(
+        'Invalid email address' + '\n' + 'Please check your email address'
+      );
       return;
     }
     setShowLoader(true);
@@ -79,13 +81,13 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
     <div>
       {showLoader && <Loader />}
       {!sendOTP && (
-        <div className='questLabs'>
+        <div className="questLabs">
           <div style={{ marginTop: '8%' }}>
             <h4 style={{ color: textColor, fontFamily }} className="q-h4">
               Email
             </h4>
             <input
-              style={{ paddingLeft: '10px', height:"50px" }}
+              style={{ paddingLeft: '10px', height: '50px' }}
               type="text"
               placeholder="Enter your email id"
               value={email}
@@ -94,15 +96,17 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
               className="q-input-box"
             />
             {!isValidEmail && (
-              <p style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', color: '#f00' }}>
-                <span className="q-err">
-                  !
-                </span>
+              <p className="q-login-p">
+                <span className="q-err">!</span>
                 Please enter a valid email id
               </p>
             )}
             <div
-              style={{ backgroundColor: btnColor, fontFamily, color: btnTextColor }}
+              style={{
+                backgroundColor: btnColor,
+                fontFamily,
+                color: btnTextColor,
+              }}
               onClick={sendOTPfunction}
               className="q-btn-continue"
             >

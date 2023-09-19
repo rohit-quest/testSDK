@@ -124,12 +124,3 @@ body {
   -webkit-text-decoration: underline dotted;
   text-decoration: underline dotted;
 }
-.questLabs h1,
-.questLabs h2,
-.questLabs h3,
-.questLabs h4,
-.questLabs h5,
-.questLabs h6 {
-  font-size: inherit;
-  font-weight: inherit;
-}
