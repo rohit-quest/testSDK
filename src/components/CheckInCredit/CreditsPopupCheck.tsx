@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import ReactDOM from "react-dom";
-import creditBanner from "../../assets/images/creditBanner.png";
 import cross from "../../assets/images/cross.png";
-import "./credit.css";
+import "./creditCheck.css";
+import {creditCHeck} from "../../assets/images";
 
 interface PopupProps {
     isOpen: boolean;
@@ -13,9 +13,11 @@ interface PopupProps {
     continueButton: boolean;
     buttonText: string;
     buttonFunction: () => void;
+    color: string;
+    backgroundColor: string
 }
 
-const CreditsPopup: FC<PopupProps> = ({
+const CreditsPopupCheck: FC<PopupProps> = ({
     isOpen,
     onClose,
     headingText,
@@ -24,28 +26,33 @@ const CreditsPopup: FC<PopupProps> = ({
     continueButton,
     buttonText,
     buttonFunction,
+    color ='black',
+    backgroundColor='white'
 }) => {
-    if (!isOpen) return null;
 
+    const style = {backgroundColor,color}
+
+    if (!isOpen) return (<></>);
     return ReactDOM.createPortal(
-        <div className="q-crd-home">
+        <div className="q-credit-home" >
             <div className="popup-overlay">
-                <div className="q-crdp-main">
-                    <div className="q-crdp-child" style={{boxShadow: "rgba(0, 0, 0, 0.50) 0px 0px 6px 0px"}}>
-                        <img src={creditBanner} className="q-crdp-banner" />
+                <div className="q-creditp-main">
+                    <div className="q-creditp-child" style={{boxShadow: "rgba(0, 0, 0, 0.50) 0px 0px 6px 0px"}}>
+                        <img src={creditCHeck} className="q-creditp-banner" />
                         {!!isCloseble && (
                             <img
                                 src={cross}
                                 alt=""
                                 onClick={() => onClose()}
-                                className="q-crdp-img"
+                                className="q-creditp-img"
                             />
                         )}
-                        <p className="q-crdp-p1">{headingText}</p>
-                        <p className="q-crdp-p2">{descText}</p>
+                        <p className="q-creditp-p1">{headingText}</p>
+                        <p className="q-creditp-p2">{descText}</p>
                         {!!continueButton && (
                             <button
-                                className="q-crdp-btn"
+                                style={style}
+                                className="q-creditp-btn"
                                 onClick={() => buttonFunction()}
                             >
                                 {buttonText}
@@ -59,4 +66,4 @@ const CreditsPopup: FC<PopupProps> = ({
     );
 };
 
-export default CreditsPopup;
+export default CreditsPopupCheck;

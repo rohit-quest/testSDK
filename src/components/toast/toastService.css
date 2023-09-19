@@ -1,0 +1,39 @@
+.q-toast{
+    position: fixed;
+    top: 1rem;
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+    transition-duration: 500ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    right: 4%;
+}
+
+.q-toast-msg{
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    width: 270px;
+    height: 43px;
+}
+
+.q-toast-msg-div{
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 500;
+    color: #000000;
+}
+
+.q-toast-img{
+    width: 15px;
+    height: 15px;
+}
+
+.q-toast-x{
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
