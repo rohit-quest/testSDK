@@ -3,6 +3,8 @@ import config from "../../config";
 import axios from "axios";
 import { useContext } from "react";
 import QuestContext from '../QuestWrapper';
+import "./onboarding.css"
+
 interface QuestLoginProps {
     design?: any;
     color?: string;
@@ -23,6 +25,7 @@ interface QuestLoginProps {
     headingSize?: string;
     descSize?: string;
     inputFieldType?: object;
+    defaultFont?: boolean;
     userId?: string;
     token?: string;
     questId?: string;
@@ -63,6 +66,7 @@ function OnBoarding(props: QuestLoginProps) {
         customComponents,
         customComponentPositions,
         inputFieldType,
+        defaultFont,
         userId,
         token,
         questId,
@@ -88,7 +92,7 @@ function OnBoarding(props: QuestLoginProps) {
     const [currentPage, setCurrentPage] = useState<number>(0);
     // const [answer, setAnswer] = useState<any>({});
     const [btnFlag, setButtonFlag] = useState<boolean>(false);
-    const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
+    const { apiKey, apiSecret, entityId, featureFlags } = useContext(QuestContext.Context);
 
     useEffect(() => {
         if (entityId) {
@@ -197,16 +201,16 @@ function OnBoarding(props: QuestLoginProps) {
         }
     };
 
-    const progressBar = () => {
-        return (
-            <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                <div
-                    className="bg-blue-600 h-2.5 rounded-full"
-                    style={{ width: "45%" }}
-                ></div>
-            </div>
-        );
-    };
+    // const progressBar = () => {
+    //     return (
+    //         <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+    //             <div
+    //                 className="bg-blue-600 h-2.5 rounded-full"
+    //                 style={{ width: "45%" }}
+    //             ></div>
+    //         </div>
+    //     );
+    // };
 
     const normalInput = (
         question: string,
@@ -216,15 +220,15 @@ function OnBoarding(props: QuestLoginProps) {
         placeholder: string,
     ) => {
         return (
-            <div className="py-3" key={criteriaId}>
+            <div style={{paddingTop: "12px", paddingBottom: "12px"}} key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div className="pb-3">
+                    <div style={{paddingBottom: "12px"}}>
                         {customComponents}
                     </div>
                 }
                 <label
-                    className="block mb-1 font-medium"
+                    className="q-onb-lebels"
                     htmlFor="normalInput"
                     style={{ color: onboardingData?.color }}
                 >
@@ -236,8 +240,8 @@ function OnBoarding(props: QuestLoginProps) {
                             id="normalInput"
                             name="normalInput"
                             placeholder={placeholder}
-                            className="bg-gray-100 border-none outline-none text-sm rounded h-32 focus:ring-blue-500 focus:ring-1 w-full p-3"
-                            style={{ backgroundColor: onboardingData?.inputBgColor, border: onboardingData?.inputBorder }}
+                            className="q-onb-input"
+                            style={{ height: "120px", backgroundColor: onboardingData?.inputBgColor, border: onboardingData?.inputBorder }}
                             onChange={(e) => handleUpdate(e, criteriaId, "")}
                             value={answer[criteriaId]}
                         />
@@ -246,7 +250,7 @@ function OnBoarding(props: QuestLoginProps) {
                             type="text"
                             id="normalInput"
                             name="normalInput"
-                            className="bg-gray-100 border-none outline-none text-sm rounded focus:ring-blue-500 focus:ring-1 w-full p-3"
+                            className="q-onb-input"
                             style={{ backgroundColor: onboardingData?.inputBgColor, border: onboardingData?.inputBorder }}
                             onChange={(e) => handleUpdate(e, criteriaId, "")}
                             value={answer[criteriaId]}
@@ -264,15 +268,15 @@ function OnBoarding(props: QuestLoginProps) {
         index: number
     ) => {
         return (
-            <div className="py-3" key={criteriaId}>
+            <div style={{paddingTop: "12px", paddingBottom: "12px"}} key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div className="pb-3">
+                    <div style={{paddingBottom: "12px"}}>
                         {customComponents}
                     </div>
                 }
                 <label
-                    className="block mb-1 font-medium"
+                    className="q-onb-lebels"
                     htmlFor="dateInput"
                     style={{ color: onboardingData?.color }}
                 >
@@ -283,7 +287,7 @@ function OnBoarding(props: QuestLoginProps) {
                     id="dateInput"
                     name="dateInput"
                     value={answer[criteriaId]}
-                    className="bg-gray-100 border-none outline-none text-sm rounded focus:ring-blue-500 focus:ring-1 w-full p-3"
+                    className="q-onb-input"
                     style={{ backgroundColor: onboardingData?.inputBgColor, border: onboardingData?.inputBorder }}
                     onChange={(e) => handleUpdate(e, criteriaId, "")}
                 />
@@ -299,16 +303,16 @@ function OnBoarding(props: QuestLoginProps) {
         index: number
     ) => {
         return (
-            <div className="py-3" key={criteriaId}>
+            <div style={{paddingTop: "12px", paddingBottom: "12px"}} key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div className="pb-3">
+                    <div style={{paddingBottom: "12px"}}>
                         {customComponents}
                     </div>
                 }
                 <label
                     htmlFor={criteriaId}
-                    className="block mb-1 font-medium"
+                    className="q-onb-lebels"
                     style={{ color: onboardingData?.color }}
                 >
                     {question} {required && "*"}
@@ -317,7 +321,8 @@ function OnBoarding(props: QuestLoginProps) {
                     id={criteriaId}
                     value={answer[criteriaId]}
                     onChange={(e) => handleUpdate(e, criteriaId, "")}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-none focus:ring-1 block w-full p-3"
+                    className="q-onb-singleChoiceOne"
+                    style={{ backgroundColor: onboardingData?.inputBgColor, border: onboardingData?.inputBorder }}
                 >
                     <option value="">Choose a option</option>
                     {options.map((opt, id) => (
@@ -338,22 +343,22 @@ function OnBoarding(props: QuestLoginProps) {
         index: number
     ) => {
         return (
-            <div className="pt-3" key={criteriaId}>
+            <div style={{paddingTop: "12px"}} key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div className="pb-3">
+                    <div style={{paddingBottom: "12px"}}>
                         {customComponents}
                     </div>
                 }
                 <p
-                    className="block font-medium mb-3"
+                    className="q-onb-singleChoiceOne-lebel"
                     style={{ color: onboardingData?.color }}
                 >
                     {question} {required && "*"}
                 </p>
-                <div className="flex gap-x-12 gap-y-2 flex-wrap">
+                <div className="q-onb-singleChoiceOne-optDiv">
                     {options.map((option: string, id: number) => (
-                        <div className="flex items-center mb-3" key={id}>
+                        <div className="q-onb-singleChoiceOne-chDiv" style={{paddingBottom: "12px"}} key={id}>
                             <input
                                 id={`sct${id}`}
                                 type="radio"
@@ -363,11 +368,11 @@ function OnBoarding(props: QuestLoginProps) {
                                     handleUpdate(e, criteriaId, "radio")
                                 }
                                 name="default-radio"
-                                className="h-4 w-4 accent-black  bg-grey-700 text-red-500 rounded cursor-pointer"
+                                className="q-onb-singleChoiceOne-inp"
                             />
                             <label
                                 htmlFor={`sct${id}`}
-                                className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-500"
+                                className="q-onb-singleChoiceOne-lebel3"
                             >
                                 {option}
                             </label>
@@ -386,22 +391,22 @@ function OnBoarding(props: QuestLoginProps) {
         index: number
     ) => {
         return (
-            <div className="pt-3" key={criteriaId}>
+            <div style={{paddingTop: "12px"}} key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div className="pb-3">
+                    <div style={{paddingBottom: "12px"}}>
                         {customComponents}
                     </div>
                 }
                 <p
-                    className="block font-medium mb-3"
+                    className="q-onb-singleChoiceOne-lebel"
                     style={{ color: onboardingData?.color }}
                 >
                     {question} {required && "*"}
                 </p>
-                <div className="flex gap-x-12 gap-y-2 flex-wrap mb-3">
+                <div className="q-onb-singleChoiceOne-optDiv" style={{paddingBottom: "12px"}}>
                     {options.map((option: string, id: number) => (
-                        <div className="flex items-center" key={id}>
+                        <div className="q-onb-singleChoiceOne-chDiv" key={id}>
                             <input
                                 id={`mct${id}`}
                                 type="checkbox"
@@ -413,11 +418,11 @@ function OnBoarding(props: QuestLoginProps) {
                                 onChange={(e) =>
                                     handleUpdate(e, criteriaId, "check")
                                 }
-                                className="h-4 w-4 accent-black  bg-grey-700 text-red-500 rounded cursor-pointer"
+                                className="q-onb-singleChoiceOne-inp"
                             />
                             <label
                                 htmlFor={`mct${id}`}
-                                className="ml-2 text-sm font-medium text-black"
+                                className="q-onb-singleChoiceOne-label"
                             >
                                 {option}
                             </label>
@@ -436,22 +441,22 @@ function OnBoarding(props: QuestLoginProps) {
         index: number
     ) => {
         return (
-            <div className="py-3" key={criteriaId}>
+            <div style={{paddingTop: "12px", paddingBottom: "12px"}} key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div className="pb-3">
+                    <div style={{paddingBottom: "12px"}}>
                         {customComponents}
                     </div>
                 }
                 <p
-                    className="block mb-1 font-medium"
+                    className="q-onb-lebels"
                     style={{ color: onboardingData?.color }}
                 >
                     {question} {required && "*"}
                 </p>
-                <ul className="flex flex-wrap w-full gap-3">
+                <ul className="q-onb-miltiChoiceOne-ul" style={{paddingLeft: "0"}}>
                     {options.map((option: string, id: number) => (
-                        <li key={id}>
+                        <li key={id} style={{listStyleType: "none"}}>
                             <input
                                 type="checkbox"
                                 id={`mct${id}`}
@@ -460,17 +465,18 @@ function OnBoarding(props: QuestLoginProps) {
                                     !!answer[criteriaId] &&
                                     answer[criteriaId].includes(option)
                                 }
-                                className="hidden peer"
+                                style={{display: "none"}}
+                                className="q-onb-multiChoiceOne-checkbox"
                                 onChange={(e) =>
                                     handleUpdate(e, criteriaId, "check")
                                 }
                             />
                             <label
                                 htmlFor={`mct${id}`}
-                                className="inline-flex items-center justify-between px-5 py-1 text-gray-800 bg-white border-2 border-gray-800 rounded-2xl cursor-pointer peer-checked:border-gray-800 peer-checked:bg-gray-800 peer-checked:font-bold peer-checked:text-white hover:text-gray-600 hover:bg-gray-50"
+                                className="q-onb-miltiChoiceOne-lebel"
                             >
-                                <div className="block">
-                                    <div className="text-sm">{option}</div>
+                                <div style={{display: "block"}}>
+                                    <div style={{fontSize: "14px"}}>{option}</div>
                                 </div>
                             </label>
                         </li>
@@ -517,41 +523,44 @@ function OnBoarding(props: QuestLoginProps) {
         });
         getAnswers(ansArr);
     }
+    
+    if (featureFlags[config.FLAG_CONSTRAINTS.OnboardingFlag]?.isEnabled == false) {
+        return (<div></div>)
+    }
 
     return (
-        <div className="questLabs">
+        <div className="q-onb-home" style={{ background: onboardingData?.bgColor, height: onboardingData?.screenHeight ? onboardingData?.screenHeight : "fit-content", fontFamily: defaultFont == false ? "" : "'Hanken Grotesk', sans-serif" }}>
             <div
-                style={{ background: onboardingData?.bgColor, height: onboardingData?.screenHeight }}
-                className="h-fit"
+               className="q-onb-ch"
             >
                 {formdata.length > 0 &&
                     (typeof heading == "object" && !!heading.name ? (
                         <div>
-                            <h3 className="w-100 text-center pt-8 text-4xl font-bold" style={{ fontSize: onboardingData?.headingSize }}>
+                            <h3 className="q-onb-main-h3" style={{ fontSize: onboardingData?.headingSize }}>
                                 {heading?.name}
                             </h3>
-                            <h4 className="w-100 text-center" style={{ fontSize: onboardingData?.descSize }}>{heading?.desc}</h4>
+                            <h4 className="q-onb-main-h4" style={{ fontSize: onboardingData?.descSize }}>{heading?.desc}</h4>
                         </div>
                     ) : !!heading[currentPage] ? (
                         <div>
-                            <h3 className="w-100 text-center pt-8 text-4xl font-bold" style={{ fontSize: onboardingData?.headingSize }}>
+                            <h3 className="q-onb-main-h3" style={{ fontSize: onboardingData?.headingSize }}>
                                 {heading[currentPage]?.name}
                             </h3>
-                            <h4 className="w-100 text-center" style={{ fontSize: onboardingData?.descSize }}>
+                            <h4 className="q-onb-main-h4" style={{ fontSize: onboardingData?.descSize }}>
                                 {heading[currentPage]?.desc}
                             </h4>
                         </div>
                     ) : (
                         <div>
-                            <h3 className="w-100 text-center pt-8 text-4xl font-bold" style={{ fontSize: onboardingData?.headingSize }}>
+                            <h3 className="q-onb-main-h3" style={{ fontSize: onboardingData?.headingSize }}>
                                 {heading[0]?.name}
                             </h3>
-                            <h4 className="w-100 text-center" style={{ fontSize: onboardingData?.descSize }}>
+                            <h4 className="q-onb-main-h4" style={{ fontSize: onboardingData?.descSize }}>
                                 {heading[0]?.desc}
                             </h4>
                         </div>
                     ))}
-                <div className="p-8 max-w-screen-md m-auto">
+                <div className="q-onb-main-first">
                     {onboardingData?.design.length > 0 && checkDesignCriteria()
                         ? onboardingData?.design[currentPage].map((num: number, index: number) =>
                         (formdata[num - 1].type == "USER_INPUT_TEXT"
@@ -658,9 +667,9 @@ function OnBoarding(props: QuestLoginProps) {
                     {formdata.length > 0 &&
                         (onboardingData?.design.length > 0 &&
                             checkDesignCriteria() ? (
-                            <div className="flex justify-between pt-3">
+                            <div className="q-onb-main-criteria">
                                 <button
-                                    className="text-black border-2 border-gray-800 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-4 py-2 mr-2 mb-2 min-w-[120px] md:px-10 md:min-w-[150px]"
+                                    className="q-onb-main-btn"
                                     onClick={() =>
                                         currentPage > 0 &&
                                         setCurrentPage(currentPage - 1)
@@ -678,7 +687,7 @@ function OnBoarding(props: QuestLoginProps) {
                                     Previous
                                 </button>
                                 <button
-                                    className="text-white bg-black hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg px-4 py-2 mb-2 min-w-[120px] md:px-10 md:min-w-[150px]"
+                                    className="q-onb-main-btn2"
                                     onClick={() =>
                                         currentPage !=
                                             onboardingData.design.length - 1
@@ -696,9 +705,9 @@ function OnBoarding(props: QuestLoginProps) {
                                 </button>
                             </div>
                         ) : (
-                            <div className="pt-3">
+                            <div style={{paddingTop: "12px"}}>
                                 <button
-                                    className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-xl px-5 py-2.5 mr-2 mb-2 w-full"
+                                    className="q-onb-main-btn3"
                                     onClick={returnAnswers}
                                     disabled={!btnFlag}
                                     style={{

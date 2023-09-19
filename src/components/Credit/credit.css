@@ -1,0 +1,123 @@
+*{
+    margin: 0;
+}
+.q-crd-home{
+    font-family: 'Hanken Grotesk', sans-serif;
+    margin: 0;
+    line-height: inherit;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: #e5e7eb;
+}
+
+.q-crd-home button {
+    cursor: pointer;
+}
+
+/* CREDIT BUTTON */
+.q-crdb-div {
+    display: flex; 
+    position: relative; 
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem; 
+    padding-left: 3.5rem;
+    padding-right: 3.5rem; 
+    gap: 3rem; 
+    align-items: center; 
+    border-radius: 0.75rem; 
+    width: fit-content; 
+    background-color: #ffffff; 
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); 
+}
+.q-crdb-p {
+    font-size: 1.125rem;
+    line-height: 1.75rem; 
+    font-weight: 700; 
+    color: #374151; 
+}
+.q-crdb-btn {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem; 
+    padding-left: 1.25rem;
+    padding-right: 1.25rem; 
+    border-radius: 9999px; 
+    font-size: 1rem;
+    line-height: 1.5rem; 
+    font-weight: 500;
+    color: #ffffff; 
+    background-color: #374151; 
+    border: 0px;
+}
+.q-crdb-btn:hover {
+    background-color: #111827; 
+}
+
+
+/* CREDIT POPUP */
+.q-crdp-main {
+    display: flex; 
+    position: fixed; 
+    justify-content: center; 
+    align-items: center; 
+    width: 100%; 
+    height: 100%; 
+    backdrop-filter: blur(4px);
+    z-index: 10;
+}
+.q-crdp-child {
+    position: relative; 
+    padding: 1.5rem; 
+    border-radius: 0.75rem; 
+    width: 24rem; 
+    background-color: #ffffff; 
+    /* box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);  */
+}
+.q-crdp-banner {
+    width: 100%;
+}
+.q-crdp-img {
+    position: absolute; 
+    top: 1.5rem; 
+    right: 1.5rem; 
+    width: 2rem; 
+    cursor: pointer; 
+}
+.q-crdp-p1 {
+    margin-top: 0.75rem; 
+    font-size: 1.125rem;
+    line-height: 1.75rem; 
+    font-weight: 700; 
+    text-align: center; 
+}
+.q-crdp-p2 {
+    margin-top: 0.75rem; 
+    font-size: 1rem;
+    line-height: 1.5rem; 
+    text-align: center; 
+}
+.q-crdp-btn {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem; 
+    margin-top: 0.75rem; 
+    border-radius: 0.5rem; 
+    border-width: 2px; 
+    border-color: #1F2937; 
+    width: 100%; 
+    font-size: 1.125rem;
+    line-height: 1.75rem; 
+    font-weight: 500; 
+    color: #000000; 
+    background-color: transparent;
+}
+.q-crdp-btn:hover {
+    background-color: #F3F4F6; 
+}
+
