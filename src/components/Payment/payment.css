@@ -1,0 +1,312 @@
+* {
+    margin: 0;
+}
+.q-pynt-home {
+    font-family: "Hanken Grotesk", sans-serif;
+    margin: 0;
+    line-height: inherit;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: #e5e7eb;
+}
+.q-pynt-home button {
+    cursor: pointer;
+}
+
+.q-pynt-main {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+}
+.q-pynt-main-div {
+    display: grid;
+    gap: 2rem;
+    width: 100%;
+}
+.q-pynt-main-div-tier {
+    padding: 2rem;
+    border-radius: 0.5rem;
+    width: calc(100% - 4rem);
+}
+.q-pynt-main-div-p {
+    padding-right: 2rem;
+    padding-left: 2rem;
+    width: calc(100% - 4rem);
+    font-weight: 700;
+    text-align: center;
+    font-size: 30px;
+}
+.q-pynt-main-div-p2 {
+    font-size: 1.125rem;
+    text-align: center;
+    color: #545454;
+}
+.q-pynt-main-div-div {
+    display: flex;
+    margin-bottom: 1rem;
+    margin-top: 1.5rem;
+    gap: 0.25rem;
+    align-items: flex-end;
+}
+.q-pynt-main-div-div-p {
+    font-size: 2.25rem;
+    font-weight: 700;
+}
+.q-pynt-main-div-div-p2 {
+    font-size: 1.125rem;
+    color: #4b5563;
+    padding-bottom: 7px;
+}
+.q-pynt-main-div-div-btn {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-radius: 0.25rem;
+    border-width: 2px;
+    border-color: #1f2937;
+    width: 100%;
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #000000;
+    background-color: transparent;
+}
+.q-pynt-main-div-div-btn:hover {
+    background-color: #f3f4f6;
+}
+.q-pynt-main-div-div-btn:focus {
+    outline: none;
+}
+.q-pynt-main-div-div-ch {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px dashed #9ca3af;
+}
+.q-pynt-main-div-div-p3 {
+    padding-bottom: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    text-align: center;
+    color: #9ca3af;
+}
+.q-pynt-main-div-div-chDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.q-pynt-main-div-div-chDiv-ben {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+.q-pynt-main-div-div-chDiv-ben2 {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+.q-pyntg-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+.q-pyntg-ch {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
+    border-radius: 0.5rem;
+    color: #4b5563;
+}
+.q-pyntg-ch-div {
+    padding-bottom: 2.5rem;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 700;
+}
+.q-pyntg-ch-div-inp {
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    border-style: none;
+    outline-style: none;
+    width: calc(100% - 1.5rem);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    background-color: #f3f4f6;
+}
+.q-pyntg-ch-div-inp:hover {
+    box-shadow: var(--tw-ring-inset) 0 0 0
+        calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+    --ring-color: #3b82f6;
+}
+.q-pyntg-ch-div2 {
+    display: grid;
+    margin-bottom: 1.25rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+}
+.q-pyntg-ch-div3 {
+    display: grid;
+    margin-bottom: 2.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+}
+.q-pyntg-ch-div-btn {
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #1f2937;
+}
+.q-pyntg-ch-div-btn:hover {
+    background-color: #111827;
+}
+.q-pyntg-rg {
+    width: 100%;
+}
+.q-pyntg-rg-div {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
+    border-radius: 0.5rem;
+}
+.q-pyntg-rg-div-p {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 700;
+    text-align: left;
+}
+.q-pyntg-rg-div-p2 {
+    margin-top: 0.75rem;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    text-align: left;
+    color: #374151;
+}
+.q-pyntg-rg-div-p3 {
+    display: flex;
+    margin-bottom: 1.25rem;
+    margin-top: 1.5rem;
+    gap: 0.25rem;
+    align-items: flex-end;
+}
+.q-pyntg-rg-div-p3-p {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    font-weight: 700;
+}
+.q-pyntg-rg-div-p4 {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    color: #4b5563;
+}
+.q-pyntg-rg-div-br {
+    margin-bottom: 1.5rem;
+    border: 1px dashed #9ca3af;
+}
+.q-pyntg-rg-div-fea {
+    padding-bottom: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    text-align: center;
+    color: #9ca3af;
+}
+.q-pyntg-rg-div2 {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.q-pyntg-rg-div2-ben {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+.q-pyntg-rg-div2-ben2 {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+.q-pyntg-rg-div2-img {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+@media (min-width: 640px) {
+    .q-pynt-main-div {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .q-pyntg-ch {
+        /* width: 100%; */
+    }
+    .q-pyntg-rg {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    .q-pynt-main {
+        padding-left: 3.5rem;
+        padding-right: 3.5rem;
+    }
+    .q-pyntg-ch {
+        padding-left: 3rem;
+        padding-right: 3rem;
+        padding-top: 3.5rem;
+        padding-bottom: 3.5rem;
+        width: calc(100% - 6rem);
+    }
+    .q-pyntg-rg {
+        width: 100%;
+    }
+    .q-pyntg-rg-div {
+        padding-left: 3rem;
+        padding-right: 3rem;
+        padding-top: 3.5rem;
+        padding-bottom: 3.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .q-pynt-main {
+        padding-left: 3.5rem;
+        padding-right: 3.5rem;
+    }
+    .q-pynt-main-div {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .q-pyntg-main {
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+    .q-pyntg-ch {
+        padding-left: 3rem;
+        padding-right: 3rem;
+        padding-top: 3.5rem;
+        padding-bottom: 3.5rem;
+        width: calc(40% - 6rem);
+    }
+    .q-pyntg-rg {
+        width: 33.33%;
+    }
+    .q-pyntg-rg-div {
+        padding-left: 3rem;
+        padding-right: 3rem;
+        padding-top: 3.5rem;
+        padding-bottom: 3.5rem;
+    }
+}

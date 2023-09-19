@@ -7,6 +7,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import config from "../../config";
 import PaymentGateway from "./PaymentGateway";
+import "./payment.css"
 
 interface CreditButtonProps {
     userId?: string;
@@ -80,19 +81,19 @@ const Payment: FC<CreditButtonProps> = ({
 
     return (
         <div
-            className="questLabs px-6 md:px-14 lg:px-14 py-10 "
+            className="q-pynt-home q-pynt-main"
             style={{ fontFamily: "'Hanken Grotesk', sans-serif", width: `${modifyDesigns.width}` }}
         >
             {openPaymentPopup == false && (
                 <div
-                    className="w-full grid sm:grid-cols-2 lg:grid-cols-3 gap-8"
+                    className="q-pynt-main-div"
                     style={{
                         gridTemplateColumns: `repeat(${modifyDesigns.mainLayout},1fr)`,
                     }}
                 >
                     {tiers.map((tier, index) => (
                         <div
-                            className="w-full p-8 rounded-lg"
+                            className="q-pynt-main-div-tier"
                             style={{
                                 boxShadow:
                                     "rgba(0, 0, 0, 0.50) 0px 0px 6px 0px",
@@ -101,7 +102,7 @@ const Payment: FC<CreditButtonProps> = ({
                             key={index}
                         >
                             <p
-                                className="text-3xl text-center font-bold"
+                                className="q-pynt-main-div-p"
                                 style={{ color: `${modifyDesigns.fontColor}` }}
                             >
                                 {tier.creditsTierName
@@ -111,19 +112,19 @@ const Payment: FC<CreditButtonProps> = ({
                                     : tier.creditsTierName + " Plan"}
                             </p>
                             <p
-                                className="text-center text-lg text-gray-700 mt-3"
+                                className="q-pynt-main-div-p2"
                                 style={{ color: `${modifyDesigns.fontColor}` }}
                             >
                                 {desc[index]}
                             </p>
                             <div
-                                className="flex items-end gap-1 mb-5 mt-6"
+                                className="q-pynt-main-div-div"
                                 style={{ color: `${modifyDesigns.fontColor}` }}
                             >
-                                <p className="text-4xl font-bold">
+                                <p className="q-pynt-main-div-div-p">
                                     ${tier.creditsAmount}
                                 </p>
-                                <p className="text-lg text-gray-600">
+                                <p className="q-pynt-main-div-div-p2">
                                     {tier.recurringTimePeriod == "ONETIME"
                                         ? "/one-time"
                                         : tier.recurringTimePeriod == "MONTHLY"
@@ -132,26 +133,26 @@ const Payment: FC<CreditButtonProps> = ({
                                 </p>
                             </div>
                             <button
-                                className="text-black border-2 border-gray-800 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-lg w-full py-3 mt-7"
+                                className="q-pynt-main-div-div-btn"
                                 onClick={() => handleClick(index)}
                                 style={{
-                                    backgroundColor: `${modifyDesigns.buttonBgColor}`,
+                                    backgroundColor: modifyDesigns.buttonBgColor ,
                                     color: `${modifyDesigns.btnTextColor}`,
                                 }}
                             >
                                 Continue
                             </button>
-                            <div className="border-b-2 my-6 border-dashed border-gray-400"></div>
-                            <p className="text-center text-base text-gray-400 pb-6">
+                            <div className="q-pynt-main-div-div-ch"></div>
+                            <p className="q-pynt-main-div-div-p3">
                                 FEATURES
                             </p>
-                            <div className=" flex flex-col gap-3">
+                            <div className=" q-pynt-main-div-div-chDiv">
                                 {!!paymentBanefits[index] &&
                                     !!paymentBanefits[index].included &&
                                     paymentBanefits[index].included.map(
                                         (banefits: string, i: number) => (
                                             <div
-                                                className="flex gap-3 items-center"
+                                                className="q-pynt-main-div-div-chDiv-ben"
                                                 key={i}
                                                 style={{
                                                     color: `${modifyDesigns.fontColor}`,
@@ -159,9 +160,9 @@ const Payment: FC<CreditButtonProps> = ({
                                             >
                                                 <img
                                                     src={tick}
-                                                    className="w-5 h-5"
+                                                    style={{width: "1.25rem", height: "1.25rem"}}
                                                 />
-                                                <p className="">{banefits}</p>
+                                                <p>{banefits}</p>
                                             </div>
                                         )
                                     )}
@@ -170,14 +171,14 @@ const Payment: FC<CreditButtonProps> = ({
                                     paymentBanefits[index].notIncluded.map(
                                         (banefits: string, i: number) => (
                                             <div
-                                                className="flex gap-3 items-center"
+                                                className="q-pynt-main-div-div-chDiv-ben2"
                                                 key={i}
                                             >
                                                 <img
                                                     src={untick}
-                                                    className="w-5 h-5"
+                                                    style={{width: "1.25rem", height: "1.25rem"}}
                                                 />
-                                                <p className="text-gray-400">
+                                                <p style={{color: "#9CA3AF"}}>
                                                     {banefits}
                                                 </p>
                                             </div>

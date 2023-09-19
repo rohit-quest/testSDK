@@ -1,0 +1,51 @@
+.q-streak-main {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    border-radius: 10px;
+    gap: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    padding: 16px 21px;
+}
+
+.q-streak-div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.q-streak-badge {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 500;
+    color: #000000;
+}
+
+.q-streak-text {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 500;
+    color: #000000;
+}
+
+.q-streak-img {
+    -webkit-filter-: drop-shadow(2px 2px 5px rgba(34, 34, 34, 0.65));
+    filter: drop-shadow(2px 2px 5px rgba(34, 34, 34, 0.65));
+    height: 58px;
+}
+
+.q-streak-simg{
+    position: absolute;
+    top: 25%;
+    width: 12px;
+    height: 12px;
+    left: 38%;
+}
+
+.q-streak-count{
+    position: absolute;
+    color: #ffffff;
+    top: 65%;
+    left: 38%;
+    font-size: 12px;
+}

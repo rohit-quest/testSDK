@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import "./credit.css";
+import "./creditCheck.css";
 
 interface CreditButtonProps {
     remainingCount: React.ReactNode;
