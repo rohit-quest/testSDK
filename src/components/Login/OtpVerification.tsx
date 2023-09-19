@@ -132,10 +132,8 @@ function OtpVerification({
       <div style={{ padding: '3%' }} className="embeded-otp">
         {showLoader && <Loader />}
         <h1
+          className="q-login-h1"
           style={{
-            fontWeight: 'bold',
-            fontSize: '2rem',
-            textAlign: 'center',
             color: textColor,
             fontFamily: fontFamily,
           }}
@@ -145,18 +143,26 @@ function OtpVerification({
         <div style={{ marginTop: '5%' }}>
           {sec === 0 ? (
             <div
-              style={{ color: textColor,textAlign:"center", fontFamily, fontSize: '18px' }}
+              className="q-resend"
+              style={{
+                color: textColor,
+                fontFamily,
+              }}
               onClick={sendOTPfunction}
             >
               we have sent you one time password to your email{' '}
-              <span style={{fontWeight:"bold"}}>Resend</span>
+              <span style={{ fontWeight: 'bold' }}>Resend</span>
             </div>
           ) : (
             <div
-              style={{ color: textColor,textAlign:"center", fontFamily, fontSize: '18px' }}
+              className="q-resend"
+              style={{
+                color: textColor,
+                fontFamily,
+              }}
             >
               we have sent you one time password to your email{' '}
-              <span style={{fontWeight:"bold"}}>
+              <span style={{ fontWeight: 'bold' }}>
                 {modifyTime(Math.floor(sec / 60))}:{modifyTime(sec % 60)}
               </span>
             </div>
@@ -170,10 +176,8 @@ function OtpVerification({
               renderInput={(props) => <input {...props} />}
             />
             {OTP.length < 6 && OTP.length > 0 && (
-              <p style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', color: '#f00' }}>
-                <span className="q-err">
-                  !
-                </span>
+              <p className="q-login-p">
+                <span className="q-err">!</span>
                 Please enter a valid OTP
               </p>
             )}

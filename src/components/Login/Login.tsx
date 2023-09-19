@@ -105,21 +105,15 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
             ...(gradient
               ? { backgroundImage: bgColor }
               : { backgroundColor: bgColor }),
-            width: '534px',
-            height: '561px',
-            borderRadius: '10px',
-            boxShadow: '0px 0px 6px 0px #00000073',
           }}
-          className="quest-login-container"
+          className="q-login-container"
         >
           <div style={{ padding: '10% 10%' }}>
             {!otpScreen && (
               <>
                 <h1
+                  className="q-login-h1"
                   style={{
-                    fontWeight: 'bold',
-                    fontSize: '2rem',
-                    textAlign: 'center',
                     color: textColor,
                     fontFamily: fontFamily,
                   }}
@@ -127,10 +121,8 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   Welcome Back
                 </h1>
                 <h4
+                  className="q-login-h4"
                   style={{
-                    fontWeight: 'normal',
-                    marginBottom: '1rem',
-                    textAlign: 'center',
                     color: textColor,
                     fontFamily: fontFamily,
                   }}
@@ -160,22 +152,8 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   }}
                 />
                 {!otpScreen && isGoogle && (
-                  <div
-                    style={{
-                      marginTop: '1.25rem',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                    }}
-                  >
-                    <div
-                      style={{
-                        flexGrow: 1,
-                        borderWidth: '1px',
-                        borderStyle: 'solid',
-                        borderColor: 'gray',
-                      }}
-                    ></div>
+                  <div className="q-login-or-container">
+                    <div className="login-or-line"></div>
                     <span
                       style={{
                         color: textColor,
@@ -186,14 +164,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                     >
                       Or Continue With
                     </span>
-                    <div
-                      style={{
-                        flexGrow: 1,
-                        borderWidth: '1px',
-                        borderStyle: 'solid',
-                        borderColor: 'gray',
-                      }}
-                    ></div>
+                    <div className="login-or-line"></div>
                   </div>
                 )}
                 {!otpScreen && isGoogle && (
@@ -229,7 +200,11 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
               />
             )}
             <p
-              style={{ marginTop: '0.75rem', fontSize: '0.875rem', textAlign: 'center', color: textColor, fontFamily }}
+              className="powered-by"
+              style={{
+                color: textColor,
+                fontFamily,
+              }}
             >
               ** Powered by Quest Labs
             </p>

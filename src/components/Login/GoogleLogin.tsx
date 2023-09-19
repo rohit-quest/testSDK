@@ -92,19 +92,11 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
           href={`https://accounts.google.com/o/oauth2/auth?client_id=${googleClientId}&redirect_uri=${redirectUri}&scope=profile%20email&response_type=code`}
         >
           <div
+          className='q-g-btn'
             style={{
-              border: '2px solid black',
               backgroundColor: btnColor,
               fontFamily,
               color: btnTextColor,
-              height: '45px',
-              fontSize: '16px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              borderRadius: '8px',
-              paddingLeft: '10px',
-              paddingRight: '10px',
             }}
           >
             Sign in with Google
