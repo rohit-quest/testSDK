@@ -1,5 +1,5 @@
 .q-referShare {
-    width: 40%;
+    width: 35%;
     flex-shrink: 0;
     border-radius: 18px;
     background: #FFF;
@@ -98,7 +98,7 @@
 /*Refer Share component*/
 
 .q-referEarn {
-    border-radius: 30px;
+    border-radius: 20px;
     background: #FFF;
     width: 400px;
     gap: 5px;
