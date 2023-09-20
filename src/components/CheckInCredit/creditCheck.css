@@ -1,64 +1,6 @@
 *{
     margin: 0;
 }
-.q-credit-home{
-    font-family: 'Hanken Grotesk', sans-serif;
-    margin: 0;
-    line-height: inherit;
-    line-height: 1.5;
-    -webkit-text-size-adjust: 100%;
-    -moz-tab-size: 4;
-    -o-tab-size: 4;
-    tab-size: 4;
-    font-feature-settings: normal;
-    font-variation-settings: normal;
-    box-sizing: border-box;
-    border-width: 0;
-    border-style: solid;
-    border-color: #e5e7eb;
-}
-
-.q-credit-home button {
-    cursor: pointer;
-}
-
-/* CREDIT BUTTON */
-.q-creditb-div {
-    display: flex;
-    position: relative;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-    padding-left: 3.5rem;
-    padding-right: 3.5rem;
-    gap: 3rem;
-    align-items: center;
-    border-radius: 0.75rem;
-    width: fit-content;
-    background-color: #ffffff;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-.q-creditb-p {
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-    font-weight: 700;
-    color: #374151;
-}
-.q-creditb-btn {
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-    border-radius: 9999px;
-    font-size: 1rem;
-    line-height: 1.5rem;
-    font-weight: 500;
-    color: #ffffff;
-    background-color: #374151;
-    border: 0px;
-}
-.q-creditb-btn:hover {
-    background-color: #111827;
-}
 
 
 /* CREDIT POPUP */
@@ -109,14 +51,17 @@
     margin-top: 0.75rem;
     border-radius: 0.5rem;
     border-width: 2px;
-    border-color: black;
+    border-color: grey;
     width: 100%;
     font-size: 1.125rem;
     line-height: 1.75rem;
     font-weight: 500;
     color: #000000;
     background-color: transparent;
+    cursor: pointer;
 }
-.q-creditp-btn:hover {
-    background-color: #F3F4F6;
+
+.q-creditb-btn:hover {
+    background-color: black !important;
+    color: white !important;
 }

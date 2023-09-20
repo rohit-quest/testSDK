@@ -34,10 +34,10 @@ const CreditsPopupCheck: FC<PopupProps> = ({
 
     if (!isOpen) return (<></>);
     return ReactDOM.createPortal(
-        <div className="q-credit-home" >
-            <div className="popup-overlay">
+        <div className="q-credit-home" style={style}>
+            <div className="popup-overlay" style={style}>
                 <div className="q-creditp-main">
-                    <div className="q-creditp-child" style={{boxShadow: "rgba(0, 0, 0, 0.50) 0px 0px 6px 0px"}}>
+                    <div className="q-creditp-child" style={{boxShadow: "rgba(0, 0, 0, 0.50) 0px 0px 6px 0px",...style}}>
                         <img src={creditCHeck} className="q-creditp-banner" />
                         {!!isCloseble && (
                             <img
@@ -47,13 +47,13 @@ const CreditsPopupCheck: FC<PopupProps> = ({
                                 className="q-creditp-img"
                             />
                         )}
-                        <p className="q-creditp-p1">{headingText}</p>
-                        <p className="q-creditp-p2">{descText}</p>
+                        <p className="q-creditp-p1" style={style}>{headingText}</p>
+                        <p className="q-creditp-p2" style={style}>{descText}</p>
                         {!!continueButton && (
                             <button
-                                style={style}
                                 className="q-creditp-btn"
                                 onClick={() => buttonFunction()}
+                                style={style}
                             >
                                 {buttonText}
                             </button>
