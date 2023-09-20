@@ -3,7 +3,12 @@
   text-align: start;
   font-size: 18px;
   font-weight: 500 !important;
-  padding: 2%;
+  padding: 2% 0;
+}
+.q-h1 {
+  font-weight: bold;
+  font-size: 2rem;
+  text-align: center;
 }
 .quest-loader {
   position: fixed;
@@ -22,7 +27,7 @@
 }
 .q-input-box {
   width: 100%;
-  padding-left: 2.5rem; 
+  padding-left: 1rem; 
   padding-right: 3.5rem; 
   border-radius: 10px; 
   background-color: #f0f0f0; 
