@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+}
+.q-ana-home {
+    margin: 0;
+    line-height: inherit;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: #e5e7eb;
+}
+
+.q-tab-main {
+    overflow-x: auto;
+    padding: 1.25rem;
+}
+.q-tab-table {
+    width: 100%;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    text-align: left;
+    color: #6b7280;
+    border-collapse: collapse;
+}
+.q-tab-thead {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: #374151;
+    text-transform: uppercase;
+    background-color: #d1d5db;
+}
+.q-tab-thead-th {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+    transition-duration: 300ms;
+}
+.q-tab-thead-th:hover {
+    background-color: #9ca3af;
+}
+.q-tab-tbody-th {
+    display: flex;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    gap: 0.5rem;
+    align-items: center;
+    border-color: #d1d5db;
+    font-weight: 500;
+    color: #374151;
+}
+.q-tab-tbody-img {
+    border-radius: 100px;
+    width: 2.5rem;
+}
+.q-tab-tbody-td {
+    overflow: hidden;
+    padding: 0.5rem;
+    border-color: #d1d5db;
+    font-weight: 400;
+    color: #6b7280;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 150px;
+}
+.q-tab-toolTip {
+    display: inline-block;
+    position: absolute;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    border-radius: 0.375rem;
+    font-weight: 200;
+    font-size: 12px;
+    text-align: center;
+    color: #ffffff;
+    background-color: #6b7280;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+    transition-duration: 300ms;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    color: 10px;
+    max-width: 200px;
+}
+
+
+/* CHART */
+.q-ana-ch-main {
+    overflow-x: auto;
+    padding: 1.25rem;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.50) 0px 0px 6px 0px;
+}
+.q-ana-ch-p{
+    font-size: 20px;
+    font-weight: 600;
+    font-family: "Hanken Grotesk", sans-serif;
+    text-align: center;
+}
+
+.custom-tooltip{
+    font-size: 12px;
+    font-family: "Hanken Grotesk", sans-serif;
+    font-weight: 700;
+}

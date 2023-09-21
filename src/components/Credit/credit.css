@@ -78,10 +78,10 @@
     border-radius: 0.75rem; 
     width: 24rem; 
     background-color: #ffffff; 
-    /* box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);  */
 }
 .q-crdp-banner {
-    width: 100%;
+    padding: 30px;
+    width: calc(100% - 60px);
 }
 .q-crdp-img {
     position: absolute; 

@@ -2,6 +2,7 @@ import React, { FC, useState, useEffect, useContext, useCallback } from "react";
 import axios from "axios";
 import config from "../../config";
 import QuestContext from "../QuestWrapper";
+import "./analytics.css"
 
 interface Table {
     userId?: string;
@@ -14,6 +15,9 @@ interface Table {
     bodyTextColor?: string;
     headingTooltip?: boolean;
     bodyTooltip?: boolean;
+    hideQuestion?: boolean;
+    showAvatar?: boolean;
+    tableWidth?: string;
 }
 
 type User = {
@@ -35,6 +39,9 @@ const Table: FC<Table> = ({
     bodyTextColor,
     headingTooltip,
     bodyTooltip,
+    hideQuestion,
+    showAvatar,
+    tableWidth
 }) => {
     const [questionData, setQuestionData] = useState<string[]>([]);
     const [answerData, setAnswerData] = useState<UsersDataArray | any>({});
@@ -109,10 +116,10 @@ const Table: FC<Table> = ({
     // console.log(tooltipPosition)
 
     return (
-        <div className="questLabs p-5 overflow-x-auto w-screen pt-20">
-            <table className="w-full text-sm text-left text-gray-500 border-collapse">
+        <div className="q-ana-home q-tab-main" style={{width: tableWidth ? tableWidth : "100%"}}>
+            <table className="q-tab-table">
                 <thead
-                    className="text-xs text-gray-700 uppercase bg-gray-300"
+                    className="q-tab-thead"
                     style={{
                         backgroundColor: headingBgColor,
                         color: headingTextColor,
@@ -121,13 +128,13 @@ const Table: FC<Table> = ({
                     <tr>
                         <th
                             scope="col"
-                            className={`px-2 py-2 ${
-                                horizontalBorder && "border-x-2"
-                            }`}
                             style={{
                                 borderColor: bodyBgColor
                                     ? bodyBgColor
                                     : "white",
+                                padding: "0.5rem",
+                                borderLeft: horizontalBorder ? "2px solid" : "0px",
+                                borderRight: horizontalBorder ? "2px solid" : "0px",
                             }}
                         >
                             Users
@@ -135,13 +142,12 @@ const Table: FC<Table> = ({
                         {questionData.map((question: string, i: number) => (
                             <th
                                 scope="col"
-                                className={`px-2 py-2 min-w-[100px] hover:bg-gray-400 transition-all duration-300  ${
-                                    horizontalBorder && "border-r-2"
-                                }`}
+                                className={`q-tab-thead-th`}
                                 style={{
                                     borderColor: bodyBgColor
                                         ? bodyBgColor
                                         : "white",
+                                    borderRight: horizontalBorder ? "2px solid" : "0px",
                                 }}
                                 key={i}
                                 onMouseEnter={(e) =>
@@ -150,8 +156,7 @@ const Table: FC<Table> = ({
                                 }
                                 onMouseLeave={handleMouseLeave}
                             >
-                                {/* {`q${i+1}`} */}
-                                {question}
+                                { hideQuestion ? `q${i+1}` : question}
                             </th>
                         ))}
                     </tr>
@@ -159,21 +164,21 @@ const Table: FC<Table> = ({
                 <tbody>
                     {Object.keys(answerData).map((datas, i: number) => (
                         <tr
-                            className="border-b-2 border-gray-300"
                             style={{
-                                borderColor: headingBgColor,
+                                borderBottom: "2px solid",
+                                borderColor: headingBgColor ? headingBgColor : "#D1D5DB",
                                 backgroundColor: bodyBgColor,
                             }}
                         >
-                            <th
+                            <td
                                 scope="row"
-                                className={`px-2 py-2 font-medium text-gray-700 flex items-center gap-2 min-w-[150px] border-gray-300 ${
-                                    horizontalBorder && "border-x-2"
-                                }`}
+                                className={`q-tab-tbody-th`}
                                 style={{
                                     borderColor: headingBgColor
                                         ? headingBgColor
                                         : "",
+                                    borderLeft: horizontalBorder ? "2px solid" : "0px",
+                                    borderRight: horizontalBorder ? "2px solid" : "0px",
                                 }}
                                 onMouseEnter={(e) =>
                                     !!bodyTooltip &&
@@ -184,27 +189,29 @@ const Table: FC<Table> = ({
                                 }
                                 onMouseLeave={handleMouseLeave}
                             >
-                                <img
-                                    src={
-                                        "https://pin.questprotocol.xyz/ipfs/" +
-                                        answerData[datas].avatar
-                                    }
-                                    className="w-10 rounded-full"
-                                    alt=""
-                                />
+                                {
+                                    !!showAvatar &&
+                                    <img
+                                        src={
+                                            "https://pin.questprotocol.xyz/ipfs/" +
+                                            answerData[datas].avatar
+                                        }
+                                        className="q-tab-tbody-img"
+                                        alt=""
+                                    />
+                                }
                                 <p className="">{answerData[datas].userName}</p>
-                            </th>
+                            </td>
                             {questionData.map((question: string, i: number) =>
                                 !!answerData[datas].userAnswers[`q${i}`] ? (
-                                    <th
-                                        className={`x-2 py-2 font-normal text-gray-500 overflow-hidden whitespace-nowrap text-ellipsis min-w-[100px] max-w-[150px] border-gray-300 ${
-                                            horizontalBorder && "border-r-2"
-                                        }`}
+                                    <td
+                                        className={`q-tab-tbody-td`}
                                         style={{
                                             borderColor: headingBgColor
                                                 ? headingBgColor
                                                 : "",
                                             color: bodyTextColor,
+                                            borderRight: horizontalBorder ? `2px solid ${headingBgColor ? headingBgColor : ""}` : "0px",
                                         }}
                                         onMouseEnter={(e) =>
                                             !!bodyTooltip &&
@@ -218,17 +225,16 @@ const Table: FC<Table> = ({
                                         onMouseLeave={handleMouseLeave}
                                     >
                                         {answerData[datas].userAnswers[`q${i}`]}
-                                    </th>
+                                    </td>
                                 ) : (
                                     <th
-                                        className={`x-2 py-2 font-normal text-gray-500 overflow-hidden whitespace-nowrap text-ellipsis min-w-[100px] max-w-[150px] border-gray-300 ${
-                                            horizontalBorder && "border-r-2"
-                                        }`}
+                                        className={`q-tab-tbody-td`}
                                         style={{
                                             borderColor: headingBgColor
                                                 ? headingBgColor
                                                 : "",
                                             color: bodyTextColor,
+                                            borderRight: horizontalBorder ? `2px solid ${headingBgColor ? headingBgColor : ""}` : "0px",
                                         }}
                                     ></th>
                                 )
@@ -239,7 +245,7 @@ const Table: FC<Table> = ({
             </table>
             {!!hoveredQuestion && (
                 <div
-                    className="absolute inline-block px-2 py-2 text-[10px] font-extralight text-white transition-all max-w-[200px] duration-300 bg-gray-600 rounded-md shadow-sm tooltip min-w-[100px] text-center"
+                    className="q-tab-toolTip"
                     style={{ left: tooltipPosition.x, top: tooltipPosition.y }}
                 >
                     {hoveredQuestion}
