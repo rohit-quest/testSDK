@@ -10,6 +10,11 @@
   font-size: 2rem;
   text-align: center;
 }
+.q-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .quest-loader {
   position: fixed;
   inset: 0;
@@ -26,6 +31,7 @@
   100% { transform: rotate(360deg); }
 }
 .q-input-box {
+  margin-top: 1%;
   width: 100%;
   padding-left: 1rem; 
   padding-right: 3.5rem; 
@@ -128,4 +134,8 @@ body {
 .questLabs abbr:where([title]) {
   -webkit-text-decoration: underline dotted;
   text-decoration: underline dotted;
+}
+.questLabs textarea {
+  font-family: inherit;
+  padding-top: 2%;
 }
