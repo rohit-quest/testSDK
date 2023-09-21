@@ -36,38 +36,25 @@ export const Context = createContext({
   featureFlags: {}
 });
 
+
+
 export const QuestProvider = (props: Props) => {
   const [user, setUser] = useState<User>({});
   const [featureFlags, setFeatureFlags] = useState()
 
-  useEffect(() => {
-    getAllFeatureFlagsForQuest()
-  }, [])
-
   
+  try{
+    const eventSource = new EventSource('http://localhost:8081/api/entities/e-5a4a908f-47fb-4f73-93a5-3cfb962b5750/featureFlags/chat');
+      eventSource.addEventListener('message', async (event) => {
+        const updatedConfig = await JSON.parse(event.data);
+        const flagsObject = updatedConfig.data.reduce((acc, flag) => { acc[flag.flagName] = flag; return acc; }, {});
+        console.log(flagsObject);
+        setFeatureFlags(flagsObject)
+      });
+  } catch(err) {
 
-  async function getAllFeatureFlagsForQuest() {
-    const cookies = new Cookies();
-    let featureFlags = cookies.get('featureFlags');
-    if (!!featureFlags && Object.keys(featureFlags).length != 0) {
-      setFeatureFlags(featureFlags)
-      return;
-    }
-
-    let request = config.BACKEND_URL + `api/entities/${props.entityId}/featureFlags`
-    var response = await axios.get(request, { headers: { apiKey: props.apiKey, apiSecret: props.apiSecret } });
-
-    if (response.data.success) {
-        // Transform the array into an object where the keys are flagNames
-        const flagsObject = response.data.data.reduce((acc, flag) => { acc[flag.flagName] = flag; return acc; }, {});
-        // Set the cookie with the flags object, with a 1-hour expiry time
-        const date = new Date();
-        date.setHours(date.getHours() + 1);  // Set the date 1 hour in the future
-        cookies.set('featureFlags', flagsObject, { path: '/', expires: date });
-        featureFlags = flagsObject;
-    }
-    setFeatureFlags(featureFlags)
   }
+
 
 
   return (

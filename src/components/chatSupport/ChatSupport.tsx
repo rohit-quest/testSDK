@@ -1,4 +1,6 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState, useContext } from "react";
+import config from "../../config";
+import QuestContext from "../QuestWrapper";
 import ReactDOM from "react-dom";
 import chat1 from "../../assets/images/chat1.png";
 import chat2 from "../../assets/images/chat2.png";
@@ -28,6 +30,7 @@ const ChatSupport: FC<ChatSupport> = ({ logoType, bgColor }) => {
     const [chat, setChat] = useState<Chat[]>([]);
     const [typeMessage, setTypeMessage] = useState("");
     const chatContainerRef = useRef(null);
+    const { featureFlags } = useContext(QuestContext.Context);
 
     useEffect(() => {
         chatContainerRef.current.scrollTop =
@@ -86,6 +89,10 @@ const ChatSupport: FC<ChatSupport> = ({ logoType, bgColor }) => {
             sendMessage();
         }
     };
+
+    if (featureFlags[config.FLAG_CONSTRAINTS.ChatFlag]?.isEnabled == false) {
+        return (<div></div>)
+    }
 
     return ReactDOM.createPortal(
         <div
