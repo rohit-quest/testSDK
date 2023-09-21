@@ -16,6 +16,10 @@ function SimpleAreaChart(prop: any) {
         if (active && payload && payload.length) {
             return (
                 <div className="custom-tooltip" style={{color: textColor}}>
+                    {
+                        !!data[0]?.metric && 
+                        <p>Metric: {payload[0].payload.metric}</p>
+                    }
                     <span className="label">{`${type} : ${payload[0].value}`}</span>
                 </div>
             );
@@ -27,11 +31,11 @@ function SimpleAreaChart(prop: any) {
         <ResponsiveContainer width="100%" height={210}>
             <AreaChart data={data} margin={{ right: 20, top: 20, left: -30, bottom: 10 }}>
             <XAxis
-                    dataKey="date"
+                    dataKey={!!data[0]?.metric ? "" : "date"}
                     interval={0}
                     domain={[0, (dataMax) => (dataMax >= 50 ? dataMax : 50)]}
                     style={{ fontSize: "12px" }}
-                    angle={-45}
+                    angle={!!data[0]?.metric ? 0 : -45}
                     textAnchor="end"
                 />
                 <YAxis
