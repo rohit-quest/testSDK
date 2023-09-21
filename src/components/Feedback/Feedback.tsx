@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import QuestContext from '../QuestWrapper';
 import axios from 'axios';
 import config from '../../config';
+import './Feedback.css';
 
 interface FeedbackProps {
   heading?: string;
   subHeading?: string;
-  inputFieldType?: object;
   userId?: string;
   token?: string;
   questId?: string;
@@ -24,7 +24,6 @@ interface FeedbackProps {
 const Feedback: React.FC<FeedbackProps> = ({
   heading,
   subHeading,
-  inputFieldType,
   userId,
   token,
   questId,
@@ -258,78 +257,139 @@ const Feedback: React.FC<FeedbackProps> = ({
     return (
       <div className="questLabs" style={{ paddingTop: '2%' }} key={criteriaId}>
         <label
-          className="pb-2 pt-2 block text-gray-600 font-semibold"
+          className="q-h4"
           htmlFor="normalInput"
           style={{
-            fontWeight: '500',
-            margin: '1%',
             fontFamily: font,
             color: textColor,
           }}
         >
           {question}
         </label>
-        {!!inputFieldType &&
-        (inputFieldType as Record<string, string>)[criteriaId] ===
-          'textArea' ? (
-          <textarea
-            id="normalInput"
-            placeholder="Write your message"
-            style={{ height: '150px' }}
-            className="max-w-md mx-auto p-6 rounded-lg bg-gray-100 w-full px-3 py-2 rounded-lg"
-            onChange={(e) => handleUpdate(e, criteriaId, '')}
-            value={answer[criteriaId]}
-          />
-        ) : (
+        <input
+          type="text"
+          id="normalInput"
+          style={{ height: '50px' }}
+          name="normalInput"
+          className="q-input-box"
+          onChange={(e) => handleUpdate(e, criteriaId, '')}
+          value={answer[criteriaId]}
+          placeholder={`Enter your ${question}`}
+        />
+      </div>
+    );
+  };
+
+  const normalInput2 = (question: string, criteriaId: string) => {
+    return (
+      <div className="questLabs" style={{ paddingTop: '2%' }} key={criteriaId}>
+        <label
+          className="q-h4"
+          htmlFor="normalInput2"
+          style={{
+            fontFamily: font,
+            color: textColor,
+          }}
+        >
+          {question}
+        </label>
+        <textarea
+          id="normalInput2"
+          placeholder="Write your message"
+          style={{ height: '150px' }}
+          className="q-input-box"
+          onChange={(e) => handleUpdate(e, criteriaId, '')}
+          value={answer[criteriaId]}
+        />
+      </div>
+    );
+  };
+
+  const likePopupContent = () => {
+    return (
+      <div className="questLabs">
+        <div>
+          <div className="like-dislike-cont">
+            <div className="icon-inside-like-dislike">{tick}</div>
+            <p className="p-2" style={{ color: '#00A96D' }}>
+              Thanks again for your feedback.
+            </p>
+          </div>
+          <p
+            style={{
+              margin: '5% 0% 1% 0%',
+              fontSize: '18px',
+              fontFamily: font,
+              color: textColor,
+            }}
+          >
+            Tell us more
+          </p>
           <input
+            style={{ height: '60px' }}
+            placeholder="Comments (optional)"
             type="text"
-            id="normalInput"
-            style={{ height: '50px' }}
-            name="normalInput"
-            className="max-w-md mx-auto p-6 rounded-lg bg-gray-100 w-full px-3 py-2 rounded-lg"
-            onChange={(e) => handleUpdate(e, criteriaId, '')}
-            value={answer[criteriaId]}
-            placeholder={`Enter your ${question}`}
+            className="q-input-box"
+            value={comment}
+            maxLength={200}
+            onChange={(e) => setComment(e.target.value)}
           />
-        )}
+          <div className="q-cmts">{comment.length}/200</div>
+          <div className="q-feed-desc">
+            We’re unable to respond directly to your feedback. If you have a
+            customer support inquiry, please{' '}
+            <span
+              onClick={() => (window.location.href = `${supportUrl}`)}
+              style={{
+                fontWeight: '600',
+                textDecoration: 'underline',
+              }}
+            >
+              contact customer support.
+            </span>
+          </div>
+          <div className="q-feed-btns-div">
+            <button onClick={handleShort} className="q-btn-feed">
+              Skip
+            </button>
+            <button
+              onClick={handleShort}
+              className="q-btn-feed"
+              style={{
+                backgroundColor: btnColor ? btnColor : 'black',
+                color: btnTextColor ? btnTextColor : 'white',
+              }}
+            >
+              Submit
+            </button>
+          </div>
+        </div>
       </div>
     );
   };
 
   return (
-    <div
-      className="questLabs"
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
+    <div className="q-parent-container">
       <div
         style={{
-          width: '534px',
-          height: '700px',
-          borderRadius: '10px',
-          boxShadow: '0px 0px 6px 0px #00000073',
-          padding: '2% 3%',
           ...(gradient
             ? { backgroundImage: bgColor }
             : { backgroundColor: bgColor }),
         }}
-        className="max-w-md mx-auto border rounded-lg shadow-lg"
+        className="q-feedback-cont"
       >
         {formdata.length > 0 ? (
           formdata[0].type !== 'LIKE_DISLIKE' &&
           formdata[0].type !== 'RATING' ? (
-            <div className='questLabs'>
+            <div className="questLabs">
               <h2
-                className="text-2xl font-bold text-center mb-1"
+                className="q-h1"
                 style={{ fontFamily: font, color: textColor, fontSize: '28px' }}
               >
                 {heading}
               </h2>
               <p
-                className="text-gray-600 mb-2 text-center"
+                className="q-sub"
                 style={{ fontFamily: font, color: textColor, fontSize: '18px' }}
               >
                 {subHeading}
@@ -341,41 +401,38 @@ const Feedback: React.FC<FeedbackProps> = ({
                       data.question || '',
                       data.criteriaId || ''
                     );
+                  } else if (data.type === 'USER_INPUT_TEXTAREA') {
+                    return normalInput2(
+                      data.question || '',
+                      data.criteriaId || ''
+                    );
                   } else if (data.type === 'RATING') {
                     return (
                       <div className="mb-4">
                         <label
                           style={{
-                            fontWeight: '500',
                             fontFamily: font,
                             color: textColor,
                           }}
-                          className="pb-2 block text-gray-600 font-semibold"
+                          className="q-h4"
                         >
                           Rating Scale
                         </label>
                         <div
-                          style={{ padding: '2% 0% 2%' }}
-                          className="flex p-2"
+                          style={{
+                            display: 'flex',
+                          }}
                         >
                           {[1, 2, 3, 4, 5].map((star) => (
-                            <button
-                              style={{
-                                width: '40px',
-                                height: '40px',
-                                lineHeight: '40px',
-                              }}
+                            <div
+                              className="q-star-div"
                               key={star}
-                              type="button"
                               onClick={() =>
                                 handleRatingChange(data.criteriaId, star)
                               }
-                              className={`mr-2 text-2xl ${
-                                star <= rating ? 'text-black' : 'text-gray-300'
-                              }`}
                             >
                               {star <= rating ? blackStar : whiteStar}
-                            </button>
+                            </div>
                           ))}
                         </div>
                       </div>
@@ -389,300 +446,80 @@ const Feedback: React.FC<FeedbackProps> = ({
                     fontFamily: font,
                   }}
                   onClick={returnAnswers}
-                  className="mt-5 continue-btn h-14 pl-4 pr-4 rounded-lg border px-3 bg-black text-white focus:ring focus:ring-blue-300 flex items-center justify-center"
+                  className="q-btn-continue"
                 >
                   Submit
                 </div>
               </form>
             </div>
           ) : formdata[0].type === 'LIKE_DISLIKE' ? (
-            <div className='questLabs'>
-              {!likePopup && <div 
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
-              >
-                <div style={{ flex: 1 }}>
-                  <h4
-                    style={{
-                      fontSize: '20px',
-                      fontWeight: '600',
-                      fontFamily: font,
-                      color: textColor,
-                    }}
-                  >
-                    Are these results helpful?
-                  </h4>
-                  <p
-                    style={{
-                      fontSize: '18px',
-                      fontFamily: font,
-                      color: textColor,
-                    }}
-                  >
-                    Your feedback helps us improve search results
-                  </p>
-                </div>
+            <div className="questLabs">
+              {!likePopup && (
                 <div
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '8px',
-                    cursor: 'pointer',
+                    justifyContent: 'space-between',
                   }}
                 >
-                  <span onClick={() => setLikePopup(true)}>{like}</span>
-                  <span onClick={() => setLikePopup(true)}>{dislike}</span>
-                </div>
-              </div>}
-              {likePopup && (
-                <div className="questLabs">
-                  <div>
-                    <div className="flex items-center space-x-2">
-                      <div
-                        style={{
-                          width: '2rem',
-                          height: '2rem',
-                          borderRadius: '50%',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}
-                      >
-                        {tick}
-                      </div>
-                      <p className="p-2" style={{ color: '#00A96D' }}>
-                        Thanks again for your feedback.
-                      </p>
-                    </div>
+                  <div style={{ flex: 1 }}>
+                    <h4
+                      style={{
+                        fontSize: '20px',
+                        fontWeight: '600',
+                        fontFamily: font,
+                        color: textColor,
+                      }}
+                    >
+                      Are these results helpful?
+                    </h4>
                     <p
                       style={{
-                        margin: '5% 0% 1% 0%',
                         fontSize: '18px',
                         fontFamily: font,
                         color: textColor,
                       }}
-                      className="mt-4 block text-gray-600"
                     >
-                      Tell us more
+                      Your feedback helps us improve search results
                     </p>
-                    <input
-                      style={{ height: '60px' }}
-                      placeholder="Comments (optional)"
-                      type="text"
-                      className="w-full mx-auto p-6 border-2 border-black rounded-lg w-full px-3 py-2 rounded-lg"
-                      value={comment}
-                      maxLength={200}
-                      onChange={(e) => setComment(e.target.value)}
-                    />
-                    <div
-                      style={{
-                        marginTop: '2%',
-                        fontSize: '16px',
-                        textAlign: 'right',
-                      }}
-                    >
-                      {comment.length}/200
-                    </div>
-                    <div
-                      style={{ marginTop: '5%' }}
-                      className="mx-auto p-6 rounded-lg bg-gray-100 w-full px-3 py-3 rounded-lg"
-                    >
-                      We’re unable to respond directly to your feedback. If you
-                      have a customer support inquiry, please{' '}
-                      <span
-                        onClick={() => (window.location.href = `${supportUrl}`)}
-                        style={{
-                          fontWeight: '600',
-                          textDecoration: 'underline',
-                        }}
-                      >
-                        contact customer support.
-                      </span>
-                    </div>
-                    <div
-                      style={{
-                        marginTop: '1.5rem',
-                        width: '100%',
-                        display: 'flex',
-                        justifyContent: 'end',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      <button
-                        onClick={handleShort}
-                        style={{
-                          fontSize: '18px',
-                          backgroundColor: 'white',
-                          color: 'black',
-                          border: '2px solid black',
-                          borderRadius: '50px',
-                          padding: '8px 24px',
-                          marginRight: '1rem',
-                        }}
-                      >
-                        Skip
-                      </button>
-                      <button
-                        onClick={handleShort}
-                        style={{
-                          fontSize: '18px',
-                          backgroundColor: btnColor ? btnColor : 'black',
-                          color: 'white',
-                          borderRadius: '50px',
-                          padding: '8px 24px',
-                        }}
-                      >
-                        Submit
-                      </button>
-                    </div>
+                  </div>
+                  <div className="like-dislike-cont">
+                    <span onClick={() => setLikePopup(true)}>{like}</span>
+                    <span onClick={() => setLikePopup(true)}>{dislike}</span>
                   </div>
                 </div>
               )}
+              {likePopup && likePopupContent()}
             </div>
           ) : formdata[0].type === 'RATING' ? (
-            <div className='questLabs'>
+            <div className="questLabs">
               <div className="mb-4">
                 <label
                   style={{
-                    fontWeight: '500',
                     fontFamily: font,
                     color: textColor,
                   }}
-                  className="pb-2 block text-gray-600 font-semibold"
+                  className="q-h4"
                 >
                   Rating Scale
                 </label>
-                <div style={{ padding: '2% 0% 2%' }} className="flex p-2">
+                <div style={{ display: 'flex', padding: '2% 0% 2%' }}>
                   {[1, 2, 3, 4, 5].map((star) => (
-                    <button
-                      style={{
-                        width: '40px',
-                        height: '40px',
-                        lineHeight: '40px',
-                      }}
+                    <div
+                      className="q-star-div"
                       key={star}
-                      type="button"
                       onClick={() => handleRatingChange2(star)}
-                      className={`mr-2 text-2xl ${
-                        star <= rating ? 'text-black' : 'text-gray-300'
-                      }`}
                     >
                       {star <= rating ? blackStar : whiteStar}
-                    </button>
+                    </div>
                   ))}
                 </div>
               </div>
-              {likePopup && (
-                <div className="questLabs">
-                  <div>
-                    <div className="flex items-center space-x-2">
-                      <div
-                        style={{
-                          width: '2rem',
-                          height: '2rem',
-                          borderRadius: '50%',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                        }}
-                      >
-                        {tick}
-                      </div>
-                      <p className="p-2" style={{ color: '#00A96D' }}>
-                        Thanks again for your feedback.
-                      </p>
-                    </div>
-                    <p
-                      style={{
-                        margin: '5% 0% 1% 0%',
-                        fontSize: '18px',
-                        fontFamily: font,
-                        color: textColor,
-                      }}
-                      className="mt-4 block text-gray-600"
-                    >
-                      Tell us more
-                    </p>
-                    <input
-                      style={{ height: '60px' }}
-                      placeholder="Comments (optional)"
-                      type="text"
-                      className="w-full mx-auto p-6 border-2 border-black rounded-lg w-full px-3 py-2 rounded-lg"
-                      value={comment}
-                      maxLength={200}
-                      onChange={(e) => setComment(e.target.value)}
-                    />
-                    <div
-                      style={{
-                        marginTop: '2%',
-                        fontSize: '16px',
-                        textAlign: 'right',
-                      }}
-                    >
-                      {comment.length}/200
-                    </div>
-                    <div
-                      style={{ marginTop: '5%' }}
-                      className="mx-auto p-6 rounded-lg bg-gray-100 w-full px-3 py-3 rounded-lg"
-                    >
-                      We’re unable to respond directly to your feedback. If you
-                      have a customer support inquiry, please{' '}
-                      <span
-                        onClick={() => (window.location.href = `${supportUrl}`)}
-                        style={{
-                          fontWeight: '600',
-                          textDecoration: 'underline',
-                        }}
-                      >
-                        contact customer support.
-                      </span>
-                    </div>
-                    <div
-                      style={{
-                        marginTop: '1.5rem',
-                        width: '100%',
-                        display: 'flex',
-                        justifyContent: 'end',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      <button
-                        onClick={handleShort}
-                        style={{
-                          fontSize: '18px',
-                          backgroundColor: 'white',
-                          color: 'black',
-                          border: '2px solid black',
-                          borderRadius: '50px',
-                          padding: '8px 24px',
-                          marginRight: '1rem',
-                        }}
-                      >
-                        Skip
-                      </button>
-                      <button
-                        onClick={handleShort}
-                        style={{
-                          fontSize: '18px',
-                          backgroundColor: btnColor ? btnColor : 'black',
-                          color: 'white',
-                          borderRadius: '50px',
-                          padding: '8px 24px',
-                        }}
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
+              {likePopup && likePopupContent()}
             </div>
           ) : null
         ) : (
-          <p className='text-center'>Form data is empty</p>
+          <p className="text-center">Form data is empty</p>
         )}
       </div>
     </div>

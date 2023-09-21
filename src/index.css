@@ -1,1 +1,131 @@
-@import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Kanit&family=Neucha&family=Roboto:wght@100;400;500&family=Xanh+Mono&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Kanit&family=Neucha&family=Roboto:wght@100;400;500&family=Xanh+Mono&display=swap');
+.q-h4 {
+  text-align: start;
+  font-size: 18px;
+  font-weight: 500 !important;
+  padding: 2% 0;
+}
+.q-h1 {
+  font-weight: bold;
+  font-size: 2rem;
+  text-align: center;
+}
+.quest-loader {
+  position: fixed;
+  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  z-index: 999;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.q-input-box {
+  width: 100%;
+  padding-left: 1rem; 
+  padding-right: 3.5rem; 
+  border-radius: 10px; 
+  background-color: #f0f0f0; 
+  border: 2px solid;
+  border-color: #f0f0f0;
+  text-align: start;
+  outline: none;
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.q-err {
+  background-color: #f00; 
+  color: #fff; 
+  border-radius: 50%; 
+  width: 1.5rem; 
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.5rem; 
+  font-weight: bold; 
+  font-size: 1rem;
+}
+.q-input-box:focus {
+  border-color: #0070f3;
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.3);
+}
+
+.q-btn-continue {
+  margin-top: 1.25rem;
+  height: 3.1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 0.375rem;
+  border: 2px solid #000;
+  padding: 0.75rem 1rem;
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 24px;
+  outline: none;
+}
+.q-btn-continue:hover {
+  background-color: #333; 
+  border-color: #333;
+}
+.q-hover:hover {
+  background-color: #f4f5f6;
+}
+.q-parent-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+*{
+  margin: 0;
+}
+
+*,
+.questLabs :before,
+.questLabs :after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: #e5e7eb;
+}
+.questLabs :before,
+.questLabs :after {
+  --tw-content: '';
+}
+
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', Segoe UI Symbol, 'Noto Color Emoji';
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+}
+
+body {
+  margin: 0;
+  line-height: inherit;
+}
+.questLabs hr {
+  height: 0;
+  color: inherit;
+  border-top-width: 1px;
+}
+.questLabs abbr:where([title]) {
+  -webkit-text-decoration: underline dotted;
+  text-decoration: underline dotted;
+}
