@@ -44,7 +44,7 @@ export const QuestProvider = (props: Props) => {
 
   
   try{
-    const eventSource = new EventSource('http://localhost:8081/api/entities/e-5a4a908f-47fb-4f73-93a5-3cfb962b5750/featureFlags/chat');
+    const eventSource = new EventSource(`${config.BACKEND_URL}api/entities/${props.entityId}/featureFlags/sdk?apikey=${props.apiKey}&apisecret=${props.apiSecret}&source=reactSDK`);
       eventSource.addEventListener('message', async (event) => {
         const updatedConfig = await JSON.parse(event.data);
         const flagsObject = updatedConfig.data.reduce((acc, flag) => { acc[flag.flagName] = flag; return acc; }, {});
