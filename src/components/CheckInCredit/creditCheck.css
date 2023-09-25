@@ -1,0 +1,67 @@
+*{
+    margin: 0;
+}
+
+
+/* CREDIT POPUP */
+.q-creditp-main {
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(4px);
+    z-index: 10;
+}
+.q-creditp-child {
+    position: relative;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    width: 24rem;
+    background-color: #ffffff;
+    /* box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);  */
+}
+.q-creditp-banner {
+    width: 100%;
+}
+.q-creditp-img {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 2rem;
+    cursor: pointer;
+}
+.q-creditp-p1 {
+    margin-top: 0.5rem;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 700;
+    text-align: center;
+}
+.q-creditp-p2 {
+    margin-top: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    text-align: center;
+}
+.q-creditp-btn {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-top: 0.75rem;
+    border-radius: 0.5rem;
+    border-width: 2px;
+    border-color: grey;
+    width: 100%;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 500;
+    color: #000000;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.q-creditb-btn:hover {
+    background-color: black !important;
+    color: white !important;
+}
