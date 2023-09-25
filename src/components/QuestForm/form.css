@@ -142,8 +142,11 @@
     max-width: 90%;
     overflow: hidden;
     padding-bottom: 0.5rem;
+    padding-left: 5px;
+    border-radius: 10px;
     color: #000000;
     font-size: 24px;
+    background-color: #F6F6F6;
 }
 
 .q-form-normal-input:focus {
