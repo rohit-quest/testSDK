@@ -15,3 +15,6 @@ import giftPng from './gift.png'
 import creditBannerPng from './creditBanner.png'
 
 export { googleImg, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like,closePng,copyPng,twitterPng,telegramPng,discordPng,giftPng,creditBannerPng };
+
+
+

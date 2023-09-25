@@ -1,0 +1,326 @@
+@import "https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Kanit&family=Neucha&family=Roboto:wght@100;400;500&family=Xanh+Mono&display=swap";
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes scrollAnimation {
+    0% {
+        transform: translateY(0);
+        opacity: 1
+    }
+    49% {
+        transform: translateY(-100vh);
+        opacity: 0
+    }
+    50% {
+        transform: translateY(100vh);
+        opacity: 0
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1
+    }
+}
+
+@keyframes scrollAnimationRev {
+    0% {
+        transform: translateY(0);
+        opacity: 1
+    }
+    49% {
+        transform: translateY(100vh);
+        opacity: 0
+    }
+    50% {
+        transform: translateY(-100vh);
+        opacity: 0
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1
+    }
+}
+
+.scroll-animation {
+    animation: scrollAnimation 0.4s ease;
+}
+
+.scroll-animation-rev {
+    animation: scrollAnimationRev 0.4s ease;
+}
+
+.q-form {
+    font-family: 'Hanken Grotesk', sans-serif;
+}
+
+.q-form-text-area {
+    padding: 10px;
+}
+
+.q-form-radio {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 3rem;
+    row-gap: 0.5rem;
+}
+
+.q-form-radio-flex {
+    display: flex;
+    margin-bottom: 0.75rem;
+    align-items: center;
+}
+
+.q-form-radio-input {
+    border-radius: 0.25rem;
+    width: 1rem;
+    height: 1rem;
+    color: #EF4444;
+    cursor: pointer;
+}
+
+.q-form-radio-label {
+    margin-left: 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    color: #111827;
+}
+
+.q-form-multi {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+.q-form-multi-ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    width: 100%;
+    list-style: none;
+}
+
+.q-form-multi-li {
+    display: none;
+}
+
+.q-form-multi-for {
+    display: inline-flex;
+    padding: 0.25rem 1.25rem;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 1rem;
+    border-width: 2px;
+    border-color: #1F2937;
+    color: #1F2937;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+
+.q-form-multi-for:hover {
+    color: #4B5563;
+    background-color: #F9FAFB;
+}
+
+.q-form-multi-li:checked + .q-form-multi-for {
+    color: white;
+    background-color: #01172c;
+}
+
+.q-form-multi-block {
+    display: block;
+}
+
+.q-form-text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.q-form-normal-input {
+    padding-top: 0.5rem;
+    max-width: 90%;
+    overflow: hidden;
+    padding-bottom: 0.5rem;
+    padding-left: 5px;
+    border-radius: 10px;
+    color: #000000;
+    font-size: 24px;
+    background-color: #F6F6F6;
+}
+
+.q-form-normal-input:focus {
+    border-style: none;
+    outline-style: none;
+}
+
+.q-form-date-label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+}
+
+.q-form-date-input {
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    border-style: none;
+    outline-style: none;
+    width: 100%;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    background-color: #F3F4F6;
+}
+
+.q-form-date-input:focus {
+    padding: 0.75rem;
+    width: 100%;
+}
+
+.q-form-survey {
+    display: flex;
+    position: absolute;
+    padding: 2.5rem;
+    flex-direction: column;
+    gap: 3rem;
+    justify-content: center;
+    align-items: flex-start;
+    width: 50%;
+}
+
+.q-form-survey-h4 {
+    font-weight: 400;
+}
+
+.q-form-survey-div {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.q-form-survey-prev {
+    display: inline-flex;
+    padding: 1.5rem 2.75rem;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5rem;
+    border-width: 1px;
+    border-style: solid;
+    height: 3.5rem;
+    background-color: #ffffff;
+    width: 165px;
+    font-size: 24px;
+    cursor: pointer;
+    border-color: grey;
+}
+
+.q-form-survey-next {
+    cursor: pointer;
+    display: inline-flex;
+    background: black;
+    color: white;
+    padding: 1.5rem 2.75rem;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5rem;
+    border: 1px solid grey;
+    height: 3.5rem;
+    width: fit-content;
+    font-size: 24px;
+}
+
+.q-form-survey-enter {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.q-form-first {
+    display: flex;
+    position: absolute;
+    padding: 2.5rem;
+    flex-direction: column;
+    gap: 3rem;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.q-form-first-h2 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 700;
+}
+
+.q-form-font-normal {
+    font-weight: 400;
+}
+
+.q-form-first-div {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.q-form-first-next {
+    cursor: pointer;
+    display: inline-flex;
+    padding: 1rem 2.75rem;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5rem;
+    border: 1px solid grey;
+    height: 3.5rem;
+    background: black;
+    color: white;
+    font-size: 24px;
+    width: fit-content;
+    font-size: 24px;
+}
+
+.q-form-first-enter {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.q-form {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.q-form-progress {
+    position: fixed;
+    height: 0.5rem;
+    background-color: #1D4ED8;
+}
+
+.q-form-div {
+    display: flex;
+    position: relative;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+    align-items: center;
+    height: 100%;
+}
+
+.q-form-survey-input-div{
+    width: 100%;
+}
+
+@media only screen and (max-width: 1100px) {
+   .q-form-survey-div{
+       flex-wrap: wrap;
+   }
+}@media only screen and (max-width: 700px) {
+   .q-form-survey-div{
+       flex-wrap: wrap;
+   }
+    .q-form-survey{
+        align-items: center;
+    }
+}

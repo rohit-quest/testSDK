@@ -84,20 +84,20 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
   }
 
   return (
-    <div className="questLabs">
-      <div className="relative mt-5">
+    <div className="questLabs-google">
+      <div style={{marginTop:"10px", position:"relative" }}>
         {showLoader && <Loader />}
         <a
+          style={{ textDecoration: 'none', color:'black' }}
           href={`https://accounts.google.com/o/oauth2/auth?client_id=${googleClientId}&redirect_uri=${redirectUri}&scope=profile%20email&response_type=code`}
         >
           <div
+          className='q-g-btn'
             style={{
-              border: '2px solid black',
               backgroundColor: btnColor,
               fontFamily,
               color: btnTextColor,
             }}
-            className={`h-14 text-18 p-3 flex items-center justify-center rounded-lg text-black`}
           >
             Sign in with Google
             <img className="ml-auto" src={googleSvg} alt="google-logo" />

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useContext } from "react";
+import { useContext } from 'react';
 import QuestContext from '../QuestWrapper';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
@@ -7,6 +7,7 @@ import config from '../../config';
 import EmailLogin from './EmailLogin';
 import GoogleLogin from './GoogleLogin';
 import { ToastContainer } from 'react-toastify';
+import './Login.css';
 export interface QuestLoginProps {
   googleClientId: string;
   redirectUri: string;
@@ -96,40 +97,46 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   }, [entityId, btnColor, backgroundColor, email, google, btnTextColor]);
 
   return (
-    <div className='questLabs' >
+    <div className="questLabs">
       <ToastContainer />
-      <div className="flex items-center justify-center h-screen">
+      <div className="q-parent-container">
         <div
           style={{
             ...(gradient
               ? { backgroundImage: bgColor }
               : { backgroundColor: bgColor }),
-            width: '534px',
-            height: '561px',
-            borderRadius: '10px',
-            boxShadow: '0px 0px 6px 0px #00000073',
           }}
-          className="quest-login-container"
+          className="q-login-container"
         >
           <div style={{ padding: '10% 10%' }}>
             {!otpScreen && (
               <>
                 <h1
-                  className="font-bold text-4xl text-center"
-                  style={{ color: textColor, fontFamily }}
+                  className="q-login-h1"
+                  style={{
+                    color: textColor,
+                    fontFamily: fontFamily,
+                  }}
                 >
                   Welcome Back
                 </h1>
                 <h4
-                  className="font-normal mb-4 text-center"
-                  style={{ color: textColor, fontFamily }}
+                  className="q-login-h4"
+                  style={{
+                    color: textColor,
+                    fontFamily: fontFamily,
+                  }}
                 >
                   Welcome Back, Please enter your details
                 </h4>
               </>
             )}
             {isEmail && (
-              <div className="w-full">
+              <div
+                style={{
+                  width: '100%',
+                }}
+              >
                 <EmailLogin
                   {...{
                     textColor,
@@ -145,15 +152,19 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   }}
                 />
                 {!otpScreen && isGoogle && (
-                  <div className="mt-5 flex items-center justify-between">
-                    <div className="flex-grow border-2 border-solid border-gray-700"></div>
+                  <div className="q-login-or-container">
+                    <div className="login-or-line"></div>
                     <span
-                      style={{ color: textColor, fontFamily }}
-                      className="whitespace-no-wrap px-4"
+                      style={{
+                        color: textColor,
+                        fontFamily,
+                        whiteSpace: 'nowrap',
+                        padding: '0.5rem',
+                      }}
                     >
                       Or Continue With
                     </span>
-                    <div className="flex-grow border-2 border-solid border-gray-700"></div>
+                    <div className="login-or-line"></div>
                   </div>
                 )}
                 {!otpScreen && isGoogle && (
@@ -189,8 +200,11 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
               />
             )}
             <p
-              className="mt-3 text-sm text-center"
-              style={{ color: textColor, fontFamily }}
+              className="powered-by"
+              style={{
+                color: textColor,
+                fontFamily,
+              }}
             >
               ** Powered by Quest Labs
             </p>
