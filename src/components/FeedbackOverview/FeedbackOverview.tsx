@@ -9,6 +9,7 @@ import axios from 'axios';
 import ContactContent from './Contact';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
+import Loader from '../Login/Loader';
 
 const feedback = (
   <svg
@@ -408,16 +409,62 @@ const FeedbackComponent: React.FC<feedbackCompProps> = ({
   font,
 }) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
   const [formdata, setFormdata] = useState<{ [key: number]: [FormDataItem] }>(
     {}
   );
+  const [showLoader, setShowLoader] = useState<boolean>(false);
   const [submit, setSubmit] = useState<boolean>(false);
   const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
   const [answer, setAnswer] = useState<any[]>([]);
 
-  const handleOptionClick = (option: string) => {
+  const handleOptionClick = (option: string, quest: string) => {
     setSelectedOption(option);
+    setSelectedQuest(quest);
+    setAnswer([]);
   };
+
+  function returnAnswers(index:number) {
+    const headers = {
+      apiKey: apiKey,
+      apisecret: apiSecret,
+      userId: userId,
+      token: token,
+    };
+    if (answer.length !== 0) {
+      const ansArr = formdata[index].map((ans: any) => ({
+        question: ans?.question || '',
+        answer: [answer[ans?.criteriaId] || ''],
+        criteriaId: ans?.criteriaId || '',
+      }));
+      const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${selectedQuest}/verify-all?userId=${userId}`;
+      const requestData = {
+        criterias: ansArr,
+      };
+      setShowLoader(true);
+      axios
+        .post(request, requestData, { headers: headers })
+        .then((response) => {
+          if (response.data.success) {
+            toast.success('Thank you for your feedback');
+            setSubmit(true);
+            setTimeout(() => {
+              window.location.reload();
+            }, 5000);
+          } else {
+            toast.error(response.data.error);
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        })
+        .finally(() => {
+          setShowLoader(false);
+        });
+    } else {
+      toast.error('Please fill in all required fields.');
+    }
+  }
 
   const handleBackClick = () => {
     setSelectedOption(null);
@@ -517,14 +564,6 @@ const FeedbackComponent: React.FC<feedbackCompProps> = ({
       });
     }
   };
-  function returnAnswers() {
-    if (answer.length !== 0) {
-      setSubmit(true);
-    } else {
-      toast.error('Please fill in all required fields.');
-    }
-    console.log('ans', answer);
-  }
   const handleThanks = () => {
     setSubmit(false);
     setSelectedOption(null);
@@ -532,6 +571,7 @@ const FeedbackComponent: React.FC<feedbackCompProps> = ({
 
   return (
     <div className="q-parent-container">
+      {showLoader && <Loader />}
       <ToastContainer />
       <div className="q-fw-div">
         {selectedOption && !submit ? (
@@ -564,7 +604,7 @@ const FeedbackComponent: React.FC<feedbackCompProps> = ({
             <div style={{ padding: '5px' }}>
               {selectedOption === 'General Feedback' && (
                 <GeneralFeedbackContent
-                  handleSubmit={returnAnswers}
+                  handleSubmit={() => returnAnswers(0)}
                   handleUpdate={handleUpdate}
                   formdata={formdata[0]}
                   font={font}
@@ -575,7 +615,7 @@ const FeedbackComponent: React.FC<feedbackCompProps> = ({
               )}
               {selectedOption === 'Report a Bug' && (
                 <BugContent
-                  handleSubmit={returnAnswers}
+                  handleSubmit={() => returnAnswers(1)}
                   handleUpdate={handleUpdate}
                   formdata={formdata[1]}
                   font={font}
@@ -586,7 +626,7 @@ const FeedbackComponent: React.FC<feedbackCompProps> = ({
               )}
               {selectedOption === 'Request a Feature' && (
                 <FeatureContent
-                  handleSubmit={returnAnswers}
+                  handleSubmit={() => returnAnswers(2)}
                   handleUpdate={handleUpdate}
                   formdata={formdata[2]}
                   font={font}
@@ -597,7 +637,7 @@ const FeedbackComponent: React.FC<feedbackCompProps> = ({
               )}
               {selectedOption === 'Contact us' && (
                 <ContactContent
-                  handleSubmit={returnAnswers}
+                  handleSubmit={() => returnAnswers(3)}
                   handleUpdate={handleUpdate}
                   formdata={formdata[3]}
                   font={font}
@@ -641,7 +681,7 @@ const FeedbackComponent: React.FC<feedbackCompProps> = ({
           >
             {questIds[0] && (
               <div
-                onClick={() => handleOptionClick('General Feedback')}
+                onClick={() => handleOptionClick('General Feedback', questIds[0])}
                 className="q-hover q-fw-cards"
               >
                 {feedback}
@@ -657,7 +697,7 @@ const FeedbackComponent: React.FC<feedbackCompProps> = ({
             )}
             {questIds[1] && (
               <div
-                onClick={() => handleOptionClick('Report a Bug')}
+                onClick={() => handleOptionClick('Report a Bug', questIds[1])}
                 className="q-hover q-fw-cards"
               >
                 {bug}
@@ -677,7 +717,7 @@ const FeedbackComponent: React.FC<feedbackCompProps> = ({
             )}
             {questIds[2] && (
               <div
-                onClick={() => handleOptionClick('Request a Feature')}
+                onClick={() => handleOptionClick('Request a Feature', questIds[2])}
                 className="q-hover q-fw-cards"
               >
                 <div>{feature}</div>
@@ -697,7 +737,7 @@ const FeedbackComponent: React.FC<feedbackCompProps> = ({
             )}
             {questIds[3] && (
               <div
-                onClick={() => handleOptionClick('Contact us')}
+                onClick={() => handleOptionClick('Contact us', questIds[3])}
                 className="q-hover q-fw-cards"
               >
                 <div>{contact}</div>

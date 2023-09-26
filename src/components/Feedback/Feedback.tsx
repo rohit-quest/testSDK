@@ -3,6 +3,9 @@ import QuestContext from '../QuestWrapper';
 import axios from 'axios';
 import config from '../../config';
 import './Feedback.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+import Loader from '../Login/Loader';
 
 interface FeedbackProps {
   heading?: string;
@@ -15,9 +18,6 @@ interface FeedbackProps {
   btnTextColor?: string;
   textColor?: string;
   font?: string;
-  getAnswers?: Function;
-  answer?: any;
-  setAnswer?: any;
   supportUrl?: string;
 }
 
@@ -31,10 +31,7 @@ const Feedback: React.FC<FeedbackProps> = ({
   btnTextColor,
   textColor,
   font,
-  getAnswers,
   bgColor,
-  answer,
-  setAnswer,
   supportUrl,
 }) => {
   interface FormDataItem {
@@ -48,9 +45,12 @@ const Feedback: React.FC<FeedbackProps> = ({
   const [rating, setRating] = useState<number>(0);
   const [comment, setComment] = useState<string>('');
   const [likePopup, setLikePopup] = useState<boolean>(false);
+  const [thanksPopup, setThanksPopup] = useState<boolean>(false);
   const [formdata, setFormdata] = useState<FormDataItem[]>([]);
   const [gradient, setGradient] = useState<boolean>(false);
   const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
+  const [answer, setAnswer] = useState<any[]>([]);
+  const [showLoader, setShowLoader] = useState<boolean>(false);
   const whiteStar = (
     <svg
       width="45"
@@ -156,6 +156,21 @@ const Feedback: React.FC<FeedbackProps> = ({
     });
   };
 
+  const handleComments = (id: string, msg: string) => {
+    if (msg.length > 0) {
+      setAnswer({
+        ...answer,
+        [id]: msg,
+      });
+    } else {
+      setAnswer({
+        ...answer,
+        [id]: 'none',
+      });
+    }
+    returnAnswers();
+  };
+
   const handleRatingChange2 = (rating: number) => {
     setRating(rating);
     setLikePopup(true);
@@ -191,38 +206,29 @@ const Feedback: React.FC<FeedbackProps> = ({
         });
         criterias = Array.isArray(criterias) ? criterias : [];
         setFormdata([...criterias]);
-        let ansArray: any = {};
-        criterias.forEach((criteria: any) => {
-          if (criteria.type === 'USER_INPUT_MULTI_CHOICE') {
-            if (!answer[criteria.criteriaId]) {
-              ansArray[criteria.criteriaId] = [];
-            }
-          } else {
-            if (!answer[criteria.criteriaId]) {
-              ansArray[criteria.criteriaId] = '';
-            }
-          }
-        });
-
-        setAnswer({ ...answer, ...ansArray });
       });
     }
   }, []);
 
-  const handleUpdate = (e: any, id: string, j: string) => {
+  const handleUpdate = (e: any, id: string, j: string, k?: number) => {
     if (e.target.checked === true && j === 'check') {
-      let ans = answer[id] || [];
+      let ans = answer[id as unknown as number] || [];
       ans.push(e.target.value);
       setAnswer({
         ...answer,
         [id]: ans,
       });
+    } else if (k) {
+      setAnswer({
+        ...answer,
+        [id]: k,
+      });
     } else if (
       e.target.checked === false &&
-      typeof answer[id] === 'object' &&
+      typeof answer[id as unknown as number] === 'object' &&
       j === 'check'
     ) {
-      let ans = answer[id];
+      let ans = answer[id as unknown as number];
       let mod_ans = ans.filter((an: string | number) => an !== e.target.value);
       setAnswer({
         ...answer,
@@ -237,19 +243,44 @@ const Feedback: React.FC<FeedbackProps> = ({
   };
 
   function returnAnswers() {
-    if (getAnswers) {
+    const headers = {
+      apiKey: apiKey,
+      apisecret: apiSecret,
+      userId: userId,
+      token: token,
+    };
+    if (answer.length !== 0) {
       const ansArr = formdata.map((ans: any) => ({
         question: ans?.question || '',
-        answer: answer[ans?.criteriaId] || '',
+        answer: [answer[ans?.criteriaId] || ''],
+        criteriaId: ans?.criteriaId || '',
       }));
-      getAnswers(ansArr);
-    }
-  }
-
-  function handleShort() {
-    const ans = [comment, rating];
-    if (getAnswers) {
-      getAnswers(ans);
+      const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${userId}`;
+      const requestData = {
+        criterias: ansArr,
+      };
+      setShowLoader(true);
+      axios
+        .post(request, requestData, { headers: headers })
+        .then((response) => {
+          if (response.data.success) {
+            toast.success('Thank you for your feedback');
+            setThanksPopup(true);
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
+          } else {
+            toast.error(response.data.error);
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        })
+        .finally(() => {
+          setShowLoader(false);
+        });
+    } else {
+      toast.error('Please fill in all required fields.');
     }
   }
 
@@ -273,7 +304,6 @@ const Feedback: React.FC<FeedbackProps> = ({
           name="normalInput"
           className="q-input-box"
           onChange={(e) => handleUpdate(e, criteriaId, '')}
-          value={answer[criteriaId]}
           placeholder={`Enter your ${question}`}
         />
       </div>
@@ -299,13 +329,12 @@ const Feedback: React.FC<FeedbackProps> = ({
           style={{ height: '150px' }}
           className="q-input-box"
           onChange={(e) => handleUpdate(e, criteriaId, '')}
-          value={answer[criteriaId]}
         />
       </div>
     );
   };
 
-  const likePopupContent = () => {
+  const likePopupContent = (criteriaId: any, comment: any) => {
     return (
       <div className="questLabs">
         <div>
@@ -327,7 +356,7 @@ const Feedback: React.FC<FeedbackProps> = ({
           </p>
           <input
             style={{ height: '60px' }}
-            placeholder="Comments (optional)"
+            placeholder="Comments"
             type="text"
             className="q-input-box"
             value={comment}
@@ -349,11 +378,14 @@ const Feedback: React.FC<FeedbackProps> = ({
             </span>
           </div>
           <div className="q-feed-btns-div">
-            <button onClick={handleShort} className="q-btn-feed">
+            <button
+              onClick={() => handleComments(criteriaId, comment)}
+              className="q-btn-feed"
+            >
               Skip
             </button>
             <button
-              onClick={handleShort}
+              onClick={() => handleComments(criteriaId, comment)}
               className="q-btn-feed"
               style={{
                 backgroundColor: btnColor ? btnColor : 'black',
@@ -370,6 +402,8 @@ const Feedback: React.FC<FeedbackProps> = ({
 
   return (
     <div className="q-parent-container">
+      {showLoader && <Loader />}
+      <ToastContainer />
       <div
         style={{
           ...(gradient
@@ -381,77 +415,97 @@ const Feedback: React.FC<FeedbackProps> = ({
         {formdata.length > 0 ? (
           formdata[0].type !== 'LIKE_DISLIKE' &&
           formdata[0].type !== 'RATING' ? (
-            <div className="questLabs">
-              <h2
-                className="q-h1"
-                style={{ fontFamily: font, color: textColor, fontSize: '28px' }}
-              >
-                {heading}
-              </h2>
-              <p
-                className="q-sub"
-                style={{ fontFamily: font, color: textColor, fontSize: '18px' }}
-              >
-                {subHeading}
-              </p>
-              <form>
-                {formdata.map((data: any) => {
-                  if (data.type === 'USER_INPUT_TEXT') {
-                    return normalInput(
-                      data.question || '',
-                      data.criteriaId || ''
-                    );
-                  } else if (data.type === 'USER_INPUT_TEXTAREA') {
-                    return normalInput2(
-                      data.question || '',
-                      data.criteriaId || ''
-                    );
-                  } else if (data.type === 'RATING') {
-                    return (
-                      <div className="mb-4">
-                        <label
-                          style={{
-                            fontFamily: font,
-                            color: textColor,
-                          }}
-                          className="q-h4"
-                        >
-                          Rating Scale
-                        </label>
-                        <div
-                          style={{
-                            display: 'flex',
-                          }}
-                        >
-                          {[1, 2, 3, 4, 5].map((star) => (
-                            <div
-                              className="q-star-div"
-                              key={star}
-                              onClick={() =>
-                                handleRatingChange(data.criteriaId, star)
-                              }
+            <>
+              {!thanksPopup && (
+                <div className="questLabs">
+                  <h2
+                    className="q-h1"
+                    style={{
+                      fontFamily: font,
+                      color: textColor,
+                      fontSize: '28px',
+                    }}
+                  >
+                    {heading}
+                  </h2>
+                  <p
+                    className="q-sub"
+                    style={{
+                      fontFamily: font,
+                      color: textColor,
+                      fontSize: '18px',
+                    }}
+                  >
+                    {subHeading}
+                  </p>
+                  <form>
+                    {formdata.map((data: any) => {
+                      if (data.type === 'USER_INPUT_TEXT') {
+                        return normalInput(
+                          data.question || '',
+                          data.criteriaId || ''
+                        );
+                      } else if (data.type === 'USER_INPUT_TEXTAREA') {
+                        return normalInput2(
+                          data.question || '',
+                          data.criteriaId || ''
+                        );
+                      } else if (data.type === 'RATING') {
+                        return (
+                          <div className="mb-4">
+                            <label
+                              style={{
+                                fontFamily: font,
+                                color: textColor,
+                              }}
+                              className="q-h4"
                             >
-                              {star <= rating ? blackStar : whiteStar}
+                              Rating Scale
+                            </label>
+                            <div
+                              style={{
+                                display: 'flex',
+                              }}
+                            >
+                              {[1, 2, 3, 4, 5].map((star) => (
+                                <div
+                                  className="q-star-div"
+                                  key={star}
+                                  onClick={() =>
+                                    handleRatingChange(data.criteriaId, star)
+                                  }
+                                >
+                                  {star <= rating ? blackStar : whiteStar}
+                                </div>
+                              ))}
                             </div>
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  }
-                })}
-                <div
-                  style={{
-                    backgroundColor: btnColor,
-                    color: btnTextColor,
-                    fontFamily: font,
-                  }}
-                  onClick={returnAnswers}
-                  className="q-btn-continue"
-                >
-                  Submit
+                          </div>
+                        );
+                      }
+                    })}
+                    <div
+                      style={{
+                        backgroundColor: btnColor,
+                        color: btnTextColor,
+                        fontFamily: font,
+                      }}
+                      onClick={returnAnswers}
+                      className="q-btn-continue"
+                    >
+                      Submit
+                    </div>
+                  </form>
                 </div>
-              </form>
-            </div>
+              )}
+              {thanksPopup && (
+                <div className="like-dislike-cont">
+                  <div className="icon-inside-like-dislike">{tick}</div>
+                  <p className="p-2" style={{ color: '#00A96D' }}>
+                    Thanks again for your feedback.
+                  </p>
+                </div>
+              )}
+            </>
           ) : formdata[0].type === 'LIKE_DISLIKE' ? (
             <div className="questLabs">
               {!likePopup && (
@@ -489,7 +543,7 @@ const Feedback: React.FC<FeedbackProps> = ({
                   </div>
                 </div>
               )}
-              {likePopup && likePopupContent()}
+              {likePopup && likePopupContent(formdata[0].criteriaId, comment)}
             </div>
           ) : formdata[0].type === 'RATING' ? (
             <div className="questLabs">
@@ -515,11 +569,13 @@ const Feedback: React.FC<FeedbackProps> = ({
                   ))}
                 </div>
               </div>
-              {likePopup && likePopupContent()}
+              {likePopup && likePopupContent(formdata[0].criteriaId, comment)}
             </div>
           ) : null
         ) : (
-          <p className="text-center">Form data is empty</p>
+          <div className="questLabs">
+            <p className="q-center">Form data is empty</p>
+          </div>
         )}
       </div>
     </div>
