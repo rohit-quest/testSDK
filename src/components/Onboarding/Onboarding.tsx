@@ -92,16 +92,11 @@ function OnBoarding(props: QuestLoginProps) {
 
     useEffect(() => {
         if (entityId) {
-            // let data = {
-            //     _id: "64f18c6c5554c919f7a3817c",
-            //     Email: "soumitra.petbindhi@gmail.com"
-            // }
-            // localStorage.setItem('persana-user', JSON.stringify(data));
             let externalUserId = cookies.get("externalUserId");
             let questUserId = cookies.get("questUserId");
             let questUserToken = cookies.get("questUserToken");
             let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
-            console.log(personalUserId)
+            
             const headers = {
                 apiKey: apiKey,
                 apisecret: apiSecret,
@@ -120,7 +115,7 @@ function OnBoarding(props: QuestLoginProps) {
                 if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == personalUserId._id) {
                     let header = {...headers, ...{questUserId, questUserToken}}
                     getQuestData(questUserId, header)
-
+                    axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}`, {count: 1}, {headers: header})
                 } else {
                     axios.post(`${config.BACKEND_URL}api/users/external/login`, body, {headers})
                     .then((res) => {
@@ -133,6 +128,7 @@ function OnBoarding(props: QuestLoginProps) {
                         cookies.set("questUserId", userId, {path: "/", expires: date})
                         cookies.set("questUserToken", token, {path: "/", expires: date})
                         getQuestData(userId, header)
+                        axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}`, {count: 1}, {headers: header})
                     })
                 }
 
@@ -605,10 +601,13 @@ function OnBoarding(props: QuestLoginProps) {
             token: questUserToken
         }
 
+        getAnswers(ansArr);
+        
         axios.post(`${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${questUserId}`, {criterias}, {headers})
         .then((res) => console.log(res))
 
-        getAnswers(ansArr);
+        axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-complete?userId=${questUserId}`, {count: 1}, {headers})
+        .then((res) => console.log(res))
     }
     
     if (featureFlags[config.FLAG_CONSTRAINTS.OnboardingFlag]?.isEnabled == false) {
