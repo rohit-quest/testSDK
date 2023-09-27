@@ -124,3 +124,7 @@
 .q-tut-btn:disabled {
   cursor: not-allowed;
 }
+
+.progress-bar-fill, .q-tut-cont, .q-tut-label {
+  box-sizing: border-box;
+}

@@ -92,13 +92,13 @@
   align-items: center;
   height: 100vh;
 }
-*{
+* {
   margin: 0;
 }
 
-*,
-.questLabs :before,
-.questLabs :after {
+.questLabs :before, 
+.q-input-box,
+.q-btn-continue, .questLabs :after {
   box-sizing: border-box;
   border-width: 0;
   border-style: solid;

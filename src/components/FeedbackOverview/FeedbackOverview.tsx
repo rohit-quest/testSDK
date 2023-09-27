@@ -399,7 +399,7 @@ interface FormDataItem {
   required?: boolean;
   placeholder?: string;
 }
-const FeedbackComponent: React.FC<feedbackCompProps> = ({
+const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   userId,
   token,
   questIds,
@@ -760,4 +760,4 @@ const FeedbackComponent: React.FC<feedbackCompProps> = ({
   );
 };
 
-export default FeedbackComponent;
+export default FeedbackWorkflow;
