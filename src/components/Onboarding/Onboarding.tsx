@@ -200,6 +200,19 @@ function OnBoarding(props: QuestLoginProps) {
         }
 
         if (currentQuestions.length > 0 && c == currentQuestions.length) {
+            let questUserId = cookies.get("questUserId");
+            let questUserToken = cookies.get("questUserToken");
+    
+            let headers = {
+                apikey: apiKey,
+                apisecret: apiSecret,
+                userId: questUserId,
+                token: questUserToken
+            }
+            if (!!design && Number(currentPage) + 1 != design?.length) {
+                axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-complete-page-${Number(currentPage) + 1}?userId=${questUserId}`, {count: 1}, {headers})
+            }
+
             setButtonFlag(true);
         } else {
             setButtonFlag(false);
@@ -604,10 +617,9 @@ function OnBoarding(props: QuestLoginProps) {
         getAnswers(ansArr);
         
         axios.post(`${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${questUserId}`, {criterias}, {headers})
-        .then((res) => console.log(res))
 
         axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-complete?userId=${questUserId}`, {count: 1}, {headers})
-        .then((res) => console.log(res))
+        
     }
     
     if (featureFlags[config.FLAG_CONSTRAINTS.OnboardingFlag]?.isEnabled == false) {
