@@ -96,9 +96,10 @@
   margin: 0;
 }
 
-.questLabs :before, 
+.questLabs :before,
 .q-input-box,
-.q-btn-continue, .questLabs :after {
+.q-btn-continue,
+.questLabs :after {
   box-sizing: border-box;
   border-width: 0;
   border-style: solid;
