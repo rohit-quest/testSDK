@@ -43,17 +43,48 @@ export const QuestProvider = (props: Props) => {
   const [featureFlags, setFeatureFlags] = useState()
 
   
-  try{
-    const eventSource = new EventSource(`${config.BACKEND_URL}api/entities/${props.entityId}/featureFlags/sdk?apikey=${props.apiKey}&apisecret=${props.apiSecret}&source=reactSDK`);
-      eventSource.addEventListener('message', async (event) => {
-        const updatedConfig = await JSON.parse(event.data);
+  class RateLimitedEventSource {
+    config: { entityId: string; apiKey: string; apiSecret: string; };
+    eventSource: null;
+    lastRequestTime: number;
+    minRequestInterval: number;
+    constructor(config: { entityId: string; apiKey: string; apiSecret: string; }) {
+      this.config = config;
+      this.eventSource = null;
+      this.lastRequestTime = 0;
+      this.minRequestInterval = 1000;
+      this.initializeEventSource();
+    }
+  
+    initializeEventSource() {
+      const { entityId, apiKey, apiSecret } = this.config;
+      this.eventSource = new EventSource(`${config.BACKEND_URL}api/entities/${entityId}/featureFlags/stream?apikey=${apiKey}&apisecret=${apiSecret}`);
+      this.eventSource.addEventListener('message', this.handleMessage.bind(this));
+    }
+  
+    handleMessage(event: { data: string; }) {
+      const currentTime = Date.now();
+      const timeSinceLastRequest = currentTime - this.lastRequestTime;
+  
+      if (timeSinceLastRequest >= this.minRequestInterval) {
+        this.lastRequestTime = currentTime;
+  
+        const updatedConfig = JSON.parse(event.data);
         const flagsObject = updatedConfig.data.reduce((acc, flag) => { acc[flag.flagName] = flag; return acc; }, {});
-        console.log(flagsObject);
-        setFeatureFlags(flagsObject)
-      });
-  } catch(err) {
-
+        if (updatedConfig.entityId == props.entityId) {
+          setFeatureFlags(flagsObject)
+        }
+      }
+    }
   }
+  
+  // Usage
+  const rateLimitedEventSource = new RateLimitedEventSource({
+    entityId: props.entityId,
+    apiKey: props.apiKey,
+    apiSecret: props.apiSecret,
+  });
+  
 
 
 
