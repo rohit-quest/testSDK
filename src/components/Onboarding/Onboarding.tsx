@@ -115,7 +115,7 @@ function OnBoarding(props: QuestLoginProps) {
                 if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == personalUserId._id) {
                     let header = {...headers, ...{questUserId, questUserToken}}
                     getQuestData(questUserId, header)
-                    axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}`, {count: 1}, {headers: header})
+                    axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers: header})
                 } else {
                     axios.post(`${config.BACKEND_URL}api/users/external/login`, body, {headers})
                     .then((res) => {
@@ -128,7 +128,7 @@ function OnBoarding(props: QuestLoginProps) {
                         cookies.set("questUserId", userId, {path: "/", expires: date})
                         cookies.set("questUserToken", token, {path: "/", expires: date})
                         getQuestData(userId, header)
-                        axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}`, {count: 1}, {headers: header})
+                        axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/onboarding-view?userId=${userId}&questId=${questId}`, {count: 1}, {headers: header})
                     })
                 }
 
@@ -210,7 +210,7 @@ function OnBoarding(props: QuestLoginProps) {
                 token: questUserToken
             }
             if (!!design && Number(currentPage) + 1 != design?.length) {
-                axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-complete-page-${Number(currentPage) + 1}?userId=${questUserId}`, {count: 1}, {headers})
+                axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-complete-page-${Number(currentPage) + 1}?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers})
             }
 
             setButtonFlag(true);
@@ -618,7 +618,7 @@ function OnBoarding(props: QuestLoginProps) {
         
         axios.post(`${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${questUserId}`, {criterias}, {headers})
 
-        axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-complete?userId=${questUserId}`, {count: 1}, {headers})
+        axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-complete?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers})
         
     }
     
