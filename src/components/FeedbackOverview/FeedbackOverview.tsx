@@ -6,7 +6,7 @@ import { useContext } from 'react';
 import QuestContext from '../QuestWrapper';
 import config from '../../config';
 import axios from 'axios';
-import ContactContent from './Contact';
+// import ContactContent from './Contact';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import Loader from '../Login/Loader';
@@ -390,6 +390,7 @@ interface feedbackCompProps {
   btnTextColor?: string;
   textColor?: string;
   font?: string;
+  contactUrl?: string;
 }
 interface FormDataItem {
   type?: string;
@@ -407,6 +408,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   btnTextColor,
   textColor,
   font,
+  contactUrl,
 }) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
@@ -419,9 +421,13 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   const [answer, setAnswer] = useState<any[]>([]);
 
   const handleOptionClick = (option: string, quest: string) => {
-    setSelectedOption(option);
-    setSelectedQuest(quest);
-    setAnswer([]);
+    if (option === 'Contact us' && contactUrl) {
+      window.location.href = contactUrl;
+    } else {
+      setSelectedOption(option);
+      setSelectedQuest(quest);
+      setAnswer([]);
+    }
   };
 
   function returnAnswers(index:number) {
@@ -570,7 +576,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   };
 
   return (
-    <div className="q-parent-container">
+    <div style={{position:"fixed"}} className="q-parent-container">
       {showLoader && <Loader />}
       <ToastContainer />
       <div className="q-fw-div">
@@ -636,15 +642,16 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 />
               )}
               {selectedOption === 'Contact us' && (
-                <ContactContent
-                  handleSubmit={() => returnAnswers(3)}
-                  handleUpdate={handleUpdate}
-                  formdata={formdata[3]}
-                  font={font}
-                  textColor={textColor}
-                  btnColor={btnColor}
-                  btnTextColor={btnTextColor}
-                />
+                <div></div>
+                // <ContactContent
+                //   handleSubmit={() => returnAnswers(3)}
+                //   handleUpdate={handleUpdate}
+                //   formdata={formdata[3]}
+                //   font={font}
+                //   textColor={textColor}
+                //   btnColor={btnColor}
+                //   btnTextColor={btnTextColor}
+                // />
               )}
             </div>
           </div>
