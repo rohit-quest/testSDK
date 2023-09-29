@@ -36,38 +36,58 @@ export const Context = createContext({
   featureFlags: {}
 });
 
+
+
 export const QuestProvider = (props: Props) => {
   const [user, setUser] = useState<User>({});
-  const [featureFlags, setFeatureFlags] = useState()
-
-  useEffect(() => {
-    getAllFeatureFlagsForQuest()
-  }, [])
+  const [featureFlags, setFeatureFlags] = useState({})
 
   
+  // class RateLimitedEventSource {
+  //   config: { entityId: string; apiKey: string; apiSecret: string; };
+  //   eventSource: null;
+  //   lastRequestTime: number;
+  //   minRequestInterval: number;
+  //   constructor(config: { entityId: string; apiKey: string; apiSecret: string; }) {
+  //     this.config = config;
+  //     this.eventSource = null;
+  //     this.lastRequestTime = 0;
+  //     this.minRequestInterval = 1000000;
+  //     this.initializeEventSource();
+  //   }
+  
+  //   initializeEventSource() {
+  //     const { entityId, apiKey, apiSecret } = this.config;
+  //     this.eventSource = new EventSource(`http://localhost:8081/api/entities/e-0000000000/featureFlags/stream?apikey=k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be&apisecret=s-7462f377-2ce4-4593-a907-3a2a00cdf951be06358a-d95d-4576-b3b4-a07dda2dab36`);
+  //     this.eventSource.addEventListener('message', this.handleMessage.bind(this));
+  //   }
+  
+  //   handleMessage(event: { data: string; }) {
+  //     const currentTime = Date.now();
+  //     const timeSinceLastRequest = currentTime - this.lastRequestTime;
+  
+  //     if (timeSinceLastRequest >= this.minRequestInterval) {
+  //       this.lastRequestTime = currentTime;
+  
+  //       const updatedConfig = JSON.parse(event.data);
+  //       const flagsObject = updatedConfig.data.reduce((acc, flag) => { acc[flag.flagName] = {isEnabled: flag.isEnabled, isActive: flag.isActive}; return acc; }, {});
+  //       let cookies = new Cookies()
+  //       cookies.set("featureFlag", flagsObject)
+  //       // if (updatedConfig.entityId == props.entityId) {
+  //         setFeatureFlags(flagsObject)
+  //       // }
+  //     }
+  //   }
+  // }
+  
+  // Usage
+  // const rateLimitedEventSource = new RateLimitedEventSource({
+  //   entityId: props.entityId,
+  //   apiKey: props.apiKey,
+  //   apiSecret: props.apiSecret,
+  // });
+  
 
-  async function getAllFeatureFlagsForQuest() {
-    const cookies = new Cookies();
-    let featureFlags = cookies.get('featureFlags');
-    if (!!featureFlags && Object.keys(featureFlags).length != 0) {
-      setFeatureFlags(featureFlags)
-      return;
-    }
-
-    let request = config.BACKEND_URL + `api/entities/${props.entityId}/featureFlags`
-    var response = await axios.get(request, { headers: { apiKey: props.apiKey, apiSecret: props.apiSecret } });
-
-    if (response.data.success) {
-        // Transform the array into an object where the keys are flagNames
-        const flagsObject = response.data.data.reduce((acc, flag) => { acc[flag.flagName] = flag; return acc; }, {});
-        // Set the cookie with the flags object, with a 1-hour expiry time
-        const date = new Date();
-        date.setHours(date.getHours() + 1);  // Set the date 1 hour in the future
-        cookies.set('featureFlags', flagsObject, { path: '/', expires: date });
-        featureFlags = flagsObject;
-    }
-    setFeatureFlags(featureFlags)
-  }
 
 
   return (
