@@ -13,8 +13,9 @@ import discordPng from './discord.png';
 import telegramPng from './telegram.png';
 import giftPng from './gift.png'
 import creditBannerPng from './creditBanner.png'
+import creditCheck from './creditCheck.png'
 
-export { googleImg, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like,closePng,copyPng,twitterPng,telegramPng,discordPng,giftPng,creditBannerPng };
+export { googleImg, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like,closePng,copyPng,twitterPng,telegramPng,discordPng,giftPng,creditBannerPng,creditCheck };
 
 
 
