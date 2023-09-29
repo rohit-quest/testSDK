@@ -391,6 +391,11 @@ interface feedbackCompProps {
   textColor?: string;
   font?: string;
   contactUrl?: string;
+  isOpen?: boolean;
+  onClose?: Function;
+  backgroundColor?: string;
+  zIndex?:number;
+  topbarColor?: string;
 }
 interface FormDataItem {
   type?: string;
@@ -409,6 +414,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   textColor,
   font,
   contactUrl,
+  isOpen,
+  onClose,
+  backgroundColor,
+  zIndex,
+  topbarColor
 }) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
@@ -443,34 +453,55 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         answer: [answer[ans?.criteriaId] || ''],
         criteriaId: ans?.criteriaId || '',
       }));
-      const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${selectedQuest}/verify-all?userId=${userId}`;
-      const requestData = {
-        criterias: ansArr,
-      };
-      setShowLoader(true);
-      axios
-        .post(request, requestData, { headers: headers })
-        .then((response) => {
-          if (response.data.success) {
-            toast.success('Thank you for your feedback');
-            setSubmit(true);
-            setTimeout(() => {
-              window.location.reload();
-            }, 5000);
-          } else {
-            toast.error(response.data.error);
-          }
+      let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
+      if (!!personalUserId._id) {
+        const body = {
+          externalUserId: !!personalUserId && personalUserId._id,
+          entityId: entityId,
+        }
+
+        axios.post(`${config.BACKEND_URL}api/users/external/login`, body, {headers})
+          .then((res) => {
+            let {userId, token} = res.data;
+            let header = {...headers, ...{userId, token}}
+            setResult(header, userId)
         })
-        .catch((error) => {
-          console.error('Error:', error);
-        })
-        .finally(() => {
-          setShowLoader(false);
-        });
+      } else {
+        setResult(headers, userId)
+      }
+
+      function setResult(headers: object, userId: string) {
+        const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${selectedQuest}/verify-all?userId=${userId}`;
+          const requestData = {
+            criterias: ansArr,
+          };
+          setShowLoader(true);
+          axios
+            .post(request, requestData, { headers: headers })
+            .then((response) => {
+              if (response.data.success) {
+                toast.success('Thank you for your feedback');
+                setSubmit(true);
+                setTimeout(() => {
+                  window.location.reload();
+                }, 5000);
+              } else {
+                toast.error(response.data.error);
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            })
+            .finally(() => {
+              setShowLoader(false);
+            });
+      }
     } else {
       toast.error('Please fill in all required fields.');
     }
+      
   }
+
 
   const handleBackClick = () => {
     setSelectedOption(null);
@@ -576,13 +607,13 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   };
 
   return (
-    <div style={{position:"fixed"}} className="q-parent-container">
+    <div style={{position:"fixed", display: isOpen == true ? "flex" : "none", zIndex}} className="q-parent-container">
       {showLoader && <Loader />}
       <ToastContainer />
-      <div className="q-fw-div">
+      <div className="q-fw-div" style={{backgroundColor}}>
         {selectedOption && !submit ? (
           <div>
-            <div className="q-fw-heading">
+            <div className="q-fw-heading" style={{backgroundColor: topbarColor}}>
               <div
                 onClick={handleBackClick}
                 style={{
@@ -681,6 +712,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             </div>
           </div>
         ) : (
+          <div>
+            <div className='q-fw-crossBtn'>
+              <div onClick={() => onClose(false)}>{cross}</div>
+            </div>
           <div
             style={{
               padding: '25px',
@@ -761,8 +796,18 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               </div>
             )}
           </div>
+          </div>
         )}
+        <p
+          className="powered-by"
+          style={{
+            color: textColor,
+          }}
+        >
+          ** Powered by Quest Labs
+        </p>
       </div>
+      
     </div>
   );
 };

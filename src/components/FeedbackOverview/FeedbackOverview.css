@@ -19,8 +19,9 @@
 .q-fw-div {
   width: 480px;
   border-radius: 10px;
-  box-shadow: 0px 0px 6px 0px #00000073;
+  box-shadow: 0px 0px 20px 0px #00000073;
   border: 1px solid #e5e7eb;
+  background-color: white;
 }
 .q-fw-thanks {
   padding-bottom: 20%;
@@ -35,6 +36,22 @@
   cursor: pointer;
   padding: 12px;
   border-radius: 0.375rem;
+}
+
+.q-fw-crossBtn {
+  position: relative;
+  height: 10px;
+}
+.q-fw-crossBtn>div {
+  width: 25px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+.powered-by {
+  font-size: 0.875rem;
+  text-align: center;
 }
 
 
