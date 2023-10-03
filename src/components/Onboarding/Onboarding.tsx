@@ -631,7 +631,7 @@ function OnBoarding(props: QuestLoginProps) {
             <div
                className="q-onb-ch"
             >
-                {formdata.length && progressBar()}
+                {formdata.length > 0 && progressBar()}
                 {formdata.length > 0 && !!headingScreen &&
                     (typeof headingScreen == "object" && !!headingScreen.name ? (
                         <div>
