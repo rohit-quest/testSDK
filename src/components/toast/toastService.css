@@ -8,6 +8,8 @@
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
     right: 4%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.29);
+    border-radius: 5px;
 }
 
 .q-toast-msg{
@@ -22,6 +24,8 @@
 
 .q-toast-msg-div{
     font-size: 0.75rem;
+    display: flex;
+    gap: 10px;
     line-height: 1rem;
     font-weight: 500;
     color: #000000;

@@ -4,10 +4,15 @@ import OnBoarding from './src/components/Onboarding/Onboarding';
 import { QuestProvider } from './src/components/QuestWrapper';
 import Feedback from './src/components/Feedback/Feedback';
 import Badge from './src/components/Badge/Badge';
-import Tutorial from './src/components/TutorialScreen/TutorialScreen';
-import FeedbackWorkflow from './src/components/FeedbackOverview/FeedbackOverview';
-import Payment from './src/components/Payment/Payment';
-import ChatSupport from './src/components/chatSupport/ChatSupport';
-import { QuestForm } from './src/components/QuestForm';
+import CreditsPopupCheck from "./src/components/CheckInCredit/CreditsPopupCheck";
+import VisitStreak from "./src/components/Streak/VisitStreak"
+import showToast from "./src/components/toast/toastService";
+import CreditsPopup from "./src/components/Credit/CreditsPopup";
+import Tutorial from "./src/components/TutorialScreen/TutorialScreen";
+import FeedbackWorkflow from "./src/components/FeedbackOverview/FeedbackOverview";
+import Payment from "./src/components/Payment/Payment";
+import ChatSupport from "./src/components/chatSupport/ChatSupport";
+import {QuestForm} from "./src/components/QuestForm/index";
 
-export {QuestProvider, QuestLogin, OnBoarding, Feedback, Badge, Tutorial, FeedbackWorkflow, Payment, ChatSupport, QuestForm};
+
+export {QuestProvider, QuestLogin, OnBoarding, Feedback,Badge, Tutorial, FeedbackWorkflow, Payment, ChatSupport, QuestForm,CreditsPopupCheck,VisitStreak,showToast,CreditsPopup};

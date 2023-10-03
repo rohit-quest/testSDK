@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import ReactDOM from "react-dom";
 import cross from "../../assets/images/cross.png";
 import "./creditCheck.css";
-import {creditCHeck} from "../../assets/images";
+import {creditCheck} from "../../assets/images";
 
 interface PopupProps {
     isOpen: boolean;
@@ -38,7 +38,7 @@ const CreditsPopupCheck: FC<PopupProps> = ({
             <div className="popup-overlay" style={style}>
                 <div className="q-creditp-main">
                     <div className="q-creditp-child" style={{boxShadow: "rgba(0, 0, 0, 0.50) 0px 0px 6px 0px",...style}}>
-                        <img src={creditCHeck} className="q-creditp-banner" />
+                        <img src={creditCheck} className="q-creditp-banner" />
                         {!!isCloseble && (
                             <img
                                 src={cross}
