@@ -10,6 +10,7 @@ import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import Loader from '../Login/Loader';
+import Cookies from "universal-cookie";
 
 const feedback = (
   <svg
@@ -437,6 +438,45 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       setSelectedOption(option);
       setSelectedQuest(quest);
       setAnswer([]);
+      let cookies = new Cookies();
+      let externalUserId = cookies.get("externalUserId");
+      let questUserId = cookies.get("questUserId");
+      let questUserToken = cookies.get("questUserToken");
+      let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
+      if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == personalUserId._id) {
+        let header = {
+          apiKey: apiKey,
+          apisecret: apiSecret,
+          userId: questUserId,
+          token: questUserToken,
+        }
+        axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`, {count: 1}, {headers: header})
+      } else {
+        const body = {
+          externalUserId: !!personalUserId && personalUserId._id,
+          entityId: entityId,
+        }
+
+        const headers = {
+          apiKey: apiKey,
+          apisecret: apiSecret,
+          userId: userId,
+          token: token,
+        };
+
+        axios.post(`${config.BACKEND_URL}api/users/external/login`, body, {headers})
+          .then((res) => {
+            let {userId, token} = res.data;
+            let header = {...headers, ...{userId, token}}
+            let cookies = new Cookies();
+            const date = new Date();
+            date.setHours(date.getHours() + 12)
+            cookies.set("externalUserId", personalUserId._id, {path: "/", expires: date})
+            cookies.set("questUserId", userId, {path: "/", expires: date})
+            cookies.set("questUserToken", token, {path: "/", expires: date})
+            axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`, {count: 1}, {headers: header})
+        })
+      }
     }
   };
 
@@ -447,25 +487,25 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       userId: userId,
       token: token,
     };
+    let cookies = new Cookies();
+    let externalUserId = cookies.get("externalUserId");
+    let questUserId = cookies.get("questUserId");
+    let questUserToken = cookies.get("questUserToken");
+    let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
     if (answer.length !== 0) {
       const ansArr = formdata[index].map((ans: any) => ({
         question: ans?.question || '',
         answer: [answer[ans?.criteriaId] || ''],
         criteriaId: ans?.criteriaId || '',
       }));
-      let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
-      if (!!personalUserId._id) {
-        const body = {
-          externalUserId: !!personalUserId && personalUserId._id,
-          entityId: entityId,
+      if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == personalUserId._id) {
+        let header = {
+          apiKey: apiKey,
+          apisecret: apiSecret,
+          userId: questUserId,
+          token: questUserToken,
         }
-
-        axios.post(`${config.BACKEND_URL}api/users/external/login`, body, {headers})
-          .then((res) => {
-            let {userId, token} = res.data;
-            let header = {...headers, ...{userId, token}}
-            setResult(header, userId)
-        })
+        setResult(header, userId)
       } else {
         setResult(headers, userId)
       }
