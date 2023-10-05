@@ -49,7 +49,8 @@
   top: 10px;
   cursor: pointer;
 }
-.powered-by {
+.fd-powered-by {
+  padding-bottom: 20px;
   font-size: 0.875rem;
   text-align: center;
 }

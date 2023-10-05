@@ -42,7 +42,32 @@ export const QuestProvider = (props: Props) => {
   const [user, setUser] = useState<User>({});
   const [featureFlags, setFeatureFlags] = useState({})
 
-  
+  useEffect(() => {
+    getFeatureFlags()
+  },[])
+
+  async function getFeatureFlags(){
+    const cookies = new Cookies();
+    let featureFlag = cookies.get('featureFlags');
+    if (!!featureFlag && Object.keys(featureFlag).length != 0) {
+      setFeatureFlags(featureFlag)
+      return;
+    }
+    
+    let request = `${config.BACKEND_URL}api/entities/${props.entityId}/featureFlags`
+    var response = await axios.get(request, { headers: {
+      apikey: props.apiKey,
+      apisecret: props.apiSecret,
+    }});
+
+    if (response.data.success) {
+      const flagsObject = response.data.data.reduce((acc: any, flag: any) => { acc[flag.flagName] = {isEnabled: flag.isEnabled, isActive: flag.isActive}; return acc; }, {});
+      const date = new Date();
+      date.setMinutes(date.getMinutes() + 30);
+      cookies.set('featureFlags', flagsObject, { path: '/', expires: date });
+      setFeatureFlags(flagsObject)
+    }
+  }
   // class RateLimitedEventSource {
   //   config: { entityId: string; apiKey: string; apiSecret: string; };
   //   eventSource: null;
