@@ -364,7 +364,7 @@ export const QuestForm = (props: questFormPropType) => {
     }, [])
 
     return (
-        <div className='q-form'>
+        <div className='q-form' style={{width: '50vw'}}>
             {progressBar &&
                 <div style={{ width: `${String((page + 1) / (criteria.length - 1) * 100)}vw` }}
                     className={`q-form-progress`}></div>}
