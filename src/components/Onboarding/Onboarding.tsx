@@ -35,10 +35,12 @@ interface QuestLoginProps {
     descSize?: string;
     inputFieldType?: { [key: string]: string };
     defaultFont?: boolean;
-    userId?: string;
+    userId: string;
     token?: string;
     questId?: string;
     progress?: string[];
+    loadingTracker?: boolean;
+    setLoading?: Function;
 }
 
 interface FormData {
@@ -81,6 +83,8 @@ function OnBoarding(props: QuestLoginProps) {
         userId,
         token,
         questId,
+        loadingTracker,
+        setLoading
     } = props;
 
     const [formdata, setFormdata] = useState<FormData[] | []>([]);
@@ -109,51 +113,45 @@ function OnBoarding(props: QuestLoginProps) {
                 entityId: entityId,
             }
             
-            if (!personalUserId._id) {
-                getQuestData(userId, headers)
+            getQuestData(userId, headers)
+            
+            if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == personalUserId._id) {
+                let header = {...headers, ...{questUserId, questUserToken}}
+                axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers: header})
             } else {
-                if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == personalUserId._id) {
-                    let header = {...headers, ...{questUserId, questUserToken}}
-                    getQuestData(questUserId, header)
-                    axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers: header})
-                } else {
-                    axios.post(`${config.BACKEND_URL}api/users/external/login`, body, {headers})
-                    .then((res) => {
-                        let {userId, token} = res.data;
-                        let header = {...headers, ...{userId, token}}
+                axios.post(`${config.BACKEND_URL}api/users/external/login`, body, {headers})
+                .then((res) => {
+                    let {userId, token} = res.data;
+                    let header = {...headers, ...{userId, token}}
 
-                        const date = new Date();
-                        date.setHours(date.getHours() + 12)
-                        cookies.set("externalUserId", personalUserId._id, {path: "/", expires: date})
-                        cookies.set("questUserId", userId, {path: "/", expires: date})
-                        cookies.set("questUserToken", token, {path: "/", expires: date})
-                        getQuestData(userId, header)
-                        axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/onboarding-view?userId=${userId}&questId=${questId}`, {count: 1}, {headers: header})
-                    })
-                }
-
+                    const date = new Date();
+                    date.setHours(date.getHours() + 12)
+                    cookies.set("externalUserId", personalUserId._id, {path: "/", expires: date})
+                    cookies.set("questUserId", userId, {path: "/", expires: date})
+                    cookies.set("questUserToken", token, {path: "/", expires: date})
+                    axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/onboarding-view?userId=${userId}&questId=${questId}`, {count: 1}, {headers: header})
+                })
             }
 
-            function getQuestData(userId: string, headers: object) {
-                const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}`;
-                axios.get(request, { headers: headers }).then((res) => {
+
+            async function getQuestData(userId: string, headers: object) {
+                (loadingTracker && setLoading(true));
+                const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/criterias?userId=${userId}`;
+                await axios.get(request, { headers: headers }).then((res) => {
                     let response = res.data;
-                    let criterias = response?.eligibilityData?.map(
+                    let criterias = response?.data?.eligibilityData?.map(
                         (criteria: {
-                            data: {
-                                criteriaType: any;
-                                metadata: { title: any; options: any, isOptional: any, placeholder: any };
-                                criteriaId: string;
-    
-                            };
+                            criteriaType: any;
+                            metadata: { title: any; options: any, isOptional: any, placeholder: any };
+                            criteriaId: string;
                         }) => {
                             return {
-                                type: criteria?.data?.criteriaType,
-                                question: criteria?.data?.metadata?.title,
-                                options: criteria?.data?.metadata?.options || [],
-                                criteriaId: criteria?.data?.criteriaId,
-                                required: !criteria?.data?.metadata?.isOptional,
-                                placeholder: criteria?.data?.metadata?.placeholder,
+                                type: criteria?.criteriaType,
+                                question: criteria?.metadata?.title,
+                                options: criteria?.metadata?.options || [],
+                                criteriaId: criteria?.criteriaId,
+                                required: !criteria?.metadata?.isOptional,
+                                placeholder: criteria?.metadata?.placeholder,
                             };
                         }
                     );
@@ -175,6 +173,7 @@ function OnBoarding(props: QuestLoginProps) {
                     });
                     setAnswer({ ...answer, ...ansArray });
                 });
+                (loadingTracker && setLoading(false))
             }
         }
     }, []);

@@ -427,7 +427,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   );
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [submit, setSubmit] = useState<boolean>(false);
-  const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
+  const { apiKey, apiSecret, entityId, featureFlags } = useContext(QuestContext.Context);
   const [answer, setAnswer] = useState<any[]>([]);
 
   const handleOptionClick = (option: string, quest: string) => {
@@ -605,6 +605,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     setSubmit(false);
     setSelectedOption(null);
   };
+
+  if (featureFlags[config.FLAG_CONSTRAINTS.FeedbackWorkflowFlag]?.isEnabled == false) {
+    return (<div></div>)
+}
 
   return (
     <div style={{position:"fixed", display: isOpen == true ? "flex" : "none", zIndex}} className="q-parent-container">
@@ -799,12 +803,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           </div>
         )}
         <p
-          className="powered-by"
+          className="fd-powered-by"
           style={{
             color: textColor,
           }}
         >
-          ** Powered by Quest Labs
+          Powered by Quest Labs
         </p>
       </div>
       
