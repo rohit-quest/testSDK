@@ -687,7 +687,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 {cross}
               </div>
             </div>
-            <div style={{ padding: '5px' }}>
+            <div style={{ padding: '0px 18px' }}>
               {selectedOption === 'General Feedback' && (
                 <GeneralFeedbackContent
                   starColor={starColor}
@@ -849,6 +849,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           </div>
         )}
         <p
+        onClick={() => window.location.href = 'https://questlabs.ai'}
           className="fd-powered-by"
           style={{
             color: textColor,
