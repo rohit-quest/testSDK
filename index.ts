@@ -13,6 +13,6 @@ import FeedbackWorkflow from "./src/components/FeedbackOverview/FeedbackOverview
 import Payment from "./src/components/Payment/Payment";
 import ChatSupport from "./src/components/chatSupport/ChatSupport";
 import {QuestForm} from "./src/components/QuestForm/index";
+import {ReferShare,ReferEarn} from "./src/components/Refer/ReferEarn.tsx"
 
-
-export {QuestProvider, QuestLogin, OnBoarding, Feedback,Badge, Tutorial, FeedbackWorkflow, Payment, ChatSupport, QuestForm,CreditsPopupCheck,VisitStreak,showToast,CreditsPopup};
+export {QuestProvider, QuestLogin, OnBoarding, Feedback,Badge, Tutorial, FeedbackWorkflow, Payment, ChatSupport, QuestForm,CreditsPopupCheck,VisitStreak,showToast,CreditsPopup,ReferShare,ReferEarn};
