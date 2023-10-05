@@ -213,7 +213,123 @@ const cross = (
     />
   </svg>
 );
-const thanks = (
+const contact = (
+  <svg
+    width="50"
+    height="50"
+    viewBox="0 0 62 62"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g filter="url(#filter0_d_127_429)">
+      <circle cx="31" cy="31" r="29" fill="white" />
+    </g>
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M33.6257 19.9167C33.6257 19.8393 33.5949 19.7651 33.5402 19.7104C33.4855 19.6557 33.4113 19.625 33.334 19.625H25.1673C24.3164 19.625 23.5004 19.963 22.8987 20.5647C22.297 21.1664 21.959 21.9824 21.959 22.8333V39.1667C21.959 40.0176 22.297 40.8336 22.8987 41.4353C23.5004 42.037 24.3164 42.375 25.1673 42.375H36.834C37.6849 42.375 38.5009 42.037 39.1026 41.4353C39.7043 40.8336 40.0423 40.0176 40.0423 39.1667V27.6715C40.0423 27.5941 40.0116 27.52 39.9569 27.4653C39.9022 27.4106 39.828 27.3798 39.7507 27.3798H34.5007C34.2686 27.3798 34.046 27.2876 33.8819 27.1236C33.7178 26.9595 33.6257 26.7369 33.6257 26.5048V19.9167ZM34.5007 31.2917C34.7327 31.2917 34.9553 31.3839 35.1194 31.5479C35.2835 31.712 35.3757 31.9346 35.3757 32.1667C35.3757 32.3987 35.2835 32.6213 35.1194 32.7854C34.9553 32.9495 34.7327 33.0417 34.5007 33.0417H27.5007C27.2686 33.0417 27.046 32.9495 26.8819 32.7854C26.7178 32.6213 26.6257 32.3987 26.6257 32.1667C26.6257 31.9346 26.7178 31.712 26.8819 31.5479C27.046 31.3839 27.2686 31.2917 27.5007 31.2917H34.5007ZM34.5007 35.9583C34.7327 35.9583 34.9553 36.0505 35.1194 36.2146C35.2835 36.3787 35.3757 36.6013 35.3757 36.8333C35.3757 37.0654 35.2835 37.288 35.1194 37.4521C34.9553 37.6161 34.7327 37.7083 34.5007 37.7083H27.5007C27.2686 37.7083 27.046 37.6161 26.8819 37.4521C26.7178 37.288 26.6257 37.0654 26.6257 36.8333C26.6257 36.6013 26.7178 36.3787 26.8819 36.2146C27.046 36.0505 27.2686 35.9583 27.5007 35.9583H34.5007Z"
+      fill="#AFAFAF"
+    />
+    <path
+      d="M35.375 20.2937C35.375 20.0791 35.6002 19.9426 35.767 20.0767C35.9082 20.1911 36.0353 20.3241 36.1438 20.4757L39.659 25.3722C39.7383 25.4842 39.652 25.6289 39.5143 25.6289H35.6667C35.5893 25.6289 35.5151 25.5982 35.4604 25.5435C35.4057 25.4888 35.375 25.4146 35.375 25.3372V20.2937Z"
+      fill="#AFAFAF"
+    />
+    <defs>
+      <filter
+        id="filter0_d_127_429"
+        x="0"
+        y="0"
+        width="62"
+        height="62"
+        filterUnits="userSpaceOnUse"
+        colorInterpolationFilters="sRGB"
+      >
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+        <feColorMatrix
+          in="SourceAlpha"
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          result="hardAlpha"
+        />
+        <feOffset />
+        <feGaussianBlur stdDeviation="1" />
+        <feComposite in2="hardAlpha" operator="out" />
+        <feColorMatrix
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+        />
+        <feBlend
+          mode="normal"
+          in2="BackgroundImageFix"
+          result="effect1_dropShadow_127_429"
+        />
+        <feBlend
+          mode="normal"
+          in="SourceGraphic"
+          in2="effect1_dropShadow_127_429"
+          result="shape"
+        />
+      </filter>
+    </defs>
+  </svg>
+);
+
+interface feedbackCompProps {
+  userId: string;
+  token: string;
+  questIds: string[];
+  answer?: any;
+  setAnswer?: any;
+  getAnswers?: any;
+  btnColor?: string;
+  btnTextColor?: string;
+  textColor?: string;
+  font?: string;
+  contactUrl?: string;
+  isOpen?: boolean;
+  onClose?: Function;
+  backgroundColor?: string;
+  zIndex?:number;
+  topbarColor?: string;
+  starColor?: string;
+  tickBg?: string;
+}
+interface FormDataItem {
+  type?: string;
+  question?: string;
+  options?: [string];
+  criteriaId?: string;
+  required?: boolean;
+  placeholder?: string;
+}
+const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
+  userId,
+  token,
+  questIds,
+  btnColor,
+  btnTextColor,
+  textColor,
+  font,
+  contactUrl,
+  isOpen,
+  onClose,
+  backgroundColor,
+  zIndex,
+  topbarColor,
+  starColor,
+  tickBg
+}) => {
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
+  const [formdata, setFormdata] = useState<{ [key: number]: [FormDataItem] }>(
+    {}
+  );
+  const [showLoader, setShowLoader] = useState<boolean>(false);
+  const [submit, setSubmit] = useState<boolean>(false);
+  const { apiKey, apiSecret, entityId, featureFlags } = useContext(QuestContext.Context);
+  const [answer, setAnswer] = useState<any[]>([]);
+
+  const thanks = (
   <svg
     width="250"
     height="250"
@@ -308,128 +424,17 @@ const thanks = (
       cy="199.803"
       rx="89.9689"
       ry="90.0005"
-      fill="#141414"
+      fill={tickBg || "#141414"}
     />
     <path
       d="M237.29 179.33L196.355 220.278L175.887 199.805"
-      stroke="white"
+      stroke={textColor || "white"}
       strokeWidth="5.67982"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
   </svg>
 );
-const contact = (
-  <svg
-    width="50"
-    height="50"
-    viewBox="0 0 62 62"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <g filter="url(#filter0_d_127_429)">
-      <circle cx="31" cy="31" r="29" fill="white" />
-    </g>
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M33.6257 19.9167C33.6257 19.8393 33.5949 19.7651 33.5402 19.7104C33.4855 19.6557 33.4113 19.625 33.334 19.625H25.1673C24.3164 19.625 23.5004 19.963 22.8987 20.5647C22.297 21.1664 21.959 21.9824 21.959 22.8333V39.1667C21.959 40.0176 22.297 40.8336 22.8987 41.4353C23.5004 42.037 24.3164 42.375 25.1673 42.375H36.834C37.6849 42.375 38.5009 42.037 39.1026 41.4353C39.7043 40.8336 40.0423 40.0176 40.0423 39.1667V27.6715C40.0423 27.5941 40.0116 27.52 39.9569 27.4653C39.9022 27.4106 39.828 27.3798 39.7507 27.3798H34.5007C34.2686 27.3798 34.046 27.2876 33.8819 27.1236C33.7178 26.9595 33.6257 26.7369 33.6257 26.5048V19.9167ZM34.5007 31.2917C34.7327 31.2917 34.9553 31.3839 35.1194 31.5479C35.2835 31.712 35.3757 31.9346 35.3757 32.1667C35.3757 32.3987 35.2835 32.6213 35.1194 32.7854C34.9553 32.9495 34.7327 33.0417 34.5007 33.0417H27.5007C27.2686 33.0417 27.046 32.9495 26.8819 32.7854C26.7178 32.6213 26.6257 32.3987 26.6257 32.1667C26.6257 31.9346 26.7178 31.712 26.8819 31.5479C27.046 31.3839 27.2686 31.2917 27.5007 31.2917H34.5007ZM34.5007 35.9583C34.7327 35.9583 34.9553 36.0505 35.1194 36.2146C35.2835 36.3787 35.3757 36.6013 35.3757 36.8333C35.3757 37.0654 35.2835 37.288 35.1194 37.4521C34.9553 37.6161 34.7327 37.7083 34.5007 37.7083H27.5007C27.2686 37.7083 27.046 37.6161 26.8819 37.4521C26.7178 37.288 26.6257 37.0654 26.6257 36.8333C26.6257 36.6013 26.7178 36.3787 26.8819 36.2146C27.046 36.0505 27.2686 35.9583 27.5007 35.9583H34.5007Z"
-      fill="#AFAFAF"
-    />
-    <path
-      d="M35.375 20.2937C35.375 20.0791 35.6002 19.9426 35.767 20.0767C35.9082 20.1911 36.0353 20.3241 36.1438 20.4757L39.659 25.3722C39.7383 25.4842 39.652 25.6289 39.5143 25.6289H35.6667C35.5893 25.6289 35.5151 25.5982 35.4604 25.5435C35.4057 25.4888 35.375 25.4146 35.375 25.3372V20.2937Z"
-      fill="#AFAFAF"
-    />
-    <defs>
-      <filter
-        id="filter0_d_127_429"
-        x="0"
-        y="0"
-        width="62"
-        height="62"
-        filterUnits="userSpaceOnUse"
-        colorInterpolationFilters="sRGB"
-      >
-        <feFlood floodOpacity="0" result="BackgroundImageFix" />
-        <feColorMatrix
-          in="SourceAlpha"
-          type="matrix"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-          result="hardAlpha"
-        />
-        <feOffset />
-        <feGaussianBlur stdDeviation="1" />
-        <feComposite in2="hardAlpha" operator="out" />
-        <feColorMatrix
-          type="matrix"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-        />
-        <feBlend
-          mode="normal"
-          in2="BackgroundImageFix"
-          result="effect1_dropShadow_127_429"
-        />
-        <feBlend
-          mode="normal"
-          in="SourceGraphic"
-          in2="effect1_dropShadow_127_429"
-          result="shape"
-        />
-      </filter>
-    </defs>
-  </svg>
-);
-
-interface feedbackCompProps {
-  userId: string;
-  token: string;
-  questIds: string[];
-  answer?: any;
-  setAnswer?: any;
-  getAnswers?: any;
-  btnColor?: string;
-  btnTextColor?: string;
-  textColor?: string;
-  font?: string;
-  contactUrl?: string;
-  isOpen?: boolean;
-  onClose?: Function;
-  backgroundColor?: string;
-  zIndex?:number;
-  topbarColor?: string;
-}
-interface FormDataItem {
-  type?: string;
-  question?: string;
-  options?: [string];
-  criteriaId?: string;
-  required?: boolean;
-  placeholder?: string;
-}
-const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
-  userId,
-  token,
-  questIds,
-  btnColor,
-  btnTextColor,
-  textColor,
-  font,
-  contactUrl,
-  isOpen,
-  onClose,
-  backgroundColor,
-  zIndex,
-  topbarColor
-}) => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
-  const [formdata, setFormdata] = useState<{ [key: number]: [FormDataItem] }>(
-    {}
-  );
-  const [showLoader, setShowLoader] = useState<boolean>(false);
-  const [submit, setSubmit] = useState<boolean>(false);
-  const { apiKey, apiSecret, entityId, featureFlags } = useContext(QuestContext.Context);
-  const [answer, setAnswer] = useState<any[]>([]);
 
   const handleOptionClick = (option: string, quest: string) => {
     if (option === 'Contact us' && contactUrl) {
@@ -651,7 +656,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
 }
 
   return (
-    <div style={{position:"fixed", display: isOpen == true ? "flex" : "none", zIndex}} className="q-parent-container">
+    <div style={{position:"fixed", display: isOpen == true ? "flex" : "none", zIndex, width:"100vw"}} className="q-parent-container">
       {showLoader && <Loader />}
       <ToastContainer />
       <div className="q-fw-div" style={{backgroundColor}}>
@@ -685,6 +690,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             <div style={{ padding: '5px' }}>
               {selectedOption === 'General Feedback' && (
                 <GeneralFeedbackContent
+                  starColor={starColor}
                   handleSubmit={() => returnAnswers(0)}
                   handleUpdate={handleUpdate}
                   formdata={formdata[0]}

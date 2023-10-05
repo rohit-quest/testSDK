@@ -54,5 +54,8 @@
   font-size: 0.875rem;
   text-align: center;
 }
+.rating-heading {
+  text-align: center !important;
+}
 
 
