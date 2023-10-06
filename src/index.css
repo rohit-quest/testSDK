@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Kanit&family=Neucha&family=Roboto:wght@100;400;500&family=Xanh+Mono&display=swap');
 .q-h4 {
   text-align: start;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500 !important;
   padding: 2% 0;
 }
@@ -91,7 +91,6 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  width: 100vw;
   background-color: rgba(128,144,160,.7);
 }
 * {
