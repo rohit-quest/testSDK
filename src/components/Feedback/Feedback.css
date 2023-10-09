@@ -1,7 +1,7 @@
 .q-feedback-cont {
   width: 534px;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.4); /* Use rgba for transparent black */
-  padding: 2% 3%;
+  padding: 6% 8%;
   max-width: 28rem;
   margin: 0 auto;
   border-radius: 0.375rem;
@@ -16,6 +16,7 @@
   height: 40px;
   line-height: 40px;
   margin-right: 10px;
+  margin-top: 5px;
   cursor: pointer;
 }
 .like-dislike-cont {
@@ -54,6 +55,7 @@
   padding: 8px 24px;
   margin-right: 0.5rem;
   cursor: pointer;
+  margin-top: 10px;
 }
 .q-feed-btns-div {
   margin-top: 1.5rem;

@@ -91,7 +91,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: rgba(128,144,160,.7);
+  background-color: rgb(255, 255, 255);
 }
 * {
   margin: 0;

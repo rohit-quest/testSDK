@@ -460,7 +460,7 @@ const Feedback: React.FC<FeedbackProps> = ({
                               }}
                               className="q-h4"
                             >
-                              Rating Scale
+                              { data.question || 'Rating Scale' }
                             </label>
                             <div
                               style={{
