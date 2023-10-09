@@ -1,160 +1,117 @@
 # Quest React SDK
 
+# Quest React SDK
+
 Welcome to the Quest React SDK repository! This library provides a set of reusable React components.
 
-## Features
-
-- **Login Component**: Our login component offers a straightforward way to integrate secure user authentication into your React applications. Easily customize the login UI with a variety of options and flow to match your project's requirements.
-
-- **Onboarding**: In addition to the login component, we provide Onboarding component which contains quizzes for users.
-
-## Getting Started
-
-To get started using the Quest React SDK, follow these simple steps:
-
-1. **Installation**: Add the SDK to your project by including it as a dependency. Detailed installation instructions can be found in the documentation.
-
-2. **Usage**: import the CSS, import the QuestProvider component, pass the required props to it (apiKey, apiSecret, entityId). now add the component inside, pass the props and you are good to go! 
-
-## Example
-
-To see the Quest React SDK in action, check out our [live demo](link-to-your-demo) or explore the example folder in this repository for sample usage.
-
-## Props of QuestProvider component
-
-The `QuestProvider` component accepts the following props:
-
-- `entityId` (string, required): An entity identifier for your application.
-- `apiKey` (string, required): An API key for your application.
-- `apiSecret` (string, required): An API secret for your application.
-
-## Props of Login component
-
-The `QuestLogin` component accepts the following props:
-
-- `googleClientId` (string, required): The Google Client ID for OAuth 2.0 authentication.
-
-- `redirectUri` (string, required for google): The URI where users will be redirected after authentication.(this URL should match the one configured in your OAuth provider)  [Google Console](https://console.cloud.google.com/apis/credentials/oauthclient).
-
-- `redirectURL` (string, required): The URL where users will be redirected after authentication. 
-- `btnColor` (string, optional): The background color of the login button. Defaults to a platform-specific color if not specified.
-- `email` (boolean, optional): If `true`, includes an option for users to log in with their email.
-- `google` (boolean, optional): If `true`, includes an option for users to log in with Google.
-- `btnTextColor` (string, optional): The text color of the login button. Defaults to a platform-specific color if not specified.
-- `textColor` (string, optional): The text color of other UI elements in the component. Defaults to a platform-specific color if not specified.
-- `backgroundColor` (string, optional): The background color of the entire component. Defaults to a platform-specific color if not specified.
-- `font` (string, optional): The font style for text in the component. Defaults to a platform-specific font if not specified.
-
-### Example Usage
-You have to wrap the components inside QuestProvider and You have to import the CSS too along with the components. 
-```
-import '@questlabs/react-sdk/dist/style.css';
+## Installation
+To install the Quest react-sdk into your project, follow these steps:
+- Open your terminal/command prompt.
+- Navigate to your project's root directory using the `cd` command if you're not already there.
+- Run the following command to install the `quest-sdk` package using npm:
+```react JSX
+  npm install @questlabs/react-sdk
 ```
 
-```jsx
-<QuestProvider apiKey="k-xxxxxxxxxxxxxxxxxxxxxx" apiSecret="s-xxxxxxxxxxxxxxx-xxxxxxxxxxxx" entityId="e-xxxxxxx-xxxx-xxxw16">
-  <QuestLogin
-    font='script'
-    textColor='blue'
-    btnTextColor="white"
-    btnColor="#8B0000"
-    backgroundColor="gray"
-    googleClientId="103xxxxxxxxxxxxxxxxxxxxxxa.apps.googleusercontent.com"
-    redirectUri="http:xxxxxxxxxx"
-    redirectURL="http:xxxxxxx"
-  />
-</QuestProvider>
-```
 
-## Props of Onboarding component
 
-The `Onboarding` component accepts the following props:
+## Components
+### Login Component
+Our login component provides a simple means to incorporate secure user authentication into React apps. Easily tailor the login UI to fit your project's needs with various customization options.
 
-- `token` (string, required): A userToken which you get after login need to pass here to fetch the data.
-- `questId` (string, required):  This take a particular questId to fetch the data.
-- `answer` (useState property(get), required): To read all answer.
-- `setAnswer` (useState property(set), required): To set all the answer according to their id's.
-- `color` (string, optional): To set a color in all lebels.
-- `bgColor` (string, optional): To set the background color on the webpage.
-- `headingSize` (string, optional): To add a fontSize of headings.
-- `descSize` (string, optional): To add a fontSize of description.
-- `inputFieldType` (object, optional): By this we add the type of a specific input box. Eg. {"ec-d176b702-2a05-4394-83ce-a1657e26dfd9": "textArea"} //The input box of that particular id is set as textarea.
-- `btnColor` (string, optional): To add a color to all buttons.
-- `btnSize` (string, optional): Give a size of your buttons
-- `inputBgColor` (string, optional): To add a background color in all input fields.
-- `inputBorder` (string, optional): To set border property of input boxes.
-- `singleChoice` (string, optional): Select a single-choice design, it can be `modal1` or `modal2`, initially it selected `modal1`.
-- `multiChoice` (string, optional): Select a multi-choice design, it can be `modal1` or `modal2`, initially it selected `modal1`.
-- `design` (arrar of array, optional): Using this field we can divide questions into screens, rearrange the questions. Eg. [ [ 2, 3 ], [ 1, 4 ] ] //It means 2nd and 3rd show on 1st screen and 1st and 4th show on 2nd screens.
-- `headingScreen` (array of array / object, optional): Using this field we can add a heading in all screens or add different headings for different screens. Eg. 1. [ { name: “n1”, desc: “d1” }, { name: “n2”, desc: “d2” } ] // It means n1 and d1 show on 1st screen and n2 and d2 show on 2nd screens. 2. { name: “n1”, desc: “d1” } //  It means n1 and d1 show on all screen
-- `answers` (callback function, optional): It’s a callback function to get an answer
-- `customComponents` (component, optional): To pass a custom component if you want.
-- `customComponentPositions` (number, optional): To set a position of your custom component.
-- `getAnswers` (callback function, optional): To get all the answer after completion of all required questions.
+Explore our `Login components` and documentation on GitBook for in-depth information and examples.
 
-### Example Usage
-You have to wrap the components inside QuestProvider and You have to import the CSS too along with the components. 
-```
-import '@questlabs/react-sdk/dist/style.css';
-```
+[📘 GitBook Documentation](https://quest-2.gitbook.io/quest-labs/quest-sdks/react-sdk-modules/login-component)
 
-```jsx
-<QuestProvider
-  apiKey="k-xxxxxxxxxxxxxxxxx"
-  apiSecret="s-xxxxxxxxxxxxxxxxxxxxxxxxxxx"
-  entityId="e-xxxxxxxxxxxx"
->
-  <OnBoarding
-    questId="q-xxxxxxxxxxxxxx"
-    userId="u-xxxxxxxxxxxxxx"
-    token="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxI"
-    answer={answer}
-    setAnswer={setAnswer}
-    color="black"
-    bgColor="gray"
-    headingSize="24px"
-    descSize="18px"
-    inputFieldType={{
-      "ec-xxxxxxxxxxxxxxxxx": "textArea",
-    }}
-    btnColor="#0284fe"
-    btnSize="200px"
-    inputBgColor="#e5e7eb"
-    inputBorder="1px solid gray"
-    singleChoose="modal1"
-    multiChoice="modal2"
-    design={[[1, 2], [3, 4, 5], [6, 7]]}
-    headingScreen={{name : "n1", desc : "d1"}}
-    customComponents={<CustomButton />}
-    customComponentPositions={5}
-    getAnswers={printAnswer}
-  />
-</QuestProvider>
-```
+### Referral component
+The Referral components are  reusable React components designed to facilitate user referrals and rewards. It allows users to earn rewards by sharing a referral code with friends.
 
-## Props of Feedback component
+Explore our `Referral components` and documentation on GitBook for in-depth information and examples.
 
-The `Onboarding` component accepts the following props:
+[📘 GitBook Documentation](https://quest-2.gitbook.io/quest-labs/quest-sdks/react-sdk-modules/referral-components)
 
-- `token` (string, required): A userToken which you get after login need to pass here to fetch the data.
-- `questId` (string, required):  This take a particular questId to fetch the data.
-- `userId` (string, required): This is your quest User ID.
-- `textColor` (string, optional): To set a color of the text.
-- `bgColor` (string, optional): To set the background color on the webpage.
-- `btnColor` (string, optional): To add a color to all buttons.
-- `btnTextColor` (string, optional): The text color of the login button. Defaults to a platform-specific color if not specified.
-- `font` (string, optional): The font style for text in the component. Defaults to a platform-specific font if not specified.
-- `heading` (string, required): heading of the component
-- `subheading` (string, required): sub heading of the component
+### Toast Component
+The Toast component is a React functional component responsible for displaying notifications to users in a non-intrusive and visually appealing manner.
 
-## Contributing
+Explore our `Toast component` and documentation on GitBook for in-depth information and examples.
 
-We welcome contributions from the community! If you find a bug, have an idea for an enhancement, or want to contribute code, please refer to our [contribution guidelines](link-to-contributing-guidelines).
+[📘 GitBook Documentation](https://quest-2.gitbook.io/quest-labs/quest-sdks/react-sdk-modules/toast-service)
 
-## Support
+### Quest One to one Survey Component
+The Quest Survey component is a  customizable feature that empowers users to create one-to-one surveys and quizzes.
 
-If you encounter any issues or have questions while using the Quest React SDK, please don't hesitate to [reach out to us](link-to-support).
+Explore our `Quest One to one Survey Component` and documentation on GitBook for in-depth information and examples.
 
-## License
+[📘 GitBook Documentation](https://quest-2.gitbook.io/quest-labs/quest-sdks/react-sdk-modules/quest-one-to-one-survey-component)
 
-The Quest React SDK is open-source and available under the [MIT License](link-to-license).
+### OnBoarding Component
+The OnBoarding component is a versatile React component designed for creating interactive onboarding experiences. It allows you to guide users through a series of screens, collect their responses.
+
+Explore our `OnBoarding Component` and documentation on GitBook for in-depth information and examples.
+
+[📘 GitBook Documentation](https://quest-2.gitbook.io/quest-labs/quest-sdks/react-sdk-modules/onboarding-component)
+
+### Feedback Component
+A user-friendly tool for collecting feedback, featuring email, message, name, and star ratings for effective user input.
+
+Explore our `Feedback Component` and documentation on GitBook for in-depth information and examples.
+
+[📘 GitBook Documentation](https://quest-2.gitbook.io/quest-labs/quest-sdks/react-sdk-modules/feedback-component)
+
+### CreditsPopup Component
+The CreditsPopup component is a React component that provides a customizable popup for displaying information, alerts, or notifications to users.
+
+Explore our `CreditsPopup Component` and documentation on GitBook for in-depth information and examples.
+
+[📘 GitBook Documentation](https://quest-2.gitbook.io/quest-labs/quest-sdks/react-sdk-modules/creditspopup-component)
+
+### Pricing & Payment Component
+Empower users to design custom plans and effortlessly handle payments via Stripe with this versatile component.
+
+Explore our `Pricing & Payment Component` and documentation on GitBook for in-depth information and examples.
+
+[📘 GitBook Documentation](https://quest-2.gitbook.io/quest-labs/quest-sdks/react-sdk-modules/pricing-and-payment-component)
+
+### Feedback Workflow Component
+A versatile interface for user communication, offering options to report issues, provide feedback, request features, or contact support, ensuring user engagement and problem-solving.
+
+Explore our `Feedback Workflow Component` and documentation on GitBook for in-depth information and examples.
+
+[📘 GitBook Documentation](https://quest-2.gitbook.io/quest-labs/quest-sdks/react-sdk-modules/feedback-workflow-component)
+
+### Daily Visit Streak Component
+The Visit Streak component is a React component designed to display a visual representation of a user's daily streak.
+
+Explore our `Daily Visit Streak Component` and documentation on GitBook for in-depth information and examples.
+
+[📘 GitBook Documentation](https://quest-2.gitbook.io/quest-labs/quest-sdks/react-sdk-modules/daily-visit-streak-component)
+
+### Tutorials/Quest List Component
+A versatile UI element for managing and tracking task completion. Displays tasks, tracks progress with a progress bar, and shows checkmarks for completed tasks.
+
+Explore our `Tutorials/Quest List Component` and documentation on GitBook for in-depth information and examples.
+
+[📘 GitBook Documentation](https://quest-2.gitbook.io/quest-labs/quest-sdks/react-sdk-modules/tutorials-quest-list-component)
+
+### Badge Component
+The Badge component visually represents user achievements, showcasing earned badges within your application.
+
+Explore our `Badge Component` and documentation on GitBook for in-depth information and examples.
+
+[📘 GitBook Documentation](https://quest-2.gitbook.io/quest-labs/quest-sdks/react-sdk-modules/badge-component)
+
+### Help Hub + AI Assistant
+A conversational AI assistant integrated with a Help Hub to chat with users, providing instant answers to frequently asked questions (FAQs) and enhancing user support and engagement.
+
+Explore our `Help Hub + AI Assistant` and documentation on GitBook for in-depth information and examples.
+
+[📘 GitBook Documentation](https://quest-2.gitbook.io/quest-labs/quest-sdks/react-sdk-modules/help-hub-+-ai-assistant)
+
+
+
+## Contact Us
+If you encounter any issues or have questions while using the Quest React SDK, please don't hesitate to reach out to us:
+
+- Shubham - shubham@questapp.xyz
+- Deb - deb@questapp.xyz
+
