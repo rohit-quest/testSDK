@@ -532,7 +532,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 setSubmit(true);
                 setTimeout(() => {
                   setSubmit(false)
-                }, 5000);
+                  setSelectedOption(null)
+                }, 4000);
               } else {
                 toast.error(response.data.error);
               }
