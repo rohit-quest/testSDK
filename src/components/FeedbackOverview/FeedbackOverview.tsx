@@ -532,7 +532,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 setSubmit(true);
                 setTimeout(() => {
                   setSubmit(false)
-                }, 5000);
+                  setSelectedOption(null)
+                }, 4000);
               } else {
                 toast.error(response.data.error);
               }
@@ -659,7 +660,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
 }
 
   return (
-    <div style={{position:"fixed", display: isOpen == true ? "flex" : "none", zIndex, width:"100vw"}} className="q-parent-container">
+    <div style={{position:"fixed", display: isOpen == true ? "flex" : "none", zIndex, width:"100vw", backgroundColor: "rgba(128,144,160,.7)"}} className="q-parent-container">
       {showLoader && <Loader />}
       <ToastContainer />
       <div className="q-fw-div" style={{backgroundColor}}>
