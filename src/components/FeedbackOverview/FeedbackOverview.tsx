@@ -292,6 +292,7 @@ interface feedbackCompProps {
   zIndex?:number;
   topbarColor?: string;
   starColor?: string;
+  starBorderColor?: string;
   tickBg?: string;
 }
 interface FormDataItem {
@@ -317,6 +318,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   zIndex,
   topbarColor,
   starColor,
+  starBorderColor,
   tickBg
 }) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -437,51 +439,52 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
 );
 
   const handleOptionClick = (option: string, quest: string) => {
+    let cookies = new Cookies();
+    let externalUserId = cookies.get("externalUserId");
+    let questUserId = cookies.get("questUserId");
+    let questUserToken = cookies.get("questUserToken");
+    let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
+    if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == personalUserId._id) {
+      let header = {
+        apiKey: apiKey,
+        apisecret: apiSecret,
+        userId: questUserId,
+        token: questUserToken,
+      }
+      axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`, {count: 1}, {headers: header})
+    } else {
+      const body = {
+        externalUserId: !!personalUserId && personalUserId._id,
+        entityId: entityId,
+      }
+
+      const headers = {
+        apiKey: apiKey,
+        apisecret: apiSecret,
+        userId: userId,
+        token: token,
+      };
+
+      axios.post(`${config.BACKEND_URL}api/users/external/login`, body, {headers})
+        .then((res) => {
+          let {userId, token} = res.data;
+          let header = {...headers, ...{userId, token}}
+          let cookies = new Cookies();
+          const date = new Date();
+          date.setHours(date.getHours() + 12)
+          cookies.set("externalUserId", personalUserId._id, {path: "/", expires: date})
+          cookies.set("questUserId", userId, {path: "/", expires: date})
+          cookies.set("questUserToken", token, {path: "/", expires: date})
+          axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`, {count: 1}, {headers: header})
+      })
+    }
+    
     if (option === 'Contact us' && contactUrl) {
       window.location.href = contactUrl;
     } else {
       setSelectedOption(option);
       setSelectedQuest(quest);
       setAnswer([]);
-      let cookies = new Cookies();
-      let externalUserId = cookies.get("externalUserId");
-      let questUserId = cookies.get("questUserId");
-      let questUserToken = cookies.get("questUserToken");
-      let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
-      if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == personalUserId._id) {
-        let header = {
-          apiKey: apiKey,
-          apisecret: apiSecret,
-          userId: questUserId,
-          token: questUserToken,
-        }
-        axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`, {count: 1}, {headers: header})
-      } else {
-        const body = {
-          externalUserId: !!personalUserId && personalUserId._id,
-          entityId: entityId,
-        }
-
-        const headers = {
-          apiKey: apiKey,
-          apisecret: apiSecret,
-          userId: userId,
-          token: token,
-        };
-
-        axios.post(`${config.BACKEND_URL}api/users/external/login`, body, {headers})
-          .then((res) => {
-            let {userId, token} = res.data;
-            let header = {...headers, ...{userId, token}}
-            let cookies = new Cookies();
-            const date = new Date();
-            date.setHours(date.getHours() + 12)
-            cookies.set("externalUserId", personalUserId._id, {path: "/", expires: date})
-            cookies.set("questUserId", userId, {path: "/", expires: date})
-            cookies.set("questUserToken", token, {path: "/", expires: date})
-            axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`, {count: 1}, {headers: header})
-        })
-      }
     }
   };
 
@@ -528,7 +531,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 toast.success('Thank you for your feedback');
                 setSubmit(true);
                 setTimeout(() => {
-                  window.location.reload();
+                  setSubmit(false)
                 }, 5000);
               } else {
                 toast.error(response.data.error);
@@ -666,7 +669,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               <div
                 onClick={handleBackClick}
                 style={{
-                  marginLeft: '2px',
+                  marginLeft: '10px',
                   marginTop: '2px',
                   cursor: 'pointer',
                 }}
@@ -679,7 +682,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               <div
                 onClick={handleBackClick}
                 style={{
-                  marginRight: '2px',
+                  marginRight: '10px',
                   marginTop: '2px',
                   cursor: 'pointer',
                 }}
@@ -698,6 +701,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   textColor={textColor}
                   btnColor={btnColor}
                   btnTextColor={btnTextColor}
+                  starBorderColor={starBorderColor}
                 />
               )}
               {selectedOption === 'Report a Bug' && (
@@ -846,17 +850,19 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               </div>
             )}
           </div>
+          <div>
+            <p
+            onClick={() => window.open('https://questlabs.ai', "_blank")}
+              className="fd-powered-by"
+              style={{
+                color: textColor,
+              }}
+            >
+              Powered by Quest Labs
+            </p>
+          </div>
           </div>
         )}
-        <p
-        onClick={() => window.location.href = 'https://questlabs.ai'}
-          className="fd-powered-by"
-          style={{
-            color: textColor,
-          }}
-        >
-          Powered by Quest Labs
-        </p>
       </div>
       
     </div>

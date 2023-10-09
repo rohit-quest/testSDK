@@ -76,7 +76,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 18px;
   outline: none;
 }
 .q-btn-continue:hover {
