@@ -480,7 +480,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     }
     
     if (option === 'Contact us' && contactUrl) {
-      window.location.href = contactUrl;
+      window.open('https://questlabs.ai', "_blank");
     } else {
       setSelectedOption(option);
       setSelectedQuest(quest);

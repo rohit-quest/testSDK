@@ -7,6 +7,11 @@ import "./onboarding.css"
 import complete from "../../assets/images/complete.png";
 import incomplete from "../../assets/images/incomplete.png";
 import Cookies from "universal-cookie";
+import calendly from "../../assets/images/calendly.png";
+import discord from "../../assets/images/discord-color.png";
+import twitter from "../../assets/images/twitter-color.png";
+import slack from "../../assets/images/slack.png";
+import link from "../../assets/images/links.png"
 
 
 type HeadingScreen = {
@@ -41,15 +46,19 @@ interface QuestLoginProps {
     progress?: string[];
     loadingTracker?: boolean;
     setLoading?: Function;
+    linksLogoWidth?: string;
+    linksLogo: string[];
 }
 
 interface FormData {
-    type?: string;
-    question?: string;
-    options?: [string];
-    criteriaId?: string;
-    required?: boolean;
-    placeholder?: string,
+    type: string;
+    question: string;
+    options: [string];
+    criteriaId: string;
+    required: boolean;
+    placeholder: string,
+    linkTitle: string,
+    linkUrl: string
 }
 
 interface Answer {
@@ -84,7 +93,9 @@ function OnBoarding(props: QuestLoginProps) {
         token,
         questId,
         loadingTracker,
-        setLoading
+        setLoading,
+        linksLogoWidth,
+        linksLogo
     } = props;
 
     const [formdata, setFormdata] = useState<FormData[] | []>([]);
@@ -93,6 +104,7 @@ function OnBoarding(props: QuestLoginProps) {
     const [steps, setSteps] = useState<number[]>([]);
     const { apiKey, apiSecret, entityId, featureFlags } = useContext(QuestContext.Context);
     const cookies = new Cookies()
+
 
     useEffect(() => {
         if (entityId) {
@@ -141,10 +153,14 @@ function OnBoarding(props: QuestLoginProps) {
                     let response = res.data;
                     let criterias = response?.data?.eligibilityData?.map(
                         (criteria: {
-                            criteriaType: any;
-                            metadata: { title: any; options: any, isOptional: any, placeholder: any };
+                            criteriaType: string;
+                            metadata: { title: string; options: string[], isOptional: string, placeholder: string, linkActionName: string, linkActionUrl: string};
                             criteriaId: string;
                         }) => {
+                            // criteria.criteriaType == "LINK_OPEN_READ" 
+                            // ?
+                            // return {}
+                            // :
                             return {
                                 type: criteria?.criteriaType,
                                 question: criteria?.metadata?.title,
@@ -152,6 +168,8 @@ function OnBoarding(props: QuestLoginProps) {
                                 criteriaId: criteria?.criteriaId,
                                 required: !criteria?.metadata?.isOptional,
                                 placeholder: criteria?.metadata?.placeholder,
+                                linkTitle: criteria?.metadata?.linkActionName || "",
+                                linkUrl: criteria?.metadata?.linkActionUrl || "",
                             };
                         }
                     );
@@ -559,6 +577,64 @@ function OnBoarding(props: QuestLoginProps) {
         );
     };
 
+    const chooseLogo = (links: string) => {
+        if (links.includes("calendly")) {
+            return calendly
+        } else if (links.includes("slack")) {
+            return slack
+        } else if (links.includes("twitter")) {
+            return twitter
+        } else if (links.includes("discord")) {
+            return discord
+        } else {
+            return link
+        }
+    }
+console.log(formdata)
+    const linksCriteria = (
+        linkTitle: string,
+        criteriaId: string,
+        linkUrl: string,
+        index: number,
+    ) => {
+        return (
+            <div style={{paddingTop: "12px", paddingBottom: "12px"}} key={criteriaId}>
+                {
+                    (customComponentPositions == index + 1) &&
+                    <div style={{paddingBottom: "12px"}}>
+                        {customComponents}
+                    </div>
+                }
+                {/* <label
+                    className="q-onb-lebels"
+                    htmlFor="normalInput"
+                    style={{ color: color }}
+                >
+                    {question} {required && "*"}
+                </label>
+                <input
+                    type="text"
+                    id="normalInput"
+                    name="normalInput"
+                    className="q-onb-input"
+                    style={{ backgroundColor: inputBgColor, border: inputBorder }}
+                    onChange={(e) => handleUpdate(e, criteriaId, "")}
+                    value={answer[criteriaId]}
+                    placeholder={placeholder}
+                /> */}
+                <div className="q-onb-link-div">
+                    <img src={chooseLogo(linkUrl)} style={{width: linksLogoWidth }}/>
+                    <div className="q-onb-link-div-ch">
+                        <p>{linkTitle}</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                            <path d="M2 11H14.2L8.6 16.6L10 18L18 10L10 2L8.6 3.4L14.2 9H2V11Z" className="q-onb-arrow"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
     function checkDesignCriteria() {
         let fl = false;
         let arr: number[] = [];
@@ -710,7 +786,15 @@ function OnBoarding(props: QuestLoginProps) {
                                                 formdata[num - 1].criteriaId || "",
                                                 num - 1
                                             )
-                                        : null)
+                                        : formdata[num - 1].type == 
+                                            "LINK_OPEN_READ" 
+                                            ? linksCriteria(
+                                                formdata[num - 1].linkTitle,
+                                                formdata[num - 1].criteriaId,
+                                                formdata[num - 1].linkUrl,
+                                                num - 1
+                                            )
+                                            : null )
                         )
                         : formdata?.map((data, index) =>
                             data.type == "USER_INPUT_TEXT"
@@ -760,7 +844,14 @@ function OnBoarding(props: QuestLoginProps) {
                                                     data.criteriaId || "",
                                                     index
                                                 )
-                                            : null
+                                                : data.type == "LINK_OPEN_READ" 
+                                                    ? linksCriteria(
+                                                        data.linkTitle,
+                                                        data.criteriaId,
+                                                        data.linkUrl,
+                                                        index
+                                                    )
+                                                    : null
                         )}
                     {formdata.length > 0 &&
                         (!!design && design.length > 0 &&
