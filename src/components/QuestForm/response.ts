@@ -20,6 +20,8 @@ export interface questFormPropType {
     questId?: string;
     onSubmit?: () => void
     shadowColor?: string;
+    inputBgColor?: string;
+    width?: string
 }
 
 export interface metadata {

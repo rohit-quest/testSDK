@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import QuestContext from '../../components/QuestWrapper';
-import { ApiResponse, fetchQuestions, metadata, questFormPropType } from "./response.ts";
+import {ApiResponse, fetchQuestions, metadata, questFormPropType} from "./response.ts";
 import enterPng from '../../assets/images/enter.png';
 import "./form.css";
 
@@ -8,7 +8,7 @@ import "./form.css";
 export const QuestForm = (props: questFormPropType) => {
 
     const {
-        userId = "", questId = "", shadowColor = "rgba(128, 128, 128, 0.56)", token = "", setAnswer = (() => {
+        userId = "", questId = "", shadowColor = "rgba(0, 0, 0, 0.25)", token = "", setAnswer = (() => {
         }), onSubmit = (() => {
         })
     } = props;
@@ -24,39 +24,39 @@ export const QuestForm = (props: questFormPropType) => {
     const {
         color = "", bgColor = "", progressBar,
         alignment = "start", inputBorderColor = "transparent",
-        headingSize = "24px", descSize = "24px"
+        headingSize = "24px", descSize = "24px", inputBgColor = "#F6F6F6"
     } = props;
     const setData = async () => {
-        const res = await fetchQuestions({ ...headers, userId, questId, token });
+        const res = await fetchQuestions({...headers, userId, questId, token});
         if (!res?.success) return;
         setSubject(res);
         let crts = res?.eligibilityData.map(e => ({
             ...e.data.metadata, ...e.data
         }))
         setCriteria(crts);
-        setAnswer(crts.map(({ title, options }) => ({ question: title, answer: options || "" })))
+        setAnswer(crts.map(({title, options}) => ({question: title, answer: options ? [] : ""})))
     }
     const [anime, setAnime] = useState<"scroll-animation" | "scroll-animation-rev" | "">("")
 
     // @ts-ignore
-    const TextArea = ({ setFill, title = "" }: {
+    const TextArea = ({setFill, title = ""}: {
         setFill: React.Dispatch<React.SetStateAction<string>>,
         title: string
     }) => {
         return (<textarea cols={60} placeholder={"enter the " + title} className='q-form-text-area'
-            onChange={(e) => {
-                setFill(e.target.value)
-                setAnswer(prev => {
-                    prev[page].answer = e.target.value;
-                    return prev;
-                })
-            }}
-            style={{ color: color, border: `1px solid ${inputBorderColor}`, backgroundColor: bgColor }}
-            rows={5}></textarea>)
+                          onChange={(e) => {
+                              setFill(e.target.value)
+                              setAnswer(prev => {
+                                  prev[page].answer = e.target.value;
+                                  return prev;
+                              })
+                          }}
+                          style={{color: color, border: `1px solid ${inputBorderColor}`, backgroundColor: bgColor}}
+                          rows={5}></textarea>)
     }
 
     // @ts-ignore
-    const Radio = ({ setFill, options = ["option1", "option2", "option3"] }: {
+    const Radio = ({setFill, options = ["option1", "option2", "option3"]}: {
         setFill: React.Dispatch<React.SetStateAction<string>>,
         options: Array<string>
     }) => {
@@ -65,20 +65,20 @@ export const QuestForm = (props: questFormPropType) => {
             {options.map((option: string, id: number) => (
                 <div className="q-form-radio-flex" key={id}>
                     <input id={`sct${id}`} type="radio" value={option}
-                        defaultChecked={(!!values[page]?.length) && values[page] == option}
-                        onChange={(e) => {
-                            setFill(e.target.value)
-                            setValues(prev => {
-                                prev[page] = e.target.value;
-                                return prev;
-                            })
-                            setAnswer(prev => {
-                                prev[page].answer = e.target.value;
-                                return prev;
-                            })
-                        }}
-                        name="default-radio"
-                        className="q-form-radio-input"
+                           defaultChecked={(!!values[page]?.length) && values[page] == option}
+                           onChange={(e) => {
+                               setFill(e.target.value)
+                               setValues(prev => {
+                                   prev[page] = e.target.value;
+                                   return prev;
+                               })
+                               setAnswer(prev => {
+                                   prev[page].answer = e.target.value;
+                                   return prev;
+                               })
+                           }}
+                           name="default-radio"
+                           className="q-form-radio-input"
                     />
                     <label
                         htmlFor={`sct${id}`}
@@ -91,7 +91,7 @@ export const QuestForm = (props: questFormPropType) => {
         </div>)
     }
 
-    const Multi = ({ setFill, options = ["option1", "option2", "option3"] }: {
+    const Multi = ({setFill, options = ["option1", "option2", "option3"]}: {
         setFill: React.Dispatch<React.SetStateAction<string>>,
         options: Array<string>
     }) => {
@@ -167,7 +167,7 @@ export const QuestForm = (props: questFormPropType) => {
         </div>)
     }
 
-    const NormalInput = ({ title = "", setFill }: {
+    const NormalInput = ({title = "", setFill}: {
         title: string,
         setFill: React.Dispatch<React.SetStateAction<string>>
     }) => {
@@ -181,24 +181,24 @@ export const QuestForm = (props: questFormPropType) => {
                 input.current.focus();
             }
         }, []);
-        return (<input placeholder={"Enter Your " + title}
-            style={{ color: color, border: `1px solid ${inputBorderColor}`, backgroundColor: bgColor }}
-            ref={input}
-            onChange={(e) => {
-                setFill(e.target.value)
-                setValues(prev => {
-                    prev[page] = e.target.value;
-                    return prev
-                })
-                setAnswer(prev => {
-                    prev[page].answer = e.target.value;
-                    return prev;
-                })
-            }}
-            className='q-form-normal-input' />)
+        return (<input placeholder={title}
+                       style={{color: color, border: `1px solid ${inputBorderColor}`, backgroundColor: inputBgColor}}
+                       ref={input}
+                       onChange={(e) => {
+                           setFill(e.target.value)
+                           setValues(prev => {
+                               prev[page] = e.target.value;
+                               return prev
+                           })
+                           setAnswer(prev => {
+                               prev[page].answer = e.target.value;
+                               return prev;
+                           })
+                       }}
+                       className='q-form-normal-input'/>)
     }
 
-    const DateInput = ({ setFill }: { setFill: React.Dispatch<React.SetStateAction<string>> }) => {
+    const DateInput = ({setFill}: { setFill: React.Dispatch<React.SetStateAction<string>> }) => {
         const input = useRef<HTMLInputElement>(null);
         useEffect(() => {
             if (!!input.current) {
@@ -210,22 +210,22 @@ export const QuestForm = (props: questFormPropType) => {
         }, []);
         return (
             <div className="py-3">
-                <label className="q-form-date-label" htmlFor="dateInput" style={{ color: color }}>
+                <label className="q-form-date-label" htmlFor="dateInput" style={{color: color}}>
                 </label>
                 <input type="date" id="dateInput" name="dateInput" ref={input}
-                    style={{ color: color, border: `1px solid ${inputBorderColor}`, backgroundColor: bgColor }}
-                    className="q-form-date-input"
-                    onChange={(e) => {
-                        setFill(e.target.value)
-                        setValues(prev => {
-                            prev[page] = e.target.value;
-                            return prev
-                        })
-                        setAnswer(prev => {
-                            prev[page].answer = e.target.value;
-                            return prev;
-                        })
-                    }}
+                       style={{color: color, border: `1px solid ${inputBorderColor}`, backgroundColor: inputBgColor}}
+                       className="q-form-date-input"
+                       onChange={(e) => {
+                           setFill(e.target.value)
+                           setValues(prev => {
+                               prev[page] = e.target.value;
+                               return prev
+                           })
+                           setAnswer(prev => {
+                               prev[page].answer = e.target.value;
+                               return prev;
+                           })
+                       }}
                 />
             </div>
         );
@@ -241,11 +241,13 @@ export const QuestForm = (props: questFormPropType) => {
             if (event.key === "Enter") {
                 if (subj.isOptional || fillVal) {
                     setAnime("scroll-animation")
-                    setPage(c => c + 1)
-                    setFill("");
-                    if (page == criteria.length - 1) {
+                    if (page == criteria.length - 1)
                         onSubmit();
+                    else {
+                        setPage(c => c + 1)
+                        setFill("");
                     }
+
                 } else {
                     setNext(false)
                 }
@@ -268,31 +270,38 @@ export const QuestForm = (props: questFormPropType) => {
                 setPage(c => c - 1)
             }
         }
-
         return (<>
             {!!criteria.length && (
-                <div style={{ boxShadow: `0 0 5px ${shadowColor}` }} className={`${anime} q-form-survey`}>
-                    <h4 className={`q-form-survey-h4`} style={{ fontSize: descSize }}>{subj?.title}</h4>
+                <div style={{boxShadow: `0 0 5px ${shadowColor}`}} className={`${anime} q-form-survey`}>
+                    <h4 className={`q-form-survey-h4`} style={{fontSize: descSize}}>{subj?.title}</h4>
                     <div className='q-form-survey-input-div'>
                         {(() => {
                             switch (subj.criteriaType) {
                                 case "":
-                                    return <NormalInput setFill={setFill} title={subj?.title} />
+                                    return <NormalInput setFill={setFill} title={subj?.title}/>
                                 case "USER_INPUT_TEXT":
-                                    return <NormalInput setFill={setFill} title={subj?.title} />
+                                    return <NormalInput setFill={setFill} title={subj?.title}/>
                                 case "USER_INPUT_MULTI_CHOICE":
-                                    return <Multi options={subj.options} setFill={setFill} />
+                                    return <Multi options={subj.options} setFill={setFill}/>
                                 case "USER_INPUT_SINGLE_CHOICE":
-                                    return <Radio options={subj.options} setFill={setFill} />
+                                    return <Radio options={subj.options} setFill={setFill}/>
                                 case "USER_INPUT_DATE":
-                                    return <DateInput setFill={setFill} />
+                                    return <DateInput setFill={setFill}/>
                                 case "USER_INPUT_TEXT_AREA":
-                                    return <TextArea setFill={setFill} title={subj.title} />
+                                    return <TextArea setFill={setFill} title={subj.title}/>
                                 default:
-                                    return <NormalInput setFill={setFill} title={subj?.title} />
+                                    return <NormalInput setFill={setFill} title={subj?.title}/>
                             }
                         })()}
-                        <div style={{ color: "red" }}>{!allowNext && `please fill the ${subj.title}`}</div>
+                        {!allowNext && <div className="q-input-alert">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                 fill="none">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z"
+                                    fill="#C53434"/>
+                            </svg>
+                            <div style={{color: "red"}}>please fill the above field</div>
+                        </div>}
                     </div>
                     <div className='q-form-survey-div'>
                         {page > 0 && page < criteria.length - 1 && <button
@@ -306,21 +315,22 @@ export const QuestForm = (props: questFormPropType) => {
                             onClick={() => {
                                 if (subj.isOptional || fillVal) {
                                     setAnime("scroll-animation")
-                                    if(page==criteria.length-1)
-                                        setPage(-1);
-                                    else
-                                    setPage(c => c + 1)
-                                    setFill("");
+                                    if (page == criteria.length - 1)
+                                        onSubmit();
+                                    else {
+                                        setPage(c => c + 1)
+                                        setFill("");
+                                    }
                                 } else {
                                     setNext(false)
                                 }
                             }}
                             className={`q-form-survey-next`}>
-                            {criteria.length - 1 == page ? "Back To Home" : "Next"}
+                            {criteria.length - 1 == page ? "Submit" : "Next"}
                         </button>}
-                        <div className='q-form-survey-enter'>
+                        {(page < 1) && (<div className='q-form-survey-enter'>
                             Press Enter
-                            <img className='w-8' src={enterPng} alt='' /></div>
+                            <img className='w-8' src={enterPng} alt=''/></div>)}
                     </div>
                 </div>)}
         </>)
@@ -343,16 +353,17 @@ export const QuestForm = (props: questFormPropType) => {
             }
         }
         return (<>
-            {!!subject && (<div style={{ boxShadow: `0 0 5px ${shadowColor}` }} className={'q-form-first ' + anime}>
-                <h2 className={`q-form-first-h2`} style={{ color }}>{subject?.data.title}</h2>
-                <h4 style={{ color, fontSize: headingSize }} className={`q-form-font-normal`}>{subject.data.description}</h4>
+            {!!subject && (<div style={{boxShadow: `0 0 5px ${shadowColor}`}} className={'q-form-first ' + anime}>
+                <h2 className={`q-form-first-h2`} style={{color}}>{subject?.data.title}</h2>
+                <h4 style={{color, fontSize: headingSize}}
+                    className={`q-form-font-normal`}>{subject.data.description}</h4>
                 <div className='q-form-first-div'>
                     <button
                         onClick={() => setPage(c => c + 1)}
                         className={`q-form-first-next`}>Next
                     </button>
                     <div className='q-form-first-enter'>Press Enter
-                        <img width={"35px"} src={enterPng} alt='' /></div>
+                        <img width={"35px"} src={enterPng} alt=''/></div>
                 </div>
             </div>)}
         </>)
@@ -361,19 +372,21 @@ export const QuestForm = (props: questFormPropType) => {
 
     useEffect(() => {
         setData()
+        // setPage(0)
+        console.log(page)
     }, [])
 
     return (
-        <div className='q-form' style={{width: '50vw'}}>
+        <div className='q-form' style={{width: props.width || "99vw"}}>
             {progressBar &&
-                <div style={{ width: `${String((page + 1) / (criteria.length - 1) * 100)}vw` }}
-                    className={`q-form-progress`}></div>}
+                <div style={{width: `${String((page + 1) / (criteria.length - 1) * 100)}vw`}}
+                     className={`q-form-progress`}></div>}
             <div style={{
                 backgroundColor: bgColor,
                 color: color,
                 justifyContent: alignment
             }} className={`q-form-div`}>
-                {(page < 0) ? <FirstPage /> : <Survey />}
+                {(page < 0) ? <FirstPage/> : <Survey/>}
             </div>
         </div>
     );
