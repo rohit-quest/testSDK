@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import config from "../../config";
 import axios from "axios";
 import { useContext } from "react";
@@ -47,7 +47,9 @@ interface QuestLoginProps {
     loadingTracker?: boolean;
     setLoading?: Function;
     linksLogoWidth?: string;
-    linksLogo: string[];
+    previousBtnText: string;
+    nextBtnText: string;
+    progressbarColor: string;
 }
 
 interface FormData {
@@ -56,9 +58,10 @@ interface FormData {
     options: [string];
     criteriaId: string;
     required: boolean;
-    placeholder: string,
-    linkTitle: string,
-    linkUrl: string
+    placeholder: string;
+    linkTitle: string;
+    linkUrl: string;
+
 }
 
 interface Answer {
@@ -95,7 +98,9 @@ function OnBoarding(props: QuestLoginProps) {
         loadingTracker,
         setLoading,
         linksLogoWidth,
-        linksLogo
+        previousBtnText,
+        nextBtnText,
+        progressbarColor,
     } = props;
 
     const [formdata, setFormdata] = useState<FormData[] | []>([]);
@@ -104,6 +109,7 @@ function OnBoarding(props: QuestLoginProps) {
     const [steps, setSteps] = useState<number[]>([]);
     const { apiKey, apiSecret, entityId, featureFlags } = useContext(QuestContext.Context);
     const cookies = new Cookies()
+    const progressRef = useRef()
 
 
     useEffect(() => {
@@ -157,10 +163,6 @@ function OnBoarding(props: QuestLoginProps) {
                             metadata: { title: string; options: string[], isOptional: string, placeholder: string, linkActionName: string, linkActionUrl: string};
                             criteriaId: string;
                         }) => {
-                            // criteria.criteriaType == "LINK_OPEN_READ" 
-                            // ?
-                            // return {}
-                            // :
                             return {
                                 type: criteria?.criteriaType,
                                 question: criteria?.metadata?.title,
@@ -203,7 +205,7 @@ function OnBoarding(props: QuestLoginProps) {
                 : formdata.map((e, i) => i + 1);
         let c = 0;
         for (let i = 0; i < currentQuestions.length; i++) {
-            if (formdata[currentQuestions[i] - 1].required == false) {
+            if (formdata[currentQuestions[i] - 1].required == false || formdata[currentQuestions[i] - 1].type == "LINK_OPEN_READ") {
                 c++;
             } else {
                 if (
@@ -245,7 +247,7 @@ function OnBoarding(props: QuestLoginProps) {
                 setSteps(updatedSteps);
             }
         }
-    }, [btnFlag])
+    }, [btnFlag, currentPage])
 
     const handleUpdate = (e: any, id: string, j: string) => {
         if (e.target.checked == true && j == "check") {
@@ -276,23 +278,41 @@ function OnBoarding(props: QuestLoginProps) {
         }
     };
 
-    const progressBar = () => {
+    const ProgressBar = () => {
+        const [wd, setWd] = useState(0)
+        useEffect(() => {
+            if (progressRef.current) {
+                setWd(progressRef?.current?.clientWidth)
+            }
+        }, [])
         return (
             <div className="q-onb-progress">
-                <div style={{gridTemplateColumns: progress ? `repeat(${progress.length}, 1fr)` : ""}}>
+                <div style={{gridTemplateColumns: progress ? `repeat(${progress.length}, 1fr)` : ""}} ref={progressRef}>
                     {
                         !!progress && !!design && progress.length == design?.length && progress.map((prog: string, i: number) => (
                             <div key={i}>
                                 {
                                     steps.includes(i) == true ?
-                                    <div className="q-onb-progress-comp" style={{borderColor: "#55A555"}}>
-                                        <img src={complete} alt="" />
-                                        <p>{prog}</p>
+                                    <div className="q-onb-progress-comp" style={{borderColor: progressbarColor ? progressbarColor : "#55A555"}}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M15.75 8C15.75 12.2802 12.2802 15.75 8 15.75C3.71978 15.75 0.25 12.2802 0.25 8C0.25 3.71978 3.71978 0.25 8 0.25C12.2802 0.25 15.75 3.71978 15.75 8ZM7.10356 12.1036L12.8536 6.35356C13.0488 6.15831 13.0488 5.84172 12.8536 5.64647L12.1465 4.93937C11.9512 4.74409 11.6346 4.74409 11.4393 4.93937L6.75 9.62869L4.56066 7.43934C4.36541 7.24409 4.04881 7.24409 3.85353 7.43934L3.14644 8.14644C2.95119 8.34169 2.95119 8.65828 3.14644 8.85353L6.39644 12.1035C6.59172 12.2988 6.90828 12.2988 7.10356 12.1036Z" 
+                                                fill = {progressbarColor ? progressbarColor : "#55A555"}
+                                            />
+                                        </svg>
+                                        <div style={{width: `${((((wd - (progress.length - 1) * 15)) / progress.length) - 24)}px`}}>
+                                            {prog}
+                                        </div>
                                     </div>
                                     :
                                     <div className="q-onb-progress-comp" style={{borderColor: "#EAEBED"}}>
-                                        <img src={incomplete} alt="" />
-                                        <p>{prog}</p>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                            <path d="M8 0.25C3.71978 0.25 0.25 3.71978 0.25 8C0.25 12.2802 3.71978 15.75 8 15.75C12.2802 15.75 15.75 12.2802 15.75 8C15.75 3.71978 12.2802 0.25 8 0.25ZM10.5 8C10.5 9.3785 9.3785 10.5 8 10.5C6.6215 10.5 5.5 9.3785 5.5 8C5.5 6.6215 6.6215 5.5 8 5.5C9.3785 5.5 10.5 6.6215 10.5 8Z" 
+                                                fill="#EAEBED"
+                                            />
+                                        </svg>
+                                        <div style={{width: `${((((wd - (progress.length - 1) * 15)) / progress.length) - 24)}px`}}>
+                                            {prog}
+                                        </div>
                                     </div>
                                 }
                             </div>
@@ -590,7 +610,7 @@ function OnBoarding(props: QuestLoginProps) {
             return link
         }
     }
-console.log(formdata)
+
     const linksCriteria = (
         linkTitle: string,
         criteriaId: string,
@@ -605,32 +625,17 @@ console.log(formdata)
                         {customComponents}
                     </div>
                 }
-                {/* <label
-                    className="q-onb-lebels"
-                    htmlFor="normalInput"
-                    style={{ color: color }}
-                >
-                    {question} {required && "*"}
-                </label>
-                <input
-                    type="text"
-                    id="normalInput"
-                    name="normalInput"
-                    className="q-onb-input"
-                    style={{ backgroundColor: inputBgColor, border: inputBorder }}
-                    onChange={(e) => handleUpdate(e, criteriaId, "")}
-                    value={answer[criteriaId]}
-                    placeholder={placeholder}
-                /> */}
-                <div className="q-onb-link-div">
-                    <img src={chooseLogo(linkUrl)} style={{width: linksLogoWidth }}/>
-                    <div className="q-onb-link-div-ch">
-                        <p>{linkTitle}</p>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-                            <path d="M2 11H14.2L8.6 16.6L10 18L18 10L10 2L8.6 3.4L14.2 9H2V11Z" className="q-onb-arrow"/>
-                        </svg>
+                <a href={linkUrl} target="_blank" style={{textDecoration: "none"}}>
+                    <div className="q-onb-link-div">
+                        <img src={chooseLogo(linkUrl)} style={{width: linksLogoWidth }}/>
+                        <div className="q-onb-link-div-ch">
+                            <p style={{ color: color ? color : "black" }}>{linkTitle}</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                                <path d="M2 11H14.2L8.6 16.6L10 18L18 10L10 2L8.6 3.4L14.2 9H2V11Z" className="q-onb-arrow"/>
+                            </svg>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         );
     };
@@ -706,7 +711,7 @@ console.log(formdata)
             <div
                className="q-onb-ch"
             >
-                {formdata.length > 0 && progressBar()}
+                {formdata.length > 0 && <ProgressBar/>}
                 {formdata.length > 0 && !!headingScreen &&
                     (typeof headingScreen == "object" && !!headingScreen.name ? (
                         <div>
@@ -873,7 +878,7 @@ console.log(formdata)
                                     }}
                                 >
                                     {" "}
-                                    Previous
+                                    {previousBtnText ? previousBtnText : "Previous"}
                                 </button>
                                 <button
                                     className="q-onb-main-btn2"
@@ -889,7 +894,7 @@ console.log(formdata)
                                     }}
                                 >
                                     {currentPage == design.length - 1
-                                        ? "Continue"
+                                        ? (nextBtnText ? nextBtnText : "Continue")
                                         : "Next"}
                                 </button>
                             </div>
@@ -904,7 +909,7 @@ console.log(formdata)
                                         width: btnSize
                                     }}
                                 >
-                                    Continue
+                                    {nextBtnText ? nextBtnText : "Continue"}
                                 </button>
                             </div>
                         ))}
