@@ -268,6 +268,42 @@
     }
 }
 
+.q-onb-link-div{
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.q-onb-link-div>img {
+    width: 58px;
+    height: 58px;
+    padding: 15px;
+    border-radius: 50px;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+}
+
+.q-onb-link-div-ch{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.q-onb-link-div svg path{
+    fill: none;
+}
+
+.q-onb-link-div:hover svg {
+    padding: 12px;
+    background-color: rgba(246, 246, 246, 1);
+    border-radius: 50px;
+    width: 44px;
+    height: 44px;
+}
+
+.q-onb-link-div:hover svg path{
+    fill: black;
+}
   
 .q-onb-progress{
     padding: 2rem 2rem 0 2rem; 
@@ -287,6 +323,17 @@
     border-bottom: 5px solid ;
     padding-bottom: 10px;
     transition: all 0.6s;
+}
+
+.q-onb-progress-comp>div{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+}
+
+.q-onb-progress>div>div{
+    width: 100%;
 }
 
 .q-onb-progress-comp>img {
