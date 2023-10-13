@@ -1,0 +1,130 @@
+.q-tutorial-cont {
+  background-color: white;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.q-tut-div {
+  text-align: left;
+  padding-bottom: 0.5rem;
+  padding-top: 0.25rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.q-tut-head {
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 0.3125rem;
+}
+
+.q-tut-subhead {
+  color: #d1d5db;
+  color: white;
+  margin-top: 0.3125rem;
+}
+
+.q-tut-cont {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.progress-bar-container {
+  margin-top: 0.5rem;
+  background-color: #e5e7eb;
+  height: 10px;
+  border-radius: 50px;
+}
+
+.progress-bar-fill {
+  height: 10px;
+  border-radius: 50px;
+}
+
+.step-counter {
+  display: flex;
+  justify-content: space-between;
+  color: #718096;
+  margin-top: 1rem;
+}
+
+.q-tut-item-cont {
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.q-tut-label {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 0.25rem;
+  margin-right: 0.75rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.q-tut-label.completed {
+  background-color: black;
+  color: white;
+  border: none;
+  border-color: black;
+}
+
+.q-tut-label.incomplete {
+  border-color: #ccc;
+  color: transparent;
+  border: 2px solid black;
+}
+
+.q-tut-step {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.q-tut-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.q-tut-button {
+  background-color: #ccc;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.q-tut-button:hover {
+  background-color: #888;
+}
+
+.q-tut-btn-cont {
+  margin-right: 0.75rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.q-tut-btn {
+  padding: 0.5rem 1rem;
+  margin-right: 0.75rem;
+  border: 1.5px solid black;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.q-tut-btn:disabled {
+  cursor: not-allowed;
+}
+
+.progress-bar-fill, .q-tut-cont, .q-tut-label {
+  box-sizing: border-box;
+}

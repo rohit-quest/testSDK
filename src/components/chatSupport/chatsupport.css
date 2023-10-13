@@ -18,10 +18,15 @@
     border-color: #e5e7eb;
 }
 
+.q-cht-home * {
+    box-sizing: border-box;
+}
+
 .q-cht-main {
     position: fixed;
     right: 1.75rem;
     bottom: 1.75rem;
+    z-index: 9;
 }
 .q-cht-logo1 {
     width: 4rem;
@@ -42,6 +47,7 @@
     transition-duration: 300ms;
     height: 70vh;
     width: 80%;
+    z-index: 9;
 }
 .q-cht-ch-div {
     display: flex;
@@ -51,7 +57,7 @@
     align-items: center;
     border-top-left-radius: 0.75rem;
     border-top-right-radius: 0.75rem;
-    width: calc(100% - 3rem);
+    width: 100%;
     background-color: #000000;
     height: 10%;
 }
@@ -74,7 +80,7 @@
     padding-right: 1.5rem;
     font-size: 0.875rem;
     line-height: 1.25rem;
-    height: calc(80% - 3rem);
+    height: 80%;
 }
 .q-cht-ch-loading {
     display: flex;
@@ -111,7 +117,7 @@
     border-bottom-left-radius: 0.75rem;
     border-style: none;
     outline-style: none;
-    height: calc(100% - 3rem);
+    height: 100%;
     background-color: transparent;
     width: 90%;
 }

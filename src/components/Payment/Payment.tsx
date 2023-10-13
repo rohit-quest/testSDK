@@ -42,7 +42,7 @@ const Payment: FC<CreditButtonProps> = ({
 }) => {
     const [tiers, setTears] = useState<any[]>([]);
     const [desc, setDesc] = useState<string[]>(description || []);
-    const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
+    const { apiKey, apiSecret, entityId, featureFlags } = useContext(QuestContext.Context);
     const stripeTestPromise = loadStripe(stripePublishableKey);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [openPaymentPopup, setOpenPaymentPopup] = useState(false);
@@ -78,6 +78,10 @@ const Payment: FC<CreditButtonProps> = ({
         setSelectedIndex(index);
         setOpenPaymentPopup(true);
     };
+
+    if (featureFlags[config.FLAG_CONSTRAINTS.PaymentFlag]?.isEnabled == false) {
+        return (<div></div>)
+    }
 
     return (
         <div

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Kanit&family=Neucha&family=Roboto:wght@100;400;500&family=Xanh+Mono&display=swap');
 .q-h4 {
   text-align: start;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500 !important;
   padding: 2% 0;
 }
@@ -9,6 +9,11 @@
   font-weight: bold;
   font-size: 2rem;
   text-align: center;
+}
+.q-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .quest-loader {
   position: fixed;
@@ -26,6 +31,7 @@
   100% { transform: rotate(360deg); }
 }
 .q-input-box {
+  margin-top: 1%;
   width: 100%;
   padding-left: 1rem; 
   padding-right: 3.5rem; 
@@ -70,7 +76,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 18px;
   outline: none;
 }
 .q-btn-continue:hover {
@@ -85,13 +91,15 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-color: rgb(255, 255, 255);
 }
-*{
+* {
   margin: 0;
 }
 
-*,
 .questLabs :before,
+.q-input-box,
+.q-btn-continue,
 .questLabs :after {
   box-sizing: border-box;
   border-width: 0;
@@ -128,4 +136,8 @@ body {
 .questLabs abbr:where([title]) {
   -webkit-text-decoration: underline dotted;
   text-decoration: underline dotted;
+}
+.questLabs textarea {
+  font-family: inherit;
+  padding-top: 2%;
 }
