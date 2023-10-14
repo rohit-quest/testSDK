@@ -278,10 +278,10 @@ function OnBoarding(props: QuestLoginProps) {
         }
     };
 
+    const [wd, setWd] = useState(0)
     const ProgressBar = () => {
-        const [wd, setWd] = useState(0)
         useEffect(() => {
-            if (progressRef.current) {
+            if (!!progressRef.current && progressRef.current != wd) {
                 setWd(progressRef?.current?.clientWidth)
             }
         }, [])
