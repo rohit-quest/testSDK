@@ -20,6 +20,8 @@ export interface questFormPropType {
     questId?: string;
     onSubmit?: () => void
     shadowColor?: string;
+    inputBgColor?: string;
+    width?: string
 }
 
 export interface metadata {
@@ -32,6 +34,7 @@ export interface metadata {
     placeholder: string;
     options: Array<string>;
     criteriaType?: "USER_INPUT_TEXT" | "USER_INPUT_DATE" | "USER_INPUT_SINGLE_CHOICE" | "USER_INPUT_MULTI_CHOICE" | "USER_INPUT_TEXT_AREA" | "";
+    criteriaId: string;
 }
 
 export interface ApiResponse {
@@ -106,4 +109,38 @@ export async function fetchQuestions({
         else console.log(error);
         return null;
     }
+}
+
+interface SubmitInput {
+    entityId: string;
+    questId: string;
+    questUserId: string;
+    criterias: { criteriaId: string; answer: string | string[] }[];
+    headers: {
+        apikey: string;
+        apisecret: string;
+        userId: string;
+        token: string;
+    };
+}
+
+export async function Submit(inputData: SubmitInput) {
+    const { entityId, questId, questUserId, criterias, headers } = inputData;
+
+    await axios.post(
+        `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${questUserId}`,
+        { criterias },
+        { headers }
+    );
+
+    await axios.post(
+        `${config.BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-complete?userId=${questUserId}&questId=${questId}`,
+        { count: 1 },
+        { headers }
+    );
+}
+
+export interface criteriaType {
+    metadata: metadata,
+    criteriaId: string
 }

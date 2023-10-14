@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import QuestContext from '../../components/QuestWrapper';
-import { ApiResponse, fetchQuestions, metadata, questFormPropType } from "./response.ts";
+import { ApiResponse, Submit, fetchQuestions, metadata, questFormPropType } from "./response.ts";
 import enterPng from '../../assets/images/enter.png';
 import "./form.css";
 
@@ -8,12 +8,12 @@ import "./form.css";
 export const QuestForm = (props: questFormPropType) => {
 
     const {
-        userId = "", questId = "", shadowColor = "rgba(128, 128, 128, 0.56)", token = "", setAnswer = (() => {
+        userId = "", questId = "", shadowColor = "rgba(0, 0, 0, 0.25)", token = "", setAnswer = (() => {
         }), onSubmit = (() => {
         })
     } = props;
     const headers = useContext(QuestContext.Context) || null;
-
+    const { apiKey, apiSecret, entityId, featureFlags } = useContext(QuestContext.Context);
     const [criteria, setCriteria] = useState<metadata[]>([]);
     const [subject, setSubject] = useState<ApiResponse>();
     const [page, setPage] = useState(-1);
@@ -24,7 +24,7 @@ export const QuestForm = (props: questFormPropType) => {
     const {
         color = "", bgColor = "", progressBar,
         alignment = "start", inputBorderColor = "transparent",
-        headingSize = "24px", descSize = "24px"
+        headingSize = "24px", descSize = "24px", inputBgColor = "#F6F6F6"
     } = props;
     const setData = async () => {
         const res = await fetchQuestions({ ...headers, userId, questId, token });
@@ -34,7 +34,7 @@ export const QuestForm = (props: questFormPropType) => {
             ...e.data.metadata, ...e.data
         }))
         setCriteria(crts);
-        setAnswer(crts.map(({ title, options }) => ({ question: title, answer: options || "" })))
+        setAnswer(crts.map(({ title, options, criteriaId }) => ({ question: title, answer: options ? [] : "", criteriaId })))
     }
     const [anime, setAnime] = useState<"scroll-animation" | "scroll-animation-rev" | "">("")
 
@@ -181,8 +181,8 @@ export const QuestForm = (props: questFormPropType) => {
                 input.current.focus();
             }
         }, []);
-        return (<input placeholder={"Enter Your " + title}
-            style={{ color: color, border: `1px solid ${inputBorderColor}`, backgroundColor: bgColor }}
+        return (<input placeholder={title}
+            style={{ color: color, border: `1px solid ${inputBorderColor}`, backgroundColor: inputBgColor }}
             ref={input}
             onChange={(e) => {
                 setFill(e.target.value)
@@ -213,7 +213,7 @@ export const QuestForm = (props: questFormPropType) => {
                 <label className="q-form-date-label" htmlFor="dateInput" style={{ color: color }}>
                 </label>
                 <input type="date" id="dateInput" name="dateInput" ref={input}
-                    style={{ color: color, border: `1px solid ${inputBorderColor}`, backgroundColor: bgColor }}
+                    style={{ color: color, border: `1px solid ${inputBorderColor}`, backgroundColor: inputBgColor }}
                     className="q-form-date-input"
                     onChange={(e) => {
                         setFill(e.target.value)
@@ -231,6 +231,11 @@ export const QuestForm = (props: questFormPropType) => {
         );
     }
 
+    const submit = () => {
+        const answers = criteria.map((e, i) => ({ criteriaId: e.criteriaId, answer: values[i] }))
+        Submit({ entityId, criterias: answers, headers: { apikey: apiKey, apisecret: apiSecret, token, userId }, questId, questUserId: userId })
+    }
+
     const Survey: React.FC = () => {
         if (page > criteria.length - 1) setPage(() => criteria.length - 1);
         const subj = criteria[page]
@@ -241,11 +246,15 @@ export const QuestForm = (props: questFormPropType) => {
             if (event.key === "Enter") {
                 if (subj.isOptional || fillVal) {
                     setAnime("scroll-animation")
-                    setPage(c => c + 1)
-                    setFill("");
                     if (page == criteria.length - 1) {
                         onSubmit();
+                        submit();
                     }
+                    else {
+                        setPage(c => c + 1)
+                        setFill("");
+                    }
+
                 } else {
                     setNext(false)
                 }
@@ -268,7 +277,6 @@ export const QuestForm = (props: questFormPropType) => {
                 setPage(c => c - 1)
             }
         }
-
         return (<>
             {!!criteria.length && (
                 <div style={{ boxShadow: `0 0 5px ${shadowColor}` }} className={`${anime} q-form-survey`}>
@@ -292,7 +300,15 @@ export const QuestForm = (props: questFormPropType) => {
                                     return <NormalInput setFill={setFill} title={subj?.title} />
                             }
                         })()}
-                        <div style={{ color: "red" }}>{!allowNext && `please fill the ${subj.title}`}</div>
+                        {!allowNext && <div className="q-input-alert">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z"
+                                    fill="#C53434" />
+                            </svg>
+                            <div style={{ color: "red" }}>please fill the above field</div>
+                        </div>}
                     </div>
                     <div className='q-form-survey-div'>
                         {page > 0 && page < criteria.length - 1 && <button
@@ -306,21 +322,24 @@ export const QuestForm = (props: questFormPropType) => {
                             onClick={() => {
                                 if (subj.isOptional || fillVal) {
                                     setAnime("scroll-animation")
-                                    if(page==criteria.length-1)
-                                        setPage(-1);
-                                    else
-                                    setPage(c => c + 1)
-                                    setFill("");
+                                    if (page == criteria.length - 1) {
+                                        onSubmit();
+                                        submit()
+                                    }
+                                    else {
+                                        setPage(c => c + 1)
+                                        setFill("");
+                                    }
                                 } else {
                                     setNext(false)
                                 }
                             }}
                             className={`q-form-survey-next`}>
-                            {criteria.length - 1 == page ? "Back To Home" : "Next"}
+                            {criteria.length - 1 == page ? "Submit" : "Next"}
                         </button>}
-                        <div className='q-form-survey-enter'>
+                        {(page < 1) && (<div className='q-form-survey-enter'>
                             Press Enter
-                            <img className='w-8' src={enterPng} alt='' /></div>
+                            <img className='w-8' src={enterPng} alt='' /></div>)}
                     </div>
                 </div>)}
         </>)
@@ -345,7 +364,8 @@ export const QuestForm = (props: questFormPropType) => {
         return (<>
             {!!subject && (<div style={{ boxShadow: `0 0 5px ${shadowColor}` }} className={'q-form-first ' + anime}>
                 <h2 className={`q-form-first-h2`} style={{ color }}>{subject?.data.title}</h2>
-                <h4 style={{ color, fontSize: headingSize }} className={`q-form-font-normal`}>{subject.data.description}</h4>
+                <h4 style={{ color, fontSize: headingSize }}
+                    className={`q-form-font-normal`}>{subject.data.description}</h4>
                 <div className='q-form-first-div'>
                     <button
                         onClick={() => setPage(c => c + 1)}
@@ -364,7 +384,7 @@ export const QuestForm = (props: questFormPropType) => {
     }, [])
 
     return (
-        <div className='q-form'>
+        <div className='q-form' style={{ width: props.width || "99vw" }}>
             {progressBar &&
                 <div style={{ width: `${String((page + 1) / (criteria.length - 1) * 100)}vw` }}
                     className={`q-form-progress`}></div>}

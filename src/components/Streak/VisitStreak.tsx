@@ -8,8 +8,8 @@ const VisitStreak = ({days=0,color="black",backgroundColor="white"}) => {
         <div className='m-5' >
             <div className='q-streak-main' style={{color,backgroundColor}}>
                 <div className='q-streak-div'>
-                    <div className='q-streak-badge' style={{color,backgroundColor}}>You have earned a new badge:
-                        <span style={{fontWeight: 700,color,backgroundColor}} >Daily Streaking</span></div>
+                    <div className='q-streak-badge' style={{color,backgroundColor}}>You have earned a new badge
+                       Daily Streaking</div>
                     <div className='q-streak-text' style={{color,backgroundColor}}>You maintained a streak
                         for {days} days
                     </div>
