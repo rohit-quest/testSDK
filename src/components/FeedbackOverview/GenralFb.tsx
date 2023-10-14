@@ -53,7 +53,6 @@ const blackStar = (
         </clipPath>
       </defs>
     </svg>
-
 );
 
   const normalInput = (question: string, criteriaId: string, placeholder?:string) => {
