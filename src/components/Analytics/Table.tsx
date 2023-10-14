@@ -5,19 +5,20 @@ import QuestContext from "../QuestWrapper";
 import "./analytics.css"
 
 interface Table {
-    userId?: string;
-    token?: string;
-    questId?: string;
-    headingBgColor?: string;
-    headingTextColor?: string;
-    horizontalBorder?: boolean;
-    bodyBgColor?: string;
-    bodyTextColor?: string;
-    headingTooltip?: boolean;
-    bodyTooltip?: boolean;
-    hideQuestion?: boolean;
-    showAvatar?: boolean;
-    tableWidth?: string;
+    userId: string;
+    token: string;
+    questId: string;
+    headingBgColor: string;
+    headingTextColor: string;
+    horizontalBorder: boolean;
+    bodyBgColor: string;
+    bodyTextColor: string;
+    headingTooltip: boolean;
+    bodyTooltip: boolean;
+    hideQuestion: boolean;
+    showAvatar: boolean;
+    tableWidth: string;
+    hideAnswers: boolean;
 }
 
 type User = {
@@ -41,7 +42,8 @@ const Table: FC<Table> = ({
     bodyTooltip,
     hideQuestion,
     showAvatar,
-    tableWidth
+    tableWidth,
+    hideAnswers
 }) => {
     const [questionData, setQuestionData] = useState<string[]>([]);
     const [answerData, setAnswerData] = useState<UsersDataArray | any>({});
@@ -61,7 +63,6 @@ const Table: FC<Table> = ({
             { headers }
         ).then((res: any) => {
             let userAnswers = res?.data?.summary?.answers;
-            // console.log(userAnswers)
             let questions = [];
             let answers: UsersDataArray = {};
             for (let i = 0; i < userAnswers.length; i++) {
@@ -70,7 +71,6 @@ const Table: FC<Table> = ({
                 for (let j = 0; j < ans?.length; j++) {
                     if (answers[ans[j].userId]) {
                         let user = answers[ans[j].userId];
-                        // console.log(user.userAnswers)
                         user.userAnswers[`q${i}`] = ans[j].userAnswer;
                     } else {
                         answers[ans[j].userId] = {
@@ -83,7 +83,6 @@ const Table: FC<Table> = ({
                     }
                 }
             }
-            console.log(answers);
             setQuestionData([...questions]);
             setAnswerData({ ...answers });
         });
@@ -113,7 +112,6 @@ const Table: FC<Table> = ({
         [tooltipPosition]
     );
 
-    // console.log(tooltipPosition)
 
     return (
         <div className="q-ana-home q-tab-main" style={{width: tableWidth ? tableWidth : "100%"}}>
@@ -212,6 +210,8 @@ const Table: FC<Table> = ({
                                                 : "",
                                             color: bodyTextColor,
                                             borderRight: horizontalBorder ? `2px solid ${headingBgColor ? headingBgColor : ""}` : "0px",
+                                            whiteSpace: !!hideAnswers ? "nowrap" : "normal",
+                                            textOverflow: !!hideAnswers ? "ellipsis" : "",
                                         }}
                                         onMouseEnter={(e) =>
                                             !!bodyTooltip &&

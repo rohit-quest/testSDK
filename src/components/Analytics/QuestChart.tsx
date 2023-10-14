@@ -8,21 +8,17 @@ import SimpleAreaChart from "./SimpleAreaChart";
 import SimpleBarChart from "./SimpleBarChart";
 
 interface QuestChart {
-    userId?: string;
-    token?: string;
-    questId?: string;
-    headingText?: string;
-    headingTextColor?: string;
-    chartType?: string;
-    dataType?: string;
-    boxWidth?: string;
-    startDate?: string;
-    endDate?: string;
-    chartLineColor?: string;
-    bgColor?: string;
-    disabledGrid?: boolean;
-    metricChart?: boolean;
-    metricIds?: string [];
+    userId: string;
+    token: string;
+    questId: string;
+    headingText: string;
+    headingTextColor: string;
+    chartType: "LineChart" | "AreaChart" | "BarChart";
+    dataType: "Claim" | "View" | "Metric";
+    boxWidth: string;
+    bgColor: string;
+    disabledGrid: boolean;
+    metricIds: string[];
 }
 
 interface updatedViewData {
@@ -45,55 +41,107 @@ const QuestChart: FC<QuestChart> = ({
     chartType,
     dataType,
     boxWidth,
-    startDate,
-    endDate,
-    chartLineColor,
     bgColor,
     disabledGrid,
-    metricChart,
-    metricIds
+    metricIds,
 }) => {
     const [claimData, setClaimData] = useState<updatedViewData[]>([]);
     const [viewData, setViewData] = useState<updatedViewData[]>([]);
     const [metricData, setMetricData] = useState<metricViewData[]>([]);
     const [questData, setQuestData] = useState({});
+    const [renderData, setRenderData] = useState<
+        updatedViewData[] | metricViewData[]
+    >([]);
     const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
 
-    useEffect(() => {
+    async function getData() {
+        let defaultsMetricNames = {
+            "onboarding-view": "Onboarding Started",
+            "onboarding-complete-page-1": "Onboarding 1st Step",
+            "onboarding-complete-page-2": "Onboarding 2nd Step",
+            "onboarding-complete-page-3": "Onboarding 3rd Step",
+            "onboarding-complete-page-4": "Onboarding 4th Step",
+            "onboarding-complete-page-5": "Onboarding 5th Step",
+            "onboarding-complete-page-6": "Onboarding 6th Step",
+            "onboarding-complete-page-7": "Onboarding 7th Step",
+            "onboarding-complete-page-8": "Onboarding 8th Step",
+            "onboarding-complete-page-9": "Onboarding 9th Step",
+            "onboarding-complete-page-10": "Onboarding 10th Step",
+            "onboarding-complete": "Onboarding Completed",
+            "feedback-q-request-a-feature": "Feature Request Form Viewed",
+            "feedback-q-report-a-bug": "Bug Report Form Viewed",
+            "feedback-q-general-feedback": "General Feedback Form View",
+            "feedback-q-contact-us": "Contact Us Form View",
+        };
+
         const headers = {
             apiKey: apiKey,
             apisecret: apiSecret,
             userId: userId,
             token: token,
         };
-        if (metricChart == true) {
+        if (dataType == "Metric") {
             axios(
-                `${config.BACKEND_URL}api/entities/${entityId}/metrics/claims?userId=${userId}`,
+                `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/metric-summary?userId=${userId}`,
                 { headers }
             ).then((res: any) => {
-                let data = res.data.totalClaims
-                let modData: metricViewData [] = []
-                for (let i = 0; i < metricIds?.length; i++) {
-                    let fl = 0
-                    for (let j = 0; j < data.length; j++) {
-                        if (metricIds[i] == data[j]._id) {
-                            modData.push({
-                                metric: data[j]._id,
-                                count: data[j].count
-                            })
-                            fl = 1
-                            break;
-                        }
-                    }
-                    if (fl == 0) {
-                        modData.push({
-                            metric: metricIds[i],
-                            count: 0
-                        })
+                let data = res.data.data;
+                let modData = [];
+                for (let j = 0; j < data.length; j++) {
+                    if (metricIds.includes(data[j].metric)) {
+                        modData.push(data[j]);
                     }
                 }
-                setMetricData(modData)
-            })
+
+                const dates = filterDate();
+                const finalData = updateDataForChart(dates, metricIds, modData);
+
+                setMetricData(finalData);
+
+                function filterDate() {
+                    const endDate = new Date();
+                    const dates = [];
+
+                    const currentDate = new Date(endDate);
+
+                    while (dates.length <= 29) {
+                        dates.unshift(currentDate.toISOString().split("T")[0]);
+                        currentDate.setDate(currentDate.getDate() - 1);
+                    }
+
+                    return dates;
+                }
+
+                function updateDataForChart(
+                    dates = [],
+                    metricIds = [],
+                    data = []
+                ) {
+                    let finalData = [];
+                    let allIds = [];
+                    for (let j = 0; j < metricIds.length; j++) {
+                        allIds[defaultsMetricNames[metricIds[j]]] = 0;
+                    }
+
+                    for (let i = 0; i < dates.length; i++) {
+                        let obj = {
+                            date: dates[i].slice(5, 10),
+                            ...allIds,
+                        };
+
+                        for (let j = 0; j < data.length; j++) {
+                            if (data[j].date == dates[i]) {
+                                obj[data[j].metricDetails[0].name] =
+                                    data[j].count;
+                            }
+                        }
+
+                        finalData.push(obj);
+                    }
+
+                    return finalData;
+                }
+            });
         } else {
             axios(
                 `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/summary?userId=${userId}`,
@@ -107,84 +155,37 @@ const QuestChart: FC<QuestChart> = ({
                         const dateB = new Date(b.date);
                         return dateA - dateB;
                     });
-    
-                    let allDates = getDatesBetween(startDate, endDate);
-    
-                    function getDatesBetween(startDateStr, endDateStr) {
-                        if (startDateStr && endDateStr) {
-                            const startDate = new Date(startDateStr);
-                            const endDate = new Date(endDateStr);
-                            const dates = [];
-    
-                            const currentDate = new Date(startDate);
-    
-                            while (currentDate <= endDate) {
-                                dates.push(currentDate.toISOString().split("T")[0]);
-                                currentDate.setDate(currentDate.getDate() + 1);
-                            }
-    
-                            return dates;
-                        } else if (startDateStr) {
-                            const startDate = new Date(startDateStr);
-                            const endDate = new Date();
-                            const dates = [];
-    
-                            const currentDate = new Date(startDate);
-    
-                            while (currentDate <= endDate) {
-                                if (dates.length == 7) {
-                                    break;
-                                }
-                                dates.push(currentDate.toISOString().split("T")[0]);
-                                currentDate.setDate(currentDate.getDate() + 1);
-                            }
-    
-                            return dates;
-                        } else if (endDateStr) {
-                            const startDate = new Date();
-                            const endDate = new Date(endDateStr);
-                            const dates = [];
-    
-                            const currentDate = new Date(endDate);
-    
-                            while (dates.length <= 7) {
-                                dates.unshift(
-                                    currentDate.toISOString().split("T")[0]
-                                );
-                                currentDate.setDate(currentDate.getDate() - 1);
-                            }
-    
-                            return dates;
-                        } else {
-                            const startDate = new Date();
-                            const endDate = new Date();
-                            const dates = [];
-    
-                            const currentDate = new Date(endDate);
+
+                    let allDates = getDatesBetween();
+
+                    function getDatesBetween() {
+                        const endDate = new Date();
+                        const dates = [];
+
+                        const currentDate = new Date(endDate);
+
+                        while (dates.length <= 29) {
+                            dates.unshift(
+                                currentDate.toISOString().split("T")[0]
+                            );
                             currentDate.setDate(currentDate.getDate() - 1);
-    
-                            while (dates.length <= 7) {
-                                dates.unshift(
-                                    currentDate.toISOString().split("T")[0]
-                                );
-                                currentDate.setDate(currentDate.getDate() - 1);
-                            }
-    
-                            return dates;
                         }
+
+                        return dates;
                     }
-    
+
                     let finalData = [];
-    
-                    let fl = 0;
+
                     for (let i = 0; i < allDates.length; i++) {
-                        if (
-                            !!sortedChartData[fl] &&
-                            allDates[i] == sortedChartData[fl].date
-                        ) {
-                            finalData.push(sortedChartData[fl]);
-                            fl++;
-                        } else {
+                        let fl = false;
+                        for (let j = 0; j < sortedChartData.length; j++) {
+                            if (sortedChartData[j].date == allDates[i]) {
+                                finalData.push(sortedChartData[j]);
+                                fl = true;
+                                break;
+                            }
+                        }
+                        if (fl == false) {
                             let obj = {
                                 claimCount: 0,
                                 viewCount: 0,
@@ -193,17 +194,16 @@ const QuestChart: FC<QuestChart> = ({
                             finalData.push(obj);
                         }
                     }
-    
                     const updatedClaimData: updatedViewData[] = [];
                     const updatedViewData: updatedViewData[] = [];
-    
+
                     for (const stat of finalData) {
                         const claimStat = {
                             count: stat.claimCount,
                             date: stat.date.slice(5, 10),
                         };
                         updatedClaimData.push(claimStat);
-    
+
                         const viewStat = {
                             count: stat.viewCount,
                             date: stat.date.slice(5, 10),
@@ -216,9 +216,34 @@ const QuestChart: FC<QuestChart> = ({
                 }
             });
         }
+    }
+
+    async function changeDaysValue(val: number) {
+        await getData();
+        if (dataType == "Claim") {
+            filterRenderData(claimData, val);
+        } else if (dataType == "View") {
+            filterRenderData(viewData, val);
+        } else {
+            filterRenderData(metricData, val);
+        }
+    }
+
+    function filterRenderData(
+        data: updatedViewData[] | metricViewData[],
+        days: number
+    ) {
+        let dt = [...data];
+        let newData: updatedViewData[] | metricViewData[] = dt.slice(
+            30 - days,
+            30
+        );
+        setRenderData(newData);
+    }
+
+    useEffect(() => {
+        changeDaysValue(3);
     }, []);
-
-
 
     return (
         <div
@@ -228,92 +253,44 @@ const QuestChart: FC<QuestChart> = ({
                 backgroundColor: bgColor,
             }}
         >
-            <p
-                className="q-ana-ch-p"
-                style={{ color: headingTextColor ? headingTextColor : "" }}
-            >
-                {!!headingText
-                    ? headingText
-                    : `${
-                          chartType ? chartType.split("chart")[0] : "Line"
-                      } Chart of ${metricChart ? "Metrics" : questData.title}`}
-            </p>
-            {chartType == "Barchart" ? (
-                metricChart == true ?
-                    <SimpleBarChart
-                        data={metricData}
-                        type={"Claims"}
-                        lineColor={chartLineColor}
-                        textColor={headingTextColor}
-                        gridLine={disabledGrid}
-                    />
-                :
-                dataType == "claim" ? (
-                    <SimpleBarChart
-                        data={claimData}
-                        type={"Claims"}
-                        lineColor={chartLineColor}
-                        textColor={headingTextColor}
-                        gridLine={disabledGrid}
-                    />
-                ) : (
-                    <SimpleBarChart
-                        data={viewData}
-                        type={"Views"}
-                        lineColor={chartLineColor}
-                        textColor={headingTextColor}
-                        gridLine={disabledGrid}
-                    />
-                )
-            ) : chartType == "Areachart" ? (
-                metricChart == true ?
-                    <SimpleAreaChart
-                        data={metricData}
-                        type={"Claims"}
-                        lineColor={chartLineColor}
-                        textColor={headingTextColor}
-                        gridLine={disabledGrid}
-                    />
-                :
-                dataType == "claim" ? (
-                    <SimpleAreaChart
-                        data={claimData}
-                        type={"Claims"}
-                        lineColor={chartLineColor}
-                        textColor={headingTextColor}
-                        gridLine={disabledGrid}
-                    />
-                ) : (
-                    <SimpleAreaChart
-                        data={viewData}
-                        type={"Views"}
-                        lineColor={chartLineColor}
-                        textColor={headingTextColor}
-                        gridLine={disabledGrid}
-                    />
-                )
-            ) 
-            : metricChart == true ?
-                <SimpleLineChart
-                    data={metricData}
-                    type={"Claims"}
-                    lineColor={chartLineColor}
+            <div className="q-ana-tab-div">
+                <p
+                    className="q-ana-ch-p"
+                    style={{ color: headingTextColor ? headingTextColor : "" }}
+                >
+                    {!!headingText
+                        ? headingText
+                        : `${
+                              chartType ? chartType.split("chart")[0] : "Line"
+                          } Chart of ${
+                              dataType == "Metric" ? "Metrics" : questData.title
+                          }`}
+                </p>
+                <select onChange={(e) => changeDaysValue(e.target.value)}>
+                    <option value="3">3 days</option>
+                    <option value="7">7 days</option>
+                    <option value="15">15 days</option>
+                    <option value="30">30 days</option>
+                </select>
+            </div>
+            {chartType == "BarChart" ? (
+                <SimpleBarChart
+                    data={renderData}
+                    type={dataType}
                     textColor={headingTextColor}
                     gridLine={disabledGrid}
-                />            
-            : dataType == "claim" ? (
-                <SimpleLineChart
-                    data={claimData}
-                    type={"Claims"}
-                    lineColor={chartLineColor}
+                />
+            ) : chartType == "AreaChart" ? (
+                <SimpleAreaChart
+                    data={renderData}
+                    type={dataType}
                     textColor={headingTextColor}
                     gridLine={disabledGrid}
                 />
             ) : (
                 <SimpleLineChart
-                    data={viewData}
-                    type={"Views"}
-                    lineColor={chartLineColor}
+                    data={renderData}
+                    type={dataType}
                     textColor={headingTextColor}
                     gridLine={disabledGrid}
                 />

@@ -1,4 +1,3 @@
-import React from "react";
 import {
     LineChart,
     Line,
@@ -6,20 +5,38 @@ import {
     YAxis,
     Tooltip,
     ResponsiveContainer,
-    CartesianGrid
+    CartesianGrid,
 } from "recharts";
 
-function SimpleLineChart(prop: any) {
-    const { data, type, lineColor, textColor, gridLine } = prop;
-    
+let lineColors: string[] = [
+    "#36A2EB",
+    "#FFCE56",
+    "#4BC0C0",
+    "#9966FF",
+    "#FF9F40",
+    "#008000",
+];
+function SingleLineChart(prop) {
+    const { data, type, textColor, gridLine } = prop;
     const CustomTooltip = ({ active, payload, label }) => {
         if (active && payload && payload.length) {
-            return (
-                <div className="custom-tooltip" style={{color: textColor}}>
-                    {
-                        !!data[0]?.metric && 
-                        <p>Metric: {payload[0].payload.metric}</p>
-                    }
+            return type == "Metric" ? (
+                <div className="custom-tooltip" style={{ color: textColor }}>
+                    {!!payload[0].payload &&
+                        Object.keys(payload[0].payload).map((pl, i) => (
+                            <p
+                                className="label"
+                                style={{
+                                    fontSize: "10px",
+                                    padding: 0,
+                                    margin: 0,
+                                }}
+                                key={i}
+                            >{`${pl} : ${payload[0].payload[pl]}`}</p>
+                        ))}
+                </div>
+            ) : (
+                <div className="custom-tooltip" style={{ color: textColor }}>
                     <span className="label">{`${type} : ${payload[0].value}`}</span>
                 </div>
             );
@@ -29,35 +46,47 @@ function SimpleLineChart(prop: any) {
 
     return (
         <ResponsiveContainer width="100%" height={210}>
-            <LineChart data={data} margin={{ right: 20, top: 20, left: -30, bottom: 10 }}>
+            <LineChart data={data} margin={{ right: 20, top: 20 }}>
                 <XAxis
-                    dataKey={!!data[0]?.metric ? "" : "date"}
+                    dataKey="date"
                     interval={0}
-                    domain={[0, (dataMax) => (dataMax >= 50 ? dataMax : 50)]}
-                    style={{ fontSize: "12px" }}
-                    angle={!!data[0]?.metric ? 0 : -45}
-                    textAnchor="end"
+                    domain={[0, (dataMax) => dataMax + 5]}
+                    style={{ fontSize: "10px" }}
                 />
                 <YAxis
                     tickCount={5}
                     interval={0}
-                    domain={[0, (dataMax) => (dataMax >= 50 ? dataMax : 50)]}
-                    style={{ fontSize: "12px" }}
+                    domain={[0, (dataMax) => dataMax + 5]}
+                    style={{ fontSize: "10px" }}
                 />
-                <Line
-                    type="monotone"
-                    dataKey="count"
-                    stroke={lineColor ? lineColor : "#8884d8"}
-                    dot={true}
-                />
-                {
-                    (!gridLine || gridLine == false) &&
+                {type == "Metric" && !!data.length ? (
+                    Object.keys(data[0]).map(
+                        (line, i) =>
+                            line != "date" && (
+                                <Line
+                                    type="monotone"
+                                    dataKey={line}
+                                    stroke={lineColors[i]}
+                                    dot={false}
+                                    key={i}
+                                />
+                            )
+                    )
+                ) : (
+                    <Line
+                        type="monotone"
+                        dataKey="count"
+                        stroke="#8884d8"
+                        dot={false}
+                    />
+                )}
+                {(!gridLine || gridLine == false) && (
                     <CartesianGrid strokeDasharray="3 3" />
-                }
-                <Tooltip content={<CustomTooltip/>} />
+                )}
+                <Tooltip content={<CustomTooltip />} />
             </LineChart>
         </ResponsiveContainer>
     );
 }
 
-export default SimpleLineChart;
+export default SingleLineChart;
