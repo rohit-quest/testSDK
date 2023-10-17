@@ -534,6 +534,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   setSubmit(false)
                   setSelectedOption(null)
                 }, 4000);
+                axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${selectedQuest}-com?userId=${userId}&questId=${selectedQuest}`, {count: 1}, {headers: headers})
               } else {
                 toast.error(response.data.error);
               }
@@ -569,14 +570,30 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       token: token,
     };
     let request;
-    let defaultQuestId: string[] = []
-    let questIndex: number[] = [];
     {
       questIds.map((id, index) => {
         const isDefault = isDefaultQuestId(id);
         if (isDefault) {
-          defaultQuestId.push(id)
-          questIndex.push(index)
+          request = `${config.BACKEND_URL}api/entities/${entityId}/default-quest/?userId=${userId}&defaultId=${id}`;
+          axios.post(request, {}, { headers: headers }).then((res) => {
+            let response = res.data.data;
+            let criterias = response?.eligibilityData?.map((criteria: any) => {
+              return {
+                type: criteria?.data?.criteriaType,
+                question: criteria?.data?.metadata?.title,
+                options: criteria?.data?.metadata?.options || [],
+                criteriaId: criteria?.data?.criteriaId,
+                required: !criteria?.data?.metadata?.isOptional,
+                placeholder: criteria?.data?.metadata?.placeholder,
+              };
+            });
+            criterias = Array.isArray(criterias) ? criterias : [];
+            setFormdata((prevFormdata) => {
+              const updatedFormdata = { ...prevFormdata };
+              updatedFormdata[index] = criterias;
+              return updatedFormdata;
+            });
+          });
         } else {
           request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${id}?userId=${userId}`;
           axios.get(request, { headers: headers }).then((res) => {
@@ -599,29 +616,6 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             });
           });
         }
-      });
-      request = `${config.BACKEND_URL}api/entities/${entityId}/default-multi-quest/?userId=${userId}`;
-      axios.post(request, {defaultIds: defaultQuestId}, { headers: headers }).then((res) => {
-        let response = res.data.data;
-        response.map((qData: { data: any; }, index: number) => {
-          let mainData = qData?.data
-          let criterias = mainData?.eligibilityData?.map((criteria: any) => {
-            return {
-              type: criteria?.data?.criteriaType,
-              question: criteria?.data?.metadata?.title,
-              options: criteria?.data?.metadata?.options || [],
-              criteriaId: criteria?.data?.criteriaId,
-              required: !criteria?.data?.metadata?.isOptional,
-              placeholder: criteria?.data?.metadata?.placeholder,
-            };
-          });
-          criterias = Array.isArray(criterias) ? criterias : [];
-          setFormdata((prevFormdata) => {
-            const updatedFormdata = { ...prevFormdata };
-            updatedFormdata[questIndex[index]] = criterias;
-            return updatedFormdata;
-          });
-        })
       });
     }
   }, [questIds]);
@@ -664,7 +658,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
 
   if (featureFlags[config.FLAG_CONSTRAINTS.FeedbackWorkflowFlag]?.isEnabled == false) {
     return (<div></div>)
-}
+  }
 
   return (
     <div style={{position:"fixed", display: isOpen == true ? "flex" : "none", zIndex, width:"100vw", backgroundColor: "rgba(128,144,160,.7)"}} className="q-parent-container">

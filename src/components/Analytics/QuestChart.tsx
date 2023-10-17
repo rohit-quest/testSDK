@@ -52,6 +52,7 @@ const QuestChart: FC<QuestChart> = ({
     const [renderData, setRenderData] = useState<
         updatedViewData[] | metricViewData[]
     >([]);
+    const [selectedDate, setSelectedDate] = useState<number>(3)
     const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
 
     async function getData() {
@@ -69,9 +70,13 @@ const QuestChart: FC<QuestChart> = ({
             "onboarding-complete-page-10": "Onboarding 10th Step",
             "onboarding-complete": "Onboarding Completed",
             "feedback-q-request-a-feature": "Feature Request Form Viewed",
+            "feedback-q-request-a-feature-com": "Feature Request Form Submitted",
             "feedback-q-report-a-bug": "Bug Report Form Viewed",
-            "feedback-q-general-feedback": "General Feedback Form View",
-            "feedback-q-contact-us": "Contact Us Form View",
+            "feedback-q-report-a-bug-com": "Bug Report Form Submitted",
+            "feedback-q-general-feedback": "General Feedback Form Viewed",
+            "feedback-q-general-feedback-com": "General Feedback Form Submitted",
+            "feedback-q-contact-us": "Contact Us Form Viewed",
+            "feedback-q-contact-us-com": "Contact Us Form Submitted"
         };
 
         const headers = {
@@ -218,8 +223,7 @@ const QuestChart: FC<QuestChart> = ({
         }
     }
 
-    async function changeDaysValue(val: number) {
-        await getData();
+    function changeDaysValue(val: number) {
         if (dataType == "Claim") {
             filterRenderData(claimData, val);
         } else if (dataType == "View") {
@@ -242,8 +246,12 @@ const QuestChart: FC<QuestChart> = ({
     }
 
     useEffect(() => {
-        changeDaysValue(3);
-    }, []);
+        changeDaysValue(selectedDate);
+    }, [claimData, viewData, metricData, selectedDate]);
+
+    useEffect(() => {
+        getData();
+    }, [])
 
     return (
         <div
@@ -266,7 +274,7 @@ const QuestChart: FC<QuestChart> = ({
                               dataType == "Metric" ? "Metrics" : questData.title
                           }`}
                 </p>
-                <select onChange={(e) => changeDaysValue(e.target.value)}>
+                <select onChange={(e) => setSelectedDate(Number(e.target.value))}>
                     <option value="3">3 days</option>
                     <option value="7">7 days</option>
                     <option value="15">15 days</option>
