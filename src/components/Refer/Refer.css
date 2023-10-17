@@ -1,11 +1,11 @@
 .q-referShare {
-    width: 35%;
+    width: 314px;
     flex-shrink: 0;
     border-radius: 18px;
     background: #FFF;
     backdrop-filter: blur(91px);
     font-family: Hanken Grotesk, Serif;
-    min-width: 400px;
+    min-width: 314px;
     padding: 20px 30px;
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.42);
 }
@@ -20,7 +20,7 @@
 
 .q-referShare-content-head {
     color: #141414;
-    font-size: 34px;
+    font-size: 20px;
     font-weight: 700;
     margin: 0;
 }
@@ -28,7 +28,7 @@
 .q-referShare-content-para {
     color: #141414;
     text-align: center;
-    font-size: 25px;
+    font-size: 16px;
     font-weight: 400;
     margin: 0;
 }
@@ -53,13 +53,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    padding: 10px;
     width: 100%;
 }
 
 .q-referShare-content-code {
     color: #333;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 400;
     line-height: 51px;
 }
@@ -70,38 +70,32 @@
 }
 
 .q-referShare-content-copy-img {
-    width: 43px;
-    height: 43px;
+    width: 33px;
+    height: 33px;
     cursor: pointer;
 }
 
 .q-referShare-content-msg {
     color: #545454;
-    font-size: 25px;
+    font-size: 16px;
     font-weight: 400;
     margin: 0;
 }
 
 .q-referShare-content-social-img {
-    width: 35px;
+    width: 30px;
     cursor: pointer;
-    height: 35px;
+    height: 30px;
 }
 
-@media (max-width: 550px) {
-    .q-referShare {
-        width: fit-content;
-        min-width: 250px;
-    }
-}
 
 /*Refer Share component*/
 
 .q-referEarn {
     border-radius: 20px;
     background: #FFF;
-    width: 400px;
-    gap: 5px;
+    width: 325px;
+    gap: 23px;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
     display: flex;
     flex-direction: column;
@@ -117,11 +111,16 @@
 .q-referEarn-rect{
     display: flex;
     align-items: center;
-    width: 70%;
+    justify-content: center;
+    width: 30%;
     gap: 40%;
-    padding: 5px 0 5px 15%;
+    padding: 5px 15px;
     border-radius: 10px;
     border: 1px dashed black;
+}
+
+.q-referEarn-head{
+    font-size: 18px;
 }
 
 .q-referEarn-para{
@@ -136,8 +135,10 @@
 .q-referEarn-invite{
     display: flex;
     width: 90%;
+    font-size: 18px;
     justify-content: center;
     padding: 10px;
+    border: none;
     cursor: pointer;
     border-radius: 10px;
     background: #141414;

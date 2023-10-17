@@ -87,7 +87,7 @@ export const ReferEarn = ({questId = "", userId = "", token = '',color='black',b
                 </div>
             </PopupComponent>
             <img src={giftPng} className='q-referEarn-gift-img' alt=""/>
-            <h3>Your referral code:</h3>
+            <h3 className="q-referEarn-head">Your referral code:</h3>
             <div className='q-referEarn-rect'>
                 <span>{shareCode}</span>
                 <img src={copy ? tick : copyPng} style={{cursor: 'pointer'}} width='20px' alt="" onClick={() => {
