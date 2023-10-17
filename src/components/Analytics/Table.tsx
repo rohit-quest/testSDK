@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect, useContext, useCallback } from "react";
 import axios from "axios";
 import config from "../../config";
 import QuestContext from "../QuestWrapper";
-import "./analytics.css"
+import "./analytics.css";
 
 interface Table {
     userId: string;
@@ -43,15 +43,18 @@ const Table: FC<Table> = ({
     hideQuestion,
     showAvatar,
     tableWidth,
-    hideAnswers
+    hideAnswers,
 }) => {
     const [questionData, setQuestionData] = useState<string[]>([]);
     const [answerData, setAnswerData] = useState<UsersDataArray | any>({});
     const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
     const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
     const [hoveredQuestion, setHoveredQuestion] = useState("");
+    const [fullData, setFullData] = useState<Boolean>(false);
+    const [loading, setLoading] = useState<Boolean>(false)
 
     useEffect(() => {
+        setLoading(true);
         const headers = {
             apiKey: apiKey,
             apisecret: apiSecret,
@@ -85,6 +88,7 @@ const Table: FC<Table> = ({
             }
             setQuestionData([...questions]);
             setAnswerData({ ...answers });
+            setLoading(false);
         });
     }, []);
 
@@ -112,9 +116,11 @@ const Table: FC<Table> = ({
         [tooltipPosition]
     );
 
-
-    return (
-        <div className="q-ana-home q-tab-main" style={{width: tableWidth ? tableWidth : "100%"}}>
+    return ( loading == false ) ? (
+        <div
+            className="q-ana-home q-tab-main"
+            style={{ width: tableWidth ? tableWidth : "100%" }}
+        >
             <table className="q-tab-table">
                 <thead
                     className="q-tab-thead"
@@ -131,8 +137,12 @@ const Table: FC<Table> = ({
                                     ? bodyBgColor
                                     : "white",
                                 padding: "0.5rem",
-                                borderLeft: horizontalBorder ? "2px solid" : "0px",
-                                borderRight: horizontalBorder ? "2px solid" : "0px",
+                                borderLeft: horizontalBorder
+                                    ? "2px solid"
+                                    : "0px",
+                                borderRight: horizontalBorder
+                                    ? "2px solid"
+                                    : "0px",
                             }}
                         >
                             Users
@@ -145,7 +155,9 @@ const Table: FC<Table> = ({
                                     borderColor: bodyBgColor
                                         ? bodyBgColor
                                         : "white",
-                                    borderRight: horizontalBorder ? "2px solid" : "0px",
+                                    borderRight: horizontalBorder
+                                        ? "2px solid"
+                                        : "0px",
                                 }}
                                 key={i}
                                 onMouseEnter={(e) =>
@@ -154,95 +166,151 @@ const Table: FC<Table> = ({
                                 }
                                 onMouseLeave={handleMouseLeave}
                             >
-                                { hideQuestion ? `q${i+1}` : question}
+                                {hideQuestion ? `q${i + 1}` : question}
                             </th>
                         ))}
                     </tr>
                 </thead>
                 <tbody>
-                    {Object.keys(answerData).map((datas, i: number) => (
-                        <tr
-                            style={{
-                                borderBottom: "2px solid",
-                                borderColor: headingBgColor ? headingBgColor : "#D1D5DB",
-                                backgroundColor: bodyBgColor,
-                            }}
-                        >
-                            <td
-                                scope="row"
-                                className={`q-tab-tbody-th`}
-                                style={{
-                                    borderColor: headingBgColor
-                                        ? headingBgColor
-                                        : "",
-                                    borderLeft: horizontalBorder ? "2px solid" : "0px",
-                                    borderRight: horizontalBorder ? "2px solid" : "0px",
-                                }}
-                                onMouseEnter={(e) =>
-                                    !!bodyTooltip &&
-                                    handleMouseEnter(
-                                        e,
-                                        answerData[datas].userName
-                                    )
-                                }
-                                onMouseLeave={handleMouseLeave}
-                            >
-                                {
-                                    !!showAvatar &&
-                                    <img
-                                        src={
-                                            "https://pin.questprotocol.xyz/ipfs/" +
-                                            answerData[datas].avatar
-                                        }
-                                        className="q-tab-tbody-img"
-                                        alt=""
-                                    />
-                                }
-                                <p className="">{answerData[datas].userName}</p>
-                            </td>
-                            {questionData.map((question: string, i: number) =>
-                                !!answerData[datas].userAnswers[`q${i}`] ? (
+                    {Object.keys(answerData).map(
+                        (datas, i: number) =>
+                            (fullData == false ? i < 10 : true) && (
+                                <tr
+                                    style={{
+                                        borderBottom: "2px solid",
+                                        borderColor: headingBgColor
+                                            ? headingBgColor
+                                            : "#D1D5DB",
+                                        backgroundColor: bodyBgColor,
+                                    }}
+                                >
                                     <td
-                                        className={`q-tab-tbody-td`}
+                                        scope="row"
+                                        className={`q-tab-tbody-th`}
                                         style={{
                                             borderColor: headingBgColor
                                                 ? headingBgColor
                                                 : "",
-                                            color: bodyTextColor,
-                                            borderRight: horizontalBorder ? `2px solid ${headingBgColor ? headingBgColor : ""}` : "0px",
-                                            whiteSpace: !!hideAnswers ? "nowrap" : "normal",
-                                            textOverflow: !!hideAnswers ? "ellipsis" : "",
+                                            borderLeft: horizontalBorder
+                                                ? "2px solid"
+                                                : "0px",
+                                            borderRight: horizontalBorder
+                                                ? "2px solid"
+                                                : "0px",
                                         }}
                                         onMouseEnter={(e) =>
                                             !!bodyTooltip &&
                                             handleMouseEnter(
                                                 e,
-                                                answerData[datas].userAnswers[
-                                                    `q${i}`
-                                                ]
+                                                answerData[datas].userName
                                             )
                                         }
                                         onMouseLeave={handleMouseLeave}
                                     >
-                                        {answerData[datas].userAnswers[`q${i}`]}
+                                        {!!showAvatar && (
+                                            <img
+                                                src={
+                                                    "https://pin.questprotocol.xyz/ipfs/" +
+                                                    answerData[datas].avatar
+                                                }
+                                                className="q-tab-tbody-img"
+                                                alt=""
+                                            />
+                                        )}
+                                        <p className="">
+                                            {answerData[datas].userName}
+                                        </p>
                                     </td>
-                                ) : (
-                                    <th
-                                        className={`q-tab-tbody-td`}
-                                        style={{
-                                            borderColor: headingBgColor
-                                                ? headingBgColor
-                                                : "",
-                                            color: bodyTextColor,
-                                            borderRight: horizontalBorder ? `2px solid ${headingBgColor ? headingBgColor : ""}` : "0px",
-                                        }}
-                                    ></th>
-                                )
-                            )}
-                        </tr>
-                    ))}
+                                    {questionData.map(
+                                        (question: string, i: number) =>
+                                            !!answerData[datas].userAnswers[
+                                                `q${i}`
+                                            ] ? (
+                                                <td
+                                                    className={`q-tab-tbody-td`}
+                                                    style={{
+                                                        borderColor:
+                                                            headingBgColor
+                                                                ? headingBgColor
+                                                                : "",
+                                                        color: bodyTextColor,
+                                                        borderRight:
+                                                            horizontalBorder
+                                                                ? `2px solid ${
+                                                                      headingBgColor
+                                                                          ? headingBgColor
+                                                                          : ""
+                                                                  }`
+                                                                : "0px",
+                                                        whiteSpace:
+                                                            !!hideAnswers
+                                                                ? "nowrap"
+                                                                : "normal",
+                                                        textOverflow:
+                                                            !!hideAnswers
+                                                                ? "ellipsis"
+                                                                : "",
+                                                    }}
+                                                    onMouseEnter={(e) =>
+                                                        !!bodyTooltip &&
+                                                        handleMouseEnter(
+                                                            e,
+                                                            answerData[datas]
+                                                                .userAnswers[
+                                                                `q${i}`
+                                                            ]
+                                                        )
+                                                    }
+                                                    onMouseLeave={
+                                                        handleMouseLeave
+                                                    }
+                                                >
+                                                    {
+                                                        answerData[datas]
+                                                            .userAnswers[
+                                                            `q${i}`
+                                                        ]
+                                                    }
+                                                </td>
+                                            ) : (
+                                                <td
+                                                    className={`q-tab-tbody-td`}
+                                                    style={{
+                                                        borderColor:
+                                                            headingBgColor
+                                                                ? headingBgColor
+                                                                : "",
+                                                        color: bodyTextColor,
+                                                        borderRight:
+                                                            horizontalBorder
+                                                                ? `2px solid ${
+                                                                      headingBgColor
+                                                                          ? headingBgColor
+                                                                          : ""
+                                                                  }`
+                                                                : "0px",
+                                                    }}
+                                                ></td>
+                                            )
+                                    )}
+                                </tr>
+                            )
+                    )}
                 </tbody>
             </table>
+            {Object.keys(answerData).length > 10 &&
+                <div
+                    className="q-ana-tab-btn"
+                    style={{
+                        borderColor: headingBgColor ? headingBgColor : "#D1D5DB",
+                    }}
+                    onClick={() => setFullData(!fullData)}
+                >
+                    {
+                        fullData ? "Hide" : "Show More"
+                    }
+                </div>
+            }
             {!!hoveredQuestion && (
                 <div
                     className="q-tab-toolTip"
@@ -252,7 +320,9 @@ const Table: FC<Table> = ({
                 </div>
             )}
         </div>
-    );
+    ) : (
+        <div className="q-tab-loader-div"><div className="q-tab-loader"></div></div>
+    )
 };
 
 export default Table;
