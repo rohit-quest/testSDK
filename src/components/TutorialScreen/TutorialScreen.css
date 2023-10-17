@@ -5,6 +5,7 @@
 }
 
 .q-tut-div {
+  font-family: Hanken Grotesk;
   text-align: left;
   padding-bottom: 0.5rem;
   padding-top: 0.25rem;
@@ -12,21 +13,30 @@
   padding-right: 1rem;
   background-color: black;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  width: 446px;
+  padding: 10px 20px;
+  align-items: center;
+  gap: 190px;
 }
 
 .q-tut-head {
-  font-size: 1.875rem;
-  font-weight: 600;
-  color: white;
-  margin-bottom: 0.3125rem;
+  color: #FFF;
+  font-size: 22px;
+  font-weight: 700;
 }
 
 .q-tut-subhead {
   color: #d1d5db;
+  font-size: 14px;
   color: white;
-  margin-top: 0.3125rem;
+}
+
+.q-tut-bar-icons {
+  display: flex;
+  gap: 15px;
+  cursor: pointer;
 }
 
 .q-tut-cont {
@@ -39,6 +49,7 @@
   background-color: #e5e7eb;
   height: 10px;
   border-radius: 50px;
+  width: 90%;
 }
 
 .progress-bar-fill {
@@ -70,14 +81,15 @@
 .q-tut-label.completed {
   background-color: black;
   color: white;
-  border: none;
-  border-color: black;
+  border-radius: 5px;
+  border: 2px solid #e2e2e2;
 }
 
 .q-tut-label.incomplete {
   border-color: #ccc;
   color: transparent;
-  border: 2px solid black;
+  border-radius: 5px;
+  border: 2px solid #e2e2e2;
 }
 
 .q-tut-step {
@@ -88,13 +100,13 @@
 }
 
 .q-tut-title {
-  font-size: 1.125rem;
+  font-size: 18px;
   font-weight: 600;
   margin-bottom: 0.25rem;
 }
 
 .q-tut-button {
-  background-color: #ccc;
+  background-color: #f7f4f4;
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
@@ -104,27 +116,51 @@
 }
 
 .q-tut-button:hover {
-  background-color: #888;
+  background-color: #f7f4f4;
 }
 
 .q-tut-btn-cont {
-  margin-right: 0.75rem;
   display: flex;
+  gap: 10px;
   justify-content: flex-end;
+  width: 90%;
 }
 
 .q-tut-btn {
-  padding: 0.5rem 1rem;
-  margin-right: 0.75rem;
-  border: 1.5px solid black;
-  font-weight: bold;
+  display: flex;
+  width: 103px;
+  height: 36px;
+  padding: 10.233px 12.792px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
   cursor: pointer;
+  border-radius: 6.396px;
+  border: 0.959px solid #4B4B4B;
+  color: #333;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 28px;
+  background-color: white;
 }
 
 .q-tut-btn:disabled {
   cursor: not-allowed;
+  color: gray;
+  border: 0.959px solid #8b8b8b;
 }
 
-.progress-bar-fill, .q-tut-cont, .q-tut-label {
+.progress-bar-fill,
+.q-tut-cont,
+.q-tut-label {
   box-sizing: border-box;
+}
+
+.q-tut-progress{
+  display: flex;
+  align-content: center;
+  flex-direction: row-reverse;
+  gap: 15px;
+  margin: 15px 0 15px 10px;
 }
