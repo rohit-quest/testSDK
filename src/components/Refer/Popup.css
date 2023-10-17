@@ -29,6 +29,8 @@
     right: 10px;
     cursor: pointer;
     border-radius: 50%;
+    font-size: 20px;
+    width: 30px;
 }
 
 .q-referEarn-pop-div{
