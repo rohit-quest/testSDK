@@ -325,12 +325,11 @@
     transition: all 0.6s;
 }
 
-.q-onb-progress-comp>div{
+/* .q-onb-progress-comp>div{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    min-width: 0;
-}
+} */
 
 .q-onb-progress>div>div{
     width: 100%;
