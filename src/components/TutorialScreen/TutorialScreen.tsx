@@ -252,9 +252,9 @@ const Tutorial: React.FC<TutorialProps> = ({
                     }}
                   ></div>
                 </div>
-                {/* <div>
+                <div>
                   {completedSteps.length}/{formdata.length}
-                </div> */}
+                </div>
               </div>
             </div>
             <div>

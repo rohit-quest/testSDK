@@ -284,7 +284,7 @@ const Feedback: React.FC<FeedbackProps> = ({
 
   const normalInput = (question: string, criteriaId: string) => {
     return (
-      <div className="questLabs" style={{ paddingTop: '2%' }} key={criteriaId}>
+      <div className="questLabs" style={{ paddingTop: '16px' }} key={criteriaId}>
         <label
           className="q-h4"
           htmlFor="normalInput"
@@ -310,7 +310,7 @@ const Feedback: React.FC<FeedbackProps> = ({
 
   const normalInput2 = (question: string, criteriaId: string) => {
     return (
-      <div className="questLabs" style={{ paddingTop: '2%' }} key={criteriaId}>
+      <div className="questLabs" style={{ paddingTop: '16px' }} key={criteriaId}>
         <label
           className="q-h4"
           htmlFor="normalInput2"
@@ -450,7 +450,7 @@ const Feedback: React.FC<FeedbackProps> = ({
                         );
                       } else if (data.type === 'RATING') {
                         return (
-                          <div className="mb-4">
+                          <div style={{ paddingTop: '8px' }} className="mb-4">
                             <label
                               style={{
                                 fontFamily: font,
@@ -463,6 +463,7 @@ const Feedback: React.FC<FeedbackProps> = ({
                             <div
                               style={{
                                 display: 'flex',
+                                marginTop: '5px'
                               }}
                             >
                               {[1, 2, 3, 4, 5].map((star) => (
