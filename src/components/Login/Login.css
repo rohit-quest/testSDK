@@ -19,20 +19,21 @@
   color: #f00;
 }
 .q-login-container {
-  width: 534px;
-  height: 561px;
+  width: 454px;
+  /* height: 561px; */
   border-radius: 10px;
   box-shadow: 0px 0px 6px 0px #00000073;
 }
 .q-login-h1 {
   font-weight: bold;
-  font-size: 2rem;
+  font-size: 24px;
   text-align: center;
 }
 .q-login-h4 {
   font-weight: normal;
-  margin-bottom: 1rem;
+  margin-bottom: 18px;
   text-align: center;
+  color: #333333;
 }
 .q-login-or-container {
   margin-top: 1.25rem;
