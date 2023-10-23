@@ -256,6 +256,7 @@ const Feedback: React.FC<FeedbackProps> = ({
       const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${userId}`;
       const requestData = {
         criterias: ansArr,
+        userId,
       };
       setShowLoader(true);
       axios
@@ -282,7 +283,7 @@ const Feedback: React.FC<FeedbackProps> = ({
     }
   }
 
-  const normalInput = (question: string, criteriaId: string) => {
+  const normalInput = (question: string, criteriaId: string, placeholder?:string) => {
     return (
       <div className="questLabs" style={{ paddingTop: '16px' }} key={criteriaId}>
         <label
@@ -302,13 +303,13 @@ const Feedback: React.FC<FeedbackProps> = ({
           name="normalInput"
           className="q-input-box"
           onChange={(e) => handleUpdate(e, criteriaId, '')}
-          placeholder={`Enter your ${question}`}
+          placeholder={placeholder ? placeholder : `${(question).toLowerCase()}`}
         />
       </div>
     );
   };
 
-  const normalInput2 = (question: string, criteriaId: string) => {
+  const normalInput2 = (question: string, criteriaId: string, placeholder?:string) => {
     return (
       <div className="questLabs" style={{ paddingTop: '16px' }} key={criteriaId}>
         <label
@@ -323,7 +324,7 @@ const Feedback: React.FC<FeedbackProps> = ({
         </label>
         <textarea
           id="normalInput2"
-          placeholder="Write your message"
+          placeholder={placeholder ? placeholder : `${(question).toLowerCase()}`}
           style={{ height: '125px' }}
           className="q-input-box"
           onChange={(e) => handleUpdate(e, criteriaId, '')}
@@ -441,12 +442,14 @@ const Feedback: React.FC<FeedbackProps> = ({
                       if (data.type === 'USER_INPUT_TEXT') {
                         return normalInput(
                           data.question || '',
-                          data.criteriaId || ''
+                          data.criteriaId || '',
+                          data.placeholder || undefined,
                         );
                       } else if (data.type === 'USER_INPUT_TEXTAREA') {
                         return normalInput2(
                           data.question || '',
-                          data.criteriaId || ''
+                          data.criteriaId || '',
+                          data.placeholder || undefined,
                         );
                       } else if (data.type === 'RATING') {
                         return (
