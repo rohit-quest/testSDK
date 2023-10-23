@@ -1,10 +1,10 @@
 .q-feedback-cont {
   width: 400px;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.4);
-  padding: 7% 7%;
+  padding: 30px;
   max-width: 28rem;
   margin: 0 auto;
-  border-radius: 0.375rem;
+  border-radius: 12px;
 }
 .q-sub {
   color: #333333;
