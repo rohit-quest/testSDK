@@ -18,6 +18,7 @@ interface OtpVerificationProps {
   apiKey: string;
   apiSecret: string;
   btnTextColor?: string;
+  onSubmit?: ({userId,token}:{userId: string, token: string}) => void;
 }
 
 function OtpVerification({
@@ -30,6 +31,7 @@ function OtpVerification({
   apiKey,
   apiSecret,
   btnTextColor,
+  onSubmit,
 }: OtpVerificationProps): JSX.Element {
   const [OTP, setOTP] = useState<string>('');
   const [sec, setsec] = useState<number>(300);
@@ -86,6 +88,9 @@ function OtpVerification({
 
       if (response.data.success) {
         toast.success('Congratulations!!!' + '\n' + 'Successfully Logged in');
+        if (onSubmit) {
+          onSubmit({ userId: response.data.userId, token: response.data.token });
+        }
         setUser({
           userId: response.data.userId,
           token: response.data.token,

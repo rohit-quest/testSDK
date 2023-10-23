@@ -16,6 +16,7 @@ interface EmailLoginProps {
   fontFamily?: string;
   apiKey: string;
   apiSecret: string;
+  onSubmit?: ({userId,token}:{userId: string, token: string}) => void;
 }
 
 const EmailLogin: React.FC<EmailLoginProps> = ({
@@ -28,6 +29,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   apiKey,
   apiSecret,
   btnTextColor,
+  onSubmit,
 }) => {
   const [sendOTP, setSendOTP] = useState(false);
   const [email, setEmail] = useState('');
@@ -126,6 +128,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
           entityId={entityId}
           email={email}
           btnTextColor={btnTextColor}
+          onSubmit={onSubmit}
         />
       )}
     </div>
