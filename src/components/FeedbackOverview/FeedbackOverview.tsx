@@ -770,11 +770,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         ) : (
           <div>
             <div className='q-fw-crossBtn'>
-              <div onClick={() => onClose(false)}>{cross}</div>
+            <div onClick={() => onClose?.(false)}>{cross}</div>
             </div>
           <div
             style={{
-              padding: '25px',
+              marginTop: '25px',
             }}
           >
             {questIds[0] && (
@@ -858,6 +858,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               className="fd-powered-by"
               style={{
                 color: textColor,
+                marginTop: '10px'
               }}
             >
               Powered by Quest Labs

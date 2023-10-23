@@ -108,7 +108,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
           }}
           className="q-login-container"
         >
-          <div style={{ padding: '10% 10%' }}>
+          <div style={{ padding: '6%' }}>
             {!otpScreen && (
               <>
                 <h1

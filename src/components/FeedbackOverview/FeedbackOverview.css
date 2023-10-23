@@ -17,7 +17,7 @@
   border-top-right-radius: 8px;
 }
 .q-fw-div {
-  width: 480px;
+  width: 430px;
   border-radius: 16px;
   box-shadow: 0px 0px 20px 0px #00000073;
   background-color: white;
@@ -33,7 +33,7 @@
   display: flex;
   align-items: center;
   cursor: pointer;
-  padding: 6% 12%;
+  padding: 3% 6%;
   border-radius: 0.375rem;
 }
 

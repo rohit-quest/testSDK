@@ -97,7 +97,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
             />
             {!isValidEmail && (
               <p className="q-login-p">
-                <span className="q-err">!</span>
+                <span style={{fontSize:'12px'}} className="q-err">!</span>
                 Please enter a valid email id
               </p>
             )}
