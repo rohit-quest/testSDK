@@ -19,6 +19,7 @@ interface FeedbackProps {
   textColor?: string;
   font?: string;
   supportUrl?: string;
+  onSubmit?: () => void;
 }
 
 const Feedback: React.FC<FeedbackProps> = ({
@@ -33,6 +34,7 @@ const Feedback: React.FC<FeedbackProps> = ({
   font,
   bgColor,
   supportUrl,
+  onSubmit,
 }) => {
   interface FormDataItem {
     type?: string;
@@ -51,6 +53,7 @@ const Feedback: React.FC<FeedbackProps> = ({
   const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
   const [answer, setAnswer] = useState<any[]>([]);
   const [showLoader, setShowLoader] = useState<boolean>(false);
+  const [session, setSession] = useState<string>('');
   const whiteStar = (
       <svg width="40" height="40" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clip-path="url(#clip0_415_158)">
@@ -192,6 +195,7 @@ const Feedback: React.FC<FeedbackProps> = ({
 
       axios.get(request, { headers: headers }).then((res) => {
         let response = res.data;
+        setSession(response.session);
         let criterias = response?.eligibilityData?.map((criteria: any) => {
           return {
             type: criteria?.data?.criteriaType,
@@ -257,6 +261,7 @@ const Feedback: React.FC<FeedbackProps> = ({
       const requestData = {
         criterias: ansArr,
         userId,
+        session,
       };
       setShowLoader(true);
       axios
@@ -266,6 +271,7 @@ const Feedback: React.FC<FeedbackProps> = ({
             toast.success('Thank you for your feedback');
             setThanksPopup(true);
             setTimeout(() => {
+              onSubmit && onSubmit();
               window.location.reload();
             }, 3000);
           } else {
