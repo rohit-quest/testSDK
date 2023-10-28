@@ -8,6 +8,7 @@ interface FeatureContentProps {
   formdata: Array<{ [key: string]: any }>;
   handleSubmit?: (e: any) => void;
   handleUpdate: (e: any, id: string, j: string, k?: number) => void;
+  answer: any;
 }
 
 const FeatureContent: React.FC<FeatureContentProps> = ({
@@ -18,7 +19,13 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
   btnTextColor,
   handleUpdate,
   handleSubmit,
+  answer
 }) => {
+  function isValidEmail(email: string) {
+    if (!email) return false;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return !emailRegex.test(email);
+  }
   const normalInput = (
     question: string,
     criteriaId: string,
@@ -45,6 +52,36 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
           onChange={(e) => handleUpdate(e, criteriaId, '')}
           placeholder={placeholder}
         />
+      </div>
+    );
+  };
+  const emailInput = (question: string, criteriaId: string, placeholder?:string) => {
+    return (
+      <div className="questLabs" style={{ paddingTop: '2%' }} key={criteriaId}>
+        <label
+          className="q-h4"
+          htmlFor="normalInput"
+          style={{
+            fontFamily: font,
+            color: textColor,
+          }}
+        >
+          {question}
+        </label>
+        <input
+          type="email"
+          id="normalInput"
+          style={{ height: '50px' }}
+          name="normalInput"
+          className="q-input-box"
+          onChange={(e) => handleUpdate(e, criteriaId, '')}
+          placeholder={placeholder}
+          value={answer[criteriaId]}
+        />
+        {
+          isValidEmail(answer[criteriaId]) &&
+          <p className='q-input-email-checks'>This is not a valid email</p>
+        }
       </div>
     );
   };
@@ -85,6 +122,8 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
                 data.criteriaId || '',
                 data.placeholder || ''
               );
+            } else if (data.type === 'USER_INPUT_EMAIL') {
+              return emailInput(data.question || '', data.criteriaId || '', data.placeholder || '');
             } else if (data.type === 'USER_INPUT_TEXTAREA') {
               return normalInput2(
                 data.question || '',

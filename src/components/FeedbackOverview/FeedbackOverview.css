@@ -59,5 +59,8 @@
 .rating-heading {
   text-align: center !important;
 }
-
+.q-input-email-checks{
+  font-size: 12px;
+  color: #f00;
+}
 
