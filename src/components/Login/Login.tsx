@@ -19,6 +19,7 @@ export interface QuestLoginProps {
   textColor?: string;
   backgroundColor?: string;
   font?: string;
+  onSubmit?: ({userId,token}:{userId: string, token: string}) => void;
 }
 
 const QuestLogin: React.FC<QuestLoginProps> = ({
@@ -32,6 +33,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   textColor,
   backgroundColor,
   font,
+  onSubmit,
 }) => {
   const [isEmail, setIsEmail] = useState<boolean>(false);
   const [isGoogle, setIsGoogle] = useState<boolean>(false);
@@ -108,7 +110,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
           }}
           className="q-login-container"
         >
-          <div style={{ padding: '10% 10%' }}>
+          <div style={{ padding: '6%' }}>
             {!otpScreen && (
               <>
                 <h1
@@ -149,6 +151,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                     handleOtp,
                     redirectUri,
                     btnTextColor,
+                    onSubmit,
                   }}
                 />
                 {!otpScreen && isGoogle && (
@@ -179,6 +182,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                       googleClientId,
                       apiSecret,
                       apiKey,
+                      onSubmit,
                     }}
                   />
                 )}
@@ -196,6 +200,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   googleClientId,
                   apiSecret,
                   apiKey,
+                  onSubmit,
                 }}
               />
             )}

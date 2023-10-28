@@ -25,8 +25,7 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "prepare": "npm run build",
-    "publish": "npm publish --access=public"
+    "prepare": "npm run build"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^2.1.2",

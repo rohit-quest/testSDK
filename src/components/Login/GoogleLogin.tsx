@@ -18,6 +18,7 @@ interface GoogleLoginProps {
   googleClientId: string;
   apiSecret: string;
   apiKey: string;
+  onSubmit?: ({userId,token}:{userId: string, token: string}) => void;
 }
 
 function GoogleLogin(props: GoogleLoginProps): JSX.Element {
@@ -31,6 +32,7 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
     googleClientId,
     apiSecret,
     apiKey,
+    onSubmit
   } = props;
 
   const [showLoader, setShowLoader] = useState<boolean>(false);
@@ -64,6 +66,9 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
       .then((res) => {
         if (res.data.success === true) {
           toast.success('Congratulations!!!' + '\n' + 'Successfully Logged in');
+          if (onSubmit) {
+            onSubmit({ userId: res.data.userId, token: res.data.token });
+          }
           setUser({
             userId: res.data.userId,
             token: res.data.token,

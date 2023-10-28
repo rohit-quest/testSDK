@@ -31,7 +31,7 @@ const BugContent: React.FC<BugContentProps> = ({
     placeholder?: string
   ) => {
     return (
-      <div className="questLabs" style={{ paddingTop: '2%' }} key={criteriaId}>
+      <div className="questLabs" style={{ paddingTop: '3%' }} key={criteriaId}>
         <label
           className="q-h4"
           htmlFor="normalInput"
@@ -90,7 +90,7 @@ const BugContent: React.FC<BugContentProps> = ({
     placeholder?: string
   ) => {
     return (
-      <div className="questLabs" style={{ paddingTop: '2%' }} key={criteriaId}>
+      <div className="questLabs" style={{ paddingTop: '3%' }} key={criteriaId}>
         <label
           className="q-h4"
           style={{
@@ -111,7 +111,7 @@ const BugContent: React.FC<BugContentProps> = ({
     );
   };
   return (
-    <div style={{ padding: '5%' }}>
+    <div style={{ padding: '5% 2%' }}>
       {formdata?.length > 0 ? (
         <>
           {formdata.map((data: any) => {

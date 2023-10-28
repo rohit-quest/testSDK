@@ -64,7 +64,7 @@ function isValidEmail(email: string) {
 
   const normalInput = (question: string, criteriaId: string, placeholder?:string) => {
     return (
-      <div className="questLabs" style={{ paddingTop: '2%' }} key={criteriaId}>
+      <div className="questLabs" style={{ paddingTop: '3%' }} key={criteriaId}>
         <label
           className="q-h4"
           htmlFor="normalInput"
@@ -120,7 +120,7 @@ function isValidEmail(email: string) {
 
   const normalInput2 = (question: string, criteriaId: string, placeholder?:string) => {
     return (
-      <div className="questLabs" style={{ paddingTop: '2%' }} key={criteriaId}>
+      <div className="questLabs" style={{ paddingTop: '3%' }} key={criteriaId}>
         <label
           className="q-h4"
           style={{
@@ -142,7 +142,7 @@ function isValidEmail(email: string) {
   };
 
   return (
-    <div style={{ padding: '5%'}}>
+    <div style={{ padding: '5% 2%'}}>
       {formdata?.length > 0 ? (
         <>
           {formdata.map((data: any) => {
