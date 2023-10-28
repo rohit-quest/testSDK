@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './FeedbackOverview.css';
 
 interface GeneralFeedbackContentProps {
@@ -23,6 +23,7 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
   starBorderColor,
   handleUpdate,
   handleSubmit,
+  answer
 }) => {
   const [rating, setRating] = useState<number>(0);
   const handleRatingChange2 = (e: any, id: any, rating: number) => {
@@ -55,6 +56,12 @@ const blackStar = (
     </svg>
 );
 
+function isValidEmail(email: string) {
+  if (!email) return false;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return !emailRegex.test(email);
+}
+
   const normalInput = (question: string, criteriaId: string, placeholder?:string) => {
     return (
       <div className="questLabs" style={{ paddingTop: '2%' }} key={criteriaId}>
@@ -80,6 +87,37 @@ const blackStar = (
       </div>
     );
   };
+  const emailInput = (question: string, criteriaId: string, placeholder?:string) => {
+    return (
+      <div className="questLabs" style={{ paddingTop: '2%' }} key={criteriaId}>
+        <label
+          className="q-h4"
+          htmlFor="normalInput"
+          style={{
+            fontFamily: font,
+            color: textColor,
+          }}
+        >
+          {question}
+        </label>
+        <input
+          type="email"
+          id="normalInput"
+          style={{ height: '50px' }}
+          name="normalInput"
+          className="q-input-box"
+          onChange={(e) => handleUpdate(e, criteriaId, '')}
+          placeholder={placeholder}
+          value={answer[criteriaId]}
+        />
+        {
+          isValidEmail(answer[criteriaId]) &&
+          <p className='q-input-email-checks'>This is not a valid email</p>
+        }
+      </div>
+    );
+  };
+
   const normalInput2 = (question: string, criteriaId: string, placeholder?:string) => {
     return (
       <div className="questLabs" style={{ paddingTop: '2%' }} key={criteriaId}>
@@ -110,6 +148,8 @@ const blackStar = (
           {formdata.map((data: any) => {
             if (data.type === 'USER_INPUT_TEXT') {
               return normalInput(data.question || '', data.criteriaId || '', data.placeholder || '');
+            } else if (data.type === 'USER_INPUT_EMAIL') {
+              return emailInput(data.question || '', data.criteriaId || '', data.placeholder || '');
             } else if (data.type === 'USER_INPUT_TEXTAREA') {
               return normalInput2(data.question || '', data.criteriaId || '', data.placeholder || '');
             } else if (data.type === 'RATING') {

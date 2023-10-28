@@ -452,7 +452,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         token: questUserToken,
       }
       axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`, {count: 1}, {headers: header})
-    } else {
+    } else if (personalUserId._id) {
       const body = {
         externalUserId: !!personalUserId && personalUserId._id,
         entityId: entityId,
@@ -704,6 +704,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   btnColor={btnColor}
                   btnTextColor={btnTextColor}
                   starBorderColor={starBorderColor}
+                  answer={answer}
                 />
               )}
               {selectedOption === 'Report a Bug' && (

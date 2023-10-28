@@ -3,15 +3,14 @@ import config from "../../config";
 import axios from "axios";
 import { useContext } from "react";
 import QuestContext from '../QuestWrapper';
-import "./onboarding.css"
-import complete from "../../assets/images/complete.png";
-import incomplete from "../../assets/images/incomplete.png";
+import "./onboarding.css";
 import Cookies from "universal-cookie";
 import calendly from "../../assets/images/calendly.png";
 import discord from "../../assets/images/discord-color.png";
 import twitter from "../../assets/images/twitter-color.png";
 import slack from "../../assets/images/slack.png";
-import link from "../../assets/images/links.png"
+import link from "../../assets/images/links.png";
+import Select from "react-select"
 
 
 type HeadingScreen = {
@@ -20,38 +19,41 @@ type HeadingScreen = {
 };
 
 interface QuestLoginProps {
-    design?: Array<Array<number>>;
-    color?: string;
-    bgColor?: string;
-    btnColor?: string;
-    inputBgColor?: string;
-    headingScreen?: HeadingScreen | HeadingScreen[];
-    singleChoose?: "modal1" | "modal2";
-    multiChoice?:  "modal1" | "modal2";
-    screenHeight?: string;
-    getAnswers?: Function | undefined;
-    answer?: any;
-    setAnswer?: any;
-    customComponents?: any;
-    customComponentPositions?: number;
-    inputBorder?: string;
-    btnSize?: string;
-    headingSize?: string;
-    descSize?: string;
-    inputFieldType?: { [key: string]: string };
-    defaultFont?: boolean;
+    design: Array<Array<number>>;
+    color: string;
+    bgColor: string;
+    btnColor: string;
+    inputBgColor: string;
+    headingScreen: HeadingScreen | HeadingScreen[] | any;
+    singleChoose: "modal1" | "modal2";
+    multiChoice:  "modal1" | "modal2";
+    screenHeight: string;
+    getAnswers: Function | undefined;
+    answer: any;
+    setAnswer: any;
+    customComponents: any;
+    customComponentPositions: number;
+    inputBorder: string;
+    btnSize: string;
+    headingSize: string;
+    descSize: string;
+    inputFieldType: { [key: string]: string };
+    defaultFont: boolean;
     userId: string;
-    token?: string;
-    questId?: string;
-    progress?: string[];
-    loadingTracker?: boolean;
-    setLoading?: Function;
-    linksLogoWidth?: string;
+    token: string;
+    questId: string;
+    progress: string[];
+    loadingTracker: boolean;
+    setLoading: Function;
+    linksLogoWidth: string;
     previousBtnText: string;
     nextBtnText: string;
     progressbarColor: string;
     progressBarMultiLine: boolean;
     progressBartabHeight: string;
+    headingAlignment: "left" | "right" | "center";
+    questionFontSize: string;
+    answerFontSize: string;
 }
 
 interface FormData {
@@ -63,7 +65,7 @@ interface FormData {
     placeholder: string;
     linkTitle: string;
     linkUrl: string;
-
+    manualInput: string | boolean;
 }
 
 interface Answer {
@@ -104,7 +106,10 @@ function OnBoarding(props: QuestLoginProps) {
         nextBtnText,
         progressbarColor,
         progressBarMultiLine,
-        progressBartabHeight
+        progressBartabHeight,
+        headingAlignment,
+        questionFontSize,
+        answerFontSize
     } = props;
 
     const [formdata, setFormdata] = useState<FormData[] | []>([]);
@@ -164,7 +169,7 @@ function OnBoarding(props: QuestLoginProps) {
                     let criterias = response?.data?.eligibilityData?.map(
                         (criteria: {
                             criteriaType: string;
-                            metadata: { title: string; options: string[], isOptional: string, placeholder: string, linkActionName: string, linkActionUrl: string};
+                            metadata: { title: string; options: string[], isOptional: string, placeholder: string, linkActionName: string, linkActionUrl: string, manualInput: string};
                             criteriaId: string;
                         }) => {
                             return {
@@ -176,6 +181,7 @@ function OnBoarding(props: QuestLoginProps) {
                                 placeholder: criteria?.metadata?.placeholder,
                                 linkTitle: criteria?.metadata?.linkActionName || "",
                                 linkUrl: criteria?.metadata?.linkActionUrl || "",
+                                manualInput: criteria?.metadata?.manualInput || false,
                             };
                         }
                     );
@@ -253,7 +259,7 @@ function OnBoarding(props: QuestLoginProps) {
         }
     }, [btnFlag, currentPage])
 
-    const handleUpdate = (e: any, id: string, j: string) => {
+    const handleUpdate = (e: any, id: string, j: string, ) => {
         if (e.target.checked == true && j == "check") {
             let ans = answer[id] || [];
             ans.push(e.target.value);
@@ -373,7 +379,7 @@ function OnBoarding(props: QuestLoginProps) {
                             id="normalInput"
                             name="normalInput"
                             className="q-onb-input"
-                            style={{ backgroundColor: inputBgColor, border: inputBorder }}
+                            style={{ backgroundColor: inputBgColor, border: inputBorder, fontSize: answerFontSize }}
                             onChange={(e) => handleUpdate(e, criteriaId, "")}
                             value={answer[criteriaId]}
                             placeholder={placeholder}
@@ -410,8 +416,43 @@ function OnBoarding(props: QuestLoginProps) {
                     name="dateInput"
                     value={answer[criteriaId]}
                     className="q-onb-input"
-                    style={{ backgroundColor: inputBgColor, border: inputBorder }}
+                    style={{ backgroundColor: inputBgColor, border: inputBorder, fontSize: answerFontSize }}
                     onChange={(e) => handleUpdate(e, criteriaId, "")}
+                />
+            </div>
+        );
+    };
+
+    const textAreaInput = (
+        question: string,
+        required: boolean,
+        criteriaId: string,
+        index: number,
+        placeholder: string,
+    ) => {
+        return (
+            <div style={{paddingTop: "12px", paddingBottom: "12px"}} key={criteriaId}>
+                {
+                    (customComponentPositions == index + 1) &&
+                    <div style={{paddingBottom: "12px"}}>
+                        {customComponents}
+                    </div>
+                }
+                <label
+                    className="q-onb-lebels"
+                    htmlFor="normalInput"
+                    style={{ color: color }}
+                >
+                    {question} {required && "*"}
+                </label>
+                <textarea
+                    id="normalInput"
+                    name="normalInput"
+                    placeholder={placeholder}
+                    className="q-onb-input"
+                    style={{ height: "120px", backgroundColor: inputBgColor, border: inputBorder, fontFamily: defaultFont == false ? "" : "'Hanken Grotesk', sans-serif", maxWidth: "100%", fontSize: answerFontSize }}
+                    onChange={(e) => handleUpdate(e, criteriaId, "")}
+                    value={answer[criteriaId]}
                 />
             </div>
         );
@@ -422,10 +463,20 @@ function OnBoarding(props: QuestLoginProps) {
         question: string,
         required: boolean,
         criteriaId: string,
-        index: number
+        index: number,
+        manualInput: string | boolean
     ) => {
+        const customStyles = {
+            control: (base: any, state: any) => ({
+              ...base,
+              background: "#f9fafb",
+              padding: "3px",
+              fontSize: answerFontSize
+            }),
+        }
+        
         return (
-            <div style={{paddingTop: "12px", paddingBottom: "12px"}} key={criteriaId}>
+            <div style={{paddingTop: "12px"}} key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
                     <div style={{paddingBottom: "12px"}}>
@@ -439,30 +490,52 @@ function OnBoarding(props: QuestLoginProps) {
                 >
                     {question} {required && "*"}
                 </label>
-                <select
-                    id={criteriaId}
-                    value={answer[criteriaId]}
-                    onChange={(e) => handleUpdate(e, criteriaId, "")}
-                    className="q-onb-singleChoiceOne"
-                    style={{ backgroundColor: inputBgColor, border: inputBorder }}
-                >
-                    <option value="">Choose a option</option>
-                    {options.map((opt, id) => (
-                        <option value={opt} key={`sct${id}`}>
-                            {opt}
-                        </option>
-                    ))}
-                </select>
+                {/* <div className="selectdiv">
+                    <select
+                        id={criteriaId}
+                        value={answer[criteriaId]}
+                        onChange={(e) => handleUpdate(e, criteriaId, "")}
+                        className="q-onb-singleChoiceOne"
+                        style={{ backgroundColor: inputBgColor, border: inputBorder }}
+                    >
+                        <option value="" disabled>Choose a option</option>
+                        {options.map((opt, id) => (
+                            <option value={opt} key={`sct${id}`}>
+                                {opt}
+                            </option>
+                        ))}
+                    </select>
+                </div> */}
+                <Select 
+                    isSearchable={true} 
+                    name={criteriaId} 
+                    options={options.map((opt: string) => {return {value: opt, label: opt}})} 
+                    onChange={(e) => handleUpdate({target: e}, criteriaId, "")}
+                    styles={customStyles}
+                />
+                {manualInput != false && answer[criteriaId] == manualInput &&
+                    <input 
+                        type="text" 
+                        name="" 
+                        id="" 
+                        className="q-onb-input"
+                        style={{marginTop: "10px"}}
+                        placeholder="Please fill manually"
+                        onChange={(e) => handleUpdate(e, (criteriaId + "/manual"), "")}
+                        value={answer[criteriaId + "/manual"]}
+                    />
+                }
             </div>
         );
     };
-
+    console.log(answer);
     const singleChoiceOne = (
         options: [string] | [],
         question: string,
         required: boolean,
         criteriaId: string,
-        index: number
+        index: number,
+        manualInput: string | boolean
     ) => {
         return (
             <div style={{paddingTop: "12px"}} key={criteriaId}>
@@ -482,25 +555,38 @@ function OnBoarding(props: QuestLoginProps) {
                     {options.map((option: string, id: number) => (
                         <div className="q-onb-singleChoiceOne-chDiv" style={{paddingBottom: "12px"}} key={id}>
                             <input
-                                id={`sct${id}`}
+                                id={`sct${criteriaId + id}`}
                                 type="radio"
                                 value={option}
                                 checked={answer[criteriaId] == option}
                                 onChange={(e) =>
                                     handleUpdate(e, criteriaId, "radio")
                                 }
-                                name="default-radio"
+                                name={`default-radio${criteriaId}`}
                                 className="q-onb-singleChoiceOne-inp"
                             />
                             <label
-                                htmlFor={`sct${id}`}
+                                htmlFor={`sct${criteriaId + id}`}
                                 className="q-onb-singleChoiceOne-lebel3"
+                                style={{fontSize: answerFontSize}}
                             >
                                 {option}
                             </label>
                         </div>
                     ))}
                 </div>
+                {manualInput != false && answer[criteriaId] == manualInput &&
+                    <input 
+                        type="text" 
+                        name="" 
+                        id="" 
+                        className="q-onb-input"
+                        style={{marginTop: "10px", fontSize: answerFontSize}}
+                        placeholder="Please fill manually"
+                        onChange={(e) => handleUpdate(e, (criteriaId + "/manual"), "")}
+                        value={answer[criteriaId + "/manual"]}
+                    />
+                }
             </div>
         );
     };
@@ -530,7 +616,7 @@ function OnBoarding(props: QuestLoginProps) {
                     {options.map((option: string, id: number) => (
                         <div className="q-onb-singleChoiceOne-chDiv" key={id}>
                             <input
-                                id={`mct${id}`}
+                                id={`mct${criteriaId + id}`}
                                 type="checkbox"
                                 checked={
                                     !!answer[criteriaId] &&
@@ -543,8 +629,9 @@ function OnBoarding(props: QuestLoginProps) {
                                 className="q-onb-singleChoiceOne-inp"
                             />
                             <label
-                                htmlFor={`mct${id}`}
+                                htmlFor={`mct${criteriaId + id}`}
                                 className="q-onb-singleChoiceOne-label"
+                                style={{fontSize: answerFontSize}}
                             >
                                 {option}
                             </label>
@@ -581,7 +668,7 @@ function OnBoarding(props: QuestLoginProps) {
                         <li key={id} style={{listStyleType: "none"}}>
                             <input
                                 type="checkbox"
-                                id={`mct${id}`}
+                                id={`mct${criteriaId + id}`}
                                 value={option}
                                 checked={
                                     !!answer[criteriaId] &&
@@ -594,11 +681,11 @@ function OnBoarding(props: QuestLoginProps) {
                                 }
                             />
                             <label
-                                htmlFor={`mct${id}`}
+                                htmlFor={`mct${criteriaId + id}`}
                                 className="q-onb-miltiChoiceOne-lebel"
                             >
                                 <div style={{display: "block"}}>
-                                    <div style={{fontSize: "14px"}}>{option}</div>
+                                    <div style={{fontSize: answerFontSize ? answerFontSize : "14px"}}>{option}</div>
                                 </div>
                             </label>
                         </li>
@@ -680,20 +767,32 @@ function OnBoarding(props: QuestLoginProps) {
     }
 
     function returnAnswers() {
-        let ansArr: Answer[] = formdata.map((ans: object) => {
+        
+        let crt: any = {...answer};
+        for (let i of Object.keys(crt)) {
+            if (i.includes("/manual") && crt[i] != "") {
+                let id: string = i.split("/manual")[0];
+                let criteriaDetails: FormData[] = formdata.filter((item) => item.criteriaId == id)
+                if (criteriaDetails[0].manualInput == crt[id]) {
+                    crt[id] = crt[id] + ":" + crt[i];
+                }
+            }
+        }
+        
+        let ansArr: Answer[] = formdata.map((ans: FormData) => {
             return {
                 question: ans?.question,
-                answer: answer[ans?.criteriaId] || "",
+                answer: crt[ans?.criteriaId] || "",
             };
         });
         
-        
-        let criterias = Object.keys(answer).map((key: string) => {
-            return {
-                criteriaId: key,
-                answer: typeof(answer[key]) == "object" ? answer[key] : [answer[key]]
-            }
-        })
+        let criterias = Object.keys(crt)
+        .filter((key: string) => !key.includes("/manual"))
+        .map((key: string) => ({
+            criteriaId: key,
+            answer: typeof crt[key] === "object" ? crt[key] : [crt[key]],
+        }));
+
         
         let questUserId = cookies.get("questUserId");
         let questUserToken = cookies.get("questUserToken");
@@ -701,15 +800,15 @@ function OnBoarding(props: QuestLoginProps) {
         let headers = {
             apikey: apiKey,
             apisecret: apiSecret,
-            userId: questUserId,
-            token: questUserToken
+            userId: questUserId ? questUserId : userId,
+            token: questUserToken ? questUserToken : token
         }
 
         getAnswers(ansArr);
         
-        axios.post(`${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${questUserId}`, {criterias}, {headers})
+        axios.post(`${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`, {criterias, userId: headers.userId}, {headers})
 
-        axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-complete?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers})
+        axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${headers.userId}/metrics/onboarding-complete?userId=${headers.userId}&questId=${questId}`, {count: 1}, {headers})
         
     }
     
@@ -726,31 +825,31 @@ function OnBoarding(props: QuestLoginProps) {
                 {formdata.length > 0 && !!headingScreen &&
                     (typeof headingScreen == "object" && !!headingScreen.name ? (
                         <div>
-                            <h3 className="q-onb-main-h3" style={{ fontSize: headingSize }}>
+                            <h3 className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
                                 {headingScreen?.name}
                             </h3>
-                            <h4 className="q-onb-main-h4" style={{ fontSize: descSize }}>{headingScreen?.desc}</h4>
+                            <h4 className="q-onb-main-h4" style={{ fontSize: descSize, textAlign: headingAlignment }}>{headingScreen?.desc}</h4>
                         </div>
                     ) : !!headingScreen[currentPage] ? (
                         <div>
-                            <h3 className="q-onb-main-h3" style={{ fontSize: headingSize }}>
+                            <h3 className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
                                 {headingScreen[currentPage]?.name}
                             </h3>
-                            <h4 className="q-onb-main-h4" style={{ fontSize: descSize }}>
+                            <h4 className="q-onb-main-h4" style={{ fontSize: descSize, textAlign: headingAlignment }}>
                                 {headingScreen[currentPage]?.desc}
                             </h4>
                         </div>
                     ) : (
                         <div>
-                            <h3 className="q-onb-main-h3" style={{ fontSize: headingSize }}>
+                            <h3 className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
                                 {headingScreen[0]?.name}
                             </h3>
-                            <h4 className="q-onb-main-h4" style={{ fontSize: descSize }}>
+                            <h4 className="q-onb-main-h4" style={{ fontSize: descSize, textAlign: headingAlignment }}>
                                 {headingScreen[0]?.desc}
                             </h4>
                         </div>
                     ))}
-                <div className="q-onb-main-first">
+                <div className="q-onb-main-first" style={{fontSize: questionFontSize}}>
                     {!!design && design.length > 0 && checkDesignCriteria()
                         ? design[currentPage].map((num: number) =>
                         (formdata[num - 1].type == "USER_INPUT_TEXT"
@@ -760,6 +859,14 @@ function OnBoarding(props: QuestLoginProps) {
                                 formdata[num - 1].criteriaId || "",
                                 num - 1,
                                 formdata[num - 1]?.placeholder || formdata[num - 1]?.question || "",
+                            )
+                            : formdata[num - 1].type == "USER_INPUT_TEXTAREA"
+                            ? textAreaInput(
+                                formdata[num - 1]?.question || "",
+                                formdata[num - 1]?.required || false,
+                                formdata[num - 1].criteriaId || "",
+                                num - 1,
+                                formdata[num - 1]?.placeholder || formdata[num - 1]?.question || ""
                             )
                             : formdata[num - 1].type == "USER_INPUT_DATE"
                                 ? dateInput(
@@ -776,14 +883,16 @@ function OnBoarding(props: QuestLoginProps) {
                                             formdata[num - 1]?.question || "",
                                             formdata[num - 1]?.required || false,
                                             formdata[num - 1].criteriaId || "",
-                                            num - 1
+                                            num - 1,
+                                            formdata[num - 1]?.manualInput
                                         )
                                         : singleChoiceOne(
                                             formdata[num - 1].options || [],
                                             formdata[num - 1]?.question || "",
                                             formdata[num - 1]?.required || false,
                                             formdata[num - 1].criteriaId || "",
-                                            num - 1
+                                            num - 1,
+                                            formdata[num - 1]?.manualInput
                                         )
                                     : formdata[num - 1].type ==
                                         "USER_INPUT_MULTI_CHOICE"
@@ -821,6 +930,14 @@ function OnBoarding(props: QuestLoginProps) {
                                     index,
                                     data?.placeholder || data?.question || "",
                                 )
+                                : data.type == "USER_INPUT_TEXTAREA"
+                                ? textAreaInput(
+                                    data?.question || "",
+                                    data?.required || false,
+                                    data.criteriaId || "",
+                                    index,
+                                    data?.placeholder || data?.question || "",
+                                )
                                 : data.type == "USER_INPUT_DATE"
                                     ? dateInput(
                                         data?.question || "",
@@ -835,14 +952,16 @@ function OnBoarding(props: QuestLoginProps) {
                                                 data?.question || "",
                                                 data?.required || false,
                                                 data.criteriaId || "",
-                                                index
+                                                index,
+                                                data?.manualInput
                                             )
                                             : singleChoiceOne(
                                                 data.options || [],
                                                 data?.question || "",
                                                 data?.required || false,
                                                 data.criteriaId || "",
-                                                index
+                                                index,
+                                                data?.manualInput
                                             )
                                         : data.type == "USER_INPUT_MULTI_CHOICE"
                                             ? !!multiChoice && multiChoice == "modal2"
@@ -870,7 +989,7 @@ function OnBoarding(props: QuestLoginProps) {
                                                     : null
                         )}
                     {formdata.length > 0 &&
-                        (!!design && design.length > 0 &&
+                        (!!design && design.length > 1 &&
                             checkDesignCriteria() ? (
                             <div className="q-onb-main-criteria">
                                 <button
