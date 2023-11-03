@@ -11,7 +11,7 @@ import copyPng from './copy.png';
 import twitterPng from './twitter.png';
 import discordPng from './discord.png';
 import telegramPng from './telegram.png';
-import giftPng from './gift.png'
+import giftPng from './referEarn.png';
 import creditBannerPng from './creditBanner.png'
 import creditCheck from './creditCheck.png'
 
