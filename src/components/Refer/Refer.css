@@ -1,36 +1,50 @@
 .q-referShare {
     width: 314px;
     flex-shrink: 0;
-    border-radius: 18px;
+    border-radius: 14px;
     background: #FFF;
     backdrop-filter: blur(91px);
     font-family: Hanken Grotesk, Serif;
     min-width: 314px;
     padding: 20px 30px;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.42);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25);
 }
 
-.q-referShare-content-close {
+/* .q-referShare-content-close {
     width: 35px;
     height: 35px;
     flex-shrink: 0;
     cursor: pointer;
     margin-left: 90%;
-}
+} */
 
 .q-referShare-content-head {
-    color: #141414;
-    font-size: 20px;
-    font-weight: 700;
-    margin: 0;
+    overflow: hidden;
+    color: var(--grey-4, #141414);
+    text-align: center;
+    text-overflow: ellipsis;
+
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    align-self: stretch;
 }
 
 .q-referShare-content-para {
-    color: #141414;
+    color: var(--grey-0, var(--neutral-grey-200, #AFAFAF));
     text-align: center;
-    font-size: 16px;
+
+    font-size: 14px;
+    font-style: normal;
     font-weight: 400;
-    margin: 0;
+    line-height: 20px;
+
+    align-self: stretch;
 }
 
 .q-referShare-content {
@@ -48,13 +62,15 @@
 }
 
 .q-referShare-content-rect {
-    background: #EEE;
-    border-radius: 7px;
+    height: 30px;
+    width: 92%;
     display: flex;
-    justify-content: space-between;
+    padding: 10px 12px;
     align-items: center;
-    padding: 10px;
-    width: 100%;
+    gap: 190px;
+    align-self: stretch;
+    border-radius: 10px;
+    border: 1.5px solid var(--neutral-grey-100, #ECECEC);
 }
 
 .q-referShare-content-code {
@@ -66,7 +82,8 @@
 
 .q-referShare-content-social {
     display: flex;
-    gap: 25px;
+    align-self: start;
+    gap: 13px;
 }
 
 .q-referShare-content-copy-img {
@@ -76,16 +93,31 @@
 }
 
 .q-referShare-content-msg {
-    color: #545454;
-    font-size: 16px;
+    display: flex;
+    align-self: start;
+
+    color: var(--neutral-grey-700, #252525);
+    font-size: 12px;
+    font-style: normal;
     font-weight: 400;
-    margin: 0;
+    line-height: 16px;
 }
 
 .q-referShare-content-social-img {
-    width: 30px;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
-    height: 30px;
+}
+
+.q-referShare-referralCode {
+    display: flex;
+    align-self: start;
+    color: var(--neutral-grey-700, #252525);
+
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
 }
 
 
