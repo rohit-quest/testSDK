@@ -245,7 +245,6 @@ const Tutorial: React.FC<TutorialProps> = ({
                 : { backgroundColor: bgColor }),
               borderBottomLeftRadius: "14px",
               borderBottomRightRadius: "14px",
-
               paddingRight: "14px",
               paddingLeft: "14px",
             }}
