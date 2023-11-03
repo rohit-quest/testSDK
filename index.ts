@@ -16,6 +16,7 @@ import { QuestForm } from "./src/components/QuestForm/index";
 import { ReferShare, ReferEarn } from "./src/components/Refer/ReferEarn.tsx";
 import Table from "./src/components/Analytics/Table.tsx";
 import QuestChart from "./src/components/Analytics/QuestChart.tsx";
+import GetStarted from "./src/components/GetStarted/GetStarted.tsx";
 
 export {
     QuestProvider,
@@ -35,5 +36,6 @@ export {
     ReferShare,
     ReferEarn,
     Table,
-    QuestChart
+    QuestChart,
+    GetStarted
 };

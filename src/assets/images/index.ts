@@ -19,9 +19,10 @@ import twitterSvg from './twitter.svg';
 import discordSvg from './discord.svg';
 import copySVG from './copy.svg';
 import copyLargeSVG from './copyLarge.svg';
+import helpCenter1 from './helpCenter1.png'
+import helpCenter2 from './helpCenter2.png'
 
-
-export { copySVG, copyLargeSVG, googleImg, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like,closePng,copyPng,twitterPng,telegramPng,discordPng,giftPng,creditBannerPng,creditCheck, whatsappSvg, twitterSvg, discordSvg};
+export { copySVG, copyLargeSVG, googleImg, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like,closePng,copyPng,twitterPng,telegramPng,discordPng,giftPng,creditBannerPng,creditCheck, whatsappSvg, twitterSvg, discordSvg , helpCenter1, helpCenter2 };
 
 
 
