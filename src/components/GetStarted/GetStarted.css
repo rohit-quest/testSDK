@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300&family=Hanken+Grotesk:wght@500&family=Mulish:wght@200&display=swap');
+.gs-card-container {
+  padding-left: 2%;
+  border-radius: 12px;
+  height: 92px;
+  margin-top: 20px;
+  /* min-width: 1150px; */
+  border: 1.5px solid var(--grey-4, #141414);;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.gs-card-container>div{
+  display: flex;
+  align-items: center;
+}
+.gs-card-container>:first-child{
+  width: 70%;
+}
+.gs-card-btn-container {
+  padding-right: 2%;
+  display: flex;
+
+}
+.gs-card-btn-container a{
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+.gs-card-text {
+  padding-left: 2%;
+}
+.gs-card-btn2 {
+  font-family: Figtree;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  width: 130px;
+  border-radius: 12px;
+  margin-left: 15px;
+  cursor: pointer;
+}
+.gs-card-btn1 {
+  font-family: Figtree;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.gs-heading {
+  font-family: Figtree;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.gs-subheading {
+  font-family: Figtree;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0em;
+  text-align: left;
+  margin-top: 8px;
+}
+.gs-card-head {
+  font-family: Hanken Grotesk;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+.gs-card-desc {
+  font-family: Hanken Grotesk;
+  margin-top: 5px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0px;
+  text-align: left;
+}
