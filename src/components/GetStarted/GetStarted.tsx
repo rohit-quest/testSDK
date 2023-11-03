@@ -11,6 +11,10 @@ type Props = {
   userId?: string;
   token?: string;
   questId?: string;
+  cardBG: string;
+  cardHeadingColor: string;
+  cardDescColor: string;
+  completeAllStatus?: () => void;
 };
 interface TutorialStep {
   id: number;
@@ -21,9 +25,10 @@ interface TutorialStep {
   btn1?: string;
   btn2?: string;
   completed?: boolean;
+  btn1Link: string;
 }
 
-function GetStarted({ userId, token, questId }: Props) {
+function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus }: Props) {
   const svg1 = (
     <svg
       width="24"
@@ -172,6 +177,7 @@ function GetStarted({ userId, token, questId }: Props) {
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [allCriteriaCompleted, setAllCriteriaCompleted] =
     useState<boolean>(false);
+  const [criteriaSubmit, setCriteriaSubmit] = useState<string[]>([])
 
   const handleCriteriaClick = (id: any, url: string) => {
     const headers = {
@@ -191,9 +197,10 @@ function GetStarted({ userId, token, questId }: Props) {
       .then((response) => {
         if (response.data.success) {
           const newWindow = window.open(url, '_blank');
+          setCriteriaSubmit([...criteriaSubmit, id]);
           if (newWindow) {
             newWindow.focus();
-            window.location.reload();
+            // window.location.reload();
           } else {
             toast.error('Popup was blocked');
           }
@@ -245,7 +252,7 @@ function GetStarted({ userId, token, questId }: Props) {
         setFormdata([...criterias]);
       });
     }
-  }, []);
+  }, [criteriaSubmit]);
 
   useEffect(() => {
     if (allCriteriaCompleted) {
@@ -266,6 +273,7 @@ function GetStarted({ userId, token, questId }: Props) {
           if (response.data.success) {
             const cookies = new Cookies();
             cookies.set("getStartedScreenComplete", true, { path: "/" });
+            completeAllStatus()
             return;
           } else {
             toast.error(response.data.error);
@@ -283,11 +291,11 @@ function GetStarted({ userId, token, questId }: Props) {
   let btn2Color =
     'radial-gradient(98.75% 3360.24% at 0% 100%, #6200EE 0%, #1F3EFE 100%)';
   let btnTextColor = '#FFFFFF';
-  let textColor = '#FFFFFF';
+  let textColor = cardHeadingColor || '#FFFFFF';
   let subHeadingColor = '#8A8A8A';
-  let descColor = '#AFAFAF';
+  let descColor = cardDescColor || '#AFAFAF';
   let bg =
-    'linear-gradient(0deg, #141414, #141414),linear-gradient(0deg, #161616, #161616)';
+  cardBG || '#161616';
 
   const card = (
     icon?: any,
@@ -297,23 +305,28 @@ function GetStarted({ userId, token, questId }: Props) {
     btn2?: any,
     completed?: any,
     id?: any,
-    url?: any
+    url?: any,
+    btn1Link?: string
   ) => {
     return (
       <div key={id} style={{ background: bg }} className="gs-card-container">
-        <div className="gs-card-icon">{icon}</div>
-        <div className="gs-card-text">
-          <div style={{ color: textColor }} className="gs-card-head">
-            {heading}
-          </div>
-          <div style={{ color: descColor }} className="gs-card-desc">
-            {description}
+        <div>
+          <div className="gs-card-icon">{icon}</div>
+          <div className="gs-card-text">
+            <div style={{ color: textColor }} className="gs-card-head">
+              {heading}
+            </div>
+            <div style={{ color: descColor }} className="gs-card-desc">
+              {description}
+            </div>
           </div>
         </div>
         <div className="gs-card-btn-container">
-          <div style={{ color: descColor }} className="gs-card-btn1">
-            {btn1}
-          </div>
+            <div className="gs-card-btn1">
+              <a href={btn1Link} target='_blank' style={{ color: descColor }}>
+                {btn1}
+              </a>
+            </div>
           <div
             onClick={() => handleCriteriaClick(id, url)}
             style={{ background: btn2Color, color: btnTextColor }}
@@ -348,7 +361,8 @@ function GetStarted({ userId, token, questId }: Props) {
             e.btn2,
             e.completed,
             e.criteriaId,
-            e.url
+            e.url,
+            e.btn1Link
           )
         )}
       </div>

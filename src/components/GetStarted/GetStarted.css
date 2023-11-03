@@ -5,18 +5,29 @@
   height: 92px;
   margin-top: 20px;
   /* min-width: 1150px; */
-  border: 1.5px solid;
+  border: 1.5px solid var(--grey-4, #141414);;
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   align-items: center;
 }
-.gs-card-btn-container {
-  padding-left: 2%;
+.gs-card-container>div{
   display: flex;
+  align-items: center;
+}
+.gs-card-container>:first-child{
+  width: 70%;
+}
+.gs-card-btn-container {
+  padding-right: 2%;
+  display: flex;
+
+}
+.gs-card-btn-container a{
+  text-decoration: none;
+  color: rgb(255, 255, 255);
 }
 .gs-card-text {
   padding-left: 2%;
-  width: 70%;
 }
 .gs-card-btn2 {
   font-family: Figtree;
@@ -32,6 +43,7 @@
   width: 130px;
   border-radius: 12px;
   margin-left: 15px;
+  cursor: pointer;
 }
 .gs-card-btn1 {
   font-family: Figtree;
@@ -43,6 +55,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 .gs-heading {
   font-family: Figtree;

@@ -54,6 +54,7 @@ interface QuestLoginProps {
     headingAlignment: "left" | "right" | "center";
     questionFontSize: string;
     answerFontSize: string;
+    gap: string;
 }
 
 interface FormData {
@@ -109,7 +110,8 @@ function OnBoarding(props: QuestLoginProps) {
         progressBartabHeight,
         headingAlignment,
         questionFontSize,
-        answerFontSize
+        answerFontSize,
+        gap
     } = props;
 
     const [formdata, setFormdata] = useState<FormData[] | []>([]);
@@ -348,10 +350,10 @@ function OnBoarding(props: QuestLoginProps) {
         placeholder: string,
     ) => {
         return (
-            <div style={{paddingTop: "12px", paddingBottom: "12px"}} key={criteriaId}>
+            <div style={{paddingTop: `calc(${gap} / 2)`, paddingBottom: `calc(${gap} / 2)`}} key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: "12px"}}>
+                    <div style={{paddingBottom: `calc(${gap} / 2)`}}>
                         {customComponents}
                     </div>
                 }
@@ -396,10 +398,10 @@ function OnBoarding(props: QuestLoginProps) {
         index: number
     ) => {
         return (
-            <div style={{paddingTop: "12px", paddingBottom: "12px"}} key={criteriaId}>
+            <div style={{paddingTop: `calc(${gap} / 2)`, paddingBottom: `calc(${gap} / 2)`}} key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: "12px"}}>
+                    <div style={{paddingBottom: `calc(${gap} / 2)`}}>
                         {customComponents}
                     </div>
                 }
@@ -431,10 +433,10 @@ function OnBoarding(props: QuestLoginProps) {
         placeholder: string,
     ) => {
         return (
-            <div style={{paddingTop: "12px", paddingBottom: "12px"}} key={criteriaId}>
+            <div style={{paddingTop: `calc(${gap} / 2)`, paddingBottom: `calc(${gap} / 2)`}} key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: "12px"}}>
+                    <div style={{paddingBottom: `calc(${gap} / 2)`}}>
                         {customComponents}
                     </div>
                 }
@@ -469,17 +471,27 @@ function OnBoarding(props: QuestLoginProps) {
         const customStyles = {
             control: (base: any, state: any) => ({
               ...base,
-              background: "#f9fafb",
+              background: inputBgColor ? inputBgColor : "#f9fafb",
               padding: "3px",
-              fontSize: answerFontSize
+              fontSize: answerFontSize,
+              border: inputBorder
             }),
+            option: (styles: any, { isDisabled, isFocused, isSelected, isHovered }) => ({
+                ...styles,
+                backgroundColor: isFocused ? "#9dc3ed" : inputBgColor ? inputBgColor : "#f9fafb",
+                color: ""
+            }),
+            menu: (provided, state) => ({
+                ...provided,
+                backgroundColor: inputBgColor ? inputBgColor : "#f9fafb",
+            })
         }
         
         return (
-            <div style={{paddingTop: "12px"}} key={criteriaId}>
+            <div style={{paddingTop: `calc(${gap} / 2)`, paddingBottom: `calc(${gap} / 2)`}} key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: "12px"}}>
+                    <div style={{paddingBottom: `calc(${gap} / 2)`}}>
                         {customComponents}
                     </div>
                 }
@@ -528,7 +540,7 @@ function OnBoarding(props: QuestLoginProps) {
             </div>
         );
     };
-    console.log(answer);
+    
     const singleChoiceOne = (
         options: [string] | [],
         question: string,
@@ -538,10 +550,10 @@ function OnBoarding(props: QuestLoginProps) {
         manualInput: string | boolean
     ) => {
         return (
-            <div style={{paddingTop: "12px"}} key={criteriaId}>
+            <div style={{paddingTop: `calc(${gap} / 2)`, paddingBottom: `calc(${gap} / 2)`}} key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: "12px"}}>
+                    <div style={{paddingBottom: `calc(${gap} / 2)`}}>
                         {customComponents}
                     </div>
                 }
@@ -553,7 +565,7 @@ function OnBoarding(props: QuestLoginProps) {
                 </p>
                 <div className="q-onb-singleChoiceOne-optDiv">
                     {options.map((option: string, id: number) => (
-                        <div className="q-onb-singleChoiceOne-chDiv" style={{paddingBottom: "12px"}} key={id}>
+                        <div className="q-onb-singleChoiceOne-chDiv" style={{paddingBottom: `calc(${gap} / 2)`}} key={id}>
                             <input
                                 id={`sct${criteriaId + id}`}
                                 type="radio"
@@ -599,10 +611,10 @@ function OnBoarding(props: QuestLoginProps) {
         index: number
     ) => {
         return (
-            <div style={{paddingTop: "12px"}} key={criteriaId}>
+            <div style={{paddingTop: `calc(${gap} / 2)`, paddingBottom: `calc(${gap} / 2)`}} key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: "12px"}}>
+                    <div style={{paddingBottom: `calc(${gap} / 2)`}}>
                         {customComponents}
                     </div>
                 }
@@ -612,7 +624,7 @@ function OnBoarding(props: QuestLoginProps) {
                 >
                     {question} {required && "*"}
                 </p>
-                <div className="q-onb-singleChoiceOne-optDiv" style={{paddingBottom: "12px"}}>
+                <div className="q-onb-singleChoiceOne-optDiv" style={{paddingBottom: `calc(${gap} / 2)`}}>
                     {options.map((option: string, id: number) => (
                         <div className="q-onb-singleChoiceOne-chDiv" key={id}>
                             <input
@@ -650,10 +662,10 @@ function OnBoarding(props: QuestLoginProps) {
         index: number
     ) => {
         return (
-            <div style={{paddingTop: "12px", paddingBottom: "12px"}} key={criteriaId}>
+            <div style={{paddingTop: `calc(${gap} / 2)`, paddingBottom: `calc(${gap} / 2)`}} key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: "12px"}}>
+                    <div style={{paddingBottom: `calc(${gap} / 2)`}}>
                         {customComponents}
                     </div>
                 }
@@ -716,10 +728,10 @@ function OnBoarding(props: QuestLoginProps) {
         index: number,
     ) => {
         return (
-            <div style={{paddingTop: "12px", paddingBottom: "12px"}} key={criteriaId}>
+            <div style={{paddingTop: `calc(${gap} / 2)`, paddingBottom: `calc(${gap} / 2)`}} key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: "12px"}}>
+                    <div style={{paddingBottom: `calc(${gap} / 2)`}}>
                         {customComponents}
                     </div>
                 }
@@ -1029,7 +1041,7 @@ function OnBoarding(props: QuestLoginProps) {
                                 </button>
                             </div>
                         ) : (
-                            <div style={{paddingTop: "12px"}}>
+                            <div style={{paddingTop: `calc(${gap} / 2)`}}>
                                 <button
                                     className="q-onb-main-btn3"
                                     onClick={returnAnswers}
