@@ -126,24 +126,24 @@
 
 .q-tut-btn-cont {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   justify-content: center;
   align-items: center;
   color: var(--neutral-grey-700, #252525);
+  width: 80%;
+  height: 14px;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 27px;
+
+  padding: 10px 20px;
+  border: 1.5px solid var(--neutral-grey-600, #2B2B2B);
+  border-radius: 10px;
 }
 
 .q-tut-btn {
-  margin: 20px 0 16px 0;
-  display: flex;
-  width: 90%;
-  height: 44px;
-  padding: 10px 20px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  border-radius: 10px;
-  border: 1.5px solid var(--neutral-grey-600, #2B2B2B);
-
+  margin: auto;
+  border: none;
   background-color: white;
   cursor: pointer;
   text-align: center;
@@ -166,7 +166,7 @@
   box-sizing: border-box;
 }
 
-.q-tut-progress{
+.q-tut-progress {
   display: flex;
   align-content: center;
   flex-direction: row-reverse;
