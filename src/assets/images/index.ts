@@ -20,4 +20,7 @@ import helpCenter2 from './helpCenter2.png/'
 export { googleImg, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like,closePng,copyPng,twitterPng,telegramPng,discordPng,giftPng,creditBannerPng,creditCheck,helpCenter1,helpCenter2 };
 
 
+import emailLogo from './emailLogo.svg';
+import crossLogo from './cross.svg';
+import alertLogo from './alert.svg';
 
