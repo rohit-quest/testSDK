@@ -184,7 +184,7 @@ const Tutorial: React.FC<TutorialProps> = ({
         <div className="q-tutorial-cont">
           <div
             style={{
-              height: "72px",
+              height: "52px",  
               borderTopLeftRadius: "14px",
               borderTopRightRadius: "14px",
               fontFamily: font,
