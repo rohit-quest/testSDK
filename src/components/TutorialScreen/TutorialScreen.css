@@ -1,22 +1,19 @@
 .q-tutorial-cont {
   background-color: white;
-  border-radius: 0.5rem;
+  /* border-radius: 0.5rem; */
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 .q-tut-div {
   font-family: Hanken Grotesk;
   text-align: left;
-  padding-bottom: 0.5rem;
-  padding-top: 0.25rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  background-color: black;
+  padding: 12px 20px;
+  /* previously  padding: 0.25rem 1rem 0.5rem 1rem; */
+  background: var(--neutral-pure-black-100, #000);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 400px;
-  padding: 10px 20px;
+  width: 376px;
   align-items: center;
   /* gap: 190px; */
 }
@@ -41,19 +38,19 @@
 
 .q-tut-cont {
   margin-bottom: 1rem;
-  border-bottom: 1px solid #e5e7eb;
+  /* border-bottom: 1px solid #e5e7eb; */
 }
 
 .progress-bar-container {
-  margin-top: 0.5rem;
+  margin: 20px 10px 20px 0px;
   background-color: #e5e7eb;
-  height: 10px;
+  height: 8px;
   border-radius: 50px;
-  width: 90%;
+  width: 100%;
 }
 
 .progress-bar-fill {
-  height: 10px;
+  height: 8px;
   border-radius: 50px;
 }
 
@@ -65,7 +62,7 @@
 }
 
 .q-tut-item-cont {
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
   /* border-bottom: 1px solid #e5e7eb; */
 }
 
@@ -101,9 +98,19 @@
   justify-content: space-between;
 }
 
+.q-tut-title-completed {
+  color: var(--neutral-grey-300, #8E8E8E);
+}
+
+.q-tut-title-notcompleted {
+  color: var(--neutral-grey-700, #252525);
+}
+
 .q-tut-title {
-  font-size: 16px;
+  font-size: 14px;
+  font-style: normal;
   font-weight: 500;
+  line-height: 20px;
   margin-bottom: 0.25rem;
 }
 
@@ -120,26 +127,31 @@
 .q-tut-btn-cont {
   display: flex;
   gap: 10px;
-  justify-content: flex-end;
-  width: 95%;
+  justify-content: center;
+  align-items: center;
+  color: var(--neutral-grey-700, #252525);
 }
 
 .q-tut-btn {
+  margin: 20px 0 16px 0;
   display: flex;
-  width: 70px;
-  height: 30px;
-  padding: 2% 4%;
-  align-items: center;
-  display: flex;
+  width: 90%;
+  height: 44px;
+  padding: 10px 20px;
   justify-content: center;
-  cursor: pointer;
-  border-radius: 6.396px;
-  border: 1.5px solid #4B4B4B;
-  color: #333;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 500;
+  align-items: center;
+  gap: 8px;
+  border-radius: 10px;
+  border: 1.5px solid var(--neutral-grey-600, #2B2B2B);
+
   background-color: white;
+  cursor: pointer;
+  text-align: center;
+  color: var(--neutral-grey-700, #252525);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
 }
 
 .q-tut-btn:disabled {
