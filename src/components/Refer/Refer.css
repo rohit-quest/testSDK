@@ -59,6 +59,7 @@
     flex-direction: column;
     align-items: center;
     gap: 15px;
+    padding-bottom: 20px;
 }
 
 .q-referShare-content-rect {
