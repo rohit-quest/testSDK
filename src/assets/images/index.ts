@@ -18,9 +18,10 @@ import whatsappSvg from './whatsapp.svg';
 import twitterSvg from './twitter.svg';
 import discordSvg from './discord.svg';
 import copySVG from './copy.svg';
+import copyLargeSVG from './copyLarge.svg';
 
 
-export { copySVG, googleImg, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like,closePng,copyPng,twitterPng,telegramPng,discordPng,giftPng,creditBannerPng,creditCheck, whatsappSvg, twitterSvg, discordSvg};
+export { copySVG, copyLargeSVG, googleImg, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like,closePng,copyPng,twitterPng,telegramPng,discordPng,giftPng,creditBannerPng,creditCheck, whatsappSvg, twitterSvg, discordSvg};
 
 
 
