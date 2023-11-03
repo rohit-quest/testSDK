@@ -14,8 +14,10 @@ import telegramPng from './telegram.png';
 import giftPng from './gift.png'
 import creditBannerPng from './creditBanner.png'
 import creditCheck from './creditCheck.png'
+import helpCenter1 from './helpCenter1.png'
+import helpCenter2 from './helpCenter2.png/'
 
-export { googleImg, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like,closePng,copyPng,twitterPng,telegramPng,discordPng,giftPng,creditBannerPng,creditCheck };
+export { googleImg, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like,closePng,copyPng,twitterPng,telegramPng,discordPng,giftPng,creditBannerPng,creditCheck,helpCenter1,helpCenter2 };
 
 
 
