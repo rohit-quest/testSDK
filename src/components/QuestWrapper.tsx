@@ -18,7 +18,7 @@ type Props = {
   children: ReactNode;
   apiKey: string;
   apiSecret: string;
-  entityId?: string;
+  entityId: string;
   featureFlags?: FeatureFlags;
 };
 

@@ -8,13 +8,15 @@ import Loader from '../Login/Loader';
 import Cookies from 'universal-cookie';
 
 type Props = {
-  userId?: string;
-  token?: string;
-  questId?: string;
-  cardBG: string;
-  cardHeadingColor: string;
-  cardDescColor: string;
+  userId: string;
+  token: string;
+  questId: string;
+  cardBG?: string;
+  cardHeadingColor?: string;
+  cardDescColor?: string;
   completeAllStatus?: () => void;
+  buttonBg?: string;
+  buttonColor?: string;
 };
 interface TutorialStep {
   id: number;
@@ -28,7 +30,7 @@ interface TutorialStep {
   btn1Link: string;
 }
 
-function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus }: Props) {
+function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus, buttonBg, buttonColor }: Props) {
   const svg1 = (
     <svg
       width="24"
@@ -288,14 +290,15 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
     }
   }, [allCriteriaCompleted]);
 
-  let btn2Color =
-    'radial-gradient(98.75% 3360.24% at 0% 100%, #6200EE 0%, #1F3EFE 100%)';
-  let btnTextColor = '#FFFFFF';
-  let textColor = cardHeadingColor || '#FFFFFF';
+  let btn2Color = buttonBg || "#252525";
+    // 'radial-gradient(98.75% 3360.24% at 0% 100%, #6200EE 0%, #1F3EFE 100%)';
+  let btnTextColor = buttonColor || '#FFFFFF';
+  let textColor = cardHeadingColor || '#000';
   let subHeadingColor = '#8A8A8A';
   let descColor = cardDescColor || '#AFAFAF';
   let bg =
-  cardBG || '#161616';
+  cardBG || '#FFF';
+  let borderColor = cardBG || "var(--neutral-grey-200, #AFAFAF)"
 
   const card = (
     icon?: any,
@@ -309,7 +312,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
     btn1Link?: string
   ) => {
     return (
-      <div key={id} style={{ background: bg }} className="gs-card-container">
+      <div key={id} style={{ background: bg, borderColor }} className="gs-card-container">
         <div>
           <div className="gs-card-icon">{icon}</div>
           <div className="gs-card-text">

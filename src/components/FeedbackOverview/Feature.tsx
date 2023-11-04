@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import './FeedbackOverview.css';
+import { backButton, userLogo, crossLogo, emailLogo, textAreaIcon } from "../../assets/assetsSVG"
 
 interface FeatureContentProps {
   btnColor?: string;
@@ -9,6 +11,7 @@ interface FeatureContentProps {
   handleSubmit?: (e: any) => void;
   handleUpdate: (e: any, id: string, j: string, k?: number) => void;
   answer: any;
+  handleRemove: (e: any) => void;
 }
 
 const FeatureContent: React.FC<FeatureContentProps> = ({
@@ -19,7 +22,8 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
   btnTextColor,
   handleUpdate,
   handleSubmit,
-  answer
+  answer,
+  handleRemove
 }) => {
   function isValidEmail(email: string) {
     if (!email) return false;
@@ -32,9 +36,9 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
     placeholder?: string
   ) => {
     return (
-      <div className="questLabs" style={{ paddingTop: '3%' }} key={criteriaId}>
+      <div key={criteriaId}>
         <label
-          className="q-h4"
+          className="q-fdov-levels"
           htmlFor="normalInput"
           style={{
             fontFamily: font,
@@ -43,23 +47,26 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
         >
           {question}
         </label>
-        <input
-          type="text"
-          id="normalInput"
-          style={{ height: '50px' }}
-          name="normalInput"
-          className="q-input-box"
-          onChange={(e) => handleUpdate(e, criteriaId, '')}
-          placeholder={placeholder}
-        />
+        <div className="q-fdov-input">
+            {userLogo()}
+            <input
+              type="text"
+              id="normalInput"
+              name="normalInput"
+              onChange={(e) => handleUpdate(e, criteriaId, "")}
+              value={answer[criteriaId]}
+              placeholder={placeholder}
+            />
+            {crossLogo(criteriaId, handleRemove)}
+        </div>
       </div>
     );
   };
   const emailInput = (question: string, criteriaId: string, placeholder?:string) => {
     return (
-      <div className="questLabs" style={{ paddingTop: '2%' }} key={criteriaId}>
+      <div key={criteriaId}>
         <label
-          className="q-h4"
+          className="q-fdov-levels"
           htmlFor="normalInput"
           style={{
             fontFamily: font,
@@ -68,16 +75,18 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
         >
           {question}
         </label>
-        <input
-          type="email"
-          id="normalInput"
-          style={{ height: '50px' }}
-          name="normalInput"
-          className="q-input-box"
-          onChange={(e) => handleUpdate(e, criteriaId, '')}
-          placeholder={placeholder}
-          value={answer[criteriaId]}
-        />
+        <div className="q-fdov-input">
+            {emailLogo()}
+            <input
+              type="email"
+              id="normalInput"
+              name="normalInput"
+              onChange={(e) => handleUpdate(e, criteriaId, "")}
+              value={answer[criteriaId]}
+              placeholder={placeholder}
+            />
+            {crossLogo(criteriaId, handleRemove)}
+        </div>
         {
           isValidEmail(answer[criteriaId]) &&
           <p className='q-input-email-checks'>This is not a valid email</p>
@@ -91,9 +100,9 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
     placeholder?: string
   ) => {
     return (
-      <div className="questLabs" style={{ paddingTop: '3%' }} key={criteriaId}>
+      <div key={criteriaId}>
         <label
-          className="q-h4"
+          className="q-fdov-levels"
           style={{
             fontFamily: font,
             color: textColor,
@@ -101,18 +110,23 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
         >
           {question}
         </label>
-        <textarea
-          id="normalInput2"
-          placeholder={placeholder}
-          style={{ height: '150px' }}
-          className="q-input-box"
-          onChange={(e) => handleUpdate(e, criteriaId, '')}
-        />
+        <div className="q-fdov-input" style={{alignItems: "flex-start"}}>
+            {textAreaIcon()}
+            <textarea
+              id="normalInput2"
+              name="normalInput"
+              onChange={(e) => handleUpdate(e, criteriaId, "")}
+              value={answer[criteriaId]}
+              placeholder={placeholder}
+              style={{height: "120px", padding: "0px", fontFamily: "'Figtree', sans-serif"}}
+            />
+            {crossLogo(criteriaId, handleRemove)}
+        </div>
       </div>
     );
   };
   return (
-    <div style={{ padding: '5% 2%' }}>
+    <div className='q-fdov-ch-boxes'>
       {formdata?.length > 0 ? (
         <>
           {formdata.map((data: any) => {
@@ -135,7 +149,7 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
           <div
           style={{backgroundColor: btnColor, color:btnTextColor, marginTop: '10%'}}
             onClick={handleSubmit}
-            className="q-btn-continue"
+            className="q-fdov-btn-continue"
           >
             Submit
           </div>

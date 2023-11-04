@@ -11,6 +11,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import Loader from '../Login/Loader';
 import Cookies from "universal-cookie";
+import { backButton } from "../../assets/assetsSVG";
+import crossCircle from "../../assets/images/crossCircle.png"
 
 const feedback = (
   <svg
@@ -286,7 +288,7 @@ interface feedbackCompProps {
   textColor?: string;
   font?: string;
   contactUrl?: string;
-  isOpen?: boolean;
+  isOpen: boolean;
   onClose?: Function;
   backgroundColor?: string;
   zIndex?:number;
@@ -294,6 +296,7 @@ interface feedbackCompProps {
   starColor?: string;
   starBorderColor?: string;
   tickBg?: string;
+  ratingStyle?: "Star" | "Numbers" | "Smiles";
 }
 interface FormDataItem {
   type?: string;
@@ -319,7 +322,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   topbarColor,
   starColor,
   starBorderColor,
-  tickBg
+  tickBg,
+  ratingStyle
 }) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
@@ -480,7 +484,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     }
     
     if (option === 'Contact us' && contactUrl) {
-      window.open('https://questlabs.ai', "_blank");
+      window.open(contactUrl, "_blank");
     } else {
       setSelectedOption(option);
       setSelectedQuest(quest);
@@ -656,6 +660,13 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     setSelectedOption(null);
   };
 
+  const handleRemove = (id: string) => {
+    setAnswer({
+        ...answer,
+        [id]: ""
+    })
+  }
+
   if (featureFlags[config.FLAG_CONSTRAINTS.FeedbackWorkflowFlag]?.isEnabled == false) {
     return (<div></div>)
   }
@@ -668,31 +679,13 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         {selectedOption && !submit ? (
           <div>
             <div className="q-fw-heading" style={{backgroundColor: topbarColor}}>
-              <div
-                onClick={handleBackClick}
-                style={{
-                  marginLeft: '10px',
-                  marginTop: '2px',
-                  cursor: 'pointer',
-                }}
-              >
-                {back}
+              <div>
+                {backButton(handleBackClick)}
+                <p>{selectedOption}</p>
               </div>
-              <h4 style={{ fontSize: '18px', fontWeight: 'bold' }}>
-                {selectedOption}
-              </h4>
-              <div
-                onClick={handleBackClick}
-                style={{
-                  marginRight: '10px',
-                  marginTop: '2px',
-                  cursor: 'pointer',
-                }}
-              >
-                {cross}
-              </div>
+              <img src={crossCircle} onClick={handleBackClick} alt="" />
             </div>
-            <div style={{ padding: '0px 18px' }}>
+            <div style={{ padding: '20px 28px' }}>
               {selectedOption === 'General Feedback' && (
                 <GeneralFeedbackContent
                   starColor={starColor}
@@ -705,6 +698,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   btnTextColor={btnTextColor}
                   starBorderColor={starBorderColor}
                   answer={answer}
+                  handleRemove={handleRemove}
+                  ratingStyle={ratingStyle}
                 />
               )}
               {selectedOption === 'Report a Bug' && (
@@ -716,6 +711,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   textColor={textColor}
                   btnColor={btnColor}
                   btnTextColor={btnTextColor}
+                  answer={answer}
+                  handleRemove={handleRemove}
                 />
               )}
               {selectedOption === 'Request a Feature' && (
@@ -726,7 +723,9 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   font={font}
                   textColor={textColor}
                   btnColor={btnColor}
+                  answer={answer}
                   btnTextColor={btnTextColor}
+                  handleRemove={handleRemove}
                 />
               )}
               {selectedOption === 'Contact us' && (
