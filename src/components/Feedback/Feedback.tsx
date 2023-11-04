@@ -6,6 +6,7 @@ import './Feedback.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import Loader from '../Login/Loader';
+import crossCircle from "../../assets/images/crossCircle.png"
 import {userLogo, crossLogo, leftArrow, rightArrow, calenderIcon, textAreaIcon, phoneLogo, emailLogo, crossLogoFeedback} from "../../assets/assetsSVG"
 
 interface FeedbackProps {
@@ -258,7 +259,7 @@ const Feedback: React.FC<FeedbackProps> = ({
 
   const normalInput = (question: string, criteriaId: string, placeholder?: string, inputType: string) => {
     return (
-      <div className="" style={{ paddingTop: '12px' }} key={criteriaId}>
+      <div className="" key={criteriaId}>
         <label
           className="q-fd-lebels"
           htmlFor="normalInput"
@@ -287,7 +288,7 @@ const Feedback: React.FC<FeedbackProps> = ({
 
   const normalInput2 = (question: string, criteriaId: string, placeholder?:string) => {
     return (
-      <div className="" style={{ paddingTop: '12px' }} key={criteriaId}>
+      <div className="" key={criteriaId}>
         <label
           className="q-fd-lebels"
           htmlFor="normalInput2"
@@ -400,28 +401,33 @@ const Feedback: React.FC<FeedbackProps> = ({
           formdata[0].type !== 'RATING' ? (
             <>
               {!thanksPopup && (
-                <div className="">
-                  <h2
-                    className="q-h1"
-                    style={{
-                      fontFamily: font,
-                      color: textColor,
-                      fontSize: '24px',
-                    }}
-                  >
-                    {heading}
-                  </h2>
-                  <p
-                    className="q-sub"
-                    style={{
-                      fontFamily: font,
-                      color: textColor,
-                      fontSize: '18px',
-                    }}
-                  >
-                    {subHeading}
-                  </p>
-                  <form>
+                <div>
+                  <div className="q-fd-topbar">
+                    <div>
+                      <h2
+                        className="q-fd-heading"
+                        style={{
+                          fontFamily: font,
+                          color: textColor,
+                          fontSize: '24px',
+                        }}
+                      >
+                        {heading}
+                      </h2>
+                      <p
+                        className="q-fd-sub"
+                        style={{
+                          fontFamily: font,
+                          color: textColor,
+                          fontSize: '18px',
+                        }}
+                      >
+                        {subHeading}
+                      </p>
+                    </div>
+                    <img src={crossCircle} alt="" />
+                  </div>
+                  <form style={{padding: "20px", display: "flex", flexDirection: "column", gap: "12px"}}>
                     {formdata.map((data: any) => {
                       if (data.type === 'USER_INPUT_TEXT') {
                         return normalInput(
@@ -445,7 +451,7 @@ const Feedback: React.FC<FeedbackProps> = ({
                         );
                       } else if (data.type === 'RATING') {
                         return (
-                          <div style={{ paddingTop: '12px' }} className="mb-4">
+                          <div className="mb-4">
                             <label
                               className='q-fd-lebels'
                             >

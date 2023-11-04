@@ -20,43 +20,43 @@ type HeadingScreen = {
 };
 
 interface QuestLoginProps {
-    design: Array<Array<number>>;
-    color: string;
-    bgColor: string;
-    btnColor: string;
-    inputBgColor: string;
-    headingScreen: HeadingScreen | HeadingScreen[] | any;
-    singleChoose: "modal1" | "modal2";
-    multiChoice:  "modal1" | "modal2";
-    screenHeight: string;
+    design?: Array<Array<number>>;
+    color?: string;
+    bgColor?: string;
+    btnColor?: string;
+    inputBgColor?: string;
+    headingScreen?: HeadingScreen | HeadingScreen[] | any;
+    singleChoose?: "modal1" | "modal2";
+    multiChoice?:  "modal1" | "modal2";
+    screenHeight?: string;
     getAnswers: Function | undefined;
     answer: any;
     setAnswer: any;
-    customComponents: any;
-    customComponentPositions: number;
-    inputBorder: string;
-    btnSize: string;
-    headingSize: string;
-    descSize: string;
-    inputFieldType: { [key: string]: string };
-    defaultFont: boolean;
+    customComponents?: any;
+    customComponentPositions?: number;
+    inputBorder?: string;
+    btnSize?: string;
+    headingSize?: string;
+    descSize?: string;
+    inputFieldType?: { [key: string]: string };
+    defaultFont?: boolean;
     userId: string;
     token: string;
     questId: string;
-    progress: string[];
-    loadingTracker: boolean;
-    setLoading: Function;
-    linksLogoWidth: string;
-    previousBtnText: string;
-    nextBtnText: string;
-    progressbarColor: string;
-    progressBarMultiLine: boolean;
-    progressBartabHeight: string;
-    headingAlignment: "left" | "right" | "center";
-    questionFontSize: string;
-    answerFontSize: string;
-    gap: string;
-    controlBtnType: "Arrow" | "Buttons"
+    progress?: string[];
+    loadingTracker?: boolean;
+    setLoading?: Function;
+    linksLogoWidth?: string;
+    previousBtnText?: string;
+    nextBtnText?: string;
+    progressbarColor?: string;
+    progressBarMultiLine?: boolean;
+    progressBartabHeight?: string;
+    headingAlignment?: "left" | "right" | "center";
+    questionFontSize?: string;
+    answerFontSize?: string;
+    gap?: string;
+    controlBtnType?: "Arrow" | "Buttons"
 }
 
 interface FormData {
