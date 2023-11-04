@@ -75,19 +75,14 @@
   margin-top: 8px;
 }
 .gs-card-head {
-  font-family: Hanken Grotesk;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 28px;
-  letter-spacing: 0px;
-  text-align: left;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
 }
 .gs-card-desc {
-  font-family: Hanken Grotesk;
-  margin-top: 5px;
   font-size: 14px;
-  font-weight: 400;
-  line-height: 20px;
-  letter-spacing: 0px;
-  text-align: left;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 142.857% */
 }

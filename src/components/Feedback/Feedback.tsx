@@ -486,7 +486,7 @@ const Feedback: React.FC<FeedbackProps> = ({
                         fontFamily: font,
                       }}
                       onClick={returnAnswers}
-                      className="q-btn-continue"
+                      className="q-fdov-btn-continue"
                     >
                       Submit
                     </div>

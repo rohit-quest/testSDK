@@ -159,3 +159,15 @@
   height: 20px;
   cursor: pointer;
 }
+.q-fdov-btn-continue{
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: var(--neutral-grey-700, #252525);
+  color: var(--neutral-pure-white-100, #FFF);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: center;
+  margin-top: 10px;
+}
