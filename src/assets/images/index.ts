@@ -11,13 +11,18 @@ import copyPng from './copy.png';
 import twitterPng from './twitter.png';
 import discordPng from './discord.png';
 import telegramPng from './telegram.png';
-import giftPng from './gift.png'
+import giftPng from './referEarn.png';
 import creditBannerPng from './creditBanner.png'
 import creditCheck from './creditCheck.png'
+import whatsappSvg from './whatsapp.svg';
+import twitterSvg from './twitter.svg';
+import discordSvg from './discord.svg';
+import copySVG from './copy.svg';
+import copyLargeSVG from './copyLarge.svg';
 import helpCenter1 from './helpCenter1.png'
-import helpCenter2 from './helpCenter2.png/'
+import helpCenter2 from './helpCenter2.png'
 
-export { googleImg, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like,closePng,copyPng,twitterPng,telegramPng,discordPng,giftPng,creditBannerPng,creditCheck,helpCenter1,helpCenter2 };
+export { copySVG, copyLargeSVG, googleImg, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like,closePng,copyPng,twitterPng,telegramPng,discordPng,giftPng,creditBannerPng,creditCheck, whatsappSvg, twitterSvg, discordSvg , helpCenter1, helpCenter2 };
 
 
 
