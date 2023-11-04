@@ -218,23 +218,28 @@ function isValidEmail(email: string) {
                       ))}
                     </div>
                     :
-                    [1, 2, 3, 4, 5].map((star) => (
-                      <div
-                        style={{
-                          width: '32px',
-                          height: '32px',
-                          lineHeight: '32px',
-                          marginRight: '8px',
-                          cursor: 'pointer',
-                        }}
-                        key={star}
-                        onClick={(e) =>
-                          handleRatingChange2(e, data.criteriaId, star)
-                        }
-                      >
-                        {star <= rating ? blackStar : whiteStar}
-                      </div>
-                    ))}
+                    <div style={{display: "flex"}}>
+                      {
+                        [1, 2, 3, 4, 5].map((star) => (
+                          <div
+                            style={{
+                              width: '32px',
+                              height: '32px',
+                              lineHeight: '32px',
+                              marginRight: '8px',
+                              cursor: 'pointer',
+                            }}
+                            key={star}
+                            onClick={(e) =>
+                              handleRatingChange2(e, data.criteriaId, star)
+                            }
+                          >
+                            {star <= rating ? blackStar : whiteStar}
+                          </div>
+                        ))
+                      }
+                    </div>
+                    }
                   </div>
                 </div>
               );
