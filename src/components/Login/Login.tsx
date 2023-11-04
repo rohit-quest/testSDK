@@ -19,7 +19,7 @@ export interface QuestLoginProps {
   textColor?: string;
   backgroundColor?: string;
   font?: string;
-  onSubmit?: ({userId,token}:{userId: string, token: string}) => void;
+  onSubmit?: ({ userId, token }: { userId: string, token: string }) => void;
 }
 
 const QuestLogin: React.FC<QuestLoginProps> = ({
@@ -30,7 +30,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   email,
   google,
   btnTextColor,
-  textColor,
+  textColor = '#252525',
   backgroundColor,
   font,
   onSubmit,
@@ -38,7 +38,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   const [isEmail, setIsEmail] = useState<boolean>(false);
   const [isGoogle, setIsGoogle] = useState<boolean>(false);
   const [bgColor, setBgColor] = useState<string>('#ffffff');
-  const [fontFamily, setFontFamily] = useState<string>('sans-serif');
+  const [fontFamily, setFontFamily] = useState<string>('Figtree');
   const [gradient, setGradient] = useState<boolean>(false);
   const [otpScreen, setOtpScreen] = useState<boolean>(false);
   const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
@@ -57,10 +57,10 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
             const data = res.data.theme;
             if (data) {
               setBgColor(data?.backgroundColor || '#ffffff');
-              setFontFamily(data?.fontFamily || 'sans-serif');
+              setFontFamily(data?.fontFamily || 'Figtree');
               setGradient(
                 data?.backgroundColor?.includes('linear-gradient') ||
-                  data?.backgroundColor?.includes('radial-gradient')
+                data?.backgroundColor?.includes('radial-gradient')
               );
             } else {
               if (backgroundColor) {
@@ -68,7 +68,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
               } else {
                 setBgColor('#ffffff');
               }
-              setFontFamily('sans-serif');
+              setFontFamily('Figtree');
               setGradient(false);
             }
           }
@@ -80,7 +80,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
           } else {
             setBgColor('#ffffff');
           }
-          setFontFamily('sans-serif');
+          setFontFamily('Figtree');
           setGradient(false);
         });
     }
@@ -101,7 +101,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   return (
     <div className="questLabs">
       <ToastContainer />
-      <div className="q-parent-container">
+      <div className="q-login-parent-container">
         <div
           style={{
             ...(gradient
@@ -110,7 +110,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
           }}
           className="q-login-container"
         >
-          <div style={{ padding: '6%' }}>
+          <div className='q-login-body'>
             {!otpScreen && (
               <>
                 <h1
@@ -158,12 +158,8 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   <div className="q-login-or-container">
                     <div className="login-or-line"></div>
                     <span
-                      style={{
-                        color: textColor,
-                        fontFamily,
-                        whiteSpace: 'nowrap',
-                        padding: '0.5rem',
-                      }}
+                      style={{ color: textColor, fontFamily, }}
+                      className='q-or-continue'
                     >
                       Or Continue With
                     </span>
@@ -204,15 +200,15 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                 }}
               />
             )}
-            <p
+            {/* <p
               className="powered-by"
               style={{
                 color: textColor,
                 fontFamily,
               }}
             >
-              ** Powered by Quest Labs
-            </p>
+              Powered by Quest Labs
+            </p> */}
           </div>
         </div>
       </div>

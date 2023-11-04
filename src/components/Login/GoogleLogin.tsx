@@ -18,7 +18,7 @@ interface GoogleLoginProps {
   googleClientId: string;
   apiSecret: string;
   apiKey: string;
-  onSubmit?: ({userId,token}:{userId: string, token: string}) => void;
+  onSubmit?: ({ userId, token }: { userId: string, token: string }) => void;
 }
 
 function GoogleLogin(props: GoogleLoginProps): JSX.Element {
@@ -89,15 +89,15 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
   }
 
   return (
-    <div className="questLabs-google">
-      <div style={{marginTop:"10px", position:"relative" }}>
+    <div className="q-google-login-btn">
+      <div style={{ marginTop: "10px", position: "relative" }}>
         {showLoader && <Loader />}
         <a
-          style={{ textDecoration: 'none', color:'black' }}
+          style={{ textDecoration: 'none', color: 'black' }}
           href={`https://accounts.google.com/o/oauth2/auth?client_id=${googleClientId}&redirect_uri=${redirectUri}&scope=profile%20email&response_type=code`}
         >
           <div
-          className='q-g-btn'
+            className='q-g-btn'
             style={{
               backgroundColor: btnColor,
               fontFamily,

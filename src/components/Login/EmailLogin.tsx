@@ -4,6 +4,7 @@ import config from '../../config';
 import OtpVerification from './OtpVerification';
 import Loader from './Loader';
 import { toast } from 'react-toastify';
+import { alertLogo, crossLogo, emailLogo } from '../../assets/images';
 
 interface EmailLoginProps {
   btnColor?: string;
@@ -16,7 +17,7 @@ interface EmailLoginProps {
   fontFamily?: string;
   apiKey: string;
   apiSecret: string;
-  onSubmit?: ({userId,token}:{userId: string, token: string}) => void;
+  onSubmit?: ({ userId, token }: { userId: string, token: string }) => void;
 }
 
 const EmailLogin: React.FC<EmailLoginProps> = ({
@@ -84,22 +85,25 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
       {showLoader && <Loader />}
       {!sendOTP && (
         <div className="questLabs">
-          <div style={{ marginTop: '8%' }}>
-            <h4 style={{ color: textColor, fontFamily }} className="q-h4">
+          <div className='q-email-login-ctn'>
+            <p style={{ color: textColor, fontFamily }} className="q-email-text">
               Email
-            </h4>
-            <input
-              style={{ paddingLeft: '10px', height: '50px' }}
-              type="text"
-              placeholder="Enter your email id"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onKeyUp={handlesubmit}
-              className="q-input-box"
-            />
+            </p>
+            <label htmlFor='q_email_login' className='q-email-input'>
+              <img src={emailLogo} className='q-email-logo' alt=''/>
+              <img src={isValidEmail?crossLogo:alertLogo} className='q-email-cross' alt='' onClick={()=>setEmail("")} />
+              <input
+                id='q_email_login'
+                type="text"
+                placeholder="Enter your email id"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyUp={handlesubmit}
+                className="q-login-email-input"
+              />
+            </label>
             {!isValidEmail && (
               <p className="q-login-p">
-                <span style={{fontSize:'12px'}} className="q-err">!</span>
                 Please enter a valid email id
               </p>
             )}
@@ -110,7 +114,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                 color: btnTextColor,
               }}
               onClick={sendOTPfunction}
-              className="q-btn-continue"
+              className="q-email-btn-continue"
             >
               Continue
             </div>
