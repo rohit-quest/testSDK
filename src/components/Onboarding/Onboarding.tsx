@@ -10,7 +10,8 @@ import discord from "../../assets/images/discord-color.png";
 import twitter from "../../assets/images/twitter-color.png";
 import slack from "../../assets/images/slack.png";
 import link from "../../assets/images/links.png";
-import Select from "react-select"
+import Select from "react-select";
+import {userLogo, crossLogo, leftArrow, rightArrow, calenderIcon, textAreaIcon, phoneLogo, emailLogo} from "../../assets/assetsSVG"
 
 
 type HeadingScreen = {
@@ -55,6 +56,7 @@ interface QuestLoginProps {
     questionFontSize: string;
     answerFontSize: string;
     gap: string;
+    controlBtnType: "Arrow" | "Buttons"
 }
 
 interface FormData {
@@ -111,7 +113,8 @@ function OnBoarding(props: QuestLoginProps) {
         headingAlignment,
         questionFontSize,
         answerFontSize,
-        gap
+        gap,
+        controlBtnType
     } = props;
 
     const [formdata, setFormdata] = useState<FormData[] | []>([]);
@@ -290,7 +293,15 @@ function OnBoarding(props: QuestLoginProps) {
         }
     };
 
+    const handleRemove = (id: string) => {
+        setAnswer({
+            ...answer,
+            [id]: ""
+        })
+    }
+
     const [wd, setWd] = useState(0)
+    
     const ProgressBar = () => {
         useEffect(() => {
             if (!!progressRef.current && progressRef.current != wd) {
@@ -305,33 +316,45 @@ function OnBoarding(props: QuestLoginProps) {
                             <div key={i}>
                                 {
                                     steps.includes(i) == true ?
-                                    <div className="q-onb-progress-comp" style={{borderColor: progressbarColor ? progressbarColor : "#55A555", height: progressBarMultiLine ? progressBartabHeight : "auto"}}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M15.75 8C15.75 12.2802 12.2802 15.75 8 15.75C3.71978 15.75 0.25 12.2802 0.25 8C0.25 3.71978 3.71978 0.25 8 0.25C12.2802 0.25 15.75 3.71978 15.75 8ZM7.10356 12.1036L12.8536 6.35356C13.0488 6.15831 13.0488 5.84172 12.8536 5.64647L12.1465 4.93937C11.9512 4.74409 11.6346 4.74409 11.4393 4.93937L6.75 9.62869L4.56066 7.43934C4.36541 7.24409 4.04881 7.24409 3.85353 7.43934L3.14644 8.14644C2.95119 8.34169 2.95119 8.65828 3.14644 8.85353L6.39644 12.1035C6.59172 12.2988 6.90828 12.2988 7.10356 12.1036Z" 
-                                                fill = {progressbarColor ? progressbarColor : "#55A555"}
-                                            />
-                                        </svg>
-                                        <div style={{width: `${((((wd - (progress.length - 1) * 15)) / progress.length) - 24)}px`}}>
-                                            {prog}
-                                        </div>
-                                    </div>
-                                    :
-                                    <div className="q-onb-progress-comp" style={{borderColor: "#EAEBED", height: progressBarMultiLine ? progressBartabHeight : "auto"}}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                            <path d="M8 0.25C3.71978 0.25 0.25 3.71978 0.25 8C0.25 12.2802 3.71978 15.75 8 15.75C12.2802 15.75 15.75 12.2802 15.75 8C15.75 3.71978 12.2802 0.25 8 0.25ZM10.5 8C10.5 9.3785 9.3785 10.5 8 10.5C6.6215 10.5 5.5 9.3785 5.5 8C5.5 6.6215 6.6215 5.5 8 5.5C9.3785 5.5 10.5 6.6215 10.5 8Z" 
-                                                fill="#EAEBED"
-                                            />
-                                        </svg>
+                                    <div className="q-onb-progress-comp" style={{borderColor: progressbarColor ? progressbarColor : "#5E5E5E", height: progressBarMultiLine ? progressBartabHeight : "auto"}}>
                                         <div 
                                             style={{
-                                                    width: `${((((wd - (progress.length - 1) * 15)) / progress.length) - 24)}px`, 
+                                                maxWidth: `${((((wd - (progress.length - 1) * 15)) / progress.length) - 32)}px`,
+                                                whiteSpace: progressBarMultiLine ? "normal" : "nowrap", 
+                                                overflow: progressBarMultiLine ? "" : "hidden", 
+                                                textOverflow: progressBarMultiLine ? "" : "ellipsis",
+                                                color: "#5E5E5E"
+                                            }}
+                                        >
+                                            {prog}
+                                        </div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 21 20" fill="none">
+                                            <path opacity="0.3" d="M10.8333 18.3333C15.4357 18.3333 19.1667 14.6023 19.1667 9.99996C19.1667 5.39759 15.4357 1.66663 10.8333 1.66663C6.23095 1.66663 2.49999 5.39759 2.49999 9.99996C2.49999 14.6023 6.23095 18.3333 10.8333 18.3333Z" fill={progressbarColor ? progressbarColor : "#8E8E8E"}/>
+                                            <path d="M14.8074 6.51474C15.1215 6.17828 15.6488 6.1601 15.9853 6.47412C16.3217 6.78815 16.3399 7.31548 16.0259 7.65193L10.1925 13.9019C9.88787 14.2284 9.38003 14.2566 9.041 13.9661L6.12434 11.4661C5.7749 11.1665 5.73443 10.6404 6.03395 10.291C6.33347 9.94157 6.85955 9.9011 7.20899 10.2006L9.51916 12.1808L14.8074 6.51474Z" fill={progressbarColor ? progressbarColor : "#8E8E8E"}/>
+                                        </svg>
+                                        
+                                    </div>
+                                    :
+                                    <div className="q-onb-progress-comp" style={{borderColor: "#ECECEC", height: progressBarMultiLine ? progressBartabHeight : "auto"}}>
+                                        <div 
+                                            style={{
+                                                    maxWidth: `${((((wd - (progress.length - 1) * 15)) / progress.length) - 32)}px`, 
                                                     whiteSpace: progressBarMultiLine ? "normal" : "nowrap", 
                                                     overflow: progressBarMultiLine ? "" : "hidden", 
                                                     textOverflow: progressBarMultiLine ? "" : "ellipsis",
+                                                    color: "#AFAFAF"
                                                 }}
                                             >
                                             {prog}
                                         </div>
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect width="20" height="20" fill="#E9E9E9"/>
+                                            <path d="M-301 -113C-301 -114.105 -300.105 -115 -299 -115H2097C2098.1 -115 2099 -114.105 2099 -113V592C2099 593.105 2098.1 594 2097 594H-299C-300.105 594 -301 593.105 -301 592V-113Z" fill="#ECECEC"/>
+                                            <rect width="376" height="68" transform="translate(-213 -20)" fill="white"/>
+                                            <path id="Oval 3" d="M10 3.33337V5.00004C12.7614 5.00004 15 7.23862 15 10C15 12.7615 12.7614 15 10 15C7.23857 15 5 12.7615 5 10C5 9.13364 5.21992 8.30109 5.63312 7.56266L4.17866 6.74882C3.6272 7.73435 3.33333 8.84683 3.33333 10C3.33333 13.6819 6.3181 16.6667 10 16.6667C13.6819 16.6667 16.6667 13.6819 16.6667 10C16.6667 6.31814 13.6819 3.33337 10 3.33337Z" fill="#AFAFAF"/>
+                                            <path d="M-299 -114H2097V-116H-299V-114ZM2098 -113V592H2100V-113H2098ZM2097 593H-299V595H2097V593ZM-300 592V-113H-302V592H-300ZM-299 593C-299.552 593 -300 592.552 -300 592H-302C-302 593.657 -300.657 595 -299 595V593ZM2098 592C2098 592.552 2097.55 593 2097 593V595C2098.66 595 2100 593.657 2100 592H2098ZM2097 -114C2097.55 -114 2098 -113.552 2098 -113H2100C2100 -114.657 2098.66 -116 2097 -116V-114ZM-299 -116C-300.657 -116 -302 -114.657 -302 -113H-300C-300 -113.552 -299.552 -114 -299 -114V-116Z" fill="#AFAFAF"/>
+                                        </svg>
+                                        
                                     </div>
                                 }
                             </div>
@@ -348,12 +371,13 @@ function OnBoarding(props: QuestLoginProps) {
         criteriaId: string,
         index: number,
         placeholder: string,
+        inputType: string,
     ) => {
         return (
-            <div style={{paddingTop: `calc(${gap} / 2)`, paddingBottom: `calc(${gap} / 2)`}} key={criteriaId}>
+            <div key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: `calc(${gap} / 2)`}}>
+                    <div style={{paddingBottom: "12px"}}>
                         {customComponents}
                     </div>
                 }
@@ -364,29 +388,19 @@ function OnBoarding(props: QuestLoginProps) {
                 >
                     {question} {required && "*"}
                 </label>
-                {
-                    (!!inputFieldType && inputFieldType[criteriaId] == "textArea") ?
-                        <textarea
-                            id="normalInput"
-                            name="normalInput"
-                            placeholder={placeholder}
-                            className="q-onb-input"
-                            style={{ height: "120px", backgroundColor: inputBgColor, border: inputBorder }}
-                            onChange={(e) => handleUpdate(e, criteriaId, "")}
-                            value={answer[criteriaId]}
-                        />
-                        :
-                        <input
-                            type="text"
-                            id="normalInput"
-                            name="normalInput"
-                            className="q-onb-input"
-                            style={{ backgroundColor: inputBgColor, border: inputBorder, fontSize: answerFontSize }}
-                            onChange={(e) => handleUpdate(e, criteriaId, "")}
-                            value={answer[criteriaId]}
-                            placeholder={placeholder}
-                        />
-                }
+                <div className="q-onb-input">
+                    {inputType == "text" ? userLogo() : inputType == "number" ? phoneLogo() : emailLogo()}
+                    <input
+                        type={inputType}
+                        id="normalInput"
+                        name="normalInput"
+                        style={{ backgroundColor: inputBgColor, border: inputBorder, fontSize: answerFontSize }}
+                        onChange={(e) => handleUpdate(e, criteriaId, "")}
+                        value={answer[criteriaId]}
+                        placeholder={placeholder}
+                    />
+                    {crossLogo(criteriaId, handleRemove)}
+                </div>
             </div>
         );
     };
@@ -395,13 +409,14 @@ function OnBoarding(props: QuestLoginProps) {
         question: string,
         required: boolean,
         criteriaId: string,
-        index: number
+        index: number,
+        placeholder: string,
     ) => {
         return (
-            <div style={{paddingTop: `calc(${gap} / 2)`, paddingBottom: `calc(${gap} / 2)`}} key={criteriaId}>
+            <div key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: `calc(${gap} / 2)`}}>
+                    <div style={{paddingBottom: "12px"}}>
                         {customComponents}
                     </div>
                 }
@@ -412,15 +427,22 @@ function OnBoarding(props: QuestLoginProps) {
                 >
                     {question} {required && "*"}
                 </label>
-                <input
-                    type="date"
-                    id="dateInput"
-                    name="dateInput"
-                    value={answer[criteriaId]}
-                    className="q-onb-input"
-                    style={{ backgroundColor: inputBgColor, border: inputBorder, fontSize: answerFontSize }}
-                    onChange={(e) => handleUpdate(e, criteriaId, "")}
-                />
+                <div className="q-onb-input">
+                    {calenderIcon()}
+                    <label className="q-onb-custom-date">
+                        <input
+                            type="date"
+                            id="dateInput"
+                            name="dateInput"
+                            value={answer[criteriaId]}
+                            style={{ backgroundColor: inputBgColor, border: inputBorder, fontSize: answerFontSize }}
+                            onChange={(e) => handleUpdate(e, criteriaId, "")}
+                            className="q-onb-custom-datePicker"
+                        />
+                        <button id="q-onb-custom-date-text">{answer[criteriaId] ? <span>{answer[criteriaId]}</span> : <span style={{color:"#8E8E8E"}}>{placeholder}</span>}</button>
+                    </label>
+                    {crossLogo(criteriaId, handleRemove)}
+                </div>
             </div>
         );
     };
@@ -433,10 +455,10 @@ function OnBoarding(props: QuestLoginProps) {
         placeholder: string,
     ) => {
         return (
-            <div style={{paddingTop: `calc(${gap} / 2)`, paddingBottom: `calc(${gap} / 2)`}} key={criteriaId}>
+            <div key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: `calc(${gap} / 2)`}}>
+                    <div style={{paddingBottom: "12px"}}>
                         {customComponents}
                     </div>
                 }
@@ -447,15 +469,18 @@ function OnBoarding(props: QuestLoginProps) {
                 >
                     {question} {required && "*"}
                 </label>
-                <textarea
-                    id="normalInput"
-                    name="normalInput"
-                    placeholder={placeholder}
-                    className="q-onb-input"
-                    style={{ height: "120px", backgroundColor: inputBgColor, border: inputBorder, fontFamily: defaultFont == false ? "" : "'Hanken Grotesk', sans-serif", maxWidth: "100%", fontSize: answerFontSize }}
-                    onChange={(e) => handleUpdate(e, criteriaId, "")}
-                    value={answer[criteriaId]}
-                />
+                <div className="q-onb-input" style={{alignItems: "flex-start"}}>
+                    {textAreaIcon()}
+                    <textarea
+                        id="normalInput"
+                        name="normalInput"
+                        placeholder={placeholder}
+                        style={{ height: "120px", backgroundColor: inputBgColor, border: inputBorder, fontFamily: defaultFont == false ? "" : "'Figtree', sans-serif", maxWidth: "100%", fontSize: answerFontSize }}
+                        onChange={(e) => handleUpdate(e, criteriaId, "")}
+                        value={answer[criteriaId]}
+                    />
+                    {crossLogo(criteriaId, handleRemove)}
+                </div>
             </div>
         );
     };
@@ -471,10 +496,10 @@ function OnBoarding(props: QuestLoginProps) {
         const customStyles = {
             control: (base: any, state: any) => ({
               ...base,
-              background: inputBgColor ? inputBgColor : "#f9fafb",
-              padding: "3px",
-              fontSize: answerFontSize,
-              border: inputBorder
+              background: inputBgColor,
+              fontSize: answerFontSize || "14px",
+              border: inputBorder || "2px solid var(--neutral-grey-100, #ECECEC)",
+              borderRadius: "10px"
             }),
             option: (styles: any, { isDisabled, isFocused, isSelected, isHovered }) => ({
                 ...styles,
@@ -488,10 +513,10 @@ function OnBoarding(props: QuestLoginProps) {
         }
         
         return (
-            <div style={{paddingTop: `calc(${gap} / 2)`, paddingBottom: `calc(${gap} / 2)`}} key={criteriaId}>
+            <div key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: `calc(${gap} / 2)`}}>
+                    <div style={{paddingBottom: "12px"}}>
                         {customComponents}
                     </div>
                 }
@@ -550,10 +575,10 @@ function OnBoarding(props: QuestLoginProps) {
         manualInput: string | boolean
     ) => {
         return (
-            <div style={{paddingTop: `calc(${gap} / 2)`, paddingBottom: `calc(${gap} / 2)`}} key={criteriaId}>
+            <div key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: `calc(${gap} / 2)`}}>
+                    <div style={{paddingBottom: "12px"}}>
                         {customComponents}
                     </div>
                 }
@@ -565,7 +590,7 @@ function OnBoarding(props: QuestLoginProps) {
                 </p>
                 <div className="q-onb-singleChoiceOne-optDiv">
                     {options.map((option: string, id: number) => (
-                        <div className="q-onb-singleChoiceOne-chDiv" style={{paddingBottom: `calc(${gap} / 2)`}} key={id}>
+                        <div className="q-onb-singleChoiceOne-chDiv" key={id}>
                             <input
                                 id={`sct${criteriaId + id}`}
                                 type="radio"
@@ -580,7 +605,7 @@ function OnBoarding(props: QuestLoginProps) {
                             <label
                                 htmlFor={`sct${criteriaId + id}`}
                                 className="q-onb-singleChoiceOne-lebel3"
-                                style={{fontSize: answerFontSize}}
+                                style={{fontSize: answerFontSize, color: answer[criteriaId] == option ? "#252525" : ""}}
                             >
                                 {option}
                             </label>
@@ -611,10 +636,10 @@ function OnBoarding(props: QuestLoginProps) {
         index: number
     ) => {
         return (
-            <div style={{paddingTop: `calc(${gap} / 2)`, paddingBottom: `calc(${gap} / 2)`}} key={criteriaId}>
+            <div key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: `calc(${gap} / 2)`}}>
+                    <div style={{paddingBottom: "12px"}}>
                         {customComponents}
                     </div>
                 }
@@ -624,7 +649,7 @@ function OnBoarding(props: QuestLoginProps) {
                 >
                     {question} {required && "*"}
                 </p>
-                <div className="q-onb-singleChoiceOne-optDiv" style={{paddingBottom: `calc(${gap} / 2)`}}>
+                <div className="q-onb-singleChoiceOne-optDiv">
                     {options.map((option: string, id: number) => (
                         <div className="q-onb-singleChoiceOne-chDiv" key={id}>
                             <input
@@ -642,8 +667,8 @@ function OnBoarding(props: QuestLoginProps) {
                             />
                             <label
                                 htmlFor={`mct${criteriaId + id}`}
-                                className="q-onb-singleChoiceOne-label"
-                                style={{fontSize: answerFontSize}}
+                                className="q-onb-singleChoiceOne-lebel3"
+                                style={{fontSize: answerFontSize, color: answer[criteriaId].includes(option) ? "#252525" : ""}}
                             >
                                 {option}
                             </label>
@@ -662,10 +687,10 @@ function OnBoarding(props: QuestLoginProps) {
         index: number
     ) => {
         return (
-            <div style={{paddingTop: `calc(${gap} / 2)`, paddingBottom: `calc(${gap} / 2)`}} key={criteriaId}>
+            <div key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: `calc(${gap} / 2)`}}>
+                    <div style={{paddingBottom: "12px"}}>
                         {customComponents}
                     </div>
                 }
@@ -675,7 +700,7 @@ function OnBoarding(props: QuestLoginProps) {
                 >
                     {question} {required && "*"}
                 </p>
-                <ul className="q-onb-miltiChoiceOne-ul" style={{paddingLeft: "0"}}>
+                <ul className="q-onb-miltiChoiceOne-ul">
                     {options.map((option: string, id: number) => (
                         <li key={id} style={{listStyleType: "none"}}>
                             <input
@@ -728,10 +753,10 @@ function OnBoarding(props: QuestLoginProps) {
         index: number,
     ) => {
         return (
-            <div style={{paddingTop: `calc(${gap} / 2)`, paddingBottom: `calc(${gap} / 2)`}} key={criteriaId}>
+            <div key={criteriaId}>
                 {
                     (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: `calc(${gap} / 2)`}}>
+                    <div style={{paddingBottom: "12px"}}>
                         {customComponents}
                     </div>
                 }
@@ -829,21 +854,21 @@ function OnBoarding(props: QuestLoginProps) {
     }
 
     return (
-        <div className="q-onb-home" style={{ background: bgColor, height: screenHeight ? screenHeight : "fit-content", fontFamily: defaultFont == false ? "" : "'Hanken Grotesk', sans-serif" }}>
+        <div className="q-onb-home" style={{ background: bgColor, height: screenHeight ? screenHeight : "fit-content", fontFamily: defaultFont == false ? "" : "'Figtree', sans-serif" }}>
             <div
                className="q-onb-ch"
             >
                 {formdata.length > 0 && <ProgressBar/>}
                 {formdata.length > 0 && !!headingScreen &&
                     (typeof headingScreen == "object" && !!headingScreen.name ? (
-                        <div>
+                        <div className="q-onb-main-heading">
                             <h3 className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
                                 {headingScreen?.name}
                             </h3>
                             <h4 className="q-onb-main-h4" style={{ fontSize: descSize, textAlign: headingAlignment }}>{headingScreen?.desc}</h4>
                         </div>
                     ) : !!headingScreen[currentPage] ? (
-                        <div>
+                        <div className="q-onb-main-heading">
                             <h3 className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
                                 {headingScreen[currentPage]?.name}
                             </h3>
@@ -852,7 +877,7 @@ function OnBoarding(props: QuestLoginProps) {
                             </h4>
                         </div>
                     ) : (
-                        <div>
+                        <div className="q-onb-main-heading">
                             <h3 className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
                                 {headingScreen[0]?.name}
                             </h3>
@@ -871,6 +896,25 @@ function OnBoarding(props: QuestLoginProps) {
                                 formdata[num - 1].criteriaId || "",
                                 num - 1,
                                 formdata[num - 1]?.placeholder || formdata[num - 1]?.question || "",
+                                "text"
+                            )
+                            : formdata[num - 1].type == "USER_INPUT_EMAIL"
+                            ? normalInput(
+                                formdata[num - 1]?.question || "",
+                                formdata[num - 1]?.required || false,
+                                formdata[num - 1].criteriaId || "",
+                                num - 1,
+                                formdata[num - 1]?.placeholder || formdata[num - 1]?.question || "",
+                                "email"
+                            )
+                            : formdata[num - 1].type == "USER_INPUT_PHONE"
+                            ? normalInput(
+                                formdata[num - 1]?.question || "",
+                                formdata[num - 1]?.required || false,
+                                formdata[num - 1].criteriaId || "",
+                                num - 1,
+                                formdata[num - 1]?.placeholder || formdata[num - 1]?.question || "",
+                                "number"
                             )
                             : formdata[num - 1].type == "USER_INPUT_TEXTAREA"
                             ? textAreaInput(
@@ -885,7 +929,8 @@ function OnBoarding(props: QuestLoginProps) {
                                     formdata[num - 1]?.question || "",
                                     formdata[num - 1]?.required || false,
                                     formdata[num - 1].criteriaId || "",
-                                    num - 1
+                                    num - 1,
+                                    formdata[num - 1]?.placeholder || formdata[num - 1]?.question || ""
                                 )
                                 : formdata[num - 1].type ==
                                     "USER_INPUT_SINGLE_CHOICE"
@@ -941,6 +986,25 @@ function OnBoarding(props: QuestLoginProps) {
                                     data.criteriaId || "",
                                     index,
                                     data?.placeholder || data?.question || "",
+                                    "text"
+                                )
+                                : data.type == "USER_INPUT_EMAIL"
+                                ? normalInput(
+                                    data?.question || "",
+                                    data?.required || false,
+                                    data.criteriaId || "",
+                                    index,
+                                    data?.placeholder || data?.question || "",
+                                    "email"
+                                )
+                                : data.type == "USER_INPUT_PHONE"
+                                ? normalInput(
+                                    data?.question || "",
+                                    data?.required || false,
+                                    data.criteriaId || "",
+                                    index,
+                                    data?.placeholder || data?.question || "",
+                                    "number"
                                 )
                                 : data.type == "USER_INPUT_TEXTAREA"
                                 ? textAreaInput(
@@ -955,7 +1019,8 @@ function OnBoarding(props: QuestLoginProps) {
                                         data?.question || "",
                                         data?.required || false,
                                         data.criteriaId || "",
-                                        index
+                                        index,
+                                        data?.placeholder || data?.question || "",
                                     )
                                     : data.type == "USER_INPUT_SINGLE_CHOICE"
                                         ? !!singleChoose && singleChoose == "modal2"
@@ -1003,45 +1068,80 @@ function OnBoarding(props: QuestLoginProps) {
                     {formdata.length > 0 &&
                         (!!design && design.length > 1 &&
                             checkDesignCriteria() ? (
-                            <div className="q-onb-main-criteria">
-                                <button
-                                    className="q-onb-main-btn"
-                                    onClick={() =>
-                                        currentPage > 0 &&
-                                        setCurrentPage(currentPage - 1)
-                                    }
-                                    style={{
-                                        opacity: currentPage == 0 ? "0" : "1",
-                                        cursor:
-                                            currentPage == 0
-                                                ? "context-menu"
-                                                : "pointer",
-                                        border: `2px solid ${btnColor}`
-                                    }}
-                                >
-                                    {" "}
-                                    {previousBtnText ? previousBtnText : "Previous"}
-                                </button>
-                                <button
-                                    className="q-onb-main-btn2"
-                                    onClick={() =>
-                                        currentPage !=
-                                            design.length - 1
-                                            ? setCurrentPage(currentPage + 1)
-                                            : returnAnswers()
-                                    }
-                                    disabled={!btnFlag}
-                                    style={{
-                                        backgroundColor: btnColor,
-                                    }}
-                                >
-                                    {currentPage == design.length - 1
-                                        ? (nextBtnText ? nextBtnText : "Continue")
-                                        : "Next"}
-                                </button>
-                            </div>
+                                controlBtnType == "Buttons" ?
+                                <div className="q-onb-main-criteria">
+                                    <button
+                                        className="q-onb-main-btn"
+                                        onClick={() =>
+                                            currentPage > 0 &&
+                                            setCurrentPage(currentPage - 1)
+                                        }
+                                        style={{
+                                            opacity: currentPage == 0 ? "0" : "1",
+                                            cursor:
+                                                currentPage == 0
+                                                    ? "context-menu"
+                                                    : "pointer",
+                                            border: `2px solid ${btnColor}`
+                                        }}
+                                    >
+                                        {" "}
+                                        {previousBtnText ? previousBtnText : "Previous"}
+                                    </button>
+                                    <button
+                                        className="q-onb-main-btn2"
+                                        onClick={() =>
+                                            currentPage !=
+                                                design.length - 1
+                                                ? setCurrentPage(currentPage + 1)
+                                                : returnAnswers()
+                                        }
+                                        disabled={!btnFlag}
+                                        style={{
+                                            backgroundColor: btnColor,
+                                        }}
+                                    >
+                                        {currentPage == design.length - 1
+                                            ? (nextBtnText ? nextBtnText : "Continue")
+                                            : "Next"}
+                                    </button>
+                                </div>
+                                :
+                                <div className="q-onb-main-arrow-div">
+                                    <button 
+                                        className="q-onb-main-arrow"
+                                        onClick={() =>
+                                            currentPage > 0 &&
+                                            setCurrentPage(currentPage - 1)
+                                        }
+                                        style={{
+                                            opacity: currentPage == 0 ? "0" : "1",
+                                            cursor:
+                                                currentPage == 0
+                                                    ? "context-menu"
+                                                    : "pointer",
+                                        }}
+                                    >
+                                        {leftArrow()}
+                                    </button>
+                                    <button
+                                        className="q-onb-main-arrow2"
+                                        onClick={() =>
+                                            currentPage !=
+                                                design.length - 1
+                                                ? setCurrentPage(currentPage + 1)
+                                                : returnAnswers()
+                                        }
+                                        disabled={!btnFlag}
+                                        style={{
+                                            backgroundColor: btnColor,
+                                        }}
+                                    >
+                                        {rightArrow()}
+                                    </button>
+                                </div>
                         ) : (
-                            <div style={{paddingTop: `calc(${gap} / 2)`}}>
+                            <div>
                                 <button
                                     className="q-onb-main-btn3"
                                     onClick={returnAnswers}

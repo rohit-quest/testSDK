@@ -1,10 +1,11 @@
 .q-feedback-cont {
   width: 400px;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.4);
-  padding: 30px;
+  padding: 20px;
   max-width: 28rem;
   margin: 0 auto;
   border-radius: 12px;
+  font-family: 'Figtree', sans-serif;
 }
 .q-sub {
   color: #333333;
@@ -17,14 +18,15 @@
   width: 40px;
   height: 40px;
   line-height: 40px;
-  margin-right: 10px;
+  margin-right: 3px;
   cursor: pointer;
 }
 .like-dislike-cont {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   cursor: pointer;
+  padding-bottom: 8px;
 }
 .icon-inside-like-dislike {
   width: 2rem;
@@ -63,4 +65,67 @@
   display: flex;
   justify-content: flex-end;
   cursor: pointer;
+}
+.q-fd-like-dislike{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.q-fd-like-dislike-txt{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 20px;
+  gap: 8px;
+}
+.q-fd-like-dislike-txt>h4,p{
+  width: fit-content;
+}
+.q-fd-like-dislike-txt>h4{
+  color: var(--neutral-grey-700, #252525);
+  text-align: center;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 32px;
+}
+.q-fd-like-dislike-txt>p{
+  color: var(--neutral-grey-400, #5E5E5E);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+.q-fd-input {
+  display: flex;
+  padding: 10px 12px;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 10px;
+  border: 2px solid var(--neutral-grey-100, #ECECEC);
+}
+.q-fd-input>input,textarea{
+  width: 100%;
+  border: 0;
+}
+.q-fd-input>input,textarea:hover{
+  border: 0;
+  outline: 0;
+}
+.q-fd-input>input,textarea:focus{
+  border: 0;
+  outline: 0;
+}
+.q-fd-input>textarea{
+  resize: none;
+}
+.q-fd-lebels {
+  display: block;
+  color: #141414;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  margin-bottom: 4px;
 }
