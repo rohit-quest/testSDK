@@ -26,8 +26,12 @@ import errorCross from './errorCross.svg';
 import successCross from './successCross.svg';
 import warnCross from './warnCross.svg';
 import primaryAlert from './primaryAlert.svg';
-
-export { googleImg, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like,closePng,copyPng,twitterPng,telegramPng,discordPng,giftPng,creditBannerPng,creditCheck,helpCenter1,helpCenter2,emailLogo,crossLogo,alertLogo,toastTic,questionLogo ,warnCross,primaryCross,errorCross,successCross,primaryAlert};
+import whatsappSvg from './whatsapp.svg';
+import twitterSvg from './twitter.svg';
+import discordSvg from './discord.svg';
+import copySVG from './copy.svg';
+import copyLargeSVG from './copyLarge.svg';
+export { whatsappSvg, twitterSvg, discordSvg, copySVG, googleImg, copyLargeSVG, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like, closePng, copyPng, twitterPng, telegramPng, discordPng, giftPng, creditBannerPng, creditCheck, helpCenter1, helpCenter2, emailLogo, crossLogo, alertLogo, toastTic, questionLogo, warnCross, primaryCross, errorCross, successCross, primaryAlert };
 
 
 

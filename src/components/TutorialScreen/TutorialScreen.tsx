@@ -184,9 +184,9 @@ const Tutorial: React.FC<TutorialProps> = ({
         <div className="q-tutorial-cont">
           <div
             style={{
-              height: '80px',
-              borderTopLeftRadius: '8px',
-              borderTopRightRadius: '8px',
+              height: "52px",  
+              borderTopLeftRadius: "14px",
+              borderTopRightRadius: "14px",
               fontFamily: font,
               color: textColor,
             }}
@@ -197,7 +197,7 @@ const Tutorial: React.FC<TutorialProps> = ({
               <p className="q-tut-subhead">{subheading}</p>
             </div>
             <div className="q-tut-bar-icons">
-              <span onClick={() => setMin(true)}>
+              {/* <span onClick={() => setMin(true)}>
                 <svg
                   width="24"
                   height="24"
@@ -210,22 +210,29 @@ const Tutorial: React.FC<TutorialProps> = ({
                     fill="#AFAFAF"
                   />
                 </svg>
-              </span>
+              </span> */}
               <span
+                style={{ width: "20px", height: "20px", flexShrink: 0 }}
                 onClick={() => {
                   onClose();
                 }}
               >
                 <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 56 56"
-                  fill="none"
                   xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
                 >
                   <path
-                    d="M42.7 13.3229C42.4841 13.1066 42.2277 12.935 41.9455 12.8179C41.6632 12.7008 41.3606 12.6405 41.055 12.6405C40.7494 12.6405 40.4468 12.7008 40.1645 12.8179C39.8823 12.935 39.6259 13.1066 39.41 13.3229L28 24.7095L16.59 13.2995C16.374 13.0835 16.1175 12.9122 15.8353 12.7952C15.553 12.6783 15.2505 12.6182 14.945 12.6182C14.6395 12.6182 14.337 12.6783 14.0547 12.7952C13.7725 12.9122 13.516 13.0835 13.3 13.2995C13.084 13.5156 12.9126 13.772 12.7957 14.0543C12.6788 14.3365 12.6186 14.639 12.6186 14.9445C12.6186 15.2501 12.6788 15.5526 12.7957 15.8348C12.9126 16.1171 13.084 16.3735 13.3 16.5895L24.71 27.9995L13.3 39.4095C13.084 39.6256 12.9126 39.882 12.7957 40.1643C12.6788 40.4465 12.6186 40.749 12.6186 41.0545C12.6186 41.36 12.6788 41.6626 12.7957 41.9448C12.9126 42.2271 13.084 42.4835 13.3 42.6995C13.516 42.9156 13.7725 43.0869 14.0547 43.2038C14.337 43.3207 14.6395 43.3809 14.945 43.3809C15.2505 43.3809 15.553 43.3207 15.8353 43.2038C16.1175 43.0869 16.374 42.9156 16.59 42.6995L28 31.2895L39.41 42.6995C39.626 42.9156 39.8825 43.0869 40.1647 43.2038C40.447 43.3207 40.7495 43.3809 41.055 43.3809C41.3605 43.3809 41.663 43.3207 41.9453 43.2038C42.2275 43.0869 42.484 42.9156 42.7 42.6995C42.916 42.4835 43.0874 42.2271 43.2043 41.9448C43.3212 41.6626 43.3814 41.36 43.3814 41.0545C43.3814 40.749 43.3212 40.4465 43.2043 40.1643C43.0874 39.882 42.916 39.6256 42.7 39.4095L31.29 27.9995L42.7 16.5895C43.5867 15.7029 43.5867 14.2095 42.7 13.3229Z"
-                    fill="#AFAFAF"
+                    d="M8.35859 7.47455C8.11451 7.23047 7.71878 7.23047 7.4747 7.47455C7.23063 7.71863 7.23063 8.11436 7.4747 8.35843L9.11611 9.99983L7.47472 11.6412C7.23064 11.8853 7.23064 12.281 7.47472 12.5251C7.7188 12.7692 8.11453 12.7692 8.35861 12.5251L9.99999 10.8837L11.6414 12.5251C11.8854 12.7692 12.2812 12.7692 12.5252 12.5251C12.7693 12.281 12.7693 11.8853 12.5252 11.6412L10.8839 9.99983L12.5253 8.35845C12.7693 8.11437 12.7693 7.71864 12.5253 7.47457C12.2812 7.23049 11.8855 7.23049 11.6414 7.47457L9.99999 9.11595L8.35859 7.47455Z"
+                    fill="#8E8E8E"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M10 1.0415C5.05245 1.0415 1.04167 5.05229 1.04167 9.99984C1.04167 14.9474 5.05245 18.9582 10 18.9582C14.9476 18.9582 18.9583 14.9474 18.9583 9.99984C18.9583 5.05229 14.9476 1.0415 10 1.0415ZM2.29167 9.99984C2.29167 5.74264 5.74281 2.2915 10 2.2915C14.2572 2.2915 17.7083 5.74264 17.7083 9.99984C17.7083 14.257 14.2572 17.7082 10 17.7082C5.74281 17.7082 2.29167 14.257 2.29167 9.99984Z"
+                    fill="#8E8E8E"
                   />
                 </svg>
               </span>
@@ -236,25 +243,27 @@ const Tutorial: React.FC<TutorialProps> = ({
               ...(gradient
                 ? { backgroundImage: bgColor }
                 : { backgroundColor: bgColor }),
-              borderBottomLeftRadius: '8px',
-              borderBottomRightRadius: '8px',
+              borderBottomLeftRadius: "14px",
+              borderBottomRightRadius: "14px",
+              paddingRight: "14px",
+              paddingLeft: "14px",
             }}
           >
             <div className="q-tut-cont">
               <div className="q-tut-progress">
-                <div className="step-counter"></div>
+                {/* <div className="step-counter"></div> */}
                 <div className="progress-bar-container">
                   <div
                     className="progress-bar-fill"
                     style={{
                       width: progressBarWidth,
-                      backgroundColor: '#333333',
+                      backgroundColor: "#333333",
                     }}
                   ></div>
                 </div>
-                <div>
+                {/* <div>
                   {completedSteps.length}/{formdata.length}
-                </div>
+                </div> */}
               </div>
             </div>
             <div>
@@ -270,64 +279,74 @@ const Tutorial: React.FC<TutorialProps> = ({
                 >
                   <div
                     style={{
-                      display: 'flex',
-                      gap: '20px',
-                      alignItems: 'center',
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      alignSelf: "stretch",
                     }}
                   >
-                    {!completedSteps.includes(index) ? (
-                      <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 48 48"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <rect
-                          x="2"
-                          y="2"
-                          width="44"
-                          height="44"
-                          rx="8"
-                          stroke="#E2E2E2"
-                          stroke-width="4"
-                        />
-                      </svg>
-                    ) : (
-                      <svg
-                        width="25"
-                        height="25"
-                        viewBox="0 0 64 64"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M28.2667 43.2L47.0667 24.4L43.3333 20.6667L28.2667 35.7333L20.6667 28.1333L16.9333 31.8667L28.2667 43.2ZM13.3333 56C11.8667 56 10.6107 55.4773 9.56534 54.432C8.52 53.3867 7.99823 52.1316 8 50.6667V13.3333C8 11.8667 8.52267 10.6107 9.568 9.56534C10.6133 8.52 11.8684 7.99823 13.3333 8H50.6667C52.1333 8 53.3893 8.52267 54.4347 9.568C55.48 10.6133 56.0018 11.8684 56 13.3333V50.6667C56 52.1333 55.4773 53.3893 54.432 54.4347C53.3867 55.48 52.1316 56.0018 50.6667 56H13.3333Z"
-                          fill="black"
-                        />
-                      </svg>
-                    )}
+                    <div>
+                      {!completedSteps.includes(index) ? (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                        >
+                          <path
+                            d="M3.33333 2.5H16.6667C17.1269 2.5 17.5 2.8731 17.5 3.33333V16.6667C17.5 17.1269 17.1269 17.5 16.6667 17.5H3.33333C2.8731 17.5 2.5 17.1269 2.5 16.6667V3.33333C2.5 2.8731 2.8731 2.5 3.33333 2.5ZM4.16667 4.16667V15.8333H15.8333V4.16667H4.16667Z"
+                            fill="#AFAFAF"
+                          />
+                        </svg>
+                      ) : (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                        >
+                          <path
+                            d="M3.33333 2.5H16.6667C17.1269 2.5 17.5 2.8731 17.5 3.33333V16.6667C17.5 17.1269 17.1269 17.5 16.6667 17.5H3.33333C2.8731 17.5 2.5 17.1269 2.5 16.6667V3.33333C2.5 2.8731 2.8731 2.5 3.33333 2.5ZM9.16883 13.3333L15.0614 7.44077L13.8829 6.26227L9.16883 10.9763L6.81184 8.61925L5.63333 9.79783L9.16883 13.3333Z"
+                            fill="black"
+                          />
+                        </svg>
+                      )}
+                    </div>
                     <div
                       onClick={() => handleNextStep(step.criteriaId, step.url)}
                       onMouseEnter={() => handleHover(index, true)}
                       onMouseLeave={() => handleHover(index, false)}
                       className="q-tut-step"
                     >
-                      <h3 className="q-tut-title">{step.title}</h3>
                       <div
+                        className={`${
+                          !completedSteps.includes(index)
+                            ? "q-tut-title-completed"
+                            : "q-tut-title-notcompleted"
+                        }`}
+                        style={{
+                          marginTop: "-3px",
+                        }}
+                      >
+                        <h3 className="q-tut-title">{step.title}</h3>
+                      </div>
+
+                      {/* <div
                         className="q-tut-button"
                         style={{
-                          display: hoverStates[index] ? 'flex' : 'none',
+                          display: hoverStates[index] ? "flex" : "none",
                         }}
                       >
                         {arrow}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
               ))}
             </div>
-            <div style={{ paddingBottom: '20px' }} className="q-tut-btn-cont">
+            <div style={{ paddingBottom: "20px" }} className="q-tut-btn-cont">
               {/* <button
                 style={{
                   backgroundColor: btnColor,
@@ -346,7 +365,7 @@ const Tutorial: React.FC<TutorialProps> = ({
                   fontFamily: font,
                   color: btnTextColor,
                 }}
-                className={`q-tut-btn ${currentStep === 0 ? 'disabled' : ''}`}
+                className={`q-tut-btn ${currentStep === 0 ? "disabled" : ""}`}
                 onClick={handleSkipStep}
                 disabled={currentStep === formdata.length - 1}
               >
