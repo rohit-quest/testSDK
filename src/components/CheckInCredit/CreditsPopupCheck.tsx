@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import ReactDOM from "react-dom";
 import cross from "../../assets/images/cross.png";
 import "./creditCheck.css";
-import {creditCheck} from "../../assets/images";
+import { creditCheck } from "../../assets/images";
 
 interface PopupProps {
     isOpen: boolean;
@@ -18,26 +18,26 @@ interface PopupProps {
 }
 
 const CreditsPopupCheck: FC<PopupProps> = ({
-                                               isOpen,
-                                               onClose,
-                                               headingText,
-                                               descText,
-                                               isCloseble,
-                                               continueButton,
-                                               buttonText,
-                                               buttonFunction,
-                                               color ='black',
-                                               backgroundColor='white'
-                                           }) => {
+    isOpen,
+    onClose,
+    headingText,
+    descText,
+    isCloseble,
+    continueButton,
+    buttonText,
+    buttonFunction,
+    color = 'black',
+    backgroundColor = 'white'
+}) => {
 
-    const style = {backgroundColor,color}
+    const style = { backgroundColor, color }
 
     if (!isOpen) return (<></>);
     return ReactDOM.createPortal(
         <div className="q-credit-home" style={style}>
             <div className="popup-overlay" style={style}>
                 <div className="q-creditp-main">
-                    <div className="q-creditp-child" style={{boxShadow: "rgba(0, 0, 0, 0.50) 0px 0px 6px 0px",...style}}>
+                    <div className="q-creditp-child" style={{ boxShadow: "rgba(0, 0, 0, 0.50) 0px 0px 6px 0px", ...style }}>
                         <img src={creditCheck} className="q-creditp-banner" />
                         {!!isCloseble && (
                             <img
