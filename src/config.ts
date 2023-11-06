@@ -1,5 +1,6 @@
 class config {
     static BACKEND_URL = 'https://api.questprotocol.xyz/';
+    static BACKEND_URL_STAGING = 'https://staging.questprotocol.xyz/';
     static FLAG_CONSTRAINTS = {
         OnboardingFlag: "quest.sdk.onboardings",
         AnalyticsFlag: "quest.sdk.analytics",

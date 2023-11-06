@@ -121,10 +121,10 @@ function OnBoarding(props: QuestLoginProps) {
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [btnFlag, setButtonFlag] = useState<boolean>(false);
     const [steps, setSteps] = useState<number[]>([]);
-    const { apiKey, apiSecret, entityId, featureFlags } = useContext(QuestContext.Context);
+    const { apiKey, apiSecret, entityId, featureFlags, apiType } = useContext(QuestContext.Context);
     const cookies = new Cookies()
     const progressRef = useRef()
-
+    let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
     useEffect(() => {
         if (entityId) {
@@ -149,9 +149,9 @@ function OnBoarding(props: QuestLoginProps) {
             
             if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == personalUserId._id) {
                 let header = {...headers, ...{questUserId, questUserToken}}
-                axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers: header})
+                axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers: header})
             } else {
-                axios.post(`${config.BACKEND_URL}api/users/external/login`, body, {headers})
+                axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
                 .then((res) => {
                     let {userId, token} = res.data;
                     let header = {...headers, ...{userId, token}}
@@ -161,14 +161,14 @@ function OnBoarding(props: QuestLoginProps) {
                     cookies.set("externalUserId", personalUserId._id, {path: "/", expires: date})
                     cookies.set("questUserId", userId, {path: "/", expires: date})
                     cookies.set("questUserToken", token, {path: "/", expires: date})
-                    axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/onboarding-view?userId=${userId}&questId=${questId}`, {count: 1}, {headers: header})
+                    axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/onboarding-view?userId=${userId}&questId=${questId}`, {count: 1}, {headers: header})
                 })
             }
 
 
             async function getQuestData(userId: string, headers: object) {
                 (loadingTracker && setLoading(true));
-                const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/criterias?userId=${userId}`;
+                const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/criterias?userId=${userId}`;
                 await axios.get(request, { headers: headers }).then((res) => {
                     let response = res.data;
                     let criterias = response?.data?.eligibilityData?.map(
@@ -244,7 +244,7 @@ function OnBoarding(props: QuestLoginProps) {
                 token: questUserToken
             }
             if (!!design && Number(currentPage) + 1 != design?.length) {
-                axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-complete-page-${Number(currentPage) + 1}?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers})
+                axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-complete-page-${Number(currentPage) + 1}?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers})
             }
 
             setButtonFlag(true);
@@ -388,13 +388,13 @@ function OnBoarding(props: QuestLoginProps) {
                 >
                     {question} {required && "*"}
                 </label>
-                <div className="q-onb-input">
+                <div className="q-onb-input" style={{border: inputBorder}}>
                     {inputType == "text" ? userLogo() : inputType == "number" ? phoneLogo() : emailLogo()}
                     <input
                         type={inputType}
                         id="normalInput"
                         name="normalInput"
-                        style={{ backgroundColor: inputBgColor, border: inputBorder, fontSize: answerFontSize }}
+                        style={{ backgroundColor: inputBgColor, fontSize: answerFontSize }}
                         onChange={(e) => handleUpdate(e, criteriaId, "")}
                         value={answer[criteriaId]}
                         placeholder={placeholder}
@@ -427,7 +427,7 @@ function OnBoarding(props: QuestLoginProps) {
                 >
                     {question} {required && "*"}
                 </label>
-                <div className="q-onb-input">
+                <div className="q-onb-input" style={{border: inputBorder}}>
                     {calenderIcon()}
                     <label className="q-onb-custom-date">
                         <input
@@ -435,7 +435,7 @@ function OnBoarding(props: QuestLoginProps) {
                             id="dateInput"
                             name="dateInput"
                             value={answer[criteriaId]}
-                            style={{ backgroundColor: inputBgColor, border: inputBorder, fontSize: answerFontSize }}
+                            style={{ backgroundColor: inputBgColor, fontSize: answerFontSize }}
                             onChange={(e) => handleUpdate(e, criteriaId, "")}
                             className="q-onb-custom-datePicker"
                         />
@@ -469,13 +469,13 @@ function OnBoarding(props: QuestLoginProps) {
                 >
                     {question} {required && "*"}
                 </label>
-                <div className="q-onb-input" style={{alignItems: "flex-start"}}>
+                <div className="q-onb-input" style={{alignItems: "flex-start", border: inputBorder}}>
                     {textAreaIcon()}
                     <textarea
                         id="normalInput"
                         name="normalInput"
                         placeholder={placeholder}
-                        style={{ height: "120px", backgroundColor: inputBgColor, border: inputBorder, fontFamily: defaultFont == false ? "" : "'Figtree', sans-serif", maxWidth: "100%", fontSize: answerFontSize }}
+                        style={{ height: "120px", backgroundColor: inputBgColor, fontFamily: defaultFont == false ? "" : "'Figtree', sans-serif", maxWidth: "100%", fontSize: answerFontSize }}
                         onChange={(e) => handleUpdate(e, criteriaId, "")}
                         value={answer[criteriaId]}
                     />
@@ -843,9 +843,9 @@ function OnBoarding(props: QuestLoginProps) {
 
         getAnswers(ansArr);
         
-        axios.post(`${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`, {criterias, userId: headers.userId}, {headers})
+        axios.post(`${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`, {criterias, userId: headers.userId}, {headers})
 
-        axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${headers.userId}/metrics/onboarding-complete?userId=${headers.userId}&questId=${questId}`, {count: 1}, {headers})
+        axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${headers.userId}/metrics/onboarding-complete?userId=${headers.userId}&questId=${questId}`, {count: 1}, {headers})
         
     }
     
