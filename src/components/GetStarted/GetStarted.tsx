@@ -175,11 +175,12 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
   const svgArr = [svg1, svg2, svg3, svg4];
 
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
-  const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
+  const { apiKey, apiSecret, entityId, apiType } = useContext(QuestContext.Context);
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [allCriteriaCompleted, setAllCriteriaCompleted] =
     useState<boolean>(false);
   const [criteriaSubmit, setCriteriaSubmit] = useState<string[]>([])
+  let BACKEND_URL =  apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
   const handleCriteriaClick = (id: any, url: string) => {
     const headers = {
@@ -192,7 +193,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
     const json = {
       criteriaId: id,
     };
-    const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
+    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
     setShowLoader(true);
     axios
       .post(request, json, { headers: headers })
@@ -226,7 +227,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
         userId: userId,
         token: token,
       };
-      const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}`;
+      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}`;
 
       axios.get(request, { headers: headers }).then((res) => {
         let response = res.data;
@@ -267,7 +268,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
       const json = {
         userId,
       };
-      const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/claim?userId=${userId}`;
+      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/claim?userId=${userId}`;
       setShowLoader(true);
       axios
         .post(request, json, { headers: headers })

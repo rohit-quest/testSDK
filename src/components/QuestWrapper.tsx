@@ -20,6 +20,7 @@ type Props = {
   apiSecret: string;
   entityId: string;
   featureFlags?: FeatureFlags;
+  apiType?: "STAGING" | "PRODUCTION";
 };
 
 type User = {
@@ -33,9 +34,9 @@ export const Context = createContext({
   entityId: "",
   user: {} as User,
   setUser: (user: User) => {},
-  featureFlags: {}
+  featureFlags: {},
+  apiType: "PRODUCTION",
 });
-
 
 
 export const QuestProvider = (props: Props) => {
@@ -122,8 +123,9 @@ export const QuestProvider = (props: Props) => {
         apiSecret: props.apiSecret,
         entityId: props.entityId,
         featureFlags: featureFlags || {},
+        apiType: props.apiType || "PRODUCTION",
         user,
-        setUser
+        setUser,
       }}
     >
       {props.children}
