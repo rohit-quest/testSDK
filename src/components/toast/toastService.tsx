@@ -149,7 +149,7 @@ showToast.warn = ({ text = 'This is an warning message', duration = 2000 }: aler
     )
 }
 
-showToast.primary = ({ text = 'This is an primary message', duration = 2000 }: alert) => {
+showToast.info = ({ text = 'This is an primary message', duration = 2000 }: alert) => {
 
     const div = General(
         <>
