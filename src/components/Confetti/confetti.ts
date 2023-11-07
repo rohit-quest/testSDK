@@ -3,14 +3,14 @@ export function confetti(duration = 2000) {
     const canvas = document.createElement('canvas');
     canvas.setAttribute("id", "canvas");
     const body = document.body;
-    const existingChildren = Array.from(body.children);
-    existingChildren.forEach(child => body.removeChild(child));
+    // const existingChildren = Array.from(body.children);
+    // existingChildren.forEach(child => body.removeChild(child));
 
     body.appendChild(canvas)
 
     setTimeout(() => {
         body.removeChild(canvas)
-        existingChildren.forEach(child => body.appendChild(child));
+        // existingChildren.forEach(child => body.appendChild(child));
     }, duration)
 
     let W = window.innerWidth;
