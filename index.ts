@@ -17,6 +17,7 @@ import { ReferShare, ReferEarn } from "./src/components/Refer/ReferEarn.tsx";
 import Table from "./src/components/Analytics/Table.tsx";
 import QuestChart from "./src/components/Analytics/QuestChart.tsx";
 import GetStarted from "./src/components/GetStarted/GetStarted.tsx";
+import { HelpCenter } from "./src/components/HelpCenter/HelpCenter.tsx";
 import { confetti } from "./src/components/Confetti/confetti.ts";
 
 export {
@@ -39,5 +40,6 @@ export {
     Table,
     QuestChart,
     GetStarted,
+    HelpCenter,
     confetti
 };
