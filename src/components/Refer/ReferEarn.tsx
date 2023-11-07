@@ -17,7 +17,6 @@ import PopupComponent from "./Popup.tsx";
 
 export const ReferShare = ({
   isOpen = true,
-  onClose,
   questId = "",
   userId = "",
   token = "",
@@ -53,34 +52,28 @@ export const ReferShare = ({
           </p>
           <div className="q-referShare-referralCode">
             <p>Referral code</p>
-          </div>
-          <div className="q-referShare-content-rect" style={style}>
-            <span className="q-referShare-content-code" style={style}>
-              {shareCode}
-            </span>
-            <img
-              className="q-referEarn-copy-img"
-              onClick={() => {
-                navigator.clipboard
-                  .writeText(shareCode)
-                  .then(() => setCopy(true));
-              }}
-              src={copy ? tick : copySVG}
-              style={{ cursor: "pointer" }}
-              width="20px"
-              alt="tick"
-            />
+            <div className="q-referShare-content-rect" style={style}>
+              <span className="q-referShare-content-code" style={style}>
+                {shareCode}
+              </span>
+              <img
+                className="q-referEarn-copy-img"
+                onClick={() => {
+                  navigator.clipboard
+                    .writeText(shareCode)
+                    .then(() => setCopy(true));
+                }}
+                src={copy ? tick : copySVG}
+                style={{ cursor: "pointer" }}
+                width="20px"
+                alt="tick"
+              />
+            </div>
           </div>
           <div className="q-referShare-content-msg">
             <p style={style}>Share with your community</p>
           </div>
           <div className="q-referShare-content-social">
-            <img
-              className="q-referShare-content-social-img"
-              src={discordSvg}
-              alt="Discord"
-            />
-
             {/* Twitter */}
             <img
               className="q-referShare-content-social-img"
@@ -144,7 +137,7 @@ export const ReferEarn = ({
             />
             Twitter
           </div>
-          <div className="q-referEarn-pop-div">
+          <div className="q-referEarn-pop-div" style={style}>
             <img
               onClick={() => shareOnPlatform(shareCode, "telegram")}
               src={telegramPng}
@@ -156,8 +149,8 @@ export const ReferEarn = ({
         </div>
       </PopupComponent>
       <img src={giftPng} className="q-referEarn-gift-img" alt="giftPng" />
-      <h3 className="q-referEarn-head">Your referral code:</h3>
-      <p className="q-referEarn-para">
+      <h3 className="q-referEarn-head" style={style}>Your referral code:</h3>
+      <p className="q-referEarn-para" style={style}>
         Share your referral code with your friends and get benefits.
       </p>
       <div className="q-referEarn-rect">
@@ -173,7 +166,7 @@ export const ReferEarn = ({
           alt="tick"
         />
       </div>
-      <button onClick={() => setshare(true)} className="q-referEarn-invite">
+      <button  onClick={() => setshare(true)} className="q-referEarn-invite">
         Invite Friends
       </button>
     </div>

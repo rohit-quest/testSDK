@@ -116,7 +116,7 @@ export const HelpCenter = (
                         style={{ backgroundColor: headBgColor }}>
                         <div>
                             <p className="q-cht-ch-div-head" style={{ color: headColor }}>Help Center</p>
-                            <p className='q-cht-ch-div-desc'>{descriptioin}</p>
+                            <p className='q-cht-ch-div-desc' style={{color}}>{descriptioin}</p>
                         </div>
                         <div style={{ display: "flex", cursor: "pointer" }}
                             onClick={() => { setIsOpen(false); onClose(); }}
@@ -129,7 +129,7 @@ export const HelpCenter = (
                             <input className='q-help-ask-input' onChange={(e) => filter(e.target.value)}
                                 placeholder='Ask a question' />
                             <span className='q-help-search-icon'><SearchSvg /></span>
-                            <div className='q-help-ask-ai' onClick={() => setChat(true)}>Ask AI <AskAiSvg /></div>
+                            <div className='q-help-ask-ai' style={{color}} onClick={() => setChat(true)}>Ask AI <AskAiSvg /></div>
                         </div>
                         <div className='q-help-rect'>
                             <img src={helpCenter1} alt={""} />
@@ -143,8 +143,8 @@ export const HelpCenter = (
                                     }}>
                                     <div className='q-help-link-icon'><LinkIcon /></div>
                                     <div className='q-help-links-div'>
-                                        <p className='q-help-links-name'>{e.title}</p>
-                                        <p className='q-help-links-desc'>{e.description}</p>
+                                        <p className='q-help-links-name' style={{color}}>{e.title}</p>
+                                        <p className='q-help-links-desc' style={{color}}>{e.description}</p>
                                     </div>
                                 </div>
                             ))}
