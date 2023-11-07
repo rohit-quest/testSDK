@@ -14,8 +14,8 @@ import telegramPng from './telegram.png';
 import giftPng from './gift.png'
 import creditBannerPng from './creditBanner.png'
 import creditCheck from './creditCheck.png'
-import helpCenter1 from './helpCenter1.png'
-import helpCenter2 from './helpCenter2.png'
+import helpCenter1 from './helpCenter1.svg'
+import helpCenter2 from './helpCenter2.svg'
 import emailLogo from './emailLogo.svg';
 import crossLogo from './cross.svg';
 import alertLogo from './alert.svg';
@@ -31,7 +31,9 @@ import twitterSvg from './twitter.svg';
 import discordSvg from './discord.svg';
 import copySVG from './copy.svg';
 import copyLargeSVG from './copyLarge.svg';
-export { whatsappSvg, twitterSvg, discordSvg, copySVG, googleImg, copyLargeSVG, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like, closePng, copyPng, twitterPng, telegramPng, discordPng, giftPng, creditBannerPng, creditCheck, helpCenter1, helpCenter2, emailLogo, crossLogo, alertLogo, toastTic, questionLogo, warnCross, primaryCross, errorCross, successCross, primaryAlert };
-
-
-
+import userChatPng from './userChat.png';
+import aiChatPng from './aiChatIcon.svg';
+import sendChatPng from './sendArrow.png';
+import leftArrowPng from './arroLeft.png';
+import linkPng from './link.png';
+export { whatsappSvg, twitterSvg, discordSvg, copySVG, googleImg, copyLargeSVG, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like, closePng, copyPng, twitterPng, telegramPng, discordPng, giftPng, creditBannerPng, creditCheck, helpCenter1, helpCenter2, emailLogo, crossLogo, alertLogo, toastTic, questionLogo, warnCross, primaryCross, errorCross, successCross, primaryAlert, userChatPng, aiChatPng, sendChatPng, leftArrowPng, linkPng };
