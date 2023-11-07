@@ -123,48 +123,50 @@ const remove = (div: HTMLDivElement) => {
     toastCounter--;
 }
 
-showToast.success = ({ text = 'This is an success message', duration = 2000 }) => {
+type alert = { text?: string, duration?: number }
+
+showToast.success = ({ text = 'This is an success message', duration = 2000 }: alert) => {
 
     const div = General(
         <>
             <img src={toastTic} alt='' />
-            <div>{text}</div>
+            <div style={{marginRight:"30px"}}>{text}</div>
             <img src={successCross} alt='' onClick={() => { remove(div) }} />
         </>
         , duration, "q_toast_success"
     )
 }
 
-showToast.warn = ({ text = 'This is an warning message', duration = 2000 }) => {
+showToast.warn = ({ text = 'This is an warning message', duration = 2000 }: alert) => {
 
     const div = General(
         <>
             <img src={questionLogo} alt='' />
-            <div>{text}</div>
+            <div style={{marginRight:"30px"}}>{text}</div>
             <img src={warnCross} alt='' onClick={() => { remove(div) }} />
         </>
         , duration, "q_toast_warn"
     )
 }
 
-showToast.primary = ({ text = 'This is an primary message', duration = 2000 }) => {
+showToast.primary = ({ text = 'This is an primary message', duration = 2000 }: alert) => {
 
     const div = General(
         <>
             <img src={primaryAlert} alt='' />
-            <div>{text}</div>
+            <div style={{marginRight:"30px"}}>{text}</div>
             <img src={primaryCross} alt='' onClick={() => { remove(div) }} />
         </>
         , duration, "q_toast_primary"
     )
 }
 
-showToast.error = ({ text = 'This is an error message', duration = 2000 }) => {
+showToast.error = ({ text = 'This is an error message', duration = 2000 }: alert) => {
 
     const div = General(
         <>
-            <img src={alertLogo } alt='' />
-            <div>{text}</div>
+            <img src={alertLogo} alt='' />
+            <div style={{marginRight:"30px"}}>{text}</div>
             <img src={errorCross} alt='' onClick={() => { remove(div) }} />
         </>
         , duration, "q_toast_error"

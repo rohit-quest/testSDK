@@ -30,7 +30,7 @@
 
 
 .q-help-child {
-    width: 460px;
+    width: 376px;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -40,10 +40,27 @@
     min-height: 530px;
 }
 
+.q-cht-ch-div-desc {
+    color: #8E8E8E;
+    font-family: Figtree;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.q-cht-ch-div-head {
+    color: #FFF;
+    font-family: Figtree;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 28px;
+}
+
 .q-help-ch-div {
     display: flex;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 12px 20px;
     justify-content: space-between;
     align-items: center;
     width: calc(100% - 40px);
@@ -59,24 +76,31 @@
 }
 
 .q-help-ask-input {
-    width: 80%;
+    width: 130%;
     height: 43px;
     border-radius: 10px;
-    background: #F6F6F6;
     border: none;
-    font-size: 18px;
-    padding: 0 50px;
+    padding: 0 16px;
+    color: var(--grey-2, #545454);
+    font-family: Figtree;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    border-radius: 10px;
+    border: 2px solid var(--grey-2, #E2E2E2);
 }
 
 .q-help-ask-input:focus {
     border: none;
     box-shadow: none;
     outline: none;
+    border: 2px solid var(--grey-2, #E2E2E2);
 }
 
 .q-help-ask {
     display: flex;
-    gap: 5%;
+    gap: 12px;
     padding: 0 20px;
     justify-content: center;
     width: calc(100% - 40px);
@@ -85,17 +109,18 @@
 
 .q-help-ask-ai {
     display: flex;
-    width: 160px;
+    width: 170px;
     white-space: nowrap;
     cursor: pointer;
     height: 43px;
     color: white;
-    font-size: 18px;
+    font-size: 16px;
     justify-content: center;
     align-items: center;
     gap: 8px;
     border-radius: 8px;
     background: #141414;
+    padding: 0 12px;
 }
 
 .q-help-head-title {
@@ -107,8 +132,8 @@
 
 .q-help-search-icon {
     position: absolute;
-    left: 25px;
-    top: 8px;
+    left: 57%;
+    top: 14px;
 }
 
 .q-help-rect img {
@@ -129,7 +154,7 @@
     flex-direction: column;
     align-items: center;
     gap: 16px;
-    margin-bottom: 20px;
+    margin: 0 auto;
     max-height: 250px;
     width: 95%;
     overflow-y: auto;
@@ -141,22 +166,22 @@
     width: 100%;
 }
 
-.q-help-links::-webkit-scrollbar {
+.q-help-links::-webkit-scrollbar, .q-help-chat-container::-webkit-scrollbar {
     width: 8px;
 }
 
-.q-help-links::-webkit-scrollbar-thumb {
+.q-help-links::-webkit-scrollbar-thumb, .q-help-chat-container::-webkit-scrollbar-thumb{
     background-color: #888888;
     border-radius: 4px;
 }
 
-.q-help-links::-webkit-scrollbar-thumb:hover {
+.q-help-links::-webkit-scrollbar-thumb:hover, .q-help-chat-container::-webkit-scrollbar-thumb-hover {
     background-color: #555555;
 }
 
-.q-help-links::-webkit-scrollbar-track {
-    background-color: #f0f0f0; /* Track color */
-    border-radius: 8px; /* Rounded corners */
+.q-help-links::-webkit-scrollbar-track,.q-help-chat-container::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+    border-radius: 8px;
 }
 
 .q-help-links-child {
@@ -172,23 +197,29 @@
 }
 
 .q-help-link-icon {
-    padding: 5px 6px 2px 8px;
+    padding: 6px 6px 0px 7px;
     border-radius: 60%;
+    background-color: #141414;
     border: 1px solid rgba(0, 0, 0, 0.25);
 }
 
-.q-help-links h5 {
-    color: #545454;
-    font-size: 18px;
+.q-help-links-desc {
+    color: #AFAFAF;
+    font-family: Figtree;
+    font-size: 12px;
+    font-style: normal;
     font-weight: 400;
-    line-height: 28px;
+    line-height: 16px;
 }
 
-.q-help-links h3 {
-    color: #141414;
-    font-size: 18px;
+.q-help-links-name {
+    color: #000;
+    font-family: Figtree;
+    font-size: 16px;
+    font-style: normal;
     font-weight: 500;
-    line-height: 28px;
+    line-height: 24px;
+    /* 150% */
 }
 
 .q-help-chat img {
@@ -257,21 +288,46 @@
 
 .q-help-chat-input {
     border-radius: 7px;
-    background: #F6F6F6;
-    border: none;
     display: flex;
-    padding: 8px;
     align-items: flex-start;
     gap: 182px;
     width: 100%;
     color: #000;
-    font-size: 16px;
+    font-size: 14px;
+    padding: 10px 12px;
     font-weight: 500;
+    border: 2px solid var(--neutral-grey-100, #ECECEC);
 }
 
 .q-help-chat-input:focus {
     border: none;
     outline: none;
+    border: 2px solid var(--neutral-grey-100, #ECECEC);
+}
+
+.q-help-chat-div{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.q-help-send-chat-png{
+    background-color: #000;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.q-help-chat-nav{
+    align-items: flex-start;
+    display: flex;
+    padding: 0px 28px;
+    justify-content: space-between;
+    align-self: stretch;
+}
+
+.q-help-chat-container{
+    height: 100%;
+    overflow-y: auto;
 }
 
 @media only screen and (max-width: 600px) {
