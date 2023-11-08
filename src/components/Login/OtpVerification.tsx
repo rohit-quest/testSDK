@@ -134,7 +134,7 @@ function OtpVerification({
 
   return (
     <div className="questLabs">
-      <div style={{ padding: '3%' }} className="embeded-otp">
+      <div className="embeded-otp">
         {showLoader && <Loader />}
         <h1
           className="q-login-h1"
@@ -145,7 +145,7 @@ function OtpVerification({
         >
           Please Enter OTP
         </h1>
-        <div style={{ marginTop: '5%' }}>
+        <div style={{ marginTop: '8px' }}>
           {sec === 0 ? (
             <div
               className="q-resend"
@@ -156,7 +156,7 @@ function OtpVerification({
               onClick={sendOTPfunction}
             >
               we have sent you one time password to your email{' '}
-              <span style={{ fontWeight: 'bold' }}>Resend</span>
+              <span className='q-resend'>Resend</span>
             </div>
           ) : (
             <div
@@ -167,22 +167,24 @@ function OtpVerification({
               }}
             >
               we have sent you one time password to your email{' '}
-              <span style={{ fontWeight: 'bold' }}>
-                {modifyTime(Math.floor(sec / 60))}:{modifyTime(sec % 60)}
+              <span className='q-resend'>
+                {modifyTime(Math.floor(sec / 60))}:{modifyTime(sec % 60)} sec
               </span>
             </div>
           )}
-          <div style={{ marginTop: '10%' }}>
+          <div style={{ marginTop: '20px' }}>
+            <p className='q-otp-label'>Enter your otp</p>
             <OTPInput
               onChange={handleChange}
               value={OTP}
               inputStyle="q-inputStyle"
+              containerStyle='q-containerStyle'
               numInputs={6}
               renderInput={(props) => <input {...props} />}
             />
             {OTP.length < 6 && OTP.length > 0 && (
               <p className="q-login-p">
-                <span className="q-err">!</span>
+                {/* <span className="q-err">!</span> */}
                 Please enter a valid OTP
               </p>
             )}
@@ -192,13 +194,13 @@ function OtpVerification({
           style={{
             backgroundColor: btnColor,
             fontFamily,
-            marginTop: '15%',
+            marginTop: '20px',
             color: btnTextColor,
           }}
-          className="q-btn-continue"
+          className="q-email-btn-continue"
           onClick={verifyOTPfunction}
         >
-          Verify OTP
+          Verify with OTP
         </div>
       </div>
     </div>

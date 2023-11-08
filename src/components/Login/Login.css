@@ -3,15 +3,27 @@
   outline: none;
 }
 .q-inputStyle {
-  width: 50% !important;
-  height: 45px;
-  border-radius: 7px;
-  border: 0px;
-  margin-left: 8px;
-  margin-right: 8px;
-  background: #dddddd;
-  font-size: 20px;
+  width: 43px !important;
+  height: 35px;
+  border-radius:  10px;
+  border: 1.5px solid var(--neutral-grey-100, #ECECEC);
+  background: var(--neutral-pure-white-100, #FFF);  
   color: rgb(2, 2, 2);
+  font-size: 14px;
+}
+.q-inputStyle:focus{
+  outline: none;
+}
+.q-otp-label{
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 16px;
+}
+.q-containerStyle{
+  width: 320px !important;
+  display: flex;
+  justify-content: space-between;
 }
 .q-login-p {
   color: #ed0a34;
@@ -73,8 +85,12 @@
   border: 1.5px solid #2b2b2b;
 }
 .q-resend {
+  color:var(--neutral-grey-400, #5E5E5E);
   text-align: center;
-  font-size: 18px;
+  font-size: 14px;
+  font-style: normal;
+ font-weight: 400;
+ line-height: 20px;
 }
 .q-login-parent-container {
   display: flex;
