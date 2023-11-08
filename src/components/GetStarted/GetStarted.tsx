@@ -199,14 +199,15 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
       .post(request, json, { headers: headers })
       .then((response) => {
         if (response.data.success) {
-          const newWindow = window.open(url, '_blank');
           setCriteriaSubmit([...criteriaSubmit, id]);
-          if (newWindow) {
-            newWindow.focus();
-            // window.location.reload();
-          } else {
-            toast.error('Popup was blocked');
-          }
+          // window.open(url);
+          window.location.href = url;
+          // if (newWindow) {
+          //   newWindow.focus();
+          //   // window.location.reload();
+          // } else {
+          //   toast.error('Popup was blocked');
+          // }
         } else {
           toast.error(response.data.error);
         }
