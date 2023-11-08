@@ -180,7 +180,7 @@ function OtpVerification({
               inputStyle="q-inputStyle"
               containerStyle='q-containerStyle'
               numInputs={6}
-              renderInput={(props) => <input {...props} />}
+              renderInput={(props) => <input {...props} placeholder={'-'} />}
             />
             {OTP.length < 6 && OTP.length > 0 && (
               <p className="q-login-p">
