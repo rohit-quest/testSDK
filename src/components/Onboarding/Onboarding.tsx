@@ -143,6 +143,7 @@ function OnBoarding(props: QuestLoginProps) {
             const body = {
                 externalUserId: !!personalUserId && personalUserId._id,
                 entityId: entityId,
+                emails: personalUserId.Email
             }
             
             getQuestData(userId, headers)
@@ -150,7 +151,7 @@ function OnBoarding(props: QuestLoginProps) {
             if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == personalUserId._id) {
                 let header = {...headers, ...{questUserId, questUserToken}}
                 axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers: header})
-            } else {
+            } else if (!!personalUserId) {
                 axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
                 .then((res) => {
                     let {userId, token} = res.data;
@@ -549,18 +550,22 @@ function OnBoarding(props: QuestLoginProps) {
                     options={options.map((opt: string) => {return {value: opt, label: opt}})} 
                     onChange={(e) => handleUpdate({target: e}, criteriaId, "")}
                     styles={customStyles}
+                    value={{value: answer[criteriaId], label: answer[criteriaId]}}
                 />
                 {manualInput != false && answer[criteriaId] == manualInput &&
-                    <input 
-                        type="text" 
-                        name="" 
-                        id="" 
-                        className="q-onb-input"
-                        style={{marginTop: "10px"}}
-                        placeholder="Please fill manually"
-                        onChange={(e) => handleUpdate(e, (criteriaId + "/manual"), "")}
-                        value={answer[criteriaId + "/manual"]}
-                    />
+                    <div className="q-onb-input" style={{border: inputBorder, marginTop: "10px"}}>
+                        {userLogo()}
+                        <input
+                            type="text"
+                            id="normalInput"
+                            name="normalInput"
+                            style={{ backgroundColor: inputBgColor, fontSize: answerFontSize }}
+                            onChange={(e) => handleUpdate(e, (criteriaId + "/manual"), "")}
+                            value={answer[criteriaId + "/manual"]}
+                            placeholder="Please fill manually"
+                        />
+                        {crossLogo(criteriaId + "/manual", handleRemove)}
+                    </div>
                 }
             </div>
         );
@@ -811,23 +816,24 @@ function OnBoarding(props: QuestLoginProps) {
                 let id: string = i.split("/manual")[0];
                 let criteriaDetails: FormData[] = formdata.filter((item) => item.criteriaId == id)
                 if (criteriaDetails[0].manualInput == crt[id]) {
-                    crt[id] = crt[id] + ":" + crt[i];
+                    crt[id] = crt[i];
                 }
             }
         }
         
-        let ansArr: Answer[] = formdata.map((ans: FormData) => {
-            return {
-                question: ans?.question,
-                answer: crt[ans?.criteriaId] || "",
-            };
-        });
+        // let ansArr: Answer[] = formdata.map((ans: FormData) => {
+        //     return {
+        //         question: ans?.question,
+        //         answer: crt[ans?.criteriaId] || "",
+        //     };
+        // });
         
         let criterias = Object.keys(crt)
         .filter((key: string) => !key.includes("/manual"))
         .map((key: string) => ({
             criteriaId: key,
             answer: typeof crt[key] === "object" ? crt[key] : [crt[key]],
+            question: formdata[formdata.findIndex(ele => ele.criteriaId == key)].question
         }));
 
         
@@ -841,7 +847,7 @@ function OnBoarding(props: QuestLoginProps) {
             token: questUserToken ? questUserToken : token
         }
 
-        getAnswers(ansArr);
+        getAnswers(crt);
         
         axios.post(`${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`, {criterias, userId: headers.userId}, {headers})
 
