@@ -41,8 +41,8 @@ const CreditsPopup: FC<PopupProps> = ({
                                 className="q-crdp-img"
                             />
                         )}
-                        <p className="q-crdp-p1">{headingText}</p>
-                        <p className="q-crdp-p2">{descText}</p>
+                        <div className="q-crdp-p1">{headingText}</div>
+                        <div className="q-crdp-p2">{descText}</div>
                         {!!continueButton && (
                             <button
                                 className="q-crdp-btn"

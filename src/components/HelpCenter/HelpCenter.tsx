@@ -1,7 +1,5 @@
 import './HelpCenter.css';
 import '../chatSupport/chatsupport.css'
-import minimize from "../../assets/images/minimize.png";
-import close from "../../assets/images/close.png";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AskAiSvg, CrossIcon, LinkIcon, QuestArray, SearchSvg } from "./Svg.tsx";
 import { helpCenter1, helpCenter2 } from "../../assets/images";
@@ -115,8 +113,8 @@ export const HelpCenter = (
                     <div onClick={() => setChat(false)} className="q-help-ch-div"
                         style={{ backgroundColor: headBgColor }}>
                         <div>
-                            <p className="q-cht-ch-div-head" style={{ color: headColor }}>Help Center</p>
-                            <p className='q-cht-ch-div-desc' style={{color}}>{descriptioin}</p>
+                            <div className="q-cht-ch-div-head" style={{ color: headColor }}>Help Center</div>
+                            <div className='q-cht-ch-div-desc' style={{color}}>{descriptioin}</div>
                         </div>
                         <div style={{ display: "flex", cursor: "pointer" }}
                             onClick={() => { setIsOpen(false); onClose(); }}
@@ -128,7 +126,7 @@ export const HelpCenter = (
                         <div className='q-help-ask'>
                             <input className='q-help-ask-input' onChange={(e) => filter(e.target.value)}
                                 placeholder='Ask a question' />
-                            <span className='q-help-search-icon'><SearchSvg /></span>
+                            <div style={{display: "inline"}}  className='q-help-search-icon'><SearchSvg /></div>
                             <div className='q-help-ask-ai' style={{color}} onClick={() => setChat(true)}>Ask AI <AskAiSvg /></div>
                         </div>
                         <div className='q-help-rect'>
@@ -143,8 +141,8 @@ export const HelpCenter = (
                                     }}>
                                     <div className='q-help-link-icon'><LinkIcon /></div>
                                     <div className='q-help-links-div'>
-                                        <p className='q-help-links-name' style={{color}}>{e.title}</p>
-                                        <p className='q-help-links-desc' style={{color}}>{e.description}</p>
+                                        <div className='q-help-links-name' style={{color}}>{e.title}</div>
+                                        <div className='q-help-links-desc' style={{color}}>{e.description}</div>
                                     </div>
                                 </div>
                             ))}

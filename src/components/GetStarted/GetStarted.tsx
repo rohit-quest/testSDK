@@ -180,7 +180,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
   const [allCriteriaCompleted, setAllCriteriaCompleted] =
     useState<boolean>(false);
   const [criteriaSubmit, setCriteriaSubmit] = useState<string[]>([])
-  let BACKEND_URL =  apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
+  let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
   const handleCriteriaClick = (id: any, url: string) => {
     const headers = {
@@ -293,13 +293,13 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
   }, [allCriteriaCompleted]);
 
   let btn2Color = buttonBg || "#252525";
-    // 'radial-gradient(98.75% 3360.24% at 0% 100%, #6200EE 0%, #1F3EFE 100%)';
+  // 'radial-gradient(98.75% 3360.24% at 0% 100%, #6200EE 0%, #1F3EFE 100%)';
   let btnTextColor = buttonColor || '#FFFFFF';
   let textColor = cardHeadingColor || '#000';
   let subHeadingColor = '#8A8A8A';
   let descColor = cardDescColor || '#AFAFAF';
   let bg =
-  cardBG || '#FFF';
+    cardBG || '#FFF';
   let borderColor = cardBG || "var(--neutral-grey-200, #AFAFAF)"
 
   const card = (
@@ -327,11 +327,11 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
           </div>
         </div>
         <div className="gs-card-btn-container">
-            <div className="gs-card-btn1">
-              <a href={btn1Link} target='_blank' style={{ color: descColor }}>
-                {btn1}
-              </a>
-            </div>
+          <div className="gs-card-btn1">
+            <a href={btn1Link} target='_blank' style={{ color: descColor }}>
+              {btn1}
+            </a>
+          </div>
           <div
             onClick={() => handleCriteriaClick(id, url)}
             style={{ background: btn2Color, color: btnTextColor }}
@@ -345,7 +345,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
   };
 
   return (
-    <div style={{ padding: '40px' }}>
+    <div style={{ padding: '40px', boxSizing: "content-box" }}>
       {showLoader && <Loader />}
       <div className="gs-heading-div">
         <div style={{ color: textColor }} className="gs-heading">

@@ -40,7 +40,7 @@ const ChatSupport: FC<ChatSupport> = ({ logoType, bgColor }) => {
     const computerChat = (msg: string, index: number) => {
         return (
             <div className="q-cht-comp-div" key={index}>
-                <p className="q-cht-comp-msg">{msg}</p>
+                <div className="q-cht-comp-msg">{msg}</div>
             </div>
         );
     };
@@ -48,7 +48,7 @@ const ChatSupport: FC<ChatSupport> = ({ logoType, bgColor }) => {
     const userChat = (msg: string, index: number) => {
         return (
             <div className="q-cht-user-div" key={index}>
-                <p className="q-cht-user-msg">{msg}</p>
+                <div className="q-cht-user-msg">{msg}</div>
             </div>
         );
     };
@@ -125,7 +125,7 @@ const ChatSupport: FC<ChatSupport> = ({ logoType, bgColor }) => {
                     }}
                 >
                     <div className="q-cht-ch-div">
-                        <p className="q-cht-ch-div-p">Chat Support</p>
+                        <div className="q-cht-ch-div-p">Chat Support</div>
                         <div style={{ display: "flex", gap: "1rem" }}>
                             <img
                                 src={minimize}

@@ -116,7 +116,7 @@ const Table: FC<Table> = ({
         [tooltipPosition]
     );
 
-    return ( loading == false ) ? (
+    return (loading == false) ? (
         <div
             className="q-ana-home q-tab-main"
             style={{ width: tableWidth ? tableWidth : "100%" }}
@@ -143,6 +143,7 @@ const Table: FC<Table> = ({
                                 borderRight: horizontalBorder
                                     ? "2px solid"
                                     : "0px",
+                                boxSizing: "content-box"
                             }}
                         >
                             Users
@@ -217,9 +218,9 @@ const Table: FC<Table> = ({
                                                 alt=""
                                             />
                                         )}
-                                        <p className="">
+                                        <div className="">
                                             {answerData[datas].userName}
-                                        </p>
+                                        </div>
                                     </td>
                                     {questionData.map(
                                         (question: string, i: number) =>
@@ -236,11 +237,10 @@ const Table: FC<Table> = ({
                                                         color: bodyTextColor,
                                                         borderRight:
                                                             horizontalBorder
-                                                                ? `2px solid ${
-                                                                      headingBgColor
-                                                                          ? headingBgColor
-                                                                          : ""
-                                                                  }`
+                                                                ? `2px solid ${headingBgColor
+                                                                    ? headingBgColor
+                                                                    : ""
+                                                                }`
                                                                 : "0px",
                                                         whiteSpace:
                                                             !!hideAnswers
@@ -257,7 +257,7 @@ const Table: FC<Table> = ({
                                                             e,
                                                             answerData[datas]
                                                                 .userAnswers[
-                                                                `q${i}`
+                                                            `q${i}`
                                                             ]
                                                         )
                                                     }
@@ -268,7 +268,7 @@ const Table: FC<Table> = ({
                                                     {
                                                         answerData[datas]
                                                             .userAnswers[
-                                                            `q${i}`
+                                                        `q${i}`
                                                         ]
                                                     }
                                                 </td>
@@ -283,11 +283,10 @@ const Table: FC<Table> = ({
                                                         color: bodyTextColor,
                                                         borderRight:
                                                             horizontalBorder
-                                                                ? `2px solid ${
-                                                                      headingBgColor
-                                                                          ? headingBgColor
-                                                                          : ""
-                                                                  }`
+                                                                ? `2px solid ${headingBgColor
+                                                                    ? headingBgColor
+                                                                    : ""
+                                                                }`
                                                                 : "0px",
                                                     }}
                                                 ></td>

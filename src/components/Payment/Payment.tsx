@@ -105,7 +105,7 @@ const Payment: FC<CreditButtonProps> = ({
                             }}
                             key={index}
                         >
-                            <p
+                            <div
                                 className="q-pynt-main-div-p"
                                 style={{ color: `${modifyDesigns.fontColor}` }}
                             >
@@ -114,27 +114,27 @@ const Payment: FC<CreditButtonProps> = ({
                                     .includes(" plan")
                                     ? tier.creditsTierName
                                     : tier.creditsTierName + " Plan"}
-                            </p>
-                            <p
+                            </div>
+                            <div
                                 className="q-pynt-main-div-p2"
                                 style={{ color: `${modifyDesigns.fontColor}` }}
                             >
                                 {desc[index]}
-                            </p>
+                            </div>
                             <div
                                 className="q-pynt-main-div-div"
                                 style={{ color: `${modifyDesigns.fontColor}` }}
                             >
-                                <p className="q-pynt-main-div-div-p">
+                                <div className="q-pynt-main-div-div-p">
                                     ${tier.creditsAmount}
-                                </p>
-                                <p className="q-pynt-main-div-div-p2">
+                                </div>
+                                <div className="q-pynt-main-div-div-p2">
                                     {tier.recurringTimePeriod == "ONETIME"
                                         ? "/one-time"
                                         : tier.recurringTimePeriod == "MONTHLY"
                                         ? "/months"
                                         : "/years"}
-                                </p>
+                                </div>
                             </div>
                             <button
                                 className="q-pynt-main-div-div-btn"
@@ -147,9 +147,9 @@ const Payment: FC<CreditButtonProps> = ({
                                 Continue
                             </button>
                             <div className="q-pynt-main-div-div-ch"></div>
-                            <p className="q-pynt-main-div-div-p3">
+                            <div className="q-pynt-main-div-div-p3">
                                 FEATURES
-                            </p>
+                            </div>
                             <div className=" q-pynt-main-div-div-chDiv">
                                 {!!paymentBanefits[index] &&
                                     !!paymentBanefits[index].included &&
@@ -166,7 +166,7 @@ const Payment: FC<CreditButtonProps> = ({
                                                     src={tick}
                                                     style={{width: "1.25rem", height: "1.25rem"}}
                                                 />
-                                                <p>{banefits}</p>
+                                                <div>{banefits}</div>
                                             </div>
                                         )
                                     )}
@@ -182,9 +182,9 @@ const Payment: FC<CreditButtonProps> = ({
                                                     src={untick}
                                                     style={{width: "1.25rem", height: "1.25rem"}}
                                                 />
-                                                <p style={{color: "#9CA3AF"}}>
+                                                <div style={{color: "#9CA3AF"}}>
                                                     {banefits}
-                                                </p>
+                                                </div>
                                             </div>
                                         )
                                     )}
