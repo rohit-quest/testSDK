@@ -125,6 +125,7 @@ function OtpVerification({
           setsec(120);
         }
       })
+      
       .catch((err) => {
         console.error(err);
       })
