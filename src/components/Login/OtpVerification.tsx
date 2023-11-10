@@ -136,7 +136,7 @@ function OtpVerification({
     <div className="questLabs">
       <div className="embeded-otp">
         {showLoader && <Loader />}
-        <h1
+        <div
           className="q-login-h1"
           style={{
             color: textColor,
@@ -144,7 +144,7 @@ function OtpVerification({
           }}
         >
           Please Enter OTP
-        </h1>
+        </div>
         <div style={{ marginTop: '8px' }}>
           {sec === 0 ? (
             <div
@@ -156,7 +156,7 @@ function OtpVerification({
               onClick={sendOTPfunction}
             >
               we have sent you one time password to your email{' '}
-              <span className='q-resend'>Resend</span>
+              <div className='q-resend'>Resend</div>
             </div>
           ) : (
             <div
@@ -167,13 +167,13 @@ function OtpVerification({
               }}
             >
               we have sent you one time password to your email{' '}
-              <span className='q-resend'>
+              <div className='q-resend'>
                 {modifyTime(Math.floor(sec / 60))}:{modifyTime(sec % 60)} sec
-              </span>
+              </div>
             </div>
           )}
           <div style={{ marginTop: '20px' }}>
-            <p className='q-otp-label'>Enter your otp</p>
+            <div className='q-otp-label'>Enter your otp</div>
             <OTPInput
               onChange={handleChange}
               value={OTP}
@@ -183,10 +183,10 @@ function OtpVerification({
               renderInput={(props) => <input {...props} placeholder={'-'} />}
             />
             {OTP.length < 6 && OTP.length > 0 && (
-              <p className="q-login-p">
+              <div className="q-login-p">
                 {/* <span className="q-err">!</span> */}
                 Please enter a valid OTP
-              </p>
+              </div>
             )}
           </div>
         </div>
