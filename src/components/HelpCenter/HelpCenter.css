@@ -237,6 +237,13 @@
 
 .q-help-chat img {
     cursor: pointer;
+    border-radius: 14px;
+    background: var(--neutral-grey-100, #ECECEC);
+    display: flex;
+    padding: 6px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
 }
 
 .q-help-input-box {
