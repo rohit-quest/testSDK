@@ -155,7 +155,7 @@ function App() {
 
 
 
-                {/* <Tutorial
+                <Tutorial
                     heading={"Tutorial Screen"}
                     subheading={"subheading"}
                     // bgColor="blue"
@@ -166,7 +166,7 @@ function App() {
                     userId={userId}
                     token={token}
                     // textColor="blue"
-                /> */}
+                />
 
 
 

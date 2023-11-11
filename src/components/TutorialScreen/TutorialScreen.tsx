@@ -347,31 +347,8 @@ const Tutorial: React.FC<TutorialProps> = ({
                 </div>
               ))}
             </div>
-            <div style={{ paddingBottom: "20px" }} className="q-tut-btn-cont">
-              {/* <button
-                style={{
-                  backgroundColor: btnColor,
-                  fontFamily: font,
-                  color: btnTextColor,
-                }}
-                className={`q-tut-btn ${currentStep === 0 ? 'disabled' : ''}`}
-                onClick={handlePrev}
-                disabled={currentStep === 0}
-              >
-                Previous
-              </button> */}
-              <button
-                style={{
-                  backgroundColor: btnColor,
-                  fontFamily: font,
-                  color: btnTextColor,
-                }}
-                className={`q-tut-btn ${currentStep === 0 ? "disabled" : ""}`}
-                onClick={handleSkipStep}
-                disabled={currentStep === formdata.length - 1}
-              >
-                Skip
-              </button>
+            <div style={{ backgroundColor: btnColor, color: btnTextColor}} onClick={handleSkipStep} className="q-tut-btn-cont">
+              Skip
             </div>
           </div>
         </div>

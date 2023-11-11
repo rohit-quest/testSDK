@@ -45,6 +45,7 @@ interface Metadata {
     importance: string;
     xp: number;
     frequency: string;
+    icon: string
 }
 
 interface Data {

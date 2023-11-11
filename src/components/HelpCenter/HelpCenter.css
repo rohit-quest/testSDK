@@ -103,7 +103,7 @@
 .q-help-ask {
     display: flex;
     gap: 12px;
-    padding: 0 20px;
+    padding: 0 28px;
     box-sizing: content-box;
     justify-content: center;
     width: calc(100% - 40px);
@@ -148,7 +148,7 @@
     box-sizing: content-box;
     display: flex;
     gap: 10px;
-    width: calc(100% - 53px);
+    width: calc(100% - 50px);
     justify-content: center;
     align-items: center;
     padding: 0 25px;
@@ -200,7 +200,7 @@
     display: flex;
     padding: 12px 16px;
     border: #E2E2E2 solid 2px;
-    width: calc(100% - 60px);
+    width: 80%;
     align-items: center;
     gap: 18px;
     border-radius: 10px;
@@ -210,7 +210,7 @@
 
 .q-help-link-icon {
     box-sizing: content-box;
-    padding: 6px 6px 0px 7px;
+    padding: 6px 6px 3px 7px;
     border-radius: 60%;
     background-color: #141414;
     border: 1px solid rgba(0, 0, 0, 0.25);
@@ -235,7 +235,7 @@
     /* 150% */
 }
 
-.q-help-chat img {
+.q-help-chat-nav img {
     cursor: pointer;
     border-radius: 14px;
     background: var(--neutral-grey-100, #ECECEC);
@@ -341,6 +341,7 @@
     box-sizing: content-box;
     border-radius: 50%;
     padding: 5px;
+    cursor: pointer;
 }
 
 .q-help-chat-nav {
