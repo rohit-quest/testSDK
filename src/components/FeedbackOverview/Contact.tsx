@@ -73,7 +73,7 @@ const ContactContent: React.FC<ContactProps> = ({
     );
   };
   return (
-    <div style={{ padding: '5%' }}>
+    <div style={{ padding: '5%',boxSizing: "content-box" }}>
       {formdata?.length > 0 ? (
         <>
           {formdata.map((data: any) => {

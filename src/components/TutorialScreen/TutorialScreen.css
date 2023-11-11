@@ -7,6 +7,7 @@
 .q-tut-div {
   font-family: Hanken Grotesk;
   text-align: left;
+  box-sizing: content-box;
   padding: 12px 20px;
   background: var(--neutral-pure-black-100, #000);
   display: flex;
@@ -132,7 +133,7 @@
   margin: auto;
   margin-top: 20px;
   margin-bottom: 27px;
-
+  box-sizing: content-box;
   padding: 10px 20px;
   border: 1.5px solid var(--neutral-grey-600, #2B2B2B);
   border-radius: 10px;

@@ -136,7 +136,7 @@ function OtpVerification({
 
   return (
     <div className="questLabs">
-      <div className="embeded-otp">
+      <div style={{ boxSizing: "content-box" }} className="embeded-otp">
         {showLoader && <Loader />}
         <div
           className="q-login-h1"
@@ -159,6 +159,7 @@ function OtpVerification({
             >
               we have sent you one time password to your email{' '}
               <div className='q-resend'>Resend</div>
+
             </div>
           ) : (
             <div
@@ -171,6 +172,7 @@ function OtpVerification({
               we have sent you one time password to your email{' '}
               <div className='q-resend'>
                 {modifyTime(Math.floor(sec / 60))}:{modifyTime(sec % 60)} sec
+
               </div>
             </div>
           )}
@@ -186,7 +188,7 @@ function OtpVerification({
             />
             {OTP.length < 6 && OTP.length > 0 && (
               <div className="q-login-p">
-                {/* <span className="q-err">!</span> */}
+                <div style={{display: "inline"}}  className="q-err">!</div>
                 Please enter a valid OTP
               </div>
             )}

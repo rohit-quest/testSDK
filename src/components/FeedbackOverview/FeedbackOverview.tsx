@@ -681,11 +681,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             <div className="q-fw-heading" style={{backgroundColor: topbarColor}}>
               <div>
                 {backButton(handleBackClick)}
-                <p>{selectedOption}</p>
+                <div>{selectedOption}</div>
               </div>
               <img src={crossCircle} onClick={handleBackClick} alt="" />
             </div>
-            <div style={{ padding: '20px 28px' }}>
+            <div style={{ padding: '20px 28px', boxSizing: "content-box" }}>
               {selectedOption === 'General Feedback' && (
                 <GeneralFeedbackContent
                   starColor={starColor}
@@ -759,10 +759,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               <div>
                 {thanks}
                 <div>
-                  <p style={{ fontSize: '30px', fontWeight: 'bold' }}>
+                  <div style={{ fontSize: '30px', fontWeight: 'bold' }}>
                     Thank you !
-                  </p>
-                  <p>We really appreciate your feedback.</p>
+                  </div>
+                  <div>We really appreciate your feedback.</div>
                 </div>
               </div>
             </div>
@@ -784,12 +784,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               >
                 {feedback}
                 <div style={{ marginLeft: '8px' }}>
-                  <h4 style={{ fontSize: '18px', fontWeight: '600' }}>
+                  <div style={{ fontSize: '18px', fontWeight: '600' }}>
                     General Feedback
-                  </h4>
-                  <p style={{ color: '#6B7280' }}>
+                  </div>
+                  <div style={{ color: '#6B7280' }}>
                     Give general feedback on this page
-                  </p>
+                  </div>
                 </div>
               </div>
             )}
@@ -801,14 +801,14 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 {bug}
                 <div style={{ marginLeft: '10px' }}>
                   <div>
-                    <h4 style={{ fontSize: '18px', fontWeight: '600' }}>
+                    <div style={{ fontSize: '18px', fontWeight: '600' }}>
                       Report a Bug
-                    </h4>
+                    </div>
                   </div>
                   <div>
-                    <p style={{ color: '#6B7280' }}>
+                    <div style={{ color: '#6B7280' }}>
                       Let us know what's broken
-                    </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -821,14 +821,14 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 <div>{feature}</div>
                 <div style={{ marginLeft: '10px' }}>
                   <div>
-                    <h4 style={{ fontSize: '18px', fontWeight: '600' }}>
+                    <div style={{ fontSize: '18px', fontWeight: '600' }}>
                       Request a Feature
-                    </h4>
+                    </div>
                   </div>
                   <div>
-                    <p style={{ color: '#6B7280' }}>
+                    <div style={{ color: '#6B7280' }}>
                       Tell us how we can improve
-                    </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -841,19 +841,19 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 <div>{contact}</div>
                 <div style={{ marginLeft: '10px' }}>
                   <div>
-                    <h4 style={{ fontSize: '18px', fontWeight: '600' }}>
+                    <div style={{ fontSize: '18px', fontWeight: '600' }}>
                       Contact us
-                    </h4>
+                    </div>
                   </div>
                   <div>
-                    <p style={{ color: '#6B7280' }}>Tell us how we can help</p>
+                    <div style={{ color: '#6B7280' }}>Tell us how we can help</div>
                   </div>
                 </div>
               </div>
             )}
           </div>
           <div>
-            <p
+            <div
             onClick={() => window.open('https://questlabs.ai', "_blank")}
               className="fd-powered-by"
               style={{
@@ -862,7 +862,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               }}
             >
               Powered by Quest Labs
-            </p>
+            </div>
           </div>
           </div>
         )}

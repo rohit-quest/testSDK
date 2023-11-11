@@ -113,7 +113,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
           <div className='q-login-body'>
             {!otpScreen && (
               <>
-                <h1
+                <div
                   className="q-login-h1"
                   style={{
                     color: textColor,
@@ -121,8 +121,8 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   }}
                 >
                   Welcome Back
-                </h1>
-                <h4
+                </div>
+                <div
                   className="q-login-h4"
                   style={{
                     color: textColor,
@@ -130,7 +130,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   }}
                 >
                   Welcome Back, Please enter your details
-                </h4>
+                </div>
               </>
             )}
             {isEmail && (
@@ -157,12 +157,12 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                 {!otpScreen && isGoogle && (
                   <div className="q-login-or-container">
                     <div className="login-or-line"></div>
-                    <span
-                      style={{ color: textColor, fontFamily, }}
+                    <div
+                      style={{ color: textColor, fontFamily, display: "inline" }}
                       className='q-or-continue'
                     >
                       Or Continue With
-                    </span>
+                    </div>
                     <div className="login-or-line"></div>
                   </div>
                 )}
@@ -208,7 +208,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
               }}
             >
               Powered by Quest Labs
-            </p> */}
+            </div> */}
           </div>
         </div>
       </div>

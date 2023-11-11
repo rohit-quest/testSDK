@@ -16,9 +16,9 @@ function SimpleBarChart(prop: any) {
                 <div className="custom-tooltip" style={{color: textColor}}>
                     {
                         !!data[0]?.metric && 
-                        <p>Metric: {payload[0].payload.metric}</p>
+                        <div>Metric: {payload[0].payload.metric}</div>
                     }
-                    <span className="label">{`${type} : ${payload[0].value}`}</span>
+                    <div style={{display: "inline"}} className="label">{`${type} : ${payload[0].value}`}</div>
                 </div>
             );
         }

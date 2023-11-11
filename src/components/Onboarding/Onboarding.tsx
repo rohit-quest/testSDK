@@ -143,6 +143,7 @@ function OnBoarding(props: QuestLoginProps) {
             const body = {
                 externalUserId: !!personalUserId && personalUserId._id,
                 entityId: entityId,
+                emails: personalUserId.Email
             }
             
             getQuestData(userId, headers)
@@ -150,7 +151,7 @@ function OnBoarding(props: QuestLoginProps) {
             if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == personalUserId._id) {
                 let header = {...headers, ...{questUserId, questUserToken}}
                 axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers: header})
-            } else {
+            } else if (!!personalUserId) {
                 axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
                 .then((res) => {
                     let {userId, token} = res.data;
@@ -439,7 +440,7 @@ function OnBoarding(props: QuestLoginProps) {
                             onChange={(e) => handleUpdate(e, criteriaId, "")}
                             className="q-onb-custom-datePicker"
                         />
-                        <button id="q-onb-custom-date-text">{answer[criteriaId] ? <span>{answer[criteriaId]}</span> : <span style={{color:"#8E8E8E"}}>{placeholder}</span>}</button>
+                        <button id="q-onb-custom-date-text">{answer[criteriaId] ? <div style={{display: "inline"}} >{answer[criteriaId]}</div> : <div style={{display: "inline"}} style={{color:"#8E8E8E"}}>{placeholder}</div>}</button>
                     </label>
                     {crossLogo(criteriaId, handleRemove)}
                 </div>
@@ -549,18 +550,22 @@ function OnBoarding(props: QuestLoginProps) {
                     options={options.map((opt: string) => {return {value: opt, label: opt}})} 
                     onChange={(e) => handleUpdate({target: e}, criteriaId, "")}
                     styles={customStyles}
+                    value={{value: answer[criteriaId], label: answer[criteriaId]}}
                 />
                 {manualInput != false && answer[criteriaId] == manualInput &&
-                    <input 
-                        type="text" 
-                        name="" 
-                        id="" 
-                        className="q-onb-input"
-                        style={{marginTop: "10px"}}
-                        placeholder="Please fill manually"
-                        onChange={(e) => handleUpdate(e, (criteriaId + "/manual"), "")}
-                        value={answer[criteriaId + "/manual"]}
-                    />
+                    <div className="q-onb-input" style={{border: inputBorder, marginTop: "10px"}}>
+                        {userLogo()}
+                        <input
+                            type="text"
+                            id="normalInput"
+                            name="normalInput"
+                            style={{ backgroundColor: inputBgColor, fontSize: answerFontSize }}
+                            onChange={(e) => handleUpdate(e, (criteriaId + "/manual"), "")}
+                            value={answer[criteriaId + "/manual"]}
+                            placeholder="Please fill manually"
+                        />
+                        {crossLogo(criteriaId + "/manual", handleRemove)}
+                    </div>
                 }
             </div>
         );
@@ -582,12 +587,12 @@ function OnBoarding(props: QuestLoginProps) {
                         {customComponents}
                     </div>
                 }
-                <p
+                <div
                     className="q-onb-singleChoiceOne-lebel"
                     style={{ color: color }}
                 >
                     {question} {required && "*"}
-                </p>
+                </div>
                 <div className="q-onb-singleChoiceOne-optDiv">
                     {options.map((option: string, id: number) => (
                         <div className="q-onb-singleChoiceOne-chDiv" key={id}>
@@ -643,12 +648,12 @@ function OnBoarding(props: QuestLoginProps) {
                         {customComponents}
                     </div>
                 }
-                <p
+                <div
                     className="q-onb-singleChoiceOne-lebel"
                     style={{ color: color }}
                 >
                     {question} {required && "*"}
-                </p>
+                </div>
                 <div className="q-onb-singleChoiceOne-optDiv">
                     {options.map((option: string, id: number) => (
                         <div className="q-onb-singleChoiceOne-chDiv" key={id}>
@@ -694,12 +699,12 @@ function OnBoarding(props: QuestLoginProps) {
                         {customComponents}
                     </div>
                 }
-                <p
+                <div
                     className="q-onb-lebels"
                     style={{ color: color }}
                 >
                     {question} {required && "*"}
-                </p>
+                </div>
                 <ul className="q-onb-miltiChoiceOne-ul">
                     {options.map((option: string, id: number) => (
                         <li key={id} style={{listStyleType: "none"}}>
@@ -764,7 +769,7 @@ function OnBoarding(props: QuestLoginProps) {
                     <div className="q-onb-link-div">
                         <img src={chooseLogo(linkUrl)} style={{width: linksLogoWidth }}/>
                         <div className="q-onb-link-div-ch">
-                            <p style={{ color: color ? color : "black" }}>{linkTitle}</p>
+                            <div style={{ color: color ? color : "black" }}>{linkTitle}</div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
                                 <path d="M2 11H14.2L8.6 16.6L10 18L18 10L10 2L8.6 3.4L14.2 9H2V11Z" className="q-onb-arrow"/>
                             </svg>
@@ -811,23 +816,24 @@ function OnBoarding(props: QuestLoginProps) {
                 let id: string = i.split("/manual")[0];
                 let criteriaDetails: FormData[] = formdata.filter((item) => item.criteriaId == id)
                 if (criteriaDetails[0].manualInput == crt[id]) {
-                    crt[id] = crt[id] + ":" + crt[i];
+                    crt[id] = crt[i];
                 }
             }
         }
         
-        let ansArr: Answer[] = formdata.map((ans: FormData) => {
-            return {
-                question: ans?.question,
-                answer: crt[ans?.criteriaId] || "",
-            };
-        });
+        // let ansArr: Answer[] = formdata.map((ans: FormData) => {
+        //     return {
+        //         question: ans?.question,
+        //         answer: crt[ans?.criteriaId] || "",
+        //     };
+        // });
         
         let criterias = Object.keys(crt)
         .filter((key: string) => !key.includes("/manual"))
         .map((key: string) => ({
             criteriaId: key,
             answer: typeof crt[key] === "object" ? crt[key] : [crt[key]],
+            question: formdata[formdata.findIndex(ele => ele.criteriaId == key)].question
         }));
 
         
@@ -841,7 +847,7 @@ function OnBoarding(props: QuestLoginProps) {
             token: questUserToken ? questUserToken : token
         }
 
-        getAnswers(ansArr);
+        getAnswers(crt);
         
         axios.post(`${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`, {criterias, userId: headers.userId}, {headers})
 
@@ -862,28 +868,28 @@ function OnBoarding(props: QuestLoginProps) {
                 {formdata.length > 0 && !!headingScreen &&
                     (typeof headingScreen == "object" && !!headingScreen.name ? (
                         <div className="q-onb-main-heading">
-                            <h3 className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
+                            <div className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
                                 {headingScreen?.name}
-                            </h3>
-                            <h4 className="q-onb-main-h4" style={{ fontSize: descSize, textAlign: headingAlignment }}>{headingScreen?.desc}</h4>
+                            </div>
+                            <div className="q-onb-main-h4" style={{ fontSize: descSize, textAlign: headingAlignment }}>{headingScreen?.desc}</div>
                         </div>
                     ) : !!headingScreen[currentPage] ? (
                         <div className="q-onb-main-heading">
-                            <h3 className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
+                            <div className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
                                 {headingScreen[currentPage]?.name}
-                            </h3>
-                            <h4 className="q-onb-main-h4" style={{ fontSize: descSize, textAlign: headingAlignment }}>
+                            </div>
+                            <div className="q-onb-main-h4" style={{ fontSize: descSize, textAlign: headingAlignment }}>
                                 {headingScreen[currentPage]?.desc}
-                            </h4>
+                            </div>
                         </div>
                     ) : (
                         <div className="q-onb-main-heading">
-                            <h3 className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
+                            <div className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
                                 {headingScreen[0]?.name}
-                            </h3>
-                            <h4 className="q-onb-main-h4" style={{ fontSize: descSize, textAlign: headingAlignment }}>
+                            </div>
+                            <div className="q-onb-main-h4" style={{ fontSize: descSize, textAlign: headingAlignment }}>
                                 {headingScreen[0]?.desc}
-                            </h4>
+                            </div>
                         </div>
                     ))}
                 <div className="q-onb-main-first" style={{fontSize: questionFontSize}}>

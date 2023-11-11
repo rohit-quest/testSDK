@@ -33,7 +33,7 @@ const Loader: FC = () => {
               position: 'relative',
             }}
           >
-            <span
+            <div
               style={{
                 position: 'absolute',
                 width: '0',
@@ -43,10 +43,11 @@ const Loader: FC = () => {
                 border: '0',
                 padding: '0',
                 clip: 'rect(0,0,0,0)',
+                display: "inline"
               }}
             >
               Loading...
-            </span>
+            </div>
           </div>
         </div>
       </div>

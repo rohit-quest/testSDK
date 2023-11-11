@@ -17,7 +17,7 @@ const VisitStreak = ({days=0,color="black",backgroundColor="white"}) => {
                 <div style={{position: "relative"}}>
                     <img src={streakBg} alt=""  className='q-streak-img'/>
                     <img src={streak} alt='' className='q-streak-simg'/>
-                    <span className='q-streak-count'>{days}</span>
+                    <div style={{display: "inline"}} className='q-streak-count'>{days}</div>
                 </div>
             </div>
         </div>

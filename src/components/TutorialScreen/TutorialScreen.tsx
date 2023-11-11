@@ -193,8 +193,8 @@ const Tutorial: React.FC<TutorialProps> = ({
             className="q-tut-div"
           >
             <div>
-              <h2 className="q-tut-head">{heading}</h2>
-              <p className="q-tut-subhead">{subheading}</p>
+              <div className="q-tut-head">{heading}</div>
+              <div className="q-tut-subhead">{subheading}</div>
             </div>
             <div className="q-tut-bar-icons">
               {/* <span onClick={() => setMin(true)}>
@@ -271,6 +271,7 @@ const Tutorial: React.FC<TutorialProps> = ({
                 <div
                   style={{
                     padding: '0% 4% 2% 4%',
+                    boxSizing: "content-box",
                     fontFamily: font,
                     color: textColor,
                   }}
@@ -330,7 +331,7 @@ const Tutorial: React.FC<TutorialProps> = ({
                           marginTop: "-3px",
                         }}
                       >
-                        <h3 className="q-tut-title">{step.title}</h3>
+                        <div className="q-tut-title">{step.title}</div>
                       </div>
 
                       {/* <div

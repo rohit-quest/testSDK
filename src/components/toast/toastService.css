@@ -3,7 +3,8 @@
   top: 1rem;
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 500ms; /* Keep one transition-duration */
+  transition-duration: 500ms;
+  /* Keep one transition-duration */
   cursor: pointer;
   right: 4%;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.29);
@@ -23,7 +24,8 @@
 .q-toast-msg-div {
   font-size: 0.75rem;
   display: flex;
-  gap: 10px; /* Ensure this is used appropriately in your layout */
+  gap: 10px;
+  /* Ensure this is used appropriately in your layout */
   line-height: 1rem;
   font-weight: 500;
   color: #000000;
@@ -43,6 +45,7 @@
 .q_toast_success {
   display: flex;
   height: 37px;
+  box-sizing: content-box;
   padding: 12px 20px;
   align-items: center;
   gap: 12px;
@@ -53,12 +56,14 @@
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
-  line-height: 28px; /* 155.556% */
+  line-height: 28px;
+  /* 155.556% */
 }
 
 .q_toast_error {
   display: flex;
   height: 37px;
+  box-sizing: content-box;
   padding: 12px 20px;
   align-items: center;
   gap: 12px;
@@ -69,12 +74,14 @@
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
-  line-height: 28px; /* 155.556% */
+  line-height: 28px;
+  /* 155.556% */
 }
 
 .q_toast_warn {
   display: flex;
   height: 37px;
+  box-sizing: content-box;
   padding: 12px 20px;
   align-items: center;
   gap: 12px;
@@ -85,12 +92,14 @@
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
-  line-height: 28px; /* 155.556% */
+  line-height: 28px;
+  /* 155.556% */
 }
 
 .q_toast_primary {
   display: flex;
   height: 37px;
+  box-sizing: content-box;
   padding: 12px 20px;
   align-items: center;
   gap: 12px;
@@ -101,5 +110,6 @@
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
-  line-height: 28px; /* 155.556% */
+  line-height: 28px;
+  /* 155.556% */
 }

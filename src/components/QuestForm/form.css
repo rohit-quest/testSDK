@@ -10,14 +10,17 @@
         transform: translateY(0);
         opacity: 1
     }
+
     49% {
         transform: translateY(-100vh);
         opacity: 0
     }
+
     50% {
         transform: translateY(100vh);
         opacity: 0
     }
+
     100% {
         transform: translateY(0);
         opacity: 1
@@ -29,14 +32,17 @@
         transform: translateY(0);
         opacity: 1
     }
+
     49% {
         transform: translateY(100vh);
         opacity: 0
     }
+
     50% {
         transform: translateY(-100vh);
         opacity: 0
     }
+
     100% {
         transform: translateY(0);
         opacity: 1
@@ -57,6 +63,7 @@
 }
 
 .q-form-text-area {
+    box-sizing: content-box;
     padding: 10px;
 }
 
@@ -108,6 +115,7 @@
 
 .q-form-multi-for {
     display: inline-flex;
+    box-sizing: content-box;
     padding: 0.25rem 1.25rem;
     justify-content: space-between;
     align-items: center;
@@ -124,7 +132,7 @@
     background-color: #F9FAFB;
 }
 
-.q-form-multi-li:checked + .q-form-multi-for {
+.q-form-multi-li:checked+.q-form-multi-for {
     color: white;
     background-color: #01172c;
 }
@@ -164,6 +172,7 @@
 }
 
 .q-form-date-input {
+    box-sizing: content-box;
     padding: 0.75rem;
     border-radius: 0.25rem;
     border-style: none;
@@ -175,6 +184,7 @@
 }
 
 .q-form-date-input:focus {
+    box-sizing: content-box;
     padding: 0.75rem;
     width: 100%;
 }
@@ -182,6 +192,7 @@
 .q-form-survey {
     display: flex;
     position: absolute;
+    box-sizing: content-box;
     padding: 2.5rem;
     border-radius: 10px;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
@@ -193,13 +204,14 @@
     min-width: 400px;
 }
 
-.q-form-survey-h4,.q-form-font-normal {
+.q-form-survey-h4,
+.q-form-font-normal {
     font-weight: 400;
     max-height: 100px;
     overflow-y: auto;
 }
 
-.q-form-font-normal{
+.q-form-font-normal {
     max-width: 80%;
 }
 
@@ -237,6 +249,7 @@
 
 .q-form-survey-prev {
     display: inline-flex;
+    box-sizing: content-box;
     padding: 1.5rem 2.75rem;
     gap: 0.5rem;
     justify-content: center;
@@ -257,6 +270,7 @@
     display: inline-flex;
     background: black;
     color: white;
+    box-sizing: content-box;
     padding: 1.5rem 2.75rem;
     gap: 0.5rem;
     justify-content: center;
@@ -278,6 +292,7 @@
 .q-form-first {
     display: flex;
     position: absolute;
+    box-sizing: content-box;
     padding: 2.5rem;
     flex-direction: column;
     gap: 3rem;
@@ -308,6 +323,7 @@
 .q-form-first-next {
     cursor: pointer;
     display: inline-flex;
+    box-sizing: content-box;
     padding: 1rem 2.75rem;
     gap: 0.5rem;
     justify-content: center;
@@ -350,36 +366,42 @@
     height: 100%;
 }
 
-.q-form-survey-input-div{
+.q-form-survey-input-div {
     width: 100%;
 }
 
 @media only screen and (max-width: 1000px) {
-   .q-form-survey-div{
-       flex-wrap: wrap;
-   }
-}@media only screen and (max-width: 700px) {
-   .q-form-survey-div{
-       flex-wrap: wrap;
-   }
-    .q-form{
+    .q-form-survey-div {
+        flex-wrap: wrap;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .q-form-survey-div {
+        flex-wrap: wrap;
+    }
+
+    .q-form {
         align-items: center;
     }
-    .q-form-survey{
+
+    .q-form-survey {
         align-items: center;
         min-width: 200px;
     }
-    .q-form-div{
+
+    .q-form-div {
+        box-sizing: content-box;
         width: 80%;
         padding: 0;
     }
 }
 
-.q-form input[type='date']{
+.q-form input[type='date'] {
     width: 130px;
 }
 
-.q-input-alert{
+.q-input-alert {
     display: flex;
     justify-content: start;
     padding-top: 5px;

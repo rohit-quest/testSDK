@@ -65,21 +65,22 @@ const PaymentGateway: FC<PaymentGateway> = ({
     });
 
 
-    
+
     return (
-        <div className="q-pyntg-main" style={!!modifyDesigns.pymentGatewayLayout ? modifyDesigns.pymentGatewayLayout == 2 ? {flexDirection: "row"} : {flexDirection: "column"} : {}}>
+        <div className="q-pyntg-main" style={!!modifyDesigns.pymentGatewayLayout ? modifyDesigns.pymentGatewayLayout == 2 ? { flexDirection: "row" } : { flexDirection: "column" } : {}}>
             <div
                 className="q-pyntg-ch"
                 style={{
                     boxShadow: "rgba(0, 0, 0, 0.50) 0px 0px 6px 0px",
                     backgroundColor: `${modifyDesigns.bgColor}`,
                     width: `${modifyDesigns.pymentGatewayLayout == 1 ? "100%" : ""}`,
-                    padding: `${modifyDesigns.pymentGatewayLayout == 1 ? "28px 24px" : ""}`
+                    padding: `${modifyDesigns.pymentGatewayLayout == 1 ? "28px 24px" : ""}`,
+                    boxSizing: "content-box"
                 }}
             >
-                <p className="q-pyntg-ch-div" style={{ color: `${modifyDesigns.fontColor}` }}>Payment</p>
-                <div style={{marginBottom: "1.25rem"}}>
-                    <p style={{ color: `${modifyDesigns.fontColor}`, marginBottom: ".75rem" }}>Card holder name</p>
+                <div className="q-pyntg-ch-div" style={{ color: `${modifyDesigns.fontColor}` }}>Payment</div>
+                <div style={{ marginBottom: "1.25rem" }}>
+                    <div style={{ color: `${modifyDesigns.fontColor}`, marginBottom: ".75rem" }}>Card holder name</div>
                     <input
                         type="text"
                         className="q-pyntg-ch-div-inp"
@@ -89,8 +90,8 @@ const PaymentGateway: FC<PaymentGateway> = ({
                         }}
                     />
                 </div>
-                <div style={{marginBottom: "1.25rem"}}>
-                    <p style={{ color: `${modifyDesigns.fontColor}` }}>Card Number</p>
+                <div style={{ marginBottom: "1.25rem" }}>
+                    <div style={{ color: `${modifyDesigns.fontColor}` }}>Card Number</div>
                     <div
                         className="q-pyntg-ch-div-inp"
                         style={{
@@ -102,7 +103,7 @@ const PaymentGateway: FC<PaymentGateway> = ({
                 </div>
                 <div className="q-pyntg-ch-div2">
                     <div>
-                        <p style={{ color: `${modifyDesigns.fontColor}` }}>Expiration Date</p>
+                        <div style={{ color: `${modifyDesigns.fontColor}` }}>Expiration Date</div>
                         <div
                             className="q-pyntg-ch-div-inp"
                             style={{
@@ -113,7 +114,7 @@ const PaymentGateway: FC<PaymentGateway> = ({
                         </div>
                     </div>
                     <div>
-                        <p style={{ color: `${modifyDesigns.fontColor}` }}>CVV</p>
+                        <div style={{ color: `${modifyDesigns.fontColor}` }}>CVV</div>
                         <div
                             className="q-pyntg-ch-div-inp"
                             style={{
@@ -126,7 +127,7 @@ const PaymentGateway: FC<PaymentGateway> = ({
                 </div>
                 <div className="q-pyntg-ch-div3">
                     <div>
-                        <p style={{ color: `${modifyDesigns.fontColor}` }}>Country</p>
+                        <div style={{ color: `${modifyDesigns.fontColor}` }}>Country</div>
                         <input
                             type="text"
                             className="q-pyntg-ch-div-inp"
@@ -137,7 +138,7 @@ const PaymentGateway: FC<PaymentGateway> = ({
                         />
                     </div>
                     <div>
-                        <p style={{ color: `${modifyDesigns.fontColor}` }}>Zip</p>
+                        <div style={{ color: `${modifyDesigns.fontColor}` }}>Zip</div>
                         <input
                             type="number"
                             className="q-pyntg-ch-div-inp"
@@ -160,57 +161,58 @@ const PaymentGateway: FC<PaymentGateway> = ({
             </div>
             <div
                 className="q-pyntg-rg"
-                style={{ 
+                style={{
                     backgroundColor: `${modifyDesigns.bgColor}`,
                     width: `${modifyDesigns.pymentGatewayLayout == 1 ? "100%" : ""}`
                 }}
             >
                 <div
                     className="q-pyntg-rg-div"
-                    style={{ 
+                    style={{
                         boxShadow: "rgba(0, 0, 0, 0.50) 0px 0px 6px 0px",
-                        padding: `${modifyDesigns.pymentGatewayLayout == 1 ? "28px 24px" : ""}`
+                        padding: `${modifyDesigns.pymentGatewayLayout == 1 ? "28px 24px" : ""}`,
+                        boxSizing: "content-box"
                     }}
                 >
-                    <p
+                    <div
                         className="q-pyntg-rg-div-p"
                         style={{ color: `${modifyDesigns.fontColor}` }}
                     >
                         {!!paymentTier?.creditsTierName &&
-                        paymentTier.creditsTierName
-                            .toLowerCase()
-                            .includes(" plan")
+                            paymentTier.creditsTierName
+                                .toLowerCase()
+                                .includes(" plan")
                             ? paymentTier.creditsTierName
                             : paymentTier.creditsTierName + " Plan"}
-                    </p>
-                    <p
+                    </div>
+                    <div
                         className="q-pyntg-rg-div-p2"
                         style={{ color: `${modifyDesigns.fontColor}` }}
                     >
                         {description}
-                    </p>
+                    </div>
                     <div className="q-pyntg-rg-div-p3">
-                        <p
+                        <div
                             className="q-pyntg-rg-div-p3-p"
                             style={{ color: `${modifyDesigns.fontColor}` }}
                         >
                             ${paymentTier.creditsAmount}
-                        </p>
-                        <p
+                        </div>
+                        <div
                             className="q-pyntg-rg-div-p4"
                             style={{ color: `${modifyDesigns.fontColor}` }}
                         >
                             {paymentTier.recurringTimePeriod == "ONETIME"
                                 ? "/one-time"
                                 : paymentTier.recurringTimePeriod == "MONTHLY"
-                                ? "/months"
-                                : "/years"}
-                        </p>
+                                    ? "/months"
+                                    : "/years"}
+                        </div>
                     </div>
                     <div className="q-pyntg-rg-div-br"></div>
-                    <p className="q-pyntg-rg-div-fea">
+                    <div className="q-pyntg-rg-div-fea">
                         FEATURES
-                    </p>
+                    </div>
                     <div className=" q-pyntg-rg-div2">
                         {!!banefits &&
                             !!banefits.included &&
@@ -224,7 +226,7 @@ const PaymentGateway: FC<PaymentGateway> = ({
                                         }}
                                     >
                                         <img src={tick} className="q-pyntg-rg-div2-img" />
-                                        <p >{banefits}</p>
+                                        <div >{banefits}</div>
                                     </div>
                                 )
                             )}
@@ -237,9 +239,9 @@ const PaymentGateway: FC<PaymentGateway> = ({
                                         key={i}
                                     >
                                         <img src={untick} className="q-pyntg-rg-div2-img" />
-                                        <p color="#9CA3AF">
+                                        <div color="#9CA3AF">
                                             {banefits}
-                                        </p>
+                                        </div>
                                     </div>
                                 )
                             )}

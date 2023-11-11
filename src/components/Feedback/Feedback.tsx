@@ -321,11 +321,11 @@ const Feedback: React.FC<FeedbackProps> = ({
         <div>
           <div className="like-dislike-cont">
             <div className="icon-inside-like-dislike">{tick}</div>
-            <p className="p-2" style={{ color: '#00A96D' }}>
+            <div className="p-2" style={{ color: '#00A96D' }}>
               Thanks again for your feedback.
-            </p>
+            </div>
           </div>
-          <p
+          <div
             style={{
               margin: '5% 0% 1% 0%',
               fontSize: '18px',
@@ -334,7 +334,7 @@ const Feedback: React.FC<FeedbackProps> = ({
             }}
           >
             Tell us more
-          </p>
+          </div>
           <div className="q-fd-input">
               {textAreaIcon()}
               <input
@@ -351,15 +351,16 @@ const Feedback: React.FC<FeedbackProps> = ({
           <div className="q-feed-desc">
             We’re unable to respond directly to your feedback. If you have a
             customer support inquiry, please{' '}
-            <span
+            <div
               onClick={() => (window.location.href = `${supportUrl}`)}
               style={{
                 fontWeight: '600',
                 textDecoration: 'underline',
+                display: "inline"
               }}
             >
               contact customer support.
-            </span>
+            </div>
           </div>
           <div className="q-feed-btns-div">
             <button
@@ -404,7 +405,7 @@ const Feedback: React.FC<FeedbackProps> = ({
                 <div>
                   <div className="q-fd-topbar">
                     <div>
-                      <h2
+                      <div
                         className="q-fd-heading"
                         style={{
                           fontFamily: font,
@@ -413,8 +414,8 @@ const Feedback: React.FC<FeedbackProps> = ({
                         }}
                       >
                         {heading}
-                      </h2>
-                      <p
+                      </div>
+                      <div
                         className="q-fd-sub"
                         style={{
                           fontFamily: font,
@@ -423,11 +424,11 @@ const Feedback: React.FC<FeedbackProps> = ({
                         }}
                       >
                         {subHeading}
-                      </p>
+                      </div>
                     </div>
                     <img src={crossCircle} alt="" />
                   </div>
-                  <form style={{padding: "20px", display: "flex", flexDirection: "column", gap: "12px"}}>
+                  <form style={{padding: "20px",boxSizing: "content-box", display: "flex", flexDirection: "column", gap: "12px"}}>
                     {formdata.map((data: any) => {
                       if (data.type === 'USER_INPUT_TEXT') {
                         return normalInput(
@@ -496,9 +497,9 @@ const Feedback: React.FC<FeedbackProps> = ({
               {thanksPopup && (
                 <div className="like-dislike-cont">
                   <div className="icon-inside-like-dislike">{tick}</div>
-                  <p className="p-2" style={{ color: '#00A96D' }}>
+                  <div className="p-2" style={{ color: '#00A96D' }}>
                     Thanks again for your feedback.
-                  </p>
+                  </div>
                 </div>
               )}
             </>
@@ -509,16 +510,16 @@ const Feedback: React.FC<FeedbackProps> = ({
                   className='q-fd-like-dislike'
                 >
                   <div className='q-fd-like-dislike-txt'>
-                    <h4>
+                    <div>
                       Are these results helpful?
-                    </h4>
-                    <p>
+                    </div>
+                    <div>
                       Your feedback helps us improve search results
-                    </p>
+                    </div>
                   </div>
                   <div className="like-dislike-cont">
-                    <span onClick={() => setLikePopup(true)}>{dislike}</span>
-                    <span onClick={() => setLikePopup(true)}>{like}</span>
+                    <div style={{display: "inline"}}  onClick={() => setLikePopup(true)}>{dislike}</div>
+                    <div style={{display: "inline"}}  onClick={() => setLikePopup(true)}>{like}</div>
                   </div>
                 </div>
               )}
@@ -549,7 +550,7 @@ const Feedback: React.FC<FeedbackProps> = ({
           ) : null
         ) : (
           <div className="">
-            <p className="q-center">Form data is empty</p>
+            <div className="q-center">Form data is empty</div>
           </div>
         )}
       </div>
