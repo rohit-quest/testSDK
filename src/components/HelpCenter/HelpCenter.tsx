@@ -28,7 +28,7 @@ interface HelpProps {
     onClose: Function
 }
 
-type data = [{ title: string, link: string, description: string }] | []
+type data = [{ title: string, link: string, description: string, icon: string }] | []
 let dataBackUP: data = [];
 
 function getResponse(headers: CustomHeaders, entityId: string, questId: string): Promise<any> {
@@ -42,7 +42,8 @@ function getResponse(headers: CustomHeaders, entityId: string, questId: string):
                 return data.map(e => ({
                     title: e.data.metadata.linkActionName,
                     link: e.data.metadata.linkActionUrl,
-                    description: e.data.metadata.linkActionDescription
+                    description: e.data.metadata.linkActionDescription,
+                    icon: e.data.metadata.icon
                 }))
             }
             return []
@@ -114,7 +115,7 @@ export const HelpCenter = (
                         style={{ backgroundColor: headBgColor }}>
                         <div>
                             <div className="q-cht-ch-div-head" style={{ color: headColor }}>Help Center</div>
-                            <div className='q-cht-ch-div-desc' style={{color}}>{descriptioin}</div>
+                            <div className='q-cht-ch-div-desc' style={{ color }}>{descriptioin}</div>
                         </div>
                         <div style={{ display: "flex", cursor: "pointer" }}
                             onClick={() => { setIsOpen(false); onClose(); }}
@@ -126,8 +127,11 @@ export const HelpCenter = (
                         <div className='q-help-ask'>
                             <input className='q-help-ask-input' onChange={(e) => filter(e.target.value)}
                                 placeholder='Ask a question' />
-                            <div style={{display: "inline"}}  className='q-help-search-icon'><SearchSvg /></div>
-                            <div className='q-help-ask-ai' style={{color}} onClick={() => setChat(true)}>Ask AI <AskAiSvg /></div>
+                            <div style={{ display: "inline" }} className='q-help-search-icon'><SearchSvg /></div>
+                            <div className='q-help-ask-ai' style={{ color }} onClick={() => {
+                                setData(dataBackUP);
+                                setChat(true);
+                            }}>Ask AI <AskAiSvg /></div>
                         </div>
                         <div className='q-help-rect'>
                             <img src={helpCenter1} alt={""} />
@@ -139,10 +143,10 @@ export const HelpCenter = (
                                     onClick={() => {
                                         window.open(e.link, '_blank')
                                     }}>
-                                    <div className='q-help-link-icon'><LinkIcon /></div>
+                                    <div className='q-help-link-icon'><img src={e.icon || ""} alt='' /></div>
                                     <div className='q-help-links-div'>
-                                        <div className='q-help-links-name' style={{color}}>{e.title}</div>
-                                        <div className='q-help-links-desc' style={{color}}>{e.description}</div>
+                                        <div className='q-help-links-name' style={{ color }}>{e.title}</div>
+                                        <div className='q-help-links-desc' style={{ color }}>{e.description}</div>
                                     </div>
                                 </div>
                             ))}
