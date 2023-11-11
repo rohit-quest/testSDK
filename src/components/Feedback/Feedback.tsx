@@ -420,7 +420,6 @@ const Feedback: React.FC<FeedbackProps> = ({
                         style={{
                           fontFamily: font,
                           color: textColor,
-                          fontSize: '18px',
                         }}
                       >
                         {subHeading}
