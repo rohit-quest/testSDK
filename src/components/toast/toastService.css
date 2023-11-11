@@ -113,3 +113,8 @@
   line-height: 28px;
   /* 155.556% */
 }
+
+#canvas{
+  position: absolute;
+  top: 0;
+}

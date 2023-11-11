@@ -2,6 +2,7 @@
   background-color: white;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   border-radius: 14px;
+  padding-bottom: 1px;
 }
 
 .q-tut-div {
@@ -107,9 +108,8 @@
 .q-tut-title {
   font-size: 14px;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 20px;
-  margin-bottom: 0.25rem;
 }
 
 .q-tut-button {
@@ -134,7 +134,7 @@
   box-sizing: content-box;
   padding: 10px 20px;line-height: 24px; /* 150% */
   font-weight: 500;
-  margin-bottom: 28px;
+  margin-bottom: 27px;
   border: 2px solid var(--neutral-grey-600, #2B2B2B);
   border-radius: 10px;
 }

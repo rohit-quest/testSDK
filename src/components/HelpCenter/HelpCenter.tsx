@@ -123,7 +123,7 @@ export const HelpCenter = (
                             <CrossIcon />
                         </div>
                     </div>
-                    {chat ? <HelpChat back={() => { setChat(false) }} /> : (<>
+                    {chat ? <HelpChat back={() => { setChat(false) }} /> : (<div className='q-help-section'>
                         <div className='q-help-ask'>
                             <input className='q-help-ask-input' onChange={(e) => filter(e.target.value)}
                                 placeholder='Ask a question' />
@@ -151,7 +151,7 @@ export const HelpCenter = (
                                 </div>
                             ))}
                         </div>
-                    </>)}
+                    </div>)}
                 </div>
             </div>
         </div>);

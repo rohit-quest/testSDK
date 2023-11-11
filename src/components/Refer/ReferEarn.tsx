@@ -65,7 +65,7 @@ export const ReferShare = ({
                 }}
                 src={copy ? tick : copySVG}
                 style={{ cursor: "pointer" }}
-                width="20px"
+                width="16px"
                 alt="tick"
               />
             </div>

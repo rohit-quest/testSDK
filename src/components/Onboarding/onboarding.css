@@ -422,7 +422,6 @@ textarea:focus {
 }
 
 .q-onb-main-arrow2 {
-    box-sizing: content-box;
     padding: 10px;
     border-radius: 50px;
     background: var(--neutral-grey-700, #252525);

@@ -147,8 +147,3 @@ body {
   font-family: inherit;
   padding-top: 2%;
 }
-
-#canvas{
-  position: absolute;
-  top: 0;
-}
