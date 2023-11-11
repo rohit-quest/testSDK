@@ -24,20 +24,21 @@ function SingleLineChart(prop) {
                 <div className="custom-tooltip" style={{ color: textColor }}>
                     {!!payload[0].payload &&
                         Object.keys(payload[0].payload).map((pl, i) => (
-                            <p
+                            <div
                                 className="label"
                                 style={{
                                     fontSize: "10px",
                                     padding: 0,
                                     margin: 0,
+                                    boxSizing: "content-box"
                                 }}
                                 key={i}
-                            >{`${pl} : ${payload[0].payload[pl]}`}</p>
+                            >{`${pl} : ${payload[0].payload[pl]}`}</div>
                         ))}
                 </div>
             ) : (
                 <div className="custom-tooltip" style={{ color: textColor }}>
-                    <span className="label">{`${type} : ${payload[0].value}`}</span>
+                    <div style={{display: "inline"}} >{`${type} : ${payload[0].value}`}</div>
                 </div>
             );
         }

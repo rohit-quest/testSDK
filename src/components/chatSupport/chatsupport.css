@@ -1,6 +1,7 @@
 * {
     margin: 0;
 }
+
 .q-cht-home {
     font-family: "Hanken Grotesk", sans-serif;
     margin: 0;
@@ -28,14 +29,17 @@
     bottom: 1.75rem;
     z-index: 9;
 }
+
 .q-cht-logo1 {
     width: 4rem;
     cursor: pointer;
 }
+
 .q-cht-logo2 {
     width: 5rem;
     cursor: pointer;
 }
+
 .q-cht-ch {
     position: fixed;
     right: 1.75rem;
@@ -49,6 +53,7 @@
     width: 80%;
     z-index: 9;
 }
+
 .q-cht-ch-div {
     display: flex;
     padding-left: 1.5rem;
@@ -61,17 +66,20 @@
     background-color: #000000;
     height: 10%;
 }
+
 .q-cht-ch-div-p {
     font-size: 1.25rem;
     line-height: 1.75rem;
     font-weight: 600;
     color: #ffffff;
 }
+
 .q-cht-ch-div-imgCon {
     width: 1.5rem;
     height: 1.5rem;
     cursor: pointer;
 }
+
 .q-cht-ch-div2 {
     overflow-x: auto;
     padding-top: 1.5rem;
@@ -82,11 +90,13 @@
     line-height: 1.25rem;
     height: 80%;
 }
+
 .q-cht-ch-loading {
     display: flex;
     margin-top: 0.75rem;
     justify-content: flex-start;
 }
+
 .q-cht-ch-loading-div {
     padding-left: 1rem;
     padding-right: 1rem;
@@ -100,6 +110,7 @@
     max-width: 90%;
     background: #eee;
 }
+
 .q-cht-ch-footer {
     display: flex;
     padding-right: 1.5rem;
@@ -111,7 +122,9 @@
     height: 10%;
     border-color: #4b4b4b;
 }
+
 .q-cht-ch-footer-inp {
+    box-sizing: content-box;
     padding: 1.5rem;
     border-bottom-right-radius: 0.75rem;
     border-bottom-left-radius: 0.75rem;
@@ -121,21 +134,25 @@
     background-color: transparent;
     width: 90%;
 }
+
 .q-cht-ch-footer-options {
     display: flex;
     gap: 1rem;
     align-items: center;
 }
+
 .q-cht-ch-footer-options-logo {
     width: 2rem;
     height: 2rem;
     cursor: pointer;
 }
+
 .q-cht-user-div {
     display: flex;
     margin-top: 0.75rem;
     justify-content: flex-end;
 }
+
 .q-cht-user-msg {
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
@@ -150,11 +167,13 @@
     max-width: 90%;
     background: #333;
 }
+
 .q-cht-comp-div {
     display: flex;
     margin-top: 0.75rem;
     justify-content: flex-start;
 }
+
 .q-cht-comp-msg {
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
@@ -174,6 +193,7 @@
     display: flex;
     height: 17px;
 }
+
 .msgTyping .dot {
     animation: mercuryTypingAnimation 1.8s infinite ease-in-out;
     background-color: #6cad96;
@@ -184,15 +204,19 @@
     width: 7px;
     display: inline-block;
 }
+
 .msgTyping .dot:nth-child(1) {
     animation-delay: 200ms;
 }
+
 .msgTyping .dot:nth-child(2) {
     animation-delay: 300ms;
 }
+
 .msgTyping .dot:nth-child(3) {
     animation-delay: 400ms;
 }
+
 .msgTyping .dot:last-child {
     margin-right: 0;
 }
@@ -202,10 +226,12 @@
         transform: translateY(0px);
         background-color: #6cad96;
     }
+
     28% {
         transform: translateY(-7px);
         background-color: #9ecab9;
     }
+
     44% {
         transform: translateY(0px);
         background-color: #b5d9cb;
@@ -228,11 +254,13 @@
         width: 70%;
     }
 }
+
 @media (min-width: 768px) {
     .q-cht-ch {
         width: 50%;
     }
 }
+
 @media (min-width: 1024px) {
     .q-cht-ch {
         width: 33.333333%;

@@ -262,7 +262,7 @@ const QuestChart: FC<QuestChart> = ({
             }}
         >
             <div className="q-ana-tab-div">
-                <p
+                <div
                     className="q-ana-ch-p"
                     style={{ color: headingTextColor ? headingTextColor : "" }}
                 >
@@ -273,7 +273,7 @@ const QuestChart: FC<QuestChart> = ({
                           } Chart of ${
                               dataType == "Metric" ? "Metrics" : questData.title
                           }`}
-                </p>
+                </div>
                 <select onChange={(e) => setSelectedDate(Number(e.target.value))}>
                     <option value="3">3 days</option>
                     <option value="7">7 days</option>

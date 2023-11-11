@@ -1,6 +1,7 @@
 * {
     margin: 0;
 }
+
 .q-ana-home {
     margin: 0;
     line-height: inherit;
@@ -19,8 +20,10 @@
 
 .q-tab-main {
     overflow-x: auto;
+    box-sizing: content-box;
     padding: 1.25rem;
 }
+
 .q-tab-table {
     width: 100%;
     font-size: 0.875rem;
@@ -29,6 +32,7 @@
     color: #6b7280;
     border-collapse: collapse;
 }
+
 .q-tab-thead {
     font-size: 0.75rem;
     line-height: 1rem;
@@ -36,6 +40,7 @@
     text-transform: uppercase;
     background-color: #d1d5db;
 }
+
 .q-tab-thead-th {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
@@ -46,9 +51,11 @@
     transition-duration: 300ms;
     transition-duration: 300ms;
 }
+
 .q-tab-thead-th:hover {
     background-color: #9ca3af;
 }
+
 .q-tab-tbody-th {
     display: flex;
     padding-top: 0.5rem;
@@ -61,11 +68,14 @@
     font-weight: 500;
     color: #374151;
 }
+
 .q-tab-tbody-img {
     border-radius: 100px;
     width: 2.5rem;
 }
+
 .q-tab-tbody-td {
+    box-sizing: content-box;
     overflow: hidden;
     padding: 0.5rem;
     border-color: #d1d5db;
@@ -75,6 +85,7 @@
     white-space: nowrap; */
     max-width: 150px;
 }
+
 .q-tab-toolTip {
     display: inline-block;
     position: absolute;
@@ -101,52 +112,59 @@
 /* CHART */
 .q-ana-ch-main {
     overflow-x: auto;
+    box-sizing: content-box;
     padding: 1.25rem;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.50) 0px 0px 6px 0px;
 }
-.q-ana-ch-p{
+
+.q-ana-ch-p {
     font-size: 20px;
     font-weight: 600;
     font-family: "Hanken Grotesk", sans-serif;
     text-align: center;
 }
 
-.custom-tooltip{
+.custom-tooltip {
     font-size: 12px;
     font-family: "Hanken Grotesk", sans-serif;
     font-weight: 700;
 }
 
-.q-ana-tab-div{
+.q-ana-tab-div {
     display: flex;
     width: 100%;
     justify-content: space-between;
 }
-.q-ana-tab-div>select{
+
+.q-ana-tab-div>select {
     border-radius: 5px;
     width: 100px;
     box-shadow: rgba(0, 0, 0, 0.50) 0px 0px 3px 0px;
 }
-.q-ana-tab-btn{
+
+.q-ana-tab-btn {
     width: 100%;
     text-align: center;
     border-bottom: 2px solid;
+    box-sizing: content-box;
     padding: 8px 0px;
     font-size: 14px;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.5s;
 }
-.q-ana-tab-btn:hover{
+
+.q-ana-tab-btn:hover {
     background-color: #e6e7e8;
 }
 
-.q-tab-loader-div{
+.q-tab-loader-div {
     width: 100%;
     display: flex;
     justify-content: center;
 }
+
 .q-tab-loader {
     border: 4px solid #f3f3f3;
     border-top: 4px solid #3498db;
@@ -157,6 +175,11 @@
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

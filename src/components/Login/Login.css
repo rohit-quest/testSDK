@@ -29,22 +29,23 @@
 }
 .q-login-h1 {
   overflow: hidden;
-  color: #252525;
   text-align: center;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
   line-height: 32px;
   margin-bottom: 8px;
+  color: var(--grey-4, #141414);
+  color: var(--neutral-grey-700, #252525);
 }
 .q-login-h4 {
-  color: #5e5e5e;
   text-align: center;
   font-family: Figtree;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
+  color: var(--neutral-grey-400, #5E5E5E);
 }
 .q-login-or-container {
   margin-top: 12px;
@@ -63,6 +64,7 @@
   text-align: center;
 }
 .q-g-btn {
+  box-sizing: content-box;
   display: flex;
   width: 280px;
   padding: 10px 20px;
@@ -85,6 +87,7 @@
 }
 
 .q-login-body {
+  box-sizing: content-box;
   padding: 20px 28px;
 }
 
@@ -112,6 +115,7 @@
 }
 
 .q-login-email-input {
+  box-sizing: content-box;
   display: flex;
   padding: 10px 12px 10px 32px;
   align-items: center;
@@ -137,6 +141,7 @@
 }
 
 .q-email-btn-continue {
+  box-sizing: content-box ;
   display: flex;
   width: 280px;
   padding: 10px 20px;

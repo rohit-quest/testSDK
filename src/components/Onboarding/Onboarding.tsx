@@ -440,7 +440,7 @@ function OnBoarding(props: QuestLoginProps) {
                             onChange={(e) => handleUpdate(e, criteriaId, "")}
                             className="q-onb-custom-datePicker"
                         />
-                        <button id="q-onb-custom-date-text">{answer[criteriaId] ? <span>{answer[criteriaId]}</span> : <span style={{color:"#8E8E8E"}}>{placeholder}</span>}</button>
+                        <button id="q-onb-custom-date-text">{answer[criteriaId] ? <div style={{display: "inline"}} >{answer[criteriaId]}</div> : <div style={{display: "inline"}} style={{color:"#8E8E8E"}}>{placeholder}</div>}</button>
                     </label>
                     {crossLogo(criteriaId, handleRemove)}
                 </div>
@@ -587,12 +587,12 @@ function OnBoarding(props: QuestLoginProps) {
                         {customComponents}
                     </div>
                 }
-                <p
+                <div
                     className="q-onb-singleChoiceOne-lebel"
                     style={{ color: color }}
                 >
                     {question} {required && "*"}
-                </p>
+                </div>
                 <div className="q-onb-singleChoiceOne-optDiv">
                     {options.map((option: string, id: number) => (
                         <div className="q-onb-singleChoiceOne-chDiv" key={id}>
@@ -648,12 +648,12 @@ function OnBoarding(props: QuestLoginProps) {
                         {customComponents}
                     </div>
                 }
-                <p
+                <div
                     className="q-onb-singleChoiceOne-lebel"
                     style={{ color: color }}
                 >
                     {question} {required && "*"}
-                </p>
+                </div>
                 <div className="q-onb-singleChoiceOne-optDiv">
                     {options.map((option: string, id: number) => (
                         <div className="q-onb-singleChoiceOne-chDiv" key={id}>
@@ -699,12 +699,12 @@ function OnBoarding(props: QuestLoginProps) {
                         {customComponents}
                     </div>
                 }
-                <p
+                <div
                     className="q-onb-lebels"
                     style={{ color: color }}
                 >
                     {question} {required && "*"}
-                </p>
+                </div>
                 <ul className="q-onb-miltiChoiceOne-ul">
                     {options.map((option: string, id: number) => (
                         <li key={id} style={{listStyleType: "none"}}>
@@ -769,7 +769,7 @@ function OnBoarding(props: QuestLoginProps) {
                     <div className="q-onb-link-div">
                         <img src={chooseLogo(linkUrl)} style={{width: linksLogoWidth }}/>
                         <div className="q-onb-link-div-ch">
-                            <p style={{ color: color ? color : "black" }}>{linkTitle}</p>
+                            <div style={{ color: color ? color : "black" }}>{linkTitle}</div>
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
                                 <path d="M2 11H14.2L8.6 16.6L10 18L18 10L10 2L8.6 3.4L14.2 9H2V11Z" className="q-onb-arrow"/>
                             </svg>
@@ -868,28 +868,28 @@ function OnBoarding(props: QuestLoginProps) {
                 {formdata.length > 0 && !!headingScreen &&
                     (typeof headingScreen == "object" && !!headingScreen.name ? (
                         <div className="q-onb-main-heading">
-                            <h3 className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
+                            <div className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
                                 {headingScreen?.name}
-                            </h3>
-                            <h4 className="q-onb-main-h4" style={{ fontSize: descSize, textAlign: headingAlignment }}>{headingScreen?.desc}</h4>
+                            </div>
+                            <div className="q-onb-main-h4" style={{ fontSize: descSize, textAlign: headingAlignment }}>{headingScreen?.desc}</div>
                         </div>
                     ) : !!headingScreen[currentPage] ? (
                         <div className="q-onb-main-heading">
-                            <h3 className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
+                            <div className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
                                 {headingScreen[currentPage]?.name}
-                            </h3>
-                            <h4 className="q-onb-main-h4" style={{ fontSize: descSize, textAlign: headingAlignment }}>
+                            </div>
+                            <div className="q-onb-main-h4" style={{ fontSize: descSize, textAlign: headingAlignment }}>
                                 {headingScreen[currentPage]?.desc}
-                            </h4>
+                            </div>
                         </div>
                     ) : (
                         <div className="q-onb-main-heading">
-                            <h3 className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
+                            <div className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
                                 {headingScreen[0]?.name}
-                            </h3>
-                            <h4 className="q-onb-main-h4" style={{ fontSize: descSize, textAlign: headingAlignment }}>
+                            </div>
+                            <div className="q-onb-main-h4" style={{ fontSize: descSize, textAlign: headingAlignment }}>
                                 {headingScreen[0]?.desc}
-                            </h4>
+                            </div>
                         </div>
                     ))}
                 <div className="q-onb-main-first" style={{fontSize: questionFontSize}}>

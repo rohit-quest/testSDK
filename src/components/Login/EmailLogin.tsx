@@ -86,12 +86,12 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
       {!sendOTP && (
         <div className="questLabs">
           <div className='q-email-login-ctn'>
-            <p style={{ color: textColor, fontFamily }} className="q-email-text">
+            <div style={{ color: textColor, fontFamily }} className="q-email-text">
               Email
-            </p>
-            <label htmlFor='q_email_login' className='q-email-input'>
-              <img src={emailLogo} className='q-email-logo' alt=''/>
-              <img src={isValidEmail?crossLogo:alertLogo} className='q-email-cross' alt='' onClick={()=>setEmail("")} />
+            </div>
+            <div className='q-email-input'>
+              <img src={emailLogo} className='q-email-logo' alt='' />
+              <img src={isValidEmail ? crossLogo : alertLogo} className='q-email-cross' alt='' onClick={() => setEmail("")} />
               <input
                 id='q_email_login'
                 type="text"
@@ -101,11 +101,11 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                 onKeyUp={handlesubmit}
                 className="q-login-email-input"
               />
-            </label>
+            </div>
             {!isValidEmail && (
-              <p className="q-login-p">
+              <div className="q-login-p">
                 Please enter a valid email id
-              </p>
+              </div>
             )}
             <div
               style={{

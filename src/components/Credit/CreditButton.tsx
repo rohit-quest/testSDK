@@ -19,10 +19,10 @@ const CreditButton: FC<CreditButtonProps> = ({
     return (
         <div className="q-crd-home">
             <div className="q-crdb-div" style={{boxShadow: "rgba(0, 0, 0, 0.50) 0px 0px 6px 0px"}}>
-                <p className="q-crdb-p" style={{ fontSize: `${fontSize}` }}>
+                <div className="q-crdb-p" style={{ fontSize: `${fontSize}` }}>
                     Remaining credits :{" "}
-                    <span style={{ color: "black" }}>{remainingCount}</span>
-                </p>
+                    <div style={{ color: "black", display: "inline" }}>{remainingCount}</div>
+                </div>
                 {!!addButton && (
                     <button
                         onClick={() => buttonFunction()}

@@ -43,19 +43,19 @@ export const ReferShare = ({
     <div className="q-referShare" style={style}>
       <div className="q-referShare-content">
         <div className="q-referShare-content-text">
-          <h3 className="q-referShare-content-head" style={style}>
+          <div className="q-referShare-content-head" style={style}>
             Invite your friends
-          </h3>
-          <p className="q-referShare-content-para" style={style}>
+          </div>
+          <div className="q-referShare-content-para" style={style}>
             Share your unique referral code with friends and receive 10 coins in
             credits each time a friend signs up!
-          </p>
+          </div>
           <div className="q-referShare-referralCode">
-            <p>Referral code</p>
+            <div>Referral code</div>
             <div className="q-referShare-content-rect" style={style}>
-              <span className="q-referShare-content-code" style={style}>
+              <div style={{display: "inline"}} className="q-referShare-content-code" style={style}>
                 {shareCode}
-              </span>
+              </div>
               <img
                 className="q-referEarn-copy-img"
                 onClick={() => {
@@ -71,7 +71,7 @@ export const ReferShare = ({
             </div>
           </div>
           <div className="q-referShare-content-msg">
-            <p style={style}>Share with your community</p>
+            <div style={style}>Share with your community</div>
           </div>
           <div className="q-referShare-content-social">
             {/* Twitter */}
@@ -149,12 +149,12 @@ export const ReferEarn = ({
         </div>
       </PopupComponent>
       <img src={giftPng} className="q-referEarn-gift-img" alt="giftPng" />
-      <h3 className="q-referEarn-head" style={style}>Your referral code:</h3>
-      <p className="q-referEarn-para" style={style}>
+      <div className="q-referEarn-head" style={style}>Your referral code:</div>
+      <div className="q-referEarn-para" style={style}>
         Share your referral code with your friends and get benefits.
-      </p>
+      </div>
       <div className="q-referEarn-rect">
-        <span>{shareCode}</span>
+        <div style={{display: "inline"}}>{shareCode}</div>
         <img
           className="q-referEarn-copy-img"
           style={{ cursor: "pointer" }}

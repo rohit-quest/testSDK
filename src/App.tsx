@@ -51,7 +51,9 @@ function App() {
     }
 
     return (
-        <div style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}>
+        <div
+        // style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
+        >
 
 
 
@@ -62,6 +64,24 @@ function App() {
                 apiSecret={apiSecret}
                 entityId={entityId} featureFlags={{}}
             >
+
+
+
+                {/* <HelpCenter
+                    userId={userId}
+                    token={token}
+                    questId="q-01533080-10f2-4309-b6b8-2e0757196d2b"
+                    onClose={() => {
+                        console.log("closed")
+                    }}
+                // backgroundColor="blue"
+                // color="red"
+                // headColor="yellow"
+                // descriptioin="this is descripiton"
+                /> */}
+
+
+
 
 
 
@@ -138,26 +158,26 @@ function App() {
                 {/* <Tutorial
                     heading={"Tutorial Screen"}
                     subheading={"subheading"}
-                    bgColor="blue"
-                    btnColor="yellow"
-                    btnTextColor="red"
-                    font='sans'
+                    // bgColor="blue"
+                    // btnColor="yellow"
+                    // btnTextColor="red"
+                    // font='sans'
                     questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
                     userId={userId}
                     token={token}
-                    textColor="blue"
-                />*/}
+                    // textColor="blue"
+                /> */}
 
 
 
 
                 {/* <FeedbackWorkflow
-                    font="sans"
-                    textColor="red"
+                    // font="sans"
+                    // textColor="red"
                     isOpen={true}
-                    btnColor="yellow"
-                    btnTextColor="blue"
-                    backgroundColor="skyblue"
+                    // btnColor="yellow"
+                    // btnTextColor="blue"
+                    // backgroundColor="skyblue"
                     questIds={[
                         'q-general-feedback',
                         'q-report-a-bug',
@@ -170,20 +190,21 @@ function App() {
                     contactUrl="https://calendly.com/shubham-quest/chat"
                 /> */}
 
-
-                {/* <Feedback
+{/* 
+                <Feedback
                     userId={userId}
                     token={token}
                     questId={"q-1a12c0e1-35a8-48a3-8cde-a8616f341b88"}
-                    bgColor={"gray"}
-                    font={"sans"}
-                    textColor={"red"}
-                    btnColor={"blue"}
-                    btnTextColor={"yellow"}
+                    // bgColor={"gray"}
+                    // font={"sans"}
+                    // textColor={"red"}
+                    // btnColor={"blue"}
+                    // btnTextColor={"yellow"}
                     heading={"Share Your FeedBack"}
                     subHeading={"How was your experience?"}
-                    supportUrl={supportUrl}
+                    supportUrl={"supportUrl"}
                 /> */}
+
                 {/* <ReferEarn
                     questId={questId}
                     token={token}
@@ -207,8 +228,8 @@ function App() {
                     token={token}
                     userId={userId}
                     isOpen={true}
-                    bgColor="gray"
-                    color="white"
+                    // bgColor="gray"
+                    // color="white"
                 /> */}
 
 
@@ -238,18 +259,6 @@ function App() {
                     redirectURL="https://www.questlabs.ai/"
                 ></QuestLogin> */}
 
-                {/* <HelpCenter
-                    userId={userId}
-                    token={token}
-                    questId="q-01533080-10f2-4309-b6b8-2e0757196d2b"
-                    onClose={() => {
-                        console.log("closed")
-                    }}
-                backgroundColor="blue"
-                color="red"
-                headColor="yellow"
-                descriptioin="this is descripiton"
-                /> */}
 
             </QuestProvider>
             {/*  */}

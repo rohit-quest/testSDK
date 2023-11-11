@@ -123,7 +123,7 @@ function isValidEmail(email: string) {
         </div>
         {
           isValidEmail(answer[criteriaId]) &&
-          <p className='q-input-email-checks'>This is not a valid email</p>
+          <div className='q-input-email-checks'>This is not a valid email</div>
         }
       </div>
     );
@@ -149,7 +149,7 @@ function isValidEmail(email: string) {
               onChange={(e) => handleUpdate(e, criteriaId, "")}
               value={answer[criteriaId]}
               placeholder={placeholder}
-              style={{height: "120px", padding: "0px", fontFamily: "'Figtree', sans-serif"}}
+              style={{height: "120px", padding: "0px", boxSizing:"content-box" , fontFamily: "'Figtree', sans-serif"}}
             />
             {crossLogo(criteriaId, handleRemove)}
         </div>
@@ -206,7 +206,8 @@ function isValidEmail(email: string) {
                             background: num <= rating ? "#000" : "#fff",
                             padding: "10px 12px",
                             textAlign: "center",
-                            cursor: "pointer"
+                            cursor: "pointer",
+                            boxSizing:"content-box"
                           }}
                           key={num}
                           onClick={(e) =>

@@ -280,7 +280,7 @@ export const QuestForm = (props: questFormPropType) => {
         return (<>
             {!!criteria.length && (
                 <div style={{ boxShadow: `0 0 5px ${shadowColor}` }} className={`${anime} q-form-survey`}>
-                    <h4 className={`q-form-survey-h4`} style={{ fontSize: descSize }}>{subj?.title}</h4>
+                    <div className={`q-form-survey-h4`} style={{ fontSize: descSize }}>{subj?.title}</div>
                     <div className='q-form-survey-input-div'>
                         {(() => {
                             switch (subj.criteriaType) {
@@ -363,9 +363,9 @@ export const QuestForm = (props: questFormPropType) => {
         }
         return (<>
             {!!subject && (<div style={{ boxShadow: `0 0 5px ${shadowColor}` }} className={'q-form-first ' + anime}>
-                <h2 className={`q-form-first-h2`} style={{ color }}>{subject?.data.title}</h2>
-                <h4 style={{ color, fontSize: headingSize }}
-                    className={`q-form-font-normal`}>{subject.data.description}</h4>
+                <div className={`q-form-first-h2`} style={{ color }}>{subject?.data.title}</div>
+                <div style={{ color, fontSize: headingSize }}
+                    className={`q-form-font-normal`}>{subject.data.description}</div>
                 <div className='q-form-first-div'>
                     <button
                         onClick={() => setPage(c => c + 1)}

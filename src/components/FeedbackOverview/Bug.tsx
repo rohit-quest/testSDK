@@ -90,7 +90,7 @@ const BugContent: React.FC<BugContentProps> = ({
         </div>
         {
           isValidEmail(answer[criteriaId]) &&
-          <p className='q-input-email-checks'>This is not a valid email</p>
+          <div className='q-input-email-checks'>This is not a valid email</div>
         }
       </div>
     );
@@ -119,7 +119,7 @@ const BugContent: React.FC<BugContentProps> = ({
               onChange={(e) => handleUpdate(e, criteriaId, "")}
               value={answer[criteriaId]}
               placeholder={placeholder}
-              style={{height: "120px", padding: "0px", fontFamily: "'Figtree', sans-serif"}}
+              style={{height: "120px", padding: "0px", fontFamily: "'Figtree', sans-serif", boxSizing: "content-box"}}
             />
             {crossLogo(criteriaId, handleRemove)}
         </div>

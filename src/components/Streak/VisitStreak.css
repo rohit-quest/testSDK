@@ -5,6 +5,7 @@
     border-radius: 10px;
     gap: 40px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    box-sizing: content-box;
     padding: 16px 21px;
 }
 
@@ -34,7 +35,7 @@
     height: 58px;
 }
 
-.q-streak-simg{
+.q-streak-simg {
     position: absolute;
     top: 25%;
     width: 12px;
@@ -42,7 +43,7 @@
     left: 38%;
 }
 
-.q-streak-count{
+.q-streak-count {
     position: absolute;
     color: #ffffff;
     top: 55%;

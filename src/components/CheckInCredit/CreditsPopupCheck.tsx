@@ -47,8 +47,8 @@ const CreditsPopupCheck: FC<PopupProps> = ({
                                 className="q-creditp-img"
                             />
                         )}
-                        <p className="q-creditp-p1" style={style}>{headingText}</p>
-                        <p className="q-creditp-p2" style={style}>{descText}</p>
+                        <div className="q-creditp-p1" style={style}>{headingText}</div>
+                        <div className="q-creditp-p2" style={style}>{descText}</div>
                         {!!continueButton && (
                             <button
                                 className="q-creditp-btn"

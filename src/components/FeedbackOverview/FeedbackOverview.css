@@ -5,6 +5,7 @@
   color: #f00;
 }
 .q-fw-heading {
+  box-sizing: content-box;
   height: 50px;
   padding: 12px 20px;
   display: flex;
@@ -49,8 +50,9 @@
 .q-fw-cards {
   display: flex;
   align-items: center;
+  box-sizing: content-box;
   cursor: pointer;
-  padding: 6% 12%;
+  padding: 3% 6%;
   border-radius: 0.375rem;
 }
 
@@ -90,6 +92,7 @@
 .q-fdov-input {
   display: flex;
   padding: 10px 12px;
+  box-sizing: content-box;
   align-items: center;
   gap: 8px;
   align-self: stretch;
@@ -118,6 +121,7 @@
   gap: 12px;
 }
 .q-fdov-btn-continue{
+  box-sizing: content-box;
   padding: 10px 20px;
   border-radius: 10px;
   background: var(--neutral-grey-700, #252525);
