@@ -67,7 +67,7 @@ function App() {
 
 
 
-                {/* <HelpCenter
+                <HelpCenter
                     userId={userId}
                     token={token}
                     questId="q-01533080-10f2-4309-b6b8-2e0757196d2b"
@@ -78,7 +78,7 @@ function App() {
                 // color="red"
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
-                /> */}
+                />
 
 
 
@@ -155,7 +155,7 @@ function App() {
 
 
 
-                <Tutorial
+                {/* <Tutorial
                     heading={"Tutorial Screen"}
                     subheading={"subheading"}
                     // bgColor="blue"
@@ -166,7 +166,7 @@ function App() {
                     userId={userId}
                     token={token}
                     // textColor="blue"
-                />
+                /> */}
 
 
 

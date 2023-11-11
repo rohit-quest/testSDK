@@ -8,6 +8,7 @@
   cursor: pointer;
   right: 4%;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.29);
+  font-family: 'Figtree';
   border-radius: 5px;
 }
 
@@ -112,4 +113,9 @@
   font-weight: 600;
   line-height: 28px;
   /* 155.556% */
+}
+
+#canvas{
+  position: absolute;
+  top: 0;
 }
