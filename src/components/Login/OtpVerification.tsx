@@ -18,7 +18,7 @@ interface OtpVerificationProps {
   apiKey: string;
   apiSecret: string;
   btnTextColor?: string;
-  onSubmit?: ({userId,token}:{userId: string, token: string}) => void;
+  onSubmit?: ({ userId, token }: { userId: string, token: string }) => void;
 }
 
 function OtpVerification({
@@ -86,6 +86,7 @@ function OtpVerification({
         }
       );
 
+      
       if (response.data.success) {
         toast.success('Congratulations!!!' + '\n' + 'Successfully Logged in');
         if (onSubmit) {
@@ -124,6 +125,7 @@ function OtpVerification({
           setsec(120);
         }
       })
+      
       .catch((err) => {
         console.error(err);
       })
@@ -134,9 +136,9 @@ function OtpVerification({
 
   return (
     <div className="questLabs">
-      <div style={{ padding: '3%',boxSizing: "content-box" }} className="embeded-otp">
+      <div style={{ boxSizing: "content-box" }} className="embeded-otp">
         {showLoader && <Loader />}
-        <h1
+        <div
           className="q-login-h1"
           style={{
             color: textColor,
@@ -144,8 +146,8 @@ function OtpVerification({
           }}
         >
           Please Enter OTP
-        </h1>
-        <div style={{ marginTop: '5%' }}>
+        </div>
+        <div style={{ marginTop: '8px' }}>
           {sec === 0 ? (
             <div
               className="q-resend"
@@ -156,7 +158,8 @@ function OtpVerification({
               onClick={sendOTPfunction}
             >
               we have sent you one time password to your email{' '}
-              <div style={{ fontWeight: 'bold', display: "inline" }}>Resend</div>
+              <div className='q-resend'>Resend</div>
+
             </div>
           ) : (
             <div
@@ -167,18 +170,21 @@ function OtpVerification({
               }}
             >
               we have sent you one time password to your email{' '}
-              <div style={{ fontWeight: 'bold', display: "inline" }}>
-                {modifyTime(Math.floor(sec / 60))}:{modifyTime(sec % 60)}
+              <div className='q-resend'>
+                {modifyTime(Math.floor(sec / 60))}:{modifyTime(sec % 60)} sec
+
               </div>
             </div>
           )}
-          <div style={{ marginTop: '10%' }}>
+          <div style={{ marginTop: '20px' }}>
+            <div className='q-otp-label'>Enter your otp</div>
             <OTPInput
               onChange={handleChange}
               value={OTP}
               inputStyle="q-inputStyle"
+              containerStyle='q-containerStyle'
               numInputs={6}
-              renderInput={(props) => <input {...props} />}
+              renderInput={(props) => <input {...props} placeholder={'-'} />}
             />
             {OTP.length < 6 && OTP.length > 0 && (
               <div className="q-login-p">
@@ -192,13 +198,13 @@ function OtpVerification({
           style={{
             backgroundColor: btnColor,
             fontFamily,
-            marginTop: '15%',
+            marginTop: '20px',
             color: btnTextColor,
           }}
-          className="q-btn-continue"
+          className="q-email-btn-continue"
           onClick={verifyOTPfunction}
         >
-          Verify OTP
+          Verify with OTP
         </div>
       </div>
     </div>
