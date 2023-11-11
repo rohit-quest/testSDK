@@ -53,7 +53,7 @@ export const ReferShare = ({
           <div className="q-referShare-referralCode">
             <div>Referral code</div>
             <div className="q-referShare-content-rect" style={style}>
-              <div style={{display: "inline"}} className="q-referShare-content-code" style={style}>
+              <div style={{ display: "inline", ...style }} className="q-referShare-content-code" >
                 {shareCode}
               </div>
               <img
@@ -154,7 +154,7 @@ export const ReferEarn = ({
         Share your referral code with your friends and get benefits.
       </div>
       <div className="q-referEarn-rect">
-        <div style={{display: "inline"}}>{shareCode}</div>
+        <div style={{ display: "inline" }}>{shareCode}</div>
         <img
           className="q-referEarn-copy-img"
           style={{ cursor: "pointer" }}
@@ -166,7 +166,7 @@ export const ReferEarn = ({
           alt="tick"
         />
       </div>
-      <button  onClick={() => setshare(true)} className="q-referEarn-invite">
+      <button onClick={() => setshare(true)} className="q-referEarn-invite">
         Invite Friends
       </button>
     </div>
