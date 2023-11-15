@@ -413,8 +413,8 @@ textarea:focus {
     padding: 10px;
     border-radius: 50px;
     border: 2px solid var(--neutral-grey-200, #AFAFAF);
-    height: 44px;
-    width: 44px;
+    /* height: 44px;
+    width: 44px; */
     display: flex;
     justify-content: center;
     align-items: center;

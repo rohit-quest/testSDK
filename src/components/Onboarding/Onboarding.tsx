@@ -550,7 +550,7 @@ function OnBoarding(props: QuestLoginProps) {
                     options={options.map((opt: string) => {return {value: opt, label: opt}})} 
                     onChange={(e) => handleUpdate({target: e}, criteriaId, "")}
                     styles={customStyles}
-                    value={{value: answer[criteriaId], label: answer[criteriaId]}}
+                    value={answer[criteriaId]?{value: answer[criteriaId], label: answer[criteriaId]}:''}
                 />
                 {manualInput != false && answer[criteriaId] == manualInput &&
                     <div className="q-onb-input" style={{border: inputBorder, marginTop: "10px"}}>
