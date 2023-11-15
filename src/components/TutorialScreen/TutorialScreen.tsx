@@ -288,7 +288,7 @@ const Tutorial: React.FC<TutorialProps> = ({
                       alignSelf: "stretch",
                     }}
                   >
-                    <div>
+                    <div style={{height:'24px'}}>
                       {!step.status ? (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -324,7 +324,7 @@ const Tutorial: React.FC<TutorialProps> = ({
                       className="q-tut-step"
                     >
                       <div
-                        className={`${step.status
+                        className={`${!step.status
                           ? "q-tut-title-completed"
                           : "q-tut-title-notcompleted"
                           }`}
