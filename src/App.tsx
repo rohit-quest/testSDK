@@ -6,6 +6,7 @@ import { answer } from "./components/QuestForm/response";
 import { HelpCenter } from "./components/HelpCenter/HelpCenter";
 import { ReferEarn, ReferShare } from "./components/Refer/ReferEarn"
 import { showToast } from "./components/toast/toastService";
+import { QuestForm } from "./components/QuestForm/index"; 
 import Feedback from "./components/Feedback/Feedback";
 import FeedbackWorkflow from "./components/FeedbackOverview/FeedbackOverview";
 import Tutorial from "./components/TutorialScreen/TutorialScreen"
@@ -28,19 +29,19 @@ export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
 function App() {
 
 
-    // const [answer, setAnswer] = useState<answer>([])
+    const [answer, setAnswer] = useState<answer>([])
 
     // Mock CustomButton Component
-    // const CustomButton = () => (
-    //     <button>
-    //         Submit
-    //     </button>
-    // );
+    const CustomButton = () => (
+        <button>
+            Submit
+        </button>
+    );
 
     // Mocked function for getAnswers prop
-    // function printAnswer() {
-    //     showToast.success({ text: "You have submitted the form successfully you can find more on Quest admin dashboard" })
-    // }
+    function printAnswer() {
+        showToast.success({ text: "You have submitted the form successfully you can find more on Quest admin dashboard" })
+    }
 
     const [complete, setComplete] = useState(false)
 
@@ -66,7 +67,7 @@ function App() {
             >
 
 
-
+                {/* 
                 <HelpCenter
                     userId={userId}
                     token={token}
@@ -78,11 +79,17 @@ function App() {
                 // color="red"
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
-                />
+                /> */}
 
 
 
-
+                {/* <QuestForm
+                    userId={userId}
+                    questId={questId}
+                    answer={answer}
+                    setAnswer={setAnswer}
+                    token={token}
+                /> */}
 
 
 
@@ -126,12 +133,12 @@ function App() {
                     setAnswer={setAnswer}
                     token={token}
                     answerFontSize="14px"
-                    progress={["Personal Details","Professional Details", "Additional Details"]}
+                    progress={["Personal Details", "Professional Details", "Additional Details"]}
                     previousBtnText="previous"
                     nextBtnText="next"
                     color=""
                     bgColor="#fff"
-                    controlBtnType="Buttons"
+                    controlBtnType="Arrow"
                     headingSize="24px"
                     descSize="18px"
                     inputFieldType={{
@@ -150,8 +157,8 @@ function App() {
                     customComponents={<CustomButton />}
                     getAnswers={printAnswer}
                     screenHeight=""
-                />
-      */}
+                /> */}
+
 
 
 
@@ -190,7 +197,7 @@ function App() {
                     contactUrl="https://calendly.com/shubham-quest/chat"
                 /> */}
 
-{/* 
+                {/* 
                 <Feedback
                     userId={userId}
                     token={token}

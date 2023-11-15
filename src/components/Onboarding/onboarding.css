@@ -229,8 +229,8 @@ textarea:focus {
 }
 
 .q-onb-main-btn {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: 7px;
+    padding-bottom: 7px;
     padding-left: 1rem;
     padding-right: 1rem;
     margin-right: 0.5rem;
@@ -238,7 +238,7 @@ textarea:focus {
     border-radius: 0.5rem;
     border-width: 2px;
     border-color: #1f2937;
-    font-size: 1.125rem;
+    font-size: 14px;
     line-height: 1.75rem;
     font-weight: 500;
     color: #000000;
@@ -257,13 +257,13 @@ textarea:focus {
 }
 
 .q-onb-main-btn2 {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: 7px;
+    padding-bottom: 7px;
     padding-left: 1rem;
     padding-right: 1rem;
     margin-bottom: 0.5rem;
     border-radius: 0.5rem;
-    font-size: 1.125rem;
+    font-size: 14px;
     line-height: 1.75rem;
     font-weight: 500;
     color: #ffffff;
@@ -290,15 +290,15 @@ textarea:focus {
 }
 
 .q-onb-main-btn3 {
-    padding-top: 14px;
-    padding-bottom: 0.625rem;
+    padding-top: 7px;
+    padding-bottom: 7px;
     padding-left: 1.25rem;
     padding-right: 1.25rem;
     margin-right: 0.5rem;
     margin-bottom: 0.5rem;
     border-radius: 0.5rem;
     width: 100%;
-    font-size: 1.25rem;
+    font-size: 14px;
     line-height: 1.75rem;
     font-weight: 500;
     color: #ffffff;
@@ -409,12 +409,11 @@ textarea:focus {
 }
 
 .q-onb-main-arrow {
-    box-sizing: content-box;
     padding: 10px;
     border-radius: 50px;
     border: 2px solid var(--neutral-grey-200, #AFAFAF);
-    /* height: 44px;
-    width: 44px; */
+    height: 44px;
+    width: 44px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -430,6 +429,7 @@ textarea:focus {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
 .q-onb-custom-date {
