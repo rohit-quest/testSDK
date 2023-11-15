@@ -13,6 +13,7 @@ interface TutorialStep {
   url: string;
   subheading?: string;
   criteriaId?: string;
+  status?: boolean
 }
 
 interface TutorialProps {
@@ -42,7 +43,7 @@ const Tutorial: React.FC<TutorialProps> = ({
   font,
   textColor,
   isOpen = true,
-  onClose = () => {},
+  onClose = () => { },
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
@@ -76,20 +77,21 @@ const Tutorial: React.FC<TutorialProps> = ({
       .then((response) => {
         if (response.data.success) {
           window.open(url, 'smallWindow', 'width=500,height=500');
-          if (currentStep <= formdata.length - 1) {
-            if (!completedSteps.includes(currentStep)) {
-              setTimeout(() => {
-                setCompletedSteps((prevSteps) => [...prevSteps, currentStep]);
-                toast.success('Task completed');
-              }, 1000);
+          const filterData = formdata.map((item) => {
+            if (!item.status && item.criteriaId == id) {
+              item['status'] = true
             }
-            if (currentStep !== formdata.length - 1) {
-              setCurrentStep((prevStep) => prevStep + 1);
-            }
-          }
+            return item
+          })
+          setTimeout(() => {
+            setFormdata(filterData)
+            toast.success('Task completed');
+          }, 1000);
         } else {
           toast.error(response.data.error);
         }
+
+
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -137,7 +139,7 @@ const Tutorial: React.FC<TutorialProps> = ({
     if (bgColor) {
       setGradient(
         bgColor?.includes('linear-gradient') ||
-          bgColor?.includes('radial-gradient')
+        bgColor?.includes('radial-gradient')
       );
     }
     if (entityId) {
@@ -184,7 +186,7 @@ const Tutorial: React.FC<TutorialProps> = ({
         <div className="q-tutorial-cont">
           <div
             style={{
-              height: "52px",  
+              height: "52px",
               borderTopLeftRadius: "14px",
               borderTopRightRadius: "14px",
               fontFamily: font,
@@ -287,7 +289,7 @@ const Tutorial: React.FC<TutorialProps> = ({
                     }}
                   >
                     <div>
-                      {!completedSteps.includes(index) ? (
+                      {!step.status ? (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="20"
@@ -322,11 +324,10 @@ const Tutorial: React.FC<TutorialProps> = ({
                       className="q-tut-step"
                     >
                       <div
-                        className={`${
-                          !completedSteps.includes(index)
-                            ? "q-tut-title-completed"
-                            : "q-tut-title-notcompleted"
-                        }`}
+                        className={`${step.status
+                          ? "q-tut-title-completed"
+                          : "q-tut-title-notcompleted"
+                          }`}
                         style={{
                           marginTop: "-3px",
                         }}
@@ -347,7 +348,7 @@ const Tutorial: React.FC<TutorialProps> = ({
                 </div>
               ))}
             </div>
-            <div style={{ backgroundColor: btnColor, color: btnTextColor}} onClick={handleSkipStep} className="q-tut-btn-cont">
+            <div style={{ backgroundColor: btnColor, color: btnTextColor }} onClick={handleSkipStep} className="q-tut-btn-cont">
               Skip
             </div>
           </div>
