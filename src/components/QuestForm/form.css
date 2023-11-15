@@ -155,8 +155,8 @@
     padding-left: 37px;
     border-radius: 15px;
     color: #000000;
-    font-size: 20px;
-    height: 54px;
+    font-size: 16px;
+    height: 44px;
     background-color: #F6F6F6;
 }
 
@@ -248,20 +248,23 @@
 }
 
 .q-form-survey-prev {
-    display: inline-flex;
-    padding: 1rem 2rem;
-    gap: 0.5rem;
-    justify-content: center;
-    align-items: center;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-right: 0.5rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
     border-radius: 0.5rem;
-    border-width: 1px;
-    border-style: solid;
-    height: 3.5rem;
-    background-color: #ffffff;
-    width: 165px;
-    font-size: 18px;
+    color:white;
+    border-width: 2px;
+    font-size: 14px;
+    line-height: 1.75rem;
+    font-weight: 500;
+    border: 1px solid #000000;
+    color: #000000;
+    min-width: 120px;
     cursor: pointer;
-    border-color: grey;
 }
 
 .q-form-survey-next {
@@ -319,19 +322,22 @@
 }
 
 .q-form-first-next {
-    cursor: pointer;
-    display: inline-flex;
-    padding: 1rem 2.75rem;
-    gap: 0.5rem;
-    justify-content: center;
-    align-items: center;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-right: 0.5rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
     border-radius: 0.5rem;
-    border: 1px solid grey;
-    height: 3.5rem;
-    background: black;
-    color: white;
-    font-size: 18px;
-    width: 165px;
+    color:white;
+    border-width: 2px;
+    font-size: 14px;
+    line-height: 1.75rem;
+    font-weight: 500;
+    background-color: #000000;
+    min-width: 120px;
+    cursor: pointer;
 }
 
 .q-form-first-enter {

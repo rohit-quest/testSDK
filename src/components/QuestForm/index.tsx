@@ -311,14 +311,14 @@ export const QuestForm = (props: questFormPropType) => {
                         </div>}
                     </div>
                     <div className='q-form-survey-div'>
-                        {page > 0 && page < criteria.length - 1 && <button
+                        {page > 0 && page < criteria.length - 1 && <div
                             onClick={() => {
                                 setAnime("scroll-animation-rev")
                                 setPage(c => c - 1)
                             }}
                             className={`q-form-survey-prev`}>Previous
-                        </button>}
-                        {page < criteria.length && <button
+                        </div>}
+                        {page < criteria.length && <div
                             onClick={() => {
                                 if (subj.isOptional || fillVal) {
                                     setAnime("scroll-animation")
@@ -334,9 +334,9 @@ export const QuestForm = (props: questFormPropType) => {
                                     setNext(false)
                                 }
                             }}
-                            className={`q-form-survey-next`}>
+                            className={`q-form-first-next`}>
                             {criteria.length - 1 == page ? "Submit" : "Next"}
-                        </button>}
+                        </div>}
                         {(page < 1) && (<div className='q-form-survey-enter'>
                             Press Enter
                             <img className='w-8' src={enterPng} alt='' /></div>)}
@@ -367,10 +367,10 @@ export const QuestForm = (props: questFormPropType) => {
                 <div style={{ color, fontSize: headingSize }}
                     className={`q-form-font-normal`}>{subject.data.description}</div>
                 <div className='q-form-first-div'>
-                    <button
+                    <div
                         onClick={() => setPage(c => c + 1)}
                         className={`q-form-first-next`}>Next
-                    </button>
+                    </div>
                     <div className='q-form-first-enter'>Press Enter
                         <img width={"35px"} src={enterPng} alt='' /></div>
                 </div>
