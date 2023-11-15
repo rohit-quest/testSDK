@@ -188,7 +188,6 @@ function OtpVerification({
             />
             {OTP.length < 6 && OTP.length > 0 && (
               <div className="q-login-p">
-                <div style={{display: "inline"}}  className="q-err">!</div>
                 Please enter a valid OTP
               </div>
             )}
