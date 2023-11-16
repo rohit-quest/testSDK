@@ -51,8 +51,7 @@ const Tutorial: React.FC<TutorialProps> = ({
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
   const [gradient, setGradient] = useState<boolean>(false);
   const [showLoader, setShowLoader] = useState<boolean>(false);
-  const progressBarWidth = `${(completedSteps.length / formdata.length) * 100
-    }%`;
+  const progressBarWidth = `${(completedSteps.length / formdata.length) * 100}%`;
   const [hoverStates, setHoverStates] = useState(
     Array(formdata.length).fill(true)
   );
@@ -258,7 +257,7 @@ const Tutorial: React.FC<TutorialProps> = ({
                   <div
                     className="progress-bar-fill"
                     style={{
-                      width: progressBarWidth,
+                      width: `${(completedSteps.length / formdata.length) * 100}%`,
                       backgroundColor: "#333333",
                     }}
                   ></div>
