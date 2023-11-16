@@ -1,11 +1,11 @@
 /* Popup Styles */
-.popup {
+.q-refer-popup {
     display: none;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background-color: rgba(0, 0, 0, 0.3);
     /* Semi-transparent background */
     backdrop-filter: blur(5px);
@@ -14,11 +14,12 @@
     align-items: center;
 }
 
-.popup.open {
+.q-refer-popup.q-refer-open {
     display: flex;
+    z-index: 10000000000;
 }
 
-.popup-content {
+.q-refer-popup-content {
     background-color: white;
     box-sizing: content-box;
     padding: 20px;
@@ -26,7 +27,7 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
-.close-button {
+.q-refer-close-button {
     position: absolute;
     top: 10px;
     right: 10px;

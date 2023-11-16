@@ -86,6 +86,7 @@ export const ReferShare = ({
             <img
               className="q-referShare-content-social-img"
               src={whatsappSvg}
+              onClick={() => shareOnPlatform(shareCode, "whatsapp")}
               alt="Whatsapp"
             />
             <img
@@ -129,22 +130,31 @@ export const ReferEarn = ({
       <PopupComponent onClose={() => setshare(false)} isOpen={share}>
         <div className="q-referShare-content-social">
           <div className="q-referEarn-pop-div">
-            <img
+          <img
+              className="q-referShare-content-social-img"
               onClick={() => shareOnPlatform(shareCode, "twitter")}
               src={twitterSvg}
-              className="q-referShare-content-social-img"
-              alt=""
+              alt="Twitter"
             />
             Twitter
           </div>
           <div className="q-referEarn-pop-div" style={style}>
-            <img
+          <img
+              className="q-referShare-content-social-img"
               onClick={() => shareOnPlatform(shareCode, "telegram")}
               src={telegramPng}
-              className="q-referShare-content-social-img"
-              alt=""
+              alt="telegramPng"
             />
             Telegram
+          </div>
+          <div className="q-referEarn-pop-div" style={style}>
+          <img
+              className="q-referShare-content-social-img"
+              src={whatsappSvg}
+              onClick={() => shareOnPlatform(shareCode, "whatsapp")}
+              alt="Whatsapp"
+            />
+            Whatsapp
           </div>
         </div>
       </PopupComponent>

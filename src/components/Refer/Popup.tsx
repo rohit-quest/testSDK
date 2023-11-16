@@ -27,9 +27,9 @@ const PopupComponent: React.FC<PopupProps> = ({ isOpen, onClose, children }) => 
     }, [isOpen, onClose]);
 
     return (
-        <div className={`popup ${isOpen ? 'open' : ''}`}>
-            <div className="popup-content" ref={popupRef}>
-                <button className="close-button" onClick={onClose}>
+        <div className={`q-refer-popup ${isOpen ? 'q-refer-open' : ''}`}>
+            <div className="q-refer-popup-content" ref={popupRef}>
+                <button className="q-refer-close-button" onClick={onClose}>
                     X
                 </button>
                 {children}

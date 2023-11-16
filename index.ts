@@ -1,5 +1,22 @@
-// import "./src/index.css";
-import "./dist/style.css"
+import "./src/index.css";
+import './src/components/FeedbackOverview/FeedbackOverview.css';
+import './src/components/GetStarted/GetStarted.css';
+import './src/components/chatSupport/chatsupport.css';
+import './src/components/Streak/VisitStreak.css';
+import './src/components/toast/toastService.css';
+import './src/components/QuestForm/form.css';
+import './src/components/Payment/payment.css';
+import './src/components/Analytics/analytics.css';
+import './src/components/Login/Login.css';
+import './src/components/CheckInCredit/creditCheck.css';
+import './src/components/Feedback/Feedback.css';
+import './src/components/Onboarding/onboarding.css';
+import './src/components/Badge/Badge.css';
+import './src/components/TutorialScreen/TutorialScreen.css';
+import './src/components/Refer/Refer.css';
+import './src/components/Refer/Popup.css';
+import './src/components/HelpCenter/HelpCenter.css';
+import './src/components/Credit/credit.css';
 import QuestLogin from "./src/components/Login/Login";
 import OnBoarding from "./src/components/Onboarding/Onboarding";
 import { QuestProvider } from "./src/components/QuestWrapper";
