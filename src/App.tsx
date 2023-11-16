@@ -237,7 +237,7 @@ function App() {
                     isOpen={true}
                     // bgColor="gray"
                     // color="white"
-                /> */}
+                />
 
 
 

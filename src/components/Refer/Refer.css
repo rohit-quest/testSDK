@@ -64,15 +64,15 @@
 
 .q-referShare-content-rect {
     height: 20px;
-    width: 100%;
+    width: calc(100%-24px);
     display: flex;
-    box-sizing: content-box;
-    padding: 10px 0px 10px 12px;
+    padding: 10px 12px;
     align-items: center;
-    gap: 190px;
     align-self: stretch;
+    justify-content: space-between;
     border-radius: 10px;
-    border: 1.5px solid var(--neutral-grey-100, #ECECEC);
+    box-sizing: content-box;
+    border: 2px solid var(--neutral-grey-100, #ECECEC);
 }
 
 .q-referShare-content-code {
@@ -114,6 +114,7 @@
 .q-referShare-referralCode {
     display: flex;
     align-self: start;
+    width: 100%;
     color: var(--neutral-grey-700, #252525);
     flex-direction: column;
     gap: 2px;

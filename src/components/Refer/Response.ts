@@ -4,10 +4,11 @@ import config from "../../config";
 export type referProp = { isOpen?: boolean, questId: string, userId: string, token: string, color?: string, bgColor?: string }
 
 
-export const shareOnPlatform = (text: string, platform: "twitter" | "telegram"): void => {
+export const shareOnPlatform = (text: string, platform: "twitter" | "telegram" | "whatsapp"): void => {
     const platforms = {
         twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,
         telegram: `https://t.me/share/url?url=${encodeURIComponent(text)}`,
+        whatsapp: `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`,
     };
 
     const shareURL = platforms[platform];
@@ -18,6 +19,7 @@ export const shareOnPlatform = (text: string, platform: "twitter" | "telegram"):
         console.error('Invalid platform');
     }
 };
+
 
 export const response = async (questId = "", headers: {
     apiKey: string,
