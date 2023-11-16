@@ -51,9 +51,8 @@ const Tutorial: React.FC<TutorialProps> = ({
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
   const [gradient, setGradient] = useState<boolean>(false);
   const [showLoader, setShowLoader] = useState<boolean>(false);
-  const progressBarWidth = `${
-    (completedSteps.length / formdata.length) * 100
-  }%`;
+  const progressBarWidth = `${(completedSteps.length / formdata.length) * 100
+    }%`;
   const [hoverStates, setHoverStates] = useState(
     Array(formdata.length).fill(true)
   );
@@ -80,6 +79,7 @@ const Tutorial: React.FC<TutorialProps> = ({
           const filterData = formdata.map((item) => {
             if (!item.status && item.criteriaId == id) {
               item['status'] = true
+              setCompletedSteps((prevSteps) => [...prevSteps, currentStep]);
             }
             return item
           })
@@ -167,9 +167,9 @@ const Tutorial: React.FC<TutorialProps> = ({
     }
   }, []);
 
-  useEffect(() => {
-    setCompletedSteps([]);
-  }, [formdata]);
+  // useEffect(() => {
+  //   setCompletedSteps([]);
+  // }, [formdata]);
 
   const [minimze, setMin] = useState(false);
 
@@ -288,7 +288,7 @@ const Tutorial: React.FC<TutorialProps> = ({
                       alignSelf: "stretch",
                     }}
                   >
-                    <div style={{height:'24px'}}>
+                    <div style={{ height: '24px' }}>
                       {!step.status ? (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
