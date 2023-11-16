@@ -53,7 +53,7 @@ function App() {
 
     return (
         <div
-        style={{ display: "flex", height: "1500vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
+        // style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
         >
 
 
@@ -120,11 +120,11 @@ function App() {
                     Show Confetti</button> */}
 
 
-                <button onClick={() => { showToast.warn({ duration: 3000, text: "This is a warning message" }) }}>warning</button>
-                <button onClick={() => { showToast.error({ duration: 2000 }) }}>Error</button>
-                <button onClick={() => { showToast.info({ duration: 2000 }) }}>Info</button>
-                <button onClick={() => { showToast.success({ duration: 2000 }) }}>Success</button>
-
+                {/* <button onClick={() => { showToast.warn({ duration: 3000, text: "This is a warning message" }) }}>warning</button>
+                <button onClick={() => { showToast.error({ duration: 2000, text: "" }) }}>Error</button>
+                <button onClick={() => { showToast.info({ duration: 2000, text: "" }) }}>Info</button>
+                <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
+ */}
 
                 {/* <OnBoarding
                     userId={userId}
@@ -237,7 +237,7 @@ function App() {
                     isOpen={true}
                     // bgColor="gray"
                     // color="white"
-                /> */}
+                />
 
 
 
