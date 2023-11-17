@@ -84,6 +84,7 @@ function isValidEmail(email: string) {
         <div className="q-fdov-input">
             {userLogo()}
             <input
+              className='q_sdk_input'
               type="text"
               id="normalInput"
               name="normalInput"
@@ -112,6 +113,7 @@ function isValidEmail(email: string) {
         <div className="q-fdov-input">
             {emailLogo()}
             <input
+              className='q_sdk_input'
               type="email"
               id="normalInput"
               name="normalInput"
@@ -144,6 +146,7 @@ function isValidEmail(email: string) {
         <div className="q-fdov-input" style={{alignItems: "flex-start"}}>
             {textAreaIcon()}
             <textarea
+            className='q_sdk_textarea'
               id="normalInput2"
               name="normalInput"
               onChange={(e) => handleUpdate(e, criteriaId, "")}

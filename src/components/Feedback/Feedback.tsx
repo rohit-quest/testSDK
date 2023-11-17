@@ -273,6 +273,7 @@ const Feedback: React.FC<FeedbackProps> = ({
         <div className="q-fd-input">
             {inputType == "email" ? emailLogo() : inputType == "number" ? phoneLogo() : userLogo()}
             <input
+                className='q_sdk_input'
                 type={inputType}
                 id="normalInput"
                 name="normalInput"
@@ -302,6 +303,7 @@ const Feedback: React.FC<FeedbackProps> = ({
         <div className="q-fd-input" style={{alignItems: "flex-start"}}>
             {textAreaIcon()}
             <textarea
+                className='q_sdk_input'
                 id="normalInput2"
                 name="normalInput"
                 placeholder={placeholder ? placeholder : `${(question).toLowerCase()}`}
@@ -340,7 +342,7 @@ const Feedback: React.FC<FeedbackProps> = ({
               <input
                 placeholder="Comments"
                 type="text"
-                // className="q-input-box"
+                className="q_sdk_input"
                 value={comment}
                 maxLength={200}
                 onChange={(e) => setComment(e.target.value)}

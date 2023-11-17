@@ -6,7 +6,7 @@ import { answer } from "./components/QuestForm/response";
 import { HelpCenter } from "./components/HelpCenter/HelpCenter";
 import { ReferEarn, ReferShare } from "./components/Refer/ReferEarn"
 import { showToast } from "./components/toast/toastService";
-import { QuestForm } from "./components/QuestForm/index"; 
+import { QuestForm } from "./components/QuestForm/index";
 import Feedback from "./components/Feedback/Feedback";
 import FeedbackWorkflow from "./components/FeedbackOverview/FeedbackOverview";
 import Tutorial from "./components/TutorialScreen/TutorialScreen"
@@ -197,8 +197,8 @@ function App() {
                     contactUrl="https://calendly.com/shubham-quest/chat"
                 /> */}
 
-                {/* 
-                <Feedback
+
+                {/* <Feedback
                     userId={userId}
                     token={token}
                     questId={"q-1a12c0e1-35a8-48a3-8cde-a8616f341b88"}
@@ -210,7 +210,7 @@ function App() {
                     heading={"Share Your FeedBack"}
                     subHeading={"How was your experience?"}
                     supportUrl={"supportUrl"}
-                /> */}
+                />  */}
 
                 {/* <ReferEarn
                     questId={questId}
@@ -219,7 +219,7 @@ function App() {
                     isOpen={true}
                     // bgColor="red"
                     // color="white"
-                /> */}
+                />
 
 
 
@@ -237,7 +237,7 @@ function App() {
                     isOpen={true}
                     // bgColor="gray"
                     // color="white"
-                />
+            /> */}
 
 
 
@@ -245,17 +245,7 @@ function App() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-                {/* <QuestLogin
+                <QuestLogin
                     // questId=""
                     textColor=""
                     btnTextColor=""
@@ -264,7 +254,7 @@ function App() {
                     googleClientId="103575086200-2gijbo8rldrv5sg60u0u1rl4cmldhm8a.apps.googleusercontent.com"
                     redirectUri="http://localhost:3000"
                     redirectURL="https://www.questlabs.ai/"
-                ></QuestLogin> */}
+                ></QuestLogin>
 
 
             </QuestProvider>

@@ -9,16 +9,19 @@
   padding: 2% 0;
   color: #141414;
 }
+
 .q-h1 {
   font-weight: 700;
   font-size: 2rem;
   text-align: center;
 }
+
 .q-center {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .quest-loader {
   position: fixed;
   inset: 0;
@@ -30,17 +33,24 @@
   backdrop-filter: blur(3px);
   z-index: 999;
 }
+
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
+
 .q-input-box {
   margin-top: 1%;
   width: 100%;
-  padding-left: 1rem; 
-  padding-right: 3.5rem; 
-  border-radius: 10px; 
-  background-color: #f0f0f0; 
+  padding-left: 1rem;
+  padding-right: 3.5rem;
+  border-radius: 10px;
+  background-color: #f0f0f0;
   border: 2px solid;
   border-color: #f0f0f0;
   text-align: start;
@@ -48,22 +58,25 @@
   font-size: 16px;
   transition: border-color 0.3s, box-shadow 0.3s;
 }
+
 .q-input-box ::placeholder {
   font-size: 14px;
 }
+
 .q-err {
-  background-color: #f00; 
-  color: #fff; 
-  border-radius: 50%; 
-  width: 1.5rem; 
+  background-color: #f00;
+  color: #fff;
+  border-radius: 50%;
+  width: 1.5rem;
   height: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 0.5rem; 
-  font-weight: bold; 
+  margin-right: 0.5rem;
+  font-weight: bold;
   font-size: 1rem;
 }
+
 .q-input-box:focus {
   border-color: #0070f3;
   box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.3);
@@ -87,13 +100,16 @@
   font-size: 18px;
   outline: none;
 }
+
 .q-btn-continue:hover {
-  background-color: #333; 
+  background-color: #333;
   border-color: #333;
 }
+
 .q-hover:hover {
   background-color: #f4f5f6;
 }
+
 .q-parent-container {
   display: flex;
   justify-content: center;
@@ -101,6 +117,7 @@
   height: 100vh;
   background-color: rgb(255, 255, 255);
 }
+
 * {
   margin: 0;
 }
@@ -114,6 +131,7 @@
   border-style: solid;
   border-color: #e5e7eb;
 }
+
 .questLabs :before,
 .questLabs :after {
   --tw-content: '';
@@ -134,16 +152,39 @@ body {
   margin: 0;
   line-height: inherit;
 }
+
 .questLabs hr {
   height: 0;
   color: inherit;
   border-top-width: 1px;
 }
+
 .questLabs abbr:where([title]) {
   -webkit-text-decoration: underline dotted;
   text-decoration: underline dotted;
 }
+
 .questLabs textarea {
   font-family: inherit;
   padding-top: 2%;
+}
+
+.q_sdk_input {
+  padding: unset;
+  margin: unset;
+  height: unset;
+  width: unset;
+  font-size: unset;
+  font-family: 'Figtree';
+  font-weight: unset;
+}
+
+q_sdk_textarea {
+  padding: unset;
+  margin: unset;
+  height: unset;
+  width: unset;
+  font-size: unset;
+  font-family: 'Figtree';
+  font-weight: unset;
 }
