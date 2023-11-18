@@ -38,6 +38,7 @@ import QuestChart from "./src/components/Analytics/QuestChart.tsx";
 import GetStarted from "./src/components/GetStarted/GetStarted.tsx";
 import { HelpCenter } from "./src/components/HelpCenter/HelpCenter.tsx";
 import { confetti } from "./src/components/Confetti/confetti.ts";
+import ShareArticle from "./src/components/Share/ShareArticle.tsx";
 
 export {
     QuestProvider,
@@ -60,5 +61,6 @@ export {
     QuestChart,
     GetStarted,
     HelpCenter,
-    confetti
+    confetti,
+    ShareArticle
 };
