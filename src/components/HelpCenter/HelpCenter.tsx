@@ -34,7 +34,7 @@ let dataBackUP: data = [];
 function getResponse(headers: CustomHeaders, entityId: string, questId: string): Promise<any> {
     const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${headers.userId}`;
 
-    // @ts-ignore
+    // @ts-ignore p
     return axios.get(request, { headers })
         .then((res) => {
             if (!!res.data.eligibilityData) {
