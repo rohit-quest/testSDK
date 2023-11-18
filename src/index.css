@@ -179,6 +179,10 @@ body {
   font-weight: unset;
 }
 
+.q_sdk_input::after{
+  display: none;
+}
+
 q_sdk_textarea {
   padding: unset;
   margin: unset;
