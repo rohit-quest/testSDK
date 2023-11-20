@@ -13,6 +13,7 @@ import Tutorial from "./components/TutorialScreen/TutorialScreen"
 import OnBoarding from "./components/Onboarding/Onboarding";
 import { confetti } from "./components/Confetti/confetti";
 import GetStarted from "./components/GetStarted/GetStarted";
+import ShareArticle from "./components/Share/ShareArticle";
 // export const questId = 'q-f825ebd2-57f2-4f21-90a2-843e22b4a7f5';
 // export const apiKey = 'k-0d087a04-f631-41e1-80dd-fdc9ab2abb07'
 // export const apiSecret = 's-329b70b4-cd43-472d-bd41-c2fea09490e0c7196f7b-9020-4bc1-9a11-b70214e3eb48'
@@ -53,7 +54,7 @@ function App() {
 
     return (
         <div
-        // style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
+            style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
         >
 
 
@@ -256,7 +257,16 @@ function App() {
                     redirectURL="https://www.questlabs.ai/"
                 ></QuestLogin>
 
-
+                <ShareArticle
+                    bgColor=""
+                    // description=""
+                    // heading=""
+                    headingColor="black"
+                    textColor=""
+                    token={token}
+                    questId="q-5976dbae-0c4d-4df6-ba70-231e53dd1532"
+                    userId={userId}
+                />
             </QuestProvider>
             {/*  */}
         </div >

@@ -37,7 +37,7 @@ export const CrossIcon = () => (<svg width="20" height="20" viewBox="0 0 20 20" 
 </svg>
 )
 
-interface Metadata {
+export interface Metadata {
     linkActionName: string;
     linkActionUrl: string;
     linkActionDescription: string;
