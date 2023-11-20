@@ -399,6 +399,7 @@ function OnBoarding(props: QuestLoginProps) {
                         onChange={(e) => handleUpdate(e, criteriaId, "")}
                         value={answer[criteriaId]}
                         placeholder={placeholder}
+                        className="q_sdk_input"
                     />
                     {crossLogo(criteriaId, handleRemove)}
                 </div>
@@ -438,7 +439,7 @@ function OnBoarding(props: QuestLoginProps) {
                             value={answer[criteriaId]}
                             style={{ backgroundColor: inputBgColor, fontSize: answerFontSize }}
                             onChange={(e) => handleUpdate(e, criteriaId, "")}
-                            className="q-onb-custom-datePicker"
+                            className="q_sdk_input q-onb-custom-datePicker"
                         />
                         <button id="q-onb-custom-date-text">{answer[criteriaId] ? <div style={{display: "inline"}} >{answer[criteriaId]}</div> : <div style={{display: "inline"}} style={{color:"#8E8E8E"}}>{placeholder}</div>}</button>
                     </label>
@@ -622,7 +623,7 @@ function OnBoarding(props: QuestLoginProps) {
                         type="text" 
                         name="" 
                         id="" 
-                        className="q-onb-input"
+                        className="q_sdk_input q-onb-input"
                         style={{marginTop: "10px", fontSize: answerFontSize}}
                         placeholder="Please fill manually"
                         onChange={(e) => handleUpdate(e, (criteriaId + "/manual"), "")}

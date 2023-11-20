@@ -107,19 +107,19 @@
   border-radius: 10px;
   border: 2px solid var(--neutral-grey-100, #ECECEC);
 }
-.q-fd-input>input,textarea{
+.q-fd-input>input,.q-fd-input textarea{
   width: 100%;
   border: 0;
 }
-.q-fd-input>input,textarea:hover{
+.q-fd-input>input,.q-fd-input textarea:hover{
   border: 0;
   outline: 0;
 }
-.q-fd-input>input,textarea:focus{
+.q-fd-input>input,.q-fd-input textarea:focus{
   border: 0;
   outline: 0;
 }
-.q-fd-input>textarea{
+.q-fd-input>.q-fd-input textarea{
   resize: none;
 }
 .q-fd-lebels {

@@ -51,6 +51,7 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
             {userLogo()}
             <input
               type="text"
+              className='q_sdk_input'
               id="normalInput"
               name="normalInput"
               onChange={(e) => handleUpdate(e, criteriaId, "")}
@@ -79,6 +80,7 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
             {emailLogo()}
             <input
               type="email"
+              className='q_sdk_input'
               id="normalInput"
               name="normalInput"
               onChange={(e) => handleUpdate(e, criteriaId, "")}

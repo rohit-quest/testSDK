@@ -100,19 +100,19 @@
   border: 2px solid var(--neutral-grey-100, #ECECEC);
   margin-top: 4px !important;
 }
-.q-fdov-input>input,textarea{
+.q-fdov-input>input,.q-fdov-input textarea{
   width: 100%;
   border: 0;
 }
-.q-fdov-input>input,textarea:hover{
+.q-fdov-input>input,.q-fdov-input textarea:hover{
   border: 0;
   outline: 0;
 }
-.q-fdov-input>input,textarea:focus{
+.q-fdov-input>input,.q-fdov-input textarea:focus{
   border: 0;
   outline: 0;
 }
-.q-fdov-input>textarea{
+.q-fdov-input>.q-fdov-input textarea{
   resize: none;
 }
 .q-fdov-ch-boxes{

@@ -37,7 +37,7 @@ const BugContent: React.FC<BugContentProps> = ({
   ) => {
     return (
       <div className=""
-       key={criteriaId}>
+        key={criteriaId}>
         <label
           className="q-fdov-levels"
           htmlFor="normalInput"
@@ -49,21 +49,22 @@ const BugContent: React.FC<BugContentProps> = ({
           {question}
         </label>
         <div className="q-fdov-input">
-            {userLogo()}
-            <input
-              type="text"
-              id="normalInput"
-              name="normalInput"
-              onChange={(e) => handleUpdate(e, criteriaId, "")}
-              value={answer[criteriaId]}
-              placeholder={placeholder}
-            />
-            {crossLogo(criteriaId, handleRemove)}
+          {userLogo()}
+          <input
+            type="text"
+            className='q_sdk_input'
+            id="normalInput"
+            name="normalInput"
+            onChange={(e) => handleUpdate(e, criteriaId, "")}
+            value={answer[criteriaId]}
+            placeholder={placeholder}
+          />
+          {crossLogo(criteriaId, handleRemove)}
         </div>
       </div>
     );
   };
-  const emailInput = (question: string, criteriaId: string, placeholder?:string) => {
+  const emailInput = (question: string, criteriaId: string, placeholder?: string) => {
     return (
       <div className="" key={criteriaId}>
         <label
@@ -77,16 +78,17 @@ const BugContent: React.FC<BugContentProps> = ({
           {question}
         </label>
         <div className="q-fdov-input">
-            {emailLogo()}
-            <input
-              type="email"
-              id="normalInput"
-              name="normalInput"
-              onChange={(e) => handleUpdate(e, criteriaId, "")}
-              value={answer[criteriaId]}
-              placeholder={placeholder}
-            />
-            {crossLogo(criteriaId, handleRemove)}
+          {emailLogo()}
+          <input
+            className='q_sdk_input'
+            type="email"
+            id="normalInput"
+            name="normalInput"
+            onChange={(e) => handleUpdate(e, criteriaId, "")}
+            value={answer[criteriaId]}
+            placeholder={placeholder}
+          />
+          {crossLogo(criteriaId, handleRemove)}
         </div>
         {
           isValidEmail(answer[criteriaId]) &&
@@ -111,17 +113,18 @@ const BugContent: React.FC<BugContentProps> = ({
         >
           {question}
         </label>
-        <div className="q-fdov-input" style={{alignItems: "flex-start"}}>
-            {textAreaIcon()}
-            <textarea
-              id="normalInput2"
-              name="normalInput"
-              onChange={(e) => handleUpdate(e, criteriaId, "")}
-              value={answer[criteriaId]}
-              placeholder={placeholder}
-              style={{height: "120px", padding: "0px", fontFamily: "'Figtree', sans-serif", boxSizing: "content-box"}}
-            />
-            {crossLogo(criteriaId, handleRemove)}
+        <div className="q-fdov-input" style={{ alignItems: "flex-start" }}>
+          {textAreaIcon()}
+          <textarea
+            className='q_sdk_textarea'
+            id="normalInput2"
+            name="normalInput"
+            onChange={(e) => handleUpdate(e, criteriaId, "")}
+            value={answer[criteriaId]}
+            placeholder={placeholder}
+            style={{ height: "120px", padding: "0px", fontFamily: "'Figtree', sans-serif", boxSizing: "content-box" }}
+          />
+          {crossLogo(criteriaId, handleRemove)}
         </div>
       </div>
     );
@@ -147,7 +150,7 @@ const BugContent: React.FC<BugContentProps> = ({
               );
             }
           })}
-          <div style={{backgroundColor: btnColor, color:btnTextColor}} onClick={handleSubmit} className="q-fdov-btn-continue">
+          <div style={{ backgroundColor: btnColor, color: btnTextColor }} onClick={handleSubmit} className="q-fdov-btn-continue">
             Submit
           </div>
         </>

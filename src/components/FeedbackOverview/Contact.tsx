@@ -36,10 +36,10 @@ const ContactContent: React.FC<ContactProps> = ({
         </label>
         <input
           type="text"
+          className="q_sdk_input q-input-box"
           id="normalInput"
           style={{ height: '50px' }}
           name="normalInput"
-          className="q-input-box"
           onChange={(e) => handleUpdate(e, criteriaId, '')}
           placeholder={placeholder}
         />
@@ -63,10 +63,10 @@ const ContactContent: React.FC<ContactProps> = ({
           {question}
         </label>
         <textarea
+          className="q_sdk_textarea q-input-box"
           id="normalInput2"
           placeholder={placeholder}
           style={{ height: '150px' }}
-          className="q-input-box"
           onChange={(e) => handleUpdate(e, criteriaId, '')}
         />
       </div>
