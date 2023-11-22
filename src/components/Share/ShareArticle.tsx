@@ -11,7 +11,7 @@ import config from '../../config';
 import QuestContext from "../QuestWrapper.tsx";
 import { QuestArray, Metadata } from '../HelpCenter/Svg.tsx';
 
-interface articleProps {
+export interface articleProps {
   heading?: string;
   description?: String;
   bgColor?: string;
@@ -70,10 +70,10 @@ const ShareArticle: React.FC<articleProps> = ({
       <div className='q_article_div'>
         <div className='q_article_up'>
           <div className='q_article_head' style={{ color: headingColor }}>{heading}</div>
-          <div className='q_article_desc'>{description}</div>
+          <div className='q_article_desc' style={{color: textColor}}>{description}</div>
         </div>
         <div className='q_article_dn'>
-          <div className='q_article_wit'>Share with</div>
+          <div className='q_article_wit' style={{color: textColor}}>Share with</div>
           <div className='q_article_img'>
             <img
               className="q-referShare-content-social-img"

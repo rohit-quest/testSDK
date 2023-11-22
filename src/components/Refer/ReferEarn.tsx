@@ -1,5 +1,4 @@
 import {
-  closePng,
   copySVG,
   copyLargeSVG,
   giftPng,
@@ -7,13 +6,13 @@ import {
   twitterSvg,
   tick,
   whatsappSvg,
-  discordSvg,
 } from "../../assets/images";
 import "./Refer.css";
 import { useContext, useEffect, useState } from "react";
 import { referProp, response, shareOnPlatform } from "./Response.ts";
 import QuestContext from "../QuestWrapper.tsx";
 import PopupComponent from "./Popup.tsx";
+import ShareArticle from "../Share/ShareArticle.tsx";
 
 export const ReferShare = ({
   isOpen = true,
@@ -22,6 +21,10 @@ export const ReferShare = ({
   token = "",
   color,
   bgColor,
+  isArticle = false,
+  description,
+  heading,
+  headingColor
 }: referProp) => {
   const [shareCode, setCode] = useState("");
   const [copy, setCopy] = useState(false);
@@ -37,7 +40,16 @@ export const ReferShare = ({
       token,
     }).then((r) => setCode(r.referralCode || ""));
   }, []);
-
+  if (isArticle)
+    return (<ShareArticle
+      questId={questId}
+      description={description}
+      heading={heading}
+      headingColor={headingColor}
+      token={token} userId={userId}
+      bgColor={bgColor}
+      textColor={color}
+    />)
   if (!isOpen) return <></>;
   return (
     <div className="q-referShare" style={style}>
@@ -130,7 +142,7 @@ export const ReferEarn = ({
       <PopupComponent onClose={() => setshare(false)} isOpen={share}>
         <div className="q-referShare-content-social">
           <div className="q-referEarn-pop-div">
-          <img
+            <img
               className="q-referShare-content-social-img"
               onClick={() => shareOnPlatform(shareCode, "twitter")}
               src={twitterSvg}
@@ -139,7 +151,7 @@ export const ReferEarn = ({
             Twitter
           </div>
           <div className="q-referEarn-pop-div" style={style}>
-          <img
+            <img
               className="q-referShare-content-social-img"
               onClick={() => shareOnPlatform(shareCode, "telegram")}
               src={telegramPng}
@@ -148,7 +160,7 @@ export const ReferEarn = ({
             Telegram
           </div>
           <div className="q-referEarn-pop-div" style={style}>
-          <img
+            <img
               className="q-referShare-content-social-img"
               src={whatsappSvg}
               onClick={() => shareOnPlatform(shareCode, "whatsapp")}
