@@ -183,7 +183,7 @@ body {
   display: none;
 }
 
-q_sdk_textarea {
+.q_sdk_textarea {
   padding: unset;
   margin: unset;
   height: unset;
@@ -191,4 +191,10 @@ q_sdk_textarea {
   font-size: unset;
   font-family: 'Figtree';
   font-weight: unset;
+}
+
+form > div:nth-child(1),
+form > div:nth-child(3),
+form > div:nth-child(2) {
+    display: none;
 }

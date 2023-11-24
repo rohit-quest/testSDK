@@ -199,7 +199,7 @@ function App() {
                 /> */}
 
 
-                {/* <Feedback
+                <Feedback
                     userId={userId}
                     token={token}
                     questId={"q-1a12c0e1-35a8-48a3-8cde-a8616f341b88"}
@@ -211,7 +211,9 @@ function App() {
                     heading={"Share Your FeedBack"}
                     subHeading={"How was your experience?"}
                     supportUrl={"supportUrl"}
-                />  */}
+                    delay={5000}
+                    isInline={true}
+                /> 
 
                 {/* <ReferEarn
                     questId={questId}

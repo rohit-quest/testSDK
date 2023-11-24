@@ -175,3 +175,30 @@
   text-align: center;
   margin-top: 10px;
 }
+
+.q_feed_anime{
+  display: none !important;
+  position: fixed !important;
+  bottom: 20px;
+  right: 20px;
+  background-color: #fff;
+  animation: slide-in 0.5s ease-out;
+}
+
+.q-inline{
+  position: fixed;
+  height: fit-content !important;
+}
+
+.q-visible{
+  display: block !important;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
