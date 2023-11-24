@@ -1,7 +1,17 @@
 import axios from "axios";
 import config from "../../config";
 
-export type referProp = { isOpen?: boolean, questId: string, userId: string, token: string, color?: string, bgColor?: string }
+export interface referProp {
+    isOpen?: boolean; questId: string;
+    headingColor?: string;
+    userId: string;
+    token: string;
+    color?: string;
+    bgColor?: string;
+    isArticle?: boolean
+    heading?: string;
+    description?: String;
+}
 
 
 export const shareOnPlatform = (text: string, platform: "twitter" | "telegram" | "whatsapp"): void => {

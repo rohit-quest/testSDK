@@ -220,7 +220,7 @@ function App() {
                     isOpen={true}
                     // bgColor="red"
                     // color="white"
-                />
+            />*/}
 
 
 
@@ -231,13 +231,14 @@ function App() {
 
 
 
-                {/* <ReferShare
+               {/* <ReferShare
                     questId={questId}
                     token={token}
                     userId={userId}
                     isOpen={true}
                     // bgColor="gray"
-                    // color="white"
+                    // color="blue"
+                    // isArticle={true}
             /> */}
 
 
@@ -246,7 +247,7 @@ function App() {
 
 
 
-                <QuestLogin
+                {/* <QuestLogin
                     // questId=""
                     textColor=""
                     btnTextColor=""
@@ -255,9 +256,9 @@ function App() {
                     googleClientId="103575086200-2gijbo8rldrv5sg60u0u1rl4cmldhm8a.apps.googleusercontent.com"
                     redirectUri="http://localhost:3000"
                     redirectURL="https://www.questlabs.ai/"
-                ></QuestLogin>
+                ></QuestLogin> */}
 
-                <ShareArticle
+                {/* <ShareArticle
                     bgColor=""
                     // description=""
                     // heading=""
@@ -266,7 +267,7 @@ function App() {
                     token={token}
                     questId="q-5976dbae-0c4d-4df6-ba70-231e53dd1532"
                     userId={userId}
-                />
+                /> */}
             </QuestProvider>
             {/*  */}
         </div >
