@@ -192,9 +192,3 @@ body {
   font-family: 'Figtree';
   font-weight: unset;
 }
-
-form > div:nth-child(1),
-form > div:nth-child(3),
-form > div:nth-child(2) {
-    display: none;
-}
