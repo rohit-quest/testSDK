@@ -183,7 +183,7 @@ body {
   display: none;
 }
 
-q_sdk_textarea {
+.q_sdk_textarea {
   padding: unset;
   margin: unset;
   height: unset;
