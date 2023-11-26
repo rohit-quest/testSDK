@@ -64,7 +64,7 @@ function App() {
 
 
 
-            {/* <Search
+            {/* <Search 
                 data={dataArray}
                 wholerScreen={true}
                 open
