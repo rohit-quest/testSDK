@@ -36,4 +36,7 @@ import aiChatPng from './aiChatIcon.svg';
 import sendChatPng from './sendArrow.png';
 import leftArrowPng from './arroLeft.png';
 import linkPng from './link.png';
-export { whatsappSvg, twitterSvg, discordSvg, copySVG, googleImg, copyLargeSVG, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like, closePng, copyPng, twitterPng, telegramPng, discordPng, giftPng, creditBannerPng, creditCheck, helpCenter1, helpCenter2, emailLogo, crossLogo, alertLogo, toastTic, questionLogo, warnCross, primaryCross, errorCross, successCross, primaryAlert, userChatPng, aiChatPng, sendChatPng, leftArrowPng, linkPng };
+import searchIcon from './search.svg';
+import commandkeyIcon from './commandkey.svg';
+import enterIcon from "./enter.svg"
+export { whatsappSvg, twitterSvg, discordSvg, copySVG, googleImg, copyLargeSVG, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like, closePng, copyPng, twitterPng, telegramPng, discordPng, giftPng, creditBannerPng, creditCheck, helpCenter1, helpCenter2, emailLogo, crossLogo, alertLogo, toastTic, questionLogo, warnCross, primaryCross, errorCross, successCross, primaryAlert, userChatPng, aiChatPng, sendChatPng, leftArrowPng, linkPng, searchIcon,commandkeyIcon,enterIcon };

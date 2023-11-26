@@ -14,6 +14,10 @@ import OnBoarding from "./components/Onboarding/Onboarding";
 import { confetti } from "./components/Confetti/confetti";
 import GetStarted from "./components/GetStarted/GetStarted";
 import ShareArticle from "./components/Share/ShareArticle";
+import Search from "./components/Search/Search";
+import { ChatIcon, LinkIcon } from "./components/HelpCenter/Svg";
+import { discordSvg, twitterPng, whatsappSvg } from "./assets/images";
+import dataArray from "./components/Search/mock.json"
 // export const questId = 'q-f825ebd2-57f2-4f21-90a2-843e22b4a7f5';
 // export const apiKey = 'k-0d087a04-f631-41e1-80dd-fdc9ab2abb07'
 // export const apiSecret = 's-329b70b4-cd43-472d-bd41-c2fea09490e0c7196f7b-9020-4bc1-9a11-b70214e3eb48'
@@ -27,8 +31,8 @@ export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44
 export const entityId = 'e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5'
 export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
 export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
-function App() {
 
+function App() {
 
     const [answer, setAnswer] = useState<answer>([])
 
@@ -54,8 +58,22 @@ function App() {
 
     return (
         <div
-            style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
+            // style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
         >
+
+
+
+
+            {/* <Search
+                data={dataArray}
+                wholerScreen={true}
+                open
+                backgroundColor="black"
+                color="green"
+                inputColor="white"
+                defaultResult={dataArray.slice(0,5)}
+                defulatResultLength={5}
+            /> */}
 
 
 
@@ -199,7 +217,7 @@ function App() {
                 /> */}
 
 
-                <Feedback
+                {/* <Feedback
                     userId={userId}
                     token={token}
                     questId={"q-1a12c0e1-35a8-48a3-8cde-a8616f341b88"}
@@ -213,7 +231,7 @@ function App() {
                     supportUrl={"supportUrl"}
                     delay={5000}
                     isInline={true}
-                /> 
+                />  */}
 
                 {/* <ReferEarn
                     questId={questId}
@@ -232,8 +250,7 @@ function App() {
 
 
 
-
-               {/* <ReferShare
+                {/* <ReferShare
                     questId={questId}
                     token={token}
                     userId={userId}

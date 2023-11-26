@@ -18,6 +18,7 @@ import './src/components/Refer/Popup.css';
 import './src/components/HelpCenter/HelpCenter.css';
 import './src/components/Credit/credit.css';
 import './src/components/Share/sharearticle.css'
+import './src/components/Search/search.css';
 import QuestLogin from "./src/components/Login/Login";
 import OnBoarding from "./src/components/Onboarding/Onboarding";
 import { QuestProvider } from "./src/components/QuestWrapper";
@@ -39,6 +40,7 @@ import GetStarted from "./src/components/GetStarted/GetStarted.tsx";
 import { HelpCenter } from "./src/components/HelpCenter/HelpCenter.tsx";
 import { confetti } from "./src/components/Confetti/confetti.ts";
 import ShareArticle from "./src/components/Share/ShareArticle.tsx";
+import Search from "./src/components/Search/Search.tsx";
 
 export {
     QuestProvider,
@@ -62,5 +64,6 @@ export {
     GetStarted,
     HelpCenter,
     confetti,
-    ShareArticle
+    ShareArticle,
+    Search
 };
