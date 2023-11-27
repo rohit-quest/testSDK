@@ -17,7 +17,7 @@ import ShareArticle from "./components/Share/ShareArticle";
 import Search from "./components/Search/Search";
 import { ChatIcon, LinkIcon } from "./components/HelpCenter/Svg";
 import { discordSvg, twitterPng, whatsappSvg } from "./assets/images";
-import dataArray from "./components/Search/mock.json"
+// import dataArray from "./components/Search/mock.json"
 // export const questId = 'q-f825ebd2-57f2-4f21-90a2-843e22b4a7f5';
 // export const apiKey = 'k-0d087a04-f631-41e1-80dd-fdc9ab2abb07'
 // export const apiSecret = 's-329b70b4-cd43-472d-bd41-c2fea09490e0c7196f7b-9020-4bc1-9a11-b70214e3eb48'
@@ -56,24 +56,41 @@ function App() {
         entityId: "e-0000000000"
     }
 
+    const [data, setData] = useState([]);
+
     return (
         <div
-            // style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
+        // style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
         >
 
 
 
 
             {/* <Search
-                data={dataArray}
+                data={data}
                 wholerScreen={true}
-                open
-                backgroundColor="black"
-                color="green"
-                inputColor="white"
-                defaultResult={dataArray.slice(0,5)}
-                defulatResultLength={5}
+                open={true}
+                defaultResult={dataArray.slice(0, 5)}
+                defulatResultLength={10}
+                isFilter
+                // backgroundColor=""
+                // color=""
+                // inputColor=""
+                onSearch={(str: string) => {
+                    console.log('Search string:', str);
+                    setData(str ? dataArray.filter(({ text }) => text.toLocaleLowerCase()
+                        .includes(str.toLocaleLowerCase())).slice(0, 10) : []);
+                }}
             /> */}
+
+
+
+
+
+
+
+
+
 
 
 
