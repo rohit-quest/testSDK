@@ -66,30 +66,6 @@ function App() {
 
 
 
-            {/* <Search
-                data={data}
-                wholerScreen={true}
-                open={true}
-                defaultResult={dataArray.slice(0, 5)}
-                defulatResultLength={10}
-                isFilter
-                // backgroundColor=""
-                // color=""
-                // inputColor=""
-                onSearch={(str: string) => {
-                    console.log('Search string:', str);
-                    setData(str ? dataArray.filter(({ text }) => text.toLocaleLowerCase()
-                        .includes(str.toLocaleLowerCase())).slice(0, 10) : []);
-                }}
-            /> */}
-
-
-
-
-
-
-
-
 
 
 
@@ -145,7 +121,23 @@ function App() {
 
 
 
-
+                {/* <Search
+                    data={data}
+                    wholerScreen={true}
+                    open={true}
+                    // defaultResult={dataArray.slice(0, 5)}
+                    defulatResultLength={10}
+                    // backgroundColor=""
+                    // color=""
+                    // inputColor=""
+                    questId="q-01533080-10f2-4309-b6b8-2e0757196d2b"
+                    userId={userId}
+                    token={token}
+                    onSearch={(str: string) => {
+                        console.log('Search string:', str);
+                        // setData(str ? dataArray.filter(({ text }) => text.toLocaleLowerCase().includes(str.toLocaleLowerCase())).slice(0, 10) : []);
+                    }}
+                /> */}
 
 
 

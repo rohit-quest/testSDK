@@ -1,6 +1,8 @@
 import "./search.css";
 import { commandkeyIcon, searchIcon, enterIcon } from '../../assets/images';
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { getResponse } from "./response";
+import QuestContext from "../QuestWrapper.tsx";
 
 type data = { text: string, icon: string, link: string }[];
 
@@ -13,22 +15,29 @@ interface propType {
   inputColor?: string;
   defaultResult?: data;
   defulatResultLength?: number;
-  isFilter?: boolean;
   onSearch?: (str: string) => void;
+  token?: string;
+  userId?: string;
+  questId?: string
 }
 
 export default function Search(prop: propType): JSX.Element {
-  const { data,
+  const {
     wholerScreen = true,
     color = "#6E6E6E", backgroundColor = "white",
     defaultResult = [],
     defulatResultLength = 10,
-    onSearch = (str: string) => { }
+    onSearch = (str: string) => { },
+    questId = "",
+    token = "",
+    userId = ""
   } = prop;
   const inputElement = useRef<HTMLInputElement>(null);
   const [searchResults, setResults] = useState<data>(defaultResult);
   const [isOpen, setOpen] = useState(false);
   const [selectedResultIndex, setSelectedResultIndex] = useState<number>(0);
+  const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
+  const [data, setData] = useState<data>([]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (isOpen && searchResults.length > 0) {
@@ -61,6 +70,12 @@ export default function Search(prop: propType): JSX.Element {
   }, [isOpen])
 
   useEffect(() => {
+    getResponse({ apiKey, apisecret: apiSecret, token, userId }, entityId, questId)
+      .then((response) => {
+        setData(response);
+        setResults(response)
+      })
+
     inputElement.current?.focus();
     window.addEventListener('keydown', handleKeyPress);
     return () => {
@@ -71,18 +86,17 @@ export default function Search(prop: propType): JSX.Element {
 
   const handleSearch = (str: string) => data?.
     length && setResults(str ? data
-      .filter(({ text }) => text.toLocaleLowerCase().includes(str.toLocaleLowerCase())).slice(0, defulatResultLength) : [])
+      .filter(({ text }) => text.toLocaleLowerCase().includes(str.toLocaleLowerCase()))
+      .slice(0, defulatResultLength) : data)
 
-  useEffect(() => {
-    prop.isFilter && setResults(data?.slice(0, defulatResultLength) || []);
-  }, [data])
+
 
   const jsx = (
     <div className='q_search_bar' style={{ color, backgroundColor }}>
       <div className='q_search_box'>
         <img className="q_search_bar_icon" src={searchIcon} alt="" />
         <input type="text" placeholder='' ref={inputElement} onKeyDown={handleKeyDown} style={{ backgroundColor, color: prop.inputColor }}
-          onChange={e => { !prop.isFilter ? onSearch(e.target.value) : handleSearch(e.target.value) }} className='q_sdk_input q_search_input' />
+          onChange={e => { onSearch(e.target.value); handleSearch(e.target.value) }} className='q_sdk_input q_search_input' />
         <div className="q_search_scut">
           <img src={commandkeyIcon} alt="" />
           <div className="q_key_k">K</div>
