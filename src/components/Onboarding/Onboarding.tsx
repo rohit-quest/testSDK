@@ -56,7 +56,8 @@ interface QuestLoginProps {
     questionFontSize?: string;
     answerFontSize?: string;
     gap?: string;
-    controlBtnType?: "Arrow" | "Buttons"
+    controlBtnType?: "Arrow" | "Buttons";
+    uniqueUserId?: string;
 }
 
 interface FormData {
@@ -114,7 +115,8 @@ function OnBoarding(props: QuestLoginProps) {
         questionFontSize,
         answerFontSize,
         gap,
-        controlBtnType
+        controlBtnType,
+        uniqueUserId,
     } = props;
 
     const [formdata, setFormdata] = useState<FormData[] | []>([]);
@@ -131,7 +133,7 @@ function OnBoarding(props: QuestLoginProps) {
             let externalUserId = cookies.get("externalUserId");
             let questUserId = cookies.get("questUserId");
             let questUserToken = cookies.get("questUserToken");
-            let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
+            // let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
             
             const headers = {
                 apiKey: apiKey,
@@ -141,17 +143,17 @@ function OnBoarding(props: QuestLoginProps) {
             };
 
             const body = {
-                externalUserId: !!personalUserId && personalUserId._id,
+                externalUserId: !!uniqueUserId && uniqueUserId,
                 entityId: entityId,
-                emails: personalUserId.Email
+                // emails: uniqueUserId
             }
             
             getQuestData(userId, headers)
             
-            if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == personalUserId._id) {
+            if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
                 let header = {...headers, ...{questUserId, questUserToken}}
                 axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers: header})
-            } else if (!!personalUserId) {
+            } else if (!!uniqueUserId) {
                 axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
                 .then((res) => {
                     let {userId, token} = res.data;
@@ -159,7 +161,7 @@ function OnBoarding(props: QuestLoginProps) {
 
                     const date = new Date();
                     date.setHours(date.getHours() + 12)
-                    cookies.set("externalUserId", personalUserId._id, {path: "/", expires: date})
+                    cookies.set("externalUserId", uniqueUserId, {path: "/", expires: date})
                     cookies.set("questUserId", userId, {path: "/", expires: date})
                     cookies.set("questUserToken", token, {path: "/", expires: date})
                     axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/onboarding-view?userId=${userId}&questId=${questId}`, {count: 1}, {headers: header})
