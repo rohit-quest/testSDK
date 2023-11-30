@@ -297,6 +297,7 @@ interface feedbackCompProps {
   starBorderColor?: string;
   tickBg?: string;
   ratingStyle?: "Star" | "Numbers" | "Smiles";
+  uniqueUserId?: string;
 }
 interface FormDataItem {
   type?: string;
@@ -323,7 +324,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   starColor,
   starBorderColor,
   tickBg,
-  ratingStyle
+  ratingStyle,
+  uniqueUserId
 }) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
@@ -448,7 +450,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     let questUserId = cookies.get("questUserId");
     let questUserToken = cookies.get("questUserToken");
     let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
-    if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == personalUserId._id) {
+    if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
       let header = {
         apiKey: apiKey,
         apisecret: apiSecret,
@@ -456,9 +458,9 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         token: questUserToken,
       }
       axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`, {count: 1}, {headers: header})
-    } else if (personalUserId._id) {
+    } else if (uniqueUserId) {
       const body = {
-        externalUserId: !!personalUserId && personalUserId._id,
+        externalUserId: !!uniqueUserId && uniqueUserId,
         entityId: entityId,
       }
 
@@ -476,7 +478,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           let cookies = new Cookies();
           const date = new Date();
           date.setHours(date.getHours() + 12)
-          cookies.set("externalUserId", personalUserId._id, {path: "/", expires: date})
+          cookies.set("externalUserId", uniqueUserId, {path: "/", expires: date})
           cookies.set("questUserId", userId, {path: "/", expires: date})
           cookies.set("questUserToken", token, {path: "/", expires: date})
           axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`, {count: 1}, {headers: header})
@@ -510,7 +512,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         answer: [answer[ans?.criteriaId] || ''],
         criteriaId: ans?.criteriaId || '',
       }));
-      if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == personalUserId._id) {
+      if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
         let header = {
           apiKey: apiKey,
           apisecret: apiSecret,
