@@ -6,7 +6,8 @@ class config {
         AnalyticsFlag: "quest.sdk.analytics",
         PaymentFlag: "quest.sdk.payment",
         ChatFlag: "quest.sdk.chat",
-        FeedbackWorkflowFlag: "quest.sdk.feedback_workflow"
+        FeedbackWorkflowFlag: "quest.sdk.feedback_workflow",
+        GetStartedFlag: "quest.sdk.get_started",
     }
 }
 

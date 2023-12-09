@@ -18,7 +18,11 @@ type Props = {
   buttonBg?: string;
   buttonColor?: string;
   onLinkTrigger?: (url: string, index: number) => void;
-  icons: Array<string>
+  icons: Array<string>;
+  uniqueUserId: string;
+  cardBorderColor?: string;
+  heading?: string;
+  description?: string;
 };
 interface TutorialStep {
   id: number;
@@ -32,7 +36,7 @@ interface TutorialStep {
   btn1Link: string;
 }
 
-function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus, buttonBg, buttonColor, onLinkTrigger = (url:string,index:number)=>{window.location.href=url},icons }: Props) {
+function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus, buttonBg, buttonColor, onLinkTrigger = (url:string,index:number)=>{window.location.href=url}, icons, uniqueUserId, cardBorderColor, heading, description }: Props) {
   const svg1 = (
     <svg
       width="24"
@@ -177,25 +181,30 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
   const svgArr = [svg1, svg2, svg3, svg4];
 
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
-  const { apiKey, apiSecret, entityId, apiType } = useContext(QuestContext.Context);
+  const { apiKey, apiSecret, entityId, featureFlags, apiType } = useContext(QuestContext.Context);
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [allCriteriaCompleted, setAllCriteriaCompleted] =
     useState<boolean>(false);
   const [criteriaSubmit, setCriteriaSubmit] = useState<string[]>([])
   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
+  const cookies = new Cookies()
+
+  let externalUserId = cookies.get("externalUserId");
+  let questUserId = cookies.get("questUserId");
+  let questUserToken = cookies.get("questUserToken");
 
   const handleCriteriaClick = (id: any, url: string) => {
     const headers = {
       apiKey: apiKey,
       apisecret: apiSecret,
-      userId: userId,
-      token: token,
+      userId: questUserId,
+      token: questUserToken,
     };
 
     const json = {
       criteriaId: id,
     };
-    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
+    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${questUserId}`;
     setShowLoader(true);
     axios
       .post(request, json, { headers: headers })
@@ -225,39 +234,69 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
 
   useEffect(() => {
     if (entityId) {
+
+      
       const headers = {
         apiKey: apiKey,
         apisecret: apiSecret,
         userId: userId,
         token: token,
       };
-      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}`;
 
-      axios.get(request, { headers: headers }).then((res) => {
-        let response = res.data;
-        let criterias = response?.eligibilityData?.map((criteria: any) => {
-          return {
-            type: criteria?.data?.criteriaType,
-            title: criteria?.data?.metadata?.linkActionName,
-            url: criteria?.data?.metadata?.linkActionUrl,
-            description: criteria?.data?.metadata?.description,
-            btn1: criteria?.data?.metadata?.btn1,
-            btn2: criteria?.data?.metadata?.btn2,
-            btn1Link: criteria?.data?.metadata?.btn1Link,
-            criteriaId: criteria?.data?.criteriaId,
-            completed: criteria?.completed,
-          };
+      const body = {
+        externalUserId: !!uniqueUserId && uniqueUserId,
+        entityId: entityId,
+          // emails: uniqueUserId
+      }
+      
+      if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
+        let header = {...headers, ...{userId: questUserId, token: questUserToken}}
+        fetchData(header)
+      } else if (!!uniqueUserId) {
+        axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
+        .then((res) => {
+          let {userId, token} = res.data;
+          let header = {...headers, ...{userId, token}}
+          fetchData(header)
+          const date = new Date();
+          date.setHours(date.getHours() + 12)
+          cookies.set("externalUserId", uniqueUserId, {path: "/", expires: date})
+          cookies.set("questUserId", userId, {path: "/", expires: date})
+          cookies.set("questUserToken", token, {path: "/", expires: date})
+        })
+      } else {
+        fetchData(headers)
+      }
+      
+      function fetchData(header: any) {
+        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}`;
+  
+        axios.get(request, { headers: header }).then((res) => {
+          let response = res.data;
+          let criterias = response?.eligibilityData?.map((criteria: any) => {
+            return {
+              type: criteria?.data?.criteriaType,
+              title: criteria?.data?.metadata?.linkActionName,
+              url: criteria?.data?.metadata?.linkActionUrl,
+              description: criteria?.data?.metadata?.description,
+              btn1: criteria?.data?.metadata?.btn1,
+              btn2: criteria?.data?.metadata?.btn2,
+              btn1Link: criteria?.data?.metadata?.btn1Link,
+              criteriaId: criteria?.data?.criteriaId,
+              completed: criteria?.completed,
+            };
+          });
+          const allCriteriasCompleted = criterias.every(
+            (criteria: any) => criteria.completed === true
+          );
+          if (allCriteriasCompleted) {
+            setAllCriteriaCompleted(true);
+          }
+          criterias = Array.isArray(criterias) ? criterias : [];
+          setFormdata([...criterias]);
         });
-        const allCriteriasCompleted = criterias.every(
-          (criteria: any) => criteria.completed === true
-        );
-        console.log('add', allCriteriasCompleted);
-        if (allCriteriasCompleted) {
-          setAllCriteriaCompleted(true);
-        }
-        criterias = Array.isArray(criterias) ? criterias : [];
-        setFormdata([...criterias]);
-      });
+
+      }
     }
   }, [criteriaSubmit]);
 
@@ -269,13 +308,40 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
         userId: userId,
         token: token,
       };
+
+      const body = {
+        externalUserId: !!uniqueUserId && uniqueUserId,
+        entityId: entityId,
+          // emails: uniqueUserId
+      }
+      
+      if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
+        let header = {...headers, ...{userId: questUserId, token: questUserToken}}
+        fetchData(header)
+      } else if (!!uniqueUserId) {
+        axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
+        .then((res) => {
+          let {userId, token} = res.data;
+          let header = {...headers, ...{userId, token}}
+          fetchData(header)
+          const date = new Date();
+          date.setHours(date.getHours() + 12)
+          cookies.set("externalUserId", uniqueUserId, {path: "/", expires: date})
+          cookies.set("questUserId", userId, {path: "/", expires: date})
+          cookies.set("questUserToken", token, {path: "/", expires: date})
+        })
+      } else {
+        fetchData(headers)
+      }
+
+      function fetchData(header: any) {
       const json = {
-        userId,
+        userId: header.userId,
       };
-      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/claim?userId=${userId}`;
+      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/claim?userId=${header.userId}`;
       setShowLoader(true);
       axios
-        .post(request, json, { headers: headers })
+        .post(request, json, { headers: header })
         .then((response) => {
           if (response.data.success) {
             const cookies = new Cookies();
@@ -292,6 +358,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
         .finally(() => {
           setShowLoader(false);
         });
+      }
     }
   }, [allCriteriaCompleted]);
 
@@ -303,23 +370,27 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
   let descColor = cardDescColor || '#AFAFAF';
   let bg =
     cardBG || '#FFF';
-  let borderColor = cardBG || "var(--neutral-grey-200, #AFAFAF)"
+  let borderColor = cardBorderColor || "var(--neutral-grey-200, #AFAFAF)"
 
+  if (featureFlags[config.FLAG_CONSTRAINTS.GetStartedFlag]?.isEnabled == false) {
+    return (<div></div>)
+  }
 
   return (
-    <div style={{ padding: '40px', boxSizing: "content-box" }}>
+    <div style={{ padding: (!allCriteriaCompleted && formdata.length) ? '40px' : "0px", boxSizing: "content-box" }}>
       {showLoader && <Loader />}
-      <div className="gs-heading-div">
-        <div style={{ color: textColor }} className="gs-heading">
-          Quickstart Guide
+      {!!formdata.length && !allCriteriaCompleted &&
+        <div className="gs-heading-div">
+          <div style={{ color: textColor }} className="gs-heading">
+            {heading || "Quickstart Guide"}
+          </div>
+          <div style={{ color: subHeadingColor }} className="gs-subheading">
+            {description || "Get started with Quest and explore how Quest can take your customer engagement to the next level"}
+          </div>
         </div>
-        <div style={{ color: subHeadingColor }} className="gs-subheading">
-          Get started with Quest and explore how Quest can take your customer
-          engagement to the next level{' '}
-        </div>
-      </div>
+      }
       <div style={{ marginTop: '30px' }} className="gs-cards-container">
-        {formdata.map((e, i) =>
+        {!allCriteriaCompleted && formdata.map((e, i) =>
           (
             <div key={i} style={{ background: bg, borderColor }} className="gs-card-container">
             <div>
@@ -340,11 +411,11 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
                 </a>
               </div>
               <div
-                onClick={() => handleCriteriaClick(e.id, e.url)}
+                onClick={() => {!e.completed && handleCriteriaClick(e.criteriaId, e.url)}}
                 style={{ background: btn2Color, color: btnTextColor }}
                 className="gs-card-btn2"
               >
-                {e.completed ? check : e.btn2}
+                {e.completed ? check : !!e.btn2 ? e.btn2 : "Let's go!"}
               </div>
             </div>
           </div>
