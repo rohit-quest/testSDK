@@ -6,7 +6,7 @@ import QuestContext from '../QuestWrapper';
 import { toast } from 'react-toastify';
 import Loader from '../Login/Loader';
 import Cookies from 'universal-cookie';
-
+import { questLogo } from '../../assets/images';
 type Props = {
   userId: string;
   token: string;
@@ -17,6 +17,8 @@ type Props = {
   completeAllStatus?: () => void;
   buttonBg?: string;
   buttonColor?: string;
+  onLinkTrigger?: (url: string, index: number) => void;
+  icons: Array<string>
 };
 interface TutorialStep {
   id: number;
@@ -30,7 +32,7 @@ interface TutorialStep {
   btn1Link: string;
 }
 
-function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus, buttonBg, buttonColor }: Props) {
+function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus, buttonBg, buttonColor, onLinkTrigger = (url:string,index:number)=>{window.location.href=url},icons }: Props) {
   const svg1 = (
     <svg
       width="24"
@@ -201,7 +203,8 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
         if (response.data.success) {
           setCriteriaSubmit([...criteriaSubmit, id]);
           // window.open(url);
-          window.location.href = url;
+          // window.location.href = url;
+          onLinkTrigger(url,id);
           // if (newWindow) {
           //   newWindow.focus();
           //   // window.location.reload();
@@ -277,7 +280,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
           if (response.data.success) {
             const cookies = new Cookies();
             cookies.set("getStartedScreenComplete", true, { path: "/" });
-            completeAllStatus()
+            completeAllStatus && completeAllStatus()
             return;
           } else {
             toast.error(response.data.error);
@@ -302,47 +305,6 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
     cardBG || '#FFF';
   let borderColor = cardBG || "var(--neutral-grey-200, #AFAFAF)"
 
-  const card = (
-    icon?: any,
-    heading?: any,
-    description?: any,
-    btn1?: any,
-    btn2?: any,
-    completed?: any,
-    id?: any,
-    url?: any,
-    btn1Link?: string
-  ) => {
-    return (
-      <div key={id} style={{ background: bg, borderColor }} className="gs-card-container">
-        <div>
-          <div className="gs-card-icon">{icon}</div>
-          <div className="gs-card-text">
-            <div style={{ color: textColor }} className="gs-card-head">
-              {heading}
-            </div>
-            <div style={{ color: descColor }} className="gs-card-desc">
-              {description}
-            </div>
-          </div>
-        </div>
-        <div className="gs-card-btn-container">
-          <div className="gs-card-btn1">
-            <a href={btn1Link} target='_blank' style={{ color: descColor }}>
-              {btn1}
-            </a>
-          </div>
-          <div
-            onClick={() => handleCriteriaClick(id, url)}
-            style={{ background: btn2Color, color: btnTextColor }}
-            className="gs-card-btn2"
-          >
-            {completed ? check : btn2}
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <div style={{ padding: '40px', boxSizing: "content-box" }}>
@@ -358,16 +320,34 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
       </div>
       <div style={{ marginTop: '30px' }} className="gs-cards-container">
         {formdata.map((e, i) =>
-          card(
-            svgArr[i],
-            e.title,
-            e.description,
-            e.btn1,
-            e.btn2,
-            e.completed,
-            e.criteriaId,
-            e.url,
-            e.btn1Link
+          (
+            <div key={i} style={{ background: bg, borderColor }} className="gs-card-container">
+            <div>
+              <img className="gs-card-icon" width="24px" src={icons[i]|| questLogo} alt='' />
+              <div className="gs-card-text">
+                <div style={{ color: textColor }} className="gs-card-head">
+                  {e.title}
+                </div>
+                <div style={{ color: descColor }} className="gs-card-desc">
+                  {e.description}
+                </div>
+              </div>
+            </div>
+            <div className="gs-card-btn-container">
+              <div className="gs-card-btn1">
+                <a href={e.btn1Link} target='_blank' style={{ color: descColor }}>
+                  {e.btn1}
+                </a>
+              </div>
+              <div
+                onClick={() => handleCriteriaClick(e.id, e.url)}
+                style={{ background: btn2Color, color: btnTextColor }}
+                className="gs-card-btn2"
+              >
+                {e.completed ? check : e.btn2}
+              </div>
+            </div>
+          </div>
           )
         )}
       </div>
