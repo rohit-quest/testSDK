@@ -6,6 +6,7 @@ import './TutorialScreen.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import Loader from '../Login/Loader';
+import General from '../../general';
 
 interface TutorialStep {
   id: number;
@@ -165,9 +166,10 @@ const Tutorial: React.FC<TutorialProps> = ({
     }
   }, []);
 
-  // useEffect(() => {
-  //   setCompletedSteps([]);
-  // }, [formdata]);
+  useEffect(() => {
+    const functions = new General("");
+    functions.getKeys({userid: userId|| "",apikey: apiKey,entityId,token: token||""})
+  }, []);
 
   const [minimze, setMin] = useState(false);
 
@@ -229,8 +231,6 @@ const Tutorial: React.FC<TutorialProps> = ({
                     fill="#8E8E8E"
                   />
                   <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
                     d="M10 1.0415C5.05245 1.0415 1.04167 5.05229 1.04167 9.99984C1.04167 14.9474 5.05245 18.9582 10 18.9582C14.9476 18.9582 18.9583 14.9474 18.9583 9.99984C18.9583 5.05229 14.9476 1.0415 10 1.0415ZM2.29167 9.99984C2.29167 5.74264 5.74281 2.2915 10 2.2915C14.2572 2.2915 17.7083 5.74264 17.7083 9.99984C17.7083 14.257 14.2572 17.7082 10 17.7082C5.74281 17.7082 2.29167 14.257 2.29167 9.99984Z"
                     fill="#8E8E8E"
                   />
