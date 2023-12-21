@@ -36,7 +36,7 @@ export default function Search(prop: propType): JSX.Element {
   const [searchResults, setResults] = useState<data>(defaultResult);
   const [isOpen, setOpen] = useState(false);
   const [selectedResultIndex, setSelectedResultIndex] = useState<number>(0);
-  const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
+  const { apiKey, entityId } = useContext(QuestContext.Context);
   const [data, setData] = useState<data>([]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -70,7 +70,7 @@ export default function Search(prop: propType): JSX.Element {
   }, [isOpen])
 
   useEffect(() => {
-    getResponse({ apiKey, apisecret: apiSecret, token, userId }, entityId, questId)
+    getResponse({ apiKey,  token, userId }, entityId, questId)
       .then((response) => {
         setData(response);
         setResults(response)

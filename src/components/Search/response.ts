@@ -2,7 +2,6 @@ import axios, { AxiosHeaders } from "axios";
 import config from "../../config";
 interface CustomHeaders {
     apiKey: string;
-    apisecret: string;
     userId: string;
     token: string;
 }

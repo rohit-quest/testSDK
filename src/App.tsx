@@ -16,6 +16,7 @@ import GetStarted from "./components/GetStarted/GetStarted";
 import ShareArticle from "./components/Share/ShareArticle";
 import Search from "./components/Search/Search";
 import { ChatIcon, LinkIcon } from "./components/HelpCenter/Svg";
+import WalkThrough from "./components/Tour/WalkThrough";
 import { copyLargeSVG, copySVG, discordSvg, googleImg, twitterPng, whatsappSvg } from "./assets/images";
 // import dataArray from "./components/Search/mock.json"
 // export const questId = 'q-f825ebd2-57f2-4f21-90a2-843e22b4a7f5';
@@ -60,7 +61,7 @@ function App() {
 
     return (
         <div
-        // style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
+            style={{ display: "flex", backgroundColor: "black", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
         >
 
 
@@ -129,7 +130,7 @@ function App() {
 
 
 
-                 {/* <GetStarted
+                {/* <GetStarted
                     // questId="q-6b06e238-aece-40c6-a53d-0750f9130e1d"
                     // userId={"u-ee5f090e-6434-45de-8bcd-fce22d775bcf"}
                     // token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWVlNWYwOTBlLTY0MzQtNDVkZS04YmNkLWZjZTIyZDc3NWJjZiIsImlhdCI6MTY5OTM3MDIyMCwiZXhwIjoxNjk5NDU2NjIwfQ.lj86UTiNxRi0riBGla85yr51blIQcJ1YRCfZgM3izUE"}
@@ -150,10 +151,14 @@ function App() {
                     // }}
                 />  */}
 
-
-
-
-
+                    <div className="sdk" style={{ color: "white", border: "2px solid red" }}>element</div>
+                <WalkThrough
+                    questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
+                    userId={userId}
+                    isOpen
+                    token={token}
+                    onFinish={() => { }}
+                />
 
 
 
@@ -206,7 +211,7 @@ function App() {
 
 
 
-                <Tutorial
+                {/* <Tutorial
                     heading={"Tutorial Screen"}
                     subheading={"subheading"}
                     // bgColor="blue"
@@ -216,8 +221,8 @@ function App() {
                     questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
                     userId={userId}
                     token={token}
-                    // textColor="blue"
-                /> 
+                // textColor="blue"
+                /> */}
 
 
 
