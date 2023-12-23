@@ -49,7 +49,7 @@ export async function getResponse(headers: CustomHeaders, entityId: string, ques
         const res = await axios.get(request, { headers: { ...headers } });
         if (!!res.data.eligibilityData) {
             const data = res.data.eligibilityData as QuestArray
-            data.map((e, i) => { e.data.metadata.linkActionDescription = "A message which appears when the cursor is positioned over an icon, image, hyperlink, or other element in a graphical user interface."; e.data.metadata.linkActionName = "step 1", e.data.metadata.selector = [".sdk",".sdk1",".sdk2"][i], e.data.metadata.position = (["right", "left", "top", "bottom"][i] as positionType); e.data.metadata.selector })
+            // data.map((e, i) => { e.data.metadata.linkActionDescription = "A message which appears when the cursor is positioned over an icon, image, hyperlink, or other element in a graphical user interface."; e.data.metadata.linkActionName = "step 1", e.data.metadata.selector = [".sdk",".sdk1",".sdk2"][i], e.data.metadata.position = (["right", "left", "top", "bottom"][i] as positionType); e.data.metadata.selector })
             return data.map(e => ({
                 text: e.data.metadata.linkActionName,
                 link: e.data.metadata.linkActionUrl,
