@@ -151,14 +151,20 @@ function App() {
                     // }}
                 />  */}
 
-                    <div className="sdk" style={{ color: "white", border: "2px solid red" }}>element</div>
+                    {/* <div className="sdk" style={{ color: "white", border: "2px solid red" }}>element</div>
+                    <div className="sdk1" style={{ color: "white", border: "2px solid red" }}>element</div>
+                    <div className="sdk2" style={{ color: "white", border: "2px solid red" }}>element</div>
                 <WalkThrough
                     questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
                     userId={userId}
                     isOpen
                     token={token}
-                    onFinish={() => { }}
-                />
+                    onFinish={() => { toast("you have completed ") }}
+                    // backgroundColor="black"
+                    // color=""
+                    // btnBackGroundColor="white"
+                    // btnColor="black"
+                /> */}
 
 
 
