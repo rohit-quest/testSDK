@@ -298,6 +298,7 @@ interface feedbackCompProps {
   tickBg?: string;
   ratingStyle?: "Star" | "Numbers" | "Smiles";
   uniqueUserId?: string;
+  uniqueEmailId?: string;
 }
 interface FormDataItem {
   type?: string;
@@ -325,7 +326,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   starBorderColor,
   tickBg,
   ratingStyle,
-  uniqueUserId
+  uniqueUserId,
+  uniqueEmailId
 }) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
@@ -462,6 +464,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       const body = {
         externalUserId: !!uniqueUserId && uniqueUserId,
         entityId: entityId,
+        email: uniqueEmailId
       }
 
       const headers = {
@@ -674,7 +677,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   }
 
   return (
-    <div style={{position:"fixed", display: isOpen == true ? "flex" : "none", zIndex, width:"100vw", backgroundColor: "rgba(128,144,160,.7)"}} className="q-parent-container">
+    <div style={{position:"fixed", display: isOpen == true ? "flex" : "none", zIndex, width:"100vw", backgroundColor: "rgba(128,144,160,.7)"}} className="q-parent-container" onClick={() => onClose?.(false)}>
       {showLoader && <Loader />}
       <ToastContainer />
       <div className="q-fw-div" style={{backgroundColor}}>

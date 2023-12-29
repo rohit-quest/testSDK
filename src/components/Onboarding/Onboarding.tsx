@@ -58,6 +58,7 @@ interface QuestLoginProps {
     gap?: string;
     controlBtnType?: "Arrow" | "Buttons";
     uniqueUserId?: string;
+    uniqueEmailId?: string;
 }
 
 interface FormData {
@@ -117,6 +118,7 @@ function OnBoarding(props: QuestLoginProps) {
         gap,
         controlBtnType,
         uniqueUserId,
+        uniqueEmailId
     } = props;
 
     const [formdata, setFormdata] = useState<FormData[] | []>([]);
@@ -145,7 +147,7 @@ function OnBoarding(props: QuestLoginProps) {
             const body = {
                 externalUserId: !!uniqueUserId && uniqueUserId,
                 entityId: entityId,
-                // emails: uniqueUserId
+                email: uniqueEmailId
             }
             
             getQuestData(userId, headers)
