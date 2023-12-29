@@ -20,9 +20,11 @@ type Props = {
   onLinkTrigger?: (url: string, index: number) => void;
   icons: Array<string>;
   uniqueUserId: string;
+  uniqueEmailId?: string;
   cardBorderColor?: string;
   heading?: string;
   description?: string;
+  autoHide?: boolean;
 };
 interface TutorialStep {
   id: number;
@@ -36,7 +38,7 @@ interface TutorialStep {
   btn1Link: string;
 }
 
-function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus, buttonBg, buttonColor, onLinkTrigger = (url:string,index:number)=>{window.location.href=url}, icons, uniqueUserId, cardBorderColor, heading, description }: Props) {
+function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus, buttonBg, buttonColor, onLinkTrigger = (url:string,index:number)=>{window.location.href=url}, icons, uniqueUserId, cardBorderColor, heading, description, uniqueEmailId, autoHide }: Props) {
   const svg1 = (
     <svg
       width="24"
@@ -246,7 +248,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
       const body = {
         externalUserId: !!uniqueUserId && uniqueUserId,
         entityId: entityId,
-          // emails: uniqueUserId
+        email: uniqueEmailId
       }
       
       if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
@@ -312,7 +314,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
       const body = {
         externalUserId: !!uniqueUserId && uniqueUserId,
         entityId: entityId,
-          // emails: uniqueUserId
+        email: uniqueEmailId
       }
       
       if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
@@ -377,9 +379,9 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
   }
 
   return (
-    <div style={{ padding: (!allCriteriaCompleted && formdata.length) ? '40px' : "0px", boxSizing: "content-box" }}>
+    <div style={{ padding: autoHide == true ? (!allCriteriaCompleted && formdata.length) ? '40px' : "0px" : "40px", boxSizing: "content-box" }}>
       {showLoader && <Loader />}
-      {!!formdata.length && !allCriteriaCompleted &&
+      {(autoHide == true ? (!!formdata.length && !allCriteriaCompleted) : true) &&
         <div className="gs-heading-div">
           <div style={{ color: textColor }} className="gs-heading">
             {heading || "Quickstart Guide"}
@@ -390,7 +392,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
         </div>
       }
       <div style={{ marginTop: '30px' }} className="gs-cards-container">
-        {!allCriteriaCompleted && formdata.map((e, i) =>
+        {(autoHide == true ? !allCriteriaCompleted : true) && formdata.map((e, i) =>
           (
             <div key={i} style={{ background: bg, borderColor }} className="gs-card-container">
             <div>
@@ -411,7 +413,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
                 </a>
               </div>
               <div
-                onClick={() => {!e.completed && handleCriteriaClick(e.criteriaId, e.url)}}
+                onClick={() => handleCriteriaClick(e.criteriaId, e.url)}
                 style={{ background: btn2Color, color: btnTextColor }}
                 className="gs-card-btn2"
               >
