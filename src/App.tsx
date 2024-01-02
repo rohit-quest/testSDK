@@ -17,6 +17,7 @@ import ShareArticle from "./components/Share/ShareArticle";
 import Search from "./components/Search/Search";
 import { ChatIcon, LinkIcon } from "./components/HelpCenter/Svg";
 import { copyLargeSVG, copySVG, discordSvg, googleImg, twitterPng, whatsappSvg } from "./assets/images";
+import Payment from "./components/Payment/Payment";
 // import dataArray from "./components/Search/mock.json"
 // export const questId = 'q-f825ebd2-57f2-4f21-90a2-843e22b4a7f5';
 // export const apiKey = 'k-0d087a04-f631-41e1-80dd-fdc9ab2abb07'
@@ -31,7 +32,39 @@ import { copyLargeSVG, copySVG, discordSvg, googleImg, twitterPng, whatsappSvg }
 // export const entityId = 'e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5'
 // export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
 // export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
-
+const paymentBanefits = [
+    {
+        included: [
+            "12 Campaigns / mo",
+            "Campaign Insights",
+            "Audience",
+            "Integrations - Twitter, Discord",
+        ],
+        notIncluded: ["Custom Branding", "Automations", "Support"],
+    },
+    {
+        included: [
+            "12 Campaigns / mo",
+            "Campaign Insights",
+            "Audience",
+            "Integrations - Twitter, Discord",
+            "Custom Branding",
+        ],
+        notIncluded: ["Automations", "Support"],
+    },
+    {
+        included: [
+            "12 Campaigns / mo",
+            "Campaign Insights",
+            "Audience",
+            "Integrations - Twitter, Discord",
+            "Custom Branding",
+            "Automations",
+            "Support",
+        ],
+        notIncluded: [],
+    },
+];
 function App() {
 
     const [answer, setAnswer] = useState<answer>([])
@@ -87,7 +120,17 @@ function App() {
 
 
 
-
+            <Payment
+                stripePublishableKey="pk_test_51IGxpeHv3bPcUa5dtAAgA2TZPWjga0FPxWlK3GAnWUfzRXzO8l6Kc3zF2WBpjrvFHAle0Cy3Jqxc7djZxptd9mHe00KjsN2Im7"
+                userId="u-0000000000"
+                description={[
+                    "Basic yet functional UI design for cost-free exploration.",
+                    "Polished interface with advanced features for enhanced user interaction.",
+                    "Cutting-edge, personalized design for a luxurious and seamless user journey.",
+                ]}
+                paymentBanefits={paymentBanefits}
+                forEntityId={"e-0000000000"}
+            />
 
 
 
