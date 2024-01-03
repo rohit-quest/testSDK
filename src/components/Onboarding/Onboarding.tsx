@@ -10,8 +10,8 @@ import discord from "../../assets/images/discord-color.png";
 import twitter from "../../assets/images/twitter-color.png";
 import slack from "../../assets/images/slack.png";
 import link from "../../assets/images/links.png";
-import Select from "react-select";
-import {userLogo, crossLogo, leftArrow, rightArrow, calenderIcon, textAreaIcon, phoneLogo, emailLogo} from "../../assets/assetsSVG"
+import Select, { StylesConfig } from "react-select";
+import {userLogo, crossLogo, leftArrow, rightArrow, calenderIcon, textAreaIcon, phoneLogo, emailLogo} from "../../assets/assetsSVG.tsx"
 
 
 type HeadingScreen = {
@@ -31,8 +31,8 @@ interface QuestLoginProps {
     screenHeight?: string;
     getAnswers: Function | undefined;
     answer: any;
-    setAnswer: any;
-    customComponents?: any;
+    setAnswer: React.Dispatch<React.SetStateAction<any>>;
+    customComponents?: React.JSX.Element;
     customComponentPositions?: number;
     inputBorder?: string;
     btnSize?: string;
@@ -105,7 +105,7 @@ function OnBoarding(props: QuestLoginProps) {
         token,
         questId,
         loadingTracker,
-        setLoading,
+        setLoading=()=>{},
         linksLogoWidth,
         previousBtnText,
         nextBtnText,
@@ -127,7 +127,7 @@ function OnBoarding(props: QuestLoginProps) {
     const [steps, setSteps] = useState<number[]>([]);
     const { apiKey, apiSecret, entityId, featureFlags, apiType } = useContext(QuestContext.Context);
     const cookies = new Cookies()
-    const progressRef = useRef()
+    const progressRef = useRef<HTMLDivElement>(null)
     let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
     useEffect(() => {
@@ -306,10 +306,23 @@ function OnBoarding(props: QuestLoginProps) {
     }
 
     const [wd, setWd] = useState(0)
+
+    const ProgressBarNew = () =>{
+console.log(progress?.length)
+        return (<div className="q_onb_progress">
+            {
+                progress?.map((text,i)=>(<div
+                    style={{width: `${(100/progress.length)}%`}}
+                    className="q_onb_progress_tab" key={i}>
+                    {text}
+                </div>))
+            }
+        </div>)
+    }
     
     const ProgressBar = () => {
         useEffect(() => {
-            if (!!progressRef.current && progressRef.current != wd) {
+            if (!!progressRef.current && progressRef.current.clientWidth != wd) {
                 setWd(progressRef?.current?.clientWidth)
             }
         }, [])
@@ -499,24 +512,24 @@ function OnBoarding(props: QuestLoginProps) {
         index: number,
         manualInput: string | boolean
     ) => {
-        const customStyles = {
-            control: (base: any, state: any) => ({
+        const customStyles: StylesConfig<any, false, any> = {
+            control: (base, state) => ({
               ...base,
               background: inputBgColor,
               fontSize: answerFontSize || "14px",
               border: inputBorder || "2px solid var(--neutral-grey-100, #ECECEC)",
               borderRadius: "10px"
             }),
-            option: (styles: any, { isDisabled, isFocused, isSelected, isHovered }) => ({
-                ...styles,
-                backgroundColor: isFocused ? "#9dc3ed" : inputBgColor ? inputBgColor : "#f9fafb",
-                color: ""
+            option: (styles, { isDisabled, isFocused, isSelected }) => ({
+              ...styles,
+              backgroundColor: isFocused ? "#9dc3ed" : inputBgColor || "#f9fafb",
+              color: ""
             }),
-            menu: (provided, state) => ({
-                ...provided,
-                backgroundColor: inputBgColor ? inputBgColor : "#f9fafb",
+            menu: (provided) => ({
+              ...provided,
+              backgroundColor: inputBgColor || "#f9fafb",
             })
-        }
+          };
         
         return (
             <div key={criteriaId}>
@@ -786,6 +799,8 @@ function OnBoarding(props: QuestLoginProps) {
     };
 
     function checkDesignCriteria() {
+        if(!design?.length) return;
+
         let fl = false;
         let arr: number[] = [];
 
@@ -852,7 +867,7 @@ function OnBoarding(props: QuestLoginProps) {
             token: questUserToken ? questUserToken : token
         }
 
-        getAnswers(crt);
+        getAnswers && getAnswers(crt);
         
         axios.post(`${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`, {criterias, userId: headers.userId}, {headers})
 
@@ -869,7 +884,6 @@ function OnBoarding(props: QuestLoginProps) {
             <div
                className="q-onb-ch"
             >
-                {formdata.length > 0 && <ProgressBar/>}
                 {formdata.length > 0 && !!headingScreen &&
                     (typeof headingScreen == "object" && !!headingScreen.name ? (
                         <div className="q-onb-main-heading">
@@ -897,7 +911,9 @@ function OnBoarding(props: QuestLoginProps) {
                             </div>
                         </div>
                     ))}
-                <div className="q-onb-main-first" style={{fontSize: questionFontSize}}>
+                {formdata.length > 0 && <ProgressBarNew />}
+                {formdata.length > 0 && <ProgressBar />}
+                    <div className="q-onb-main-first" style={{fontSize: questionFontSize}}>
                     {!!design && design.length > 0 && checkDesignCriteria()
                         ? design[currentPage].map((num: number) =>
                         (formdata[num - 1].type == "USER_INPUT_TEXT"
@@ -1093,7 +1109,6 @@ function OnBoarding(props: QuestLoginProps) {
                                                 currentPage == 0
                                                     ? "context-menu"
                                                     : "pointer",
-                                            border: `2px solid ${btnColor}`
                                         }}
                                     >
                                         {" "}
@@ -1113,8 +1128,8 @@ function OnBoarding(props: QuestLoginProps) {
                                         }}
                                     >
                                         {currentPage == design.length - 1
-                                            ? (nextBtnText ? nextBtnText : "Continue")
-                                            : "Next"}
+                                            ? (nextBtnText ? nextBtnText : "Submit and")
+                                            : "Continue"}
                                     </button>
                                 </div>
                                 :

@@ -183,14 +183,20 @@ textarea:focus {
 /* MAIN PAGE */
 .q-onb-main-heading {
     max-width: 768px;
-    padding: 20px;
-    box-sizing: content-box;
+    padding: 20px 28px;
+    box-sizing: border-box;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 20px;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--Neutral-White-300, #EFEFEF);
 }
 
 .q-onb-main-h3 {
     font-weight: 700;
-    text-align: center;
+    /* text-align: center; */
     overflow: hidden;
     color: var(--neutral-grey-700, #252525);
     text-overflow: ellipsis;
@@ -201,14 +207,14 @@ textarea:focus {
 }
 
 .q-onb-main-h4 {
-    text-align: center;
+    /* text-align: center; */
     margin-top: 8px;
-    color: var(--neutral-grey-400, #5E5E5E);
-    text-align: center;
-    font-size: 14px;
+    color: var(--Neutral-White-500, #B9B9B9);
+    font-family: Figtree;
+    font-size: 12px;
     font-style: normal;
     font-weight: 400;
-    line-height: 20px;
+    line-height: 16px; /* 133.333% */
 }
 
 .q-onb-main-first {
@@ -229,21 +235,21 @@ textarea:focus {
 }
 
 .q-onb-main-btn {
-    padding-top: 7px;
-    padding-bottom: 7px;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
-    border-radius: 0.5rem;
-    border-width: 2px;
-    border-color: #1f2937;
+    display: flex;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1.5px solid var(--Neutral-White-300, #EFEFEF);
+    background: var(--Neutral-White-100, #FFF);
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    color: var(--Neutral-Black-400, #2C2C2C);
+    font-family: Figtree;
     font-size: 14px;
-    line-height: 1.75rem;
+    width: 165px;
+    font-style: normal;
     font-weight: 500;
-    color: #000000;
-    min-width: 120px;
-    cursor: pointer;
+    line-height: 20px;
 }
 
 .q-onb-main-btn:hover {
@@ -257,20 +263,25 @@ textarea:focus {
 }
 
 .q-onb-main-btn2 {
-    padding-top: 7px;
-    padding-bottom: 7px;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    margin-bottom: 0.5rem;
-    border-radius: 0.5rem;
+    display: flex;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1.5px solid #D1ACFF;
+    background: linear-gradient(90deg, #9035FF 0.36%, #0065FF 100.36%);
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    align-self: stretch;
+    color: var(--Neutral-White-100, #FFF);
+    font-family: Figtree;
     font-size: 14px;
-    line-height: 1.75rem;
-    font-weight: 500;
-    color: #ffffff;
-    background-color: #000000;
-    min-width: 120px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    box-sizing: border-box;
     cursor: pointer;
-    transition: all 0.6s;
+    width: 165px;
+    white-space: nowrap;
 }
 
 .q-onb-main-btn2:hover {
@@ -470,4 +481,34 @@ textarea:focus {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
+}
+
+.q_onb_progress_tab{
+    display: flex;
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--Neutral-Black-400, #2C2C2C);
+    background: var(--Neutral-White-100, #FFF);
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    color: var(--Neutral-Black-400, #2C2C2C);
+    font-family: Figtree;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    box-sizing: border-box;
+    line-height: 16px;
+}
+
+.q_onb_progress{
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+    padding-left: 28px;
+    padding-right: 28px;
+    max-width: 768px;
+    justify-content: space-between;
+    margin: auto;
 }

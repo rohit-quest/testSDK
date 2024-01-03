@@ -26,12 +26,12 @@ import Payment from "./components/Payment/Payment";
 // export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjQyODA5MSwiZXhwIjoxNjk2NTE0NDkxfQ.b-HXLyQwQ-R94fUNnHW2omE0JtFy4C1oSpjuQLFCb-o'
 // export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
 
-// export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
-// export const apiKey = 'k-68a0c6b8-b27f-49c6-a315-b0c9cba15bf4'
-// export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
-// export const entityId = 'e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5'
-// export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
-// export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
+export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
+export const apiKey = 'k-68a0c6b8-b27f-49c6-a315-b0c9cba15bf4'
+export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
+export const entityId = 'e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5'
+export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
+export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
 const paymentBanefits = [
     {
         included: [
@@ -96,6 +96,13 @@ function App() {
         // style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
         >
 
+<QuestProvider 
+    apiKey={apiKey}
+    apiSecret={apiSecret}
+    entityId={entityId}
+    featureFlags={{}}
+    apiType="PRODUCTION"
+>
 
 
 
@@ -120,7 +127,7 @@ function App() {
 
 
 
-            <Payment
+            { /*<Payment
                 stripePublishableKey="pk_test_51IGxpeHv3bPcUa5dtAAgA2TZPWjga0FPxWlK3GAnWUfzRXzO8l6Kc3zF2WBpjrvFHAle0Cy3Jqxc7djZxptd9mHe00KjsN2Im7"
                 userId="u-0000000000"
                 description={[
@@ -130,7 +137,7 @@ function App() {
                 ]}
                 paymentBanefits={paymentBanefits}
                 forEntityId={"e-0000000000"}
-            />
+            />*/}
 
 
 
@@ -139,15 +146,10 @@ function App() {
 
             {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
 
-            <QuestProvider
-                apiKey={getstarted.apiKey}
-                apiSecret={getstarted.apiSecret}
-                entityId={getstarted.entityId} 
-                featureFlags={{}}
-            >
 
 
-                {/* 
+
+            {/* 
                 <HelpCenter
                     userId={userId}
                     token={token}
@@ -163,7 +165,7 @@ function App() {
 
 
 
-                {/* <QuestForm
+            {/* <QuestForm
                     userId={userId}
                     questId={questId}
                     answer={answer}
@@ -172,8 +174,13 @@ function App() {
                 /> */}
 
 
-
-                 <GetStarted
+            {/* <QuestProvider
+                apiKey={getstarted.apiKey}
+                apiSecret={getstarted.apiSecret}
+                entityId={getstarted.entityId}
+                featureFlags={{}}
+            >
+                <GetStarted
                     questId="q-7fbac653-8ef6-4082-a885-2835b6971936"
                     userId={"u-fb6fd0be-24d4-4914-bed0-aac01c899758"}
                     token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWZiNmZkMGJlLTI0ZDQtNDkxNC1iZWQwLWFhYzAxYzg5OTc1OCIsImlhdCI6MTY5Mzg4MDUxMSwiZXhwIjoxODUxNjY4NTExfQ.lIHjlJqrTIAcfnIGrACJN3SHKDjJ6NQ7OPuzAL6jCzI"}
@@ -184,17 +191,18 @@ function App() {
                     // buttonColor="yellow"
                     // cardBG="grey"
                     cardHeadingColor="black"
-                    icons={[ whatsappSvg,  discordSvg]}
+                    icons={[whatsappSvg, discordSvg]}
 
                     completeAllStatus={() => {
                         // showToast.success({ text: "completed successfully" })
                     }}
-                    onLinkTrigger={(url, id)=>{
+                    onLinkTrigger={(url, id) => {
                         console.log(url, id)
                     }}
                     uniqueUserId="soumitra.petbindhi+1@gmail.com"
-                    
-                /> 
+
+                />
+            </QuestProvider> */}
 
 
 
@@ -203,56 +211,56 @@ function App() {
 
 
 
-                {/* <button
+            {/* <button
                     onClick={() => {
                         confetti(5000)
                     }}>
                     Show Confetti</button> */}
 
 
-                {/* <button onClick={() => { showToast.warn({ duration: 3000, text: "This is a warning message" }) }}>warning</button>
+            {/* <button onClick={() => { showToast.warn({ duration: 3000, text: "This is a warning message" }) }}>warning</button>
                 <button onClick={() => { showToast.error({ duration: 2000, text: "" }) }}>Error</button>
                 <button onClick={() => { showToast.info({ duration: 2000, text: "" }) }}>Info</button>
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-                {/* <OnBoarding
-                    userId={userId}
-                    questId={questId}
-                    answer={answer}
-                    setAnswer={setAnswer}
-                    token={token}
-                    answerFontSize="14px"
-                    progress={["Personal Details", "Professional Details", "Additional Details"]}
-                    previousBtnText="previous"
-                    nextBtnText="next"
-                    color=""
-                    bgColor="#fff"
-                    controlBtnType="Arrow"
-                    headingSize="24px"
-                    descSize="18px"
-                    inputFieldType={{
-                        "ec-xxxxxxxxxxxxxxxxx": "textArea"
-                    }}
-                    btnColor=""
-                    btnSize="200px"
-                    inputBgColor=""
-                    inputBorder=""
-                    singleChoose="modal1"
-                    multiChoice="modal2"
-                    design={[[1, 2], [3, 4], [5, 6]]}
-                    headingScreen={[{ name: "Tell us about yourself", desc: "" },
-                    { name: "Tell us more about your company", desc: "" },
-                    { name: "A little more will help us guide you the best", desc: "" }]}
-                    customComponents={<CustomButton />}
-                    getAnswers={printAnswer}
-                    screenHeight=""
-                /> */}
+            <OnBoarding
+                userId={userId}
+                questId={questId}
+                answer={answer}
+                setAnswer={setAnswer}
+                token={token}
+                answerFontSize="14px"
+                progress={["Personal", "Professional", "Additional"]}
+                previousBtnText="previous"
+                nextBtnText="Submit and Continue"
+                color=""
+                bgColor="#fff"
+                controlBtnType="Buttons"
+                headingSize="24px"
+                descSize="18px"
+                inputFieldType={{
+                    "ec-xxxxxxxxxxxxxxxxx": "textArea"
+                }}
+                btnColor=""
+                btnSize="200px"
+                inputBgColor=""
+                inputBorder=""
+                singleChoose="modal1"
+                multiChoice="modal2"
+                design={[[1, 2], [3, 4], [5, 6]]}
+                headingScreen={[{ name: "Tell us about yourself", desc: "this is description" },
+                { name: "Tell us more about your company", desc: "" },
+                { name: "A little more will help us guide you the best", desc: "" }]}
+                customComponents={<CustomButton />}
+                getAnswers={printAnswer}
+                screenHeight=""
+            />
 
 
 
 
-                {/* <Tutorial
+            {/* <Tutorial
                     heading={"Tutorial Screen"}
                     subheading={"subheading"}
                     // bgColor="blue"
@@ -268,7 +276,7 @@ function App() {
 
 
 
-                {/* <FeedbackWorkflow
+            {/* <FeedbackWorkflow
                     userId="u-fb6fd0be-24d4-4914-bed0-aac01c899758"
                     token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWZiNmZkMGJlLTI0ZDQtNDkxNC1iZWQwLWFhYzAxYzg5OTc1OCIsImlhdCI6MTY5Mzg4MDUxMSwiZXhwIjoxODUxNjY4NTExfQ.lIHjlJqrTIAcfnIGrACJN3SHKDjJ6NQ7OPuzAL6jCzI"
                     questIds={[
@@ -291,7 +299,7 @@ function App() {
                 /> */}
 
 
-                {/* <Feedback
+            {/* <Feedback
                     userId={userId}
                     token={token}
                     questId={"q-1a12c0e1-35a8-48a3-8cde-a8616f341b88"}
@@ -307,7 +315,7 @@ function App() {
                     isInline={true}
                 />  */}
 
-                {/* <ReferEarn
+            {/* <ReferEarn
                     questId={questId}
                     token={token}
                     userId={userId}
@@ -324,7 +332,7 @@ function App() {
 
 
 
-                {/* <ReferShare
+            {/* <ReferShare
                     questId={questId}
                     token={token}
                     userId={userId}
@@ -340,7 +348,7 @@ function App() {
 
 
 
-                {/* <QuestLogin
+            {/* <QuestLogin
                     // questId=""
                     textColor=""
                     btnTextColor=""
@@ -351,7 +359,7 @@ function App() {
                     redirectURL="https://www.questlabs.ai/"
                 ></QuestLogin> */}
 
-                {/* <ShareArticle
+            {/* <ShareArticle
                     bgColor=""
                     // description=""
                     // heading=""
@@ -361,8 +369,7 @@ function App() {
                     questId="q-5976dbae-0c4d-4df6-ba70-231e53dd1532"
                     userId={userId}
                 /> */}
-            </QuestProvider>
-            {/*  */}
+        </QuestProvider>
         </div >
     )
 }
