@@ -499,6 +499,7 @@ textarea:focus {
     font-weight: 500;
     box-sizing: border-box;
     line-height: 16px;
+    cursor: pointer;
 }
 
 .q_onb_progress{
@@ -511,4 +512,13 @@ textarea:focus {
     max-width: 768px;
     justify-content: space-between;
     margin: auto;
+    margin-bottom: 16px;
+}
+
+.q_onb_miltiChoiceOne_ul{
+    
+}
+
+.q_onb_miltiChoiceOne_lebel{
+
 }

@@ -232,7 +232,7 @@ function App() {
                 token={token}
                 answerFontSize="14px"
                 progress={["Personal", "Professional", "Additional"]}
-                previousBtnText="previous"
+                previousBtnText="Go Back"
                 nextBtnText="Submit and Continue"
                 color=""
                 bgColor="#fff"
@@ -247,11 +247,11 @@ function App() {
                 inputBgColor=""
                 inputBorder=""
                 singleChoose="modal1"
-                multiChoice="modal2"
-                design={[[1, 2], [3, 4], [5, 6]]}
+                multiChoice="modal3"
+                design={[[5, 6], [3, 4], [1, 2]]}
                 headingScreen={[{ name: "Tell us about yourself", desc: "this is description" },
-                { name: "Tell us more about your company", desc: "" },
-                { name: "A little more will help us guide you the best", desc: "" }]}
+                { name: "Tell us more about your company", desc: "description for this " },
+                { name: "A little more will help us guide you the best", desc: "description for this " }]}
                 customComponents={<CustomButton />}
                 getAnswers={printAnswer}
                 screenHeight=""

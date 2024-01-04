@@ -27,7 +27,7 @@ interface QuestLoginProps {
     inputBgColor?: string;
     headingScreen?: HeadingScreen | HeadingScreen[] | any;
     singleChoose?: "modal1" | "modal2";
-    multiChoice?:  "modal1" | "modal2";
+    multiChoice?:  "modal1" | "modal2"|"modal3";
     screenHeight?: string;
     getAnswers: Function | undefined;
     answer: any;
@@ -59,6 +59,7 @@ interface QuestLoginProps {
     controlBtnType?: "Arrow" | "Buttons";
     uniqueUserId?: string;
     uniqueEmailId?: string;
+    progressBarType?: "modal1"|"modal2"
 }
 
 interface FormData {
@@ -91,7 +92,7 @@ function OnBoarding(props: QuestLoginProps) {
         descSize,
         headingScreen,
         singleChoose,
-        multiChoice,
+        multiChoice="modal3",
         screenHeight,
         progress,
         getAnswers,
@@ -118,7 +119,8 @@ function OnBoarding(props: QuestLoginProps) {
         gap,
         controlBtnType,
         uniqueUserId,
-        uniqueEmailId
+        uniqueEmailId,
+        progressBarType="modal2"
     } = props;
 
     const [formdata, setFormdata] = useState<FormData[] | []>([]);
@@ -308,16 +310,34 @@ function OnBoarding(props: QuestLoginProps) {
     const [wd, setWd] = useState(0)
 
     const ProgressBarNew = () =>{
-console.log(progress?.length)
-        return (<div className="q_onb_progress">
-            {
-                progress?.map((text,i)=>(<div
-                    style={{width: `${(100/progress.length)}%`}}
-                    className="q_onb_progress_tab" key={i}>
-                    {text}
-                </div>))
-            }
-        </div>)
+        return ( <div className="q_onb_progress">
+        {progress?.map((text, i) => {
+            const isFilled = steps.includes(i);
+            const isActive = currentPage === i;
+            let color = isFilled ? '#098849' : isActive ? '#2C2C2C' : '#6E6E6E';
+            let border = `1px solid ${isFilled ? '#098849' : isActive ? '#2C2C2C' : '#6E6E6E'}`;
+    
+          return (
+              <div
+                  style={{
+                      width: `${100 / progress.length}%`,
+                      color,
+                      border,
+                  }}
+                  onClick={() => {
+                      if (isFilled && (i <= currentPage + 1)) {
+                          setCurrentPage(i);
+                      }
+                  }
+                  }
+                  className="q_onb_progress_tab"
+                  key={i}
+              >
+                  {text}
+              </div>
+          );
+        })}
+      </div>)
     }
     
     const ProgressBar = () => {
@@ -702,6 +722,59 @@ console.log(progress?.length)
         );
     };
 
+    const multiChoiceThree = (
+        options: string[] | [],
+        question: string,
+        required: boolean,
+        criteriaId: string,
+        index: number
+    ) => {
+        return (
+            <div key={criteriaId}>
+                {
+                    (customComponentPositions == index + 1) &&
+                    <div style={{paddingBottom: "12px"}}>
+                        {customComponents}
+                    </div>
+                }
+                <div
+                    className="q_onb_lebels"
+                    style={{ color: color }}
+                >
+                    {question} {required && "*"}
+                </div>
+                <div className="q_onb_miltiChoiceOne_ul">
+                    {options.map((option: string, id: number) => (
+                        <div key={id} style={{listStyleType: "none"}}>
+                            <input
+                                type="checkbox"
+                                id={`mct${criteriaId + id}`}
+                                value={option}
+                                checked={
+                                    !!answer[criteriaId] &&
+                                    answer[criteriaId].includes(option)
+                                }
+                                style={{display: "none"}}
+                                className="q_onb_multiChoiceOne_checkbox"
+                                onChange={(e) =>
+                                    handleUpdate(e, criteriaId, "check")
+                                }
+                            />
+                            <label
+                                htmlFor={`mct${criteriaId + id}`}
+                                className="q_onb_miltiChoiceOne_lebel"
+                            >
+                                <div style={{display: "block"}}>
+                                    <div style={{fontSize: answerFontSize ? answerFontSize : "14px"}}>{option}</div>
+                                </div>
+                            </label>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    };
+
     const multiChoiceTwo = (
         options: string[] | [],
         question: string,
@@ -911,8 +984,7 @@ console.log(progress?.length)
                             </div>
                         </div>
                     ))}
-                {formdata.length > 0 && <ProgressBarNew />}
-                {formdata.length > 0 && <ProgressBar />}
+                    {formdata.length > 0 &&(progressBarType==="modal2"? <ProgressBarNew />:<ProgressBar /> )}
                     <div className="q-onb-main-first" style={{fontSize: questionFontSize}}>
                     {!!design && design.length > 0 && checkDesignCriteria()
                         ? design[currentPage].map((num: number) =>
@@ -982,6 +1054,13 @@ console.log(progress?.length)
                                         "USER_INPUT_MULTI_CHOICE"
                                         ? !!multiChoice && multiChoice == "modal2"
                                             ? multiChoiceTwo(
+                                                formdata[num - 1].options || [],
+                                                formdata[num - 1]?.question || "",
+                                                formdata[num - 1]?.required || false,
+                                                formdata[num - 1].criteriaId || "",
+                                                num - 1
+                                            ):
+                                            multiChoice == "modal3" ? multiChoiceThree(
                                                 formdata[num - 1].options || [],
                                                 formdata[num - 1]?.question || "",
                                                 formdata[num - 1]?.required || false,
