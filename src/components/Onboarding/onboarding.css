@@ -128,7 +128,6 @@ textarea:focus {
     width: 16px;
     height: 16px;
     cursor: pointer;
-    accent-color: black;
 }
 
 .q-onb-singleChoiceOne-lebel3 {
@@ -515,10 +514,39 @@ textarea:focus {
     margin-bottom: 16px;
 }
 
-.q_onb_miltiChoiceOne_ul{
-    
+.q_onb_miltiChoiceOne_ul {
+    display: flex;
+    gap: 8px;
 }
 
-.q_onb_miltiChoiceOne_lebel{
+.q_onb_singlehoiceOne_lebel{
+    display: flex;
+    padding: 8px 16px;
+    align-items: flex-start;
+    gap: 8px;
+    border-radius: 40px;
+    border: 1px solid var(--Primary-Grape-300, #BF8AFF);
+    align-self: stretch;
+    color: var(--Primary-Grape-600, #6525B3);
+    font-family: Figtree;
+    font-size: 12px;
+    font-style: normal;
+    cursor: pointer;
+    font-weight: 500;
+    line-height: 16px;
+}
 
+.q_onb_single_choice_three{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    align-self: stretch;
+    margin-top: 12px;
+}
+
+.q_onb_singlehoiceThree_lebel {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
 }

@@ -13,6 +13,36 @@ import link from "../../assets/images/links.png";
 import Select, { StylesConfig } from "react-select";
 import {userLogo, crossLogo, leftArrow, rightArrow, calenderIcon, textAreaIcon, phoneLogo, emailLogo} from "../../assets/assetsSVG.tsx"
 
+const Tick = ({fillColor="#6525B3",isActive=false,borderColor="#B9B9B9"}) => isActive?(<svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    >
+    <g clipPath="url(#clip0_12303_10092)">
+    <path
+        d="M12 0C13.1016 0 14.1641 0.140625 15.1875 0.421875C16.2109 0.703125 17.1641 1.10938 18.0469 1.64062C18.9297 2.17188 19.7383 2.79688 20.4727 3.51562C21.207 4.23438 21.8359 5.04297 22.3594 5.94141C22.8828 6.83984 23.2852 7.79688 23.5664 8.8125C23.8477 9.82812 23.9922 10.8906 24 12C24 13.1016 23.8594 14.1641 23.5781 15.1875C23.2969 16.2109 22.8906 17.1641 22.3594 18.0469C21.8281 18.9297 21.2031 19.7383 20.4844 20.4727C19.7656 21.207 18.957 21.8359 18.0586 22.3594C17.1602 22.8828 16.2031 23.2852 15.1875 23.5664C14.1719 23.8477 13.1094 23.9922 12 24C10.8984 24 9.83594 23.8594 8.8125 23.5781C7.78906 23.2969 6.83594 22.8906 5.95312 22.3594C5.07031 21.8281 4.26172 21.2031 3.52734 20.4844C2.79297 19.7656 2.16406 18.957 1.64062 18.0586C1.11719 17.1602 0.714844 16.2031 0.433594 15.1875C0.152344 14.1719 0.0078125 13.1094 0 12C0 10.8984 0.140625 9.83594 0.421875 8.8125C0.703125 7.78906 1.10938 6.83594 1.64062 5.95312C2.17188 5.07031 2.79688 4.26172 3.51562 3.52734C4.23438 2.79297 5.04297 2.16406 5.94141 1.64062C6.83984 1.11719 7.79688 0.714844 8.8125 0.433594C9.82812 0.152344 10.8906 0.0078125 12 0ZM19.0664 8.02734L17.4727 6.43359L9.75 14.1562L6.52734 10.9336L4.93359 12.5273L9.75 17.3438L19.0664 8.02734Z"
+        fill={fillColor}
+    />
+    </g>
+    <defs>
+    <clipPath id="clip0_12303_10092">
+        <rect width="24" height="24" fill={borderColor} />
+    </clipPath>
+    </defs>
+</svg>):(<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_3420_804)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M8.00001 0.833313C4.04197 0.833313 0.833344 4.04194 0.833344 7.99998C0.833344 11.958 4.04197 15.1666 8.00001 15.1666C11.9581 15.1666 15.1667 11.958 15.1667 7.99998C15.1667 4.04194 11.9581 0.833313 8.00001 0.833313ZM1.83334 7.99998C1.83334 4.59422 4.59425 1.83331 8.00001 1.83331C11.4058 1.83331 14.1667 4.59422 14.1667 7.99998C14.1667 11.4057 11.4058 14.1666 8.00001 14.1666C4.59425 14.1666 1.83334 11.4057 1.83334 7.99998Z" fill="#B9B9B9"/>
+</g>
+<defs>
+<clipPath id="clip0_3420_804">
+<rect width="16" height="16" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+)
+
 
 type HeadingScreen = {
     name: string;
@@ -26,8 +56,8 @@ interface QuestLoginProps {
     btnColor?: string;
     inputBgColor?: string;
     headingScreen?: HeadingScreen | HeadingScreen[] | any;
-    singleChoose?: "modal1" | "modal2";
-    multiChoice?:  "modal1" | "modal2"|"modal3";
+    singleChoose?: "modal1" | "modal2" | "modal3";
+    multiChoice?:  "modal1" | "modal2";
     screenHeight?: string;
     getAnswers: Function | undefined;
     answer: any;
@@ -59,7 +89,8 @@ interface QuestLoginProps {
     controlBtnType?: "Arrow" | "Buttons";
     uniqueUserId?: string;
     uniqueEmailId?: string;
-    progressBarType?: "modal1"|"modal2"
+    progressBarType?: "modal1"|"modal2";
+    choiceColor?: string
 }
 
 interface FormData {
@@ -92,7 +123,7 @@ function OnBoarding(props: QuestLoginProps) {
         descSize,
         headingScreen,
         singleChoose,
-        multiChoice="modal3",
+        multiChoice="modal1",
         screenHeight,
         progress,
         getAnswers,
@@ -120,7 +151,8 @@ function OnBoarding(props: QuestLoginProps) {
         controlBtnType,
         uniqueUserId,
         uniqueEmailId,
-        progressBarType="modal2"
+        progressBarType="modal2",
+        choiceColor="#6525B3"
     } = props;
 
     const [formdata, setFormdata] = useState<FormData[] | []>([]);
@@ -633,7 +665,7 @@ function OnBoarding(props: QuestLoginProps) {
                 </div>
                 <div className="q-onb-singleChoiceOne-optDiv">
                     {options.map((option: string, id: number) => (
-                        <div className="q-onb-singleChoiceOne-chDiv" key={id}>
+                        <div className="q_onb_singlehoiceOne_lebel" key={id}>
                             <input
                                 id={`sct${criteriaId + id}`}
                                 type="radio"
@@ -642,13 +674,78 @@ function OnBoarding(props: QuestLoginProps) {
                                 onChange={(e) =>
                                     handleUpdate(e, criteriaId, "radio")
                                 }
+                                style={{accentColor: choiceColor}}
                                 name={`default-radio${criteriaId}`}
                                 className="q-onb-singleChoiceOne-inp"
                             />
                             <label
                                 htmlFor={`sct${criteriaId + id}`}
                                 className="q-onb-singleChoiceOne-lebel3"
-                                style={{fontSize: answerFontSize, color: answer[criteriaId] == option ? "#252525" : ""}}
+                                style={{fontSize: answerFontSize, color: answer[criteriaId] == option ? choiceColor : ""}}
+                            >
+                                {option}
+                            </label>
+                        </div>
+                    ))}
+                </div>
+                {manualInput != false && answer[criteriaId] == manualInput &&
+                    <input 
+                        type="text" 
+                        name="" 
+                        id="" 
+                        className="q_sdk_input q-onb-input"
+                        style={{marginTop: "10px", fontSize: answerFontSize}}
+                        placeholder="Please fill manually"
+                        onChange={(e) => handleUpdate(e, (criteriaId + "/manual"), "")}
+                        value={answer[criteriaId + "/manual"]}
+                    />
+                }
+            </div>
+        );
+    };
+
+    const singleChoiceThree = (
+        options: [string] | [],
+        question: string,
+        required: boolean,
+        criteriaId: string,
+        index: number,
+        manualInput: string | boolean
+    ) => {
+        return (
+            <div key={criteriaId}>
+                {
+                    (customComponentPositions == index + 1) &&
+                    <div style={{paddingBottom: "12px"}}>
+                        {customComponents}
+                    </div>
+                }
+                <div
+                    className="q-onb-singleChoiceOne-lebel"
+                    style={{ color: color }}
+                >
+                    {question} {required && "*"}
+                </div>
+                <div className="q_onb_single_choice_three">
+                    {options.map((option: string, id: number) => (
+                        <div className="q_onb_singlehoiceThree_lebel" key={id}>
+                            <input
+                                id={`sct${criteriaId + id}`}
+                                type="radio"
+                                value={option}
+                                checked={answer[criteriaId] == option}
+                                onChange={(e) =>
+                                    handleUpdate(e, criteriaId, "radio")
+                                }
+                                style={{display: "none"}}
+                                name={`default-radio${criteriaId}`}
+                                className="q-onb-singleChoiceOne-inp"
+                            />
+                            <Tick fillColor={choiceColor} borderColor={inputBorder} isActive={answer[criteriaId] == option} />
+                            <label
+                                htmlFor={`sct${criteriaId + id}`}
+                                className="q-onb-singleChoiceOne-lebel3"
+                                style={{fontSize: answerFontSize, color: answer[criteriaId] == option ? choiceColor : "",fontWeight:"500"}}
                             >
                                 {option}
                             </label>
@@ -1042,6 +1139,15 @@ function OnBoarding(props: QuestLoginProps) {
                                             num - 1,
                                             formdata[num - 1]?.manualInput
                                         )
+                                        : (singleChoose == "modal3")?
+                                        singleChoiceThree(
+                                            formdata[num - 1].options || [],
+                                            formdata[num - 1]?.question || "",
+                                            formdata[num - 1]?.required || false,
+                                            formdata[num - 1].criteriaId || "",
+                                            num - 1,
+                                            formdata[num - 1]?.manualInput
+                                        )
                                         : singleChoiceOne(
                                             formdata[num - 1].options || [],
                                             formdata[num - 1]?.question || "",
@@ -1059,15 +1165,7 @@ function OnBoarding(props: QuestLoginProps) {
                                                 formdata[num - 1]?.required || false,
                                                 formdata[num - 1].criteriaId || "",
                                                 num - 1
-                                            ):
-                                            multiChoice == "modal3" ? multiChoiceThree(
-                                                formdata[num - 1].options || [],
-                                                formdata[num - 1]?.question || "",
-                                                formdata[num - 1]?.required || false,
-                                                formdata[num - 1].criteriaId || "",
-                                                num - 1
-                                            )
-                                            : multiChoiceOne(
+                                            ): multiChoiceOne(
                                                 formdata[num - 1].options || [],
                                                 formdata[num - 1]?.question || "",
                                                 formdata[num - 1]?.required || false,
@@ -1131,6 +1229,15 @@ function OnBoarding(props: QuestLoginProps) {
                                     : data.type == "USER_INPUT_SINGLE_CHOICE"
                                         ? !!singleChoose && singleChoose == "modal2"
                                             ? singleChoiceTwo(
+                                                data.options || [],
+                                                data?.question || "",
+                                                data?.required || false,
+                                                data.criteriaId || "",
+                                                index,
+                                                data?.manualInput
+                                            )
+                                            : (singleChoose == "modal3")?
+                                            singleChoiceThree(
                                                 data.options || [],
                                                 data?.question || "",
                                                 data?.required || false,
