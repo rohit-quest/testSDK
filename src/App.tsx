@@ -174,7 +174,7 @@ function App() {
                 /> */}
 
 
-            {/* <QuestProvider
+            <QuestProvider
                 apiKey={getstarted.apiKey}
                 apiSecret={getstarted.apiSecret}
                 entityId={getstarted.entityId}
@@ -202,7 +202,7 @@ function App() {
                     uniqueUserId="soumitra.petbindhi+1@gmail.com"
 
                 />
-            </QuestProvider> */}
+            </QuestProvider>
 
 
 
@@ -224,7 +224,7 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-            <OnBoarding
+            {/* <OnBoarding
                 userId={userId}
                 questId={questId}
                 answer={answer}
@@ -255,7 +255,7 @@ function App() {
                 customComponents={<CustomButton />}
                 getAnswers={printAnswer}
                 screenHeight=""
-            />
+            /> */}
 
 
 
