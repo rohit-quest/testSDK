@@ -16,8 +16,8 @@ import GetStarted from "./components/GetStarted/GetStarted";
 import ShareArticle from "./components/Share/ShareArticle";
 import Search from "./components/Search/Search";
 import { ChatIcon, LinkIcon } from "./components/HelpCenter/Svg";
+import WalkThrough from "./components/Tour/WalkThrough";
 import { copyLargeSVG, copySVG, discordSvg, googleImg, twitterPng, whatsappSvg } from "./assets/images";
-import Payment from "./components/Payment/Payment";
 // import dataArray from "./components/Search/mock.json"
 // export const questId = 'q-f825ebd2-57f2-4f21-90a2-843e22b4a7f5';
 // export const apiKey = 'k-0d087a04-f631-41e1-80dd-fdc9ab2abb07'
@@ -26,45 +26,13 @@ import Payment from "./components/Payment/Payment";
 // export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjQyODA5MSwiZXhwIjoxNjk2NTE0NDkxfQ.b-HXLyQwQ-R94fUNnHW2omE0JtFy4C1oSpjuQLFCb-o'
 // export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
 
-// export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
-// export const apiKey = 'k-68a0c6b8-b27f-49c6-a315-b0c9cba15bf4'
-// export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
-// export const entityId = 'e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5'
-// export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
-// export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
-const paymentBanefits = [
-    {
-        included: [
-            "12 Campaigns / mo",
-            "Campaign Insights",
-            "Audience",
-            "Integrations - Twitter, Discord",
-        ],
-        notIncluded: ["Custom Branding", "Automations", "Support"],
-    },
-    {
-        included: [
-            "12 Campaigns / mo",
-            "Campaign Insights",
-            "Audience",
-            "Integrations - Twitter, Discord",
-            "Custom Branding",
-        ],
-        notIncluded: ["Automations", "Support"],
-    },
-    {
-        included: [
-            "12 Campaigns / mo",
-            "Campaign Insights",
-            "Audience",
-            "Integrations - Twitter, Discord",
-            "Custom Branding",
-            "Automations",
-            "Support",
-        ],
-        notIncluded: [],
-    },
-];
+export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
+export const apiKey = 'k-68a0c6b8-b27f-49c6-a315-b0c9cba15bf4'
+export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
+export const entityId = 'e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5'
+export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
+export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
+
 function App() {
 
     const [answer, setAnswer] = useState<answer>([])
@@ -84,16 +52,16 @@ function App() {
     const [complete, setComplete] = useState(false)
 
     const getstarted = {
-        apiKey: "k-ac177ec6-3e03-4526-b198-d085822d261e",
-        apiSecret: "s-3a33b9f7-275e-44df-8225-a6da1835e7db3c24e655-f7fb-428a-8b61-fc89a001ff22",
-        entityId: "e-cbd250cc-3fcb-4085-a95e-712742ffa7ac"
+        apiKey: "k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be",
+        apiSecret: "s-7462f377-2ce4-4593-a907-3a2a00cdf951be06358a-d95d-4576-b3b4-a07dda2dab36",
+        entityId: "e-0000000000"
     }
 
     const [data, setData] = useState([]);
 
     return (
         <div
-        // style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
+            style={{ display: "flex", backgroundColor: "black", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
         >
 
 
@@ -120,17 +88,7 @@ function App() {
 
 
 
-            <Payment
-                stripePublishableKey="pk_test_51IGxpeHv3bPcUa5dtAAgA2TZPWjga0FPxWlK3GAnWUfzRXzO8l6Kc3zF2WBpjrvFHAle0Cy3Jqxc7djZxptd9mHe00KjsN2Im7"
-                userId="u-0000000000"
-                description={[
-                    "Basic yet functional UI design for cost-free exploration.",
-                    "Polished interface with advanced features for enhanced user interaction.",
-                    "Cutting-edge, personalized design for a luxurious and seamless user journey.",
-                ]}
-                paymentBanefits={paymentBanefits}
-                forEntityId={"e-0000000000"}
-            />
+
 
 
 
@@ -140,10 +98,9 @@ function App() {
             {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
 
             <QuestProvider
-                apiKey={getstarted.apiKey}
-                apiSecret={getstarted.apiSecret}
-                entityId={getstarted.entityId} 
-                featureFlags={{}}
+                apiKey={apiKey}
+                apiSecret={apiSecret}
+                entityId={entityId} featureFlags={{}}
             >
 
 
@@ -173,13 +130,13 @@ function App() {
 
 
 
-                 <GetStarted
-                    questId="q-7fbac653-8ef6-4082-a885-2835b6971936"
-                    userId={"u-fb6fd0be-24d4-4914-bed0-aac01c899758"}
-                    token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWZiNmZkMGJlLTI0ZDQtNDkxNC1iZWQwLWFhYzAxYzg5OTc1OCIsImlhdCI6MTY5Mzg4MDUxMSwiZXhwIjoxODUxNjY4NTExfQ.lIHjlJqrTIAcfnIGrACJN3SHKDjJ6NQ7OPuzAL6jCzI"}
-                    // token={token}
-                    // userId={userId}
-                    // questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
+                {/* <GetStarted
+                    // questId="q-6b06e238-aece-40c6-a53d-0750f9130e1d"
+                    // userId={"u-ee5f090e-6434-45de-8bcd-fce22d775bcf"}
+                    // token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWVlNWYwOTBlLTY0MzQtNDVkZS04YmNkLWZjZTIyZDc3NWJjZiIsImlhdCI6MTY5OTM3MDIyMCwiZXhwIjoxNjk5NDU2NjIwfQ.lj86UTiNxRi0riBGla85yr51blIQcJ1YRCfZgM3izUE"}
+                    token={token}
+                    userId={userId}
+                    questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
                     buttonBg="blue"
                     // buttonColor="yellow"
                     // cardBG="grey"
@@ -187,19 +144,27 @@ function App() {
                     icons={[ whatsappSvg,  discordSvg]}
 
                     completeAllStatus={() => {
-                        // showToast.success({ text: "completed successfully" })
+                        showToast.success({ text: "completed successfully" })
                     }}
-                    onLinkTrigger={(url, id)=>{
-                        console.log(url, id)
-                    }}
-                    uniqueUserId="soumitra.petbindhi+1@gmail.com"
-                    
-                /> 
+                    // onLinkTrigger={(url,id)=>{
+                    //     console.log(url,id)
+                    // }}
+                />  */}
 
-
-
-
-
+                     <div className="sdk" style={{ color: "white", border: "2px solid red",height: "200px",width:"100px" }}>element</div>
+                    <div className="sdk1" style={{ color: "white", border: "2px solid red" }}>element</div>
+                    <div className="sdk2" style={{ color: "white", border: "2px solid red" }}>element</div>
+                <WalkThrough
+                    questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
+                    userId={userId}
+                    isOpen
+                    token={token}
+                    onFinish={() => {  }}
+                    // backgroundColor="black"
+                    // color=""
+                    // btnBackGroundColor="white"
+                    // btnColor="black"
+                />
 
 
 
@@ -262,32 +227,28 @@ function App() {
                     questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
                     userId={userId}
                     token={token}
-                    // textColor="blue"
-                />  */}
-
+                // textColor="blue"
+                /> */}
 
 
 
                 {/* <FeedbackWorkflow
-                    userId="u-fb6fd0be-24d4-4914-bed0-aac01c899758"
-                    token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWZiNmZkMGJlLTI0ZDQtNDkxNC1iZWQwLWFhYzAxYzg5OTc1OCIsImlhdCI6MTY5Mzg4MDUxMSwiZXhwIjoxODUxNjY4NTExfQ.lIHjlJqrTIAcfnIGrACJN3SHKDjJ6NQ7OPuzAL6jCzI"
+                    // font="sans"
+                    // textColor="red"
+                    isOpen={true}
+                    // btnColor="yellow"
+                    // btnTextColor="blue"
+                    // backgroundColor="skyblue"
                     questIds={[
                         'q-general-feedback',
                         'q-report-a-bug',
                         'q-request-a-feature',
                         'q-contact-us',
                     ]}
-                    contactUrl="https://calendly.com/sriya-persana/30min"
-                    isOpen={true}
-                    // onClose={() => setIsOpen(!isOpen)}
-                    zIndex={1000}
-                    btnColor={"#1972f5"}
-                    topbarColor={"#1972f5"}
-                    starBorderColor={"#1972f5"}
-                    starColor={"#1972f5"}
-                    tickBg={"#1972f5"}
-                    uniqueUserId="soumitra.petbindhi+25@gmail.com"
-                    uniqueEmailId="soumitra.petbindhi+25@gmail.com"
+                    userId={userId}
+                    topbarColor=""
+                    token={token}
+                    contactUrl="https://calendly.com/shubham-quest/chat"
                 /> */}
 
 
