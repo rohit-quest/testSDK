@@ -58,6 +58,7 @@ interface QuestLoginProps {
     gap?: string;
     controlBtnType?: "Arrow" | "Buttons";
     uniqueUserId?: string;
+    uniqueEmailId?: string;
 }
 
 interface FormData {
@@ -117,6 +118,7 @@ function OnBoarding(props: QuestLoginProps) {
         gap,
         controlBtnType,
         uniqueUserId,
+        uniqueEmailId
     } = props;
 
     const [formdata, setFormdata] = useState<FormData[] | []>([]);
@@ -145,7 +147,7 @@ function OnBoarding(props: QuestLoginProps) {
             const body = {
                 externalUserId: !!uniqueUserId && uniqueUserId,
                 entityId: entityId,
-                // emails: uniqueUserId
+                email: uniqueEmailId
             }
             
             getQuestData(userId, headers)
@@ -443,7 +445,7 @@ function OnBoarding(props: QuestLoginProps) {
                             onChange={(e) => handleUpdate(e, criteriaId, "")}
                             className="q_sdk_input q-onb-custom-datePicker"
                         />
-                        <button id="q-onb-custom-date-text">{answer[criteriaId] ? <div style={{display: "inline"}} >{answer[criteriaId]}</div> : <div style={{display: "inline"}} style={{color:"#8E8E8E"}}>{placeholder}</div>}</button>
+                        <button id="q-onb-custom-date-text">{answer[criteriaId] ? <div style={{display: "inline"}} >{answer[criteriaId]}</div> : <div style={{display: "inline", color:"#8E8E8E"}}>{placeholder}</div>}</button>
                     </label>
                     {crossLogo(criteriaId, handleRemove)}
                 </div>

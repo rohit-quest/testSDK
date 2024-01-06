@@ -151,7 +151,7 @@ function App() {
                     // }}
                 />  */}
 
-                    {/* <div className="sdk" style={{ color: "white", border: "2px solid red" }}>element</div>
+                     <div className="sdk" style={{ color: "white", border: "2px solid red",height: "200px",width:"100px" }}>element</div>
                     <div className="sdk1" style={{ color: "white", border: "2px solid red" }}>element</div>
                     <div className="sdk2" style={{ color: "white", border: "2px solid red" }}>element</div>
                 <WalkThrough
@@ -159,12 +159,12 @@ function App() {
                     userId={userId}
                     isOpen
                     token={token}
-                    onFinish={() => { toast("you have completed ") }}
+                    onFinish={() => {  }}
                     // backgroundColor="black"
                     // color=""
                     // btnBackGroundColor="white"
                     // btnColor="black"
-                /> */}
+                />
 
 
 
@@ -229,7 +229,6 @@ function App() {
                     token={token}
                 // textColor="blue"
                 /> */}
-
 
 
 
