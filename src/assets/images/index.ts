@@ -42,4 +42,5 @@ import enterIcon from "./enter.svg"
 import questLogo from "./questLogo.png";
 import radioActive from "./radioActive.svg";
 import radioInActive from "./radioInActive.svg";
-export { whatsappSvg, twitterSvg, discordSvg, copySVG, googleImg, copyLargeSVG, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like, closePng, copyPng, twitterPng, telegramPng, discordPng, giftPng, creditBannerPng, creditCheck, helpCenter1, helpCenter2, emailLogo, crossLogo, alertLogo, toastTic, questionLogo, warnCross, primaryCross, errorCross, successCross, primaryAlert, userChatPng, aiChatPng, sendChatPng, leftArrowPng, linkPng, searchIcon,commandkeyIcon,enterIcon,questLogo,radioActive,radioInActive };
+import downArroIcon from "./downArrow.svg";
+export { whatsappSvg, twitterSvg, discordSvg, copySVG, googleImg, copyLargeSVG, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like, closePng, copyPng, twitterPng, telegramPng, discordPng, giftPng, creditBannerPng, creditCheck, helpCenter1, helpCenter2, emailLogo, crossLogo, alertLogo, toastTic, questionLogo, warnCross, primaryCross, errorCross, successCross, primaryAlert, userChatPng, aiChatPng, sendChatPng, leftArrowPng, linkPng, searchIcon,commandkeyIcon,enterIcon,questLogo,radioActive,radioInActive,downArroIcon };

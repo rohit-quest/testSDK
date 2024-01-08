@@ -1,24 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300&family=Hanken+Grotesk:wght@500&family=Mulish:wght@200&display=swap');
+
+.get_started_box{
+  margin: auto;
+}
+
 .gs-card-container {
-  padding-left: 2%;
-  border-radius: 12px;
-  height: 92px;
-  margin-top: 20px;
+  /* padding-left: 2%; */
+  /* border-radius: 12px; */
+  height: fit-content;
   /* min-width: 1150px; */
-  border: 2px solid;
+  /* border: 2px solid; */
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  flex-direction: column;
   align-items: center;
+  border-bottom: 1px solid var(--Neutral-White-300, #EFEFEF);
 }
 .gs-card-container>div{
   display: flex;
   align-items: center;
 }
-.gs-card-container>:first-child{
-  width: 70%;
-}
 .gs-card-btn-container {
-  padding-right: 2%;
   display: flex;
 
 }
@@ -134,4 +136,109 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+
+.gs-card-icon{
+  display: flex;
+  padding: 8px;
+  border-radius: 48px;
+  background: var(--Primary-Grape-100, #F4EBFF);
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.q_gt_dropdown{
+  display: flex;
+  padding: 8px;
+  padding-left: 12px;
+  border-radius: 48px;
+  align-items: flex-start;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.gs_card_body{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 20px 12px;
+  border-bottom: 1px solid var(--Neutral-White-300, #EFEFEF);
+  align-items: center;
+  gap: 12px;
+}
+
+.gs_card_body_text{
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+  padding-left: 12px;
+  flex: 1 0 0;
+  align-self: stretch;
+}
+
+.gs_card_dropdown{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;  
+}
+
+.gs_drop_img{
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.gs_drop_btns{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  align-self: stretch;
+  margin-bottom: 20px;
+}
+
+.gs_start_btn{
+  display: flex;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1.5px solid #D1ACFF;
+  background: linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%);
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  color: var(--Neutral-White-100, #FFF);
+  font-family: Figtree;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.gs_visit_btn{
+  display: flex;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1.5px solid var(--Neutral-White-300, #EFEFEF);
+  background: var(--Neutral-White-100, #FFF);
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  color: var(--Neutral-Black-400, #2C2C2C);
+  font-family: Figtree;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.gs_drop_desc{
+  align-self: stretch;
+  color: var(--Neutral-Black-100, #939393);
+  font-family: Figtree;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
 }
