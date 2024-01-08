@@ -192,12 +192,13 @@ function App() {
                     // cardBG="grey"
                     cardHeadingColor="black"
                     icons={[whatsappSvg, discordSvg]}
-
+                    dropDown={false}
+                    // width="50vw" 
                     completeAllStatus={() => {
                         // showToast.success({ text: "completed successfully" })
                     }}
                     onLinkTrigger={(url, id) => {
-                        console.log(url, id)
+                        window.location.href=url;
                     }}
                     uniqueUserId="soumitra.petbindhi+1@gmail.com"
 
