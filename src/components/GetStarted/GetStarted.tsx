@@ -6,7 +6,7 @@ import QuestContext from '../QuestWrapper';
 import { toast } from 'react-toastify';
 import Loader from '../Login/Loader';
 import Cookies from 'universal-cookie';
-import { downArroIcon, helpCenter1, questLogo } from '../../assets/images';
+import { downArroIcon, gsTick, helpCenter1, questLogo, upArrow } from '../../assets/images';
 type Props = {
   userId: string;
   token: string;
@@ -288,7 +288,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
               btn2: criteria?.data?.metadata?.btn2,
               btn1Link: criteria?.data?.metadata?.btn1Link,
               criteriaId: criteria?.data?.criteriaId,
-              completed: criteria?.completed,
+              completed:   criteria?.completed,
               longDescription: criteria?.longDescription||"Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users"
             };
           });
@@ -433,7 +433,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
               </div>
               {
                 dropDown ? (<div className='q_gt_dropdown' onClick={()=>setDropdown(prev=>prev.map((e,index)=> (i===index)?(!e):e )) }>
-                  <img src={downArroIcon} alt="" />
+                  <img src={dropdowns[i]?upArrow:(e.completed?gsTick:downArroIcon)} alt="" />
                 </div>) : (<div
                   onClick={() => handleCriteriaClick(e.criteriaId, e.url)}
                   style={{ background: btn2Color, color: btnTextColor }}
