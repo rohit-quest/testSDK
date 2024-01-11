@@ -96,13 +96,13 @@ function App() {
         // style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
         >
 
-<QuestProvider 
+{/* <QuestProvider 
     apiKey={apiKey}
     apiSecret={apiSecret}
     entityId={entityId}
     featureFlags={{}}
     apiType="PRODUCTION"
->
+> */}
 
 
 
@@ -172,18 +172,26 @@ function App() {
                     setAnswer={setAnswer}
                     token={token}
                 /> */}
-
+{/* https://staging.questprotocol.xyz/api/entities/e-0000000000/quests/q-9727caa3-3ecf-4ee9-ad39-860f70466012?userId=u-e61750ac-8734-4e42-a56c-df49bcda9f49 */}
 
             <QuestProvider
-                apiKey={getstarted.apiKey}
-                apiSecret={getstarted.apiSecret}
-                entityId={getstarted.entityId}
+                // apiKey={getstarted.apiKey}
+                apiKey="k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be"
+                // apiSecret={getstarted.apiSecret}
+                apiSecret="s-7462f377-2ce4-4593-a907-3a2a00cdf951be06358a-d95d-4576-b3b4-a07dda2dab36"
+                // entityId={getstarted.entityId}
+                entityId="e-0000000000"
                 featureFlags={{}}
+                apiType="STAGING"
             >
                 <GetStarted
-                    questId="q-7fbac653-8ef6-4082-a885-2835b6971936"
-                    userId={"u-fb6fd0be-24d4-4914-bed0-aac01c899758"}
-                    token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWZiNmZkMGJlLTI0ZDQtNDkxNC1iZWQwLWFhYzAxYzg5OTc1OCIsImlhdCI6MTY5Mzg4MDUxMSwiZXhwIjoxODUxNjY4NTExfQ.lIHjlJqrTIAcfnIGrACJN3SHKDjJ6NQ7OPuzAL6jCzI"}
+                    // questId="q-7fbac653-8ef6-4082-a885-2835b6971936"
+                    questId="q-9727caa3-3ecf-4ee9-ad39-860f70466012"
+                    // userId={"u-fb6fd0be-24d4-4914-bed0-aac01c899758"}
+                    userId="u-e61750ac-8734-4e42-a56c-df49bcda9f49"
+                    // token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWZiNmZkMGJlLTI0ZDQtNDkxNC1iZWQwLWFhYzAxYzg5OTc1OCIsImlhdCI6MTY5Mzg4MDUxMSwiZXhwIjoxODUxNjY4NTExfQ.lIHjlJqrTIAcfnIGrACJN3SHKDjJ6NQ7OPuzAL6jCzI"}
+                    token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWU2MTc1MGFjLTg3MzQtNGU0Mi1hNTZjLWRmNDliY2RhOWY0OSIsImlhdCI6MTcwNDk5MjQ2MCwiZXhwIjoxNzA1MDc4ODYwfQ.9my6FtuFQ7HOy5muxBX_nTt_Cx1cLsmDZjytH3Z8FlQ
+                    "
                     // token={token}
                     // userId={userId}
                     // questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
@@ -192,7 +200,7 @@ function App() {
                     // cardBG="grey"
                     cardHeadingColor="black"
                     icons={[whatsappSvg, discordSvg]}
-                    dropDown={false}
+                    dropDown={true}
                     // width="50vw" 
                     completeAllStatus={() => {
                         // showToast.success({ text: "completed successfully" })
@@ -203,7 +211,7 @@ function App() {
                     uniqueUserId="soumitra.petbindhi+1@gmail.com"
 
                 />
-            </QuestProvider>
+            {/* </QuestProvider> */}
 
 
 

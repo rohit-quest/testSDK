@@ -110,7 +110,7 @@
   height: 6px;
   border-radius: 8px;
   box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.12);
-  background: var(--Neutral-White-500, #B9B9B9);
+  background: #29B379;
   flex-shrink: 0;
 }
 
@@ -122,14 +122,13 @@
 }
 
 .q_progress_percentage{
-  align-self: stretch;
-  color: var(--Neutral-Black-400, #2C2C2C);
+  color: var(--State-Success-300, #098849);
+  text-shadow: 0px 2px 4px rgba(41, 179, 121, 0.50);
   font-family: Figtree;
-  font-size: 10px;
+  font-size: 11.122px;
   font-style: normal;
   font-weight: 600;
-  line-height: 12px;
-  letter-spacing: -0.1px;
+  line-height: 16.683px; /* 150% */
 }
 
 .q_gt_progress{
@@ -161,6 +160,7 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
+  cursor: pointer;
   padding: 20px 12px;
   border-bottom: 1px solid var(--Neutral-White-300, #EFEFEF);
   align-items: center;
