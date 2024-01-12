@@ -1314,7 +1314,7 @@ function OnBoarding(props: QuestLoginProps) {
                                         }}
                                     >
                                         {currentPage == design.length - 1
-                                            ? (nextBtnText ? nextBtnText : "Submit and")
+                                            ? (nextBtnText ? nextBtnText : "Submit")
                                             : "Continue"}
                                     </button>
                                 </div>
