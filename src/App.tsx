@@ -186,7 +186,7 @@ function App() {
             >
                 <GetStarted
                     // questId="q-7fbac653-8ef6-4082-a885-2835b6971936"
-                    questId="q-9727caa3-3ecf-4ee9-ad39-860f70466012"
+                    questId="q-72858b6f-e39c-4dc9-8ef8-f5eea9389a58"
                     // userId={"u-fb6fd0be-24d4-4914-bed0-aac01c899758"}
                     userId="u-00e200ca-0d17-4bdc-938d-6fc0cce5053a"
                     // token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWZiNmZkMGJlLTI0ZDQtNDkxNC1iZWQwLWFhYzAxYzg5OTc1OCIsImlhdCI6MTY5Mzg4MDUxMSwiZXhwIjoxODUxNjY4NTExfQ.lIHjlJqrTIAcfnIGrACJN3SHKDjJ6NQ7OPuzAL6jCzI"}
@@ -194,17 +194,23 @@ function App() {
                     // token={token}
                     // userId={userId}
                     // questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
-                    buttonBg="#9035FF"
-                    compltedBtnBgColor="#EBFFEB"
-                    compltedBtnColor="#008000"
                     // buttonColor="yellow"
                     // cardBG="grey"
-                    cardHeadingColor="black"
-                    icons={[whatsappSvg, discordSvg]}
+                    icons={[
+                        "https://pin.questprotocol.xyz/ipfs/QmWSjM2BwmSW7pda3YmWxyFQ7sCJ9PVmVAwj1W9K7XAHhG",
+                        "https://pin.questprotocol.xyz/ipfs/QmRC5SwJpBup4wRB32DxjPV2fEnccpJkuMTBtzS9aiJg42",
+                        "https://pin.questprotocol.xyz/ipfs/QmcYB6T27vbqdaaeJdx1Cz3nz9oYMhTegpWjhSff7aX2Mi",
+                        "https://pin.questprotocol.xyz/ipfs/QmavuprWaHKvd5JZvkdgathYKLr5Zcshc1EPRzRzBJaPqw"
+                    ]}
                     // dropDown={true}
                     // width="50vw" 
-                    autoHide
-                    cardBorderColor="white"
+                    // autoHide
+                    buttonBg="#9035FF"
+                    cardHeadingColor="white"
+                    compltedBtnBgColor="#EBFFEB"
+                    compltedBtnColor="#008000"
+                        cardBorderColor="var(--color-core-background-1)"
+                        heading="What’s new"
                     completeAllStatus={() => {
                         // showToast.success({ text: "completed successfully" })
                     }}

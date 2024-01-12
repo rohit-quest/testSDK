@@ -6,7 +6,7 @@ import QuestContext from '../QuestWrapper';
 import { toast } from 'react-toastify';
 import Loader from '../Login/Loader';
 import Cookies from 'universal-cookie';
-import { downArroIcon, gsTick, helpCenter1, questLogo, upArrow } from '../../assets/images';
+import { downArroIcon, greenCheck, gsTick, helpCenter1, questLogo, upArrow } from '../../assets/images';
 type Props = {
   userId: string;
   token: string;
@@ -43,7 +43,7 @@ interface TutorialStep {
   btn1Link: string;
   longDescription?: string;
 }
-function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus, buttonBg, buttonColor, onLinkTrigger = (url:string,index:number)=>{window.location.href=url}, icons, uniqueUserId, cardBorderColor, heading, description, uniqueEmailId, autoHide, progressBar=true,dropDown=false,width="auto", compltedBtnColor="#008000",compltedBtnBgColor="#EBFFEB"}: Props) {
+function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus, buttonBg, buttonColor, onLinkTrigger = (url:string,index:number)=>{window.location.href=url}, icons, uniqueUserId, cardBorderColor, heading, description, uniqueEmailId, autoHide, progressBar=false,dropDown=false,width="auto", compltedBtnColor="#008000",compltedBtnBgColor="#EBFFEB"}: Props) {
   const svg1 = (
     <svg
       width="24"
@@ -167,18 +167,18 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
       </defs>
     </svg>
   );
-  const check = (color: string ="#008000") => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 8 8" fill="none">
-  <g clip-path="url(#clip0_3900_15770)">
-    <path fillRule="evenodd" clipRule="evenodd" d="M7.17487 4.02494C7.17487 5.68639 5.82799 7.03327 4.16654 7.03327C2.50508 7.03327 1.1582 5.68639 1.1582 4.02494C1.1582 2.36348 2.50508 1.0166 4.16654 1.0166C5.82799 1.0166 7.17487 2.36348 7.17487 4.02494ZM5.37899 3.11331C5.46711 3.20142 5.46711 3.34428 5.37899 3.43239L3.87483 4.93656C3.78672 5.02467 3.64386 5.02467 3.55575 4.93656L2.95408 4.33489C2.86597 4.24678 2.86597 4.10392 2.95408 4.01581C3.04219 3.9277 3.18505 3.9277 3.27316 4.01581L3.71529 4.45794L4.3876 3.78562L5.05991 3.11331C5.14803 3.0252 5.29088 3.0252 5.37899 3.11331Z" fill={color}/>
-  </g>
-  <defs>
-    <clipPath id="clip0_3900_15770">
-      <rect width="12" height="12" fill="white" transform="translate(0.556641 0.415039)"/>
-    </clipPath>
-  </defs>
-</svg>
-  );
+//   const check = (color: string ="#008000") => (
+//     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 8 8" fill="none">
+//   <g clip-path="url(#clip0_3900_15770)">
+//     <path fillRule="evenodd" clipRule="evenodd" d="M7.17487 4.02494C7.17487 5.68639 5.82799 7.03327 4.16654 7.03327C2.50508 7.03327 1.1582 5.68639 1.1582 4.02494C1.1582 2.36348 2.50508 1.0166 4.16654 1.0166C5.82799 1.0166 7.17487 2.36348 7.17487 4.02494ZM5.37899 3.11331C5.46711 3.20142 5.46711 3.34428 5.37899 3.43239L3.87483 4.93656C3.78672 5.02467 3.64386 5.02467 3.55575 4.93656L2.95408 4.33489C2.86597 4.24678 2.86597 4.10392 2.95408 4.01581C3.04219 3.9277 3.18505 3.9277 3.27316 4.01581L3.71529 4.45794L4.3876 3.78562L5.05991 3.11331C5.14803 3.0252 5.29088 3.0252 5.37899 3.11331Z" fill={color}/>
+//   </g>
+//   <defs>
+//     <clipPath id="clip0_3900_15770">
+//       <rect width="12" height="12" fill="white" transform="translate(0.556641 0.415039)"/>
+//     </clipPath>
+//   </defs>
+// </svg>
+//   );
 
   const svgArr = [svg1, svg2, svg3, svg4];
 
@@ -436,7 +436,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
                     style={{ background: !e.completed?btn2Color:compltedBtnBgColor, color: e.completed?compltedBtnColor:btnTextColor }}
                   className="gs_card_btn_2"
                   >
-                  {e.completed ?( <>Done{check(compltedBtnColor)}</> ): !!e.btn2 ? e.btn2 : "Let's go!"}
+                  {e.completed ?( <>Done <img src={greenCheck} alt="" /></> ): !!e.btn2 ? e.btn2 : "Let's go!"}
                 </div></>)
               }
             </div>
