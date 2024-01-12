@@ -574,7 +574,7 @@ function OnBoarding(props: QuestLoginProps) {
             }),
             option: (styles, { isDisabled, isFocused, isSelected }) => ({
               ...styles,
-              backgroundColor: isFocused ? "#9dc3ed" : inputBgColor || "#f9fafb",
+              backgroundColor: isFocused ? "grey" : inputBgColor || "#f9fafb",
               color: ""
             }),
             menu: (provided) => ({
