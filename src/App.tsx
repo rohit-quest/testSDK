@@ -188,20 +188,22 @@ function App() {
                     // questId="q-7fbac653-8ef6-4082-a885-2835b6971936"
                     questId="q-9727caa3-3ecf-4ee9-ad39-860f70466012"
                     // userId={"u-fb6fd0be-24d4-4914-bed0-aac01c899758"}
-                    userId="u-e61750ac-8734-4e42-a56c-df49bcda9f49"
+                    userId="u-16e8bb75-4ad2-4e38-9840-8312d00859e2"
                     // token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWZiNmZkMGJlLTI0ZDQtNDkxNC1iZWQwLWFhYzAxYzg5OTc1OCIsImlhdCI6MTY5Mzg4MDUxMSwiZXhwIjoxODUxNjY4NTExfQ.lIHjlJqrTIAcfnIGrACJN3SHKDjJ6NQ7OPuzAL6jCzI"}
-                    token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWU2MTc1MGFjLTg3MzQtNGU0Mi1hNTZjLWRmNDliY2RhOWY0OSIsImlhdCI6MTcwNDk5MjQ2MCwiZXhwIjoxNzA1MDc4ODYwfQ.9my6FtuFQ7HOy5muxBX_nTt_Cx1cLsmDZjytH3Z8FlQ
-                    "
+                    token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTE2ZThiYjc1LTRhZDItNGUzOC05ODQwLTgzMTJkMDA4NTllMiIsImlhdCI6MTcwNTA1OTk4MiwiZXhwIjoxNzA1MTQ2MzgyfQ.uBBfpJeMx1QSIwXvGIqmmaSVFuB3neHvlxUQMGvlMl4"
                     // token={token}
                     // userId={userId}
                     // questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
-                    buttonBg="blue"
+                    buttonBg="#9035FF"
+                    compltedBtnBgColor="#EBFFEB"
+                    compltedBtnColor="#008000"
                     // buttonColor="yellow"
                     // cardBG="grey"
                     cardHeadingColor="black"
                     icons={[whatsappSvg, discordSvg]}
-                    dropDown={true}
+                    // dropDown={true}
                     // width="50vw" 
+                    cardBorderColor="white"
                     completeAllStatus={() => {
                         // showToast.success({ text: "completed successfully" })
                     }}

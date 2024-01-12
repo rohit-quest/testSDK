@@ -14,7 +14,7 @@
   /* justify-content: space-between; */
   flex-direction: column;
   align-items: center;
-  border-bottom: 1px solid var(--Neutral-White-300, #EFEFEF);
+  /* border-bottom: 1px solid var(--Neutral-White-300, #EFEFEF); */
 }
 .gs-card-container>div{
   display: flex;
@@ -22,6 +22,7 @@
 }
 .gs-card-btn-container {
   display: flex;
+  gap: 10px;
 
 }
 .gs-card-btn-container a{
@@ -77,13 +78,15 @@
   margin-top: 8px;
 }
 .gs-card-head {
-  font-size: 16px;
+  color: var(--Neutral-Black-400, #2C2C2C);
+  font-family: Figtree;
+  font-size: 12.2px;
   font-style: normal;
-  font-weight: 600;
-  line-height: 24px;
+  font-weight: 500;
+  line-height: 18.3px; /* 150% */
 }
 .gs-card-desc {
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: 20px; /* 142.857% */
@@ -165,11 +168,12 @@
   border-bottom: 1px solid var(--Neutral-White-300, #EFEFEF);
   align-items: center;
   gap: 12px;
+  margin: 5px 0;
 }
 
 .gs_card_body_text{
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 2px;
   padding-left: 12px;
   flex: 1 0 0;
@@ -241,4 +245,38 @@
   font-style: normal;
   font-weight: 400;
   line-height: 16px;
+}
+
+.gs_card_btn_2 {
+  color: var(--neutral-opacity-white-80, rgba(255, 255, 255, 0.80));
+  font-family: Figtree;
+  font-size: 10.675px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 15.25px;
+  display: flex;
+  width: 112.088px;
+  height: 30.5px;
+  padding: 7.625px 15.25px;
+  justify-content: center;
+  align-items: center;
+  gap: 6.1px;
+  border-radius: 7.625px;
+  background: var(--Primary-Grape-500, #9035FF);
+}
+
+.gs-heading-div{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gs_steps{
+  color: var(--Neutral-Black-100, #939393);
+  text-align: right;
+  font-family: Figtree;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 15px;
 }
