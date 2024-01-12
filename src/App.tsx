@@ -188,9 +188,9 @@ function App() {
                     // questId="q-7fbac653-8ef6-4082-a885-2835b6971936"
                     questId="q-9727caa3-3ecf-4ee9-ad39-860f70466012"
                     // userId={"u-fb6fd0be-24d4-4914-bed0-aac01c899758"}
-                    userId="u-16e8bb75-4ad2-4e38-9840-832d00859e2"
+                    userId="u-00e200ca-0d17-4bdc-938d-6fc0cce5053a"
                     // token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWZiNmZkMGJlLTI0ZDQtNDkxNC1iZWQwLWFhYzAxYzg5OTc1OCIsImlhdCI6MTY5Mzg4MDUxMSwiZXhwIjoxODUxNjY4NTExfQ.lIHjlJqrTIAcfnIGrACJN3SHKDjJ6NQ7OPuzAL6jCzI"}
-                    token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTE2ZThiYjc1LTRhZDItNGUzOC05ODQwLTgzMTJkMDA4NTllMiIsImlhdCI6MTcwNTA1OTk4MiwiZXhwIjoxNzA1MTQ2MzgyfQ.uBBfpJeMx1QSIwXvGIqmmaSVFuB3neHvlxUQMGvlMl4"
+                    token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTAwZTIwMGNhLTBkMTctNGJkYy05MzhkLTZmYzBjY2U1MDUzYSIsImlhdCI6MTcwNTA3NDEwMSwiZXhwIjoxNzA1MTYwNTAxfQ.ROjqcWk06BeZ9YUOeZXOygKqokqn-lMisDLqQ88E-28"
                     // token={token}
                     // userId={userId}
                     // questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
@@ -203,14 +203,16 @@ function App() {
                     icons={[whatsappSvg, discordSvg]}
                     // dropDown={true}
                     // width="50vw" 
+                    autoHide
                     cardBorderColor="white"
                     completeAllStatus={() => {
                         // showToast.success({ text: "completed successfully" })
                     }}
                     onLinkTrigger={(url, id) => {
-                        window.location.href=url;
+                        console.log(url)
+                        // window.location.href=url;
                     }}
-                    uniqueUserId="soumitra.petbindhi+1@gmail.com"
+                    // uniqueUserId="soumitra.petbindhi+1@gmail.com"
 
                 />
             </QuestProvider>

@@ -19,7 +19,7 @@ type Props = {
   buttonColor?: string;
   onLinkTrigger?: (url: string, index: number) => void;
   icons: Array<string>;
-  uniqueUserId: string;
+  uniqueUserId?: string;
   uniqueEmailId?: string;
   cardBorderColor?: string;
   heading?: string;
@@ -197,18 +197,17 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
   let questUserToken = cookies.get("questUserToken");
 
   const handleCriteriaClick = (id: any, url: string) => {
-    setSteps(c=>c-1);
     const headers = {
       apiKey: apiKey,
       apisecret: apiSecret,
-      userId: questUserId,
-      token: questUserToken,
+      userId: uniqueUserId? questUserId : userId,
+      token: uniqueUserId? questUserToken : token,
     };
 
     const json = {
       criteriaId: id,
     };
-    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${questUserId}`;
+    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${headers.userId}`;
     setShowLoader(true);
     axios
       .post(request, json, { headers: headers })
@@ -377,7 +376,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
   }
 
   return (
-    <div style={{ padding: autoHide == true ? (!allCriteriaCompleted && formdata.length) ? '40px' : "0px" : "40px", boxSizing: "content-box",width: width }} className='get_started_box'>
+    (<div style={{ padding: autoHide == true ? (!allCriteriaCompleted && formdata.length) ? '40px' : "0px" : "40px", boxSizing: "content-box",width: width }} className='get_started_box'>
       {showLoader && <Loader />}
       {(autoHide == true ? (!!formdata.length && !allCriteriaCompleted) : true) &&
         <div className="gs-heading-div">
@@ -392,7 +391,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
           <div className='gs_steps'>{stepsLeft} steps left</div>
         </div>
       }
-      {progressBar&&(<div className="q_gt_progress">
+      {(autoHide == true ? (!!formdata.length && !allCriteriaCompleted) : true) &&progressBar&&(<div className="q_gt_progress">
         <div className="q_progress_percentage">{Math.floor(completedPercentage)||0}% Completed</div>
         <div className='q_gt_progress_bar'>
           <div
@@ -454,7 +453,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
         )
         )}
       </div>
-    </div>
+    </div>)
   );
 }
 
