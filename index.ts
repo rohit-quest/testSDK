@@ -19,6 +19,7 @@ import './src/components/HelpCenter/HelpCenter.css';
 import './src/components/Credit/credit.css';
 import './src/components/Share/sharearticle.css'
 import './src/components/Search/search.css';
+import './src/components/Tour/walkThrough.css';
 import QuestLogin from "./src/components/Login/Login";
 import OnBoarding from "./src/components/Onboarding/Onboarding";
 import { QuestProvider } from "./src/components/QuestWrapper";
@@ -41,6 +42,7 @@ import { HelpCenter } from "./src/components/HelpCenter/HelpCenter.tsx";
 import { confetti } from "./src/components/Confetti/confetti.ts";
 import ShareArticle from "./src/components/Share/ShareArticle.tsx";
 import Search from "./src/components/Search/Search.tsx";
+import WalkThrough from './src/components/Tour/WalkThrough';
 
 export {
     QuestProvider,
@@ -65,5 +67,6 @@ export {
     HelpCenter,
     confetti,
     ShareArticle,
-    Search
+    Search,
+    WalkThrough
 };

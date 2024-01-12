@@ -96,13 +96,13 @@ function App() {
         // style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
         >
 
-{/* <QuestProvider 
+<QuestProvider 
     apiKey={apiKey}
     apiSecret={apiSecret}
     entityId={entityId}
     featureFlags={{}}
     apiType="PRODUCTION"
-> */}
+>
 
 
 
@@ -174,7 +174,7 @@ function App() {
                 /> */}
 {/* https://staging.questprotocol.xyz/api/entities/e-0000000000/quests/q-9727caa3-3ecf-4ee9-ad39-860f70466012?userId=u-e61750ac-8734-4e42-a56c-df49bcda9f49 */}
 
-            <QuestProvider
+            {/* <QuestProvider
                 // apiKey={getstarted.apiKey}
                 apiKey="k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be"
                 // apiSecret={getstarted.apiSecret}
@@ -213,7 +213,7 @@ function App() {
                     uniqueUserId="soumitra.petbindhi+1@gmail.com"
 
                 />
-            {/* </QuestProvider> */}
+            </QuestProvider> */}
 
 
 
@@ -235,7 +235,7 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-            {/* <OnBoarding
+            <OnBoarding
                 userId={userId}
                 questId={questId}
                 answer={answer}
@@ -266,7 +266,8 @@ function App() {
                 customComponents={<CustomButton />}
                 getAnswers={printAnswer}
                 screenHeight=""
-            /> */}
+                progressBarType="modal1"
+            />
 
 
 
