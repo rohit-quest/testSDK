@@ -188,6 +188,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
   const [allCriteriaCompleted, setAllCriteriaCompleted] = useState<boolean>(false);
   const [criteriaSubmit, setCriteriaSubmit] = useState<string[]>([])
   const [dropdowns,setDropdown] = useState<Array<boolean>>([]);
+  const [stepsLeft,setSteps] = useState(0);
   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
   const cookies = new Cookies()
     const completedPercentage = (formdata.reduce((a,b)=>a+(b.completed?1:0),0))*100/formdata.length
@@ -196,6 +197,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
   let questUserToken = cookies.get("questUserToken");
 
   const handleCriteriaClick = (id: any, url: string) => {
+    setSteps(c=>c-1);
     const headers = {
       apiKey: apiKey,
       apisecret: apiSecret,
@@ -213,15 +215,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
       .then((response) => {
         if (response.data.success) {
           setCriteriaSubmit([...criteriaSubmit, id]);
-          // window.open(url);
-          // window.location.href = url;
           onLinkTrigger(url,id);
-          // if (newWindow) {
-          //   newWindow.focus();
-          //   // window.location.reload();
-          // } else {
-          //   toast.error('Popup was blocked');
-          // }
         } else {
           toast.error(response.data.error);
         }
@@ -297,6 +291,8 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
           }
           criterias = Array.isArray(criterias) ? criterias : [];
           setDropdown(new Array(criterias.length).fill(false))
+          let steps = criterias.length - (criterias?.filter((criteria: any) => criteria?.completed)?.length||0)
+          setSteps(steps);
           setFormdata([...criterias]);
         });
 
@@ -393,7 +389,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
             {description || "Get started with Quest and explore how Quest can take your customer engagement to the next level"}
           </div>
           </div>
-          <div className='gs_steps'>{4} steps left</div>
+          <div className='gs_steps'>{stepsLeft} steps left</div>
         </div>
       }
       {progressBar&&(<div className="q_gt_progress">
@@ -413,7 +409,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
         {(autoHide == true ? !allCriteriaCompleted : true) && formdata.map((e, i) =>
         (
           <div key={i} style={{ background: bg, borderColor }} className="gs-card-container" >
-            <div className='gs_card_body' style={{border:`2px solid ${borderColor}`}} onClick={()=>setDropdown(prev=>prev.map((e,index)=> (i===index)?(!e):e )) }>
+            <div className='gs_card_body' style={{border:`2px solid ${borderColor}`}} onClick={()=>dropDown&&setDropdown(prev=>prev.map((e,index)=> (i===index)?(!e):e )) }>
             <div className='gs_card_body_text'>
               <img className="gs-card-icon" width="24px" src={icons[i] || questLogo} alt='' />
               <div className="gs-card-text">

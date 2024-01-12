@@ -147,6 +147,8 @@
   background: var(--Primary-Grape-100, #F4EBFF);
   align-items: flex-start;
   gap: 8px;
+  width: 30px;
+  height: 30px;
 }
 
 .q_gt_dropdown{
@@ -263,6 +265,8 @@
   gap: 6.1px;
   border-radius: 7.625px;
   background: var(--Primary-Grape-500, #9035FF);
+  box-sizing: content-box;
+  white-space: nowrap;
 }
 
 .gs-heading-div{
