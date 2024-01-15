@@ -186,11 +186,10 @@ function App() {
             >
                 <GetStarted
                     // questId="q-7fbac653-8ef6-4082-a885-2835b6971936"
-                    questId="q-72858b6f-e39c-4dc9-8ef8-f5eea9389a58"
+                    questId="q-6b06e238-aece-40c6-a53d-0750f9130e1d"
                     // userId={"u-fb6fd0be-24d4-4914-bed0-aac01c899758"}
-                    userId="u-00e200ca-0d17-4bdc-938d-6fc0cce5053a"
-                    // token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWZiNmZkMGJlLTI0ZDQtNDkxNC1iZWQwLWFhYzAxYzg5OTc1OCIsImlhdCI6MTY5Mzg4MDUxMSwiZXhwIjoxODUxNjY4NTExfQ.lIHjlJqrTIAcfnIGrACJN3SHKDjJ6NQ7OPuzAL6jCzI"}
-                    token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTAwZTIwMGNhLTBkMTctNGJkYy05MzhkLTZmYzBjY2U1MDUzYSIsImlhdCI6MTcwNTA3NDEwMSwiZXhwIjoxNzA1MTYwNTAxfQ.ROjqcWk06BeZ9YUOeZXOygKqokqn-lMisDLqQ88E-28"
+                    userId="u-16e8bb75-4ad2-4e38-9840-8312d00859e2"
+                    token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTE2ZThiYjc1LTRhZDItNGUzOC05ODQwLTgzMTJkMDA4NTllMiIsImlhdCI6MTcwNTMzNjE2MCwiZXhwIjoxNzA1NDIyNTYwfQ.yzp0eBHRHPcG_cpk7l43NbcLryF6ZcML9xtW5FsBuGY"}
                     // token={token}
                     // userId={userId}
                     // questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
@@ -204,7 +203,7 @@ function App() {
                     ]}
                     // dropDown={true}
                     // width="50vw" 
-                    // autoHide
+                    autoHide={false}
                     buttonBg="#9035FF"
                     cardHeadingColor="white"
                     compltedBtnBgColor="#EBFFEB"
