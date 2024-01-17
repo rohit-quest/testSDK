@@ -28,7 +28,15 @@ type User = {
   token?: string;
 };
 
-export const Context = createContext({
+export const Context = createContext<{
+  apiKey: string,
+  apiSecret: string,
+  entityId: string,
+  user:  User,
+  setUser: (user: User) => void,
+  featureFlags: Record<string,{isEnabled: boolean}>,
+apiType: "PRODUCTION"|"STAGING",
+}>({
   apiKey: "",
   apiSecret: "",
   entityId: "",
@@ -41,7 +49,7 @@ export const Context = createContext({
 
 export const QuestProvider = (props: Props) => {
   const [user, setUser] = useState<User>({});
-  const [featureFlags, setFeatureFlags] = useState({})
+  const [featureFlags, setFeatureFlags] = useState<Record<string,{isEnabled: boolean}>>({})
 
   useEffect(() => {
     getFeatureFlags()

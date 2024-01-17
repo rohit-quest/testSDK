@@ -13,176 +13,38 @@ import Loader from '../Login/Loader';
 import Cookies from "universal-cookie";
 import { backButton } from "../../assets/assetsSVG";
 import crossCircle from "../../assets/images/crossCircle.png"
+import { xbutton } from '../../assets/images';
+import showToast from '../toast/toastService';
 
-const feedback = (
-  <svg
-    width="50"
-    height="50"
-    viewBox="0 0 62 62"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <g filter="url(#filter0_d_126_347)">
-      <circle cx="31" cy="31" r="29" fill="white" />
-    </g>
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M33.6257 19.9167C33.6257 19.8393 33.5949 19.7651 33.5402 19.7104C33.4855 19.6557 33.4113 19.625 33.334 19.625H25.1673C24.3164 19.625 23.5004 19.963 22.8987 20.5647C22.297 21.1664 21.959 21.9824 21.959 22.8333V39.1667C21.959 40.0176 22.297 40.8336 22.8987 41.4353C23.5004 42.037 24.3164 42.375 25.1673 42.375H36.834C37.6849 42.375 38.5009 42.037 39.1026 41.4353C39.7043 40.8336 40.0423 40.0176 40.0423 39.1667V27.6715C40.0423 27.5941 40.0116 27.52 39.9569 27.4653C39.9022 27.4106 39.828 27.3798 39.7507 27.3798H34.5007C34.2686 27.3798 34.046 27.2876 33.8819 27.1236C33.7178 26.9595 33.6257 26.7369 33.6257 26.5048V19.9167ZM34.5007 31.2917C34.7327 31.2917 34.9553 31.3839 35.1194 31.5479C35.2835 31.712 35.3757 31.9346 35.3757 32.1667C35.3757 32.3987 35.2835 32.6213 35.1194 32.7854C34.9553 32.9495 34.7327 33.0417 34.5007 33.0417H27.5007C27.2686 33.0417 27.046 32.9495 26.8819 32.7854C26.7178 32.6213 26.6257 32.3987 26.6257 32.1667C26.6257 31.9346 26.7178 31.712 26.8819 31.5479C27.046 31.3839 27.2686 31.2917 27.5007 31.2917H34.5007ZM34.5007 35.9583C34.7327 35.9583 34.9553 36.0505 35.1194 36.2146C35.2835 36.3787 35.3757 36.6013 35.3757 36.8333C35.3757 37.0654 35.2835 37.288 35.1194 37.4521C34.9553 37.6161 34.7327 37.7083 34.5007 37.7083H27.5007C27.2686 37.7083 27.046 37.6161 26.8819 37.4521C26.7178 37.288 26.6257 37.0654 26.6257 36.8333C26.6257 36.6013 26.7178 36.3787 26.8819 36.2146C27.046 36.0505 27.2686 35.9583 27.5007 35.9583H34.5007Z"
-      fill="#AFAFAF"
-    />
-    <path
-      d="M35.375 20.2937C35.375 20.0791 35.6002 19.9426 35.767 20.0767C35.9082 20.1911 36.0353 20.3241 36.1438 20.4757L39.659 25.3722C39.7383 25.4842 39.652 25.6289 39.5143 25.6289H35.6667C35.5893 25.6289 35.5151 25.5982 35.4604 25.5435C35.4057 25.4888 35.375 25.4146 35.375 25.3372V20.2937Z"
-      fill="#AFAFAF"
-    />
-    <defs>
-      <filter
-        id="filter0_d_126_347"
-        x="0"
-        y="0"
-        width="62"
-        height="62"
-        filterUnits="userSpaceOnUse"
-        colorInterpolationFilters="sRGB"
-      >
-        <feFlood floodOpacity="0" result="BackgroundImageFix" />
-        <feColorMatrix
-          in="SourceAlpha"
-          type="matrix"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-          result="hardAlpha"
-        />
-        <feOffset />
-        <feGaussianBlur stdDeviation="1" />
-        <feComposite in2="hardAlpha" operator="out" />
-        <feColorMatrix
-          type="matrix"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-        />
-        <feBlend
-          mode="normal"
-          in2="BackgroundImageFix"
-          result="effect1_dropShadow_126_347"
-        />
-        <feBlend
-          mode="normal"
-          in="SourceGraphic"
-          in2="effect1_dropShadow_126_347"
-          result="shape"
-        />
-      </filter>
-    </defs>
-  </svg>
+const feedback = (color: string = "#939393") => (
+  <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path opacity="0.5" d="M2 6.66671C2 4.15255 2 2.89547 2.78105 2.11442C3.5621 1.33337 4.81918 1.33337 7.33333 1.33337H8.66667C11.1808 1.33337 12.4379 1.33337 13.219 2.11442C14 2.89547 14 4.15255 14 6.66671V9.33337C14 11.8475 14 13.1046 13.219 13.8857C12.4379 14.6667 11.1808 14.6667 8.66667 14.6667H7.33333C4.81918 14.6667 3.5621 14.6667 2.78105 13.8857C2 13.1046 2 11.8475 2 9.33337V6.66671Z" fill={color}/>
+<path fillRule="evenodd" clipRule="evenodd" d="M4.83334 6.66663C4.83334 6.39048 5.0572 6.16663 5.33334 6.16663H10.6667C10.9428 6.16663 11.1667 6.39048 11.1667 6.66663C11.1667 6.94277 10.9428 7.16663 10.6667 7.16663H5.33334C5.0572 7.16663 4.83334 6.94277 4.83334 6.66663Z" fill={color}/>
+<path fillRule="evenodd" clipRule="evenodd" d="M4.83334 9.33337C4.83334 9.05723 5.0572 8.83337 5.33334 8.83337H8.66668C8.94282 8.83337 9.16668 9.05723 9.16668 9.33337C9.16668 9.60952 8.94282 9.83337 8.66668 9.83337H5.33334C5.0572 9.83337 4.83334 9.60952 4.83334 9.33337Z" fill={color}/>
+</svg>
 );
-const bug = (
-  <svg
-    width="50"
-    height="50"
-    viewBox="0 0 62 62"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <g filter="url(#filter0_d_126_357)">
-      <circle cx="31" cy="31" r="29" fill="white" />
-    </g>
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M31 22C30.5597 22 30.1318 22.1453 29.7825 22.4133C29.4333 22.6813 29.1822 23.0571 29.0682 23.4824C28.9543 23.9076 28.9838 24.3586 29.1523 24.7653C29.3208 25.1721 29.6187 25.5119 30 25.732V27H27C23.8 27 23 29.667 23 31V38C23 38.667 23.4 40 25 40H26V36C26 35.7348 26.1054 35.4804 26.2929 35.2929C26.4804 35.1054 26.7348 35 27 35H35C35.2652 35 35.5196 35.1054 35.7071 35.2929C35.8946 35.4804 36 35.7348 36 36V40H37C38.6 40 39 38.667 39 38V31C39 27.8 36.333 27 35 27H32V25.732C32.3813 25.5119 32.6792 25.1721 32.8477 24.7653C33.0162 24.3586 33.0457 23.9076 32.9318 23.4824C32.8178 23.0571 32.5667 22.6813 32.2175 22.4133C31.8682 22.1453 31.4403 22 31 22ZM34 40V37H32V40H34ZM30 40V37H28V40H30ZM40 37V32C40.667 32 42 32.4 42 34V35C42 35.667 41.6 37 40 37ZM22 32V37C20.4 37 20 35.667 20 35V34C20 32.4 21.333 32 22 32ZM28 31C27.7348 31 27.4804 31.1054 27.2929 31.2929C27.1054 31.4804 27 31.7348 27 32C27 32.2652 27.1054 32.5196 27.2929 32.7071C27.4804 32.8946 27.7348 33 28 33H28.001C28.2662 33 28.5206 32.8946 28.7081 32.7071C28.8956 32.5196 29.001 32.2652 29.001 32C29.001 31.7348 28.8956 31.4804 28.7081 31.2929C28.5206 31.1054 28.2662 31 28.001 31H28ZM33 32C33 31.7348 33.1054 31.4804 33.2929 31.2929C33.4804 31.1054 33.7348 31 34 31H34.001C34.2662 31 34.5206 31.1054 34.7081 31.2929C34.8956 31.4804 35.001 31.7348 35.001 32C35.001 32.2652 34.8956 32.5196 34.7081 32.7071C34.5206 32.8946 34.2662 33 34.001 33H34C33.7348 33 33.4804 32.8946 33.2929 32.7071C33.1054 32.5196 33 32.2652 33 32Z"
-      fill="#AFAFAF"
-    />
-    <defs>
-      <filter
-        id="filter0_d_126_357"
-        x="0"
-        y="0"
-        width="62"
-        height="62"
-        filterUnits="userSpaceOnUse"
-        colorInterpolationFilters="sRGB"
-      >
-        <feFlood floodOpacity="0" result="BackgroundImageFix" />
-        <feColorMatrix
-          in="SourceAlpha"
-          type="matrix"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-          result="hardAlpha"
-        />
-        <feOffset />
-        <feGaussianBlur stdDeviation="1" />
-        <feComposite in2="hardAlpha" operator="out" />
-        <feColorMatrix
-          type="matrix"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-        />
-        <feBlend
-          mode="normal"
-          in2="BackgroundImageFix"
-          result="effect1_dropShadow_126_357"
-        />
-        <feBlend
-          mode="normal"
-          in="SourceGraphic"
-          in2="effect1_dropShadow_126_357"
-          result="shape"
-        />
-      </filter>
-    </defs>
-  </svg>
+const bug = (color: string = "#939393") => (
+<svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path opacity="0.5" fillRule="evenodd" clipRule="evenodd" d="M12.6667 7.95837V10C12.6667 12.4085 10.8422 14.3907 8.50001 14.6402V10C8.50001 9.7239 8.27615 9.50004 8.00001 9.50004C7.72387 9.50004 7.50001 9.7239 7.50001 10V14.6402C5.15779 14.3907 3.33334 12.4085 3.33334 10V7.95837C3.33334 6.84682 4.02423 5.89663 5.00001 5.51381C5.29689 5.39733 5.62015 5.33337 5.95834 5.33337H10.0417C10.3799 5.33337 10.7031 5.39733 11 5.51381C11.9758 5.89663 12.6667 6.84682 12.6667 7.95837Z" fill={color}/>
+<path d="M12.6667 9.83337V8.83337H14.6667C14.9428 8.83337 15.1667 9.05723 15.1667 9.33337C15.1667 9.60951 14.9428 9.83337 14.6667 9.83337H12.6667Z" fill={color}/>
+<path d="M11.6637 12.8909C11.8709 12.6286 12.0506 12.3436 12.1983 12.0402L13.8903 12.8863C14.1373 13.0098 14.2374 13.3101 14.1139 13.5571C13.9904 13.8041 13.69 13.9042 13.443 13.7807L11.6637 12.8909Z" fill={color}/>
+<path d="M3.80173 12.0402C3.94946 12.3436 4.12912 12.6286 4.33634 12.8909L2.55697 13.7807C2.30999 13.9042 2.00965 13.8041 1.88614 13.5571C1.76263 13.3101 1.86273 13.0098 2.10971 12.8863L3.80173 12.0402Z" fill={color}/>
+<path d="M3.33334 8.83337H1.33334C1.0572 8.83337 0.833344 9.05723 0.833344 9.33337C0.833344 9.60951 1.0572 9.83337 1.33334 9.83337H3.33334V8.83337Z" fill={color}/>
+<path d="M11.569 5.82319L13.443 4.88604C13.69 4.76253 13.9904 4.86263 14.1139 5.10961C14.2374 5.35659 14.1373 5.65693 13.8903 5.78044L12.2797 6.58585C12.0958 6.28667 11.8536 6.02717 11.569 5.82319Z" fill={color}/>
+<path d="M4.43103 5.82319C4.14637 6.02717 3.90419 6.28667 3.72032 6.58585L2.10971 5.78044C1.86273 5.65693 1.76263 5.35659 1.88614 5.10961C2.00965 4.86263 2.30999 4.76253 2.55697 4.88604L4.43103 5.82319Z" fill={color}/>
+<path d="M11 5.51376V5C11 3.34315 9.65685 2 8 2C6.34315 2 5 3.34315 5 5V5.51376C5.29688 5.39729 5.62014 5.33333 5.95833 5.33333H10.0417C10.3799 5.33333 10.7031 5.39729 11 5.51376Z" fill={color}/>
+<g opacity="0.5">
+<path d="M4.25068 1.05595C4.09751 1.28572 4.1596 1.59615 4.38936 1.74933L5.96243 2.79804C6.23013 2.5502 6.54312 2.35058 6.88758 2.21296L4.94406 0.91728C4.7143 0.764104 4.40386 0.826191 4.25068 1.05595Z" fill={color}/>
+<path d="M10.0376 2.79808C9.7699 2.55024 9.45692 2.35061 9.11246 2.21299L11.056 0.91728C11.2858 0.764104 11.5962 0.826191 11.7494 1.05595C11.9026 1.28572 11.8405 1.59615 11.6107 1.74933L10.0376 2.79808Z" fill={color}/>
+</g>
+<path fillRule="evenodd" clipRule="evenodd" d="M8 9.5C8.27614 9.5 8.5 9.72386 8.5 10V14.6667H7.5V10C7.5 9.72386 7.72386 9.5 8 9.5Z" fill={color}/>
+</svg>
 );
-const feature = (
-  <svg
-    width="50"
-    height="50"
-    viewBox="0 0 62 62"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <g filter="url(#filter0_d_126_368)">
-      <circle cx="31" cy="31" r="29" fill="white" />
-    </g>
-    <path
-      d="M38 20L36.74 22.75L34 24L36.74 25.26L38 28L39.25 25.26L42 24L39.25 22.75M28 23L25.5 28.5L20 31L25.5 33.5L28 39L30.5 33.5L36 31L30.5 28.5M38 34L36.74 36.74L34 38L36.74 39.25L38 42L39.25 39.25L42 38L39.25 36.74"
-      fill="#AFAFAF"
-    />
-    <defs>
-      <filter
-        id="filter0_d_126_368"
-        x="0"
-        y="0"
-        width="62"
-        height="62"
-        filterUnits="userSpaceOnUse"
-        colorInterpolationFilters="sRGB"
-      >
-        <feFlood floodOpacity="0" result="BackgroundImageFix" />
-        <feColorMatrix
-          in="SourceAlpha"
-          type="matrix"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-          result="hardAlpha"
-        />
-        <feOffset />
-        <feGaussianBlur stdDeviation="1" />
-        <feComposite in2="hardAlpha" operator="out" />
-        <feColorMatrix
-          type="matrix"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-        />
-        <feBlend
-          mode="normal"
-          in2="BackgroundImageFix"
-          result="effect1_dropShadow_126_368"
-        />
-        <feBlend
-          mode="normal"
-          in="SourceGraphic"
-          in2="effect1_dropShadow_126_368"
-          result="shape"
-        />
-      </filter>
-    </defs>
-  </svg>
+const feature = (color: string = "#939393") => (
+  <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path opacity="0.5" d="M2.30965 13.6904C3.28596 14.6667 4.85731 14.6667 8.00001 14.6667C11.1427 14.6667 12.7141 14.6667 13.6904 13.6904C14.6667 12.7141 14.6667 11.1427 14.6667 8.00004C14.6667 4.85734 14.6667 3.286 13.6904 2.30968C12.7141 1.33337 11.1427 1.33337 8.00001 1.33337C4.85731 1.33337 3.28596 1.33337 2.30965 2.30968C1.33334 3.286 1.33334 4.85734 1.33334 8.00004C1.33334 11.1427 1.33334 12.7141 2.30965 13.6904Z" fill={color}/>
+<path d="M11.3333 8.44437C11.3333 11.2888 8.96295 11.9999 7.77777 11.9999C6.74073 11.9999 4.66666 11.2888 4.66666 8.44437C4.66666 7.20719 5.37527 6.42176 5.97061 6.02642C6.2428 5.84568 6.58133 5.9612 6.59893 6.28746C6.63743 7.00132 7.1876 7.57473 7.61366 7.00066C8.00362 6.47524 8.19607 5.76174 8.19607 5.33326C8.19607 4.70207 8.83499 4.30098 9.33384 4.68769C10.3062 5.44146 11.3333 6.70382 11.3333 8.44437Z" fill={color}/>
+</svg>
 );
 const back = (
   <svg
@@ -215,66 +77,16 @@ const cross = (
     />
   </svg>
 );
-const contact = (
-  <svg
-    width="50"
-    height="50"
-    viewBox="0 0 62 62"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <g filter="url(#filter0_d_127_429)">
-      <circle cx="31" cy="31" r="29" fill="white" />
-    </g>
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M33.6257 19.9167C33.6257 19.8393 33.5949 19.7651 33.5402 19.7104C33.4855 19.6557 33.4113 19.625 33.334 19.625H25.1673C24.3164 19.625 23.5004 19.963 22.8987 20.5647C22.297 21.1664 21.959 21.9824 21.959 22.8333V39.1667C21.959 40.0176 22.297 40.8336 22.8987 41.4353C23.5004 42.037 24.3164 42.375 25.1673 42.375H36.834C37.6849 42.375 38.5009 42.037 39.1026 41.4353C39.7043 40.8336 40.0423 40.0176 40.0423 39.1667V27.6715C40.0423 27.5941 40.0116 27.52 39.9569 27.4653C39.9022 27.4106 39.828 27.3798 39.7507 27.3798H34.5007C34.2686 27.3798 34.046 27.2876 33.8819 27.1236C33.7178 26.9595 33.6257 26.7369 33.6257 26.5048V19.9167ZM34.5007 31.2917C34.7327 31.2917 34.9553 31.3839 35.1194 31.5479C35.2835 31.712 35.3757 31.9346 35.3757 32.1667C35.3757 32.3987 35.2835 32.6213 35.1194 32.7854C34.9553 32.9495 34.7327 33.0417 34.5007 33.0417H27.5007C27.2686 33.0417 27.046 32.9495 26.8819 32.7854C26.7178 32.6213 26.6257 32.3987 26.6257 32.1667C26.6257 31.9346 26.7178 31.712 26.8819 31.5479C27.046 31.3839 27.2686 31.2917 27.5007 31.2917H34.5007ZM34.5007 35.9583C34.7327 35.9583 34.9553 36.0505 35.1194 36.2146C35.2835 36.3787 35.3757 36.6013 35.3757 36.8333C35.3757 37.0654 35.2835 37.288 35.1194 37.4521C34.9553 37.6161 34.7327 37.7083 34.5007 37.7083H27.5007C27.2686 37.7083 27.046 37.6161 26.8819 37.4521C26.7178 37.288 26.6257 37.0654 26.6257 36.8333C26.6257 36.6013 26.7178 36.3787 26.8819 36.2146C27.046 36.0505 27.2686 35.9583 27.5007 35.9583H34.5007Z"
-      fill="#AFAFAF"
-    />
-    <path
-      d="M35.375 20.2937C35.375 20.0791 35.6002 19.9426 35.767 20.0767C35.9082 20.1911 36.0353 20.3241 36.1438 20.4757L39.659 25.3722C39.7383 25.4842 39.652 25.6289 39.5143 25.6289H35.6667C35.5893 25.6289 35.5151 25.5982 35.4604 25.5435C35.4057 25.4888 35.375 25.4146 35.375 25.3372V20.2937Z"
-      fill="#AFAFAF"
-    />
-    <defs>
-      <filter
-        id="filter0_d_127_429"
-        x="0"
-        y="0"
-        width="62"
-        height="62"
-        filterUnits="userSpaceOnUse"
-        colorInterpolationFilters="sRGB"
-      >
-        <feFlood floodOpacity="0" result="BackgroundImageFix" />
-        <feColorMatrix
-          in="SourceAlpha"
-          type="matrix"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-          result="hardAlpha"
-        />
-        <feOffset />
-        <feGaussianBlur stdDeviation="1" />
-        <feComposite in2="hardAlpha" operator="out" />
-        <feColorMatrix
-          type="matrix"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-        />
-        <feBlend
-          mode="normal"
-          in2="BackgroundImageFix"
-          result="effect1_dropShadow_127_429"
-        />
-        <feBlend
-          mode="normal"
-          in="SourceGraphic"
-          in2="effect1_dropShadow_127_429"
-          result="shape"
-        />
-      </filter>
-    </defs>
-  </svg>
+const contact = (color: string = "#939393") => (
+  <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path opacity="0.5" d="M14.6667 8.00004C14.6667 11.6819 11.6819 14.6667 8.00001 14.6667C4.31811 14.6667 1.33334 11.6819 1.33334 8.00004C1.33334 4.31814 4.31811 1.33337 8.00001 1.33337C11.6819 1.33337 14.6667 4.31814 14.6667 8.00004Z" fill="#939393"/>
+<path d="M8 5.16663C7.58579 5.16663 7.25 5.50241 7.25 5.91663C7.25 6.19277 7.02614 6.41663 6.75 6.41663C6.47386 6.41663 6.25 6.19277 6.25 5.91663C6.25 4.95013 7.0335 4.16663 8 4.16663C8.9665 4.16663 9.75 4.95013 9.75 5.91663C9.75 6.39052 9.56098 6.82128 9.25531 7.13593C9.1938 7.19925 9.13512 7.25787 9.07915 7.3138L9.07915 7.3138C8.93526 7.45757 8.8092 7.58352 8.6986 7.72562C8.55258 7.91324 8.5 8.05113 8.5 8.16663V8.66663C8.5 8.94277 8.27614 9.16663 8 9.16663C7.72386 9.16663 7.5 8.94277 7.5 8.66663V8.16663C7.5 7.72983 7.70334 7.37625 7.90945 7.11143C8.06195 6.91549 8.25363 6.72419 8.40918 6.56894L8.40918 6.56894C8.45611 6.5221 8.49975 6.47855 8.53803 6.43914C8.66972 6.30358 8.75 6.11999 8.75 5.91663C8.75 5.50241 8.41421 5.16663 8 5.16663Z" fill="#939393"/>
+<path d="M8 11.3333C8.36819 11.3333 8.66667 11.0348 8.66667 10.6666C8.66667 10.2984 8.36819 9.99996 8 9.99996C7.63181 9.99996 7.33333 10.2984 7.33333 10.6666C7.33333 11.0348 7.63181 11.3333 8 11.3333Z" fill="#939393"/>
+</svg>
+
 );
+
+type optionType = 'Contact us'|'Request a Feature'|'Report a Bug'|'General Feedback'
 
 interface feedbackCompProps {
   userId: string;
@@ -299,6 +111,9 @@ interface feedbackCompProps {
   ratingStyle?: "Star" | "Numbers" | "Smiles";
   uniqueUserId?: string;
   uniqueEmailId?: string;
+  descriptions?: Record<optionType,string>;
+  topBar?: boolean;
+  backBtn?: boolean
 }
 interface FormDataItem {
   type?: string;
@@ -327,9 +142,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   tickBg,
   ratingStyle,
   uniqueUserId,
-  uniqueEmailId
+  uniqueEmailId,
+  descriptions= {"General Feedback": "Welcome back, Please complete your details","Report a Bug": "Describe your issue", "Contact us":"Invite other admins and moderators", "Request a Feature":"How can we make it better"},
+  topBar=false,
+  backBtn=false
 }) => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [selectedOption, setSelectedOption] = useState<optionType | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
   const [formdata, setFormdata] = useState<{ [key: number]: [FormDataItem] }>(
     {}
@@ -340,113 +158,30 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   const [answer, setAnswer] = useState<any[]>([]);
 
   const thanks = (
-  <svg
-    width="250"
-    height="250"
-    viewBox="0 0 413 396"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M199.73 62.9998L230.32 30.5996"
-      stroke="#1B2537"
-      strokeWidth="5"
-      strokeLinecap="round"
-    />
-    <path
-      d="M379.666 190.801L410.255 158.4"
-      stroke="#545454"
-      strokeWidth="5"
-      strokeLinecap="round"
-    />
-    <path
-      d="M305.893 379.803L336.482 347.402"
-      stroke="#FACC15"
-      strokeWidth="5"
-      strokeLinecap="round"
-    />
-    <path
-      d="M7.19727 174.601L37.7867 142.201"
-      stroke="#FACC15"
-      strokeWidth="5"
-      strokeLinecap="round"
-    />
-    <path
-      d="M88.1699 349.201L118.759 316.801"
-      stroke="#545454"
-      strokeWidth="5"
-      strokeLinecap="round"
-    />
-    <ellipse
-      cx="149.35"
-      cy="7.20004"
-      rx="7.19751"
-      ry="7.20004"
-      fill="#2873FF"
-    />
-    <ellipse
-      cx="116.957"
-      cy="73.7977"
-      rx="7.19751"
-      ry="7.20004"
-      fill="#EEEEEE"
-    />
-    <ellipse cx="61.178" cy="210.6" rx="7.19751" ry="7.20004" fill="#EEEEEE" />
-    <ellipse cx="7.19751" cy="300.6" rx="7.19751" ry="7.20004" fill="#2873FF" />
-    <ellipse cx="167.344" cy="388.8" rx="7.19751" ry="7.20004" fill="#EEEEEE" />
-    <ellipse
-      cx="278.903"
-      cy="316.803"
-      rx="8.99689"
-      ry="9.00005"
-      fill="#FACC15"
-    />
-    <ellipse
-      cx="363.475"
-      cy="271.799"
-      rx="8.99689"
-      ry="9.00005"
-      fill="#EEEEEE"
-    />
-    <ellipse
-      cx="329.284"
-      cy="68.3985"
-      rx="8.99689"
-      ry="9.00005"
-      fill="#2873FF"
-    />
-    <ellipse
-      cx="318.49"
-      cy="151.199"
-      rx="5.39813"
-      ry="5.40003"
-      fill="#EEEEEE"
-    />
-    <ellipse
-      cx="23.3923"
-      cy="75.6012"
-      rx="5.39813"
-      ry="5.40003"
-      fill="#FACC15"
-    />
-    <ellipse
-      cx="205.129"
-      cy="199.803"
-      rx="89.9689"
-      ry="90.0005"
-      fill={tickBg || "#141414"}
-    />
-    <path
-      d="M237.29 179.33L196.355 220.278L175.887 199.805"
-      stroke={textColor || "white"}
-      strokeWidth="5.67982"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clipRule="url(#clip0_4046_146)">
+<path d="M40 80C62.0914 80 80 62.0914 80 40C80 17.9086 62.0914 0 40 0C17.9086 0 0 17.9086 0 40C0 62.0914 17.9086 80 40 80Z" fill="url(#paint0_linear_4046_146)"/>
+<path d="M48.4167 79.0566C49.1837 78.9078 49.9463 78.7367 50.7033 78.5432C51.987 78.1844 53.2519 77.7617 54.4933 77.2766C55.7363 76.7955 56.9545 76.2526 58.1433 75.6499C59.3325 75.0449 60.4906 74.3807 61.6133 73.6599C62.7348 72.939 63.8195 72.1625 64.8633 71.3332C65.9091 70.5029 66.9125 69.6207 67.87 68.6899C68.8259 67.7614 69.7348 66.7858 70.5933 65.7666C71.4526 64.7465 72.2603 63.684 73.0133 62.5832C73.7662 61.4843 74.4638 60.3484 75.1033 59.1799C75.743 58.0097 76.3237 56.8082 76.8433 55.5799C77.3635 54.3514 77.8218 53.0976 78.2167 51.8232C78.5548 50.7075 78.8439 49.5776 79.0833 48.4366L55.3167 24.6732C53.3096 22.6573 50.9236 21.0581 48.2961 19.9677C45.6686 18.8774 42.8514 18.3174 40.0067 18.3199C37.1594 18.3168 34.3395 18.8765 31.7092 19.9668C29.0789 21.0572 26.6901 22.6566 24.68 24.6732C22.6649 26.6839 21.0661 29.0724 19.9753 31.7018C18.8845 34.3312 18.323 37.1499 18.323 39.9966C18.323 42.8433 18.8845 45.662 19.9753 48.2914C21.0661 50.9208 22.6649 53.3092 24.68 55.3199L48.4167 79.0566Z" fill="url(#paint1_linear_4046_146)"/>
+<path d="M40.0033 18.3232C45.5433 18.3232 51.0833 20.4398 55.3233 24.6765C57.3384 26.6872 58.9372 29.0756 60.028 31.705C61.1188 34.3344 61.6803 37.1532 61.6803 39.9998C61.6803 42.8465 61.1188 45.6653 60.028 48.2947C58.9372 50.9241 57.3384 53.3125 55.3233 55.3232C53.3126 57.3383 50.9242 58.937 48.2948 60.0279C45.6654 61.1187 42.8467 61.6802 40 61.6802C37.1533 61.6802 34.3346 61.1187 31.7052 60.0279C29.0758 58.937 26.6873 57.3383 24.6767 55.3232C22.6615 53.3125 21.0628 50.9241 19.972 48.2947C18.8811 45.6653 18.3196 42.8465 18.3196 39.9998C18.3196 37.1532 18.8811 34.3344 19.972 31.705C21.0628 29.0756 22.6615 26.6872 24.6767 24.6765C26.6867 22.6599 29.0756 21.0604 31.7059 19.9701C34.3361 18.8798 37.156 18.3201 40.0033 18.3232ZM49.87 33.3298C49.5544 33.3601 49.2539 33.4791 49.0033 33.6732L36.8233 42.8065L31.18 37.1665C29.9566 35.8932 27.5467 38.2998 28.8233 39.5232L35.49 46.1898C35.779 46.4631 36.1536 46.6281 36.5504 46.6566C36.9471 46.6852 37.3415 46.5756 37.6667 46.3465L51 36.3465C52.12 35.5298 51.43 33.3532 50.0433 33.3332C49.9867 33.3303 49.9299 33.3303 49.8733 33.3332L49.87 33.3298Z" fill="white"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_4046_146" x1="0.320001" y1="80" x2="87.5968" y2="71.0629" gradientUnits="userSpaceOnUse">
+<stop stop-color="#9035FF"/>
+<stop offset="1" stop-color="#0065FF"/>
+</linearGradient>
+<linearGradient id="paint1_linear_4046_146" x1="18.566" y1="79.0566" x2="84.8526" y2="72.2662" gradientUnits="userSpaceOnUse">
+<stop stop-color="#9035FF"/>
+<stop offset="1" stop-color="#0065FF"/>
+</linearGradient>
+<clipPath id="clip0_4046_146">
+<rect width="80" height="80" fill="white"/>
+</clipPath>
+</defs>
+</svg>
+
 );
 
-  const handleOptionClick = (option: string, quest: string) => {
+  const handleOptionClick = (option: optionType, quest: string) => {
     let cookies = new Cookies();
     let externalUserId = cookies.get("externalUserId");
     let questUserId = cookies.get("questUserId");
@@ -537,7 +272,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             .post(request, requestData, { headers: headers })
             .then((response) => {
               if (response.data.success) {
-                toast.success('Thank you for your feedback');
+                showToast.success({text:'Thank you for your feedback'});
                 setSubmit(true);
                 setTimeout(() => {
                   setSubmit(false)
@@ -545,7 +280,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 }, 4000);
                 axios.post(`${config.BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${selectedQuest}-com?userId=${userId}&questId=${selectedQuest}`, {count: 1}, {headers: headers})
               } else {
-                toast.error(response.data.error);
+                showToast.error({text: response.data.error});
               }
             })
             .catch((error) => {
@@ -677,18 +412,21 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   }
 
   return (
-    <div style={{position:"fixed", display: isOpen == true ? "flex" : "none", zIndex, width:"100vw", backgroundColor: "rgba(128,144,160,.7)"}} className="q-parent-container" onClick={() => onClose?.(false)}>
+    <div style={{position:"fixed", display: isOpen == true ? "flex" : "none", zIndex, width:"100vw", backgroundColor: "black"}} className="q-parent-container" onClick={() => onClose?.(false)}>
       {showLoader && <Loader />}
       <ToastContainer />
       <div className="q-fw-div" style={{backgroundColor}}>
         {selectedOption && !submit ? (
           <div>
-            <div className="q-fw-heading" style={{backgroundColor: topbarColor}}>
-              <div>
-                {backButton(handleBackClick)}
-                <div>{selectedOption}</div>
+            <div className="q-fw-heading" style={topBar?{backgroundColor: topbarColor}:{}}>
+              <div className='q_fw_head'>
+                { backBtn && backButton(handleBackClick)}
+                <div>
+                  <div>{selectedOption}</div>
+                  <div className='q_feedback_desc'>{descriptions[selectedOption]}</div>
+                </div>
               </div>
-              <img src={crossCircle} onClick={handleBackClick} alt="" />
+              <img src={xbutton} onClick={handleBackClick} alt="" />
             </div>
             <div style={{ padding: '20px 28px', boxSizing: "content-box" }}>
               {selectedOption === 'General Feedback' && (
@@ -763,11 +501,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             <div className="q-fw-thanks">
               <div>
                 {thanks}
-                <div>
+                <div className='q_fw_submit_box'>
                   <div style={{ fontSize: '30px', fontWeight: 'bold' }}>
-                    Thank you !
+                  Feedback Submitted
                   </div>
-                  <div>We really appreciate your feedback.</div>
+                  <div className='q_fw_submit_desc'>Thanks for submitting your feedback with us. We appreciate your review and will assure you to surely consider them</div>
+                  <div className='q_fw_submit_back'>Go to home!</div>
                 </div>
               </div>
             </div>
@@ -787,7 +526,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 onClick={() => handleOptionClick('General Feedback', questIds[0])}
                 className="q-hover q-fw-cards"
               >
-                {feedback}
+                <div className='q_feedback_icon'>{feedback()}</div>
                 <div style={{ marginLeft: '8px' }}>
                   <div style={{ fontSize: '18px', fontWeight: '600' }}>
                     General Feedback
@@ -803,7 +542,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 onClick={() => handleOptionClick('Report a Bug', questIds[1])}
                 className="q-hover q-fw-cards"
               >
-                {bug}
+                <div className='q_feedback_icon'>{bug()}</div>
                 <div style={{ marginLeft: '10px' }}>
                   <div>
                     <div style={{ fontSize: '18px', fontWeight: '600' }}>
@@ -823,7 +562,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 onClick={() => handleOptionClick('Request a Feature', questIds[2])}
                 className="q-hover q-fw-cards"
               >
-                <div>{feature}</div>
+                <div className='q_feedback_icon'>{feature()}</div>
                 <div style={{ marginLeft: '10px' }}>
                   <div>
                     <div style={{ fontSize: '18px', fontWeight: '600' }}>
@@ -843,7 +582,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 onClick={() => handleOptionClick('Contact us', questIds[3])}
                 className="q-hover q-fw-cards"
               >
-                <div>{contact}</div>
+                <div className='q_feedback_icon'>{contact()}</div>
                 <div style={{ marginLeft: '10px' }}>
                   <div>
                     <div style={{ fontSize: '18px', fontWeight: '600' }}>

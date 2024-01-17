@@ -16,8 +16,8 @@ import GetStarted from "./components/GetStarted/GetStarted";
 import ShareArticle from "./components/Share/ShareArticle";
 import Search from "./components/Search/Search";
 import { ChatIcon, LinkIcon } from "./components/HelpCenter/Svg";
-import WalkThrough from "./components/Tour/WalkThrough";
 import { copyLargeSVG, copySVG, discordSvg, googleImg, twitterPng, whatsappSvg } from "./assets/images";
+import Payment from "./components/Payment/Payment";
 // import dataArray from "./components/Search/mock.json"
 // export const questId = 'q-f825ebd2-57f2-4f21-90a2-843e22b4a7f5';
 // export const apiKey = 'k-0d087a04-f631-41e1-80dd-fdc9ab2abb07'
@@ -32,7 +32,39 @@ export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44
 export const entityId = 'e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5'
 export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
 export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
-
+const paymentBanefits = [
+    {
+        included: [
+            "12 Campaigns / mo",
+            "Campaign Insights",
+            "Audience",
+            "Integrations - Twitter, Discord",
+        ],
+        notIncluded: ["Custom Branding", "Automations", "Support"],
+    },
+    {
+        included: [
+            "12 Campaigns / mo",
+            "Campaign Insights",
+            "Audience",
+            "Integrations - Twitter, Discord",
+            "Custom Branding",
+        ],
+        notIncluded: ["Automations", "Support"],
+    },
+    {
+        included: [
+            "12 Campaigns / mo",
+            "Campaign Insights",
+            "Audience",
+            "Integrations - Twitter, Discord",
+            "Custom Branding",
+            "Automations",
+            "Support",
+        ],
+        notIncluded: [],
+    },
+];
 function App() {
 
     const [answer, setAnswer] = useState<answer>([])
@@ -52,18 +84,25 @@ function App() {
     const [complete, setComplete] = useState(false)
 
     const getstarted = {
-        apiKey: "k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be",
-        apiSecret: "s-7462f377-2ce4-4593-a907-3a2a00cdf951be06358a-d95d-4576-b3b4-a07dda2dab36",
-        entityId: "e-0000000000"
+        apiKey: "k-ac177ec6-3e03-4526-b198-d085822d261e",
+        apiSecret: "s-3a33b9f7-275e-44df-8225-a6da1835e7db3c24e655-f7fb-428a-8b61-fc89a001ff22",
+        entityId: "e-cbd250cc-3fcb-4085-a95e-712742ffa7ac"
     }
 
     const [data, setData] = useState([]);
 
     return (
         <div
-            style={{ display: "flex", backgroundColor: "black", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
+        // style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
         >
 
+<QuestProvider 
+    apiKey={apiKey}
+    apiSecret={apiSecret}
+    entityId={entityId}
+    featureFlags={{}}
+    apiType="PRODUCTION"
+>
 
 
 
@@ -88,7 +127,17 @@ function App() {
 
 
 
-
+            { /*<Payment
+                stripePublishableKey="pk_test_51IGxpeHv3bPcUa5dtAAgA2TZPWjga0FPxWlK3GAnWUfzRXzO8l6Kc3zF2WBpjrvFHAle0Cy3Jqxc7djZxptd9mHe00KjsN2Im7"
+                userId="u-0000000000"
+                description={[
+                    "Basic yet functional UI design for cost-free exploration.",
+                    "Polished interface with advanced features for enhanced user interaction.",
+                    "Cutting-edge, personalized design for a luxurious and seamless user journey.",
+                ]}
+                paymentBanefits={paymentBanefits}
+                forEntityId={"e-0000000000"}
+            />*/}
 
 
 
@@ -97,14 +146,10 @@ function App() {
 
             {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
 
-            <QuestProvider
-                apiKey={apiKey}
-                apiSecret={apiSecret}
-                entityId={entityId} featureFlags={{}}
-            >
 
 
-                {/* 
+
+            {/* 
                 <HelpCenter
                     userId={userId}
                     token={token}
@@ -120,104 +165,122 @@ function App() {
 
 
 
-                {/* <QuestForm
+            {/* <QuestForm
                     userId={userId}
                     questId={questId}
                     answer={answer}
                     setAnswer={setAnswer}
                     token={token}
                 /> */}
+{/* https://staging.questprotocol.xyz/api/entities/e-0000000000/quests/q-9727caa3-3ecf-4ee9-ad39-860f70466012?userId=u-e61750ac-8734-4e42-a56c-df49bcda9f49 */}
 
-
-
-                {/* <GetStarted
-                    // questId="q-6b06e238-aece-40c6-a53d-0750f9130e1d"
-                    // userId={"u-ee5f090e-6434-45de-8bcd-fce22d775bcf"}
-                    // token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWVlNWYwOTBlLTY0MzQtNDVkZS04YmNkLWZjZTIyZDc3NWJjZiIsImlhdCI6MTY5OTM3MDIyMCwiZXhwIjoxNjk5NDU2NjIwfQ.lj86UTiNxRi0riBGla85yr51blIQcJ1YRCfZgM3izUE"}
-                    token={token}
-                    userId={userId}
-                    questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
-                    buttonBg="blue"
+            <QuestProvider
+                // apiKey={getstarted.apiKey}
+                apiKey="k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be"
+                // apiSecret={getstarted.apiSecret}
+                apiSecret="s-7462f377-2ce4-4593-a907-3a2a00cdf951be06358a-d95d-4576-b3b4-a07dda2dab36"
+                // entityId={getstarted.entityId}
+                entityId="e-0000000000"
+                featureFlags={{}}
+                apiType="STAGING"
+            >
+                <GetStarted
+                    // questId="q-7fbac653-8ef6-4082-a885-2835b6971936"
+                    questId="q-9727caa3-3ecf-4ee9-ad39-860f70466012"
+                    // userId={"u-fb6fd0be-24d4-4914-bed0-aac01c899758"}
+                    userId="u-16e8bb75-4ad2-4e38-9840-8312d00859e2"
+                    token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTE2ZThiYjc1LTRhZDItNGUzOC05ODQwLTgzMTJkMDA4NTllMiIsImlhdCI6MTcwNTQ5MTc3NiwiZXhwIjoxNzA1NTc4MTc2fQ.S3qTfyVw4PIOUdPhwhSd6bMfg5pvSe3zbxfZlYgIijc"}
+                    // token={token}
+                    // userId={userId}
+                    // questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
                     // buttonColor="yellow"
                     // cardBG="grey"
-                    cardHeadingColor="black"
-                    icons={[ whatsappSvg,  discordSvg]}
-
+                    icons={[
+                        "https://pin.questprotocol.xyz/ipfs/QmWSjM2BwmSW7pda3YmWxyFQ7sCJ9PVmVAwj1W9K7XAHhG",
+                        "https://pin.questprotocol.xyz/ipfs/QmRC5SwJpBup4wRB32DxjPV2fEnccpJkuMTBtzS9aiJg42",
+                        "https://pin.questprotocol.xyz/ipfs/QmcYB6T27vbqdaaeJdx1Cz3nz9oYMhTegpWjhSff7aX2Mi",
+                        "https://pin.questprotocol.xyz/ipfs/QmavuprWaHKvd5JZvkdgathYKLr5Zcshc1EPRzRzBJaPqw"
+                    ]}
+                    // dropDown={true}
+                    // width="50vw" 
+                    autoHide={false}
+                    // buttonBg="#9035FF"
+                    // cardHeadingColor="white"
+                    // compltedBtnBgColor="#EBFFEB"
+                    // dropDown
+                    // compltedBtnColor="#008000"
+                        // cardBorderColor="var(--color-core-background-1)"
+                        heading="What’s new"
                     completeAllStatus={() => {
-                        showToast.success({ text: "completed successfully" })
+                        // showToast.success({ text: "completed successfully" })
                     }}
-                    // onLinkTrigger={(url,id)=>{
-                    //     console.log(url,id)
-                    // }}
-                />  */}
+                    onLinkTrigger={(url, id) => {
+                        console.log(url)
+                        // window.location.href=url;
+                    }}
+                    // uniqueUserId="soumitra.petbindhi+1@gmail.com"
 
-                     <div className="sdk" style={{ color: "white", border: "2px solid red",height: "200px",width:"100px" }}>element</div>
-                    <div className="sdk1" style={{ color: "white", border: "2px solid red" }}>element</div>
-                    <div className="sdk2" style={{ color: "white", border: "2px solid red" }}>element</div>
-                <WalkThrough
-                    questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
-                    userId={userId}
-                    isOpen
-                    token={token}
-                    onFinish={() => {  }}
-                    // backgroundColor="black"
-                    // color=""
-                    // btnBackGroundColor="white"
-                    // btnColor="black"
                 />
+            </QuestProvider>
 
 
 
-                {/* <button
+
+
+
+
+
+            {/* <button
                     onClick={() => {
                         confetti(5000)
                     }}>
                     Show Confetti</button> */}
 
 
-                {/* <button onClick={() => { showToast.warn({ duration: 3000, text: "This is a warning message" }) }}>warning</button>
+            {/* <button onClick={() => { showToast.warn({ duration: 3000, text: "This is a warning message" }) }}>warning</button>
                 <button onClick={() => { showToast.error({ duration: 2000, text: "" }) }}>Error</button>
                 <button onClick={() => { showToast.info({ duration: 2000, text: "" }) }}>Info</button>
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-                {/* <OnBoarding
-                    userId={userId}
-                    questId={questId}
-                    answer={answer}
-                    setAnswer={setAnswer}
-                    token={token}
-                    answerFontSize="14px"
-                    progress={["Personal Details", "Professional Details", "Additional Details"]}
-                    previousBtnText="previous"
-                    nextBtnText="next"
-                    color=""
-                    bgColor="#fff"
-                    controlBtnType="Arrow"
-                    headingSize="24px"
-                    descSize="18px"
-                    inputFieldType={{
-                        "ec-xxxxxxxxxxxxxxxxx": "textArea"
-                    }}
-                    btnColor=""
-                    btnSize="200px"
-                    inputBgColor=""
-                    inputBorder=""
-                    singleChoose="modal1"
-                    multiChoice="modal2"
-                    design={[[1, 2], [3, 4], [5, 6]]}
-                    headingScreen={[{ name: "Tell us about yourself", desc: "" },
-                    { name: "Tell us more about your company", desc: "" },
-                    { name: "A little more will help us guide you the best", desc: "" }]}
-                    customComponents={<CustomButton />}
-                    getAnswers={printAnswer}
-                    screenHeight=""
-                /> */}
+            {/* <OnBoarding
+                userId={userId}
+                questId={questId}
+                answer={answer}
+                setAnswer={setAnswer}
+                token={token}
+                answerFontSize="14px"
+                progress={["Personal", "Professional", "Additional","Optional"]}
+                previousBtnText="Go Back"
+                nextBtnText="Submit and Continue"
+                color=""
+                bgColor="#fff"
+                controlBtnType="Buttons"
+                headingSize="24px"
+                descSize="18px"
+                inputFieldType={{
+                    "ec-xxxxxxxxxxxxxxxxx": "textArea"
+                }}
+                btnColor=""
+                btnSize="200px"
+                inputBgColor=""
+                inputBorder="1px solid #6525B3"
+                singleChoose="modal1"
+                multiChoice="modal2"
+                design={[[7, 6], [3, 4], [1, 2],[5]]}
+                headingScreen={[{ name: "Tell us about yourself", desc: "this is description" },
+                { name: "Tell us more about your company", desc: "description for this " },
+                { name: "A little more will help us guide you the best", desc: "description for this " }]}
+                customComponents={<CustomButton />}
+                getAnswers={printAnswer}
+                screenHeight=""
+                progressBarType="modal1"
+            /> */}
 
 
 
 
-                {/* <Tutorial
+            {/* <Tutorial
                     heading={"Tutorial Screen"}
                     subheading={"subheading"}
                     // bgColor="blue"
@@ -227,32 +290,36 @@ function App() {
                     questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
                     userId={userId}
                     token={token}
-                // textColor="blue"
-                /> */}
+                    // textColor="blue"
+                />  */}
 
 
 
-                {/* <FeedbackWorkflow
-                    // font="sans"
-                    // textColor="red"
-                    isOpen={true}
-                    // btnColor="yellow"
-                    // btnTextColor="blue"
-                    // backgroundColor="skyblue"
+
+            {/* <FeedbackWorkflow
+                    userId="u-fb6fd0be-24d4-4914-bed0-aac01c899758"
+                    token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWZiNmZkMGJlLTI0ZDQtNDkxNC1iZWQwLWFhYzAxYzg5OTc1OCIsImlhdCI6MTY5Mzg4MDUxMSwiZXhwIjoxODUxNjY4NTExfQ.lIHjlJqrTIAcfnIGrACJN3SHKDjJ6NQ7OPuzAL6jCzI"
                     questIds={[
                         'q-general-feedback',
                         'q-report-a-bug',
                         'q-request-a-feature',
                         'q-contact-us',
                     ]}
-                    userId={userId}
-                    topbarColor=""
-                    token={token}
-                    contactUrl="https://calendly.com/shubham-quest/chat"
+                    contactUrl="https://calendly.com/sriya-persana/30min"
+                    isOpen={true}
+                    // onClose={() => setIsOpen(!isOpen)}
+                    zIndex={10}
+                    // btnColor={"#1972f5"}
+                    // topbarColor={"#1972f5"}
+                    // starBorderColor={"#1972f5"}
+                    // starColor={"#1972f5"}
+                    // tickBg={"#1972f5"}
+                    uniqueUserId="soumitra.petbindhi+25@gmail.com"
+                    uniqueEmailId="soumitra.petbindhi+25@gmail.com"
                 /> */}
 
 
-                {/* <Feedback
+            {/* <Feedback
                     userId={userId}
                     token={token}
                     questId={"q-1a12c0e1-35a8-48a3-8cde-a8616f341b88"}
@@ -268,7 +335,7 @@ function App() {
                     isInline={true}
                 />  */}
 
-                {/* <ReferEarn
+            {/* <ReferEarn
                     questId={questId}
                     token={token}
                     userId={userId}
@@ -285,7 +352,7 @@ function App() {
 
 
 
-                {/* <ReferShare
+            {/* <ReferShare
                     questId={questId}
                     token={token}
                     userId={userId}
@@ -301,7 +368,7 @@ function App() {
 
 
 
-                {/* <QuestLogin
+            {/* <QuestLogin
                     // questId=""
                     textColor=""
                     btnTextColor=""
@@ -312,7 +379,7 @@ function App() {
                     redirectURL="https://www.questlabs.ai/"
                 ></QuestLogin> */}
 
-                {/* <ShareArticle
+            {/* <ShareArticle
                     bgColor=""
                     // description=""
                     // heading=""
@@ -322,8 +389,7 @@ function App() {
                     questId="q-5976dbae-0c4d-4df6-ba70-231e53dd1532"
                     userId={userId}
                 /> */}
-            </QuestProvider>
-            {/*  */}
+        </QuestProvider>
         </div >
     )
 }
