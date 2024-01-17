@@ -186,10 +186,10 @@ function App() {
             >
                 <GetStarted
                     // questId="q-7fbac653-8ef6-4082-a885-2835b6971936"
-                    questId="q-6b06e238-aece-40c6-a53d-0750f9130e1d"
+                    questId="q-9727caa3-3ecf-4ee9-ad39-860f70466012"
                     // userId={"u-fb6fd0be-24d4-4914-bed0-aac01c899758"}
                     userId="u-16e8bb75-4ad2-4e38-9840-8312d00859e2"
-                    token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTE2ZThiYjc1LTRhZDItNGUzOC05ODQwLTgzMTJkMDA4NTllMiIsImlhdCI6MTcwNTMzNjE2MCwiZXhwIjoxNzA1NDIyNTYwfQ.yzp0eBHRHPcG_cpk7l43NbcLryF6ZcML9xtW5FsBuGY"}
+                    token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTE2ZThiYjc1LTRhZDItNGUzOC05ODQwLTgzMTJkMDA4NTllMiIsImlhdCI6MTcwNTQ5MTc3NiwiZXhwIjoxNzA1NTc4MTc2fQ.S3qTfyVw4PIOUdPhwhSd6bMfg5pvSe3zbxfZlYgIijc"}
                     // token={token}
                     // userId={userId}
                     // questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
@@ -204,11 +204,12 @@ function App() {
                     // dropDown={true}
                     // width="50vw" 
                     autoHide={false}
-                    buttonBg="#9035FF"
-                    cardHeadingColor="white"
-                    compltedBtnBgColor="#EBFFEB"
-                    compltedBtnColor="#008000"
-                        cardBorderColor="var(--color-core-background-1)"
+                    // buttonBg="#9035FF"
+                    // cardHeadingColor="white"
+                    // compltedBtnBgColor="#EBFFEB"
+                    // dropDown
+                    // compltedBtnColor="#008000"
+                        // cardBorderColor="var(--color-core-background-1)"
                         heading="What’s new"
                     completeAllStatus={() => {
                         // showToast.success({ text: "completed successfully" })
@@ -307,12 +308,12 @@ function App() {
                     contactUrl="https://calendly.com/sriya-persana/30min"
                     isOpen={true}
                     // onClose={() => setIsOpen(!isOpen)}
-                    zIndex={1000}
-                    btnColor={"#1972f5"}
-                    topbarColor={"#1972f5"}
-                    starBorderColor={"#1972f5"}
-                    starColor={"#1972f5"}
-                    tickBg={"#1972f5"}
+                    zIndex={10}
+                    // btnColor={"#1972f5"}
+                    // topbarColor={"#1972f5"}
+                    // starBorderColor={"#1972f5"}
+                    // starColor={"#1972f5"}
+                    // tickBg={"#1972f5"}
                     uniqueUserId="soumitra.petbindhi+25@gmail.com"
                     uniqueEmailId="soumitra.petbindhi+25@gmail.com"
                 /> */}

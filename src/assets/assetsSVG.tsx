@@ -233,3 +233,8 @@ export const backButton = (handleBackClick) => {
         </svg>
     );
 };
+
+export const CrossBtn = (handleClick: Function) => (<svg onClick={()=>{handleClick()}} width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4.50519 11.4957L8.00052 8.00034L11.4959 11.4957M11.4959 4.505L7.99985 8.00034L4.50519 4.505" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+)

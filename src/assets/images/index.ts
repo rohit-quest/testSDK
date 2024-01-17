@@ -47,4 +47,6 @@ import gsTick from "./gsTick.svg";
 import upArrow from "./upArrow.svg";
 import closeRounded from "./closeRounded.svg"
 import greenCheck from "./greenCheck.svg";
-export { whatsappSvg, twitterSvg, discordSvg, copySVG, googleImg, copyLargeSVG, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like, closePng, copyPng, twitterPng, telegramPng, discordPng, giftPng, creditBannerPng, creditCheck, helpCenter1, helpCenter2, emailLogo, crossLogo, alertLogo, toastTic, questionLogo, warnCross, primaryCross, errorCross, successCross, primaryAlert, userChatPng, aiChatPng, sendChatPng, leftArrowPng, linkPng, searchIcon,commandkeyIcon,enterIcon,questLogo,radioActive,radioInActive,downArroIcon,gsTick,upArrow,closeRounded,greenCheck };
+import xbutton from "./xbutton.svg"
+import emailIcon from "./email.svg"
+export { whatsappSvg, twitterSvg, discordSvg, copySVG, googleImg, copyLargeSVG, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like, closePng, copyPng, twitterPng, telegramPng, discordPng, giftPng, creditBannerPng, creditCheck, helpCenter1, helpCenter2, emailLogo, crossLogo, alertLogo, toastTic, questionLogo, warnCross, primaryCross, errorCross, successCross, primaryAlert, userChatPng, aiChatPng, sendChatPng, leftArrowPng, linkPng, searchIcon,commandkeyIcon,enterIcon,questLogo,radioActive,radioInActive,downArroIcon,gsTick,upArrow,closeRounded,greenCheck,xbutton,emailIcon };

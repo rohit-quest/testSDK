@@ -6,7 +6,7 @@ export const AskAiSvg = () => (<svg width="18" height="18" viewBox="0 0 24 24" f
 )
 
 export const SearchSvg = () => (<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g clip-path="url(#clip0_205_4776)">
+    <g clipPath="url(#clip0_205_4776)">
         <circle cx="7.66667" cy="7.66659" r="6.33333" stroke="#AFAFAF" stroke-width="1.5" />
         <path d="M13.3333 13.3333L14.6667 14.6666" stroke="#AFAFAF" stroke-width="1.5" stroke-linecap="round" />
     </g>
