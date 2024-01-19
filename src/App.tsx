@@ -18,6 +18,7 @@ import Search from "./components/Search/Search";
 import { ChatIcon, LinkIcon } from "./components/HelpCenter/Svg";
 import { copyLargeSVG, copySVG, discordSvg, googleImg, twitterPng, whatsappSvg } from "./assets/images";
 import Payment from "./components/Payment/Payment";
+import OnBoardingPreview from './components/Onboarding/Preview';
 // import dataArray from "./components/Search/mock.json"
 // export const questId = 'q-f825ebd2-57f2-4f21-90a2-843e22b4a7f5';
 // export const apiKey = 'k-0d087a04-f631-41e1-80dd-fdc9ab2abb07'
@@ -67,19 +68,9 @@ const paymentBanefits = [
 ];
 function App() {
 
-    const [answer, setAnswer] = useState<answer>([])
-
-    // Mock CustomButton Component
-    const CustomButton = () => (
-        <button>
-            Submit
-        </button>
-    );
 
     // Mocked function for getAnswers prop
-    function printAnswer() {
-        showToast.success({ text: "You have submitted the form successfully you can find more on Quest admin dashboard" })
-    }
+
 
     const [complete, setComplete] = useState(false)
 
@@ -162,7 +153,7 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-
+<OnBoardingPreview />
 
 
             {/* <QuestForm
@@ -174,7 +165,7 @@ function App() {
                 /> */}
 {/* https://staging.questprotocol.xyz/api/entities/e-0000000000/quests/q-9727caa3-3ecf-4ee9-ad39-860f70466012?userId=u-e61750ac-8734-4e42-a56c-df49bcda9f49 */}
 
-            <QuestProvider
+          {/*   <QuestProvider
                 // apiKey={getstarted.apiKey}
                 apiKey="k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be"
                 // apiSecret={getstarted.apiSecret}
@@ -221,7 +212,7 @@ function App() {
                     // uniqueUserId="soumitra.petbindhi+1@gmail.com"
 
                 />
-            </QuestProvider>
+            </QuestProvider>*/}
 
 
 
@@ -243,39 +234,7 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-            {/* <OnBoarding
-                userId={userId}
-                questId={questId}
-                answer={answer}
-                setAnswer={setAnswer}
-                token={token}
-                answerFontSize="14px"
-                progress={["Personal", "Professional", "Additional","Optional"]}
-                previousBtnText="Go Back"
-                nextBtnText="Submit and Continue"
-                color=""
-                bgColor="#fff"
-                controlBtnType="Buttons"
-                headingSize="24px"
-                descSize="18px"
-                inputFieldType={{
-                    "ec-xxxxxxxxxxxxxxxxx": "textArea"
-                }}
-                btnColor=""
-                btnSize="200px"
-                inputBgColor=""
-                inputBorder="1px solid #6525B3"
-                singleChoose="modal1"
-                multiChoice="modal2"
-                design={[[7, 6], [3, 4], [1, 2],[5]]}
-                headingScreen={[{ name: "Tell us about yourself", desc: "this is description" },
-                { name: "Tell us more about your company", desc: "description for this " },
-                { name: "A little more will help us guide you the best", desc: "description for this " }]}
-                customComponents={<CustomButton />}
-                getAnswers={printAnswer}
-                screenHeight=""
-                progressBarType="modal1"
-            /> */}
+ 
 
 
 

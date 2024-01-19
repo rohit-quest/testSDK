@@ -91,13 +91,14 @@ interface QuestLoginProps {
     controlBtnType?: "Arrow" | "Buttons";
     progressBarType?: "modal1"|"modal2";
     choiceColor?: string;
-    textInputModal?: "modal1"|"modal2"
+    textInputModal?: "modal1"|"modal2";
+    offlineFormData: FormData[] | []
 }
 
 interface FormData {
     type: string;
     question: string;
-    options: [string];
+    options: Array<string>;
     criteriaId: string;
     required: boolean;
     placeholder: string;
@@ -154,7 +155,8 @@ function OnBoarding(props: QuestLoginProps) {
         uniqueEmailId,
         progressBarType="modal2",
         choiceColor="#6525B3",
-        textInputModal = "modal1"
+        textInputModal = "modal1",
+        offlineFormData
     } = props;
 
     const [formdata, setFormdata] = useState<FormData[] | []>([]);
@@ -168,88 +170,87 @@ function OnBoarding(props: QuestLoginProps) {
 
     useEffect(() => {
         if (entityId) {
-            let externalUserId = cookies.get("externalUserId");
-            let questUserId = cookies.get("questUserId");
-            let questUserToken = cookies.get("questUserToken");
-            // let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
+            // let externalUserId = cookies.get("externalUserId");
+            // let questUserId = cookies.get("questUserId");
+            // let questUserToken = cookies.get("questUserToken");
+            // // let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
             
-            const headers = {
-                apiKey: apiKey,
-                apisecret: apiSecret,
-                userId: userId,
-                token: token, // Replace with your actual token
-            };
+            // const headers = {
+            //     apiKey: apiKey,
+            //     apisecret: apiSecret,
+            //     userId: userId,
+            //     token: token, // Replace with your actual token
+            // };
 
-            const body = {
-                externalUserId: !!uniqueUserId && uniqueUserId,
-                entityId: entityId,
-                email: uniqueEmailId
-            }
+            // const body = {
+            //     externalUserId: !!uniqueUserId && uniqueUserId,
+            //     entityId: entityId,
+            //     email: uniqueEmailId
+            // }
             
-            getQuestData(userId, headers)
+            getQuestData(userId, {})
             
-            if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
-                let header = {...headers, ...{questUserId, questUserToken}}
-                axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers: header})
-            } else if (!!uniqueUserId) {
-                axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
-                .then((res) => {
-                    let {userId, token} = res.data;
-                    let header = {...headers, ...{userId, token}}
+            // if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
+            //     let header = {...headers, ...{questUserId, questUserToken}}
+            //     axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers: header})
+            // } else if (!!uniqueUserId) {
+            //     axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
+            //     .then((res) => {
+            //         let {userId, token} = res.data;
+            //         let header = {...headers, ...{userId, token}}
 
-                    const date = new Date();
-                    date.setHours(date.getHours() + 12)
-                    cookies.set("externalUserId", uniqueUserId, {path: "/", expires: date})
-                    cookies.set("questUserId", userId, {path: "/", expires: date})
-                    cookies.set("questUserToken", token, {path: "/", expires: date})
-                    axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/onboarding-view?userId=${userId}&questId=${questId}`, {count: 1}, {headers: header})
-                })
-            }
+            //         const date = new Date();
+            //         date.setHours(date.getHours() + 12)
+            //         cookies.set("externalUserId", uniqueUserId, {path: "/", expires: date})
+            //         cookies.set("questUserId", userId, {path: "/", expires: date})
+            //         cookies.set("questUserToken", token, {path: "/", expires: date})
+            //         axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/onboarding-view?userId=${userId}&questId=${questId}`, {count: 1}, {headers: header})
+            //     })
+            // }
 
 
             async function getQuestData(userId: string, headers: object) {
-                (loadingTracker && setLoading(true));
-                const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/criterias?userId=${userId}`;
-                await axios.get(request, { headers: headers }).then((res) => {
-                    let response = res.data;
-                    let criterias = response?.data?.eligibilityData?.map(
-                        (criteria: {
-                            criteriaType: string;
-                            metadata: { title: string; options: string[], isOptional: string, placeholder: string, linkActionName: string, linkActionUrl: string, manualInput: string};
-                            criteriaId: string;
-                        }) => {
-                            return {
-                                type: criteria?.criteriaType,
-                                question: criteria?.metadata?.title,
-                                options: criteria?.metadata?.options || [],
-                                criteriaId: criteria?.criteriaId,
-                                required: !criteria?.metadata?.isOptional,
-                                placeholder: criteria?.metadata?.placeholder,
-                                linkTitle: criteria?.metadata?.linkActionName || "",
-                                linkUrl: criteria?.metadata?.linkActionUrl || "",
-                                manualInput: criteria?.metadata?.manualInput || false,
-                            };
+                // (loadingTracker && setLoading(true));
+                // const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/criterias?userId=${userId}`;
+                // await axios.get(request, { headers: headers }).then((res) => {
+                //     let response = res.data;
+                //     let criterias = response?.data?.eligibilityData?.map(
+                //         (criteria: {
+                //             criteriaType: string;
+                //             metadata: { title: string; options: string[], isOptional: string, placeholder: string, linkActionName: string, linkActionUrl: string, manualInput: string};
+                //             criteriaId: string;
+                //         }) => {
+                //             return {
+                //                 type: criteria?.criteriaType,
+                //                 question: criteria?.metadata?.title,
+                //                 options: criteria?.metadata?.options || [],
+                //                 criteriaId: criteria?.criteriaId,
+                //                 required: !criteria?.metadata?.isOptional,
+                //                 placeholder: criteria?.metadata?.placeholder,
+                //                 linkTitle: criteria?.metadata?.linkActionName || "",
+                //                 linkUrl: criteria?.metadata?.linkActionUrl || "",
+                //                 manualInput: criteria?.metadata?.manualInput || false,
+                //             };
+                //         }
+                //     );
+                let ansArray: any = {};
+                setFormdata([...offlineFormData]);
+
+                offlineFormData.forEach((criteria: any) => {
+                    if (criteria.type == "USER_INPUT_MULTI_CHOICE") {
+                        if (!answer[criteria.criteriaId]) {
+                            ansArray[criteria.criteriaId] = [];
                         }
-                    );
-                    setFormdata([...criterias]);
-    
-                    let ansArray: any = {};
-                    criterias.forEach((criteria: any) => {
-                        if (criteria.type == "USER_INPUT_MULTI_CHOICE") {
-                            if (!answer[criteria.criteriaId]) {
-                                ansArray[criteria.criteriaId] = [];
-                            }
-                            return;
-                        } else {
-                            if (!answer[criteria.criteriaId]) {
-                                ansArray[criteria.criteriaId] = "";
-                            }
-                            return;
+                        return;
+                    } else {
+                        if (!answer[criteria.criteriaId]) {
+                            ansArray[criteria.criteriaId] = "";
                         }
-                    });
-                    setAnswer({ ...answer, ...ansArray });
+                        return;
+                    }
                 });
-                (loadingTracker && setLoading(false))
+                setAnswer({ ...answer, ...ansArray });
+                // (loadingTracker && setLoading(false))
             }
         }
     }, []);
@@ -559,7 +560,7 @@ function OnBoarding(props: QuestLoginProps) {
     };
 
     const singleChoiceTwo = (
-        options: [string] | [],
+        options: string[] | [],
         question: string,
         required: boolean,
         criteriaId: string,
@@ -644,7 +645,7 @@ function OnBoarding(props: QuestLoginProps) {
     };
     
     const singleChoiceOne = (
-        options: [string] | [],
+        options: string[] | [],
         question: string,
         required: boolean,
         criteriaId: string,
@@ -707,7 +708,7 @@ function OnBoarding(props: QuestLoginProps) {
     };
 
     const singleChoiceThree = (
-        options: [string] | [],
+        options: string[] | [],
         question: string,
         required: boolean,
         criteriaId: string,

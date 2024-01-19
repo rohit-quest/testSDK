@@ -192,3 +192,10 @@ body {
   font-family: 'Figtree';
   font-weight: unset;
 }
+
+.q_sdk_input:-webkit-autofill,
+.q_sdk_input:-webkit-autofill:hover, 
+.q_sdk_input:-webkit-autofill:focus, 
+.q_sdk_input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px transparent inset !important;
+}
