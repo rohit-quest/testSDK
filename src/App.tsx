@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import { OnBoarding, QuestLogin } from '..'
 import { QuestProvider } from "./components/QuestWrapper";
 import QuestLogin from "./components/Login/Login";
 import { answer } from "./components/QuestForm/response";
@@ -10,22 +9,14 @@ import { QuestForm } from "./components/QuestForm/index";
 import Feedback from "./components/Feedback/Feedback";
 import FeedbackWorkflow from "./components/FeedbackOverview/FeedbackOverview";
 import Tutorial from "./components/TutorialScreen/TutorialScreen"
-import OnBoarding from "./components/Onboarding/Onboarding";
 import { confetti } from "./components/Confetti/confetti";
 import GetStarted from "./components/GetStarted/GetStarted";
 import ShareArticle from "./components/Share/ShareArticle";
 import Search from "./components/Search/Search";
 import { ChatIcon, LinkIcon } from "./components/HelpCenter/Svg";
-import { copyLargeSVG, copySVG, discordSvg, googleImg, twitterPng, whatsappSvg } from "./assets/images";
 import Payment from "./components/Payment/Payment";
 import OnBoardingPreview from './components/Onboarding/Preview';
-// import dataArray from "./components/Search/mock.json"
-// export const questId = 'q-f825ebd2-57f2-4f21-90a2-843e22b4a7f5';
-// export const apiKey = 'k-0d087a04-f631-41e1-80dd-fdc9ab2abb07'
-// export const apiSecret = 's-329b70b4-cd43-472d-bd41-c2fea09490e0c7196f7b-9020-4bc1-9a11-b70214e3eb48'
-// export const entityId = 'e-0000000000'
-// export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjQyODA5MSwiZXhwIjoxNjk2NTE0NDkxfQ.b-HXLyQwQ-R94fUNnHW2omE0JtFy4C1oSpjuQLFCb-o'
-// export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
+import GetStartedPreview from './components/GetStarted/Preview';
 
 export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
 export const apiKey = 'k-68a0c6b8-b27f-49c6-a315-b0c9cba15bf4'
@@ -153,8 +144,10 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-<OnBoardingPreview />
-
+{/* <OnBoardingPreview /> */}
+<GetStartedPreview
+//  online={false}
+/>
 
             {/* <QuestForm
                     userId={userId}
@@ -165,54 +158,7 @@ function App() {
                 /> */}
 {/* https://staging.questprotocol.xyz/api/entities/e-0000000000/quests/q-9727caa3-3ecf-4ee9-ad39-860f70466012?userId=u-e61750ac-8734-4e42-a56c-df49bcda9f49 */}
 
-          {/*   <QuestProvider
-                // apiKey={getstarted.apiKey}
-                apiKey="k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be"
-                // apiSecret={getstarted.apiSecret}
-                apiSecret="s-7462f377-2ce4-4593-a907-3a2a00cdf951be06358a-d95d-4576-b3b4-a07dda2dab36"
-                // entityId={getstarted.entityId}
-                entityId="e-0000000000"
-                featureFlags={{}}
-                apiType="STAGING"
-            >
-                <GetStarted
-                    // questId="q-7fbac653-8ef6-4082-a885-2835b6971936"
-                    questId="q-9727caa3-3ecf-4ee9-ad39-860f70466012"
-                    // userId={"u-fb6fd0be-24d4-4914-bed0-aac01c899758"}
-                    userId="u-16e8bb75-4ad2-4e38-9840-8312d00859e2"
-                    token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTE2ZThiYjc1LTRhZDItNGUzOC05ODQwLTgzMTJkMDA4NTllMiIsImlhdCI6MTcwNTQ5MTc3NiwiZXhwIjoxNzA1NTc4MTc2fQ.S3qTfyVw4PIOUdPhwhSd6bMfg5pvSe3zbxfZlYgIijc"}
-                    // token={token}
-                    // userId={userId}
-                    // questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
-                    // buttonColor="yellow"
-                    // cardBG="grey"
-                    icons={[
-                        "https://pin.questprotocol.xyz/ipfs/QmWSjM2BwmSW7pda3YmWxyFQ7sCJ9PVmVAwj1W9K7XAHhG",
-                        "https://pin.questprotocol.xyz/ipfs/QmRC5SwJpBup4wRB32DxjPV2fEnccpJkuMTBtzS9aiJg42",
-                        "https://pin.questprotocol.xyz/ipfs/QmcYB6T27vbqdaaeJdx1Cz3nz9oYMhTegpWjhSff7aX2Mi",
-                        "https://pin.questprotocol.xyz/ipfs/QmavuprWaHKvd5JZvkdgathYKLr5Zcshc1EPRzRzBJaPqw"
-                    ]}
-                    // dropDown={true}
-                    // width="50vw" 
-                    autoHide={false}
-                    // buttonBg="#9035FF"
-                    // cardHeadingColor="white"
-                    // compltedBtnBgColor="#EBFFEB"
-                    // dropDown
-                    // compltedBtnColor="#008000"
-                        // cardBorderColor="var(--color-core-background-1)"
-                        heading="What’s new"
-                    completeAllStatus={() => {
-                        // showToast.success({ text: "completed successfully" })
-                    }}
-                    onLinkTrigger={(url, id) => {
-                        console.log(url)
-                        // window.location.href=url;
-                    }}
-                    // uniqueUserId="soumitra.petbindhi+1@gmail.com"
-
-                />
-            </QuestProvider>*/}
+         
 
 
 

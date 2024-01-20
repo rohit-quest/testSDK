@@ -71,12 +71,8 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
     )
   return (
     <OnBoardingOff
-
-      userId={userId}
-      questId={questId}
       answer={answer}
       setAnswer={setAnswer}
-      token={token}
       answerFontSize="14px"
       progress={["Personal", "Professional", "Additional",]}
       previousBtnText="Go Back"

@@ -9,9 +9,9 @@ import Cookies from 'universal-cookie';
 import { greenCheck, gsTick, helpCenter1, questLogo } from '../../assets/images';
 import { arrowRight, downArroIcon, upArrow } from './Svgs';
 type Props = {
-  userId: string;
-  token: string;
-  questId: string;
+  userId?: string;
+  token?: string;
+  questId?: string;
   cardBG?: string;
   cardHeadingColor?: string;
   cardDescColor?: string;
@@ -32,7 +32,8 @@ type Props = {
   compltedBtnBgColor?: string;
   width?: string;
   showSteps?: boolean;
-  arrowColor?: string
+  arrowColor?: string;
+  offlineFormatData: Array<TutorialStep>
 };
 interface TutorialStep {
   id: number;
@@ -45,8 +46,9 @@ interface TutorialStep {
   completed?: boolean;
   btn1Link: string;
   longDescription?: string;
+  type?: string
 }
-function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus, buttonBg, buttonColor, onLinkTrigger = (url:string,index:number)=>{window.location.href=url}, icons, uniqueUserId, cardBorderColor, heading, description, uniqueEmailId, autoHide, progressBar=false,dropDown=false,width="auto", compltedBtnColor="#008000",compltedBtnBgColor="#EBFFEB",showSteps=false,arrowColor}: Props) {
+function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus, buttonBg, buttonColor, onLinkTrigger = (url:string,index:number)=>{window.location.href=url}, icons, uniqueUserId, cardBorderColor, heading, description, uniqueEmailId, autoHide, progressBar=false,dropDown=false,width="auto", compltedBtnColor="#008000",compltedBtnBgColor="#EBFFEB",offlineFormatData,showSteps=false,arrowColor}: Props) {
   const svg1 = (
     <svg
       width="24"
@@ -199,23 +201,28 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
       criteriaId: id,
     };
     const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${headers.userId}`;
-    setShowLoader(true);
-    axios
-      .post(request, json, { headers: headers })
-      .then((response) => {
-        if (response.data.success) {
+    // setShowLoader(true);
+    // axios
+    //   .post(request, json, { headers: headers })
+    //   .then((response) => {
+    //     if (response.data.success) {
+          offlineFormatData = offlineFormatData.map((e,i)=>{
+            console.log(e.criteriaId,id)
+
+            return (id==e.criteriaId)?({...e,completed: true}):e
+          });
           setCriteriaSubmit([...criteriaSubmit, id]);
           onLinkTrigger(url,id);
-        } else {
-          toast.error(response.data.error);
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      })
-      .finally(() => {
-        setShowLoader(false);
-      });
+      //   } else {
+      //     toast.error(response.data.error);
+      //   }
+      // })
+      // .catch((error) => {
+      //   console.error('Error:', error);
+      // })
+      // .finally(() => {
+      //   setShowLoader(false);
+      // });
   };
 
   useEffect(() => {
@@ -235,45 +242,43 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
         email: uniqueEmailId
       }
       
-      if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
-        let header = {...headers, ...{userId: questUserId, token: questUserToken}}
-        fetchData(header)
-      } else if (!!uniqueUserId) {
-        axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
-        .then((res) => {
-          let {userId, token} = res.data;
+      // if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
+        // let header = {...headers, ...{userId: questUserId, token: questUserToken}}
+        // fetchData(header)
+      // } else if (!!uniqueUserId) {
+        // axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
+        // .then((res) => {
+          // let {userId, token} = res.data;
           let header = {...headers, ...{userId, token}}
           fetchData(header)
-          const date = new Date();
-          date.setHours(date.getHours() + 12)
-          cookies.set("externalUserId", uniqueUserId, {path: "/", expires: date})
-          cookies.set("questUserId", userId, {path: "/", expires: date})
-          cookies.set("questUserToken", token, {path: "/", expires: date})
-        })
-      } else {
-        fetchData(headers)
-      }
+          // const date = new Date();
+          // date.setHours(date.getHours() + 12)
+          // cookies.set("externalUserId", uniqueUserId, {path: "/", expires: date})
+          // cookies.set("questUserId", userId, {path: "/", expires: date})
+          // cookies.set("questUserToken", token, {path: "/", expires: date})
+        // })
+      // } else {
+        // fetchData(headers)
+      // }
       
       function fetchData(header: any) {
         const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}`;
-  
-        axios.get(request, { headers: header }).then((res) => {
-          let response = res.data;
-          let criterias = response?.eligibilityData?.map((criteria: any) => {
-            return {
-              type: criteria?.data?.criteriaType,
-              title: criteria?.data?.metadata?.linkActionName,
-              url: criteria?.data?.metadata?.linkActionUrl,
-              description: criteria?.data?.metadata?.description||"this is the description",
-              btn1: criteria?.data?.metadata?.btn1,
-              btn2: criteria?.data?.metadata?.btn2,
-              btn1Link: criteria?.data?.metadata?.btn1Link,
-              criteriaId: criteria?.data?.criteriaId,
-              completed:   criteria?.completed,
-              longDescription: criteria?.longDescription||"Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users"
-            };
-          });
-          const allCriteriasCompleted = criterias.every(
+        // axios.get(request, { headers: header }).then((res) => {
+          let criterias = offlineFormatData
+        //     return {
+        //         type: criteria?.data?.criteriaType,
+        //         title: criteria?.data?.metadata?.linkActionName,
+        //         url: criteria?.data?.metadata?.linkActionUrl,
+        //         description: criteria?.data?.metadata?.description||"this is the description",
+        //         btn1: criteria?.data?.metadata?.btn1,
+        //         btn2: criteria?.data?.metadata?.btn2,
+        //         btn1Link: criteria?.data?.metadata?.btn1Link,
+        //         criteriaId: criteria?.data?.criteriaId,
+        //         completed:   criteria?.completed,
+        //         longDescription: criteria?.longDescription||"Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users"
+        //       };
+        //   });
+          const allCriteriasCompleted = offlineFormatData.every(
             (criteria: any) => criteria.completed === true
           );
           if (allCriteriasCompleted) {
@@ -285,7 +290,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
           let steps = criterias.length - (criterias?.filter((criteria: any) => criteria?.completed)?.length||0)
           setSteps(steps);
           setFormdata([...criterias]);
-        });
+        // });
 
       }
     }
