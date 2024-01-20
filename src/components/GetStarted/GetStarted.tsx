@@ -32,7 +32,9 @@ type Props = {
   compltedBtnBgColor?: string;
   width?: string;
   showSteps?: boolean;
-  arrowColor?: string
+  arrowColor?: string;
+  loadingIndiacator?: boolean;
+  anouncement?: boolean;
 };
 interface TutorialStep {
   id: number;
@@ -45,8 +47,9 @@ interface TutorialStep {
   completed?: boolean;
   btn1Link: string;
   longDescription?: string;
+  imageUrl?: string;
 }
-function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus, buttonBg, buttonColor, onLinkTrigger = (url:string,index:number)=>{window.location.href=url}, icons, uniqueUserId, cardBorderColor, heading, description, uniqueEmailId, autoHide, progressBar=false,dropDown=false,width="auto", compltedBtnColor="#008000",compltedBtnBgColor="#EBFFEB",showSteps=false,arrowColor}: Props) {
+function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus, buttonBg, buttonColor, onLinkTrigger = (url:string,index:number)=>{window.location.href=url}, icons, uniqueUserId, cardBorderColor, heading, description, uniqueEmailId, autoHide, progressBar=false,dropDown=false,width="auto", compltedBtnColor="#008000",compltedBtnBgColor="#EBFFEB",showSteps=false,arrowColor,loadingIndiacator=true, anouncement=false}: Props) {
   const svg1 = (
     <svg
       width="24"
@@ -188,12 +191,16 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
   let questUserToken = cookies.get("questUserToken");
 
   const handleCriteriaClick = (id: any, url: string) => {
+    if(showLoader) return;
     const headers = {
       apiKey: apiKey,
       apisecret: apiSecret,
       userId: uniqueUserId? questUserId : userId,
       token: uniqueUserId? questUserToken : token,
     };
+
+    if(anouncement)
+     return onLinkTrigger(url,id);
 
     const json = {
       criteriaId: id,
@@ -269,8 +276,9 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
               btn2: criteria?.data?.metadata?.btn2,
               btn1Link: criteria?.data?.metadata?.btn1Link,
               criteriaId: criteria?.data?.criteriaId,
-              completed:   criteria?.completed,
-              longDescription: criteria?.longDescription||"Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users"
+              completed: criteria?.completed,
+              longDescription: criteria?.longDescription||"Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users",
+              imageUrl: criteria?.imageUrl
             };
           });
           const allCriteriasCompleted = criterias.every(
@@ -369,7 +377,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
 
   return (
     (<div style={{ padding: autoHide == true ? (!allCriteriaCompleted && formdata.length) ? '40px' : "0px" : "40px", boxSizing: "content-box",width: width }} className='get_started_box'>
-      {showLoader && <Loader />}
+      {loadingIndiacator && showLoader && <Loader />}
       {(autoHide == true ? (!!formdata.length && !allCriteriaCompleted) : true) &&
         <div className="gs-heading-div">
           <div>
@@ -402,7 +410,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
           <div key={i} style={{ background: bg, borderBottom:`1px solid ${borderColor}`,borderRadius: 0 }} className="gs-card-container" >
             <div className='gs_card_body' onClick={()=>setDropdown(prev=>prev.map((e,index)=> (i===index)?(!e):e )) }>
             <div className='gs_card_body_text'>
-              <img className="gs-card-icon" width="24px" src={icons[i] || questLogo} alt='' />
+              <img className="gs-card-icon" width="24px" src={e.imageUrl || icons[i] || questLogo} alt='' />
               <div className="gs-card-text">
                 <div style={{ color: textColor }} className="gs-card-head">
                   {e.title}
