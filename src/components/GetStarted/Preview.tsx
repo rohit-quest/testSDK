@@ -34,11 +34,12 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
                 ]}
                 // dropDown={true}
                 // width="50vw" 
+                // anouncement
                 autoHide={false}
                 // buttonBg="#9035FF"
                 // cardHeadingColor="white"
                 // compltedBtnBgColor="#EBFFEB"
-                dropDown={true}
+                // dropDown={true}
                 // compltedBtnColor="#008000"
                 // cardBorderColor="var(--color-core-background-1)"
                 heading="What’s new"
@@ -63,7 +64,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
             "https://pin.questprotocol.xyz/ipfs/QmcYB6T27vbqdaaeJdx1Cz3nz9oYMhTegpWjhSff7aX2Mi",
             "https://pin.questprotocol.xyz/ipfs/QmavuprWaHKvd5JZvkdgathYKLr5Zcshc1EPRzRzBJaPqw"
         ]}
-        dropDown={true}
+        // dropDown={true}
         // width="50vw" 
         autoHide={false}
         // buttonBg="black"
