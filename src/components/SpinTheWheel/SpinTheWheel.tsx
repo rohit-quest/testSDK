@@ -40,6 +40,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
   const [rotationAngle, setRotationAngle] = useState<number>(0);
   const [isSpinning, setIsSpinning] = useState<boolean>(false);
   const [rewardImage, setRewardImage] = useState<string>(XP);
+  const [rewardValue, setRewardValue] = useState<string>("");
   const [winningSegmentIndex, setWinningSegmentIndex] = useState<number | null>(
     null
   );
@@ -61,15 +62,18 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
       wheelRef.current.style.transform = `rotate(1440deg)`;
 
       try {
-        //const apiResponse = await getRandomReward();
+        const apiResponse = await getRandomReward();
 
-      //  const winningIndex = apiResponse.winningIndex;
-      //  const reward = apiResponse.reward;
-      const winningIndex = 2;
-        
+        const winningIndex = apiResponse.winningIndex;
+        const reward = apiResponse.reward;
 
-        const image =  XP ;
-        setRewardImage(image)
+        const image =
+          reward[0]?.metadata?.logo || reward[0]?.metadata?.imageURL || XP;
+        setRewardImage(image);
+
+        const val =
+          reward[0]?.metadata?.gemsData || reward[0]?.metadata?.xp || "";
+        setRewardValue(val);
 
         if (winningIndex == null || winningIndex == undefined) {
           console.error("API response issue - winningIndex is null");
@@ -78,13 +82,9 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
           return;
         }
 
-        console.log(winningIndex)
-        console.log(rewards[winningIndex])
-
         const segmentAngle = 360 / rewards.length;
-        const stopAngle = 360 * 2 + segmentAngle * (winningIndex + 1); // Rotate 2 full circles before stopping at right index received from backend
-         
-        console.log(stopAngle)
+        const stopAngle = 360 * 3 + segmentAngle * (winningIndex + 1); // Rotate 2 full circles before stopping at right index received from backend
+
         setRotationAngle(stopAngle);
 
         wheelRef.current.style.transition = "transform 1s ease-out";
@@ -112,45 +112,40 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
     }
   };
 
-    const getRandomReward = async (): Promise<{ winningIndex: number | null; reward: any; }> => {
-      try {
-        const headers = {
-          apiKey: apiKey,
-          apisecret: apiSecret,
-          userId: userId,
-          token: token,
+  const getRandomReward = async (): Promise<{
+    winningIndex: number | null;
+    reward: any;
+  }> => {
+    try {
+      const headers = {
+        apiKey: apiKey,
+        apisecret: apiSecret,
+        userId: userId,
+        token: token,
+      };
+
+      const json = {
+        criteriaId: criteriaId,
+      };
+      const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
+
+      const response = await axios.post(request, json, { headers: headers });
+
+      if (response.data.success) {
+        console.log(response);
+        return {
+          winningIndex: response.data.winningIndex,
+          reward: response.data.reward,
         };
-
-        const json = {
-          criteriaId: criteriaId,
-        };
-        const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
-
-        const response = await axios.post(request, json, { headers: headers });
-
-        if (response.data.success) {
-          console.log(response);
-          return {
-            winningIndex: response.data.winningIndex,
-            reward: response.data.reward,
-          };
-        } else {
-          console.log(response);
-          return { winningIndex: null, reward: '' };
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        return { winningIndex: null, reward: '' };
+      } else {
+        console.log(response);
+        return { winningIndex: null, reward: "" };
       }
-    };
-
-//   const getRandomReward = (): Promise<{ winningIndex: number }> => {
-//     return new Promise((resolve) => {
-//       setTimeout(() => {
-//         resolve({ winningIndex: 4 });
-//       }, 2000);
-//     });
-//   };
+    } catch (error) {
+      console.error("Error:", error);
+      return { winningIndex: null, reward: "" };
+    }
+  };
 
   useEffect(() => {
     return () => {
@@ -213,6 +208,14 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
     marginTop: "-0.2px",
   };
 
+  const centeredImgDivStyle: React.CSSProperties = {
+    boxShadow: "0 0 20.571px 0 rgba(9, 13, 15, 0.25)",
+    width: "51.429px",
+    height: "51.429px",
+    borderRadius: "50%",
+    background: "white",
+  };
+
   const pointerStyle: React.CSSProperties = {
     position: "fixed",
     top: "-5%",
@@ -239,7 +242,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
     marginBottom: "8px",
   };
 
-  const amazingStyle: React.CSSProperties = {
+  const amazingButtonStyle: React.CSSProperties = {
     display: "flex",
     padding: "8px 16px",
     justifyContent: "center",
@@ -253,6 +256,19 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
     fontStyle: "normal",
     fontWeight: 600,
     lineHeight: "normal",
+  };
+
+  const successModal: React.CSSProperties = {
+    textAlign: "center",
+    position: "absolute",
+    top: "52%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    zIndex: 2,
+    display: "inline-flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "8px",
   };
 
   const segmentCount = rewards.length;
@@ -288,7 +304,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
                 ...divStyle,
                 ...style,
                 background:
-                  (winningSegmentIndex &&
+                  (winningSegmentIndex !== null &&
                     rewards.length - 1 - winningSegmentIndex) === index
                     ? "#FFDD7CBF"
                     : style.background,
@@ -306,35 +322,14 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
           <div>
             <img src={Pointer} alt="Pointer" style={pointerStyle} />
           </div>
-          <div
-            style={{
-              boxShadow: "0 0 20.571px 0 rgba(9, 13, 15, 0.25)",
-              width: "51.429px",
-              height: "51.429px",
-              borderRadius: "50%",
-              background: "white",
-            }}
-          >
+          <div style={centeredImgDivStyle}>
             <img src={wheelImage} alt="Mystic" style={centeredImgStyle} />
           </div>
         </div>
       </div>
 
       {showCongratulations && (
-        <div
-          style={{
-            textAlign: "center",
-            position: "absolute",
-            top: "52%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            zIndex: 2,
-            display: "inline-flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "8px",
-          }}
-        >
+        <div style={successModal}>
           <h5 style={h5Style}>Congratulations</h5>
 
           <p style={h2Style}>You have won:</p>
@@ -343,9 +338,13 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
             alt="Reward"
             style={{ width: "60px", height: "60px", marginBottom: "0px" }}
           />
-          <p style={{textAlign: "center",marginLeft:'-6px'}}>+100</p>
+          {rewardValue && (
+            <p style={{ textAlign: "center", marginLeft: "-6px" }}>
+              +{rewardValue}
+            </p>
+          )}
           <div
-            style={amazingStyle}
+            style={amazingButtonStyle}
             onClick={() => {
               setShowCongratulations(false);
               setWinningSegmentIndex(null);
