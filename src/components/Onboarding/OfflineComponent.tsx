@@ -50,9 +50,9 @@ type HeadingScreen = {
 };
 
 interface QuestLoginProps {
-    userId: string;
-    token: string;
-    questId: string;
+    userId?: string;
+    token?: string;
+    questId?: string;
     uniqueUserId?: string;
     uniqueEmailId?: string;
     design?: Array<Array<number>>;
@@ -188,7 +188,7 @@ function OnBoarding(props: QuestLoginProps) {
             //     email: uniqueEmailId
             // }
             
-            getQuestData(userId, {})
+            getQuestData(userId||"", {})
             
             // if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
             //     let header = {...headers, ...{questUserId, questUserToken}}
