@@ -35,6 +35,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
                 // dropDown={true}
                 // width="50vw" 
                 // anouncement
+                allowMultiClick={false}
                 autoHide={false}
                 // buttonBg="#9035FF"
                 // cardHeadingColor="white"

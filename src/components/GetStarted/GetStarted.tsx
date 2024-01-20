@@ -35,6 +35,7 @@ type Props = {
   arrowColor?: string;
   loadingIndiacator?: boolean;
   anouncement?: boolean;
+  allowMultiClick?: boolean;
 };
 interface TutorialStep {
   id: number;
@@ -49,7 +50,7 @@ interface TutorialStep {
   longDescription?: string;
   imageUrl?: string;
 }
-function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus, buttonBg, buttonColor, onLinkTrigger = (url:string,index:number)=>{window.location.href=url}, icons, uniqueUserId, cardBorderColor, heading, description, uniqueEmailId, autoHide, progressBar=false,dropDown=false,width="auto", compltedBtnColor="#008000",compltedBtnBgColor="#EBFFEB",showSteps=false,arrowColor,loadingIndiacator=true, anouncement=false}: Props) {
+function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus, buttonBg, buttonColor, onLinkTrigger = (url:string,index:number)=>{window.location.href=url}, icons, uniqueUserId, cardBorderColor, heading, description, uniqueEmailId, autoHide, progressBar=false,dropDown=false,width="auto", compltedBtnColor="#008000",compltedBtnBgColor="#EBFFEB",showSteps=false,arrowColor,loadingIndiacator=true, anouncement=false,allowMultiClick=true}: Props) {
   const svg1 = (
     <svg
       width="24"
@@ -430,14 +431,14 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
               {/* <img src={helpCenter1} alt="" className='gs_drop_img' /> */}
               <div className="gs_drop_desc">{e.longDescription}</div>
               <div className="gs_drop_btns">
-              <div className="gs_start_btn" style={{background: buttonBg}} onClick={() => handleCriteriaClick(e.criteriaId, e.url)}>{e.btn2||"Start Now"}</div>
+              <div className="gs_start_btn" style={{background: buttonBg}} onClick={() => !(!allowMultiClick && e.completed) && handleCriteriaClick(e.criteriaId, e.url)}>{e.btn2||"Start Now"}</div>
                 <div className="gs_visit_btn" onClick={()=>window.location.href=e.btn1Link}>{e.btn1||"Visit WebSite"}</div>
               </div>
             </div>)}
           </div>
         ):
         (
-          <div key={i}  className="gs-card-container"  onClick={() => handleCriteriaClick(e.criteriaId, e.url)}>
+          <div key={i}  className="gs-card-container"  onClick={() => !(!allowMultiClick && e.completed) && handleCriteriaClick(e.criteriaId, e.url)}>
             <div className='gs_card_body' style={{background: cardBG}} onClick={()=>dropDown&&setDropdown(prev=>prev.map((e,index)=> (i===index)?(!e):e )) }>
             <div className='gs_card_body_text'>
               <img className="gs-card-icon" width="24px" src={icons[i] || questLogo} alt='' />
@@ -451,7 +452,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
               </div>
             </div>
             <div className="gs-card-btn-container">
-                <div onClick={() => handleCriteriaClick(e.criteriaId, e.url)}>
+                <div onClick={() =>!(!allowMultiClick && e.completed) && handleCriteriaClick(e.criteriaId, e.url)}>
                 {e.completed?(<img src={greenCheck} className='q_gt_arrow' alt='' />):(<img className='q_gt_arrow' src={arrowRight(arrowColor)} alt=''/>)}
                 </div>
             </div>
