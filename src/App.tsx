@@ -145,7 +145,9 @@ function App() {
                 // descriptioin="this is descripiton"
                 /> */}
 {/* <OnBoardingPreview /> */}
-<GetStartedPreview online={false}/>
+<GetStartedPreview
+//  online={false}
+/>
 
             {/* <QuestForm
                     userId={userId}

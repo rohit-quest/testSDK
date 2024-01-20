@@ -23,7 +23,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
             <GetStarted
                 questId="q-9727caa3-3ecf-4ee9-ad39-860f70466012"
                 userId="u-16e8bb75-4ad2-4e38-9840-8312d00859e2"
-                token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTE2ZThiYjc1LTRhZDItNGUzOC05ODQwLTgzMTJkMDA4NTllMiIsImlhdCI6MTcwNTQ5MTc3NiwiZXhwIjoxNzA1NTc4MTc2fQ.S3qTfyVw4PIOUdPhwhSd6bMfg5pvSe3zbxfZlYgIijc"}
+                token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTE2ZThiYjc1LTRhZDItNGUzOC05ODQwLTgzMTJkMDA4NTllMiIsImlhdCI6MTcwNTczODk0NSwiZXhwIjoxNzA2MzQzNzQ1fQ.BxgL0g6iXp6xJOvPEFxtP3GxEyFgXKoHrcAgN_yqvq0"}
                 // buttonColor="yellow"
                 // cardBG="grey"
                 icons={[
@@ -38,7 +38,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
                 // buttonBg="#9035FF"
                 // cardHeadingColor="white"
                 // compltedBtnBgColor="#EBFFEB"
-                // dropDown
+                dropDown={true}
                 // compltedBtnColor="#008000"
                 // cardBorderColor="var(--color-core-background-1)"
                 heading="What’s new"
@@ -63,17 +63,17 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
             "https://pin.questprotocol.xyz/ipfs/QmcYB6T27vbqdaaeJdx1Cz3nz9oYMhTegpWjhSff7aX2Mi",
             "https://pin.questprotocol.xyz/ipfs/QmavuprWaHKvd5JZvkdgathYKLr5Zcshc1EPRzRzBJaPqw"
         ]}
-        // dropDown={true}
+        dropDown={true}
         // width="50vw" 
         autoHide={false}
-        // buttonBg="#9035FF"
+        // buttonBg="black"
         // cardHeadingColor="white"
         // compltedBtnBgColor="#EBFFEB"
-        // dropDown
         // compltedBtnColor="#008000"
-        // cardBorderColor="var(--color-core-background-1)"
+        // cardBG='black'
+        // cardBorderColor="gray"
+        arrowColor='red'
         heading="What’s new"
-        dropDown
         completeAllStatus={() => {
             // showToast.success({ text: "completed successfully" })
         }}

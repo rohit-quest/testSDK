@@ -6,7 +6,8 @@ import QuestContext from '../QuestWrapper';
 import { toast } from 'react-toastify';
 import Loader from '../Login/Loader';
 import Cookies from 'universal-cookie';
-import { downArroIcon, greenCheck, gsTick, helpCenter1, questLogo, upArrow } from '../../assets/images';
+import { greenCheck, gsTick, helpCenter1, questLogo } from '../../assets/images';
+import { arrowRight, downArroIcon, upArrow } from './Svgs';
 type Props = {
   userId: string;
   token: string;
@@ -29,7 +30,9 @@ type Props = {
   dropDown?: boolean;
   compltedBtnColor?: string;
   compltedBtnBgColor?: string;
-  width?: string
+  width?: string;
+  showSteps?: boolean;
+  arrowColor?: string
 };
 interface TutorialStep {
   id: number;
@@ -43,7 +46,7 @@ interface TutorialStep {
   btn1Link: string;
   longDescription?: string;
 }
-function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus, buttonBg, buttonColor, onLinkTrigger = (url:string,index:number)=>{window.location.href=url}, icons, uniqueUserId, cardBorderColor, heading, description, uniqueEmailId, autoHide, progressBar=false,dropDown=false,width="auto", compltedBtnColor="#008000",compltedBtnBgColor="#EBFFEB"}: Props) {
+function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus, buttonBg, buttonColor, onLinkTrigger = (url:string,index:number)=>{window.location.href=url}, icons, uniqueUserId, cardBorderColor, heading, description, uniqueEmailId, autoHide, progressBar=false,dropDown=false,width="auto", compltedBtnColor="#008000",compltedBtnBgColor="#EBFFEB",showSteps=false,arrowColor}: Props) {
   const svg1 = (
     <svg
       width="24"
@@ -277,7 +280,8 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
             setAllCriteriaCompleted(true);
           }
           criterias = Array.isArray(criterias) ? criterias : [];
-          setDropdown(new Array(criterias.length).fill(false))
+          if(!dropdowns.length)
+            setDropdown(new Array(criterias.length).fill(false))
           let steps = criterias.length - (criterias?.filter((criteria: any) => criteria?.completed)?.length||0)
           setSteps(steps);
           setFormdata([...criterias]);
@@ -376,7 +380,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
             {description || "Get started with Quest and explore how Quest can take your customer engagement to the next level"}
           </div>
           </div>
-          <div className='gs_steps'>{stepsLeft} steps left</div>
+        {showSteps && <div className='gs_steps'>{stepsLeft} steps left</div>}
         </div>
       }
       {(autoHide == true ? (!!formdata.length && !allCriteriaCompleted) : true) &&progressBar&&(<div className="q_gt_progress">
@@ -394,9 +398,9 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
       </div>)}
       <div style={{ marginTop: '30px' }} className="gs-cards-container">
         {(autoHide == true ? !allCriteriaCompleted : true) && formdata.map((e, i) =>
-        (
-          <div key={i} style={{ background: bg, borderColor }} className="gs-card-container" >
-            <div className='gs_card_body' style={{border:`2px solid ${borderColor}`}} onClick={()=>dropDown&&setDropdown(prev=>prev.map((e,index)=> (i===index)?(!e):e )) }>
+        dropDown?(
+          <div key={i} style={{ background: bg, borderBottom:`1px solid ${borderColor}`,borderRadius: 0 }} className="gs-card-container" >
+            <div className='gs_card_body' onClick={()=>setDropdown(prev=>prev.map((e,index)=> (i===index)?(!e):e )) }>
             <div className='gs_card_body_text'>
               <img className="gs-card-icon" width="24px" src={icons[i] || questLogo} alt='' />
               <div className="gs-card-text">
@@ -409,32 +413,47 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
               </div>
             </div>
             <div className="gs-card-btn-container">
-              {
-                dropDown ? (<div className='q_gt_dropdown' >
-                  <img src={dropdowns[i]?upArrow:(e.completed?gsTick:downArroIcon)} alt="" />
-                </div>) : (
-                  <>
-                <div className="gs-card-btn1">
-                <a href={e.btn1Link} target='_blank' style={{ color: descColor }}>
-                  {e.btn1}
-                </a>
-              </div>
-                <div
-                  onClick={() => handleCriteriaClick(e.criteriaId, e.url)}
-                    style={{ background: !e.completed?btn2Color:compltedBtnBgColor, color: e.completed?compltedBtnColor:btnTextColor }}
-                  className="gs_card_btn_2"
-                  >
-                  {e.completed ?( <>Done <img src={greenCheck} alt="" /></> ): !!e.btn2 ? e.btn2 : "Let's go!"}
-                </div></>)
-              }
+              {(<div className='q_gt_dropdown' >
+              {e.completed?(<img src={greenCheck} alt='' className='q_gt_arrow'/>):<img src={dropdowns[i]?upArrow(arrowColor):(e.completed?gsTick:downArroIcon(arrowColor))} alt="" className='q_gt_arrow'/>}
+                </div>)}
             </div>
             </div>
             {dropdowns[i]&&(<div className='gs_card_dropdown'>
-              <img src={helpCenter1} alt="" className='gs_drop_img' />
+              {/* <img src={helpCenter1} alt="" className='gs_drop_img' /> */}
               <div className="gs_drop_desc">{e.longDescription}</div>
               <div className="gs_drop_btns">
-                <div className="gs_start_btn" onClick={() => handleCriteriaClick(e.criteriaId, e.url)}>{e.btn2||"Start Now"}</div>
-                <div className="gs_visit_btn">{e.btn1||"Visit WebSite"}</div>
+              <div className="gs_start_btn" style={{background: buttonBg}} onClick={() => handleCriteriaClick(e.criteriaId, e.url)}>{e.btn2||"Start Now"}</div>
+                <div className="gs_visit_btn" onClick={()=>window.location.href=e.btn1Link}>{e.btn1||"Visit WebSite"}</div>
+              </div>
+            </div>)}
+          </div>
+        ):
+        (
+          <div key={i}  className="gs-card-container" >
+            <div className='gs_card_body' style={{background: cardBG}} onClick={()=>dropDown&&setDropdown(prev=>prev.map((e,index)=> (i===index)?(!e):e )) }>
+            <div className='gs_card_body_text'>
+              <img className="gs-card-icon" width="24px" src={icons[i] || questLogo} alt='' />
+              <div className="gs-card-text">
+                <div style={{ color: textColor }} className="gs-card-head">
+                  {e.title}
+                </div>
+                <div style={{ color: descColor }} className="gs-card-desc">
+                  {e.description}
+                </div>
+              </div>
+            </div>
+            <div className="gs-card-btn-container">
+                <div onClick={() => handleCriteriaClick(e.criteriaId, e.url)}>
+                {e.completed?(<img src={greenCheck} className='q_gt_arrow' alt='' />):(<img className='q_gt_arrow' src={arrowRight(arrowColor)} alt=''/>)}
+                </div>
+            </div>
+            </div>
+            {dropdowns[i]&&(<div className='gs_card_dropdown'>
+              {/* <img src={helpCenter1} alt="" className='gs_drop_img' /> */}
+              <div className="gs_drop_desc">{e.longDescription}</div>
+              <div className="gs_drop_btns">
+              <div className="gs_start_btn" style={{background: buttonBg}} onClick={() => handleCriteriaClick(e.criteriaId, e.url)}>{e.btn2||"Start Now"}</div>
+                <div className="gs_visit_btn" onClick={()=>window.location.href=e.btn1Link}>{e.btn1||"Visit WebSite"}</div>
               </div>
             </div>)}
           </div>
