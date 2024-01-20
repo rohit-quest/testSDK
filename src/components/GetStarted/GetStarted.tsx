@@ -429,7 +429,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
           </div>
         ):
         (
-          <div key={i}  className="gs-card-container" >
+          <div key={i}  className="gs-card-container"  onClick={() => handleCriteriaClick(e.criteriaId, e.url)}>
             <div className='gs_card_body' style={{background: cardBG}} onClick={()=>dropDown&&setDropdown(prev=>prev.map((e,index)=> (i===index)?(!e):e )) }>
             <div className='gs_card_body_text'>
               <img className="gs-card-icon" width="24px" src={icons[i] || questLogo} alt='' />
@@ -452,7 +452,7 @@ function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDesc
               {/* <img src={helpCenter1} alt="" className='gs_drop_img' /> */}
               <div className="gs_drop_desc">{e.longDescription}</div>
               <div className="gs_drop_btns">
-              <div className="gs_start_btn" style={{background: buttonBg}} onClick={() => handleCriteriaClick(e.criteriaId, e.url)}>{e.btn2||"Start Now"}</div>
+              <div className="gs_start_btn" style={{background: buttonBg}}>{e.btn2||"Start Now"}</div>
                 <div className="gs_visit_btn" onClick={()=>window.location.href=e.btn1Link}>{e.btn1||"Visit WebSite"}</div>
               </div>
             </div>)}
