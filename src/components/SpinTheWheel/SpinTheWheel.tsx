@@ -4,14 +4,12 @@ import config from "../../config";
 import General from "../../general";
 import QuestContext from "../QuestWrapper";
 import Pointer from "../../assets/images/Pointer.svg";
-import Mystic from "../../assets/images/mystic.svg";
-import Beer from "../../assets/images/Gem Wrapper.svg";
 import XP from "../../assets/images/xp.svg";
 
 interface SpinTheWheelProps {
-  userId?: string;
-  token?: string;
-  questId?: string;
+  userId: string;
+  token: string;
+  questId: string;
   criteriaId: string;
   maxSpins?: number;
   rewards: string[];
@@ -19,8 +17,8 @@ interface SpinTheWheelProps {
     primary: string;
     secondary: string;
   };
-  wheelImage: string;
-  winningIndex: number;
+  wheelImage?: string;
+  winningIndex?: number;
 }
 
 const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
