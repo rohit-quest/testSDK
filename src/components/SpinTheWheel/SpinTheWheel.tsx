@@ -48,14 +48,11 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
     if (wheelRef.current && !isSpinning && maxSpins && spinCount < maxSpins) {
       setIsSpinning(true);
 
-      // Starting the initial spin
-      wheelRef.current.style.transition = "transform 0s"; // Setting transition to 0s to avoid immediate jump
+      wheelRef.current.style.transition = "transform 0s"; 
       wheelRef.current.style.transform = `rotate(0deg)`;
 
-      // Trigger reflow
       wheelRef.current.offsetHeight;
 
-      // applying the smoother spin
       wheelRef.current.style.transition = "transform 3s ease-out";
       wheelRef.current.style.transform = `rotate(2160deg)`;
 
@@ -81,20 +78,19 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
         }
 
         const segmentAngle = 360 / rewards.length;
-        const stopAngle = 360 * 4 + segmentAngle * (winningIndex + 1); // Rotate 2 full circles before stopping at right index received from backend
+        const stopAngle = 360 * 4 + segmentAngle * (winningIndex + 1); 
 
         setRotationAngle(stopAngle);
 
         wheelRef.current.style.transition = "transform 1s ease-out";
         wheelRef.current.style.transform = `rotate(${stopAngle}deg)`;
 
-        // Clear the transition and reset angle after it finishes
         setTimeout(() => {
           if (wheelRef.current) {
             wheelRef.current.style.transition = "";
             setIsSpinning(false);
             setSpinCount((prevSpinCount) => prevSpinCount + 1);
-            setRotationAngle(0); // Reset the rotation angle to avoid issues at next spin
+            setRotationAngle(0); 
             setWinningSegmentIndex(winningIndex);
 
             setTimeout(() => {
@@ -105,7 +101,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
       } catch (error) {
         console.error("API call failed", error);
         setIsSpinning(false);
-        setRotationAngle(0); // Reset the rotation angle to avoid issues at next spin
+        setRotationAngle(0); 
       }
     }
   };
