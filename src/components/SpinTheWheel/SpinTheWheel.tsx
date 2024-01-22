@@ -57,7 +57,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
 
       // applying the smoother spin
       wheelRef.current.style.transition = "transform 3s ease-out";
-      wheelRef.current.style.transform = `rotate(1440deg)`;
+      wheelRef.current.style.transform = `rotate(2160deg)`;
 
       try {
         const apiResponse = await getRandomReward();
@@ -81,7 +81,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
         }
 
         const segmentAngle = 360 / rewards.length;
-        const stopAngle = 360 * 3 + segmentAngle * (winningIndex + 1); // Rotate 2 full circles before stopping at right index received from backend
+        const stopAngle = 360 * 4 + segmentAngle * (winningIndex + 1); // Rotate 2 full circles before stopping at right index received from backend
 
         setRotationAngle(stopAngle);
 
