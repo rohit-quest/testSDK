@@ -3,7 +3,7 @@ import axios from "axios";
 import config from "../../config";
 import General from "../../general";
 import QuestContext from "../QuestWrapper";
-import Pointer from "../../assets/images/Pointer.svg";
+import Pointer from "../../assets/images/pointer.svg";
 import XP from "../../assets/images/xp.svg";
 
 interface SpinTheWheelProps {
