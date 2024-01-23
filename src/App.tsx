@@ -17,6 +17,7 @@ import { ChatIcon, LinkIcon } from "./components/HelpCenter/Svg";
 import Payment from "./components/Payment/Payment";
 import OnBoardingPreview from './components/Onboarding/Preview';
 import GetStartedPreview from './components/GetStarted/Preview';
+import TutorialPreview from './components/TutorialScreen/Preview';
 
 export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
 export const apiKey = 'k-68a0c6b8-b27f-49c6-a315-b0c9cba15bf4'
@@ -145,9 +146,9 @@ function App() {
                 // descriptioin="this is descripiton"
                 /> */}
 {/* <OnBoardingPreview /> */}
-<GetStartedPreview
+{/* <GetStartedPreview
    online={true}
- /> 
+ />  */}
 
             {/* <QuestForm
                     userId={userId}
@@ -182,23 +183,7 @@ function App() {
 
  
 
-
-
-
-            {/* <Tutorial
-                    heading={"Tutorial Screen"}
-                    subheading={"subheading"}
-                    // bgColor="blue"
-                    // btnColor="yellow"
-                    // btnTextColor="red"
-                    // font='sans'
-                    questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
-                    userId={userId}
-                    token={token}
-                    // textColor="blue"
-                />  */}
-
-
+<TutorialPreview online/>
 
 
             {/* <FeedbackWorkflow
