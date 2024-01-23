@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import axios from "axios";
 import config from "../../config";
-import General from "../../general";
 import QuestContext from "../QuestWrapper";
-import Pointer from "../../assets/images/Pointer.svg";
+import Pointer from "../../assets/images/pointer.svg";
 import XP from "../../assets/images/xp.svg";
 
 interface SpinTheWheelProps {
@@ -48,7 +47,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
     if (wheelRef.current && !isSpinning && maxSpins && spinCount < maxSpins) {
       setIsSpinning(true);
 
-      wheelRef.current.style.transition = "transform 0s"; 
+      wheelRef.current.style.transition = "transform 0s";
       wheelRef.current.style.transform = `rotate(0deg)`;
 
       wheelRef.current.offsetHeight;
@@ -78,7 +77,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
         }
 
         const segmentAngle = 360 / rewards.length;
-        const stopAngle = 360 * 4 + segmentAngle * (winningIndex + 1); 
+        const stopAngle = 360 * 4 + segmentAngle * (winningIndex + 1);
 
         setRotationAngle(stopAngle);
 
@@ -90,7 +89,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
             wheelRef.current.style.transition = "";
             setIsSpinning(false);
             setSpinCount((prevSpinCount) => prevSpinCount + 1);
-            setRotationAngle(0); 
+            setRotationAngle(0);
             setWinningSegmentIndex(winningIndex);
 
             setTimeout(() => {
@@ -101,7 +100,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
       } catch (error) {
         console.error("API call failed", error);
         setIsSpinning(false);
-        setRotationAngle(0); 
+        setRotationAngle(0);
       }
     }
   };
@@ -156,6 +155,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
     transition: "3s all",
     padding: "3px",
     backdropFilter: "none",
+    width: "fit-content"
   };
 
   const containerStyle: React.CSSProperties = {
@@ -310,16 +310,16 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
               </p>
             </div>
           ))}
+          <div style={centeredImgContainerStyle}>
+            <div>
+              <img src={Pointer} alt="Pointer" style={pointerStyle} />
+            </div>
+            <div style={centeredImgDivStyle}>
+              <img src={wheelImage} alt="Mystic" style={centeredImgStyle} />
+            </div>
+          </div>
         </div>
 
-        <div style={centeredImgContainerStyle}>
-          <div>
-            <img src={Pointer} alt="Pointer" style={pointerStyle} />
-          </div>
-          <div style={centeredImgDivStyle}>
-            <img src={wheelImage} alt="Mystic" style={centeredImgStyle} />
-          </div>
-        </div>
       </div>
 
       {showCongratulations && (
