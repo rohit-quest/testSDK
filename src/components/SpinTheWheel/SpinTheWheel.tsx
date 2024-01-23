@@ -18,6 +18,7 @@ interface SpinTheWheelProps {
   };
   wheelImage?: string;
   winningIndex?: number;
+  onSpinComplete?: () => void;
 }
 
 const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
@@ -30,6 +31,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
   token,
   questId,
   criteriaId,
+  onSpinComplete
 }) => {
   const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
   const [spinCount, setSpinCount] = useState<number>(0);
@@ -342,6 +344,9 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
             onClick={() => {
               setShowCongratulations(false);
               setWinningSegmentIndex(null);
+              if (onSpinComplete) {
+                onSpinComplete();
+              }
             }}
           >
             <p>Amazing</p>
