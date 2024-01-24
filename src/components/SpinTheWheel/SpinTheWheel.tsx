@@ -75,6 +75,9 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
           console.error("API response issue - winningIndex is null");
           setIsSpinning(false);
           setRotationAngle(0);
+          if (onSpinComplete) {
+            onSpinComplete();
+          }
           return;
         }
 
