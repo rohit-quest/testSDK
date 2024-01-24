@@ -7,9 +7,12 @@
   z-index: 15;
   cursor: pointer;
   right: 4%;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.29);
   font-family: 'Figtree';
   border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
 }
 
 .q-toast-msg {
@@ -44,78 +47,34 @@
 }
 
 .q_toast_success {
-  display: flex;
-  height: 37px;
-  box-sizing: content-box;
-  padding: 12px 20px;
-  align-items: center;
-  gap: 12px;
-  border-radius: 12px;
-  background: #ebfff7;
-  overflow: hidden;
-  color: #098849;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 28px;
-  /* 155.556% */
+  border-radius: 8px;
+  border: 1px solid #BEE5C8;
+  background: #EBFFEB;
 }
 
 .q_toast_error {
-  display: flex;
-  height: 37px;
-  box-sizing: content-box;
-  padding: 12px 20px;
-  align-items: center;
-  gap: 12px;
-  border-radius: 12px;
-  background: #FFECF1;
-  overflow: hidden;
-  color: #ED0A34;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 28px;
-  /* 155.556% */
+  border-radius: 8px;
+  border: 1px solid #F5C5BB;
+  background: #FCEDEA;
 }
 
 .q_toast_warn {
-  display: flex;
-  height: 37px;
-  box-sizing: content-box;
-  padding: 12px 20px;
-  align-items: center;
-  gap: 12px;
-  border-radius: 12px;
-  background: #FFFBEC;
-  overflow: hidden;
-  color: #FF8744;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 28px;
-  /* 155.556% */
+  border-radius: 8px;
+  border: 1px solid #FADEAF;
+  background: #FEF7EA;
 }
 
 .q_toast_primary {
-  display: flex;
-  height: 37px;
-  box-sizing: content-box;
-  padding: 12px 20px;
-  align-items: center;
-  gap: 12px;
-  border-radius: 12px;
-  background: #E6F0FF;
-  overflow: hidden;
-  color: #0047B3;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 28px;
-  /* 155.556% */
+  border-radius: 8px;
+  border: 1px solid #ABCDF1;
+  background: #E5EFFA;
 }
 
-#canvas{
+#canvas {
   position: absolute;
   top: 0;
+}
+
+.q_toast_cross{
+  width: 30px;
 }
