@@ -1,9 +1,9 @@
 import React, { useState, useEffect, JSX, ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 import streak from "../../assets/images/streak.png";
-import xButton from "../../assets/images/xButton.png";
 import './toastService.css'
 import { alertLogo, errorCross, primaryAlert, primaryCross, questionLogo, successCross, toastTic, warnCross } from '../../assets/images';
+import { crossLogo } from './Svg';
 
 interface ToastProps {
     message: ReactNode,
@@ -50,15 +50,6 @@ const ToastService: React.FC<ToastProps> = ({
 
                     </div>
                 )}
-                <img
-                    src={xButton}
-                    className="q-toast-x"
-                    alt=""
-                    onClick={(e) => {
-                        e.stopPropagation()
-                        closeToast()
-                    }}
-                />
             </div>
         </div>
     );
@@ -84,11 +75,9 @@ export const showToast = (message: ReactNode, duration?: number): void => {
 
     root.render(<ToastService remove={remove} message={message} duration={duration} />);
 
-    if (duration !== undefined) {
-        setTimeout(() => {
-            remove();
-        }, duration);
-    }
+    setTimeout(() => {
+        remove();
+    }, duration || 2000);
 };
 
 
@@ -123,51 +112,118 @@ const remove = (div: HTMLDivElement) => {
     toastCounter--;
 }
 
-type alert = { text?: string, duration?: number }
+type alert = { text?: string, duration?: number } | string;
 
-showToast.success = ({ text = 'This is an success message', duration = 2000 }: alert) => {
+showToast.success = (prop?: alert) => {
+    let text = "Completed successfully";
+    let duration = 2000;
+    if (typeof prop == "string")
+        text = prop;
+    else{
+        duration = prop?.duration || duration;
+        text = prop?.text || text;
+    }
 
     const div = General(
         <>
             <img src={toastTic} alt='' />
-            <div style={{marginRight:"30px"}}>{text}</div>
-            <img src={successCross} alt='' onClick={() => { remove(div) }} />
+            <div style={{ marginRight: "30px" }}>{text}</div>
+            <img src={crossLogo()} className='q_toast_cross' alt='' onClick={() => { remove(div) }} />
         </>
         , duration, "q_toast_success"
     )
 }
 
-showToast.warn = ({ text = 'This is an warning message', duration = 2000 }: alert) => {
-
+showToast.warn = (prop?: alert) => {
+    let text = 'warning';
+    let duration = 2000;
+    if (typeof prop == "string")
+        text = prop;
+    else{
+        duration = prop?.duration || duration;
+        text = prop?.text || text;
+    }
     const div = General(
         <>
             <img src={questionLogo} alt='' />
-            <div style={{marginRight:"30px"}}>{text}</div>
-            <img src={warnCross} alt='' onClick={() => { remove(div) }} />
+            <div style={{ marginRight: "30px" }}>{text}</div>
+            <img src={crossLogo()} className='q_toast_cross' alt='' width={"30px"} onClick={() => { remove(div) }} />
         </>
         , duration, "q_toast_warn"
     )
 }
 
-showToast.info = ({ text = 'This is an primary message', duration = 2000 }: alert) => {
-
+showToast.info = (prop?: alert) => {
+    let text = 'Alert ';
+    let duration = 2000;
+    if (typeof prop == "string")
+        text = prop;
+    else{
+        duration = prop?.duration || duration;
+        text = prop?.text || text;
+    }
     const div = General(
         <>
             <img src={primaryAlert} alt='' />
-            <div style={{marginRight:"30px"}}>{text}</div>
-            <img src={primaryCross} alt='' onClick={() => { remove(div) }} />
+            <div style={{ marginRight: "30px" }}>{text}</div>
+            <img src={crossLogo()} className='q_toast_cross' alt='' onClick={() => { remove(div) }} />
         </>
         , duration, "q_toast_primary"
     )
 }
 
-showToast.error = ({ text = 'This is an error message', duration = 2000 }: alert) => {
+showToast.primary = (prop?: alert) => {
+    let text = 'Alert ';
+    let duration = 2000;
+    if (typeof prop == "string")
+        text = prop;
+    else{
+        duration = prop?.duration || duration;
+        text = prop?.text || text;
+    }
+    const div = General(
+        <>
+            <img src={primaryAlert} alt='' />
+            <div style={{ marginRight: "30px" }}>{text}</div>
+            <img src={crossLogo()} className='q_toast_cross' alt='' onClick={() => { remove(div) }} />
+        </>
+        , duration, "q_toast_primary"
+    )
+}
 
+showToast.error = (prop?: alert) => {
+    let text = 'Something went wrong';
+    let duration = 2000;
+    if (typeof prop == "string")
+        text = prop;
+    else{
+        duration = prop?.duration || duration;
+        text = prop?.text || text;
+    }
     const div = General(
         <>
             <img src={alertLogo} alt='' />
-            <div style={{marginRight:"30px"}}>{text}</div>
-            <img src={errorCross} alt='' onClick={() => { remove(div) }} />
+            <div style={{ marginRight: "30px" }}>{text}</div>
+            <img src={crossLogo()} className='q_toast_cross' alt='' onClick={() => { remove(div) }} />
+        </>
+        , duration, "q_toast_error"
+    )
+}
+
+showToast.custom = (prop?: alert) => {
+    let text = 'This is a toast';
+    let duration = 2000;
+    if (typeof prop == "string")
+        text = prop;
+    else{
+        duration = prop?.duration || duration;
+        text = prop?.text || text;
+    }
+    const div = General(
+        <>
+            <img src={alertLogo} alt='' />
+            <div style={{ marginRight: "30px" }}>{text}</div>
+            <img src={crossLogo()} className='q_toast_cross' alt='' onClick={() => { remove(div) }} />
         </>
         , duration, "q_toast_error"
     )

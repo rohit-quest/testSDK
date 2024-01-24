@@ -17,7 +17,7 @@ import { ChatIcon, LinkIcon } from "./components/HelpCenter/Svg";
 import Payment from "./components/Payment/Payment";
 import OnBoardingPreview from './components/Onboarding/Preview';
 import GetStartedPreview from './components/GetStarted/Preview';
-import SpinTheWheel from './components/SpinTheWheel/SpinTheWheel';
+import TutorialPreview from './components/TutorialScreen/Preview';
 
 export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
 export const apiKey = 'k-68a0c6b8-b27f-49c6-a315-b0c9cba15bf4'
@@ -146,6 +146,7 @@ function App() {
                 // descriptioin="this is descripiton"
                 /> */}
 {/* <OnBoardingPreview /> */}
+
 {/* <GetStartedPreview */}
    {/* online={true} */}
  {/* />  */}
@@ -161,32 +162,6 @@ function App() {
 
          
 
-
-<QuestProvider apiKey={"k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be"} entityId={"e-9946bedf-3c65-4111-b296-ca6fd2a3a738"}
-                featureFlags={{}}  apiSecret={""}>
-                <SpinTheWheel
-                     userId={"u-5a91002a-7589-497f-a88f-c6bfe5e444ab"}
-                     token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTVhOTEwMDJhLTc1ODktNDk3Zi1hODhmLWM2YmZlNWU0NDRhYiIsImlhdCI6MTcwNTkzNzMwMSwiZXhwIjoxNzA2NTQyMTAxfQ.iuJXZWAi3CCh4YPd40Wubnmvgt3vnCOeIXlBupzxINM"}
-                     maxSpins={20}
-                     rewards={[
-                        "1 XP",
-                        "10 MYST",
-                        "1 whiskey / vodka",
-                        "Water",
-                        "20 MYST",
-                        "50 XP",
-                        "10 XP",
-                        "1 MYST",
-                        "Griptok",
-                        "100 XP",
-                      ]}
-                     wheelColors={{ primary: "#C9A14C26", secondary: "white" }}
-                     wheelImage={"Mystic"}
-                     winningIndex={10}
-                     questId="q-5867f4d3-e8d0-4fb9-81de-f5342985e44d"
-                     criteriaId="ec-68b2af27-e05e-42f3-8b13-be6b538aeb8a"
-                />
-            </QuestProvider>
 
 
 
@@ -208,23 +183,7 @@ function App() {
 
  
 
-
-
-
-            {/* <Tutorial
-                    heading={"Tutorial Screen"}
-                    subheading={"subheading"}
-                    // bgColor="blue"
-                    // btnColor="yellow"
-                    // btnTextColor="red"
-                    // font='sans'
-                    questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
-                    userId={userId}
-                    token={token}
-                    // textColor="blue"
-                />  */}
-
-
+<TutorialPreview online/>
 
 
             {/* <FeedbackWorkflow
