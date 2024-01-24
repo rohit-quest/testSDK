@@ -18,6 +18,7 @@ interface SpinTheWheelProps {
   };
   wheelImage?: string;
   winningIndex?: number;
+  onSpinComplete?: () => void;
 }
 
 const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
@@ -30,6 +31,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
   token,
   questId,
   criteriaId,
+  onSpinComplete
 }) => {
   const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
   const [spinCount, setSpinCount] = useState<number>(0);
@@ -120,7 +122,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
       const json = {
         criteriaId: criteriaId,
       };
-      const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
+      const request = `${config.BACKEND_URL_STAGING}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
 
       const response = await axios.post(request, json, { headers: headers });
 
@@ -310,16 +312,15 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
               </p>
             </div>
           ))}
-          <div style={centeredImgContainerStyle}>
-            <div>
-              <img src={Pointer} alt="Pointer" style={pointerStyle} />
-            </div>
-            <div style={centeredImgDivStyle}>
-              <img src={wheelImage} alt="Mystic" style={centeredImgStyle} />
-            </div>
+        </div>
+        <div style={centeredImgContainerStyle}>
+          <div>
+            <img src={Pointer} alt="Pointer" style={pointerStyle} />
+          </div>
+          <div style={centeredImgDivStyle}>
+            <img src={wheelImage} alt="Mystic" style={centeredImgStyle} />
           </div>
         </div>
-
       </div>
 
       {showCongratulations && (
@@ -342,6 +343,9 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
             onClick={() => {
               setShowCongratulations(false);
               setWinningSegmentIndex(null);
+              if (onSpinComplete) {
+                onSpinComplete();
+              }
             }}
           >
             <p>Amazing</p>
