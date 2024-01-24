@@ -122,7 +122,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
       const json = {
         criteriaId: criteriaId,
       };
-      const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
+      const request = `${config.BACKEND_URL_STAGING}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
 
       const response = await axios.post(request, json, { headers: headers });
 
