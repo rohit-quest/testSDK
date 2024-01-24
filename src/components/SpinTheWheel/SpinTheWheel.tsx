@@ -312,16 +312,15 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
               </p>
             </div>
           ))}
-          <div style={centeredImgContainerStyle}>
-            <div>
-              <img src={Pointer} alt="Pointer" style={pointerStyle} />
-            </div>
-            <div style={centeredImgDivStyle}>
-              <img src={wheelImage} alt="Mystic" style={centeredImgStyle} />
-            </div>
+        </div>
+        <div style={centeredImgContainerStyle}>
+          <div>
+            <img src={Pointer} alt="Pointer" style={pointerStyle} />
+          </div>
+          <div style={centeredImgDivStyle}>
+            <img src={wheelImage} alt="Mystic" style={centeredImgStyle} />
           </div>
         </div>
-
       </div>
 
       {showCongratulations && (
