@@ -3,9 +3,8 @@ export function confetti(duration = 2000) {
     const canvas = document.createElement('canvas');
     canvas.setAttribute("id", "canvas");
     const body = document.body;
-    // const existingChildren = Array.from(body.children);
-    // existingChildren.forEach(child => body.removeChild(child));
-
+    canvas.style.position = "absolute";
+    canvas.style.top = "0";
     body.appendChild(canvas)
 
     setTimeout(() => {

@@ -43,6 +43,7 @@ import { confetti } from "./src/components/Confetti/confetti.ts";
 import ShareArticle from "./src/components/Share/ShareArticle.tsx";
 import Search from "./src/components/Search/Search.tsx";
 import WalkThrough from './src/components/Tour/WalkThrough';
+import SpinTheWheel from './src/components/SpinTheWheel/SpinTheWheel.tsx';
 
 export {
     QuestProvider,
@@ -68,5 +69,6 @@ export {
     confetti,
     ShareArticle,
     Search,
-    WalkThrough
+    WalkThrough,
+    SpinTheWheel
 };

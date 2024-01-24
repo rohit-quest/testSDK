@@ -76,7 +76,7 @@ function App() {
 
     return (
         <div
-        // style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
+        style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
         >
 
 <QuestProvider 
@@ -146,9 +146,10 @@ function App() {
                 // descriptioin="this is descripiton"
                 /> */}
 {/* <OnBoardingPreview /> */}
-{/* <GetStartedPreview
-   online={true}
- />  */}
+
+{/* <GetStartedPreview */}
+   {/* online={true} */}
+ {/* />  */}
 
             {/* <QuestForm
                     userId={userId}
@@ -160,7 +161,6 @@ function App() {
 {/* https://staging.questprotocol.xyz/api/entities/e-0000000000/quests/q-9727caa3-3ecf-4ee9-ad39-860f70466012?userId=u-e61750ac-8734-4e42-a56c-df49bcda9f49 */}
 
          
-
 
 
 
