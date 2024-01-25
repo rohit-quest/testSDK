@@ -8,14 +8,12 @@ interface CustomHeaders {
 export interface Metadata {
     linkActionName: string;
     linkActionUrl: string;
-    discription: string;
+    linkActionDescription: string;
     effort: string;
     importance: string;
     xp: number;
     frequency: string;
-    imageUrl: string;
-    icon: string;
-    resultType: "command" | "action" | undefined;
+    icon: string
 }
 
 interface Data {
@@ -45,14 +43,12 @@ export async function getResponse(headers: CustomHeaders, entityId: string, ques
         .then((res) => {
             if (!!res.data.eligibilityData) {
                 const data = res.data.eligibilityData as QuestArray
-                const formatData = data.map(e => ({
+                return data.map(e => ({
                     text: e.data.metadata.linkActionName,
                     link: e.data.metadata.linkActionUrl,
-                    description: e.data.metadata.discription,
-                    icon: e.data.metadata.imageUrl || e.data.metadata.icon,
-                    resultType: e.data.metadata.resultType
+                    description: e.data.metadata.linkActionDescription,
+                    icon: e.data.metadata.icon
                 }))
-                return [...formatData.map(e=>({...e,resultType: "action"})),...formatData.map(e=>({...e,resultType: "command"}))]
             }
             return []
         })
