@@ -1,5 +1,5 @@
 
-export function confetti(duration = 2000) {
+export function confetti(duration = 2000,smoothRate=0.1) {
     const canvas = document.createElement('canvas');
     canvas.setAttribute("id", "canvas");
     const body = document.body;
@@ -7,15 +7,20 @@ export function confetti(duration = 2000) {
     canvas.style.top = "0";
     body.appendChild(canvas)
 
-    setTimeout(() => {
-        body.removeChild(canvas)
-        // existingChildren.forEach(child => body.appendChild(child));
+    setTimeout(() => {    
+            const interval = setInterval(() => {
+                maxConfettis = maxConfettis/(1+smoothRate);
+                if (maxConfettis <10) {
+                    clearInterval(interval);
+                    body.removeChild(canvas);
+                }
+            }, 100);
     }, duration)
 
     let W = window.innerWidth;
     let H = window.innerHeight;
     const context = canvas.getContext("2d");
-    const maxConfettis = 150;
+    let maxConfettis = duration/10;
     const particles = [];
 
     const possibleColors = [
@@ -34,7 +39,7 @@ export function confetti(duration = 2000) {
         "Crimson"
     ];
 
-    function randomFromTo(from, to) {
+    function randomFromTo(from: number, to: number) {
         return Math.floor(Math.random() * (to - from + 1) + from);
     }
 
