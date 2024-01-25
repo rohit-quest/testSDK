@@ -15,7 +15,6 @@ const cookies = new Cookies();
 let externalUserId = cookies.get("externalUserId");
 let questUserId = cookies.get("questUserId");
 let questUserToken = cookies.get("questUserToken");
-
 interface TutorialStep {
   id: number;
   title: string;
@@ -60,10 +59,12 @@ const Tutorial: React.FC<TutorialProps> = ({
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
-  const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
+  const { apiKey, apiSecret, entityId,apiType } = useContext(QuestContext.Context);
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
   const [gradient, setGradient] = useState<boolean>(false);
   const [showLoader, setShowLoader] = useState<boolean>(false);
+let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
+
   const [hoverStates, setHoverStates] = useState(
     Array(formdata.length).fill(true)
   );
@@ -79,7 +80,7 @@ const Tutorial: React.FC<TutorialProps> = ({
     const json = {
       criteriaId: id,
     };
-    const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
+    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
 
     setShowLoader(true);
     axios
@@ -128,7 +129,7 @@ const Tutorial: React.FC<TutorialProps> = ({
         let header = {...headers, ...{userId: questUserId, token: questUserToken}}
         fetchData(header)
       } else if (!!uniqueUserId) {
-        axios.post(`${config.BACKEND_URL}api/users/external/login`, body, {headers})
+        axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
         .then((res) => {
           let {userId, token} = res.data;
           let header = {...headers, ...{userId, token}}
@@ -144,7 +145,7 @@ const Tutorial: React.FC<TutorialProps> = ({
       }
       
       function fetchData(header: any) {
-        const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}`;
+        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}`;
   
         axios.get(request, { headers: header }).then((res) => {
           let response = res.data;

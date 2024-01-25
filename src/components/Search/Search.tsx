@@ -1,10 +1,12 @@
 import "./search.css";
-import { commandkeyIcon, searchIcon, enterIcon } from '../../assets/images';
+import { enterIcon, questLogo } from '../../assets/images';
+import { commandkeyIcon, searchIcon } from "./Svg.ts";
 import { useContext, useEffect, useRef, useState } from "react";
 import { getResponse } from "./response";
 import QuestContext from "../QuestWrapper.tsx";
+import QuestLabs from "../QuestLabs.tsx";
 
-type data = { text: string, icon: string, link: string }[];
+type data = { text: string, icon: string, link: string, resultType: "command" | "action" | undefined }[];
 
 interface propType {
   data?: data;
@@ -18,7 +20,9 @@ interface propType {
   onSearch?: (str: string) => void;
   token?: string;
   userId?: string;
-  questId?: string
+  questId?: string;
+  placeholder?: string;
+  icons?: Array<string>;
 }
 
 export default function Search(prop: propType): JSX.Element {
@@ -70,7 +74,7 @@ export default function Search(prop: propType): JSX.Element {
   }, [isOpen])
 
   useEffect(() => {
-    getResponse({ apiKey,  token, userId }, entityId, questId)
+    getResponse({ apiKey, token, userId }, entityId, questId)
       .then((response) => {
         setData(response);
         setResults(response)
@@ -94,12 +98,11 @@ export default function Search(prop: propType): JSX.Element {
   const jsx = (
     <div className='q_search_bar' style={{ color, backgroundColor }}>
       <div className='q_search_box'>
-        <img className="q_search_bar_icon" src={searchIcon} alt="" />
-        <input type="text" placeholder='' ref={inputElement} onKeyDown={handleKeyDown} style={{ backgroundColor, color: prop.inputColor }}
+        <img className="q_search_bar_icon" src={searchIcon()} alt="" />
+        <input type="text" placeholder={prop.placeholder} ref={inputElement} onKeyDown={handleKeyDown} style={{ backgroundColor, color: prop.inputColor }}
           onChange={e => { onSearch(e.target.value); handleSearch(e.target.value) }} className='q_sdk_input q_search_input' />
-        <div className="q_search_scut">
-          <img src={commandkeyIcon} alt="" />
-          <div className="q_key_k">K</div>
+        <div className="q_search_command_key">
+          <img src={commandkeyIcon()} alt="" />
         </div>
       </div>
 
@@ -111,8 +114,7 @@ export default function Search(prop: propType): JSX.Element {
               onMouseEnter={() => setSelectedResultIndex(i)}
               onMouseLeave={() => setSelectedResultIndex(0)}
             >
-              <img src={icon} alt={''} />
-              {/* {1&& (<ChatIcon/>) && 2 &&<LinkIcon/>} */}
+              <img src={(prop.icons?.length && prop.icons[i]) || icon} alt={''} />
               <div className="q_search_link" style={{ color: i !== selectedResultIndex ? color : "white" }}>{text}</div>
               <img src={enterIcon} className="q_search_enter_icon" alt="" />
             </div>
@@ -122,17 +124,63 @@ export default function Search(prop: propType): JSX.Element {
     </div>
   )
 
+  const sectionsJsx = (<div className="q_search_bar">
+    <div className='q_search_box'>
+      <img className="q_search_bar_icon" src={searchIcon()} alt="" />
+      <input type="text" placeholder={prop.placeholder} ref={inputElement} onKeyDown={handleKeyDown} style={{ backgroundColor, color: prop.inputColor }}
+        onChange={e => { onSearch(e.target.value); handleSearch(e.target.value) }} className='q_sdk_input q_search_input' />
+      <div className="q_search_command_key">
+        <img src={commandkeyIcon()} alt="" />
+      </div>
+    </div>
+    <div className="q_search_result_sections">
+      <div className="q_search_result_section_name">Commands</div>
+      <div className="q_search_results">
+        {
+          searchResults.map(({ icon, text, link, resultType }, i) => resultType=="action"&&(
+            <div key={i} className={"q_search_res_box " + (i === selectedResultIndex && "q_heilight_search")}
+              onClick={() => { window.open(link, "_blank") }}
+              onMouseEnter={() => setSelectedResultIndex(i)}
+              onMouseLeave={() => setSelectedResultIndex(0)}
+            >
+              <img className="q_search_result_icon" src={(prop.icons?.length && prop.icons[i]) || icon || questLogo} alt={''} />
+              <div className="q_search_link" style={{ color: i !== selectedResultIndex ? color : "white" }}>{text}</div>
+              <img src={enterIcon} className="q_search_enter_icon" alt="" />
+            </div>
+          ))
+        }
+      </div>
+      <div className="q_search_result_section_name">Actions</div>
+      <div className="q_search_results">
+        {
+          searchResults.map(({ icon, text, link,resultType }, i) => resultType=="command"&&(
+            <div key={i} className={"q_search_res_box " + (i === selectedResultIndex && "q_heilight_search")}
+              onClick={() => { window.open(link, "_blank") }}
+              onMouseEnter={() => setSelectedResultIndex(i)}
+              onMouseLeave={() => setSelectedResultIndex(0)}
+            >
+              <img src={(prop.icons?.length && prop.icons[i]) || icon || questLogo} alt={''} className="q_search_result_icon"/>
+              <div className="q_search_link" style={{ color: i !== selectedResultIndex ? color : "white" }}>{text}</div>
+              <img src={enterIcon} className="q_search_enter_icon" alt="" />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+    <QuestLabs/>
+  </div>)
+
 
   if ((prop.open === "ON_CTRL_K_KEY" && isOpen)) {
     if (wholerScreen)
-      return (<div className="q_search_bar_screen">{jsx}</div>)
-    return jsx;
+      return (<div className="q_search_bar_screen">{sectionsJsx}</div>)
+    return sectionsJsx;
   } else if (prop.open !== true) {
     return (<></>)
   }
   else {
     if (wholerScreen)
-      return (<div className="q_search_bar_screen">{jsx}</div>)
-    return jsx;
+      return (<div className="q_search_bar_screen">{sectionsJsx}</div>)
+    return sectionsJsx;
   }
 }
