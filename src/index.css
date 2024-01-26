@@ -199,3 +199,26 @@ body {
 .q_sdk_input:-webkit-autofill:active{
     -webkit-box-shadow: 0 0 0 30px transparent inset !important;
 }
+
+.powered_by_quest div{
+  flex: 1 0 0;
+  color: var(--Neutral-Black-100, #939393);
+  font-family: Figtree;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: -0.1px;
+}
+
+.powered_by_quest{
+  display: flex;
+  padding: 12px 20px;
+  background: var(--Neutral-White-200, #FBFBFB);
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  align-self: stretch;
+  border-radius: 0 0 20px 20px;
+}

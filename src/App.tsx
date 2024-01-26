@@ -12,13 +12,12 @@ import Tutorial from "./components/TutorialScreen/TutorialScreen"
 import { confetti } from "./components/Confetti/confetti";
 import GetStarted from "./components/GetStarted/GetStarted";
 import ShareArticle from "./components/Share/ShareArticle";
-import Search from "./components/Search/Search";
 import { ChatIcon, LinkIcon } from "./components/HelpCenter/Svg";
 import Payment from "./components/Payment/Payment";
 import OnBoardingPreview from './components/Onboarding/Preview';
 import GetStartedPreview from './components/GetStarted/Preview';
 import TutorialPreview from './components/TutorialScreen/Preview';
-
+import SearchPreview from './components/Search/Preview';
 export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
 export const apiKey = 'k-68a0c6b8-b27f-49c6-a315-b0c9cba15bf4'
 export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
@@ -89,22 +88,7 @@ function App() {
 
 
 
-            {/* <Search
-                data={data}
-                wholerScreen={true}
-                open={true}
-                defaultResult={dataArray.slice(0, 5)}
-                defulatResultLength={10}
-                isFilter
-                // backgroundColor=""
-                // color=""
-                // inputColor=""
-                onSearch={(str: string) => {
-                    console.log('Search string:', str);
-                    setData(str ? dataArray.filter(({ text }) => text.toLocaleLowerCase()
-                        .includes(str.toLocaleLowerCase())).slice(0, 10) : []);
-                }}
-            /> */}
+            <SearchPreview online/>
 
 
 
@@ -183,7 +167,7 @@ function App() {
 
  
 
-<TutorialPreview online/>
+{/* <TutorialPreview online/> */}
 
 
             {/* <FeedbackWorkflow
