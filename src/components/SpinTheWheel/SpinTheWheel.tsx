@@ -18,7 +18,7 @@ interface SpinTheWheelProps {
   };
   wheelImage?: string;
   winningIndex?: number;
-  onSpinComplete?: () => void;
+  onSpinComplete?: (apiResponse: boolean) => void;
 }
 
 const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
@@ -76,7 +76,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
           setIsSpinning(false);
           setRotationAngle(0);
           if (onSpinComplete) {
-            onSpinComplete();
+            onSpinComplete(false);
           }
           return;
         }
@@ -347,7 +347,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
               setShowCongratulations(false);
               setWinningSegmentIndex(null);
               if (onSpinComplete) {
-                onSpinComplete();
+                onSpinComplete(true);
               }
             }}
           >
