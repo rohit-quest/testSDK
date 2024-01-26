@@ -2,8 +2,8 @@ import "./search.css";
 import { questLogo } from '../../assets/images';
 import { commandkeyIcon, searchIcon } from "./Svg.ts";
 import { useContext, useEffect, useRef, useState } from "react";
-import { getResponse } from "./response";
-import QuestContext from "../QuestWrapper.tsx";
+// import { getResponse } from "./response";
+// import QuestContext from "../QuestWrapper.tsx";
 import QuestLabs from "../QuestLabs.tsx";
 
 type data = { text: string, icon: string, link: string, resultType: "command" | "action" | undefined, description: string, longDescription?: string }[];
@@ -29,6 +29,7 @@ interface propType {
   width?: string;
   onResultClick?: (link: string)=>void;
   iconColor?: string;
+  offlineFormatData: data;
 }
 
 export default function Search(prop: propType): JSX.Element {
@@ -42,12 +43,13 @@ export default function Search(prop: propType): JSX.Element {
     token = "",
     userId = "",
     onResultClick =(link:string) => window.open(link,"_blank"),
+    offlineFormatData=[]
   } = prop;
   const inputElement = useRef<HTMLInputElement>(null);
   const [searchResults, setResults] = useState<data>(defaultResult);
   const [isOpen, setOpen] = useState(false);
   const [selectedResultIndex, setSelectedResultIndex] = useState<number>(0);
-  const { apiKey, entityId } = useContext(QuestContext.Context);
+  // const { apiKey, entityId } = useContext(QuestContext.Context);
   const [data, setData] = useState<data>([]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -81,11 +83,11 @@ export default function Search(prop: propType): JSX.Element {
   }, [isOpen])
 
   useEffect(() => {
-    getResponse({ apiKey, token, userId }, entityId, questId)
-      .then((response) => {
-        setData(response);
-        setResults(response)
-      })
+    // getResponse({ apiKey, token, userId }, entityId, questId)
+      // .then((response) => {
+        setData(prop.offlineFormatData);
+        setResults(prop.offlineFormatData?.slice(0,5))
+      // })
     if (prop.open) setOpen(true)
     inputElement.current?.focus();
     window.addEventListener('keydown', handleKeyPress);
