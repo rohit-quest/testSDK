@@ -17,6 +17,7 @@ import Payment from "./components/Payment/Payment";
 import OnBoardingPreview from './components/Onboarding/Preview';
 import GetStartedPreview from './components/GetStarted/Preview';
 import TutorialPreview from './components/TutorialScreen/Preview';
+import SpinTheWheel from './components/SpinTheWheel/SpinTheWheel';
 import SearchPreview from './components/Search/Preview';
 export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
 export const apiKey = 'k-68a0c6b8-b27f-49c6-a315-b0c9cba15bf4'
@@ -86,7 +87,15 @@ function App() {
     apiType="PRODUCTION"
 >
 
-
+                {/* <SpinTheWheel
+                    userId={userId}
+                    questId={questId}
+                    token={token}
+                    criteriaId="ec-7243720a-74b6-43e5-8e3e-45b09dab9b81"
+                    rewards={['xp', 'gems', 'xp', 'xp', 'xp', 'xp', 'xp', 'gems', 'xp', 'gems']}
+                    wheelColors={{ primary: '#C9A14C26', secondary: 'white' }}
+                    maxSpins={10}
+                    wheelImage={'https://quest-media-storage-bucket.s3.us-east-2.amazonaws.com/1706540110821-wrapit2.png'} /> */}
 
             <SearchPreview online/>
 
