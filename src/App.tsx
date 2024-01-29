@@ -18,6 +18,7 @@ import OnBoardingPreview from './components/Onboarding/Preview';
 import GetStartedPreview from './components/GetStarted/Preview';
 import TutorialPreview from './components/TutorialScreen/Preview';
 import SearchPreview from './components/Search/Preview';
+import ReferEarnPreview from './components/expansion/Preview';
 export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
 export const apiKey = 'k-68a0c6b8-b27f-49c6-a315-b0c9cba15bf4'
 export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
@@ -88,7 +89,7 @@ function App() {
 
 
 
-            <SearchPreview online/>
+            {/* <SearchPreview online/> */}
 
 
 
@@ -131,9 +132,9 @@ function App() {
                 /> */}
 {/* <OnBoardingPreview /> */}
 
-{/* <GetStartedPreview */}
-   {/* online={true} */}
- {/* />  */}
+{/* <GetStartedPreview
+   online={true}
+ />  */}
 
             {/* <QuestForm
                     userId={userId}
@@ -209,14 +210,7 @@ function App() {
                     isInline={true}
                 />  */}
 
-            {/* <ReferEarn
-                    questId={questId}
-                    token={token}
-                    userId={userId}
-                    isOpen={true}
-                    // bgColor="red"
-                    // color="white"
-            />*/}
+           {/* <ReferEarnPreview/> */}
 
 
 

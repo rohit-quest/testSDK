@@ -1,0 +1,140 @@
+.q_refer_and_earn{
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.308);
+    border-radius: 10px;
+    width: 400px;
+}
+
+.q_refer_head{
+    display: flex;
+    padding: 40px 20px;
+    border-radius: 10px;
+    background: var(--Neutral-White-100, #FFF);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    align-self: stretch;
+}
+
+.refer_head_img{
+    width: 80px;
+    height: 80px;
+}
+
+.q_refer_content{
+    display: flex;
+    padding: 0px 20px 28px 20px;
+    background: var(--Neutral-White-100, #FFF);
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    align-self: stretch;
+}
+
+.q_refer_heading{
+    display: -webkit-box;
+    color:  #2C2C2C;
+    font-family: Figtree;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 30px;
+    letter-spacing: -0.4px;
+    text-align: center;
+}
+
+.q_refer_desc{
+    align-self: stretch;
+    color:  #939393;
+    font-family: Figtree;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    text-align: center;
+}
+
+.refer_content_box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.q_refer_code_content{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    align-self: stretch;
+}
+
+.q_refer_text{
+    align-self: stretch;
+    color:  #4C4C4C;
+    font-family: Figtree;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+}
+
+.q_refer_code_box{
+    display: flex;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--Neutral-Grey-100, #ECECEC);
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+}
+
+.q_refer_code{
+    flex: 1 0 0;
+    align-self: stretch;
+    color:  #939393;
+    font-family: Figtree;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.q_share_link_button{
+    display: flex;
+    padding: 10px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1.5px solid #D1ACFF;
+    background: linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%);
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    color:  #FFF;
+    font-family: Figtree;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px;
+    align-self: stretch;
+}
+
+.q_social_link_icon{
+    display: flex;
+    padding: 10px;
+    border-radius: 48px;
+    background: var(--Primary-Blueberry-100, #E6F0FF);
+    align-items: flex-start;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.q_social_links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+}
+
+.q_refer_copy_icon{
+    cursor: pointer;
+}
