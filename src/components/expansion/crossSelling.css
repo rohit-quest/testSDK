@@ -1,0 +1,13 @@
+.q_share_link_button_2 {
+    display: flex;
+    padding: 10px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    align-self: stretch;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: 1.5px solid var(--Neutral-White-300, #EFEFEF);
+    background: var(--Neutral-White-100, #FFF);
+    cursor: pointer;
+}
