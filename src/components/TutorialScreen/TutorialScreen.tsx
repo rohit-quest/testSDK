@@ -48,13 +48,14 @@ const Tutorial: React.FC<TutorialProps> = ({
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
-  const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
+  const { apiKey, apiSecret, entityId,apiType } = useContext(QuestContext.Context);
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
   const [gradient, setGradient] = useState<boolean>(false);
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [hoverStates, setHoverStates] = useState(
     Array(formdata.length).fill(true)
   );
+  let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
   const handleNextStep = (id: any, url: string) => {
     const headers = {
@@ -67,7 +68,7 @@ const Tutorial: React.FC<TutorialProps> = ({
     const json = {
       criteriaId: id,
     };
-    const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
+    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
 
     setShowLoader(true);
     axios
@@ -148,7 +149,7 @@ const Tutorial: React.FC<TutorialProps> = ({
         userId: userId,
         token: token,
       };
-      const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}`;
+      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}`;
 
       axios.get(request, { headers: headers }).then((res) => {
         let response = res.data;

@@ -1,22 +1,6 @@
 import axios from "axios";
 import config from "../../config";
 
-export interface referProp {
-    isOpen?: boolean; questId: string;
-    headingColor?: string;
-    userId: string;
-    token: string;
-    color?: string;
-    bgColor?: string;
-    isArticle?: boolean
-    heading?: string;
-    description?: String;
-    invitationLink?: string;
-    shareButtonText?: string;
-    iconColor?: string;
-    secondaryIconColor?: string;
-}
-
 
 const platforms = {
     twitter: (text: string) => `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,

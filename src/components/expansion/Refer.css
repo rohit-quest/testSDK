@@ -1,14 +1,14 @@
-.q_refer_and_earn{
+.q_refer_and_earn {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.308);
     border-radius: 10px;
     width: 400px;
 }
 
-.q_refer_head{
+.q_refer_head {
     display: flex;
     padding: 40px 20px;
-    border-radius: 10px;
-    background: var(--Neutral-White-100, #FFF);
+    border-radius: 10px 10px 0 0;
+    background: #FFF;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -16,24 +16,24 @@
     align-self: stretch;
 }
 
-.refer_head_img{
+.refer_head_img {
     width: 80px;
     height: 80px;
 }
 
-.q_refer_content{
+.q_refer_content {
     display: flex;
     padding: 0px 20px 28px 20px;
-    background: var(--Neutral-White-100, #FFF);
+    background: #FFF;
     flex-direction: column;
     align-items: center;
     gap: 20px;
     align-self: stretch;
 }
 
-.q_refer_heading{
+.q_refer_heading {
     display: -webkit-box;
-    color:  #2C2C2C;
+    color: #2C2C2C;
     font-family: Figtree;
     font-size: 20px;
     font-weight: 600;
@@ -42,9 +42,9 @@
     text-align: center;
 }
 
-.q_refer_desc{
+.q_refer_desc {
     align-self: stretch;
-    color:  #939393;
+    color: #939393;
     font-family: Figtree;
     font-size: 12px;
     font-style: normal;
@@ -53,13 +53,13 @@
     text-align: center;
 }
 
-.refer_content_box{
+.refer_content_box {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.q_refer_code_content{
+.q_refer_code_content {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -67,9 +67,9 @@
     align-self: stretch;
 }
 
-.q_refer_text{
+.q_refer_text {
     align-self: stretch;
-    color:  #4C4C4C;
+    color: #4C4C4C;
     font-family: Figtree;
     font-size: 12px;
     font-style: normal;
@@ -77,7 +77,7 @@
     line-height: 16px;
 }
 
-.q_refer_code_box{
+.q_refer_code_box {
     display: flex;
     padding: 10px 16px;
     border-radius: 10px;
@@ -87,10 +87,10 @@
     align-self: stretch;
 }
 
-.q_refer_code{
+.q_refer_code {
     flex: 1 0 0;
     align-self: stretch;
-    color:  #939393;
+    color: #939393;
     font-family: Figtree;
     font-size: 14px;
     font-style: normal;
@@ -98,7 +98,7 @@
     line-height: 20px;
 }
 
-.q_share_link_button{
+.q_share_link_button {
     display: flex;
     padding: 10px 16px;
     border-radius: 10px;
@@ -108,7 +108,7 @@
     justify-content: center;
     align-items: center;
     gap: 4px;
-    color:  #FFF;
+    color: #FFF;
     font-family: Figtree;
     font-size: 14px;
     font-style: normal;
@@ -117,7 +117,7 @@
     align-self: stretch;
 }
 
-.q_social_link_icon{
+.q_social_link_icon {
     display: flex;
     padding: 10px;
     border-radius: 48px;
@@ -127,7 +127,7 @@
     cursor: pointer;
 }
 
-.q_social_links{
+.q_social_links {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -135,6 +135,62 @@
     align-self: stretch;
 }
 
-.q_refer_copy_icon{
+.q_refer_copy_icon {
     cursor: pointer;
+}
+
+.q_modal_cross_img {
+    cursor: pointer;
+}
+
+.q_gradient_description {
+    overflow: hidden;
+    color: #FFF;
+    text-align: center;
+    text-overflow: ellipsis;
+    font-family: Figtree;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+}
+
+.q_gradient_heading {
+    overflow: hidden;
+    color: #FFF;
+    text-align: center;
+    font-family: Figtree;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px;
+    letter-spacing: -0.48px;
+}
+
+.q_gradient_background {
+    width: 440px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--Gradient-1, linear-gradient(265deg, #3378FF 4.66%, #9442FE 85.05%));
+}
+
+.q_gradient_head {
+    display: flex;
+    width: 440px;
+    padding: 40px 20px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.q_gradient_quest_powered{
+    width: 100%;
+    margin-top: 30px;
+}
+
+.q_gradient_background .powered_by_quest{
+    border-radius: 0 0 5px 5px;
 }
