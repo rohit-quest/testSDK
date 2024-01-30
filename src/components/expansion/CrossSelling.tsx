@@ -2,11 +2,13 @@ import {
     referIcon,
 } from "../../assets/images";
 import "./crossSelling.css";
-import { useContext, useEffect, useState } from "react";
-import { response, shareOnPlatform } from "./Response.ts";
+import "../expansion/Refer.css";
+import { useContext, useEffect, useRef, useState } from "react";
+import { getResponse, response, shareOnPlatform } from "./Response.ts";
 import QuestContext from "../QuestWrapper.tsx";
 import { copyIcon, faceBookIcon, grabDealIcon, linkedInIcon, tickIcon, twitterIcon } from "./Svg.ts";
 import QuestLabs from "../QuestLabs.tsx";
+import config from "../../config.ts";
 
 export interface referProp {
     isOpen?: boolean; questId: string;
@@ -18,13 +20,13 @@ export interface referProp {
     isArticle?: boolean
     heading?: string;
     description?: String;
-    invitationLink?: string;
     shareButtonText?: string;
     iconColor?: string;
-    secondaryIconColor?: string;
     gradientBackground?: boolean;
     primaryHeading?: string;
-    primaryDescription?: string
+    primaryDescription?: string;
+    showDays?: boolean;
+    expiryDate?: number
 }
 
 export const CrossSelling = ({
@@ -35,30 +37,63 @@ export const CrossSelling = ({
     bgColor = "",
     heading = '50% off on limited products',
     description = 'Grab deals before they go off!!!',
-    invitationLink = "https://questlabs.ai/",
     shareButtonText = "Avail now",
-    iconColor = "#0065FF",
-    secondaryIconColor = "black",
+    iconColor = "#939393",
     gradientBackground = false,
     primaryHeading = 'Grab your deal',
-    primaryDescription = 'Welcome back, Please complete your details'
+    primaryDescription = 'Welcome back, Please complete your details',
+    showDays = false,
+    expiryDate = 0
 }: referProp) => {
-    const [shareCode, setCode] = useState("");
-    const [copy, setCopy] = useState([false, false]);
-    const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
+    const { apiKey, apiSecret, entityId, apiType } = useContext(QuestContext.Context);
     const style = !!color && !!bgColor ? { color, backgroundColor: bgColor } : {};
+    const BACKEND_URL = apiType === "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
-    const [timeLeft,setTimeLeft] = useState({hours: 8,minutes: 25,seconds: 45})
-
+    const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+    const requestRef = useRef<number>(expiryDate);
+    
+    const animate = () => {
+        const currentTime = Date.now();
+        const remainingTime = requestRef.current - currentTime;
+        if (remainingTime <= 0) {
+            setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+            return;
+        }
+    
+        const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+    
+        setTimeLeft({ days, hours, minutes, seconds });
+        
+        requestAnimationFrame(animate);
+    };
+    
     useEffect(() => {
-        response(questId, {
-            apiKey,
-            userid: userId,
-            entityId,
-            apisecret: apiSecret,
-            token,
-        }).then((r) => setCode(r.referralCode || ""));
+        let isMounted = true; 
+        getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL)
+            .then((r) => {
+                if (isMounted && r) {
+                    requestRef.current = +r; 
+                    animate();
+                } else {
+                    requestRef.current = expiryDate;
+                    animate();
+                }
+            })
+            .catch(() => {
+                console.log('Error fetching expiryDate:', expiryDate);
+                requestRef.current = expiryDate;
+            });
+    
+        return () => {
+            isMounted = false; 
+            cancelAnimationFrame(requestRef.current);
+        };
     }, []);
+    
+    
 
     const jsx = (
         <div className="q_refer_and_earn" style={style}>
@@ -71,14 +106,27 @@ export const CrossSelling = ({
                     <div className="q_refer_desc" style={style}>{description}</div>
                 </div>
                 <div className="q_time_left">
-                    <div className="q_hours_left">{timeLeft.hours}</div>
-                    <div className="q_minutes_left">{timeLeft.minutes}</div>
-                    <div className="q_seconds_left"></div>
+                    {showDays && !!timeLeft.days && (<div className="q_hours_left">
+                        <div>{timeLeft.days}</div>
+                        <div className="q_time_left_text">Days</div>
+                    </div>)}
+                    <div className="q_hours_left">
+                        <div>{timeLeft.hours < 10 ? 0 : ""}{timeLeft.hours}</div>
+                        <div className="q_time_left_text">Hours</div>
+                    </div>
+                    <div className="q_minutes_left">
+                        <div>{timeLeft.minutes < 10 ? 0 : ""}{timeLeft.minutes}</div>
+                        <div className="q_time_left_text">Minutes</div>
+                    </div>
+                    <div className="q_seconds_left">
+                        <div>{timeLeft.seconds < 10 ? 0 : ""}{timeLeft.seconds}</div>
+                        <div className="q_time_left_text">Seconds</div>
+                    </div>
                 </div>
                 <div style={style} className="q_share_link_button">{shareButtonText}</div>
                 <div style={style} className="q_share_link_button_2">Go to home</div>
             </div>
-            {!gradientBackground && <QuestLabs backgroundColor={bgColor} color={secondaryIconColor} />}
+            {!gradientBackground && <QuestLabs backgroundColor={bgColor} color={iconColor} />}
         </div>
     );
 
@@ -89,7 +137,7 @@ export const CrossSelling = ({
         </div>
         {jsx}
         <div className="q_gradient_quest_powered">
-            <QuestLabs backgroundColor={bgColor} color={secondaryIconColor} />
+            <QuestLabs backgroundColor={bgColor} color={iconColor} />
         </div>
     </div>
     return jsx;

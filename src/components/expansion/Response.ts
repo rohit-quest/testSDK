@@ -39,3 +39,20 @@ export const response = async (questId = "", headers: {
         return { success: false };
     }
 }
+
+interface CustomHeaders {
+    apiKey: string;
+    userId: string;
+    token: string;
+}
+
+export async function getResponse(headers: CustomHeaders, entityId: string, questId: string,BACKEND_URL: string): Promise<any> {
+    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${headers.userId}`;
+
+    return axios.get(request, { headers: { ...headers } })
+        .then((res) => res.data?.data?.endsAt )
+        .catch((error) => {
+            console.log(error);
+            return null
+        });
+}
