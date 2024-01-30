@@ -6,11 +6,18 @@ const questPowered = (color: string="#") => createUrl(`<svg width="12" height="1
 </svg>
 `)
 
-export default function QuestLabs({color="",backgroundColor=""}) {
+interface QuestLabsProps {
+    color?: string;
+    backgroundColor?: string;
+    icon?: boolean;
+    textAlign?: "start" | "end" | "left" | "right" | "center" | "justify" | "match-parent" | "inherit" | "initial" | "unset";
+}
+
+export default function QuestLabs({color="",backgroundColor="",icon=true,textAlign="start"}: QuestLabsProps) {
     return (
-        <div style={{backgroundColor,color}} onClick={()=>{window.open("https://www.questlabs.ai/","_blank")}} className='powered_by_quest'>
+        <div style={{backgroundColor,color,textAlign}} onClick={()=>{window.open("https://www.questlabs.ai/","_blank")}} className='powered_by_quest'>
             <div style={{color,backgroundColor}}>Powered by Quest Labs</div>
-            <img src={questPowered(color)} alt="" />
+            {icon && <img src={questPowered(color)} alt="" />}
         </div>
     )
 }

@@ -5,6 +5,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { getResponse } from "./response";
 import QuestContext from "../QuestWrapper.tsx";
 import QuestLabs from "../QuestLabs.tsx";
+import config from "../../config.ts";
 
 type data = { text: string, icon: string, link: string, resultType: "command" | "action" | undefined, description: string, longDescription?: string }[];
 
@@ -47,8 +48,9 @@ export default function Search(prop: propType): JSX.Element {
   const [searchResults, setResults] = useState<data>(defaultResult);
   const [isOpen, setOpen] = useState(false);
   const [selectedResultIndex, setSelectedResultIndex] = useState<number>(0);
-  const { apiKey, entityId } = useContext(QuestContext.Context);
+  const { apiKey, entityId, apiType} = useContext(QuestContext.Context);
   const [data, setData] = useState<data>([]);
+  let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (isOpen && searchResults.length > 0) {
@@ -81,7 +83,7 @@ export default function Search(prop: propType): JSX.Element {
   }, [isOpen])
 
   useEffect(() => {
-    getResponse({ apiKey, token, userId }, entityId, questId)
+    getResponse({ apiKey, token, userId }, entityId, questId,BACKEND_URL)
       .then((response) => {
         setData(response);
         setResults(response)

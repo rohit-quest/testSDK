@@ -20,6 +20,7 @@ import './src/components/Credit/credit.css';
 import './src/components/Share/sharearticle.css'
 import './src/components/Search/search.css';
 import './src/components/Tour/walkThrough.css';
+import './src/components/Streak/DailyStrek.css'
 import QuestLogin from "./src/components/Login/Login";
 import OnBoarding from "./src/components/Onboarding/Onboarding";
 import { QuestProvider } from "./src/components/QuestWrapper";
@@ -44,6 +45,10 @@ import ShareArticle from "./src/components/Share/ShareArticle.tsx";
 import Search from "./src/components/Search/Search.tsx";
 import WalkThrough from './src/components/Tour/WalkThrough';
 import SpinTheWheel from './src/components/SpinTheWheel/SpinTheWheel.tsx';
+import DailyStreak from './src/components/Streak/DailyStreak';
+import {CrossSelling} from "./src/components/expansion/CrossSelling"
+import FeedbackMOdal from './src/components/Modals/Modal';
+import TutorialScreen from "./src/components/TutorialScreen/Tutorial.tsx";
 
 export {
     QuestProvider,
@@ -70,5 +75,9 @@ export {
     ShareArticle,
     Search,
     WalkThrough,
-    SpinTheWheel
+    SpinTheWheel,
+    DailyStreak,
+    CrossSelling,
+    FeedbackMOdal,
+    TutorialScreen
 };

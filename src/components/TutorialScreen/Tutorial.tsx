@@ -42,7 +42,7 @@ interface TutorialProps {
   uniqueEmailId?: string;
 }
 
-const Tutorial: React.FC<TutorialProps> = ({
+const TutorialScreen: React.FC<TutorialProps> = ({
   heading,
   subheading,
   userId,
@@ -249,4 +249,4 @@ const Tutorial: React.FC<TutorialProps> = ({
   );
 };
 
-export default Tutorial;
+export default TutorialScreen;

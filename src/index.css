@@ -202,7 +202,7 @@ body {
 
 .powered_by_quest div{
   flex: 1 0 0;
-  color: var(--Neutral-Black-100, #939393);
+  color: #939393;
   font-family: Figtree;
   font-size: 10px;
   font-style: normal;
@@ -214,7 +214,7 @@ body {
 .powered_by_quest{
   display: flex;
   padding: 12px 20px;
-  background: var(--Neutral-White-200, #FBFBFB);
+  background:  #FBFBFB;
   justify-content: center;
   align-items: center;
   gap: 12px;
