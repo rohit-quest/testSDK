@@ -11,3 +11,32 @@
     background: var(--Neutral-White-100, #FFF);
     cursor: pointer;
 }
+
+.q_time_left{
+    display: flex;
+    gap: 12px;
+}
+
+.q_time_left>div{
+    display: flex;
+    padding: 20px 12px;
+    border-radius: 10px;
+    background: #FBFBFB;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    box-sizing: border-box;
+    width: 80px;
+}
+
+.q_time_left_text{
+    align-self: stretch;
+    color: #939393;
+    font-family: Figtree;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: center;
+}
