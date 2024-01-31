@@ -1,12 +1,13 @@
 .q_walk_trhough {
     display: flex;
     width: 376px;
-    padding: 16px 20px;
+    padding: 0;
     flex-direction: column;
     gap: 12px;
     position: relative;
     border-radius: 12px 12px;
-    background: var(--neutral-pure-white-100, #FFF);
+    background: #FFF;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.137);
 }
 
 .q_walk_close {
@@ -18,17 +19,20 @@
 .q_walk_close_img {
     width: 20px;
     height: 20px;
+    cursor: pointer;
 }
 
 .q_walk_head {
     overflow: hidden;
-    color: var(--Neutral-Grey-700, #252525);
-    text-overflow: ellipsis;
+    color: #252525;
     font-family: Figtree;
-    font-size: 18px;
+    font-size: 24px;
     font-style: normal;
     font-weight: 600;
-    line-height: 28px;
+    line-height: 32px;
+    letter-spacing: -0.48px;
+    padding: 0 20px;
+    box-sizing: content-box;
 }
 
 .q_walk_img {
@@ -48,13 +52,15 @@
 
 
 .q_walk_desc {
-    height: 95px;
-    color: var(--Neutral-Black-300, #4C4C4C);
+    color: #B9B9B9;
     font-family: Figtree;
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
-    font-weight: 500;
-    line-height: 24px;
+    font-weight: 400;
+    line-height: 20px;
+    /* 142.857% */
+    padding: 0 20px;
+    box-sizing: content-box;
 }
 
 .q_walk_foot {
@@ -65,31 +71,67 @@
 }
 
 .q_walk_count {
-    color: var(--Neutral-Black-100, #939393);
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    color: #B9B9B9;
     font-family: Figtree;
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
-    font-weight: 500;
-    line-height: 24px;
-    width: 29px;
-    height: 23px;
+    font-weight: 400;
+    line-height: 20px;
 }
 
 .q_walk_next {
     display: flex;
-    padding: 10px 20px;
-    justify-content: flex-end;
+    padding: 10px 16px;
+    justify-content: center;
     align-items: center;
     gap: 4px;
-    color: var(--neutrals-white-2, #FFF);
-    font-family: Hanken Grotesk;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 24px;
+    color: white;
+    box-sizing: border-box;
     border-radius: 10px;
     cursor: pointer;
     background: var(--Gradient-1, linear-gradient(180deg, #3378FF 0%, #9442FE 100%));
 }
+
+.q_walk_back {
+    display: flex;
+    padding: 10px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    border-radius: 10px;
+    border: 1.5px solid  #EFEFEF;
+    background:  #FFF;
+}
+
+.q_walk_btns {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.q_walk_top {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 0 20px;
+    box-sizing: content-box;
+}
+
+@keyframes q_spotlight {
+    0% {
+      box-shadow: 0 0 50px 10px rgba(255, 255, 255, 0.8); 
+      transform: scale(1.01);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); 
+      transform: scale(1);
+    }
+  }
+  
+  .q_walk_highlighted {
+    position: relative;
+    z-index: 1; 
+    animation: q_spotlight 1s infinite alternate; /
+  }
+  

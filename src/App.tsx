@@ -23,6 +23,7 @@ import ReferEarnPreview from './components/expansion/Preview';
 import FeedbackMOdal from './components/Modals/Modal';
 import CrossSellingPreview from './components/expansion/CrossPreview';
 import SreakPreview from './components/Streak/Preview';
+import TourPreview from './components/Tour/Preview';
 export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
 export const apiKey = 'k-2aa597b4-341f-4c3c-a022-f56877a585c9'
 export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
@@ -80,7 +81,7 @@ function App() {
 
     return (
         <div
-        style={{ display: "flex", height: "100vh", alignItems: "center", justifyContent: "center", gap: "20px" }}
+        style={{  height: "400vh", alignItems: "center", justifyContent: "center", gap: "20px",background: "black" }}
         >
 
 <QuestProvider 
@@ -102,7 +103,7 @@ function App() {
                     wheelImage={'https://quest-media-storage-bucket.s3.us-east-2.amazonaws.com/1706540110821-wrapit2.png'} /> */}
 
             {/* <SearchPreview online/> */}
-            <SreakPreview/>
+            {/* <SreakPreview/> */}
 
 
 
@@ -227,7 +228,7 @@ function App() {
 
 {/* <CrossSellingPreview/> */}
 
-
+<TourPreview/>
 
 
 
