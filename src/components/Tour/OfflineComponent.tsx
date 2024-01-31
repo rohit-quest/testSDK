@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext, useRef } from 'react';
 import ReactDOM from 'react-dom';
-import QuestContext from "../QuestWrapper.tsx";
+// import QuestContext from "../QuestWrapper.tsx";
 import { getResponse, walkResponeType } from './response';
 import { closeRounded, helpCenter1 } from '../../assets/images/index.ts';
 import "./walkThrough.css";
@@ -27,18 +27,16 @@ interface propType {
     animation?: boolean;
     tooltip?: boolean;
     iconColor?: string;
-    token: string;
-    userId: string;
-    questId: string;
+    offlineFormData: walkResponeType;
 }
 
 type positionType = "left" | "top" | "right" | "bottom" | "right-top" | "right-bottom" | "top-left" | "top-right" | "bottom-left" | "bottom-right";
 
-const WalkThrough = ({
+const OfflineComponent = ({
     onFinish,
     isOpen = true,
-    questId = "", token = "", userId = "",
-    onClose, backgroundColor, btnBackGroundColor, btnColor, color,actions,
+    onClose, backgroundColor, btnBackGroundColor, btnColor, color, actions,
+    offlineFormData,
     autoScroll = false,
     image = false,
     disableScrollSelector,
@@ -47,12 +45,12 @@ const WalkThrough = ({
     iconColor="#939393"
 }: propType) => {
     const [currentStep, setCurrentStep] = useState(0);
-    const { apiKey, entityId ,apiType} = useContext(QuestContext.Context);
+    // const { apiKey, entityId ,apiType} = useContext(QuestContext.Context);
     const [position, setPosition] = useState({ top: 350, left: 376 });
     const componentRef = useRef<HTMLDivElement>(null);
     const [data, setData] = useState<walkResponeType>([]);
     const [isClose, setClose] = useState(false);
-    let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
+    // let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
     const setStepPosition = (targetElement: Element, position: positionType) => {
         if (targetElement) {
@@ -112,13 +110,8 @@ const WalkThrough = ({
     };
 
     useEffect(() => {
-        getResponse({ apiKey, token, userId }, entityId, questId,BACKEND_URL)
-            .then((response) => {
-                if (response?.length) {
-                    setData(() => response);
-                    console.log(response)
-                }
-            })
+        if (actions && actions[0]) actions[0]();
+        setData(offlineFormData)
     }, [])
 
     useEffect(() => {
@@ -296,4 +289,4 @@ const WalkThrough = ({
     </div>, document.body);
 };
 
-export default WalkThrough;
+export default OfflineComponent;
