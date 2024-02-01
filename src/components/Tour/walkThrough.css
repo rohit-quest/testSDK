@@ -132,6 +132,6 @@
   .q_walk_highlighted {
     position: relative;
     z-index: 1; 
-    animation: q_spotlight 1s infinite alternate; /
+    animation: q_spotlight 1s infinite alternate;
   }
   
