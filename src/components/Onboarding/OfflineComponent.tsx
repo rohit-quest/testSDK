@@ -92,6 +92,7 @@ interface QuestLoginProps {
     progressBarType?: "modal1"|"modal2";
     choiceColor?: string;
     textInputModal?: "modal1"|"modal2";
+    template?: 1 | 2 | 3;
     offlineFormData: FormData[] | []
 }
 
@@ -114,7 +115,6 @@ interface Answer {
 
 function OnBoarding(props: QuestLoginProps) {
     const {
-        design,
         color,
         bgColor,
         inputBgColor,
@@ -156,8 +156,11 @@ function OnBoarding(props: QuestLoginProps) {
         progressBarType="modal2",
         choiceColor="#6525B3",
         textInputModal = "modal1",
+        template,
         offlineFormData
     } = props;
+
+    let { design =[] } = props;
 
     const [formdata, setFormdata] = useState<FormData[] | []>([]);
     const [currentPage, setCurrentPage] = useState<number>(0);
@@ -166,7 +169,35 @@ function OnBoarding(props: QuestLoginProps) {
     const { apiKey, apiSecret, entityId, featureFlags, apiType } = useContext(QuestContext.Context);
     const cookies = new Cookies()
     const progressRef = useRef<HTMLDivElement>(null)
+    const [designState,setDesign] = useState(design)
+
     let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
+
+    const templateDesign = () =>{
+        switch (template) {
+            case 1:
+                break;
+            case 2:
+                {
+                    let arr = [];
+                    for (let i=1; i<=formdata.length; i++)
+                        arr.push(i);
+                    design = [arr];
+                    setDesign([...design])
+                    break;
+                }
+            case 3:
+                {
+                    let arr = [];
+                    for(let i=1; i<=formdata.length; i++){
+                        arr.push([i])
+                    }
+                    design = arr;
+                    setDesign([...design])
+                    break;
+                }
+        }
+    }
 
     useEffect(() => {
         if (entityId) {
@@ -256,9 +287,10 @@ function OnBoarding(props: QuestLoginProps) {
     }, []);
 
     useEffect(() => {
+        templateDesign()
         let currentQuestions: any =
-            !!design && design.length > 0 && checkDesignCriteria()
-                ? design[currentPage]
+            !!designState && designState.length > 0 && checkDesignCriteria()
+                ? designState[currentPage]
                 : formdata.map((e, i) => i + 1);
         let c = 0;
         for (let i = 0; i < currentQuestions.length; i++) {
@@ -285,7 +317,7 @@ function OnBoarding(props: QuestLoginProps) {
                 userId: questUserId,
                 token: questUserToken
             }
-            if (!!design && Number(currentPage) + 1 != design?.length) {
+            if (!!designState && Number(currentPage) + 1 != designState?.length) {
                 axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-complete-page-${Number(currentPage) + 1}?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers})
             }
 
@@ -389,25 +421,44 @@ function OnBoarding(props: QuestLoginProps) {
                             <div key={i}>
                                 {
                                     steps.includes(i) == true ?
-                                    <div className="q-onb-progress-comp" style={{borderColor: progressbarColor ? progressbarColor : "#5E5E5E", height: progressBarMultiLine ? progressBartabHeight : "auto"}}>
+                                    <div className="q-onb-progress-comp" style={{borderColor: progressbarColor ? progressbarColor : "#098849", height: progressBarMultiLine ? progressBartabHeight : "auto"}}>
                                         <div 
                                             style={{
                                                 maxWidth: `${((((wd - (progress.length - 1) * 15)) / progress.length) - 32)}px`,
                                                 whiteSpace: progressBarMultiLine ? "normal" : "nowrap", 
                                                 overflow: progressBarMultiLine ? "" : "hidden", 
                                                 textOverflow: progressBarMultiLine ? "" : "ellipsis",
-                                                color: "#5E5E5E"
+                                                color: "#098849"
                                             }}
                                         >
                                             {prog}
                                         </div>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 21 20" fill="none">
-                                            <path opacity="0.3" d="M10.8333 18.3333C15.4357 18.3333 19.1667 14.6023 19.1667 9.99996C19.1667 5.39759 15.4357 1.66663 10.8333 1.66663C6.23095 1.66663 2.49999 5.39759 2.49999 9.99996C2.49999 14.6023 6.23095 18.3333 10.8333 18.3333Z" fill={progressbarColor ? progressbarColor : "#8E8E8E"}/>
-                                            <path d="M14.8074 6.51474C15.1215 6.17828 15.6488 6.1601 15.9853 6.47412C16.3217 6.78815 16.3399 7.31548 16.0259 7.65193L10.1925 13.9019C9.88787 14.2284 9.38003 14.2566 9.041 13.9661L6.12434 11.4661C5.7749 11.1665 5.73443 10.6404 6.03395 10.291C6.33347 9.94157 6.85955 9.9011 7.20899 10.2006L9.51916 12.1808L14.8074 6.51474Z" fill={progressbarColor ? progressbarColor : "#8E8E8E"}/>
+                                            <path opacity="0.3" d="M10.8333 18.3333C15.4357 18.3333 19.1667 14.6023 19.1667 9.99996C19.1667 5.39759 15.4357 1.66663 10.8333 1.66663C6.23095 1.66663 2.49999 5.39759 2.49999 9.99996C2.49999 14.6023 6.23095 18.3333 10.8333 18.3333Z" fill={progressbarColor ? progressbarColor : "#098849"}/>
+                                            <path d="M14.8074 6.51474C15.1215 6.17828 15.6488 6.1601 15.9853 6.47412C16.3217 6.78815 16.3399 7.31548 16.0259 7.65193L10.1925 13.9019C9.88787 14.2284 9.38003 14.2566 9.041 13.9661L6.12434 11.4661C5.7749 11.1665 5.73443 10.6404 6.03395 10.291C6.33347 9.94157 6.85955 9.9011 7.20899 10.2006L9.51916 12.1808L14.8074 6.51474Z" fill={progressbarColor ? progressbarColor : "#098849"}/>
                                         </svg>
                                         
-                                    </div>
-                                    :
+                                    </div>:(i==currentPage)?(<div className="q-onb-progress-comp" style={{borderColor: "#2C2C2C", height: progressBarMultiLine ? progressBartabHeight : "auto"}}>
+                                        <div 
+                                            style={{
+                                                    maxWidth: `${((((wd - (progress.length - 1) * 15)) / progress.length) - 32)}px`, 
+                                                    whiteSpace: progressBarMultiLine ? "normal" : "nowrap", 
+                                                    overflow: progressBarMultiLine ? "" : "hidden", 
+                                                    textOverflow: progressBarMultiLine ? "" : "ellipsis",
+                                                    color: "#2C2C2C"
+                                                }}
+                                            >
+                                            {prog}
+                                        </div>
+                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect width="20" height="20" fill="#2C2C2C"/>
+                                            <path d="M-301 -113C-301 -114.105 -300.105 -115 -299 -115H2097C2098.1 -115 2099 -114.105 2099 -113V592C2099 593.105 2098.1 594 2097 594H-299C-300.105 594 -301 593.105 -301 592V-113Z" fill="#ECECEC"/>
+                                            <rect width="376" height="68" transform="translate(-213 -20)" fill="white"/>
+                                            <path id="Oval 3" d="M10 3.33337V5.00004C12.7614 5.00004 15 7.23862 15 10C15 12.7615 12.7614 15 10 15C7.23857 15 5 12.7615 5 10C5 9.13364 5.21992 8.30109 5.63312 7.56266L4.17866 6.74882C3.6272 7.73435 3.33333 8.84683 3.33333 10C3.33333 13.6819 6.3181 16.6667 10 16.6667C13.6819 16.6667 16.6667 13.6819 16.6667 10C16.6667 6.31814 13.6819 3.33337 10 3.33337Z" fill="#2C2C2C"/>
+                                            <path d="M-299 -114H2097V-116H-299V-114ZM2098 -113V592H2100V-113H2098ZM2097 593H-299V595H2097V593ZM-300 592V-113H-302V592H-300ZM-299 593C-299.552 593 -300 592.552 -300 592H-302C-302 593.657 -300.657 595 -299 595V593ZM2098 592C2098 592.552 2097.55 593 2097 593V595C2098.66 595 2100 593.657 2100 592H2098ZM2097 -114C2097.55 -114 2098 -113.552 2098 -113H2100C2100 -114.657 2098.66 -116 2097 -116V-114ZM-299 -116C-300.657 -116 -302 -114.657 -302 -113H-300C-300 -113.552 -299.552 -114 -299 -114V-116Z" fill="#AFAFAF"/>
+                                        </svg>
+                                        
+                                    </div>):(
                                     <div className="q-onb-progress-comp" style={{borderColor: "#ECECEC", height: progressBarMultiLine ? progressBartabHeight : "auto"}}>
                                         <div 
                                             style={{
@@ -428,7 +479,7 @@ function OnBoarding(props: QuestLoginProps) {
                                             <path d="M-299 -114H2097V-116H-299V-114ZM2098 -113V592H2100V-113H2098ZM2097 593H-299V595H2097V593ZM-300 592V-113H-302V592H-300ZM-299 593C-299.552 593 -300 592.552 -300 592H-302C-302 593.657 -300.657 595 -299 595V593ZM2098 592C2098 592.552 2097.55 593 2097 593V595C2098.66 595 2100 593.657 2100 592H2098ZM2097 -114C2097.55 -114 2098 -113.552 2098 -113H2100C2100 -114.657 2098.66 -116 2097 -116V-114ZM-299 -116C-300.657 -116 -302 -114.657 -302 -113H-300C-300 -113.552 -299.552 -114 -299 -114V-116Z" fill="#AFAFAF"/>
                                         </svg>
                                         
-                                    </div>
+                                    </div>)
                                 }
                             </div>
                         ))
@@ -972,31 +1023,30 @@ function OnBoarding(props: QuestLoginProps) {
     };
 
     function checkDesignCriteria() {
-        if(!design?.length) return;
+        if(!designState?.length) return;
 
         let fl = false;
         let arr: number[] = [];
 
-        for (let i = 0; i < design?.length; i++) {
+        for (let i = 0; i < designState?.length; i++) {
             if (
-                typeof design[i] != "object" &&
-                design[i][0] == null
+                typeof designState[i] != "object" &&
+                designState[i][0] == null
             ) {
                 return false;
             }
-            for (let j = 0; j < design[i].length; j++) {
-                if (!arr.includes(design[i][j])) {
-                    arr.push(design[i][j]);
+            for (let j = 0; j < designState[i].length; j++) {
+                if (!arr.includes(designState[i][j])) {
+                    arr.push(designState[i][j]);
                 }
             }
         }
-
         if (
             arr.length == formdata.length &&
             Math.max(...arr) == formdata.length
-        ) {
-            fl = true;
-        }
+            ) {
+                fl = true;
+            }
 
         return fl;
     }
@@ -1084,10 +1134,10 @@ function OnBoarding(props: QuestLoginProps) {
                             </div>
                         </div>
                     ))}
-                    {formdata.length > 0 &&(progressBarType==="modal2"? <ProgressBarNew />:<ProgressBar /> )}
+                    {(template == 1) &&(formdata.length > 0) &&(progressBarType==="modal2"? <ProgressBarNew />:<ProgressBar /> )}
                     <div className="q-onb-main-first" style={{fontSize: questionFontSize}}>
-                    {!!design && design.length > 0 && checkDesignCriteria()
-                        ? design[currentPage].map((num: number) =>
+                    {!!designState && designState.length > 0 && checkDesignCriteria()
+                        ? designState[currentPage].map((num: number) =>
                         (formdata[num - 1].type == "USER_INPUT_TEXT"
                             ? normalInput(
                                 formdata[num - 1]?.question || "",
@@ -1282,7 +1332,7 @@ function OnBoarding(props: QuestLoginProps) {
                                                     : null
                         )}
                     {formdata.length > 0 &&
-                        (!!design && design.length > 1 &&
+                        (!!designState && designState.length > 1 &&
                             checkDesignCriteria() ? (
                                 controlBtnType == "Buttons" ?
                                 <div className="q-onb-main-criteria">
@@ -1307,7 +1357,7 @@ function OnBoarding(props: QuestLoginProps) {
                                         className="q-onb-main-btn2"
                                         onClick={() =>
                                             currentPage !=
-                                                design.length - 1
+                                            designState.length - 1
                                                 ? setCurrentPage(currentPage + 1)
                                                 : returnAnswers()
                                         }
@@ -1316,7 +1366,7 @@ function OnBoarding(props: QuestLoginProps) {
                                             backgroundColor: btnColor,
                                         }}
                                     >
-                                        {currentPage == design.length - 1
+                                        {currentPage == designState.length - 1
                                             ? (nextBtnText ? nextBtnText : "Submit")
                                             : "Continue"}
                                     </button>
@@ -1343,7 +1393,7 @@ function OnBoarding(props: QuestLoginProps) {
                                         className="q-onb-main-arrow2"
                                         onClick={() =>
                                             currentPage !=
-                                                design.length - 1
+                                            designState.length - 1
                                                 ? setCurrentPage(currentPage + 1)
                                                 : returnAnswers()
                                         }

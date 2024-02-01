@@ -401,6 +401,7 @@ textarea:focus {
     border-bottom: 2px solid;
     padding-bottom: 10px;
     transition: all 0.6s;
+    color: var(--State-Success-300, #098849);
 }
 
 .q-onb-progress>div>div {
@@ -549,4 +550,21 @@ textarea:focus {
     display: flex;
     align-items: flex-end;
     gap: 4px;
+}
+
+.q_onb_single_choice_opt_div{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.q_onb_singlehoiceThree_lebel{
+    display: flex;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1px solid  #BF8AFF;
+    align-items: flex-start;
+    cursor: pointer;
+    gap: 8px;
+    align-self: stretch;
 }
