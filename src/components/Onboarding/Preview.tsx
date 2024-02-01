@@ -41,7 +41,8 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
           setAnswer={setAnswer}
           token={token}
           answerFontSize="14px"
-          progress={["Personal", "Professional", "Additional",]}
+          template={2}
+          progress={["Personal sdrerwtr", "Professional", "Additional",]}
           previousBtnText="Go Back"
           nextBtnText="Submit and Continue"
           color=""
@@ -56,12 +57,16 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
           btnSize="200px"
           inputBgColor=""
           // inputBorder="1px solid #6525B3"
-          singleChoose="modal2"
+          singleChoose="modal3"
           multiChoice="modal2"
           design={[[1, 2], [3, 4], [5, 6]]}
+          // progressBarMultiLine = {true}
+          // design={[]}
           headingScreen={[{ name: "Tell us about yourself", desc: "this is description" },
-          { name: "Tell us more about your company", desc: "description for this " },
-          { name: "A little more will help us guide you the best", desc: "description for this " }]}
+          // { name: "Tell us more about your company", desc: "description for this " },
+          // { name: "A little more will help us guide you the best", desc: "description for this " }
+        ]
+        }
           customComponents={<CustomButton />}
           getAnswers={printAnswer}
           screenHeight=""

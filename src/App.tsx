@@ -81,7 +81,7 @@ function App() {
 
     return (
         <div
-        style={{  height: "400vh", alignItems: "center", justifyContent: "center", gap: "20px",background: "black" }}
+        style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "" }}
         >
 
 <QuestProvider 
@@ -143,7 +143,7 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-{/* <OnBoardingPreview /> */}
+<OnBoardingPreview />
 
 {/* <GetStartedPreview
    online={true}
@@ -228,7 +228,7 @@ function App() {
 
 {/* <CrossSellingPreview/> */}
 
-<TourPreview/>
+{/* <TourPreview/> */}
 
 
 
