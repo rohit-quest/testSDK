@@ -37,7 +37,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
   onSpinComplete,
   successCall
 }) => {
-  const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
+  const { apiKey, apiSecret, entityId ,apiType} = useContext(QuestContext.Context);
   const [spinCount, setSpinCount] = useState<number>(0);
   const wheelRef = useRef<HTMLDivElement>(null);
   const [rotationAngle, setRotationAngle] = useState<number>(0);
@@ -47,6 +47,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
   const [winningSegmentIndex, setWinningSegmentIndex] = useState<number | null>(
     null
   );
+  let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
   const [showCongratulations, setShowCongratulations] = useState(false);
 
   const handleSpinClick = async () => {
@@ -129,7 +130,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
       const json = {
         criteriaId: criteriaId,
       };
-      const request = `${config.BACKEND_URL_STAGING}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
+      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
 
       const response = await axios.post(request, json, { headers: headers });
 
