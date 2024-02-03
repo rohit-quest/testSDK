@@ -125,7 +125,7 @@ function App() {
             />*/}
 
 
-<ModalPreview/>
+{/* <ModalPreview/> */}
 
 
 
@@ -149,9 +149,9 @@ function App() {
                 /> */}
 {/* <OnBoardingPreview /> */}
 
-<GetStartedPreview
+{/* <GetStartedPreview
    online={false}
- /> 
+ />  */}
 
             {/* <QuestForm
                     userId={userId}
@@ -191,7 +191,7 @@ function App() {
 {/* <FeedbackWorkflowPreview online={false} /> */}
 
 
-         {/* <FeedbackPreview/> */}
+         <FeedbackPreview/>
          {/* <Survey 
          
          /> */}

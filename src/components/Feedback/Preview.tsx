@@ -2,6 +2,7 @@
 import React from 'react'
 import Feedback from './Feedback';
 import { QuestProvider } from '../QuestWrapper';
+import Survey from './Survey';
 export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
 export const apiKey = 'k-68a0c6b8-b27f-49c6-a315-b0c9cba15bf4'
 export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
@@ -18,7 +19,7 @@ export default function FeedbackPreview({ online = true }) {
                 apiSecret={apiSecret}
                 entityId={entityId}
             >
-                <Feedback
+                <Survey
                     userId={userId}
                     token={token}
                     questId={"q-1a12c0e1-35a8-48a3-8cde-a8616f341b88"}
