@@ -32,7 +32,6 @@ const EmojiRating = (props: RatingProps) => {
     }
   };
 
-  console.log(currentRating, "28");
 
   const emojiStyle = {
     backgroundColor: "#FFFBEC",
@@ -102,7 +101,6 @@ const EmojiRating = (props: RatingProps) => {
           display: "flex",
           justifyContent: props.type == "star" ? "center" : "space-between",
           padding: props.type === "emoji" ? "0 20px" : "0",
-          border: "1px solid black",
           gap: props.type == "star" ? "12px" : "none",
         }}
       >
