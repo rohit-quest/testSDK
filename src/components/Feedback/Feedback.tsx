@@ -10,6 +10,7 @@ import '../FeedbackOverview/FeedbackOverview.css'
 import crossCircle from "../../assets/images/crossCircle.png"
 import { userLogo, crossLogo, leftArrow, rightArrow, calenderIcon, textAreaIcon, phoneLogo, emailLogo, crossLogoFeedback } from "../../assets/assetsSVG"
 import showToast from '../toast/toastService';
+import Rating from '../Rating/Rating';
 
 interface FeedbackProps {
   heading?: string;
@@ -557,10 +558,10 @@ const singleChoiceOne = (
                             <div
                               style={{
                                 display: 'flex',
-                                marginTop: '5px'
+                                marginTop: '5px',
                               }}
                             >
-                              {[1, 2, 3, 4, 5].map((star) => (
+                              {/* {[1, 2, 3, 4, 5].map((star) => (
                                 <div
                                   className="q-star-div"
                                   key={star}
@@ -570,7 +571,15 @@ const singleChoiceOne = (
                                 >
                                   {star <= rating ? blackStar : whiteStar}
                                 </div>
-                              ))}
+                              ))} */}
+                              <Rating 
+                               count={5}
+                               getCurrentRating={(item) =>
+                                handleRatingChange(data.criteriaId, item)
+                               }
+                              //  defaultRating={Number(answer[0])}
+                               type={'number'}
+                              />
                             </div>
                           </div>
                         );
