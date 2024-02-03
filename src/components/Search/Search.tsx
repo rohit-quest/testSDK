@@ -85,8 +85,8 @@ export default function Search(prop: propType): JSX.Element {
   useEffect(() => {
     getResponse({ apiKey, token, userId }, entityId, questId,BACKEND_URL)
       .then((response) => {
-        setData(response);
-        setResults(response)
+        setData(response.splice(0,defulatResultLength));
+        setResults(response.splice(0,defulatResultLength))
       })
     if (prop.open) setOpen(true)
     inputElement.current?.focus();
@@ -100,7 +100,7 @@ export default function Search(prop: propType): JSX.Element {
   const handleSearch = (str: string) => data?.
     length && setResults(str ? data
       .filter(({ text }) => text.toLocaleLowerCase().includes(str.toLocaleLowerCase()))
-      .slice(0, defulatResultLength) : data)
+      .slice(0, defulatResultLength) : data.splice(0,defulatResultLength))
 
 
 

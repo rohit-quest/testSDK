@@ -5,6 +5,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 // import { getResponse } from "./response";
 // import QuestContext from "../QuestWrapper.tsx";
 import QuestLabs from "../QuestLabs.tsx";
+// import config from "../../config.ts";
 
 type data = { text: string, icon: string, link: string, resultType: "command" | "action" | undefined, description: string, longDescription?: string }[];
 
@@ -83,10 +84,10 @@ export default function SearchOffline(prop: propType): JSX.Element {
   }, [isOpen])
 
   useEffect(() => {
-    // getResponse({ apiKey, token, userId }, entityId, questId)
+    // getResponse({ apiKey, token, userId }, entityId, questId,BACKEND_URL)
       // .then((response) => {
-        setData(prop.offlineFormatData);
-        setResults(prop.offlineFormatData?.slice(0,5))
+        setData(offlineFormatData.splice(0,defulatResultLength));
+        setResults(offlineFormatData.splice(0,defulatResultLength))
       // })
     if (prop.open) setOpen(true)
     inputElement.current?.focus();
@@ -100,7 +101,7 @@ export default function SearchOffline(prop: propType): JSX.Element {
   const handleSearch = (str: string) => data?.
     length && setResults(str ? data
       .filter(({ text }) => text.toLocaleLowerCase().includes(str.toLocaleLowerCase()))
-      .slice(0, defulatResultLength) : data)
+      .slice(0, defulatResultLength) : data.splice(0,defulatResultLength))
 
 
 
