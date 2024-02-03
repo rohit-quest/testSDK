@@ -32,25 +32,6 @@ const EmojiRating = (props: RatingProps) => {
     }
   };
 
-
-  const emojiStyle = {
-    backgroundColor: "#FFFBEC",
-    padding: "10px 12px",
-    borderRadius: "10px",
-    cursor: "pointer",
-  };
-
-  const coloredButtons = {
-    backgroundColor: "white",
-    padding: "10px 12px",
-    borderRadius: "10px",
-    border: "1.5px solid #ECECEC",
-    color: "white",
-    cursor: "pointer",
-    fontSize: "14px",
-    lineHeight: "20px",
-  };
-
   const whiteStar = (
     <svg
       width="32"
@@ -97,47 +78,44 @@ const EmojiRating = (props: RatingProps) => {
   return (
     <div style={{ width: "100%" }}>
       <div
-        style={{
-          display: "flex",
-          justifyContent: props.type == "star" ? "center" : "space-between",
-          padding: props.type === "emoji" ? "0 20px" : "0",
-          gap: props.type == "star" ? "12px" : "none",
-        }}
+        className={
+          props.type == "emoji"
+            ? "emojiRatingContainer"
+            : props.type == "star"
+            ? "starContainer"
+            : "ratingContainer"
+        }
       >
         {Array(props.type === "colored" ? 7 : props.count)
           .fill(0)
           .map((_, index) => {
+            const isActive =
+              currentRating - 1 === index && props.type !== "star";
+
+            const classNames = [
+              props.type === "emoji" ? "emojiStyle" : "",
+              props.type === "colored"
+                ? `coloredButtons coloredBackground-${index}`
+                : "",
+              props.type === "number" ? "numberButtons" : "",
+              isActive ? `${props.type}Active` : "",
+            ]
+              .filter(Boolean)
+              .join(" ");
+
             return (
               <div
                 onClick={() => handlePress(index + 1)}
-                style={
-                  currentRating - 1 === index && props.type !== "star"
-                    ? {
-                        ...coloredButtons,
-                        backgroundColor: "black",
-                        border:
-                          props.type == "number" ? "1.5px solid black" : "none",
-                      }
-                    : props.type === "emoji"
-                    ? emojiStyle
-                    : props.type === "colored"
-                    ? {
-                        ...coloredButtons,
-                        backgroundColor: colouredButtons[index],
-                      }
-                    : props.type == "star"
-                    ? {}
-                    : { ...coloredButtons, color: "black" }
-                }
+                className={classNames}
+                style={{
+                  background:
+                    props.type == "colored" ? colouredButtons[index] : "",
+                }}
                 key={index}
               >
                 {props.type === "emoji" ? (
                   <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
+                    className="singleEmojiCont"
                   >
                     <img
                       src={emojiComponents[index]}
@@ -149,12 +127,11 @@ const EmojiRating = (props: RatingProps) => {
                   <div>{index < currentRating ? blackStar : whiteStar}</div>
                 ) : (
                   <div
-                    style={{
-                      display: "flex",
-                      width: props.type === "colored" ? "14px" : "33px",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
+                    className={
+                      props.type == "colored"
+                        ? "singleColoredCont"
+                        : "singleNumberCont"
+                    }
                   >
                     {index + 1}
                   </div>
@@ -174,7 +151,9 @@ const EmojiRating = (props: RatingProps) => {
         </div>
       )}
 
-      {props.type == "star" && <div className="q-star-text-Cont">Click to Rate</div>}
+      {props.type == "star" && (
+        <div className="q-star-text-Cont">Click to Rate</div>
+      )}
     </div>
   );
 };

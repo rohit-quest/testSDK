@@ -22,4 +22,83 @@
   line-height: 16px;
   align-self: stretch;
   text-align: center;
+  margin-top: 8px;
+}
+
+.emojiStyle {
+  background-color: #fffbec;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.coloredButtons {
+  background-color: white;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1.5px solid #ececec;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.numberButtons {
+  background-color: white;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1.5px solid #ececec;
+  color: black;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.emojiActive {
+  background-color: black;
+}
+
+.coloredActive {
+  background-color: black !important;
+}
+
+.numberActive {
+  background-color: black;
+  border: 1.5px solid black;
+  color: white;
+}
+.ratingContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.emojiRatingContainer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.starContainer {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.singleEmojiCont {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.singleColoredCont {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width : 14px
+}
+.singleNumberCont{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width : 33px
 }
