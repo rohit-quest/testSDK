@@ -9,7 +9,7 @@ import { copyIcon, faceBookIcon, linkedInIcon, tickIcon, twitterIcon } from "./S
 import QuestLabs from "../QuestLabs.tsx";
 
 export interface referProp {
-  isOpen?: boolean; questId: string;
+  questId: string;
   headingColor?: string;
   userId: string;
   token: string;
@@ -36,7 +36,7 @@ export const Referral = ({
   heading = 'Referral link and code',
   description = 'Share your unique referral code with friends and receive 10 coins in credits each time a friend signs up!',
   invitationLink = "https://questlabs.ai/",
-  shareButtonText = "Share Referral Link",
+  shareButtonText = "Copy Referral Link",
   iconColor = "#0065FF",
   secondaryIconColor = "black",
   gradientBackground = false,
@@ -87,7 +87,7 @@ export const Referral = ({
             <img className="q_refer_copy_icon" src={copy[1] ? tickIcon(iconColor) : copyIcon(secondaryIconColor)} onClick={() => handleCopy(1)} alt="" />
           </div>
         </div>}
-        <div style={style} className="q_share_link_button">{shareButtonText}</div>
+        <div style={style} className="q_share_link_button" onClick={()=>navigator.clipboard.writeText(shareCode)}>{shareButtonText}</div>
         <div style={style} className="q_social_links">
           <img className="q_social_link_icon" onClick={() => shareOnPlatform(shareCode, "linkedin")} src={linkedInIcon(iconColor)} alt="" />
           <img className="q_social_link_icon" onClick={() => shareOnPlatform(invitationLink, "facebook")} src={faceBookIcon(iconColor)} alt="" />

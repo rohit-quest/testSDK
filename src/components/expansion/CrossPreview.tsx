@@ -1,4 +1,3 @@
-import { ReferEarn } from './ReferEarn'
 import { QuestProvider } from '../QuestWrapper'
 import { CrossSelling } from './CrossSelling';
 
@@ -12,13 +11,17 @@ const apiSecret = ""
 export default function CrossSellingPreview() {
     return (
         <QuestProvider apiKey={apiKey} apiSecret={apiSecret} featureFlags={{}} entityId={entityId}>
-            <CrossSelling questId={questId}
+            <CrossSelling 
+                questId={questId}
                 //  invitationLink='https://questlabs.ai/'
                 // iconColor='red'
                 // secondaryIconColor='red'
                 expiryDate={1716611499655}
                 showDays
-                token={token} userId={userId} />
+                token={token} userId={userId} 
+                // claimRewardHandler={undefined} 
+                // backButtonTrigger={undefined} 
+                />
         </QuestProvider>
     )
 }

@@ -53,7 +53,7 @@ import { Referral } from "./src/components/expansion/ReferEarn.tsx";
 import OfflineComponent from "./src/components/TutorialScreen/OfflineComponent.tsx";
 import TourOfflineComponent from "./src/components/Tour/OfflineComponent.tsx";
 import OnBoardingOffline from "./src/components/Onboarding/OfflineComponent";
-import GetStartedOffline from "./src/components/GetStarted/GetStarted.tsx";
+import GetStartedOffline from "./src/components/GetStarted/OfflineComponent.tsx";
 import SearchOffline from "./src/components/Search/OfflineComponent";
 import QuestMOdalOffline from './src/components/Modals/OflineComponent';
 

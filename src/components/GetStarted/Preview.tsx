@@ -66,6 +66,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
             "https://pin.questprotocol.xyz/ipfs/QmavuprWaHKvd5JZvkdgathYKLr5Zcshc1EPRzRzBJaPqw"
         ]}
         // dropDown={true}
+        allowMultiClick={false}
         // width="50vw" 
         autoHide={false}
         // buttonBg="black"
@@ -81,7 +82,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
         }}
         onLinkTrigger={(url, id) => {
             console.log(url)
-            // window.location.href=url;
+            window.location.href=url;
         }}
         // uniqueUserId="soumitra.petbindhi+1@gmail.com"
         offlineFormatData={[
