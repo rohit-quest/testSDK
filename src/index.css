@@ -108,6 +108,7 @@
 
 .q-hover:hover {
   background-color: #f4f5f6;
+  border-radius: 10px;
 }
 
 .q-parent-container {

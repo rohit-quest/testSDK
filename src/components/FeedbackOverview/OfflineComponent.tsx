@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import Loader from '../Login/Loader';
 import Cookies from "universal-cookie";
-import { backButton } from "../../assets/assetsSVG";
+import { backButton } from "../../assets/assetsSVG.tsx";
 import crossCircle from "../../assets/images/crossCircle.png"
 import { xbutton } from '../../assets/images';
 import showToast from '../toast/toastService';
@@ -90,8 +90,8 @@ const contact = (color: string = "#939393") => (
 type optionType = 'Contact us'|'Request a Feature'|'Report a Bug'|'General Feedback'
 
 interface feedbackCompProps {
-  userId: string;
-  token: string;
+//   userId: string;
+//   token: string;
   questIds: string[];
   answer?: any;
   setAnswer?: any;
@@ -110,8 +110,7 @@ interface feedbackCompProps {
   starBorderColor?: string;
   tickBg?: string;
   ratingStyle?: "Star" | "Numbers" | "Smiles";
-  uniqueUserId?: string;
-  uniqueEmailId?: string;
+  offlineFormData: Array<[{type: string,question: string,options: string[],criteriaId: string,answer: string,required: boolean,placeholder: string ,linkTitle: string,linkUrl?: string, titile?: string, }]>;
   descriptions?: Record<optionType,string>;
   topBar?: boolean;
   backBtn?: boolean;
@@ -126,9 +125,9 @@ interface FormDataItem {
   required?: boolean;
   placeholder?: string;
 }
-const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
-  userId,
-  token,
+const FeedbackWorkflowOffline: React.FC<feedbackCompProps> = ({
+//   userId,
+//   token,
   questIds,
   btnColor,
   btnTextColor,
@@ -144,8 +143,9 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   starBorderColor,
   tickBg,
   ratingStyle,
-  uniqueUserId,
-  uniqueEmailId,
+  offlineFormData,
+//   uniqueUserId,
+//   uniqueEmailId,
   descriptions= {"General Feedback": "Welcome back, Please complete your details","Report a Bug": "Describe your issue", "Contact us":"Invite other admins and moderators", "Request a Feature":"How can we make it better"},
   topBar=false,
   backBtn=false,
@@ -161,8 +161,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   const [submit, setSubmit] = useState<boolean>(false);
   const { apiKey, apiSecret, entityId, featureFlags,apiType } = useContext(QuestContext.Context);
   const [answer, setAnswer] = useState<any[]>([]);
-  let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
-
+//   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
+console.log(offlineFormData)
   const thanks = (
 <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clipRule="url(#clip0_4046_146)">
@@ -188,46 +188,46 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
 );
 
   const handleOptionClick = (option: optionType, quest: string) => {
-    let cookies = new Cookies();
-    let externalUserId = cookies.get("externalUserId");
-    let questUserId = cookies.get("questUserId");
-    let questUserToken = cookies.get("questUserToken");
-    let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
-    if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
-      let header = {
-        apiKey: apiKey,
-        apisecret: apiSecret,
-        userId: questUserId,
-        token: questUserToken,
-      }
-      axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`, {count: 1}, {headers: header})
-    } else if (uniqueUserId) {
-      const body = {
-        externalUserId: !!uniqueUserId && uniqueUserId,
-        entityId: entityId,
-        email: uniqueEmailId
-      }
+    // let cookies = new Cookies();
+    // let externalUserId = cookies.get("externalUserId");
+    // let questUserId = cookies.get("questUserId");
+    // let questUserToken = cookies.get("questUserToken");
+    // let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
+    // if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
+    //   let header = {
+    //     apiKey: apiKey,
+    //     apisecret: apiSecret,
+    //     userId: questUserId,
+    //     token: questUserToken,
+    //   }
+    //   axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`, {count: 1}, {headers: header})
+    // } else if (uniqueUserId) {
+    //   const body = {
+    //     externalUserId: !!uniqueUserId && uniqueUserId,
+    //     entityId: entityId,
+    //     email: uniqueEmailId
+    //   }
 
-      const headers = {
-        apiKey: apiKey,
-        apisecret: apiSecret,
-        userId: userId,
-        token: token,
-      };
+    //   const headers = {
+    //     apiKey: apiKey,
+    //     apisecret: apiSecret,
+    //     userId: userId,
+    //     token: token,
+    //   };
 
-      axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
-        .then((res) => {
-          let {userId, token} = res.data;
-          let header = {...headers, ...{userId, token}}
-          let cookies = new Cookies();
-          const date = new Date();
-          date.setHours(date.getHours() + 12)
-          cookies.set("externalUserId", uniqueUserId, {path: "/", expires: date})
-          cookies.set("questUserId", userId, {path: "/", expires: date})
-          cookies.set("questUserToken", token, {path: "/", expires: date})
-          axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`, {count: 1}, {headers: header})
-      })
-    }
+    //   axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
+    //     .then((res) => {
+    //       let {userId, token} = res.data;
+    //       let header = {...headers, ...{userId, token}}
+    //       let cookies = new Cookies();
+    //       const date = new Date();
+    //       date.setHours(date.getHours() + 12)
+    //       cookies.set("externalUserId", uniqueUserId, {path: "/", expires: date})
+    //       cookies.set("questUserId", userId, {path: "/", expires: date})
+    //       cookies.set("questUserToken", token, {path: "/", expires: date})
+    //       axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`, {count: 1}, {headers: header})
+    //   })
+    // }
     
     if (option === 'Contact us' && contactUrl) {
       window.open(contactUrl, "_blank");
@@ -238,68 +238,69 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     }
   };
 
-  function returnAnswers(index:number) {
-    const headers = {
-      apiKey: apiKey,
-      apisecret: apiSecret,
-      userId: userId,
-      token: token,
-    };
-    let cookies = new Cookies();
-    let externalUserId = cookies.get("externalUserId");
-    let questUserId = cookies.get("questUserId");
-    let questUserToken = cookies.get("questUserToken");
-    let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
-    if (answer.length !== 0) {
-      const ansArr = formdata[index].map((ans: any) => ({
-        question: ans?.question || '',
-        answer: [answer[ans?.criteriaId] || ''],
-        criteriaId: ans?.criteriaId || '',
-      }));
-      if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
-        let header = {
-          apiKey: apiKey,
-          apisecret: apiSecret,
-          userId: questUserId,
-          token: questUserToken,
-        }
-        setResult(header, userId)
-      } else {
-        setResult(headers, userId)
-      }
+  function returnAnswers(index: number) {
 
-      function setResult(headers: object, userId: string) {
-        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${selectedQuest}/verify-all?userId=${userId}`;
-          const requestData = {
-            criterias: ansArr,
-          };
-          setShowLoader(true);
-          axios
-            .post(request, requestData, { headers: headers })
-            .then((response) => {
-              if (response.data.success) {
-                showToast.success({text:'Thank you for your feedback'});
-                setSubmit(true);
-                setTimeout(() => {
-                  setSubmit(false)
-                  setSelectedOption(null)
-                }, 4000);
-                axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${selectedQuest}-com?userId=${userId}&questId=${selectedQuest}`, {count: 1}, {headers: headers})
-              } else {
-                showToast.error({text: response.data.error});
-              }
-            })
-            .catch((error) => {
-              console.error('Error:', error);
-            })
-            .finally(() => {
-              setShowLoader(false);
-            });
-      }
-    } else {
-      toast.error('Please fill in all required fields.');
-    }
-      
+    // const headers = {
+    //     apiKey: apiKey,
+    //     apisecret: apiSecret,
+    //     userId: userId,
+    //     token: token,
+    //   };
+    //   let cookies = new Cookies();
+    //   let externalUserId = cookies.get("externalUserId");
+    //   let questUserId = cookies.get("questUserId");
+    //   let questUserToken = cookies.get("questUserToken");
+    //   let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
+    //   if (answer.length !== 0) {
+    //     const ansArr = formdata[index].map((ans: any) => ({
+    //       question: ans?.question || '',
+    //       answer: [answer[ans?.criteriaId] || ''],
+    //       criteriaId: ans?.criteriaId || '',
+    //     }));
+    //     if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
+    //       let header = {
+    //         apiKey: apiKey,
+    //         apisecret: apiSecret,
+    //         userId: questUserId,
+    //         token: questUserToken,
+    //       }
+    //       setResult(header, userId)
+    //     } else {
+    //       setResult(headers, userId)
+    //     }
+  
+    //     function setResult(headers: object, userId: string) {
+    //       const request = `${BACKEND_URL}api/entities/${entityId}/quests/${selectedQuest}/verify-all?userId=${userId}`;
+    //         const requestData = {
+    //           criterias: ansArr,
+    //         };
+    //         setShowLoader(true);
+    //         axios
+    //           .post(request, requestData, { headers: headers })
+    //           .then((response) => {
+    //             if (response.data.success) {
+                  showToast.success({text:'Thank you for your feedback'});
+                  setSubmit(true);
+                  setTimeout(() => {
+                    setSubmit(false)
+                    setSelectedOption(null)
+                  }, 4000);
+    //               axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${selectedQuest}-com?userId=${userId}&questId=${selectedQuest}`, {count: 1}, {headers: headers})
+    //             } else {
+    //               showToast.error({text: response.data.error});
+    //             }
+    //           })
+    //           .catch((error) => {
+    //             console.error('Error:', error);
+    //           })
+    //           .finally(() => {
+    //             setShowLoader(false);
+    //           });
+    //     }
+    //   } else {
+    //     toast.error('Please fill in all required fields.');
+    //   }
+
   }
 
 
@@ -316,57 +317,57 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     const headers = {
       apiKey: apiKey,
       apisecret: apiSecret,
-      userId: userId,
-      token: token,
+      // userId: userId,
+      // token: token,
     };
     let request;
     {
-      questIds.map((id, index) => {
-        const isDefault = isDefaultQuestId(id);
-        if (isDefault) {
-          request = `${BACKEND_URL}api/entities/${entityId}/default-quest/?userId=${userId}&defaultId=${id}`;
-          axios.post(request, {}, { headers: headers }).then((res) => {
-            let response = res.data.data;
-            let criterias = response?.eligibilityData?.map((criteria: any) => {
-              return {
-                type: criteria?.data?.criteriaType,
-                question: criteria?.data?.metadata?.title,
-                options: criteria?.data?.metadata?.options || [],
-                criteriaId: criteria?.data?.criteriaId,
-                required: !criteria?.data?.metadata?.isOptional,
-                placeholder: criteria?.data?.metadata?.placeholder,
-              };
-            });
-            criterias = Array.isArray(criterias) ? criterias : [];
-            setFormdata((prevFormdata) => {
-              const updatedFormdata = { ...prevFormdata };
-              updatedFormdata[index] = criterias;
-              return updatedFormdata;
-            });
-          });
-        } else {
-          request = `${BACKEND_URL}api/entities/${entityId}/quests/${id}?userId=${userId}`;
-          axios.get(request, { headers: headers }).then((res) => {
-            let response = res.data;
-            let criterias = response?.eligibilityData?.map((criteria: any) => {
-              return {
-                type: criteria?.data?.criteriaType,
-                question: criteria?.data?.metadata?.title,
-                options: criteria?.data?.metadata?.options || [],
-                criteriaId: criteria?.data?.criteriaId,
-                required: !criteria?.data?.metadata?.isOptional,
-                placeholder: criteria?.data?.metadata?.placeholder,
-              };
-            });
-            criterias = Array.isArray(criterias) ? criterias : [];
-            setFormdata((prevFormdata) => {
-              const updatedFormdata = { ...prevFormdata };
-              updatedFormdata[index] = criterias;
-              return updatedFormdata;
-            });
-          });
-        }
-      });
+    //   questIds.map((id, index) => {
+    //     const isDefault = isDefaultQuestId(id);
+    //     if (isDefault) {
+    //       request = `${BACKEND_URL}api/entities/${entityId}/default-quest/?userId=${userId}&defaultId=${id}`;
+    //       axios.post(request, {}, { headers: headers }).then((res) => {
+    //         let response = res.data.data;
+    //         let criterias = response?.eligibilityData?.map((criteria: any) => {
+    //           return {
+    //             type: criteria?.data?.criteriaType,
+    //             question: criteria?.data?.metadata?.title,
+    //             options: criteria?.data?.metadata?.options || [],
+    //             criteriaId: criteria?.data?.criteriaId,
+    //             required: !criteria?.data?.metadata?.isOptional,
+    //             placeholder: criteria?.data?.metadata?.placeholder,
+    //           };
+    //         });
+    //         criterias = Array.isArray(criterias) ? criterias : [];
+    //         setFormdata((prevFormdata) => {
+    //           const updatedFormdata = { ...prevFormdata };
+    //           updatedFormdata[index] = criterias;
+    //           return updatedFormdata;
+    //         });
+    //       });
+    //     } else {
+    //       request = `${BACKEND_URL}api/entities/${entityId}/quests/${id}?userId=${userId}`;
+    //       axios.get(request, { headers: headers }).then((res) => {
+    //         let response = res.data;
+    //         let criterias = response?.eligibilityData?.map((criteria: any) => {
+    //           return {
+    //             type: criteria?.data?.criteriaType,
+    //             question: criteria?.data?.metadata?.title,
+    //             options: criteria?.data?.metadata?.options || [],
+    //             criteriaId: criteria?.data?.criteriaId,
+    //             required: !criteria?.data?.metadata?.isOptional,
+    //             placeholder: criteria?.data?.metadata?.placeholder,
+    //           };
+    //         });
+    //         criterias = Array.isArray(criterias) ? criterias : [];
+    //         setFormdata((prevFormdata) => {
+    //           const updatedFormdata = { ...prevFormdata };
+    //           updatedFormdata[index] = criterias;
+    //           return updatedFormdata;
+    //         });
+    //       });
+    //     }
+    //   });
     }
   }, [questIds]);
 
@@ -408,8 +409,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
 
   const handleRemove = (id: string) => {
     setAnswer({
-        ...answer,
-        [id]: ""
+      ...answer,
+      [id]: ""
     })
   }
 
@@ -440,7 +441,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   starColor={starColor}
                   handleSubmit={() => returnAnswers(0)}
                   handleUpdate={handleUpdate}
-                  formdata={formdata[0]}
+                  formdata={offlineFormData[0]}
                   font={font}
                   textColor={textColor}
                   btnColor={btnColor}
@@ -449,7 +450,6 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   answer={answer}
                   handleRemove={handleRemove}
                   ratingStyle={ratingStyle}
-                  crossLogoForInput={crossLogoForInput}
                 />
               )}
               {selectedOption === 'Report a Bug' && (
@@ -457,7 +457,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 crossLogoForInput={crossLogoForInput}
                 handleSubmit={() => returnAnswers(1)}
                 handleUpdate={handleUpdate}
-                formdata={formdata[1]}
+                formdata={offlineFormData[1]}
                 font={font}
                 textColor={textColor}
                 btnColor={btnColor}
@@ -465,13 +465,13 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 answer={answer}
                 handleRemove={handleRemove}
                 />
-                )}
+              )}
               {selectedOption === 'Request a Feature' && (
                 <FeatureContent
                 handleSubmit={() => returnAnswers(2)}
                 crossLogoForInput={crossLogoForInput}
                   handleUpdate={handleUpdate}
-                  formdata={formdata[2]}
+                  formdata={offlineFormData[2]}
                   font={font}
                   textColor={textColor}
                   btnColor={btnColor}
@@ -527,7 +527,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             <div onClick={() => onClose?.(false)}>{cross}</div>
             </div>
           <div className='q-fw-content-box'>
-            {questIds[0] && (
+            { (
               <div
                 onClick={() => handleOptionClick('General Feedback', questIds[0])}
                 className="q-hover q-fw-cards"
@@ -543,7 +543,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 </div>
               </div>
             )}
-            {questIds[1] && (
+            {(
               <div
                 onClick={() => handleOptionClick('Report a Bug', questIds[1])}
                 className="q-hover q-fw-cards"
@@ -563,7 +563,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 </div>
               </div>
             )}
-            {questIds[2] && (
+            {(
               <div
                 onClick={() => handleOptionClick('Request a Feature', questIds[2])}
                 className="q-hover q-fw-cards"
@@ -583,7 +583,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 </div>
               </div>
             )}
-            {questIds[3] && (
+            {(
               <div
                 onClick={() => handleOptionClick('Contact us', questIds[3])}
                 className="q-hover q-fw-cards"
@@ -613,4 +613,4 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   );
 };
 
-export default FeedbackWorkflow;
+export default FeedbackWorkflowOffline;

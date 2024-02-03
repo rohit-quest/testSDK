@@ -33,7 +33,7 @@
   line-height: 28px;
 }
 .q-fw-div {
-  width: 430px;
+  width: 376px;
   border-radius: 16px;
   box-shadow: 0px 0px 20px 0px #00000073;
   background-color: white;
@@ -46,12 +46,12 @@
   text-align: center;
 }
 .q-fw-cards {
-  display: flex;
-  align-items: center;
-  box-sizing: content-box;
   cursor: pointer;
-  padding: 6% 12%;
-  border-radius: 0.375rem;
+  display: flex;
+  padding: 12px;
+  align-items: center;
+  gap: 12px;
+  align-self: stretch;
 }
 
 .q-fw-crossBtn {
@@ -196,4 +196,40 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.q-fw-content-box{
+  margin-top: 35px;
+  padding: 0 20px;
+}
+
+.q-fw-tab-heading{
+  color:  #2C2C2C;
+  font-family: Figtree;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px; /* 142.857% */
+}
+
+.q-fw-tab-description {
+  overflow: hidden;
+  color: #939393;
+  text-overflow: ellipsis;
+  font-family: Figtree;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  /* 133.333% */
+}
+
+.q_fw_input {
+  color: #939393;
+  font-family: Figtree;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  /* 142.857% */
 }

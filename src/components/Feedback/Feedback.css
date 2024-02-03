@@ -133,7 +133,7 @@
 }
 .q-fd-heading{
   overflow: hidden;
-  color: var(--neutral-pure-white-100, #FFF);
+  color:  black;
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
@@ -149,7 +149,8 @@
   margin-top: 5px;
 }
 .q-fd-topbar{
-  background: #000;
+  border-bottom: 1px solid #EFEFEF;
+  background:  #FFF;
   padding: 12px 20px;
   box-sizing: content-box;
   display: flex;
@@ -166,9 +167,10 @@
   box-sizing: content-box;
   padding: 10px 20px;
   border-radius: 10px;
-  background: var(--neutral-grey-700, #252525);
-  color: var(--neutral-pure-white-100, #FFF);
+  background:  #252525;
+  color:  #FFF;
   font-size: 16px;
+  width: 100%;
   font-style: normal;
   font-weight: 500;
   line-height: 24px;
@@ -182,7 +184,6 @@
   bottom: 20px;
   right: 20px;
   background-color: #fff;
-  animation: slide-in 0.5s ease-out;
 }
 
 .q-inline{
@@ -194,11 +195,35 @@
   display: block !important;
 }
 
-@keyframes slide-in {
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
+.q_feedback_buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  align-self: stretch;
+}
+
+.q-fdov-btn-cancel {
+  border-radius: 10px;
+  border: 1.5px solid #EFEFEF;
+  background: #FFF;
+  display: flex;
+  padding: 10px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.q_fw_textarea {
+  display: flex;
+  padding: 10px 16px 64px 16px;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 10px;
+  border: 1px solid #ECECEC;
+  outline: none;
+  width: 90%;
+  font-family: 'Figtree';
 }

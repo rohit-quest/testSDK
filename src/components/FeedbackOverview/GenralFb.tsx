@@ -15,6 +15,7 @@ interface GeneralFeedbackContentProps {
   answer: any;
   handleRemove?: (e: any) => void;
   ratingStyle?: "Star" | "Numbers" | "Smiles";
+  crossLogoForInput?: boolean
 }
 
 const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
@@ -29,7 +30,8 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
   handleSubmit,
   answer,
   handleRemove,
-  ratingStyle
+  ratingStyle,
+  crossLogoForInput
 }) => {
   const [rating, setRating] = useState<number>(0);
   const handleRatingChange2 = (e: any, id: any, rating: number) => {
@@ -82,9 +84,9 @@ function isValidEmail(email: string) {
           {question}
         </label>
         <div className="q-fdov-input">
-            {userLogo()}
+            {/* {userLogo()} */}
             <input
-              className='q_sdk_input'
+              className='q_sdk_input q_fw_input'
               type="text"
               id="normalInput"
               name="normalInput"
@@ -92,7 +94,7 @@ function isValidEmail(email: string) {
               value={answer[criteriaId]}
               placeholder={placeholder}
             />
-            {crossLogo(criteriaId, handleRemove)}
+            {crossLogoForInput && crossLogo(criteriaId, handleRemove)}
         </div>
       </div>
     );
@@ -111,7 +113,6 @@ function isValidEmail(email: string) {
           {question}
         </label>
         <div className="q-fdov-input">
-            {emailLogo()}
             <input
               className='q_sdk_input'
               type="email"
@@ -121,7 +122,7 @@ function isValidEmail(email: string) {
               value={answer[criteriaId]}
               placeholder={placeholder}
             />
-            {crossLogo(criteriaId, handleRemove)}
+            {crossLogoForInput ? crossLogo(criteriaId, handleRemove): emailLogo()}
         </div>
         {
           isValidEmail(answer[criteriaId]) &&
@@ -144,7 +145,7 @@ function isValidEmail(email: string) {
           {question}
         </label>
         <div className="q-fdov-input" style={{alignItems: "flex-start"}}>
-            {textAreaIcon()}
+            {/* {textAreaIcon()} */}
             <textarea
             className='q_sdk_textarea'
               id="normalInput2"
@@ -154,7 +155,7 @@ function isValidEmail(email: string) {
               placeholder={placeholder}
               style={{height: "120px", padding: "0px", boxSizing:"content-box" , fontFamily: "'Figtree', sans-serif"}}
             />
-            {crossLogo(criteriaId, handleRemove)}
+            {crossLogoForInput && crossLogo(criteriaId, handleRemove)}
         </div>
       </div>
     );

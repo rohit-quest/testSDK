@@ -27,7 +27,7 @@ interface propsType {
   reward?: boolean
 }
 
-export default function FeedbackMOdal({
+export default function QuestMOdal({
   questId = "",
   userId = "",
   token = "",

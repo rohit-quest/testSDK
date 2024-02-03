@@ -9,10 +9,10 @@ import config from '../../config';
 
 interface propsType {
   isOpen?: boolean;
-  questId?: string;
+  // questId?: string;
   headingColor?: string;
-  userId?: string;
-  token?: string;
+  // userId?: string;
+  // token?: string;
   color?: string;
   bgColor?: string;
   isArticle?: boolean
@@ -27,10 +27,10 @@ interface propsType {
   reward?: boolean
 }
 
-export default function FeedbackMOdal({
-  questId = "",
-  userId = "",
-  token = "",
+export default function QuestMOdalOffline({
+  // questId = "",
+  // userId = "",
+  // token = "",
   heading = 'Submit Feedback',
   description = 'Welcome back, Please complete your details',
   iconColor = "#939393",

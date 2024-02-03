@@ -21,15 +21,44 @@ export default function TutorialPreview({online=false}) {
         <Tutorial
              questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
              userId={userId}
+             bgColor=''
              token={token}
              heading='Your Application Progress'
              subheading='Welcome back, Please complete your application'
         />
     </QuestProvider>
   )
-    // return (
-    //     // <OfflineComponent 
-        
-    //     // />
-    // ) 
+    return (
+        <OfflineComponent 
+            isOpen
+            heading='Your Application Progress'
+            subheading='Welcome back, Please complete your application'
+            offlineFormatData={[
+                {
+                    id: 0,
+                    "title": "Quest Linkedin",
+                    "url": "https://www.linkedin.com/company/questlabss/",
+                    "subheading": "this is the description",
+                    "criteriaId": "ec-b6d81257-1182-4e20-91e5-e6e7bc336f9b",
+                    "status": false
+                },
+                {
+                    id: 1,
+                    "title": "Explore Questlabs",
+                    "url": "https://www.questlabs.ai/",
+                    "subheading": "AI-Powered User Experiences to Increase in-app Adoption, Engagement & Revenue ",
+                    "criteriaId": "ec-e32b88d7-0e43-4254-9c94-44859ceedcdc",
+                    "status": false
+                },
+                {
+                    id: 2,
+                    "title": "React Playground",
+                    "url": "https://main.d2h2uj2sjo2c2h.amplifyapp.com/",
+                    "subheading": "Play with our pre-made templates and create your frame",
+                    "criteriaId": "ec-e645704f-1bab-4a14-9447-9632b01f8a64",
+                    "status": false
+                }
+            ]}
+        />
+    ) 
 }

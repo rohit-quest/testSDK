@@ -46,9 +46,16 @@ import Search from "./src/components/Search/Search.tsx";
 import WalkThrough from './src/components/Tour/WalkThrough';
 import SpinTheWheel from './src/components/SpinTheWheel/SpinTheWheel.tsx';
 import DailyStreak from './src/components/Streak/DailyStreak';
-import {CrossSelling} from "./src/components/expansion/CrossSelling"
-import FeedbackMOdal from './src/components/Modals/Modal';
+import { CrossSelling } from "./src/components/expansion/CrossSelling"
+import QuestMOdal from './src/components/Modals/Modal';
 import TutorialScreen from "./src/components/TutorialScreen/Tutorial.tsx";
+import { Referral } from "./src/components/expansion/ReferEarn.tsx";
+import OfflineComponent from "./src/components/TutorialScreen/OfflineComponent.tsx";
+import TourOfflineComponent from "./src/components/Tour/OfflineComponent.tsx";
+import OnBoardingOffline from "./src/components/Onboarding/OfflineComponent";
+import GetStartedOffline from "./src/components/GetStarted/GetStarted.tsx";
+import SearchOffline from "./src/components/Search/OfflineComponent";
+import QuestMOdalOffline from './src/components/Modals/OflineComponent';
 
 export {
     QuestProvider,
@@ -78,6 +85,13 @@ export {
     SpinTheWheel,
     DailyStreak,
     CrossSelling,
-    FeedbackMOdal,
-    TutorialScreen
+    QuestMOdal,
+    TutorialScreen,
+    OfflineComponent as TutorialScreenOffline,
+    TourOfflineComponent as WalkThroughOffline,
+    OnBoardingOffline,
+    GetStartedOffline,
+    SearchOffline,
+    QuestMOdalOffline,
+    Referral
 };
