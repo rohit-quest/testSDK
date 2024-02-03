@@ -6,7 +6,7 @@ import "../expansion/Refer.css";
 import { useContext, useEffect, useRef, useState } from "react";
 import { getResponse, response, shareOnPlatform } from "./Response.ts";
 import QuestContext from "../QuestWrapper.tsx";
-import { copyIcon, faceBookIcon, grabDealIcon, linkedInIcon, tickIcon, twitterIcon } from "./Svg.ts";
+import { grabDealIcon } from "./Svg.ts";
 import QuestLabs from "../QuestLabs.tsx";
 import config from "../../config.ts";
 

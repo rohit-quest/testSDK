@@ -113,7 +113,7 @@ interface Answer {
     answer?: string[] | string;
 }
 
-function OnBoarding(props: QuestLoginProps) {
+function OnBoardingOffline(props: QuestLoginProps) {
     const {
         color,
         bgColor,
@@ -1426,4 +1426,4 @@ function OnBoarding(props: QuestLoginProps) {
     );
 }
 
-export default OnBoarding;
+export default OnBoardingOffline;

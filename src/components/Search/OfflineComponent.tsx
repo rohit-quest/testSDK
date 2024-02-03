@@ -32,7 +32,7 @@ interface propType {
   offlineFormatData: data;
 }
 
-export default function Search(prop: propType): JSX.Element {
+export default function SearchOffline(prop: propType): JSX.Element {
   const {
     wholerScreen = true,
     color = "#6E6E6E", backgroundColor = "white",

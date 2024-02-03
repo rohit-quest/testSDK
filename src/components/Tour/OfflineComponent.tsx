@@ -32,7 +32,7 @@ interface propType {
 
 type positionType = "left" | "top" | "right" | "bottom" | "right-top" | "right-bottom" | "top-left" | "top-right" | "bottom-left" | "bottom-right";
 
-const OfflineComponent = ({
+const TourOfflineComponent = ({
     onFinish,
     isOpen = true,
     onClose, backgroundColor, btnBackGroundColor, btnColor, color, actions,
@@ -289,4 +289,4 @@ const OfflineComponent = ({
     </div>, document.body);
 };
 
-export default OfflineComponent;
+export default TourOfflineComponent;

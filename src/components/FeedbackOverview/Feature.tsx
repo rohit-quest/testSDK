@@ -12,6 +12,7 @@ interface FeatureContentProps {
   handleUpdate: (e: any, id: string, j: string, k?: number) => void;
   answer: any;
   handleRemove: (e: any) => void;
+  crossLogoForInput: boolean
 }
 
 const FeatureContent: React.FC<FeatureContentProps> = ({
@@ -23,7 +24,8 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
   handleUpdate,
   handleSubmit,
   answer,
-  handleRemove
+  handleRemove,
+  crossLogoForInput
 }) => {
   function isValidEmail(email: string) {
     if (!email) return false;
@@ -48,17 +50,17 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
           {question}
         </label>
         <div className="q-fdov-input">
-            {userLogo()}
+            {/* {userLogo()} */}
             <input
               type="text"
-              className='q_sdk_input'
+              className='q_sdk_input q_fw_input'
               id="normalInput"
               name="normalInput"
               onChange={(e) => handleUpdate(e, criteriaId, "")}
               value={answer[criteriaId]}
               placeholder={placeholder}
             />
-            {crossLogo(criteriaId, handleRemove)}
+            {crossLogoForInput && crossLogo(criteriaId, handleRemove)}
         </div>
       </div>
     );
@@ -80,14 +82,14 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
             {emailLogo()}
             <input
               type="email"
-              className='q_sdk_input'
+              className='q_sdk_input q_fw_input'
               id="normalInput"
               name="normalInput"
               onChange={(e) => handleUpdate(e, criteriaId, "")}
               value={answer[criteriaId]}
               placeholder={placeholder}
             />
-            {crossLogo(criteriaId, handleRemove)}
+            {crossLogoForInput ? crossLogo(criteriaId, handleRemove): emailLogo()}
         </div>
         {
           isValidEmail(answer[criteriaId]) &&
@@ -113,7 +115,7 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
           {question}
         </label>
         <div className="q-fdov-input" style={{alignItems: "flex-start"}}>
-            {textAreaIcon()}
+            {/* {textAreaIcon()} */}
             <textarea
               id="normalInput2"
               name="normalInput"
@@ -122,7 +124,7 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
               placeholder={placeholder}
               style={{height: "120px", padding: "0px", fontFamily: "'Figtree', sans-serif",boxSizing: "content-box"}}
             />
-            {crossLogo(criteriaId, handleRemove)}
+            {crossLogoForInput && crossLogo(criteriaId, handleRemove)}
         </div>
       </div>
     );

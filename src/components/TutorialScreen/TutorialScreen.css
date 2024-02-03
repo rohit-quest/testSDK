@@ -3,6 +3,7 @@
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
   border-radius: 14px;
   padding-bottom: 1px;
+  max-width: 376px;
 }
 
 .q-tut-div {
@@ -222,7 +223,7 @@
 
 .q_tutorial_progress_icon{
   display: flex;
-  padding: 16px;
+  padding: 8px;
   border-radius: 50%;
   background: var(--Neutral-White-200, #FBFBFB);
   align-items: flex-start;
@@ -242,8 +243,8 @@
   stroke-width: 1px;
   background:  #73DCA7;
   right: 50%;
-  bottom: -50px;
+  bottom: -55px;
   width: 2px;
   z-index: 0;
-  height: 50px;
+  height: 55px;
 }

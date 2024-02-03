@@ -4,12 +4,11 @@ import config from '../../config';
 import QuestContext from '../QuestWrapper';
 import './TutorialScreen.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer, toast } from 'react-toastify';
-import Loader from '../Login/Loader';
 import General from '../../general';
 import { greenCheck, pendingIcon } from '../../assets/images';
 import showToast from '../toast/toastService';
 import Cookies from 'universal-cookie';
+import QuestLabs from '../QuestLabs';
 
 const cookies = new Cookies();
 let externalUserId = cookies.get("externalUserId");
@@ -31,7 +30,6 @@ interface TutorialProps {
   userId?: string;
   token?: string;
   questId?: string;
-  btnColor?: string;
   bgColor?: string;
   btnTextColor?: string;
   textColor?: string;
@@ -40,6 +38,8 @@ interface TutorialProps {
   onClose?: Function;
   uniqueUserId?: string;
   uniqueEmailId?: string;
+  iconColor?: string;
+  onLinkTrigger?: (link: string) => void
 }
 
 const TutorialScreen: React.FC<TutorialProps> = ({
@@ -48,25 +48,27 @@ const TutorialScreen: React.FC<TutorialProps> = ({
   userId,
   token,
   questId,
-  btnColor,
-  btnTextColor,
   bgColor,
   font,
   textColor,
   isOpen = true,
   uniqueUserId,
   uniqueEmailId,
+  iconColor='#939393',
   onClose = () => { },
+  onLinkTrigger = link =>{window.open(link, 'smallWindow', 'width=500,height=500');}
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
-  const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
+  const { apiKey, apiSecret, entityId,apiType } = useContext(QuestContext.Context);
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
   const [gradient, setGradient] = useState<boolean>(false);
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [hoverStates, setHoverStates] = useState(
     Array(formdata.length).fill(true)
   );
+
+  let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
   const handleNextStep = (id: any, url: string) => {
     const headers = {
@@ -79,14 +81,14 @@ const TutorialScreen: React.FC<TutorialProps> = ({
     const json = {
       criteriaId: id,
     };
-    const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
+    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
 
     setShowLoader(true);
     axios
       .post(request, json, { headers: headers })
       .then((response) => {
         if (response.data.success) {
-          window.open(url, 'smallWindow', 'width=500,height=500');
+          onLinkTrigger(url);
           const filterData = formdata.map((item) => {
             if (!item.status && item.id == id) {
               item['status'] = true
@@ -128,7 +130,7 @@ const TutorialScreen: React.FC<TutorialProps> = ({
         let header = {...headers, ...{userId: questUserId, token: questUserToken}}
         fetchData(header)
       } else if (!!uniqueUserId) {
-        axios.post(`${config.BACKEND_URL}api/users/external/login`, body, {headers})
+        axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
         .then((res) => {
           let {userId, token} = res.data;
           let header = {...headers, ...{userId, token}}
@@ -144,7 +146,7 @@ const TutorialScreen: React.FC<TutorialProps> = ({
       }
       
       function fetchData(header: any) {
-        const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}`;
+        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}`;
   
         axios.get(request, { headers: header }).then((res) => {
           let response = res.data;
@@ -176,19 +178,6 @@ const TutorialScreen: React.FC<TutorialProps> = ({
 
 
   return (
-    <div
-      onClick={()=>{
-        showToast.warn({duration: 44444444})
-        showToast.error({duration: 44444444})
-        showToast.success({duration: 44444444})
-        showToast.primary({duration: 44444444})
-    
-    }}
-      className="q-parent-container"
-      style={{ display: !minimze ? 'flex' : 'none' }}
-    >
-      {showLoader && <Loader />}
-      <div className="q-center">
         <div className="q-tutorial-cont">
           <div
             style={{
@@ -231,7 +220,7 @@ const TutorialScreen: React.FC<TutorialProps> = ({
               {formdata.map((step, index) => (
                 <div className="q_tutorial_box" key={index} onClick={()=>handleNextStep(step.id,step.url)}>
                   <div className='q_tutorial_progress'>
-                    <img className='q_tutorial_progress_icon' style={{background: step.status?"#01ff0111":"#FBFBFB"}} src={step.status?greenCheck:pendingIcon} alt="" />
+                    <img className='q_tutorial_progress_icon' style={{background: step.status?"#01ff0111":"#FBFBFB",width: step.status?"8px":"16px",height: step.status?"8px":"16px"}} src={step.status?greenCheck:pendingIcon} alt="" />
                     {index<(formdata.length-1) &&<div style={{background: step.status?"#73DCA7":"#EFEFEF"}} className="q_tutorial_progress_connector"></div>}
                   </div>
                   <div className="q_tutorial_box_content">
@@ -243,9 +232,8 @@ const TutorialScreen: React.FC<TutorialProps> = ({
               ))}
             </div>
           </div>
+          <QuestLabs  color={iconColor}/>
         </div>
-      </div>
-    </div>
   );
 };
 

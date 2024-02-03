@@ -27,7 +27,7 @@ export interface referProp {
   primaryDescription?: string
 }
 
-export const ReferEarn = ({
+export const Referral = ({
   questId = "",
   userId = "",
   token = "",
