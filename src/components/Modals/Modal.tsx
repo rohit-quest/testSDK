@@ -11,33 +11,37 @@ interface propsType {
   isOpen?: boolean;
   questId?: string;
   headingColor?: string;
-  userId: string;
-  token: string;
   color?: string;
   bgColor?: string;
   isArticle?: boolean
   heading?: string;
   rewardHeading?: string;
   description?: String;
-  rewqrdDescription?: String;
+  rewardDescription?: String;
   invitationLink?: string;
   shareButtonText?: string;
   iconColor?: string;
   secondaryIconColor?: string;
-  reward?: boolean
+  reward?: boolean;
+  onUpload?: (file: File | null) => void;
+  onProgressUpdate?: (progress: number) => void;
+  headers?: Record<string,any>;
+  onRewardClaim?: Function,
 }
 
 export default function QuestMOdal({
-  questId = "",
-  userId = "",
-  token = "",
   heading = 'Submit Feedback',
   description = 'Welcome back, Please complete your details',
   iconColor = "#939393",
   isOpen = true,
   reward = false,
   rewardHeading = 'Reward Unlocked',
-  rewqrdDescription = 'You have unlocked a new reward for your last transaction. Avail the reward now and enjoy!'
+  onUpload = file => { },
+  invitationLink = '',
+  onProgressUpdate=()=>{},
+  headers={},
+  onRewardClaim=()=>{},
+  rewardDescription = 'You have unlocked a new reward for your last transaction. Avail the reward now and enjoy!'
 }: propsType) {
   const [copy, setCopy] = useState([false, false]);
   const { apiKey, entityId, apiType } = useContext(QuestContext.Context);
@@ -56,13 +60,12 @@ export default function QuestMOdal({
     setCopy(prev => prev.map((e, i) => i == index ? true : e));
   }
 
-  useEffect(() => {
-    response(questId, { apiKey, entityId, token, userid: userId }, BACKEND_URL)
-  }, [])
+
+  useEffect(()=>onProgressUpdate(uploadProgress),[uploadProgress])
 
   const handleUpload = (file: File) => {
     setUpload(true);
-    upload(file, { apiKey, entityId, token, userid: userId }, BACKEND_URL, setUploadProgress)
+    upload(file,BACKEND_URL,setUploadProgress, headers )
   }
   if (!open) return;
   if (reward)
@@ -71,11 +74,11 @@ export default function QuestMOdal({
       <div className="q_modal_reward_content">
         <div>
           <div className="q_modal_heading">{rewardHeading}</div>
-          <div className="q_modal_desc">{rewqrdDescription}</div>
+          <div className="q_modal_desc">{rewardDescription}</div>
         </div>
         <div className='q_modal_buttons'>
-          <div className="q_modal_cancel">Go to home</div>
-          <div className="q_modal_upload_button">Avail now</div>
+          <div className="q_modal_cancel" onClick={()=>{setOpen(false)}}>Go to home</div>
+          <div className="q_modal_upload_button" onClick={()=>{onRewardClaim()}}>Avail now</div>
         </div>
       </div>
     </div>)
@@ -107,15 +110,17 @@ export default function QuestMOdal({
         <img src={orIcon()} alt="" />
 
         <div className="q_refer_code_content">
-          <div className="q_refer_text">Invitation Link</div>
-          <div className="q_refer_code_box">
-            <div className="q_refer_code">https://dribbble.com/shots/22712701</div>
-            <img className="q_refer_copy_icon" src={copy[1] ? tickIcon() : copyIcon(iconColor)} onClick={() => handleCopy(1)} alt="" />
-          </div>
+          {invitationLink && <>
+            <div className="q_refer_text">Invitation Link</div>
+            <div className="q_refer_code_box">
+              <div className="q_refer_code">{invitationLink}</div>
+              <img className="q_refer_copy_icon" src={copy[1] ? tickIcon() : copyIcon(iconColor)} onClick={() => handleCopy(1)} alt="" />
+            </div>
+          </>}
         </div>
         <div className='q_modal_buttons'>
           <div className="q_modal_cancel">Cancel</div>
-          <div className="q_modal_upload_button">Upload</div>
+          <div className="q_modal_upload_button" onClick={() => inpRef.current?.files && inpRef.current?.files[0] && onUpload(inpRef.current?.files[0])}>Upload</div>
         </div>
       </div>
       <QuestLabs color={iconColor} />

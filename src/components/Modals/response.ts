@@ -58,16 +58,12 @@ export const response = async (questId = "", headers: {
 
 export const upload = async (
     file: File,
-    headers: {
-        apiKey: string,
-        userid: string,
-        entityId: string,
-        token: string
-    },
-    BACKEND_URL = "",setUploadProgress:Dispatch<SetStateAction<number>>
+    BACKEND_URL = "",
+    setUploadProgress:Dispatch<SetStateAction<number>>,
+    headers: Record<string,any>,
 ): Promise<{ success: boolean; data?: Quest }> => {
     try {
-        const request = `${BACKEND_URL}api/aws/upload-img`;
+        const request = BACKEND_URL;
 
         const formData = new FormData();
         formData.append('uploaded_file', file);
