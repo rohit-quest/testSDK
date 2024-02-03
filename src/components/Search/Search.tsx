@@ -96,13 +96,11 @@ export default function Search(prop: propType): JSX.Element {
     };
   }, [])
 
-
-  const handleSearch = (str: string) => data?.
-    length && setResults(str ? data
-      .filter(({ text }) => text.toLocaleLowerCase().includes(str.toLocaleLowerCase()))
-      .slice(0, defulatResultLength) : data.splice(0,defulatResultLength))
-
-
+  const handleSearch = (str: string) => {
+    if(!data.length) return;
+    const filtered = data.filter(e=>e.text.toLocaleLowerCase().includes(str.toLocaleLowerCase()))
+      setResults(filtered)
+}
 
   const jsx = (
     <div className='q_search_bar' style={{ color, backgroundColor }}>

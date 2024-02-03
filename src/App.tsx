@@ -148,9 +148,9 @@ function App() {
                 /> */}
 {/* <OnBoardingPreview /> */}
 
-{/* <GetStartedPreview
-   online={true}
- />  */}
+<GetStartedPreview
+   online={false}
+ /> 
 
             {/* <QuestForm
                     userId={userId}
