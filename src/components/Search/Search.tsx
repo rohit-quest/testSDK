@@ -85,8 +85,8 @@ export default function Search(prop: propType): JSX.Element {
   useEffect(() => {
     getResponse({ apiKey, token, userId }, entityId, questId,BACKEND_URL)
       .then((response) => {
-        setData(response);
-        setResults(response)
+        setData(response.splice(0,defulatResultLength));
+        setResults(response.splice(0,defulatResultLength))
       })
     if (prop.open) setOpen(true)
     inputElement.current?.focus();
@@ -96,13 +96,11 @@ export default function Search(prop: propType): JSX.Element {
     };
   }, [])
 
-
-  const handleSearch = (str: string) => data?.
-    length && setResults(str ? data
-      .filter(({ text }) => text.toLocaleLowerCase().includes(str.toLocaleLowerCase()))
-      .slice(0, defulatResultLength) : data)
-
-
+  const handleSearch = (str: string) => {
+    if(!data.length) return;
+    const filtered = data.filter(e=>e.text.toLocaleLowerCase().includes(str.toLocaleLowerCase()))
+      setResults(filtered)
+}
 
   const jsx = (
     <div className='q_search_bar' style={{ color, backgroundColor }}>

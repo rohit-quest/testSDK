@@ -50,7 +50,7 @@ interface TutorialStep {
   longDescription?: string;
   imageUrl?: string;
 }
-function GetStartedOffline({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus, buttonBg, buttonColor, onLinkTrigger = (url:string,index:number)=>{window.location.href=url}, icons, uniqueUserId, cardBorderColor, heading, description, uniqueEmailId, autoHide, progressBar=false,dropDown=false,width="auto", compltedBtnColor="#008000",compltedBtnBgColor="#EBFFEB",showSteps=false,arrowColor,loadingIndiacator=true, anouncement=false,allowMultiClick=true}: Props) {
+function GetStarted({ userId, token, questId, cardBG, cardHeadingColor, cardDescColor, completeAllStatus, buttonBg, buttonColor, onLinkTrigger = (url:string,index:number)=>{window.location.href=url}, icons, uniqueUserId, cardBorderColor, heading, description, uniqueEmailId, autoHide, progressBar=false,dropDown=false,width="auto", compltedBtnColor="#008000",compltedBtnBgColor="#EBFFEB",showSteps=false,arrowColor,loadingIndiacator=true, anouncement=false,allowMultiClick=true}: Props) {
   const svg1 = (
     <svg
       width="24"
@@ -473,4 +473,4 @@ function GetStartedOffline({ userId, token, questId, cardBG, cardHeadingColor, c
   );
 }
 
-export default GetStartedOffline;
+export default GetStarted;

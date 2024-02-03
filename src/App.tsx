@@ -27,6 +27,7 @@ import TourPreview from './components/Tour/Preview';
 import FeedbackWorkflowPreview from './components/FeedbackOverview/Preview';
 import FeedbackPreview from './components/Feedback/Preview';
 import Survey from './components/Feedback/Survey';
+import ModalPreview from "./components/Modals/Preview";
 import HelpHub from './components/HelpHub/HelpHub';
 
 export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
@@ -126,7 +127,7 @@ function App() {
             />*/}
 
 
-<HelpHub />
+<ModalPreview/>
 
 
 
@@ -150,9 +151,9 @@ function App() {
                 /> */}
 {/* <OnBoardingPreview /> */}
 
-{/* <GetStartedPreview
-   online={true}
- />  */}
+<GetStartedPreview
+   online={false}
+ /> 
 
             {/* <QuestForm
                     userId={userId}

@@ -54,7 +54,8 @@ export async function getResponse(headers: CustomHeaders, entityId: string, ques
                     resultType: e.data.metadata.resultType,
                     longDescription: e.data.metadata.longDescription || "No more digging through Dropbox and Google Drive. Always know where to find “the latest,” so you can stay in your design flow."
                 }))
-                return [...formatData.map(e=>({...e,resultType: "action"})),...formatData.map(e=>({...e,resultType: "command"}))]
+                // return [...formatData.map(e=>({...e,resultType: "action"})),...formatData.map(e=>({...e,resultType: "command"}))]
+                return formatData;
             }
             return []
         })

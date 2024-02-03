@@ -11,13 +11,12 @@ import QuestLabs from "../QuestLabs.tsx";
 import config from "../../config.ts";
 
 export interface referProp {
-    isOpen?: boolean; questId: string;
+    questId: string;
     headingColor?: string;
     userId: string;
     token: string;
     color?: string;
     bgColor?: string;
-    isArticle?: boolean
     heading?: string;
     description?: String;
     shareButtonText?: string;
@@ -26,7 +25,9 @@ export interface referProp {
     primaryHeading?: string;
     primaryDescription?: string;
     showDays?: boolean;
-    expiryDate?: number
+    expiryDate?: number;
+    claimRewardHandler?: Function;
+    backButtonTrigger?: Function;
 }
 
 export const CrossSelling = ({
@@ -43,7 +44,9 @@ export const CrossSelling = ({
     primaryHeading = 'Grab your deal',
     primaryDescription = 'Welcome back, Please complete your details',
     showDays = false,
-    expiryDate = 0
+    expiryDate = 0,
+    claimRewardHandler = ()=>{},
+    backButtonTrigger = ()=>{}
 }: referProp) => {
     const { apiKey, apiSecret, entityId, apiType } = useContext(QuestContext.Context);
     const style = !!color && !!bgColor ? { color, backgroundColor: bgColor } : {};
@@ -123,8 +126,8 @@ export const CrossSelling = ({
                         <div className="q_time_left_text">Seconds</div>
                     </div>
                 </div>
-                <div style={style} className="q_share_link_button">{shareButtonText}</div>
-                <div style={style} className="q_share_link_button_2">Go to home</div>
+                <div style={style} onClick={()=>claimRewardHandler()} className="q_share_link_button">{shareButtonText}</div>
+                <div style={style} onClick={()=>backButtonTrigger()} className="q_share_link_button_2">Go to home</div>
             </div>
             {!gradientBackground && <QuestLabs backgroundColor={bgColor} color={iconColor} />}
         </div>
