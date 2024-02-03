@@ -578,7 +578,7 @@ const singleChoiceOne = (
                                 handleRatingChange(data.criteriaId, item)
                                }
                               //  defaultRating={Number(answer[0])}
-                               type={'colored'}
+                               type={'star'}
                               />
                             </div>
                           </div>
