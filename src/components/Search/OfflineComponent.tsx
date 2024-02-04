@@ -86,8 +86,8 @@ export default function SearchOffline(prop: propType): JSX.Element {
   useEffect(() => {
     // getResponse({ apiKey, token, userId }, entityId, questId,BACKEND_URL)
       // .then((response) => {
-        setData(offlineFormatData.splice(0,defulatResultLength));
-        setResults(offlineFormatData.splice(0,defulatResultLength))
+        setData([...offlineFormatData].splice(0,defulatResultLength));
+        setResults([...offlineFormatData].splice(0,defulatResultLength))
       // })
     if (prop.open) setOpen(true)
     inputElement.current?.focus();

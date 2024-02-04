@@ -85,8 +85,8 @@ export default function Search(prop: propType): JSX.Element {
   useEffect(() => {
     getResponse({ apiKey, token, userId }, entityId, questId,BACKEND_URL)
       .then((response) => {
-        setData(response.splice(0,defulatResultLength));
-        setResults(response.splice(0,defulatResultLength))
+        setData([...response].splice(0,defulatResultLength));
+        setResults([...response].splice(0,defulatResultLength))
       })
     if (prop.open) setOpen(true)
     inputElement.current?.focus();
