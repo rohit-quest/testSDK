@@ -551,7 +551,7 @@ const singleChoiceOne = (
                         style={{
                           fontFamily: font,
                           color: textColor,
-                          fontSize: '24px',
+                          fontSize: '20px',
                         }}
                       >
                         {heading}
@@ -561,6 +561,7 @@ const singleChoiceOne = (
                         style={{
                           fontFamily: font,
                           color: textColor,
+                          marginTop : '4px'
                         }}
                       >
                         {subHeading}
@@ -570,7 +571,7 @@ const singleChoiceOne = (
                   <form onSubmit={e=>{
                     e.preventDefault();
                     ((offlineFormData.length/itemsPerPage)<=page+1)?returnAnswers():handleNext()
-                  }} style={{ padding: "20px", boxSizing: "content-box", display: "flex", flexDirection: "column", gap: "12px" }}>
+                  }} style={{ padding: "20px", boxSizing: "content-box", display: "flex", flexDirection: "column", gap: "16px" }}>
                     {offlineFormData.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map((data: any) => {
                       if (data.type === 'USER_INPUT_TEXT') {
                         return normalInput(
@@ -599,7 +600,7 @@ const singleChoiceOne = (
                         );
                       } else if (data.type === 'RATING') {
                         return (
-                          <div className="mb-4">
+                          <div className="mb">
                             <label
                               className='q-fd-lebels'
                             >
@@ -608,7 +609,7 @@ const singleChoiceOne = (
                             <div
                               style={{
                                 display: 'flex',
-                                marginTop: '5px',
+                                marginTop: '4px',
                               }}
                             >
                               {/* {[1, 2, 3, 4, 5].map((star) => (
