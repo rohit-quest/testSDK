@@ -57,6 +57,7 @@ interface FeedbackProps {
   oncancel?: Function;
   itemsPerPage?: number;
   iconColor?: string;
+  ratingType? : string
 }
 
 const Survey: React.FC<FeedbackProps> = ({
@@ -72,6 +73,7 @@ const Survey: React.FC<FeedbackProps> = ({
   bgColor,
   supportUrl,
   onSubmit,
+  ratingType = 'number' ,
   delay = 1000,
   isInline = false,
   crossLogoForInput = false,
@@ -637,7 +639,7 @@ const singleChoiceOne = (
                                 handleRatingChange(data.criteriaId, item)
                                }
                               //  defaultRating={Number(answer[0])}
-                               type={'number'}
+                               type={ratingType}
                               />
                             </div>
                           </div>
