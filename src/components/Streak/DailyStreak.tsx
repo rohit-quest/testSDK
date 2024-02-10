@@ -59,6 +59,8 @@ export default function DailyStreak({
         }
     }, [days, stepDetails]);
 
+    useEffect(() => {setDays(counter)}, [counter]);
+
     return (
     
         <div className="q_daily_streak" style={style}>
