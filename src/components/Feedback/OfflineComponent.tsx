@@ -537,6 +537,7 @@ const singleChoiceOne = (
             : { backgroundColor: bgColor }),
         }}
         className="q-feedback-cont"
+        id = 'q-surveyOffline'
       >
         {offlineFormData.length > 0 ? (
           offlineFormData[0].type !== 'LIKE_DISLIKE'
