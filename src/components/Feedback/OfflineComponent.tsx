@@ -57,7 +57,8 @@ interface FeedbackProps {
   oncancel?: Function;
   itemsPerPage?: number;
   iconColor?: string;
-  offlineFormData: Array<FormDataItem>
+  offlineFormData: Array<FormDataItem>;
+  ratingType ?: string;
 }
 interface FormDataItem {
     type?: string;
@@ -86,6 +87,7 @@ const SurveyOffline = ({
   oncancel = ()=>{},
   itemsPerPage=5,
   iconColor = '',
+  ratingType = 'number',
   offlineFormData=[]
 }: FeedbackProps) => {
 
@@ -537,8 +539,8 @@ const singleChoiceOne = (
         className="q-feedback-cont"
       >
         {offlineFormData.length > 0 ? (
-          offlineFormData[0].type !== 'LIKE_DISLIKE' &&
-          offlineFormData[0].type !== 'RATING' ? (
+          offlineFormData[0].type !== 'LIKE_DISLIKE'
+           ? (
             <>
               {!thanksPopup && (
                 <div>
@@ -626,7 +628,7 @@ const singleChoiceOne = (
                                 handleRatingChange(data.criteriaId, item)
                                }
                               //  defaultRating={Number(answer[0])}
-                               type={'number'}
+                               type={ratingType}
                               />
                             </div>
                           </div>
@@ -687,7 +689,8 @@ const singleChoiceOne = (
              </div>
               )}
             </>
-          ) : offlineFormData[0].type === 'LIKE_DISLIKE' ? (
+          )
+           : offlineFormData[0].type === 'LIKE_DISLIKE' ? (
             <div className="">
               {!likePopup && (
                 <div
@@ -709,29 +712,31 @@ const singleChoiceOne = (
               )}
               {likePopup && likePopupContent(offlineFormData[0].criteriaId, comment)}
             </div>
-          ) : offlineFormData[0].type === 'RATING' ? (
-            <div className="">
-              <div className="mb-4">
-                <label
-                  className='q-fd-lebels'
-                >
-                  Rating Scale
-                </label>
-                <div style={{ display: 'flex', padding: '2% 0% 2%' }}>
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <div
-                      className="q-star-div"
-                      key={star}
-                      onClick={() => handleRatingChange2(star)}
-                    >
-                      {star <= rating ? blackStar : whiteStar}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              {likePopup && likePopupContent(offlineFormData[0].criteriaId, comment)}
-            </div>
-          ) : null
+          ) 
+          // : offlineFormData[0].type === 'RATING' ? (
+          //   <div className="">
+          //     <div className="mb-4">
+          //       <label
+          //         className='q-fd-lebels'
+          //       >
+          //         Rating Scale
+          //       </label>
+          //       <div style={{ display: 'flex', padding: '2% 0% 2%' }}>
+          //         {[1, 2, 3, 4, 5].map((star) => (
+          //           <div
+          //             className="q-star-div"
+          //             key={star}
+          //             onClick={() => handleRatingChange2(star)}
+          //           >
+          //             {star <= rating ? blackStar : whiteStar}
+          //           </div>
+          //         ))}
+          //       </div>
+          //     </div>
+          //     {likePopup && likePopupContent(offlineFormData[0].criteriaId, comment)}
+          //   </div>
+          // )
+           : null
         ) : (
           <div className="">
             <div className="q-center">Form data is empty</div>

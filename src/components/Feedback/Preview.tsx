@@ -81,6 +81,6 @@ export default function FeedbackPreview({ online = false }) {
         heading={"Share Your FeedBack"}
         subHeading={"How was your experience?"}
         itemsPerPage={2}
-        offlineFormatData={state}
+        offlineFormData={state}
     />)
 }
