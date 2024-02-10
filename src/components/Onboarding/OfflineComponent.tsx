@@ -114,6 +114,7 @@ interface Answer {
 }
 
 function OnBoardingOffline(props: QuestLoginProps) {
+    console.log('initialized',props)
     const {
         color,
         bgColor,
@@ -162,7 +163,6 @@ function OnBoardingOffline(props: QuestLoginProps) {
 
     let { design =[] } = props;
 
-    const [formdata, setFormdata] = useState<FormData[] | []>([]);
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [btnFlag, setButtonFlag] = useState<boolean>(false);
     const [steps, setSteps] = useState<number[]>([]);
@@ -180,7 +180,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
             case 2:
                 {
                     let arr = [];
-                    for (let i=1; i<=formdata.length; i++)
+                    for (let i=1; i<=offlineFormData.length; i++)
                         arr.push(i);
                     design = [arr];
                     setDesign([...design])
@@ -189,7 +189,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
             case 3:
                 {
                     let arr = [];
-                    for(let i=1; i<=formdata.length; i++){
+                    for(let i=1; i<=offlineFormData.length; i++){
                         arr.push([i])
                     }
                     design = arr;
@@ -265,7 +265,6 @@ function OnBoardingOffline(props: QuestLoginProps) {
                 //         }
                 //     );
                 let ansArray: any = {};
-                setFormdata([...offlineFormData]);
 
                 offlineFormData.forEach((criteria: any) => {
                     if (criteria.type == "USER_INPUT_MULTI_CHOICE") {
@@ -284,6 +283,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                 // (loadingTracker && setLoading(false))
             }
         }
+        console.log(offlineFormData)
     }, []);
 
     useEffect(() => {
@@ -291,15 +291,15 @@ function OnBoardingOffline(props: QuestLoginProps) {
         let currentQuestions: any =
             !!designState && designState.length > 0 && checkDesignCriteria()
                 ? designState[currentPage]
-                : formdata.map((e, i) => i + 1);
+                : offlineFormData.map((e, i) => i + 1);
         let c = 0;
         for (let i = 0; i < currentQuestions.length; i++) {
-            if (formdata[currentQuestions[i] - 1].required == false || formdata[currentQuestions[i] - 1].type == "LINK_OPEN_READ") {
+            if (offlineFormData[currentQuestions[i] - 1].required == false || offlineFormData[currentQuestions[i] - 1].type == "LINK_OPEN_READ") {
                 c++;
             } else {
                 if (
-                    !!answer[formdata[currentQuestions[i] - 1].criteriaId] &&
-                    answer[formdata[currentQuestions[i] - 1].criteriaId]
+                    !!answer[offlineFormData[currentQuestions[i] - 1].criteriaId] &&
+                    answer[offlineFormData[currentQuestions[i] - 1].criteriaId]
                         .length > 0
                 ) {
                     c++;
@@ -308,24 +308,24 @@ function OnBoardingOffline(props: QuestLoginProps) {
         }
 
         if (currentQuestions.length > 0 && c == currentQuestions.length) {
-            let questUserId = cookies.get("questUserId");
-            let questUserToken = cookies.get("questUserToken");
+            // let questUserId = cookies.get("questUserId");
+            // let questUserToken = cookies.get("questUserToken");
     
-            let headers = {
-                apikey: apiKey,
-                apisecret: apiSecret,
-                userId: questUserId,
-                token: questUserToken
-            }
-            if (!!designState && Number(currentPage) + 1 != designState?.length) {
-                axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-complete-page-${Number(currentPage) + 1}?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers})
-            }
+            // let headers = {
+            //     apikey: apiKey,
+            //     apisecret: apiSecret,
+            //     userId: questUserId,
+            //     token: questUserToken
+            // }
+            // if (!!designState && Number(currentPage) + 1 != designState?.length) {
+            //     // axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-complete-page-${Number(currentPage) + 1}?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers})
+            // }
 
             setButtonFlag(true);
         } else {
             setButtonFlag(false);
         }
-    }, [answer, formdata, currentPage]);
+    }, [answer, currentPage]);
 
     useEffect(() => {
         if (btnFlag == true) {
@@ -1042,8 +1042,8 @@ function OnBoardingOffline(props: QuestLoginProps) {
             }
         }
         if (
-            arr.length == formdata.length &&
-            Math.max(...arr) == formdata.length
+            arr.length == offlineFormData.length &&
+            Math.max(...arr) == offlineFormData.length
             ) {
                 fl = true;
             }
@@ -1057,14 +1057,14 @@ function OnBoardingOffline(props: QuestLoginProps) {
         for (let i of Object.keys(crt)) {
             if (i.includes("/manual") && crt[i] != "") {
                 let id: string = i.split("/manual")[0];
-                let criteriaDetails: FormData[] = formdata.filter((item) => item.criteriaId == id)
+                let criteriaDetails: FormData[] = offlineFormData.filter((item) => item.criteriaId == id)
                 if (criteriaDetails[0].manualInput == crt[id]) {
                     crt[id] = crt[i];
                 }
             }
         }
         
-        // let ansArr: Answer[] = formdata.map((ans: FormData) => {
+        // let ansArr: Answer[] = offlineFormData.map((ans: offlineFormData) => {
         //     return {
         //         question: ans?.question,
         //         answer: crt[ans?.criteriaId] || "",
@@ -1076,25 +1076,25 @@ function OnBoardingOffline(props: QuestLoginProps) {
         .map((key: string) => ({
             criteriaId: key,
             answer: typeof crt[key] === "object" ? crt[key] : [crt[key]],
-            question: formdata[formdata.findIndex(ele => ele.criteriaId == key)].question
+            question: offlineFormData[offlineFormData.findIndex(ele => ele.criteriaId == key)].question
         }));
 
         
-        let questUserId = cookies.get("questUserId");
-        let questUserToken = cookies.get("questUserToken");
+        // let questUserId = cookies.get("questUserId");
+        // let questUserToken = cookies.get("questUserToken");
 
-        let headers = {
-            apikey: apiKey,
-            apisecret: apiSecret,
-            userId: questUserId ? questUserId : userId,
-            token: questUserToken ? questUserToken : token
-        }
+        // let headers = {
+        //     apikey: apiKey,
+        //     apisecret: apiSecret,
+        //     userId: questUserId ? questUserId : userId,
+        //     token: questUserToken ? questUserToken : token
+        // }
 
-        getAnswers && getAnswers(crt);
+        // getAnswers && getAnswers(crt);
         
-        axios.post(`${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`, {criterias, userId: headers.userId}, {headers})
+        // axios.post(`${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`, {criterias, userId: headers.userId}, {headers})
 
-        axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${headers.userId}/metrics/onboarding-complete?userId=${headers.userId}&questId=${questId}`, {count: 1}, {headers})
+        // axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${headers.userId}/metrics/onboarding-complete?userId=${headers.userId}&questId=${questId}`, {count: 1}, {headers})
         
     }
     
@@ -1107,7 +1107,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
             <div
                className="q-onb-ch"
             >
-                {formdata.length > 0 && !!headingScreen &&
+                {offlineFormData.length > 0 && !!headingScreen &&
                     (typeof headingScreen == "object" && !!headingScreen.name ? (
                         <div className="q-onb-main-heading">
                             <div className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
@@ -1134,108 +1134,80 @@ function OnBoardingOffline(props: QuestLoginProps) {
                             </div>
                         </div>
                     ))}
-                    {(template == 1) &&(formdata.length > 0) &&(progressBarType==="modal2"? <ProgressBarNew />:<ProgressBar /> )}
+                    { (offlineFormData.length > 0) && (template == 1) &&(progressBarType==="modal2"? <ProgressBarNew />:<ProgressBar /> )}
                     <div className="q-onb-main-first" style={{fontSize: questionFontSize}}>
                     {!!designState && designState.length > 0 && checkDesignCriteria()
                         ? designState[currentPage].map((num: number) =>
-                        (formdata[num - 1].type == "USER_INPUT_TEXT"
+                        (offlineFormData[num - 1].type == "USER_INPUT_TEXT"
                             ? normalInput(
-                                formdata[num - 1]?.question || "",
-                                formdata[num - 1]?.required || false,
-                                formdata[num - 1].criteriaId || "",
+                                offlineFormData[num - 1]?.question || "",
+                                offlineFormData[num - 1]?.required || false,
+                                offlineFormData[num - 1].criteriaId || "",
                                 num - 1,
-                                formdata[num - 1]?.placeholder || formdata[num - 1]?.question || "",
+                                offlineFormData[num - 1]?.placeholder || offlineFormData[num - 1]?.question || "",
                                 "text"
                             )
-                            : formdata[num - 1].type == "USER_INPUT_EMAIL"
+                            : offlineFormData[num - 1].type == "USER_INPUT_EMAIL"
                             ? normalInput(
-                                formdata[num - 1]?.question || "",
-                                formdata[num - 1]?.required || false,
-                                formdata[num - 1].criteriaId || "",
+                                offlineFormData[num - 1]?.question || "",
+                                offlineFormData[num - 1]?.required || false,
+                                offlineFormData[num - 1].criteriaId || "",
                                 num - 1,
-                                formdata[num - 1]?.placeholder || formdata[num - 1]?.question || "",
+                                offlineFormData[num - 1]?.placeholder || offlineFormData[num - 1]?.question || "",
                                 "email"
                             )
-                            : formdata[num - 1].type == "USER_INPUT_PHONE"
+                            : offlineFormData[num - 1].type == "USER_INPUT_PHONE"
                             ? normalInput(
-                                formdata[num - 1]?.question || "",
-                                formdata[num - 1]?.required || false,
-                                formdata[num - 1].criteriaId || "",
+                                offlineFormData[num - 1]?.question || "",
+                                offlineFormData[num - 1]?.required || false,
+                                offlineFormData[num - 1].criteriaId || "",
                                 num - 1,
-                                formdata[num - 1]?.placeholder || formdata[num - 1]?.question || "",
+                                offlineFormData[num - 1]?.placeholder || offlineFormData[num - 1]?.question || "",
                                 "number"
                             )
-                            : formdata[num - 1].type == "USER_INPUT_TEXTAREA"
+                            : offlineFormData[num - 1].type == "USER_INPUT_TEXTAREA"
                             ? textAreaInput(
-                                formdata[num - 1]?.question || "",
-                                formdata[num - 1]?.required || false,
-                                formdata[num - 1].criteriaId || "",
+                                offlineFormData[num - 1]?.question || "",
+                                offlineFormData[num - 1]?.required || false,
+                                offlineFormData[num - 1].criteriaId || "",
                                 num - 1,
-                                formdata[num - 1]?.placeholder || formdata[num - 1]?.question || ""
+                                offlineFormData[num - 1]?.placeholder || offlineFormData[num - 1]?.question || ""
                             )
-                            : formdata[num - 1].type == "USER_INPUT_DATE"
+                            : offlineFormData[num - 1].type == "USER_INPUT_DATE"
                                 ? dateInput(
-                                    formdata[num - 1]?.question || "",
-                                    formdata[num - 1]?.required || false,
-                                    formdata[num - 1].criteriaId || "",
+                                    offlineFormData[num - 1]?.question || "",
+                                    offlineFormData[num - 1]?.required || false,
+                                    offlineFormData[num - 1].criteriaId || "",
                                     num - 1,
-                                    formdata[num - 1]?.placeholder || formdata[num - 1]?.question || ""
+                                    offlineFormData[num - 1]?.placeholder || offlineFormData[num - 1]?.question || ""
                                 )
-                                : formdata[num - 1].type ==
-                                    "USER_INPUT_MULTI_CHOICE"
-                                    ? !!singleChoose && singleChoose == "modal2"
-                                        ? singleChoiceTwo(
-                                            formdata[num - 1].options || [],
-                                            formdata[num - 1]?.question || "",
-                                            formdata[num - 1]?.required || false,
-                                            formdata[num - 1].criteriaId || "",
-                                            num - 1,
-                                            formdata[num - 1]?.manualInput
-                                        )
-                                        : (singleChoose == "modal3")?
-                                        singleChoiceThree(
-                                            formdata[num - 1].options || [],
-                                            formdata[num - 1]?.question || "",
-                                            formdata[num - 1]?.required || false,
-                                            formdata[num - 1].criteriaId || "",
-                                            num - 1,
-                                            formdata[num - 1]?.manualInput
-                                        )
-                                        : singleChoiceOne(
-                                            formdata[num - 1].options || [],
-                                            formdata[num - 1]?.question || "",
-                                            formdata[num - 1]?.required || false,
-                                            formdata[num - 1].criteriaId || "",
-                                            num - 1,
-                                            formdata[num - 1]?.manualInput
-                                        )
-                                    : formdata[num - 1].type ==
+                                :  offlineFormData[num - 1].type ==
                                         "USER_INPUT_MULTI_CHOICE"
                                         ? !!multiChoice && multiChoice == "modal2"
                                             ? multiChoiceTwo(
-                                                formdata[num - 1].options || [],
-                                                formdata[num - 1]?.question || "",
-                                                formdata[num - 1]?.required || false,
-                                                formdata[num - 1].criteriaId || "",
+                                                offlineFormData[num - 1].options || [],
+                                                offlineFormData[num - 1]?.question || "",
+                                                offlineFormData[num - 1]?.required || false,
+                                                offlineFormData[num - 1].criteriaId || "",
                                                 num - 1
                                             ): multiChoiceOne(
-                                                formdata[num - 1].options || [],
-                                                formdata[num - 1]?.question || "",
-                                                formdata[num - 1]?.required || false,
-                                                formdata[num - 1].criteriaId || "",
+                                                offlineFormData[num - 1].options || [],
+                                                offlineFormData[num - 1]?.question || "",
+                                                offlineFormData[num - 1]?.required || false,
+                                                offlineFormData[num - 1].criteriaId || "",
                                                 num - 1
                                             )
-                                        : formdata[num - 1].type == 
+                                        : offlineFormData[num - 1].type == 
                                             "LINK_OPEN_READ" 
                                             ? linksCriteria(
-                                                formdata[num - 1].linkTitle,
-                                                formdata[num - 1].criteriaId,
-                                                formdata[num - 1].linkUrl,
+                                                offlineFormData[num - 1].linkTitle,
+                                                offlineFormData[num - 1].criteriaId,
+                                                offlineFormData[num - 1].linkUrl,
                                                 num - 1
                                             )
                                             : null )
                         )
-                        : formdata?.map((data, index) =>
+                        : offlineFormData?.map((data, index) =>
                             data.type == "USER_INPUT_TEXT"
                                 ? normalInput(
                                     data?.question || "",
@@ -1331,7 +1303,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                                                     )
                                                     : null
                         )}
-                    {formdata.length > 0 &&
+                    {offlineFormData.length > 0 &&
                         (!!designState && designState.length > 1 &&
                             checkDesignCriteria() ? (
                                 controlBtnType == "Buttons" ?

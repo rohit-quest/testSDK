@@ -89,13 +89,13 @@ export default function SearchOffline(prop: propType): JSX.Element {
         setData([...offlineFormatData].splice(0,defulatResultLength));
         setResults([...offlineFormatData].splice(0,defulatResultLength))
       // })
-    if (prop.open) setOpen(true)
+    if (prop.open===true) setOpen(true)
     inputElement.current?.focus();
     window.addEventListener('keydown', handleKeyPress);
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, [])
+  }, [offlineFormatData])
 
 
   const handleSearch = (str: string) => {

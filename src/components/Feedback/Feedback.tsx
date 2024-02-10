@@ -437,8 +437,6 @@ const singleChoiceOne = (
     required: boolean,
     criteriaId: string,
 ) => {
-  options=["sdas","sdas","dasd"]
-  console.log(options)
     return (
         <div key={criteriaId}>
             <div

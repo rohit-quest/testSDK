@@ -106,7 +106,7 @@ const Survey: React.FC<FeedbackProps> = ({
   const handleNext = () => {
     setPage(prevPage => Math.min(prevPage + 1, Math.ceil(formdata.length / 2) - 1));
   };
-
+  console.log(data)
   const handlePrev = () => {
     setPage(prevPage => Math.max(prevPage - 1, 0));
   };

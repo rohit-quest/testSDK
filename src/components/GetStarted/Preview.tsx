@@ -12,6 +12,54 @@ export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
 
 export default function GetStartedPreview({ online = true }: { online?: boolean }) {
 
+    let [state,setstate] = useState([
+        {
+            id: 1,
+            "type": "LINK_OPEN_READ",
+            "title": "Create a Quest Campaign",
+            "url": "/admin/campaigns",
+            "description": "Choose template, customize UI, add actions and deploy SDK Component in a no-code way",
+            "btn1": "Get Demo",
+            "btn2": "Create Campaign",
+            "btn1Link": "https://calendly.com/debparna/15-min",
+            "criteriaId": "ec-868df9ea-b029-4ca9-9e83-0140f8b376d0",
+            "completed": false,
+            "longDescription": "Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users"
+        },
+        {
+            id: 2,
+            "type": "LINK_OPEN_READ",
+            "title": "Sign-up for Demo & Join our Slack Community",
+            "url": "https://calendly.com/debparna/15-min",
+            "description": "Get a demo of the entire Quest platform as well as a sneak peak of whats on our roadmap ",
+            "btn1": "Join Slack",
+            "btn2": "Book Demo",
+            "btn1Link": "https://join.slack.com/t/quest-ewq8314/shared_invite/zt-25wut50tj-YyIFs~H9d4LHjNYqJmlkow",
+            "criteriaId": "ec-166aa74a-748d-4cf6-8329-b487efb49720",
+            "completed": false,
+            "longDescription": "Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users"
+        },
+        {
+            id: 3,
+            "type": "LINK_OPEN_READ",
+            "title": "Integrate Data Sources",
+            "url": "/admin/settings/#integrations",
+            "description": "Integrate with data sources to enable intelligent data flow into components",
+            "btn1": "Get Demo",
+            "btn2": "Try Now!",
+            "btn1Link": "https://calendly.com/debparna/15-min",
+            "criteriaId": "ec-3b238eb3-2a1f-48bb-a9ac-44e48edf880f",
+            "completed": false,
+            "longDescription": "Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users"
+        }
+    ])
+
+    // setTimeout(() => {
+        // state.pop();j
+        // setstate([...state])
+        // console.log(state)
+    // }, 4000);
+
     if (online)
         return (<QuestProvider
             apiKey="k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be"
@@ -81,50 +129,10 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
             // showToast.success({ text: "completed successfully" })
         }}
         onLinkTrigger={(url, id) => {
-            console.log(url)
-            window.location.href=url;
+            // console.log(url)
+            // window.location.href=url;
         }}
         // uniqueUserId="soumitra.petbindhi+1@gmail.com"
-        offlineFormatData={[
-            {
-                id: 1,
-                "type": "LINK_OPEN_READ",
-                "title": "Create a Quest Campaign",
-                "url": "/admin/campaigns",
-                "description": "Choose template, customize UI, add actions and deploy SDK Component in a no-code way",
-                "btn1": "Get Demo",
-                "btn2": "Create Campaign",
-                "btn1Link": "https://calendly.com/debparna/15-min",
-                "criteriaId": "ec-868df9ea-b029-4ca9-9e83-0140f8b376d0",
-                "completed": false,
-                "longDescription": "Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users"
-            },
-            {
-                id: 2,
-                "type": "LINK_OPEN_READ",
-                "title": "Sign-up for Demo & Join our Slack Community",
-                "url": "https://calendly.com/debparna/15-min",
-                "description": "Get a demo of the entire Quest platform as well as a sneak peak of whats on our roadmap ",
-                "btn1": "Join Slack",
-                "btn2": "Book Demo",
-                "btn1Link": "https://join.slack.com/t/quest-ewq8314/shared_invite/zt-25wut50tj-YyIFs~H9d4LHjNYqJmlkow",
-                "criteriaId": "ec-166aa74a-748d-4cf6-8329-b487efb49720",
-                "completed": false,
-                "longDescription": "Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users"
-            },
-            {
-                id: 3,
-                "type": "LINK_OPEN_READ",
-                "title": "Integrate Data Sources",
-                "url": "/admin/settings/#integrations",
-                "description": "Integrate with data sources to enable intelligent data flow into components",
-                "btn1": "Get Demo",
-                "btn2": "Try Now!",
-                "btn1Link": "https://calendly.com/debparna/15-min",
-                "criteriaId": "ec-3b238eb3-2a1f-48bb-a9ac-44e48edf880f",
-                "completed": false,
-                "longDescription": "Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users"
-            }
-        ]}
+        offlineFormatData={state}
     />)
 }

@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { QuestProvider } from '../QuestWrapper';
-import OfflineComponent from './OfflineComponent';
+import SearchOffline from './OfflineComponent';
 import Search from './Search';
 export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
 export const apiKey = 'k-68a0c6b8-b27f-49c6-a315-b0c9cba15bf4'
@@ -7,6 +8,7 @@ export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44
 export const entityId = 'e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5'
 export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
 export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
+const criteriaId = () => `ec-e32b88d7-0e43-4254-${Date.now() + Math.floor(Math.random() * 10)}`
 
 export default function SearchPreview({ online = false }) {
 
@@ -29,13 +31,61 @@ export default function SearchPreview({ online = false }) {
                 buttonText='view integration'
                 // onResultClick={link=>{window.location.href=link}}
                 token={token}
-                open="ON_CTRL_K_KEY"
-            />
+                sections={false}
+                />
         </QuestProvider>
         )
-    return (
-        <OfflineComponent
-            offlineFormatData={[]}
+        return (
+            <SearchOffline
+            open={true}
+            defaultResultLength={5}
+            
+            offlineFormatData={[
+                {
+                    icon: 'Layers',
+                    link: "/admin/campaigns",
+                    linkUrl: "/admin/campaigns",
+                    text: "Campaigns",
+                    linkTitle: "Campaigns",
+                    "type": "LINK_OPEN_READ",
+                    criteriaId: criteriaId(),
+                },
+                {
+                    icon: 'Layers',
+                    link: "/admin/campaigns/template",
+                    linkUrl: "/admin/campaigns/template",
+                    text: "Create Campaign",
+                    linkTitle: "Create Campaign",
+                    "type": "LINK_OPEN_READ",
+                    criteriaId: criteriaId()
+                },
+                {
+                    icon: 'membershipsIcon',
+                    link: "/admin/memberships",
+                    linkUrl: "/admin/memberships",
+                    text: "Memberships",
+                    linkTitle: "Memberships",
+                    "type": "LINK_OPEN_READ",
+                    criteriaId: criteriaId()
+                },
+                {
+                    icon: 'settingsIcon',
+                    link: "/admin/settings",
+                    linkUrl: "/admin/settings",
+                    text: "Settings",
+                    linkTitle: "Settings",
+                    "type": "LINK_OPEN_READ",
+                    criteriaId: criteriaId()
+                },
+                {
+                    icon: 'Audience',
+                    link: "/admin/audience",
+                    linkUrl: "/admin/audience",
+                    text: "Audience",
+                    linkTitle: "Audience",
+                    "type": "LINK_OPEN_READ",
+                    criteriaId: criteriaId()
+                }]}
         />
     )
 }

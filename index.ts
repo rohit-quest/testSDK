@@ -56,6 +56,7 @@ import OnBoardingOffline from "./src/components/Onboarding/OfflineComponent";
 import GetStartedOffline from "./src/components/GetStarted/OfflineComponent.tsx";
 import SearchOffline from "./src/components/Search/OfflineComponent";
 import QuestMOdalOffline from './src/components/Modals/OflineComponent';
+import SurveyOffline from "./src/components/Feedback/OfflineComponent.tsx";
 
 export {
     QuestProvider,
@@ -93,5 +94,6 @@ export {
     GetStartedOffline,
     SearchOffline,
     QuestMOdalOffline,
-    Referral
+    Referral,
+    SurveyOffline
 };

@@ -46,7 +46,7 @@ export default function TutorialPreview({online=false}) {
                     id: 1,
                     "title": "Explore Questlabs",
                     "url": "https://www.questlabs.ai/",
-                    "subheading": "AI-Powered User Experiences to Increase in-app Adoption, Engagement & Revenue ",
+                    "subheading": "AI-Powered User Experiences to Increase in-app Adoption ",
                     "criteriaId": "ec-e32b88d7-0e43-4254-9c94-44859ceedcdc",
                     "status": false
                 },

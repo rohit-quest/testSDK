@@ -167,7 +167,7 @@ const OfflineComponent: React.FC<TutorialProps> = ({
 
     //   }
     // }
-  }, []);
+  }, [offlineFormatData]);
 
   // useEffect(() => {
   //   const functions = new General("");

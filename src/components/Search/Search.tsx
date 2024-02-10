@@ -88,7 +88,7 @@ export default function Search(prop: propType): JSX.Element {
         setData([...response].splice(0,defulatResultLength));
         setResults([...response].splice(0,defulatResultLength))
       })
-    if (prop.open) setOpen(true)
+    if (prop.open === true) setOpen(true)
     inputElement.current?.focus();
     window.addEventListener('keydown', handleKeyPress);
     return () => {

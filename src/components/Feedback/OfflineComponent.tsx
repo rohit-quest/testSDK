@@ -23,12 +23,12 @@ import QuestLabs from '../QuestLabs';
     </g>
     <defs>
     <linearGradient id="paint0_linear_4046_146" x1="0.320001" y1="80" x2="87.5968" y2="71.0629" gradientUnits="userSpaceOnUse">
-    <stop stop-color="#9035FF"/>
+    <stop stopColor="#9035FF"/>
     <stop offset="1" stop-color="#0065FF"/>
     </linearGradient>
     <linearGradient id="paint1_linear_4046_146" x1="18.566" y1="79.0566" x2="84.8526" y2="72.2662" gradientUnits="userSpaceOnUse">
-    <stop stop-color="#9035FF"/>
-    <stop offset="1" stop-color="#0065FF"/>
+    <stop stopColor="#9035FF"/>
+    <stop offset="1" stopColor="#0065FF"/>
     </linearGradient>
     <clipPath id="clip0_4046_146">
     <rect width="80" height="80" fill="white"/>
@@ -57,12 +57,12 @@ interface FeedbackProps {
   oncancel?: Function;
   itemsPerPage?: number;
   iconColor?: string;
-  offlineFormatData: Array<FormDataItem>
+  offlineFormData: Array<FormDataItem>
 }
 interface FormDataItem {
     type?: string;
     question?: string;
-    options?: [string];
+    options?: string[];
     criteriaId?: string;
     required?: boolean;
     placeholder?: string;
@@ -86,31 +86,23 @@ const SurveyOffline = ({
   oncancel = ()=>{},
   itemsPerPage=5,
   iconColor = '',
-  offlineFormatData=[]
+  offlineFormData=[]
 }: FeedbackProps) => {
 
   const [rating, setRating] = useState<number>(0);
   const [comment, setComment] = useState<string>('');
   const [likePopup, setLikePopup] = useState<boolean>(false);
   const [thanksPopup, setThanksPopup] = useState<boolean>(false);
-  const [formdata, setFormdata] = useState<FormDataItem[]>([]);
   const [gradient, setGradient] = useState<boolean>(false);
 //   const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
   const [answer, setAnswer] = useState<any>({});
-  const [showLoader, setShowLoader] = useState<boolean>(false);
-  const [session, setSession] = useState<string>('');
-  const [isVisible, setIsVisible] = useState(true);
   const [page,setPage] = useState(0);
-  const [data,setData] = useState<FormDataItem[]>([]);
-  const [next,setNext] = useState(false);
+
 
   const handleNext = () => {
-    setPage(prevPage => Math.min(prevPage + 1, Math.ceil(formdata.length / 2) - 1));
+    setPage(prevPage => Math.min(prevPage + 1, Math.ceil(offlineFormData.length / 2) - 1));
   };
 
-  const handlePrev = () => {
-    setPage(prevPage => Math.max(prevPage - 1, 0));
-  };
 
   const dislike = (
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -214,8 +206,6 @@ const cross = (
         //   };
         // });
         // criterias = Array.isArray(criterias) ? criterias : [];
-        setFormdata(offlineFormatData);
-        setData(offlineFormatData);
     //   });
     // }
   }, []);
@@ -503,8 +493,6 @@ const singleChoiceOne = (
     required: boolean,
     criteriaId: string,
 ) => {
-  options=["sdas","sdas","dasd"]
-  console.log(options)
     return (
         <div key={criteriaId}>
             <div
@@ -548,9 +536,9 @@ const singleChoiceOne = (
         }}
         className="q-feedback-cont"
       >
-        {formdata.length > 0 ? (
-          formdata[0].type !== 'LIKE_DISLIKE' &&
-            formdata[0].type !== 'RATING' ? (
+        {offlineFormData.length > 0 ? (
+          offlineFormData[0].type !== 'LIKE_DISLIKE' &&
+          offlineFormData[0].type !== 'RATING' ? (
             <>
               {!thanksPopup && (
                 <div>
@@ -579,9 +567,9 @@ const singleChoiceOne = (
                   </div>
                   <form onSubmit={e=>{
                     e.preventDefault();
-                    ((data.length/itemsPerPage)<=page+1)?returnAnswers():handleNext()
+                    ((offlineFormData.length/itemsPerPage)<=page+1)?returnAnswers():handleNext()
                   }} style={{ padding: "20px", boxSizing: "content-box", display: "flex", flexDirection: "column", gap: "12px" }}>
-                    {formdata.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map((data: any) => {
+                    {offlineFormData.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map((data: any) => {
                       if (data.type === 'USER_INPUT_TEXT') {
                         return normalInput(
                           data.question || '',
@@ -663,7 +651,7 @@ const singleChoiceOne = (
                           }}
                           className="q-fdov-btn-continue"
                         >
-                        {((data.length/itemsPerPage)<=page+1)?'Submit':'Next'}
+                        {((offlineFormData.length/itemsPerPage)<=page+1)?'Submit':'Next'}
                         </button>
                       </div>
                   </form>
@@ -699,7 +687,7 @@ const singleChoiceOne = (
              </div>
               )}
             </>
-          ) : formdata[0].type === 'LIKE_DISLIKE' ? (
+          ) : offlineFormData[0].type === 'LIKE_DISLIKE' ? (
             <div className="">
               {!likePopup && (
                 <div
@@ -719,9 +707,9 @@ const singleChoiceOne = (
                   </div>
                 </div>
               )}
-              {likePopup && likePopupContent(formdata[0].criteriaId, comment)}
+              {likePopup && likePopupContent(offlineFormData[0].criteriaId, comment)}
             </div>
-          ) : formdata[0].type === 'RATING' ? (
+          ) : offlineFormData[0].type === 'RATING' ? (
             <div className="">
               <div className="mb-4">
                 <label
@@ -741,7 +729,7 @@ const singleChoiceOne = (
                   ))}
                 </div>
               </div>
-              {likePopup && likePopupContent(formdata[0].criteriaId, comment)}
+              {likePopup && likePopupContent(offlineFormData[0].criteriaId, comment)}
             </div>
           ) : null
         ) : (

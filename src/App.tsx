@@ -85,7 +85,7 @@ function App() {
 
     return (
         <div
-        style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "" }}
+        style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
         >
 
 <QuestProvider 
@@ -106,7 +106,7 @@ function App() {
                     maxSpins={10}
                     wheelImage={'https://quest-media-storage-bucket.s3.us-east-2.amazonaws.com/1706540110821-wrapit2.png'} /> */}
 
-            {/* <SearchPreview online/> */}
+            {/* <SearchPreview online={false}/> */}
             {/* <SreakPreview/> */}
 
 
@@ -147,7 +147,7 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-{/* <OnBoardingPreview /> */}
+<OnBoardingPreview />
 
 {/* <GetStartedPreview
    online={false}
@@ -191,7 +191,7 @@ function App() {
 {/* <FeedbackWorkflowPreview online={false} /> */}
 
 
-         <FeedbackPreview/>
+         {/* <FeedbackPreview/> */}
          {/* <Survey 
          
          /> */}
