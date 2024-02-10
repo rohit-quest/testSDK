@@ -629,7 +629,7 @@ const singleChoiceOne = (
                                getCurrentRating={(item) =>
                                 handleRatingChange(data.criteriaId, item)
                                }
-                              //  defaultRating={Number(answer[0])}
+                               defaultRating={rating}
                                type={ratingType}
                               />
                             </div>
