@@ -35,6 +35,7 @@ export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44
 export const entityId = 'e-5684609d-cfd7-4b2f-8bcb-f7d2cb316c7e'
 export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
 export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
+
 const paymentBanefits = [
     {
         included: [
@@ -113,7 +114,7 @@ function App() {
 
 
 
-            { /*<Payment
+            {/* { <Payment
                 stripePublishableKey="pk_test_51IGxpeHv3bPcUa5dtAAgA2TZPWjga0FPxWlK3GAnWUfzRXzO8l6Kc3zF2WBpjrvFHAle0Cy3Jqxc7djZxptd9mHe00KjsN2Im7"
                 userId="u-0000000000"
                 description={[
@@ -123,7 +124,7 @@ function App() {
                 ]}
                 paymentBanefits={paymentBanefits}
                 forEntityId={"e-0000000000"}
-            />*/}
+            /> } */}
 
 
 {/* <ModalPreview/> */}
