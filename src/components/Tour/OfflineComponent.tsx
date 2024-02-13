@@ -48,7 +48,7 @@ const TourOfflineComponent = ({
     // const { apiKey, entityId ,apiType} = useContext(QuestContext.Context);
     const [position, setPosition] = useState({ top: 350, left: 376 });
     const componentRef = useRef<HTMLDivElement>(null);
-    const [data, setData] = useState<walkResponeType>([]);
+    // const [data, setData] = useState<walkResponeType>([]);
     const [isClose, setClose] = useState(false);
     // let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
@@ -111,24 +111,24 @@ const TourOfflineComponent = ({
 
     useEffect(() => {
         if (actions && actions[0]) actions[0]();
-        setData(offlineFormData)
+        // setData(offlineFormData)
     }, [])
 
     useEffect(() => {
-        if (!data.length) return;
+        if (!offlineFormData.length) return;
         if (!!actions && !!actions[currentStep]) {
             let action = actions[currentStep + 1]
             if (typeof action == "function")
                 action();
         }
         try {
-            const targetElement = document.querySelector(data[currentStep].selector || "");
+            const targetElement = document.querySelector(offlineFormData[currentStep].selector || "");
             if (targetElement) {
-                setStepPosition(targetElement || "", data[currentStep].position);
+                setStepPosition(targetElement || "", offlineFormData[currentStep].position);
                 const targetRect = targetElement.getBoundingClientRect();
                 animation && targetElement.classList.add("q_walk_highlighted")
                 if (autoScroll) {
-                    const top = data[currentStep].position == "top"?300:100;
+                    const top = offlineFormData[currentStep].position == "top"?300:100;
                     window.scrollTo({
                         top: window.scrollY + targetRect.top - top,
                         behavior: 'smooth',
@@ -146,7 +146,7 @@ const TourOfflineComponent = ({
         return () => {
             document.body.style.overflow = '';
         };
-    }, [currentStep, data])
+    }, [currentStep, offlineFormData])
 
     const tooltipPosition = (position: positionType) => {
         if (!position) return {};
@@ -244,7 +244,7 @@ const TourOfflineComponent = ({
         setClose(!isOpen)
     }, [isOpen])
 
-    if (isClose || !data.length) return <></>
+    if (isClose || !offlineFormData.length) return <></>
     return ReactDOM.createPortal(<div>
         {<div className="q_walk_trhough" ref={componentRef} style={{
             position: 'absolute',
@@ -252,10 +252,10 @@ const TourOfflineComponent = ({
             left: `${position.left}px`,
             backgroundColor, color
         }}>
-            <div className='q_walk_tooltip' style={tooltipPosition(data[currentStep]?.position)}></div>
-            {image && data[currentStep]?.icon && <img src={data[currentStep]?.icon} alt="" />}
+            <div className='q_walk_tooltip' style={tooltipPosition(offlineFormData[currentStep]?.position)}></div>
+            {image && offlineFormData[currentStep]?.icon && <img src={offlineFormData[currentStep]?.icon} alt="" />}
             <div className='q_walk_top'>
-                <div className="q_walk_count">{currentStep + 1}/{data?.length}</div>
+                <div className="q_walk_count">{currentStep + 1}/{offlineFormData?.length}</div>
                 <div className='q_walk_close'>
                 </div>
                 <img src={crossIcon(iconColor)} alt="" className="q_walk_close_img"
@@ -264,9 +264,9 @@ const TourOfflineComponent = ({
                         onClose ? onClose() : setClose(true)
                     }} />
             </div>
-            <div className="q_walk_head" style={{color}}>{data[currentStep]?.text}</div>
+            <div className="q_walk_head" style={{color}}>{offlineFormData[currentStep]?.text}</div>
             {/* <img src={helpCenter1} className='q_walk_img' alt="" /> */}
-            <div className="q_walk_desc" style={{color}}>{data[currentStep]?.description}</div>
+            <div className="q_walk_desc" style={{color}}>{offlineFormData[currentStep]?.description}</div>
             <div className="q_walk_foot">
                 <div className="q_walk_btns">
                     {currentStep > 0 && (<div className="q_walk_back" onClick={() => {
@@ -275,12 +275,12 @@ const TourOfflineComponent = ({
                     <div className="q_walk_next"
                         style={{ color: btnColor, background: btnBackGroundColor }}
                         onClick={() => {
-                            if ((data.length - 1) > currentStep) setCurrentStep(c => c + 1)
+                            if ((offlineFormData.length - 1) > currentStep) setCurrentStep(c => c + 1)
                             else {
                                 document.body.style.overflow = '';
                                 onFinish ? onFinish() : setClose(true)
                             }
-                        }}>{(data.length - 1) > currentStep ? "Continue" : "Finish"}</div>
+                        }}>{(offlineFormData.length - 1) > currentStep ? "Continue" : "Finish"}</div>
                 </div>
             </div>
             <QuestLabs color={iconColor} />

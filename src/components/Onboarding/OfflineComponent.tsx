@@ -114,7 +114,6 @@ interface Answer {
 }
 
 function OnBoardingOffline(props: QuestLoginProps) {
-    console.log('initialized',props)
     const {
         color,
         bgColor,
@@ -176,6 +175,20 @@ function OnBoardingOffline(props: QuestLoginProps) {
     const templateDesign = () =>{
         switch (template) {
             case 1:
+                let arr = [];
+                let total = offlineFormData.length;
+                let pages = headingScreen.length;
+                let perpage = Math.ceil(total/pages);
+                for(let i=0; i<pages; i++){
+                    let temp = [];
+                    for(let j=0; j<perpage; j++){
+                        if((i*perpage)+j < total){
+                            temp.push((i*perpage)+j+1)
+                        }
+                    }
+                    arr.push(temp);
+                }
+                setDesign([...arr]);
                 break;
             case 2:
                 {
@@ -283,7 +296,6 @@ function OnBoardingOffline(props: QuestLoginProps) {
                 // (loadingTracker && setLoading(false))
             }
         }
-        console.log(offlineFormData)
     }, []);
 
     useEffect(() => {
