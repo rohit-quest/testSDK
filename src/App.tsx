@@ -127,7 +127,7 @@ function App() {
             /> } */}
 
 
-{/* <ModalPreview/> */}
+<ModalPreview/>
 
 
 
@@ -149,7 +149,7 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-<OnBoardingPreview />
+{/* <OnBoardingPreview /> */}
 
 {/* <GetStartedPreview
    online={false}
