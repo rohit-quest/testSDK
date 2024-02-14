@@ -8,6 +8,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import config from "../../config";
 import PaymentGateway from "./PaymentGateway";
 import "./payment.css"
+import General from "../../general";
 
 interface CreditButtonProps {
   userId?: string;
@@ -24,6 +25,8 @@ interface CreditButtonProps {
   inputBgColor?: string;
   width?: string;
   forEntityId:string;
+  uniqueUserId?: string,
+  uniqueEmailId?: string,
 }
 
 const Payment: FC<CreditButtonProps> = ({
@@ -41,10 +44,12 @@ const Payment: FC<CreditButtonProps> = ({
   inputBgColor,
   width,
   forEntityId,
+  uniqueEmailId,
+  uniqueUserId
 }) => {
   const [tiers, setTears] = useState<any[]>([]);
   const [desc, setDesc] = useState<string[]>(description || []);
-  const { apiKey, apiSecret, entityId, featureFlags } = useContext(
+  const { apiKey, apiSecret, apiType, entityId, featureFlags } = useContext(
     QuestContext.Context
   );
   const stripeTestPromise = loadStripe(stripePublishableKey);
@@ -75,6 +80,11 @@ const Payment: FC<CreditButtonProps> = ({
           setTears([...response.data]);
         }
       });
+    }
+
+    if(entityId && uniqueUserId){
+      const functions = new General('')
+      functions.getExternalLogin({ apiType, uniqueUserId, entityId, userId, apiKey, apiSecret, token, uniqueEmailId })
     }
   }, []);
 

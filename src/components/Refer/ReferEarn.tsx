@@ -13,6 +13,7 @@ import { referProp, response, shareOnPlatform } from "./Response.ts";
 import QuestContext from "../QuestWrapper.tsx";
 import PopupComponent from "./Popup.tsx";
 import ShareArticle from "../Share/ShareArticle.tsx";
+import General from "../../general.ts";
 
 export const ReferShare = ({
   isOpen = true,
@@ -24,11 +25,13 @@ export const ReferShare = ({
   isArticle = false,
   description,
   heading,
-  headingColor
+  headingColor,
+  uniqueEmailId,
+  uniqueUserId
 }: referProp) => {
   const [shareCode, setCode] = useState("");
   const [copy, setCopy] = useState(false);
-  const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
+  const { apiKey, apiSecret, entityId, apiType } = useContext(QuestContext.Context);
   const style = !!color && !!bgColor ? { color, backgroundColor: bgColor } : {};
 
   useEffect(() => {
@@ -40,6 +43,14 @@ export const ReferShare = ({
       token,
     }).then((r) => setCode(r.referralCode || ""));
   }, []);
+
+  useEffect(() => {
+    if (entityId && uniqueUserId) {
+      const functions = new General('')
+      functions.getExternalLogin({ apiType, uniqueUserId, entityId, userId, apiKey, apiSecret, token, uniqueEmailId })
+    }
+  }, [])
+
   if (isArticle)
     return (<ShareArticle
       questId={questId}
@@ -120,10 +131,12 @@ export const ReferEarn = ({
   token = "",
   color = "black",
   bgColor = "white",
+  uniqueEmailId,
+  uniqueUserId
 }: referProp) => {
   const [shareCode, setCode] = useState("");
   const [copy, setCopy] = useState(false);
-  const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
+  const { apiKey, apiSecret, entityId ,apiType } = useContext(QuestContext.Context);
   const [share, setshare] = useState(false);
   const style = !!color && !!bgColor ? { color, backgroundColor: bgColor } : {};
 
@@ -136,6 +149,13 @@ export const ReferEarn = ({
       token,
     }).then((r) => setCode(r.referralCode || ""));
   }, []);
+
+  useEffect(() => {
+    if (entityId && uniqueUserId) {
+      const functions = new General('')
+      functions.getExternalLogin({ apiType, uniqueUserId, entityId, userId, apiKey, apiSecret, token, uniqueEmailId })
+    }
+  }, [])
 
   return (
     <div className="q-referEarn" style={style}>

@@ -6,6 +6,7 @@ import { getResponse } from "./response";
 import QuestContext from "../QuestWrapper.tsx";
 import QuestLabs from "../QuestLabs.tsx";
 import config from "../../config.ts";
+import General from "../../general.ts";
 
 type data = { text: string, icon: string, link: string, resultType: "command" | "action" | undefined, description: string, longDescription?: string }[];
 
@@ -28,8 +29,10 @@ interface propType {
   buttonText?: string;
   searchDetails?: boolean;
   width?: string;
-  onResultClick?: (link: string)=>void;
+  onResultClick?: (link: string) => void;
   iconColor?: string;
+  uniqueUserId?: string,
+  uniqueEmailId?: string,
 }
 
 export default function Search(prop: propType): JSX.Element {
@@ -42,13 +45,15 @@ export default function Search(prop: propType): JSX.Element {
     questId = "",
     token = "",
     userId = "",
-    onResultClick =(link:string) => window.open(link,"_blank"),
+    onResultClick = (link: string) => window.open(link, "_blank"),
+    uniqueUserId,
+    uniqueEmailId,
   } = prop;
   const inputElement = useRef<HTMLInputElement>(null);
   const [searchResults, setResults] = useState<data>(defaultResult);
   const [isOpen, setOpen] = useState(false);
   const [selectedResultIndex, setSelectedResultIndex] = useState<number>(0);
-  const { apiKey, entityId, apiType} = useContext(QuestContext.Context);
+  const { apiKey, entityId, apiType, apiSecret } = useContext(QuestContext.Context);
   const [data, setData] = useState<data>([]);
   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
@@ -68,6 +73,13 @@ export default function Search(prop: propType): JSX.Element {
     }
   };
 
+  useEffect(() => {
+    if (entityId && uniqueUserId) {
+      const functions = new General('')
+      functions.getExternalLogin({ apiType, uniqueUserId, entityId, userId, apiKey, apiSecret, token, uniqueEmailId })
+    }
+  }, [])
+
   const handleKeyPress = (event: KeyboardEvent) => {
     const isCtrlPressed = (event.ctrlKey || event.metaKey) && !event.altKey;
     if (isCtrlPressed && event.key === 'k') {
@@ -83,10 +95,10 @@ export default function Search(prop: propType): JSX.Element {
   }, [isOpen])
 
   useEffect(() => {
-    getResponse({ apiKey, token, userId }, entityId, questId,BACKEND_URL)
+    getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL)
       .then((response) => {
-        setData([...response].splice(0,defulatResultLength));
-        setResults([...response].splice(0,defulatResultLength))
+        setData([...response].splice(0, defulatResultLength));
+        setResults([...response].splice(0, defulatResultLength))
       })
     if (prop.open === true) setOpen(true)
     inputElement.current?.focus();
@@ -97,10 +109,10 @@ export default function Search(prop: propType): JSX.Element {
   }, [])
 
   const handleSearch = (str: string) => {
-    if(!data.length) return;
-    const filtered = data.filter(e=>e.text.toLocaleLowerCase().includes(str.toLocaleLowerCase()))
-      setResults(filtered)
-}
+    if (!data.length) return;
+    const filtered = data.filter(e => e.text.toLocaleLowerCase().includes(str.toLocaleLowerCase()))
+    setResults(filtered)
+  }
 
   const jsx = (
     <div className='q_search_bar' style={{ color, backgroundColor }}>
@@ -123,22 +135,22 @@ export default function Search(prop: propType): JSX.Element {
               >
                 <img src={(prop.icons?.length && prop.icons[i]) || icon || questLogo} className="q_search_result_icon" alt={''} />
                 <div className="q_search_result_box">
-                  <div style={{color}} className="q_search_result_head">{text}</div>
-                  <div style={{color}} className="q_search_result_desc">{description || "Provide the required information"}</div>
+                  <div style={{ color }} className="q_search_result_head">{text}</div>
+                  <div style={{ color }} className="q_search_result_desc">{description || "Provide the required information"}</div>
                 </div>
               </div>
             ))
           }
         </div>
-       {prop.searchDetails && (<div className="q_search_result_details">
+        {prop.searchDetails && (<div className="q_search_result_details">
           <img src={searchResults[selectedResultIndex]?.icon || questLogo} alt="" />
-          <div style={{color}} className="q_search_details_head">{searchResults[selectedResultIndex]?.text}</div>
-          <div style={{color}} className="q_search_result_desc">{searchResults[selectedResultIndex]?.longDescription || searchResults[selectedResultIndex]?.description}</div>
+          <div style={{ color }} className="q_search_details_head">{searchResults[selectedResultIndex]?.text}</div>
+          <div style={{ color }} className="q_search_result_desc">{searchResults[selectedResultIndex]?.longDescription || searchResults[selectedResultIndex]?.description}</div>
           {prop.buttonText && <div className="q_search_result_button1">{prop.buttonText}</div>}
           <div className="q_search_result_button2">Learn more</div>
         </div>)}
       </div>
-      <QuestLabs backgroundColor={backgroundColor} color={prop.iconColor}/>
+      <QuestLabs backgroundColor={backgroundColor} color={prop.iconColor} />
     </div>
   )
 
@@ -164,8 +176,8 @@ export default function Search(prop: propType): JSX.Element {
               >
                 <img className="q_search_result_icon" src={(prop.icons?.length && prop.icons[i]) || icon || questLogo} alt={''} />
                 <div className="q_search_result_box">
-                  <div style={{color}} className="q_search_result_head">{text}</div>
-                  <div style={{color}} className="q_search_result_desc">{description}</div>
+                  <div style={{ color }} className="q_search_result_head">{text}</div>
+                  <div style={{ color }} className="q_search_result_desc">{description}</div>
                 </div>
               </div>
             ))
@@ -182,8 +194,8 @@ export default function Search(prop: propType): JSX.Element {
               >
                 <img src={(prop.icons?.length && prop.icons[i]) || icon || questLogo} alt={''} className="q_search_result_icon" />
                 <div className="q_search_result_box">
-                  <div style={{color}} className="q_search_result_head">{text}</div>
-                  <div style={{color}} className="q_search_result_desc">{description}</div>
+                  <div style={{ color }} className="q_search_result_head">{text}</div>
+                  <div style={{ color }} className="q_search_result_desc">{description}</div>
                 </div>
                 {/* <img src={enterIcon} className="q_search_enter_icon" alt="" /> */}
               </div>
@@ -192,14 +204,14 @@ export default function Search(prop: propType): JSX.Element {
         </div>
       </div>
       {prop.searchDetails && (<div className="q_search_result_details">
-          <img src={searchResults[selectedResultIndex]?.icon || questLogo} alt="" />
-          <div className="q_search_details_head">{searchResults[selectedResultIndex]?.text}</div>
-          <div className="q_search_result_desc">{searchResults[selectedResultIndex]?.longDescription || searchResults[selectedResultIndex]?.description}</div>
-          {prop.buttonText && <div className="q_search_result_button1">{prop.buttonText}</div>}
-          <div className="q_search_result_button2">Learn more</div>
-        </div>)}
+        <img src={searchResults[selectedResultIndex]?.icon || questLogo} alt="" />
+        <div className="q_search_details_head">{searchResults[selectedResultIndex]?.text}</div>
+        <div className="q_search_result_desc">{searchResults[selectedResultIndex]?.longDescription || searchResults[selectedResultIndex]?.description}</div>
+        {prop.buttonText && <div className="q_search_result_button1">{prop.buttonText}</div>}
+        <div className="q_search_result_button2">Learn more</div>
+      </div>)}
     </div>
-    <QuestLabs backgroundColor={backgroundColor} color={prop.iconColor}/>
+    <QuestLabs backgroundColor={backgroundColor} color={prop.iconColor} />
   </div>)
 
   const result = prop.sections ? sectionsJsx : jsx;
