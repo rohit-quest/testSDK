@@ -54,7 +54,7 @@ interface FeedbackProps {
   delay?: number;
   isInline?: boolean;
   crossLogoForInput?: boolean;
-  oncancel?: Function;
+  onCancel?: Function;
   itemsPerPage?: number;
   iconColor?: string;
   offlineFormData: Array<FormDataItem>;
@@ -84,7 +84,7 @@ const SurveyOffline = ({
   delay = 1000,
   isInline = false,
   crossLogoForInput = false,
-  oncancel = ()=>{},
+  onCancel = ()=>{},
   itemsPerPage=5,
   iconColor = '',
   ratingType = 'number',
@@ -639,7 +639,7 @@ const singleChoiceOne = (
                     })}
                       <div className='q_feedback_buttons'>
                         <div onClick={
-                            ()=>(0==page)?oncancel():setPage(c=>c-1)
+                            ()=>(0==page)?onCancel():setPage(c=>c-1)
                         }
                           className="q-fdov-btn-cancel"
                         >

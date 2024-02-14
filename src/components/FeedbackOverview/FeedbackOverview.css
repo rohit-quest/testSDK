@@ -121,6 +121,7 @@
   flex-direction: column;
   gap: 12px;
 }
+
 .q-fdov-btn-continue {
   box-sizing: content-box;
   padding: 10px 20px;
@@ -228,7 +229,7 @@
 }
 
 .q_fw_input {
-  color: #939393;
+  color: black;
   font-family: Figtree;
   font-size: 14px;
   font-style: normal;

@@ -9,6 +9,7 @@ import QuestContext from "../QuestWrapper.tsx";
 import { grabDealIcon } from "./Svg.ts";
 import QuestLabs from "../QuestLabs.tsx";
 import config from "../../config.ts";
+import General from "../../general.ts";
 
 export interface referProp {
     questId: string;
@@ -28,6 +29,8 @@ export interface referProp {
     expiryDate?: number;
     claimRewardHandler?: Function;
     backButtonTrigger?: Function;
+    uniqueEmailId?: string;
+    uniqueUserId?: string
 }
 
 export const CrossSelling = ({
@@ -46,7 +49,9 @@ export const CrossSelling = ({
     showDays = false,
     expiryDate = 0,
     claimRewardHandler = ()=>{},
-    backButtonTrigger = ()=>{}
+    backButtonTrigger = ()=>{},
+    uniqueEmailId,
+    uniqueUserId
 }: referProp) => {
     const { apiKey, apiSecret, entityId, apiType } = useContext(QuestContext.Context);
     const style = !!color && !!bgColor ? { color, backgroundColor: bgColor } : {};
@@ -89,6 +94,10 @@ export const CrossSelling = ({
                 console.log('Error fetching expiryDate:', expiryDate);
                 requestRef.current = expiryDate;
             });
+         if(entityId && uniqueUserId)   {
+            const functions = new General('')
+            functions.getExternalLogin({ apiType, uniqueUserId, entityId, userId, apiKey, apiSecret, token, uniqueEmailId })
+         }
     
         return () => {
             isMounted = false; 

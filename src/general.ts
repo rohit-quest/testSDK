@@ -106,6 +106,34 @@ class General {
             console.log(error);
         }
     }
+
+    async getExternalLogin ({apiType, uniqueUserId, entityId, userId, apiKey, apiSecret, token, uniqueEmailId}) {
+        const cookies = new Cookies()
+        const headers = {
+            apiKey: apiKey,
+            apisecret: apiSecret,
+            userId: userId,
+            token: token, 
+        };
+
+        const body = {
+            externalUserId: !!uniqueUserId && uniqueUserId,
+            entityId: entityId,
+            email: uniqueEmailId
+        }
+        let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
+        await axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
+        .then((res) => {
+            let {userId, token} = res.data;
+            // let header = {...headers, ...{userId, token}}
+            const date = new Date();
+            date.setHours(date.getHours() + 12)
+            cookies.set("externalUserId", uniqueUserId, {path: "/", expires: date})
+            cookies.set("questUserId", userId, {path: "/", expires: date})
+            cookies.set("questUserToken", token, {path: "/", expires: date})
+        })
+    }
 }
+
 
 export default General;

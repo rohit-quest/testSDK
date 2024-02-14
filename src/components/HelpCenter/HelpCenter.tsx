@@ -8,6 +8,7 @@ import config from "../../config.ts";
 import QuestContext from "../QuestWrapper.tsx";
 import { HelpChat } from "./HelpChat.tsx";
 import chat1 from "../../assets/images/chat1.png";
+import General from '../../general.ts';
 
 interface CustomHeaders {
     apiKey: string;
@@ -26,6 +27,8 @@ interface HelpProps {
     color?: string;
     descriptioin?: string;
     onClose: Function
+    uniqueEmailId?: string,
+    uniqueUserId?: string
 }
 
 type data = [{ title: string, link: string, description: string, icon: string }] | []
@@ -64,12 +67,14 @@ export const HelpCenter = (
         headColor = 'white',
         headBgColor = "black",
         descriptioin = "Discover our key features",
-        onClose = (() => { })
+        onClose = (() => { }),
+        uniqueEmailId,
+        uniqueUserId
     }: HelpProps) => {
 
     const [isOpen, setIsOpen] = useState(true);
     const [data, setData] = useState<data>([])
-    const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
+    const { apiKey, apiSecret, entityId, apiType } = useContext(QuestContext.Context);
     const [chat, setChat] = useState(false)
     const filter = (str: string) => {
         // @ts-ignore
@@ -84,6 +89,10 @@ export const HelpCenter = (
                 setData(response)
                 dataBackUP = response;
             })
+        if(entityId && uniqueUserId) {
+            const functions = new General('')
+            functions.getExternalLogin({ apiType, uniqueUserId, entityId, userId, apiKey, apiSecret, token, uniqueEmailId })
+        }   
     }, [])
 
     const helpLinksRef = useRef<HTMLDivElement>(null);

@@ -151,7 +151,7 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
             }
           })}
           <div
-          style={{backgroundColor: btnColor, color:btnTextColor, marginTop: '10%'}}
+          style={{backgroundColor: btnColor, color:btnTextColor, marginTop: '10px'}}
             onClick={handleSubmit}
             className="q-fdov-btn-continue"
           >

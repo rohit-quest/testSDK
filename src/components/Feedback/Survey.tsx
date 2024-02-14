@@ -13,6 +13,7 @@ import { userLogo, crossLogo, leftArrow, rightArrow, calenderIcon, textAreaIcon,
 import showToast from '../toast/toastService';
 import Rating from '../Rating/Rating';
 import QuestLabs from '../QuestLabs';
+import General from '../../general';
 
   const thanks = (
     <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -54,10 +55,12 @@ interface FeedbackProps {
   delay?: number;
   isInline?: boolean;
   crossLogoForInput?: boolean;
-  oncancel?: Function;
+  onCancel?: Function;
   itemsPerPage?: number;
   iconColor?: string;
-  ratingType? : string
+  ratingType? : string;
+  uniqueEmailId?: string;
+  uniqueUserId?: string;
 }
 
 const Survey: React.FC<FeedbackProps> = ({
@@ -77,9 +80,11 @@ const Survey: React.FC<FeedbackProps> = ({
   delay = 1000,
   isInline = false,
   crossLogoForInput = false,
-  oncancel = ()=>{},
+  onCancel = ()=>{},
   itemsPerPage=5,
-  iconColor = ''
+  iconColor = '',
+  uniqueEmailId,
+  uniqueUserId
 }) => {
   interface FormDataItem {
     type?: string;
@@ -219,6 +224,12 @@ const cross = (
         setData([...criterias]);
       });
     }
+    
+    if(entityId && uniqueUserId){
+      const functions = new General('')
+      functions.getExternalLogin({ apiType, uniqueUserId, entityId, userId, apiKey, apiSecret, token, uniqueEmailId })
+    }
+
   }, []);
 
   const handleUpdate = (e: any, id: string, j: string, k?: number) => {
@@ -648,7 +659,7 @@ const singleChoiceOne = (
                     })}
                       <div className='q_feedback_buttons'>
                         <div onClick={
-                            ()=>(0==page)?oncancel():setPage(c=>c-1)
+                            ()=>(0==page)?onCancel():setPage(c=>c-1)
                         }
                           className="q-fdov-btn-cancel"
                         >
