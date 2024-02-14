@@ -78,7 +78,7 @@ export default function FeedbackPreview({ online = false }) {
             </QuestProvider>
         )
     return (<SurveyOffline
-        heading={"Share Your FeedBack"}
+        heading={"Share Your Feedback"}
         subHeading={"How was your experience?"}
         itemsPerPage={2}
         offlineFormData={state}

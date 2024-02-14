@@ -53,6 +53,11 @@
   font-size: 14px;
   line-height: 20px;
 }
+.numberButtons:hover {
+  background-color: black;
+  transition: 0.5s all ease;
+  color: white;
+}
 
 .emojiActive {
   background-color: black;
@@ -85,20 +90,20 @@
 }
 
 .singleEmojiCont {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .singleColoredCont {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width : 14px
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
 }
-.singleNumberCont{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width : 33px
+.singleNumberCont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 33px;
 }

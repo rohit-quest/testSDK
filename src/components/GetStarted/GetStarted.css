@@ -159,6 +159,7 @@
   align-items: flex-start;
   gap: 8px;
   cursor: pointer;
+ 
 }
 
 .gs_card_body {
@@ -290,4 +291,5 @@
   height: 16px;
   padding: 8px;
   background: var(--Neutral-White-200, #FBFBFB);
+ 
 }

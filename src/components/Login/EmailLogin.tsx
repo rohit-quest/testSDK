@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import config from '../../config';
-import OtpVerification from './OtpVerification';
-import Loader from './Loader';
-import { toast } from 'react-toastify';
-import { alertLogo, crossLogo, emailLogo } from '../../assets/images';
+import React, { useState } from "react";
+import axios from "axios";
+import config from "../../config";
+import OtpVerification from "./OtpVerification";
+import Loader from "./Loader";
+import { alertLogo, crossLogo, emailLogo } from "../../assets/images";
+import showToast from "../toast/toastService";
 
 interface EmailLoginProps {
   btnColor?: string;
@@ -17,7 +17,7 @@ interface EmailLoginProps {
   fontFamily?: string;
   apiKey: string;
   apiSecret: string;
-  onSubmit?: ({ userId, token }: { userId: string, token: string }) => void;
+  onSubmit?: ({ userId, token }: { userId: string; token: string }) => void;
 }
 
 const EmailLogin: React.FC<EmailLoginProps> = ({
@@ -33,24 +33,28 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   onSubmit,
 }) => {
   const [sendOTP, setSendOTP] = useState(false);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(true);
+  const [mainValidEmail, setMainValidEmail] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
 
   const handlesubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && e.currentTarget.value !== '') {
+    if (e.key === "Enter" && e.currentTarget.value !== "") {
+      setMainValidEmail(isValidEmail);
       sendOTPfunction();
     }
     const newEmail = e.currentTarget.value;
     setEmail(newEmail);
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex =
+      /^[A-Za-z0-9._]{3,}@[a-zA-Z]{3,}[.]{1,1}[a-zA-Z.]{2,6}$/g;
     setIsValidEmail(emailRegex.test(newEmail));
   };
 
   const sendOTPfunction = () => {
+    setMainValidEmail(isValidEmail);
     if (!isValidEmail || email.length === 0) {
-      toast.error(
-        'Invalid email address' + '\n' + 'Please check your email address'
+      showToast.error(
+        "Invalid email address" + "\n" + "Please check your email address",
       );
       return;
     }
@@ -85,15 +89,27 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
       {showLoader && <Loader />}
       {!sendOTP && (
         <div className="questLabs">
-          <div className='q-email-login-ctn'>
-            <div style={{ color: textColor, fontFamily }} className="q-email-text">
+          <div className="q-email-login-ctn">
+            <div
+              style={{ color: textColor, fontFamily }}
+              className="q-email-text"
+            >
               Email
             </div>
-            <div className='q-email-input'>
-              <img src={emailLogo} className='q-email-logo' alt='' />
-              <img src={isValidEmail ? crossLogo : alertLogo} className='q-email-cross' alt='' onClick={() => setEmail("")} />
+            <div className="q-email-input">
+              <img src={emailLogo} className="q-email-logo" alt="" />
+              <img
+                src={crossLogo}
+                className="q-email-cross"
+                alt=""
+                onClick={() => {
+                  setEmail("");
+                  setMainValidEmail(true);
+                }}
+              />
+
               <input
-                id='q_email_login'
+                id="q_email_login"
                 type="text"
                 placeholder="Enter your email id"
                 value={email}
@@ -102,10 +118,8 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                 className="q-login-email-input"
               />
             </div>
-            {!isValidEmail && (
-              <div className="q-login-p">
-                Please enter a valid email id
-              </div>
+            {!mainValidEmail && (
+              <div className="q-login-p">Please enter a valid email id</div>
             )}
             <div
               style={{

@@ -241,6 +241,7 @@ p {
   font-weight: 500;
   line-height: 24px;
   text-align: center;
+  width: 100%;
 }
 
 .q_fw_textarea,
