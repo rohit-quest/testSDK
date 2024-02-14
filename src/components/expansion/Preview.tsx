@@ -1,4 +1,4 @@
-import { ReferEarn } from './ReferEarn'
+import { Referral as ReferEarn } from './ReferEarn'
 import { QuestProvider } from '../QuestWrapper'
 
 const entityId='e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5';
