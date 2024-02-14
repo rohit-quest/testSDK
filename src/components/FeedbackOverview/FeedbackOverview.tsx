@@ -263,7 +263,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           userId: questUserId,
           token: questUserToken,
         }
-        setResult(header, userId)
+        setResult(header, header.userId)
       } else {
         setResult(headers, userId)
       }
