@@ -30,7 +30,7 @@ interface FeedbackProps {
   delay?: number;
   isInline?: boolean;
   crossLogoForInput?: boolean;
-  oncancel?: Function ;
+  onCancel?: Function ;
   uniqueEmailId?: string;
   uniqueUserId?: string
 }
@@ -51,7 +51,7 @@ const Feedback: React.FC<FeedbackProps> = ({
   delay = 1000,
   isInline = false,
   crossLogoForInput = false,
-  oncancel = ()=>{},
+  onCancel = ()=>{},
   uniqueEmailId,
   uniqueUserId
 }) => {
@@ -584,7 +584,7 @@ const singleChoiceOne = (
                       }
                     })}
                       <div className='q_feedback_buttons'>
-                        <div onClick={()=>oncancel()}
+                        <div onClick={()=>onCancel()}
                           className="q-fdov-btn-cancel"
                         >
                           Cancel
