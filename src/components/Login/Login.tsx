@@ -41,14 +41,15 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   const [fontFamily, setFontFamily] = useState<string>('Figtree');
   const [gradient, setGradient] = useState<boolean>(false);
   const [otpScreen, setOtpScreen] = useState<boolean>(false);
-  const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
+  const { apiKey, apiSecret, entityId,apiType } = useContext(QuestContext.Context);
+  let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
   const handleOtp = (val: boolean) => {
     setOtpScreen(val);
   };
   useEffect(() => {
     if (entityId) {
-      const request = `${config.BACKEND_URL}api/entities/${entityId}/get-theme`;
+      const request = `${BACKEND_URL}api/entities/${entityId}/get-theme`;
       axios
         .get(request)
         .then((res) => {
@@ -144,7 +145,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                     textColor,
                     fontFamily,
                     apiKey,
-                    apiSecret,
+                    apiSecret: apiSecret || '',
                     redirectURL,
                     btnColor,
                     entityId,
@@ -176,7 +177,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                       redirectUri,
                       redirectURL,
                       googleClientId,
-                      apiSecret,
+                      apiSecret: apiSecret || '',
                       apiKey,
                       onSubmit,
                     }}
@@ -194,7 +195,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   redirectUri,
                   redirectURL,
                   googleClientId,
-                  apiSecret,
+                  apiSecret : apiSecret || '',
                   apiKey,
                   onSubmit,
                 }}

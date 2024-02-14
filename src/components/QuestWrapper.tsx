@@ -30,7 +30,7 @@ type User = {
 
 export const Context = createContext<{
   apiKey: string,
-  apiSecret: string,
+  apiSecret?: string,
   entityId: string,
   user: User,
   setUser: (user: User) => void,
