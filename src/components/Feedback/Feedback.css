@@ -5,7 +5,7 @@
   max-width: 28rem;
   margin: 0 auto;
   border-radius: 12px;
-  font-family: 'Figtree', sans-serif;
+  font-family: "Figtree", sans-serif;
 }
 
 .q-sub {
@@ -49,7 +49,7 @@
 
 .q-feed-desc {
   margin-top: 5%;
-  background-color: #F6F6F6;
+  background-color: #f6f6f6;
   border-radius: 10px;
   padding: 1.5rem;
   width: 100%;
@@ -90,12 +90,12 @@
   gap: 8px;
 }
 
-.q-fd-like-dislike-txt>h4,
+.q-fd-like-dislike-txt > h4,
 p {
   width: fit-content;
 }
 
-.q-fd-like-dislike-txt>h4 {
+.q-fd-like-dislike-txt > h4 {
   color: var(--neutral-grey-700, #252525);
   text-align: center;
   font-size: 24px;
@@ -104,8 +104,8 @@ p {
   line-height: 32px;
 }
 
-.q-fd-like-dislike-txt>p {
-  color: var(--neutral-grey-400, #5E5E5E);
+.q-fd-like-dislike-txt > p {
+  color: var(--neutral-grey-400, #5e5e5e);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -120,28 +120,28 @@ p {
   gap: 8px;
   align-self: stretch;
   border-radius: 10px;
-  border: 2px solid var(--neutral-grey-100, #ECECEC);
+  border: 2px solid var(--neutral-grey-100, #ececec);
 }
 
-.q-fd-input>input,
+.q-fd-input > input,
 .q-fd-input textarea {
   width: 100%;
   border: 0;
 }
 
-.q-fd-input>input,
+.q-fd-input > input,
 .q-fd-input textarea:hover {
   border: 0;
   outline: 0;
 }
 
-.q-fd-input>input,
+.q-fd-input > input,
 .q-fd-input textarea:focus {
   border: 0;
   outline: 0;
 }
 
-.q-fd-input>.q-fd-input textarea {
+.q-fd-input > .q-fd-input textarea {
   resize: none;
 }
 
@@ -166,7 +166,7 @@ p {
 
 .q-fd-sub {
   overflow: hidden;
-  color: var(--neutral-grey-300, #8E8E8E);
+  color: var(--neutral-grey-300, #8e8e8e);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -175,8 +175,8 @@ p {
 }
 
 .q-fd-topbar {
-  border-bottom: 1px solid #EFEFEF;
-  background: #FFF;
+  border-bottom: 1px solid #efefef;
+  background: #fff;
   padding: 12px 20px;
   box-sizing: content-box;
   display: flex;
@@ -185,7 +185,7 @@ p {
   border-radius: 12px 12px 0px 0px;
 }
 
-.q-fd-topbar>img {
+.q-fd-topbar > img {
   width: 20px;
   height: 20px;
   cursor: pointer;
@@ -218,8 +218,8 @@ p {
 
 .q-fdov-btn-cancel {
   border-radius: 10px;
-  border: 1.5px solid #EFEFEF;
-  background: #FFF;
+  border: 1.5px solid #efefef;
+  background: #fff;
   display: flex;
   padding: 10px 16px;
   justify-content: center;
@@ -228,18 +228,32 @@ p {
   cursor: pointer;
   width: 100%;
 }
+.q-fdov-btn-next {
+  box-sizing: content-box;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1.5px solid #d1acff;
+  background: linear-gradient(84deg, #9035ff 0.36%, #0065ff 100.36%);
+  cursor: pointer;
+  color: var(--neutral-pure-white-100, #fff);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  text-align: center;
+  width: 100%;
+}
 
 .q_fw_textarea,
-.q_fw_textarea:focus ,
-.q_fw_textarea:hover
-{
+.q_fw_textarea:focus,
+.q_fw_textarea:hover {
   display: flex;
   padding: 10px 16px 64px 16px;
   align-items: center;
   gap: 8px;
   align-self: stretch;
   border-radius: 10px;
-  border: 1px solid #ECECEC;
+  border: 1px solid #ececec;
   width: 90%;
-  font-family: 'Figtree';
+  font-family: "Figtree";
 }

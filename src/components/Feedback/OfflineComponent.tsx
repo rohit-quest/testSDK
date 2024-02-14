@@ -653,7 +653,7 @@ const singleChoiceOne = (
                             color: btnTextColor,
                             fontFamily: font,
                           }}
-                          className="q-fdov-btn-continue"
+                          className="q-fdov-btn-next"
                         >
                         {((offlineFormData.length/itemsPerPage)<=page+1)?'Submit':'Next'}
                         </button>

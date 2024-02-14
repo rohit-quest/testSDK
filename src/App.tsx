@@ -3,101 +3,100 @@ import { QuestProvider } from "./components/QuestWrapper";
 import QuestLogin from "./components/Login/Login";
 import { answer } from "./components/QuestForm/response";
 import { HelpCenter } from "./components/HelpCenter/HelpCenter";
-import { ReferEarn, ReferShare } from "./components/Refer/ReferEarn"
+import { ReferEarn, ReferShare } from "./components/Refer/ReferEarn";
 import { showToast } from "./components/toast/toastService";
 import { QuestForm } from "./components/QuestForm/index";
 import Feedback from "./components/Feedback/Feedback";
 import FeedbackWorkflow from "./components/FeedbackOverview/FeedbackOverview";
-import Tutorial from "./components/TutorialScreen/TutorialScreen"
+import Tutorial from "./components/TutorialScreen/TutorialScreen";
 import { confetti } from "./components/Confetti/confetti";
 import GetStarted from "./components/GetStarted/GetStarted";
 import ShareArticle from "./components/Share/ShareArticle";
 import { ChatIcon, LinkIcon } from "./components/HelpCenter/Svg";
 import Payment from "./components/Payment/Payment";
-import OnBoardingPreview from './components/Onboarding/Preview';
-import GetStartedPreview from './components/GetStarted/Preview';
-import TutorialPreview from './components/TutorialScreen/Preview';
-import SpinTheWheel from './components/SpinTheWheel/SpinTheWheel';
-import SearchPreview from './components/Search/Preview';
-import ReferEarnPreview from './components/expansion/Preview';
-import FeedbackMOdal from './components/Modals/Modal';
-import CrossSellingPreview from './components/expansion/CrossPreview';
-import SreakPreview from './components/Streak/Preview';
-import TourPreview from './components/Tour/Preview';
-import FeedbackWorkflowPreview from './components/FeedbackOverview/Preview';
-import FeedbackPreview from './components/Feedback/Preview';
-import Survey from './components/Feedback/Survey';
+import OnBoardingPreview from "./components/Onboarding/Preview";
+import GetStartedPreview from "./components/GetStarted/Preview";
+import TutorialPreview from "./components/TutorialScreen/Preview";
+import SpinTheWheel from "./components/SpinTheWheel/SpinTheWheel";
+import SearchPreview from "./components/Search/Preview";
+import ReferEarnPreview from "./components/expansion/Preview";
+import FeedbackMOdal from "./components/Modals/Modal";
+import CrossSellingPreview from "./components/expansion/CrossPreview";
+import SreakPreview from "./components/Streak/Preview";
+import TourPreview from "./components/Tour/Preview";
+import FeedbackWorkflowPreview from "./components/FeedbackOverview/Preview";
+import FeedbackPreview from "./components/Feedback/Preview";
+import Survey from "./components/Feedback/Survey";
 import ModalPreview from "./components/Modals/Preview";
 import SurveyOffline from "./components/Feedback/OfflineComponent";
-export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
-export const apiKey = 'k-2aa597b4-341f-4c3c-a022-f56877a585c9'
-export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
-export const entityId = 'e-5684609d-cfd7-4b2f-8bcb-f7d2cb316c7e'
-export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
-export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
+export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
+export const apiKey = "k-2aa597b4-341f-4c3c-a022-f56877a585c9";
+export const apiSecret =
+  "s-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42";
+export const entityId = "e-5684609d-cfd7-4b2f-8bcb-f7d2cb316c7e";
+export const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE";
+export const userId = "u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed";
+
 const paymentBanefits = [
-    {
-        included: [
-            "12 Campaigns / mo",
-            "Campaign Insights",
-            "Audience",
-            "Integrations - Twitter, Discord",
-        ],
-        notIncluded: ["Custom Branding", "Automations", "Support"],
-    },
-    {
-        included: [
-            "12 Campaigns / mo",
-            "Campaign Insights",
-            "Audience",
-            "Integrations - Twitter, Discord",
-            "Custom Branding",
-        ],
-        notIncluded: ["Automations", "Support"],
-    },
-    {
-        included: [
-            "12 Campaigns / mo",
-            "Campaign Insights",
-            "Audience",
-            "Integrations - Twitter, Discord",
-            "Custom Branding",
-            "Automations",
-            "Support",
-        ],
-        notIncluded: [],
-    },
+  {
+    included: [
+      "12 Campaigns / mo",
+      "Campaign Insights",
+      "Audience",
+      "Integrations - Twitter, Discord",
+    ],
+    notIncluded: ["Custom Branding", "Automations", "Support"],
+  },
+  {
+    included: [
+      "12 Campaigns / mo",
+      "Campaign Insights",
+      "Audience",
+      "Integrations - Twitter, Discord",
+      "Custom Branding",
+    ],
+    notIncluded: ["Automations", "Support"],
+  },
+  {
+    included: [
+      "12 Campaigns / mo",
+      "Campaign Insights",
+      "Audience",
+      "Integrations - Twitter, Discord",
+      "Custom Branding",
+      "Automations",
+      "Support",
+    ],
+    notIncluded: [],
+  },
 ];
 function App() {
+  // Mocked function for getAnswers prop
 
+  const [complete, setComplete] = useState(false);
 
-    // Mocked function for getAnswers prop
+  const getstarted = {
+    apiKey: "k-ac177ec6-3e03-4526-b198-d085822d261e",
+    apiSecret:
+      "s-3a33b9f7-275e-44df-8225-a6da1835e7db3c24e655-f7fb-428a-8b61-fc89a001ff22",
+    entityId: "e-cbd250cc-3fcb-4085-a95e-712742ffa7ac",
+  };
 
+  const [data, setData] = useState([]);
 
-    const [complete, setComplete] = useState(false)
-
-    const getstarted = {
-        apiKey: "k-ac177ec6-3e03-4526-b198-d085822d261e",
-        apiSecret: "s-3a33b9f7-275e-44df-8225-a6da1835e7db3c24e655-f7fb-428a-8b61-fc89a001ff22",
-        entityId: "e-cbd250cc-3fcb-4085-a95e-712742ffa7ac"
-    }
-
-    const [data, setData] = useState([]);
-
-    return (
-        <div
-       // style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
-        >
-
-<QuestProvider 
-    apiKey={apiKey}
-    apiSecret={apiSecret}
-    entityId={entityId}
-    featureFlags={{}}
-    apiType="STAGING"
->
-
-                {/* <SpinTheWheel
+  return (
+    <div
+    // style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
+    >
+      <QuestProvider
+        apiKey={apiKey}
+        apiSecret={apiSecret}
+        entityId={entityId}
+        featureFlags={{}}
+        apiType="STAGING"
+      >
+        {/* <SpinTheWheel
                     userId={userId}
                     questId={questId}
                     token={token}
@@ -107,13 +106,10 @@ function App() {
                     maxSpins={10}
                     wheelImage={'https://quest-media-storage-bucket.s3.us-east-2.amazonaws.com/1706540110821-wrapit2.png'} /> */}
 
-            {/* <SearchPreview online={false}/> */}
-            {/* <SreakPreview/> */}
+        {/* <SearchPreview online={false}/> */}
+        {/* <SreakPreview/> */}
 
-
-
-
-            { /*<Payment
+        {/* { <Payment
                 stripePublishableKey="pk_test_51IGxpeHv3bPcUa5dtAAgA2TZPWjga0FPxWlK3GAnWUfzRXzO8l6Kc3zF2WBpjrvFHAle0Cy3Jqxc7djZxptd9mHe00KjsN2Im7"
                 userId="u-0000000000"
                 description={[
@@ -123,19 +119,13 @@ function App() {
                 ]}
                 paymentBanefits={paymentBanefits}
                 forEntityId={"e-0000000000"}
-            />*/}
+            /> } */}
 
+        {/* <ModalPreview/> */}
 
-{/* <ModalPreview/> */}
+        {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
 
-
-
-            {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
-
-
-
-
-            {/* 
+        {/* 
                 <HelpCenter
                     userId={userId}
                     token={token}
@@ -148,63 +138,46 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-<OnBoardingPreview />
+        {/* <OnBoardingPreview /> */}
 
-{/* <GetStartedPreview
+        {/* <GetStartedPreview
    online={false}
  />  */}
 
-            {/* <QuestForm
+        {/* <QuestForm
                     userId={userId}
                     questId={questId}
                     answer={answer}
                     setAnswer={setAnswer}
                     token={token}
                 /> */}
-{/* https://staging.questprotocol.xyz/api/entities/e-0000000000/quests/q-9727caa3-3ecf-4ee9-ad39-860f70466012?userId=u-e61750ac-8734-4e42-a56c-df49bcda9f49 */}
+        {/* https://staging.questprotocol.xyz/api/entities/e-0000000000/quests/q-9727caa3-3ecf-4ee9-ad39-860f70466012?userId=u-e61750ac-8734-4e42-a56c-df49bcda9f49 */}
 
-         
-
-
-
-
-
-
-
-            {/* <button
+        {/* <button
                     onClick={() => {
                         confetti(5000)
                     }}>
                     Show Confetti</button> */}
 
-
-            {/* <button onClick={() => { showToast.warn({ duration: 3000, text: "This is a warning message" }) }}>warning</button>
+        {/* <button onClick={() => { showToast.warn({ duration: 3000, text: "This is a warning message" }) }}>warning</button>
                 <button onClick={() => { showToast.error({ duration: 2000, text: "" }) }}>Error</button>
                 <button onClick={() => { showToast.info({ duration: 2000, text: "" }) }}>Info</button>
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
+        <TutorialPreview />
 
-{/* <TutorialPreview /> */}
+        {/* <FeedbackWorkflowPreview online={false} /> */}
 
+        {/* <FeedbackPreview /> */}
 
-{/* <FeedbackWorkflowPreview online={false} /> */}
+        {/* <ReferEarnPreview/> */}
 
+        {/* <CrossSellingPreview/> */}
 
-         {/* <FeedbackPreview/> */}
-         
+        {/* <TourPreview /> */}
 
-           {/* <ReferEarnPreview/> */}
-
-
-{/* <CrossSellingPreview/> */}
-
-{/* <TourPreview/> */}
-
-
-
-
-            {/* <ReferShare
+        {/* <ReferShare
                     questId={questId}
                     token={token}
                     userId={userId}
@@ -214,13 +187,7 @@ function App() {
                     // isArticle={true}
             /> */}
 
-
-
-
-
-
-
-            {/* <QuestLogin
+        {/* <QuestLogin
                     // questId=""
                     textColor=""
                     btnTextColor=""
@@ -231,7 +198,7 @@ function App() {
                     redirectURL="https://www.questlabs.ai/"
                 ></QuestLogin> */}
 
-            {/* <ShareArticle
+        {/* <ShareArticle
                     bgColor=""
                     // description=""
                     // heading=""
@@ -241,9 +208,9 @@ function App() {
                     questId="q-5976dbae-0c4d-4df6-ba70-231e53dd1532"
                     userId={userId}
                 /> */}
-        </QuestProvider>
-        </div >
-    )
+      </QuestProvider>
+    </div>
+  );
 }
 
 export default App;
