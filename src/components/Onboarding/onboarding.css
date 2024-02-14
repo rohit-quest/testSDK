@@ -458,6 +458,8 @@ textarea:focus {
     border: 0;
     overflow: hidden;
     cursor: pointer;
+    height: 30px;
+    top: -15px;
 }
 
 .q-onb-custom-datePicker::-webkit-calendar-picker-indicator {

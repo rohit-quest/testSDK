@@ -38,6 +38,8 @@ function OtpVerification({
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const ref = useRef<number | null>(null);
   const { setUser } = useContext(QuestContext.Context);
+  const { apiType } = useContext(QuestContext.Context);
+  let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
@@ -76,7 +78,7 @@ function OtpVerification({
     try {
       setShowLoader(true);
       const response = await axios.post(
-        `${config.BACKEND_URL}api/users/email-login/verify-otp`,
+        `${BACKEND_URL}api/users/email-login/verify-otp`,
         { email: email, otp: OTP },
         {
           headers: {
@@ -96,7 +98,9 @@ function OtpVerification({
           userId: response.data.userId,
           token: response.data.token,
         });
-        window.location.href = redirectURL;
+        if (redirectURL) {
+          window.location.href = redirectURL;
+        }
       } else {
         toast.error('Login failed' + '\n' + response.data.error);
       }
@@ -111,7 +115,7 @@ function OtpVerification({
     setShowLoader(true);
     axios
       .post(
-        `${config.BACKEND_URL}api/users/email-login/send-otp?entityId=${entityId}`,
+        `${BACKEND_URL}api/users/email-login/send-otp?entityId=${entityId}`,
         { email: email, entityId: entityId },
         {
           headers: {
