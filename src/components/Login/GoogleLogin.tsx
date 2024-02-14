@@ -38,7 +38,8 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const params = queryString.parse(window.location.search);
   const googleCode = params.code as string;
-  const { setUser } = useContext(QuestContext.Context);
+  const { setUser, apiType } = useContext(QuestContext.Context);
+  let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
   useEffect(() => {
     if (googleCode) {
@@ -50,7 +51,7 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
     setShowLoader(true);
     axios
       .post(
-        `${config.BACKEND_URL}api/users/google/login`,
+        `${BACKEND_URL}api/users/google/login`,
         {
           code,
           redirectUri: redirectUri,
@@ -73,7 +74,9 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
             userId: res.data.userId,
             token: res.data.token,
           });
-          window.location.href = redirectURL;
+          if (redirectURL) {
+            window.location.href = redirectURL;
+          }
         } else if (res.data.success === false) {
           console.log(res.data.error);
           toast.error('Unable to login' + '\n' + `${res.data.error}`);

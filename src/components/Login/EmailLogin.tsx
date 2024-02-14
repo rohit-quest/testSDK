@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import config from "../../config";
 import OtpVerification from "./OtpVerification";
 import Loader from "./Loader";
 import { alertLogo, crossLogo, emailLogo } from "../../assets/images";
 import showToast from "../toast/toastService";
+import QuestContext from '../QuestWrapper';
 
 interface EmailLoginProps {
   btnColor?: string;
@@ -37,6 +38,8 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [mainValidEmail, setMainValidEmail] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
+  const { apiType } = useContext(QuestContext.Context);
+  let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
   const handlesubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && e.currentTarget.value !== "") {
@@ -61,7 +64,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
     setShowLoader(true);
     axios
       .post(
-        `${config.BACKEND_URL}api/users/email-login/send-otp?entityId=${entityId}`,
+        `${BACKEND_URL}api/users/email-login/send-otp?entityId=${entityId}`,
         { email: email },
         {
           headers: {

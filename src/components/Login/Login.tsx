@@ -48,47 +48,47 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
     setOtpScreen(val);
   };
   useEffect(() => {
-    if (entityId) {
-      const request = `${BACKEND_URL}api/entities/${entityId}/get-theme`;
-      axios
-        .get(request)
-        .then((res) => {
-          console.log(res.data);
-          if (res.data.success === true) {
-            const data = res.data.theme;
-            if (data) {
-              setBgColor(data?.backgroundColor || '#ffffff');
-              setFontFamily(data?.fontFamily || 'Figtree');
-              setGradient(
-                data?.backgroundColor?.includes('linear-gradient') ||
-                data?.backgroundColor?.includes('radial-gradient')
-              );
-            } else {
-              if (backgroundColor) {
-                setBgColor(backgroundColor);
-              } else {
-                setBgColor('#ffffff');
-              }
-              setFontFamily('Figtree');
-              setGradient(false);
-            }
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          if (backgroundColor) {
-            setBgColor(backgroundColor);
-          } else {
-            setBgColor('#ffffff');
-          }
-          setFontFamily('Figtree');
-          setGradient(false);
-        });
-    }
+    // if (entityId) {
+    //   const request = `${BACKEND_URL}api/entities/${entityId}/get-theme`;
+    //   axios
+    //     .get(request)
+    //     .then((res) => {
+    //       console.log(res.data);
+    //       if (res.data.success === true) {
+    //         const data = res.data.theme;
+    //         if (data) {
+    //           setBgColor(data?.backgroundColor || '#ffffff');
+    //           setFontFamily(data?.fontFamily || 'Figtree');
+    //           setGradient(
+    //             data?.backgroundColor?.includes('linear-gradient') ||
+    //             data?.backgroundColor?.includes('radial-gradient')
+    //           );
+    //         } else {
+    //           if (backgroundColor) {
+    //             setBgColor(backgroundColor);
+    //           } else {
+    //             setBgColor('#ffffff');
+    //           }
+    //           setFontFamily('Figtree');
+    //           setGradient(false);
+    //         }
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //       if (backgroundColor) {
+    //         setBgColor(backgroundColor);
+    //       } else {
+    //         setBgColor('#ffffff');
+    //       }
+    //       setFontFamily('Figtree');
+    //       setGradient(false);
+    //     });
+    // }
 
-    if (btnColor) setBgColor(btnColor);
-    if (backgroundColor) setBgColor(backgroundColor);
-    if (font) setFontFamily(font);
+    // if (btnColor) setBgColor(btnColor);
+    // if (backgroundColor) setBgColor(backgroundColor);
+    // if (font) setFontFamily(font);
 
     setIsEmail(email || false);
     setIsGoogle(google || false);

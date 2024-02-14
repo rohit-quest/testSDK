@@ -417,11 +417,19 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     return (<div></div>)
   }
 
+  const clickHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const target = e.target as HTMLInputElement;
+    if (document.getElementById("disabledClick")?.contains(target)) {
+    } else {
+      onClose?.(false);
+    }
+  };
+
   return (
-    <div style={{position:"fixed", display: isOpen == true ? "flex" : "none", zIndex, width:"100vw", backgroundColor: "black"}} className="q-parent-container" onClick={() => onClose?.(false)}>
+    <div style={{position:"fixed", display: isOpen == true ? "flex" : "none", zIndex, width:"100vw", backgroundColor: "rgba(128,144,160,.7)"}} className="q-parent-container" onClick={(e) => clickHandler(e)}>
       {showLoader && <Loader />}
       <ToastContainer />
-      <div className="q-fw-div" style={{backgroundColor}}>
+      <div className="q-fw-div" style={{backgroundColor, zIndex: 100}} id='disabledClick'>
         {selectedOption && !submit ? (
           <div>
             <div className="q-fw-heading" style={topBar?{backgroundColor: topbarColor}:{}}>
