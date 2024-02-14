@@ -5,6 +5,7 @@ import config from "../../config.ts";
 import { streakIcon } from "./Svg.tsx";
 import QuestLabs from "../QuestLabs.tsx";
 import "./DailyStrek.css";
+import General from "../../general.ts";
 
 interface Props {
     description?: string;
@@ -17,6 +18,8 @@ interface Props {
     color?: string,
     backgroundColor?: string;
     stepDetails: Array<{ range: number, title: string, description: string }>,
+    uniqueUserId?: string,
+    uniqueEmailId?: string,
 }
 
 const defaultStepDetails = [
@@ -37,18 +40,24 @@ export default function DailyStreak({
     counter = 0,
     stepDetails = defaultStepDetails,
     color = '',
-    backgroundColor = 'white'
+    backgroundColor = 'white',
+    uniqueEmailId,
+    uniqueUserId
 }: Props) {
 
     const [days, setDays] = useState(counter);
     const [currentActive, setCurrent] = useState(0);
-    const { apiKey, entityId, apiType } = useContext(QuestContext.Context);
+    const { apiKey, entityId, apiType, apiSecret } = useContext(QuestContext.Context);
     let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
     const style = (color && backgroundColor) ? { color, backgroundColor } : {}
     useEffect(() => {
         getResponse({ apiKey, token, userId }, entityId, metric, BACKEND_URL).then(count => {
             if (count) setDays(count);
         })
+        if (entityId && uniqueUserId) {
+            const functions = new General('')
+            functions.getExternalLogin({ apiType, uniqueUserId, entityId, userId, apiKey, apiSecret, token, uniqueEmailId })
+          } 
     }, []);
 
     useEffect(() => {

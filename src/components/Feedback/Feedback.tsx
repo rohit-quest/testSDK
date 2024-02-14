@@ -12,6 +12,7 @@ import crossCircle from "../../assets/images/crossCircle.png"
 import { userLogo, crossLogo, leftArrow, rightArrow, calenderIcon, textAreaIcon, phoneLogo, emailLogo, crossLogoFeedback } from "../../assets/assetsSVG"
 import showToast from '../toast/toastService';
 import Rating from '../Rating/Rating';
+import General from '../../general';
 
 interface FeedbackProps {
   heading?: string;
@@ -29,7 +30,9 @@ interface FeedbackProps {
   delay?: number;
   isInline?: boolean;
   crossLogoForInput?: boolean;
-  oncancel?: Function 
+  oncancel?: Function ;
+  uniqueEmailId?: string;
+  uniqueUserId?: string
 }
 
 const Feedback: React.FC<FeedbackProps> = ({
@@ -48,7 +51,9 @@ const Feedback: React.FC<FeedbackProps> = ({
   delay = 1000,
   isInline = false,
   crossLogoForInput = false,
-  oncancel = ()=>{}
+  oncancel = ()=>{},
+  uniqueEmailId,
+  uniqueUserId
 }) => {
   interface FormDataItem {
     type?: string;
@@ -160,6 +165,10 @@ const Feedback: React.FC<FeedbackProps> = ({
         criterias = Array.isArray(criterias) ? criterias : [];
         setFormdata([...criterias]);
       });
+    }
+    if(entityId && uniqueUserId){
+      const functions = new General('')
+      functions.getExternalLogin({ apiType, uniqueUserId, entityId, userId, apiKey, apiSecret, token, uniqueEmailId })
     }
   }, []);
 
