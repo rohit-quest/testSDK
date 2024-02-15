@@ -141,6 +141,7 @@
 }
 
 .gs-card-icon{
+  box-sizing: content-box;
   display: flex;
   padding: 8px;
   border-radius: 48px;
@@ -286,6 +287,7 @@
 }
 
 .q_gt_arrow{
+  box-sizing: content-box;
   border-radius: 48px;
   width: 16px;
   height: 16px;

@@ -17,6 +17,7 @@ export interface Metadata {
     icon: string;
     resultType: "command" | "action" | undefined;
     longDescription: string;
+    linkActionImage: string;
 }
 
 interface Data {
@@ -50,7 +51,7 @@ export async function getResponse(headers: CustomHeaders, entityId: string, ques
                     text: e.data.metadata.linkActionName,
                     link: e.data.metadata.linkActionUrl,
                     description: e.data.metadata.discription || "Provide the required information",
-                    icon: e.data.metadata.imageUrl || e.data.metadata.icon,
+                    icon: e.data.metadata.imageUrl || e.data.metadata.icon || e.data.metadata.linkActionImage,
                     resultType: e.data.metadata.resultType,
                     longDescription: e.data.metadata.longDescription || "No more digging through Dropbox and Google Drive. Always know where to find “the latest,” so you can stay in your design flow."
                 }))
