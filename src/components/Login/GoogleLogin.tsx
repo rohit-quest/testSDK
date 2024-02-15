@@ -18,7 +18,7 @@ interface GoogleLoginProps {
   googleClientId: string;
   apiSecret: string;
   apiKey: string;
-  onSubmit?: ({ userId, token }: { userId: string, token: string }) => void;
+  onSubmit?: ({ userId, token , googleCredentials, refreshToken }: { userId: string, token: string, googleCredentials: object, refreshToken:string }) => void;
 }
 
 function GoogleLogin(props: GoogleLoginProps): JSX.Element {
@@ -68,11 +68,14 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
         if (res.data.success === true) {
           toast.success('Congratulations!!!' + '\n' + 'Successfully Logged in');
           if (onSubmit) {
-            onSubmit({ userId: res.data.userId, token: res.data.token });
+            onSubmit({ userId: res.data.userId, token: res.data.token, googleCredentials : res.data.credentials,
+              refreshToken : res.data.refreshToken });
           }
           setUser({
             userId: res.data.userId,
             token: res.data.token,
+            googleCredentials : res.data.credentials,
+            refreshToken : res.data.refreshToken
           });
           if (redirectURL) {
             window.location.href = redirectURL;

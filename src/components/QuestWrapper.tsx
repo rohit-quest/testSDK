@@ -26,6 +26,8 @@ type Props = {
 type User = {
   userId?: string;
   token?: string;
+  googleCredentials?: object
+  refreshToken?: string
 };
 
 export const Context = createContext<{
