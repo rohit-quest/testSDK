@@ -18,7 +18,7 @@ interface OtpVerificationProps {
   apiKey: string;
   apiSecret: string;
   btnTextColor?: string;
-  onSubmit?: ({ userId, token }: { userId: string, token: string }) => void;
+  onSubmit?: ({ userId, token, userCredentials}: { userId: string, token: string, userCredentials: object }) => void;
 }
 
 function OtpVerification({
@@ -92,11 +92,14 @@ function OtpVerification({
       if (response.data.success) {
         toast.success('Congratulations!!!' + '\n' + 'Successfully Logged in');
         if (onSubmit) {
-          onSubmit({ userId: response.data.userId, token: response.data.token });
+          onSubmit({ userId: response.data.userId, token: response.data.token, userCredentials : {email :email} });
         }
         setUser({
           userId: response.data.userId,
           token: response.data.token,
+          userCredentials:{
+            email : email
+          }
         });
         if (redirectURL) {
           window.location.href = redirectURL;
