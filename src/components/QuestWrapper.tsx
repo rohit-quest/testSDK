@@ -26,7 +26,7 @@ type Props = {
 type User = {
   userId?: string;
   token?: string;
-  googleCredentials?: object
+  userCredentials?: object
   refreshToken?: string
 };
 
