@@ -263,7 +263,6 @@ function OnBoarding(props: QuestLoginProps) {
                         }
                     );
                     setFormdata([...criterias]);
-    
                     let ansArray: any = {};
                     criterias.forEach((criteria: any) => {
                         if (criteria.type == "USER_INPUT_MULTI_CHOICE") {
@@ -1180,7 +1179,7 @@ function OnBoarding(props: QuestLoginProps) {
                                     formdata[num - 1]?.placeholder || formdata[num - 1]?.question || ""
                                 )
                                 : formdata[num - 1].type ==
-                                    "USER_INPUT_MULTI_CHOICE"
+                                    "USER_INPUT_SINGLE_CHOICE"
                                     ? !!singleChoose && singleChoose == "modal2"
                                         ? singleChoiceTwo(
                                             formdata[num - 1].options || [],
