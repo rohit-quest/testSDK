@@ -12,6 +12,7 @@ import slack from "../../assets/images/slack.png";
 import link from "../../assets/images/links.png";
 import Select, { StylesConfig } from "react-select";
 import {userLogo, crossLogo, leftArrow, rightArrow, calenderIcon, textAreaIcon, phoneLogo, emailLogo} from "../../assets/assetsSVG.tsx"
+import { NormalInput, logoType } from "../Modules/Input.tsx";
 
 const Tick = ({fillColor="#6525B3",isActive=false,borderColor="#B9B9B9"}) => isActive?(<svg
     width="16"
@@ -494,8 +495,9 @@ function OnBoarding(props: QuestLoginProps) {
         criteriaId: string,
         index: number,
         placeholder: string,
-        inputType: string,
+        inputType: logoType,
     ) => {
+
         return (
             <div key={criteriaId}>
                 {
@@ -511,7 +513,7 @@ function OnBoarding(props: QuestLoginProps) {
                 >
                     {question} {required && "*"}
                 </label>
-                <div className="q-onb-input" style={{border: inputBorder}}>
+                {/* <div className="q-onb-input" style={{border: inputBorder}}>
                     {textInputModal ==="modal2" && (inputType == "text" ? userLogo() : inputType == "number" ? phoneLogo() : emailLogo())}
                     <input
                         type={inputType}
@@ -524,7 +526,8 @@ function OnBoarding(props: QuestLoginProps) {
                         className="q_sdk_input"
                     />
                     {textInputModal === "modal2" && crossLogo(criteriaId, handleRemove)}
-                </div>
+                </div> */}
+                <NormalInput type={inputType} placeholder={placeholder} value={answer[criteriaId]} iconColor="red" onChange={(e)=>handleUpdate(e, criteriaId, "")}/>
             </div>
         );
     };

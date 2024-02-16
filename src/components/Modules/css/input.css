@@ -1,0 +1,28 @@
+.q_input_cont {
+  display: flex;
+  padding: 10px 16px;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 10px;
+  border: 1px solid  #ececec;
+
+}
+
+.q_input_main_cont{
+  flex: 1;
+  border: none;
+  color:  black;
+  font-family: Figtree;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;height: 100%;
+    background-color: transparent
+}
+
+.q_input_main_cont:focus{
+  outline: none;
+  border: none;
+  background-color: transparent
+}
+

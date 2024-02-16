@@ -29,6 +29,7 @@ import FeedbackPreview from "./components/Feedback/Preview";
 import Survey from "./components/Feedback/Survey";
 import ModalPreview from "./components/Modals/Preview";
 import SurveyOffline from "./components/Feedback/OfflineComponent";
+import { NormalInput } from './components/Modules/Input'
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-2aa597b4-341f-4c3c-a022-f56877a585c9";
 export const apiSecret =
@@ -138,7 +139,7 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-        {/* <OnBoardingPreview /> */}
+        <OnBoardingPreview online />
 
         {/* <GetStartedPreview
    online={false}
@@ -165,7 +166,7 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-        <TutorialPreview />
+        {/* <TutorialPreview /> */}
 
         {/* <FeedbackWorkflowPreview online={false} /> */}
 
@@ -207,7 +208,10 @@ function App() {
                     token={token}
                     questId="q-5976dbae-0c4d-4df6-ba70-231e53dd1532"
                     userId={userId}
+                    
                 /> */}
+
+              {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
       </QuestProvider>
     </div>
   );
