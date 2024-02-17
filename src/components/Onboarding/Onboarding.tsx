@@ -13,6 +13,7 @@ import link from "../../assets/images/links.png";
 import Select, { StylesConfig } from "react-select";
 import {userLogo, crossLogo, leftArrow, rightArrow, calenderIcon, textAreaIcon, phoneLogo, emailLogo} from "../../assets/assetsSVG.tsx"
 import { Input, logoType } from "../Modules/Input.tsx";
+import { MultiChoice } from "../Modules/MultiChoice.tsx";
 
 const Tick = ({fillColor="#6525B3",isActive=false,borderColor="#B9B9B9"}) => isActive?(<svg
     width="16"
@@ -680,7 +681,7 @@ function OnBoarding(props: QuestLoginProps) {
                 />
                 {manualInput != false && answer[criteriaId] == manualInput &&
                     <div className="q-onb-input" style={{border: inputBorder, marginTop: "10px"}}>
-                        {userLogo()}
+                        {userLogo('')}
                         <input
                             type="text"
                             id="normalInput"
@@ -845,30 +846,30 @@ function OnBoarding(props: QuestLoginProps) {
                     {question} {required && "*"}
                 </div>
                 <div className="q-onb-singleChoiceOne-optDiv">
-                    {options.map((option: string, id: number) => (
-                        <div className="q-onb-singleChoiceOne-chDiv" key={id}>
-                            <input
-                                id={`mct${criteriaId + id}`}
-                                type="checkbox"
-                                checked={
-                                    !!answer[criteriaId] &&
-                                    answer[criteriaId]?.includes(option)
-                                }
-                                value={option}
-                                onChange={(e) =>
-                                    handleUpdate(e, criteriaId, "check")
-                                }
-                                className="q-onb-singleChoiceOne-inp"
-                            />
-                            <label
-                                htmlFor={`mct${criteriaId + id}`}
-                                className="q-onb-singleChoiceOne-lebel3"
-                                style={{fontSize: answerFontSize, color: answer[criteriaId].includes(option) ? "#252525" : ""}}
-                            >
-                                {option}
-                            </label>
-                        </div>
-                    ))}
+                    <MultiChoice
+                        options={options}
+                        checked={answer[criteriaId]}
+                        checkedColor="#098849"
+                        handleChange={(option) => {
+                            if(option == answer[criteriaId]) {
+                            let ans = answer[criteriaId] || [];
+                            ans.push(option);
+                            setAnswer({
+                                ...answer,
+                                [criteriaId]: ans,
+                            });
+                            } else if (typeof answer[criteriaId] == "object" && answer[criteriaId].includes(option) == false) {
+                                let ans = answer[criteriaId];
+                                let mod_ans = ans.filter(
+                                    (an: string | number) => an != option
+                                );
+                                setAnswer({
+                                    ...answer,
+                                    [criteriaId]: mod_ans,
+                                });
+                            }
+                        }}
+                    />
                 </div>
             </div>
         );
