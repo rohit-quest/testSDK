@@ -12,7 +12,7 @@ import slack from "../../assets/images/slack.png";
 import link from "../../assets/images/links.png";
 import Select, { StylesConfig } from "react-select";
 import {userLogo, crossLogo, leftArrow, rightArrow, calenderIcon, textAreaIcon, phoneLogo, emailLogo} from "../../assets/assetsSVG.tsx"
-import { NormalInput, logoType } from "../Modules/Input.tsx";
+import { Input, logoType } from "../Modules/Input.tsx";
 import { MultiChoice } from "../Modules/MultiChoice.tsx";
 
 const Tick = ({fillColor="#6525B3",isActive=false,borderColor="#B9B9B9"}) => isActive?(<svg
@@ -527,7 +527,7 @@ function OnBoarding(props: QuestLoginProps) {
                     />
                     {textInputModal === "modal2" && crossLogo(criteriaId, handleRemove)}
                 </div> */}
-                <NormalInput type={inputType} placeholder={placeholder} value={answer[criteriaId]} iconColor="red" onChange={(e)=>handleUpdate(e, criteriaId, "")}/>
+                <Input type={inputType} placeholder={placeholder} value={answer[criteriaId]} iconColor="red" onChange={(e)=>handleUpdate(e, criteriaId, "")}/>
             </div>
         );
     };
@@ -554,7 +554,7 @@ function OnBoarding(props: QuestLoginProps) {
                 >
                     {question} {required && "*"}
                 </label>
-                <div className="q-onb-input" style={{border: inputBorder}}>
+                {/* <div className="q-onb-input" style={{border: inputBorder}}>
                     <label className="q-onb-custom-date">
                         <input
                             type="date"
@@ -569,7 +569,8 @@ function OnBoarding(props: QuestLoginProps) {
                     </label>
                     {calenderIcon()}
                     {textInputModal==="modal2" && crossLogo(criteriaId, handleRemove)}
-                </div>
+                </div> */}
+                <Input type={"date"} placeholder={placeholder} value={answer[criteriaId]} iconColor="red" onChange={(e)=>handleUpdate(e, criteriaId, "")}/>
             </div>
         );
     };
