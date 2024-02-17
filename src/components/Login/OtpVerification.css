@@ -1,0 +1,55 @@
+.q_otp_cont {
+  width: 90px;
+  height: 90px;
+  background-color: #9035ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.q_otp_icon2 {
+  align-content: center;
+  justify-content: center;
+}
+
+.q_outer_cont {
+  height: 121px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.q_otp_resend {
+  color: var(--Neutral-Grey-200, #afafaf);
+
+  font-family: Figtree;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  margin-top: 4px;
+}
+
+.q_otp_resend span {
+  color: black;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.q_email_otp {
+  color: var(--Neutral-Grey-700, #252525);
+  text-align: center;
+  text-overflow: ellipsis;
+  font-family: Figtree;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: -0.18px;
+}
+
+.q_otp_btn_continue button {
+  margin-top: 20px;
+  cursor: pointer;
+  background: linear-gradient(84deg, #9035ff 0.36%, #0065ff 100.36%);
+}

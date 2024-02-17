@@ -5,24 +5,23 @@
   gap: 8px;
   align-self: stretch;
   border-radius: 10px;
-  border: 1px solid  #ececec;
-
+  border: 1px solid #ececec;
 }
 
-.q_input_main_cont{
+.q_input_main_cont {
   flex: 1;
   border: none;
-  color:  black;
+  color: black;
   font-family: Figtree;
   font-size: 14px;
   font-style: normal;
-  font-weight: 400;height: 100%;
-    background-color: transparent
+  font-weight: 400;
+  height: 100%;
+  background-color: transparent;
 }
 
-.q_input_main_cont:focus{
+.q_input_main_cont:focus {
   outline: none;
   border: none;
-  background-color: transparent
+  background-color: transparent;
 }
-
