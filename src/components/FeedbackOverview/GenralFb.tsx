@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 import './FeedbackOverview.css';
 import { backButton, userLogo, crossLogo, emailLogo, textAreaIcon } from "../../assets/assetsSVG"
+import Label from '../Modules/Label';
+import { Input } from '../Modules/Input';
 
 interface GeneralFeedbackContentProps {
   font?: string;
@@ -15,7 +17,8 @@ interface GeneralFeedbackContentProps {
   answer: any;
   handleRemove?: (e: any) => void;
   ratingStyle?: "Star" | "Numbers" | "Smiles";
-  crossLogoForInput?: boolean
+  crossLogoForInput?: boolean,
+  labelStyle?: CSSProperties
 }
 
 const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
@@ -31,7 +34,8 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
   answer,
   handleRemove,
   ratingStyle,
-  crossLogoForInput
+  crossLogoForInput,
+  labelStyle
 }) => {
   const [rating, setRating] = useState<number>(0);
   const handleRatingChange2 = (e: any, id: any, rating: number) => {
@@ -73,57 +77,32 @@ function isValidEmail(email: string) {
   const normalInput = (question: string, criteriaId: string, placeholder?:string) => {
     return (
       <div className="" key={criteriaId}>
-        <label
-          className="q-fdov-levels"
-          htmlFor="normalInput"
-          style={{
-            fontFamily: font,
-            color: textColor,
-          }}
-        >
-          {question}
-        </label>
-        <div className="q-fdov-input">
-            {/* {userLogo()} */}
-            <input
-              className='q_sdk_input q_fw_input'
-              type="text"
-              id="normalInput"
-              name="normalInput"
-              onChange={(e) => handleUpdate(e, criteriaId, "")}
-              value={answer[criteriaId]}
-              placeholder={placeholder}
-            />
-            {crossLogoForInput && crossLogo(criteriaId, handleRemove)}
-        </div>
+        <Label htmlFor={'normalInput'} 
+          text={question}
+          style={labelStyle}
+        />
+        <Input
+          type='text'
+          placeholder={placeholder}
+          value={answer[criteriaId]}
+          onChange={(e) => handleUpdate(e, criteriaId, "")}
+        />
       </div>
     );
   };
   const emailInput = (question: string, criteriaId: string, placeholder?:string) => {
     return (
       <div className="" key={criteriaId}>
-        <label
-          className="q-fdov-levels"
-          htmlFor="normalInput"
-          style={{
-            fontFamily: font,
-            color: textColor,
-          }}
-        >
-          {question}
-        </label>
-        <div className="q-fdov-input">
-            <input
-              className='q_sdk_input'
-              type="email"
-              id="normalInput"
-              name="normalInput"
-              onChange={(e) => handleUpdate(e, criteriaId, "")}
-              value={answer[criteriaId]}
-              placeholder={placeholder}
-            />
-            {crossLogoForInput ? crossLogo(criteriaId, handleRemove): emailLogo()}
-        </div>
+        <Label htmlFor={'normalInput'} 
+          text={question}
+          style={labelStyle}
+        />
+        <Input
+          type='text'
+          placeholder={placeholder}
+          value={answer[criteriaId]}
+          onChange={(e) => handleUpdate(e, criteriaId, "")}
+        />
         {
           isValidEmail(answer[criteriaId]) &&
           <div className='q-input-email-checks'>This is not a valid email</div>
@@ -135,15 +114,10 @@ function isValidEmail(email: string) {
   const normalInput2 = (question: string, criteriaId: string, placeholder?:string) => {
     return (
       <div className="" key={criteriaId}>
-        <label
-          className="q-fdov-levels"
-          style={{
-            fontFamily: font,
-            color: textColor,
-          }}
-        >
-          {question}
-        </label>
+        <Label htmlFor={'normalInput'} 
+          text={question}
+          style={labelStyle}
+        />
         <div className="q-fdov-input" style={{alignItems: "flex-start"}}>
             {/* {textAreaIcon()} */}
             <textarea
@@ -175,17 +149,10 @@ function isValidEmail(email: string) {
             } else if (data.type === 'RATING') {
               return (
                 <div key={data.criteriaId}>
-                  <div
-                    className="q-fdov-levels"
-                    style={{
-                      fontFamily: font,
-                      color: textColor,
-                    }}
-                  >
-                    {data.question
-                      ? data.question
-                      : 'How would you rate your experience ?'}
-                  </div>
+                  <Label htmlFor={'normalInput'}
+                    text={data.question? data.question: 'How would you rate your experience ?'}
+                    style={labelStyle}
+                  />
                   <div
                     style={{
                       marginTop: "8px"
