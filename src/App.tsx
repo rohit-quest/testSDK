@@ -30,6 +30,7 @@ import Survey from "./components/Feedback/Survey";
 import ModalPreview from "./components/Modals/Preview";
 import SurveyOffline from "./components/Feedback/OfflineComponent";
 import { NormalInput } from './components/Modules/Input'
+import { MultiChoice, MultiChoiceTwo } from './components/Modules/MultiChoice';
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-2aa597b4-341f-4c3c-a022-f56877a585c9";
 export const apiSecret =
@@ -88,7 +89,7 @@ function App() {
 
   return (
     <div
-    // style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
+    style={{  alignItems: "center", justifyContent: "center", gap: "20px",height: "100vh" }}
     >
       <QuestProvider
         apiKey={apiKey}
@@ -140,6 +141,7 @@ function App() {
                 // descriptioin="this is descripiton"
                 /> */}
         <OnBoardingPreview online />
+        {/* <MultiChoiceTwo options={['one', 'two', 'three']} checked={["two"]} /> */}
 
         {/* <GetStartedPreview
    online={false}
@@ -211,7 +213,7 @@ function App() {
                     
                 /> */}
 
-              {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
+        {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
       </QuestProvider>
     </div>
   );
