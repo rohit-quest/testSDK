@@ -1,0 +1,17 @@
+.q_next_button_main_cont {
+  color: var(--Neutral-White-100, #fff);
+  font-family: Figtree;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  padding: 10px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  flex: 1 0 0;
+  border-radius: 10px;
+  border: 1.5px solid #d1acff;
+  width: 100%;
+  background: grey
+}
