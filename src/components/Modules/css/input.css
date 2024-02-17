@@ -5,21 +5,20 @@
   gap: 8px;
   align-self: stretch;
   border-radius: 10px;
-  border: 1px solid  #ececec;
+  border: 1px solid #ececec;
   position: relative;
-
 }
 
-.q_input_main_cont{
+.q_input_main_cont {
   flex: 1;
   border: none;
-  color:  black;
+  color: black;
   font-family: Figtree;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   height: 100%;
-  background-color: transparent
+  background-color: transparent;
 }
 
 .q_input_cont>input[type="number"] {
@@ -32,10 +31,10 @@
   margin: 0;
 }
 
-.q_input_main_cont:focus{
+.q_input_main_cont:focus {
   outline: none;
   border: none;
-  background-color: transparent
+  background-color: transparent;
 }
 
 .q_input_custom_datePicker {
@@ -69,7 +68,7 @@
   width: 100%;
   flex: 1;
   border: none;
-  color:  black;
+  color: black;
   font-family: Figtree;
   font-size: 14px;
   font-style: normal;
@@ -79,7 +78,7 @@
   padding: 9.5px 2px;
 }
 
-.q_modal_box{
+.q_modal_box {
   width: 100vw !important;
   height: 100vh !important;
   z-index: 1000;
@@ -119,8 +118,36 @@
     opacity: 0;
     transform: scale(0.8);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
   }
+}
+
+.q_input_textArea {
+  display: flex;
+  padding: 10px 16px;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 10px;
+  border: 1px solid var(--Neutral-Grey-100, #ececec);
+  resize: none;
+  color: black;
+  font-family: Figtree;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  min-height: 94px;
+  scrollbar-width: thin;
+}
+
+.q_input_textArea:focus {
+  border: 1px solid var(--Neutral-Grey-100, #ececec);
+}
+
+.q_input_textArea:hover {
+  border: 1px solid var(--Neutral-Grey-100, #ececec);
 }
