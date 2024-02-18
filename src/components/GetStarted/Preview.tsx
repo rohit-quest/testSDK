@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import { QuestProvider } from '../QuestWrapper';
-import showToast from '../toast/toastService';
 import GetStarted from './GetStarted';
 import GetStartedOff from './OfflineComponent';
 export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
@@ -11,7 +10,6 @@ export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzY
 export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
 
 export default function GetStartedPreview({ online = true }: { online?: boolean }) {
-
     let [state,setstate] = useState([
         {
             id: 1,
@@ -54,85 +52,64 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
         }
     ])
 
-    // setTimeout(() => {
-        // state.pop();j
-        // setstate([...state])
-        // console.log(state)
-    // }, 4000);
 
     if (online)
         return (<QuestProvider
-            apiKey="k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be"
+            apiKey="k-6594e945-a4fe-41cb-9b46-17ecbcba72bc"
             apiSecret="s-7462f377-2ce4-4593-a907-3a2a00cdf951be06358a-d95d-4576-b3b4-a07dda2dab36"
-            entityId="e-0000000000"
+            entityId="e-26629b73-a96b-436f-8198-d49572d9d156"
             featureFlags={{}}
             apiType="STAGING"
         >
             <GetStarted
-                questId="q-9727caa3-3ecf-4ee9-ad39-860f70466012"
-                userId="u-16e8bb75-4ad2-4e38-9840-8312d00859e2"
-                token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTE2ZThiYjc1LTRhZDItNGUzOC05ODQwLTgzMTJkMDA4NTllMiIsImlhdCI6MTcwNTczODk0NSwiZXhwIjoxNzA2MzQzNzQ1fQ.BxgL0g6iXp6xJOvPEFxtP3GxEyFgXKoHrcAgN_yqvq0"}
+                questId="q-68c04087-0b68-40a9-8df3-e91932302810"
+                userId="u-8268f5e1-f5a1-440c-a333-0f5578a73847"
+                token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcwODE2NTEwMCwiZXhwIjoxNzA4NzY5OTAwfQ.IvLdEQnnT4oEYjgyb6ADWd9hS2qxYRY_eh3aITHxQlg"}
                 // buttonColor="yellow"
-                // cardBG="grey"
-                icons={[
+                cardBackground="yellowGreen"
+                iconUrls={[
                     "https://pin.questprotocol.xyz/ipfs/QmWSjM2BwmSW7pda3YmWxyFQ7sCJ9PVmVAwj1W9K7XAHhG",
                     "https://pin.questprotocol.xyz/ipfs/QmRC5SwJpBup4wRB32DxjPV2fEnccpJkuMTBtzS9aiJg42",
                     "https://pin.questprotocol.xyz/ipfs/QmcYB6T27vbqdaaeJdx1Cz3nz9oYMhTegpWjhSff7aX2Mi",
                     "https://pin.questprotocol.xyz/ipfs/QmavuprWaHKvd5JZvkdgathYKLr5Zcshc1EPRzRzBJaPqw"
                 ]}
-                // dropDown={true}
-                // width="50vw" 
                 // anouncement
-                allowMultiClick={false}
+                allowMultiClick={true}
                 autoHide={false}
-                // buttonBg="#9035FF"
-                // cardHeadingColor="white"
-                // compltedBtnBgColor="#EBFFEB"
-                // dropDown={true}
-                // compltedBtnColor="#008000"
-                // cardBorderColor="var(--color-core-background-1)"
-                heading="What’s new"
-                completeAllStatus={() => {
+                headingText="What’s new"
+                onCompleteAllStatus={() => {
                     // showToast.success({ text: "completed successfully" })
                 }}
-                onLinkTrigger={(url, id) => {
-                    console.log(url)
-                    // window.location.href=url;
-                }}
-            // uniqueUserId="soumitra.petbindhi+1@gmail.com"
+                template={2}
+                showLoadingIndicator
 
+                // showDropDown
+            uniqueUserId="soumitra.petbindhi+1@gmail.com"
+            showProgressBar
+             showFooter={true}
+   mainBackground='grey'
             />
         </QuestProvider>)
 
     return (<GetStartedOff
-        // buttonColor="yellow"
-        // cardBG="grey"
-        icons={[
+
+        iconUrls={[
             "https://pin.questprotocol.xyz/ipfs/QmWSjM2BwmSW7pda3YmWxyFQ7sCJ9PVmVAwj1W9K7XAHhG",
             "https://pin.questprotocol.xyz/ipfs/QmRC5SwJpBup4wRB32DxjPV2fEnccpJkuMTBtzS9aiJg42",
             "https://pin.questprotocol.xyz/ipfs/QmcYB6T27vbqdaaeJdx1Cz3nz9oYMhTegpWjhSff7aX2Mi",
             "https://pin.questprotocol.xyz/ipfs/QmavuprWaHKvd5JZvkdgathYKLr5Zcshc1EPRzRzBJaPqw"
         ]}
-        // dropDown={true}
-        allowMultiClick={false}
+
+        allowMultiClick={true}
         // width="50vw" 
         autoHide={false}
-        // buttonBg="black"
-        // cardHeadingColor="white"
-        // compltedBtnBgColor="#EBFFEB"
-        // compltedBtnColor="#008000"
-        // cardBG='black'
-        // cardBorderColor="gray"
+
         arrowColor='red'
-        heading="What’s new"
-        completeAllStatus={() => {
+        headingText="What’s new"
+        onCompleteAllStatus={() => {
             // showToast.success({ text: "completed successfully" })
         }}
-        onLinkTrigger={(url, id) => {
-            // console.log(url)
-            // window.location.href=url;
-        }}
-        // uniqueUserId="soumitra.petbindhi+1@gmail.com"
-        offlineFormatData={state}
+      
+        offlineData={state}
     />)
 }
