@@ -11,7 +11,10 @@ interface BugContentProps {
   handleUpdate: (e: any, id: string, j: string, k?: number) => void;
   answer: any;
   handleRemove: (e: any) => void;
-  crossLogoForInput: boolean
+  crossLogoForInput: boolean;
+  normalInput: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
+  emailInput: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
+  normalInput2: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
 }
 
 const BugContent: React.FC<BugContentProps> = ({
@@ -24,114 +27,17 @@ const BugContent: React.FC<BugContentProps> = ({
   handleSubmit,
   answer,
   handleRemove,
-  crossLogoForInput
+  crossLogoForInput,
+  normalInput,
+  emailInput,
+  normalInput2
 }) => {
-  console.log(formdata)
   function isValidEmail(email: string) {
     if (!email) return false;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return !emailRegex.test(email);
   }
 
-  const normalInput = (
-    question: string,
-    criteriaId: string,
-    placeholder?: string
-  ) => {
-    return (
-      <div className=""
-        key={criteriaId}>
-        <label
-          className="q-fdov-levels"
-          htmlFor="normalInput"
-          style={{
-            fontFamily: font,
-            color: textColor,
-          }}
-        >
-          {question}
-        </label>
-        <div className="q-fdov-input">
-          {/* {userLogo()} */}
-          <input
-            type="text"
-            className='q_sdk_input q_fw_input'
-            id="normalInput"
-            name="normalInput"
-            onChange={(e) => handleUpdate(e, criteriaId, "")}
-            value={answer[criteriaId]}
-            placeholder={placeholder}
-          />
-          {crossLogoForInput && crossLogo(criteriaId, handleRemove)}
-        </div>
-      </div>
-    );
-  };
-  const emailInput = (question: string, criteriaId: string, placeholder?: string) => {
-    return (
-      <div className="" key={criteriaId}>
-        <label
-          className="q-fdov-levels"
-          htmlFor="normalInput"
-          style={{
-            fontFamily: font,
-            color: textColor,
-          }}
-        >
-          {question}
-        </label>
-        <div className="q-fdov-input">
-          {/* {emailLogo()} */}
-          <input
-            className='q_sdk_input q_fw_input'
-            type="email"
-            id="normalInput"
-            name="normalInput"
-            onChange={(e) => handleUpdate(e, criteriaId, "")}
-            value={answer[criteriaId]}
-            placeholder={placeholder}
-          />
-          {crossLogoForInput?crossLogo(criteriaId, handleRemove):emailLogo()}
-        </div>
-        {
-          isValidEmail(answer[criteriaId]) &&
-          <div className='q-input-email-checks'>This is not a valid email</div>
-        }
-      </div>
-    );
-  };
-  const normalInput2 = (
-    question: string,
-    criteriaId: string,
-    placeholder?: string
-  ) => {
-    return (
-      <div className="" key={criteriaId}>
-        <label
-          className="q-fdov-levels"
-          style={{
-            fontFamily: font,
-            color: textColor,
-          }}
-        >
-          {question}
-        </label>
-        <div className="q-fdov-input" style={{ alignItems: "flex-start" }}>
-          {/* {textAreaIcon()} */}
-          <textarea
-            className='q_sdk_textarea q_fw_input'
-            id="normalInput2"
-            name="normalInput"
-            onChange={(e) => handleUpdate(e, criteriaId, "")}
-            value={answer[criteriaId]}
-            placeholder={placeholder}
-            style={{ height: "120px", padding: "0px", fontFamily: "'Figtree', sans-serif", boxSizing: "content-box" }}
-          />
-          {crossLogoForInput && crossLogo(criteriaId, handleRemove)}
-        </div>
-      </div>
-    );
-  };
   return (
     <div className='q-fdov-ch-boxes'>
       {formdata?.length > 0 ? (

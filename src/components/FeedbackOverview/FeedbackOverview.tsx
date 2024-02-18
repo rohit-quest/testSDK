@@ -6,16 +6,15 @@ import { useContext } from 'react';
 import QuestContext from '../QuestWrapper';
 import config from '../../config';
 import axios from 'axios';
-// import ContactContent from './Contact';
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer, toast } from 'react-toastify';
 import Loader from '../Login/Loader';
 import Cookies from "universal-cookie";
 import { backButton } from "../../assets/assetsSVG";
-import crossCircle from "../../assets/images/crossCircle.png"
 import { xbutton } from '../../assets/images';
 import showToast from '../toast/toastService';
 import QuestLabs from '../QuestLabs';
+import { Input } from '../Modules/Input';
+import Label from '../Modules/Label';
+import TextArea from '../Modules/TextArea';
 
 const feedback = (color: string = "#939393") => (
   <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -160,7 +159,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [submit, setSubmit] = useState<boolean>(false);
   const { apiKey, apiSecret, entityId, featureFlags,apiType } = useContext(QuestContext.Context);
-  const [answer, setAnswer] = useState<any[]>([]);
+  const [answer, setAnswer] = useState<Record<string,string>>({});
   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
   const thanks = (
@@ -234,11 +233,13 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     } else {
       setSelectedOption(option);
       setSelectedQuest(quest);
-      setAnswer([]);
+      setAnswer({});
     }
   };
 
   function returnAnswers(index:number) {
+    console.log(answer)
+
     const headers = {
       apiKey: apiKey,
       apisecret: apiSecret,
@@ -249,8 +250,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     let externalUserId = cookies.get("externalUserId");
     let questUserId = cookies.get("questUserId");
     let questUserToken = cookies.get("questUserToken");
-    let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
-    if (answer.length !== 0) {
+    if (Object.keys(answer).length !== 0) {
       const ansArr = formdata[index].map((ans: any) => ({
         question: ans?.question || '',
         answer: [answer[ans?.criteriaId] || ''],
@@ -297,7 +297,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             });
       }
     } else {
-      toast.error('Please fill in all required fields.');
+      showToast.error('Please fill in all required fields.');
     }
       
   }
@@ -371,35 +371,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   }, [questIds]);
 
   const handleUpdate = (e: any, id: string, j: string, k?: number) => {
-    if (e.target.checked === true && j === 'check') {
-      let ans = answer[id as unknown as number] || [];
-      ans.push(e.target.value);
-      setAnswer({
-        ...answer,
-        [id]: ans,
-      });
-    } else if (k) {
-      setAnswer({
-        ...answer,
-        [id]: k,
-      });
-    } else if (
-      e.target.checked === false &&
-      typeof answer[id as unknown as number] === 'object' &&
-      j === 'check'
-    ) {
-      let ans = answer[id as unknown as number];
-      let mod_ans = ans.filter((an: string | number) => an !== e.target.value);
-      setAnswer({
-        ...answer,
-        [id]: mod_ans,
-      });
-    } else {
-      setAnswer({
-        ...answer,
-        [id]: e.target.value,
-      });
-    }
+    setAnswer({
+      ...answer,
+      [id]: e.target.value || k,
+    });
+    
   };
   const handleThanks = () => {
     setSubmit(false);
@@ -412,6 +388,63 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         [id]: ""
     })
   }
+  function isValidEmail(email: string) {
+    if (!email) return false;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return !emailRegex.test(email);
+  }
+  const normalInput = (question: string, criteriaId: string, placeholder?:string) => {
+    return (
+      <div className="" key={criteriaId}>
+        <Label htmlFor={'normalInput'} 
+          text={question}
+          // style={labelStyle}
+        />
+        <Input
+          type='text'
+          placeholder={placeholder}
+          value={answer[criteriaId]}
+          onChange={(e) => handleUpdate(e, criteriaId, "")}
+        />
+      </div>
+    );
+  };
+  const emailInput = (question: string, criteriaId: string, placeholder?:string) => {
+    return (
+      <div className="" key={criteriaId}>
+        <Label htmlFor={'normalInput'} 
+          text={question}
+          // style={labelStyle}
+        />
+        <Input
+          type='email'
+          placeholder={placeholder}
+          value={answer[criteriaId]}
+          onChange={(e) => handleUpdate(e, criteriaId, "")}
+        />
+        {
+          isValidEmail(answer[criteriaId]) &&
+          <div className='q-input-email-checks'>This is not a valid email</div>
+        }
+      </div>
+    );
+  };
+
+  const normalInput2 = (question: string, criteriaId: string, placeholder?:string) => {
+    return (
+      <div className="" key={criteriaId}>
+        <Label htmlFor={'normalInput'} 
+          text={question}
+          // style={labelStyle}
+        />
+        <TextArea 
+          onChange={(e) => handleUpdate(e, criteriaId, "")}
+          value={answer[criteriaId]}
+          placeholder={placeholder}
+        />
+      </div>
+    );
+  };
 
   if (featureFlags[config.FLAG_CONSTRAINTS.FeedbackWorkflowFlag]?.isEnabled == false) {
     return (<div></div>)
@@ -428,7 +461,6 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   return (
     <div style={{position:"fixed", display: isOpen == true ? "flex" : "none", zIndex, width:"100vw", backgroundColor: "rgba(128,144,160,.7)"}} className="q-parent-container" onClick={(e) => clickHandler(e)}>
       {showLoader && <Loader />}
-      <ToastContainer />
       <div className="q-fw-div" style={{backgroundColor, zIndex: 100}} id='disabledClick'>
         {selectedOption && !submit ? (
           <div>
@@ -442,7 +474,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               </div>
               <img src={xbutton} onClick={handleBackClick} alt="" />
             </div>
-            <div style={{ padding: '20px 28px', boxSizing: "content-box" }}>
+            <div style={{ padding: '20px', boxSizing: "content-box" }}>
               {selectedOption === 'General Feedback' && (
                 <GeneralFeedbackContent
                   starColor={starColor}
@@ -450,6 +482,9 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   handleUpdate={handleUpdate}
                   formdata={formdata[0]}
                   font={font}
+                  normalInput={normalInput}
+                  emailInput={emailInput}
+                  normalInput2={normalInput2}
                   textColor={textColor}
                   btnColor={btnColor}
                   btnTextColor={btnTextColor}
@@ -471,6 +506,9 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 btnColor={btnColor}
                 btnTextColor={btnTextColor}
                 answer={answer}
+                normalInput={normalInput}
+                normalInput2={normalInput2}
+                emailInput={emailInput}
                 handleRemove={handleRemove}
                 />
                 )}
@@ -480,6 +518,9 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 crossLogoForInput={crossLogoForInput}
                   handleUpdate={handleUpdate}
                   formdata={formdata[2]}
+                  normalInput={normalInput}
+                  normalInput2={normalInput2}
+                  emailInput={emailInput}
                   font={font}
                   textColor={textColor}
                   btnColor={btnColor}
