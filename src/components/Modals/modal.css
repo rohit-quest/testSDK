@@ -1,9 +1,8 @@
 .q_feed_back_modal {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.308);
     border-radius: 10px;
-    width: 400px;
+    width: 376px;
 }
-
 .q_feed_back_modal_head {
     display: flex;
     border-radius: 10px 10px 0 0;

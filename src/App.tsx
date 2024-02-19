@@ -29,7 +29,6 @@ import FeedbackPreview from "./components/Feedback/Preview";
 import Survey from "./components/Feedback/Survey";
 import ModalPreview from "./components/Modals/Preview";
 import SurveyOffline from "./components/Feedback/OfflineComponent";
-import { NormalInput } from './components/Modules/Input'
 import { MultiChoice, MultiChoiceTwo } from './components/Modules/MultiChoice';
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-2aa597b4-341f-4c3c-a022-f56877a585c9";
@@ -123,7 +122,7 @@ function App() {
                 forEntityId={"e-0000000000"}
             /> } */}
 
-        {/* <ModalPreview/> */}
+        <ModalPreview/>
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
 
@@ -140,7 +139,7 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-        <OnBoardingPreview online />
+        {/* <OnBoardingPreview online /> */}
         {/* <MultiChoiceTwo options={['one', 'two', 'three']} checked={["two"]} /> */}
 
         {/* <GetStartedPreview

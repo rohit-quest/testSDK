@@ -6,6 +6,8 @@ import QuestLabs from '../QuestLabs';
 import { response, upload } from './response';
 import QuestContext from '../QuestWrapper';
 import config from '../../config';
+import { SecondaryButton } from '../Modules/PreviousButton';
+import { PrimaryButton } from '../Modules/NextButton';
 
 interface propsType {
   isOpen?: boolean;
@@ -56,7 +58,7 @@ export default function QuestMOdal({
   }, [isOpen])
 
   const handleCopy = (index: number) => {
-    navigator?.clipboard.writeText("");
+    navigator?.clipboard.writeText(invitationLink);
     setCopy(prev => prev.map((e, i) => i == index ? true : e));
   }
 
@@ -109,17 +111,21 @@ export default function QuestMOdal({
         <div className="q_modal_desc">Some data formats, such as dates, numbers, and colours, may not be recognised.</div>
         <img src={orIcon()} alt="" />
 
-        <div className="q_refer_code_content">
+
           {invitationLink && <>
+            <div className="q_refer_code_content">
             <div className="q_refer_text">Invitation Link</div>
             <div className="q_refer_code_box">
               <div className="q_refer_code">{invitationLink}</div>
               <img className="q_refer_copy_icon" src={copy[1] ? tickIcon() : copyIcon(iconColor)} onClick={() => handleCopy(1)} alt="" />
             </div>
+            </div>
           </>}
-        </div>
+
         <div className='q_modal_buttons'>
-          <div className="q_modal_cancel">Cancel</div>
+          {/* <div className="q_modal_cancel">Cancel</div> */}
+          <SecondaryButton previousBtnText='Cancel' />
+          <PrimaryButton />
           <div className="q_modal_upload_button" onClick={() => inpRef.current?.files && inpRef.current?.files[0] && onUpload(inpRef.current?.files[0])}>Upload</div>
         </div>
       </div>

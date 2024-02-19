@@ -15,7 +15,8 @@ export default function ModalPreview({ online = true }) {
             apiType="STAGING"
         >
             <QuestMOdal
-                reward={true}
+                reward={false}
+                invitationLink='https://discord.gg/hjYWqJvZHg'
             />
         </QuestProvider>
     )
