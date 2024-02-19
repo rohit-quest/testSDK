@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { CSSProperties, useContext, useEffect, useState } from "react";
 import "./GetStarted.css";
 import axios from "axios";
 import config from "../../config";
@@ -42,7 +42,13 @@ type GetStartedProps = {
   footerBackgroundColor?: string;
   questIconColor?: string;
   showFooter?: boolean;
-  template?: 1 | 2
+  template?: 1 | 2;
+  styleConfig?: {
+    Heading?: CSSProperties,
+    Description?: CSSProperties,
+    PrimaryButton?: CSSProperties,
+    SecondaryButton?: CSSProperties,
+}
 };
 interface TutorialStep {
   id: number;
@@ -82,7 +88,8 @@ function GetStarted({
   mainBackground = 'white',
   footerBackgroundColor = '#FBFBFB',
   questIconColor = '#939393',
-  showFooter = true
+  showFooter = true,
+  styleConfig
 }: GetStartedProps) {
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
   const { apiKey, apiSecret, entityId, featureFlags, apiType } = useContext(
@@ -314,10 +321,10 @@ function GetStarted({
         : true) && (
         <div className="gs-heading-div">
           <div>
-            <div style={{ color: cardHeadingColor }} className="gs-heading">
+            <div style={{  ...styleConfig?.Heading }} className="gs-heading">
               {headingText || "Quickstart Guide"}
             </div>
-            <div style={{ color: cardDescriptionColor }} className="gs-subheading">
+            <div style={{ ...styleConfig?.Description }} className="gs-subheading">
               {descriptionText ||
                 "Get started with Quest and explore how Quest can take your customer engagement to the next level"}
             </div>

@@ -80,14 +80,14 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
                 onCompleteAllStatus={() => {
                     // showToast.success({ text: "completed successfully" })
                 }}
-                template={2}
+                template={1}
                 showLoadingIndicator
 
                 // showDropDown
             uniqueUserId="soumitra.petbindhi+1@gmail.com"
             showProgressBar
              showFooter={true}
-   mainBackground='grey'
+   mainBackground='pink'
             />
         </QuestProvider>)
 
@@ -109,6 +109,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
         onCompleteAllStatus={() => {
             // showToast.success({ text: "completed successfully" })
         }}
+        onLink
       
         offlineData={state}
     />)
