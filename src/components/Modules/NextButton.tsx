@@ -5,16 +5,16 @@ import "./css/nextButton.css";
 
 
 interface buttonType {
-  nextBtnText?: string;
+  text?: string;
   style?: CSSProperties | undefined;
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
 
-export const PrimaryButton = ({ nextBtnText, style, onClick }:buttonType) => {
+export const PrimaryButton = ({ text, style, onClick }:buttonType) => {
   return (
     <button className="q_next_button_main_cont" style={style} onClick={onClick}>
-      {nextBtnText}
+      {text}
     </button>
   );
 };

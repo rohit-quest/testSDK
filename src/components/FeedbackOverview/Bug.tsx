@@ -1,42 +1,27 @@
 import './FeedbackOverview.css';
-import { backButton, userLogo, crossLogo, emailLogo, textAreaIcon } from "../../assets/assetsSVG"
+import { PrimaryButton } from '../Modules/NextButton';
+import { CSSProperties } from 'react';
 
 interface BugContentProps {
-  btnColor?: string;
-  btnTextColor?: string;
-  font?: string;
-  textColor?: string;
   formdata: Array<{ [key: string]: any }>;
   handleSubmit?: (e: any) => void;
   handleUpdate: (e: any, id: string, j: string, k?: number) => void;
   answer: any;
   handleRemove: (e: any) => void;
-  crossLogoForInput: boolean;
   normalInput: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
   emailInput: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
   normalInput2: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
+  buttonStyle?: CSSProperties;
 }
 
 const BugContent: React.FC<BugContentProps> = ({
   formdata,
-  btnColor,
-  btnTextColor,
-  font,
-  textColor,
-  handleUpdate,
   handleSubmit,
-  answer,
-  handleRemove,
-  crossLogoForInput,
   normalInput,
   emailInput,
-  normalInput2
+  normalInput2,
+  buttonStyle = {},
 }) => {
-  function isValidEmail(email: string) {
-    if (!email) return false;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return !emailRegex.test(email);
-  }
 
   return (
     <div className='q-fdov-ch-boxes'>
@@ -59,18 +44,10 @@ const BugContent: React.FC<BugContentProps> = ({
               );
             }
           })}
-          <div style={{ backgroundColor: btnColor, color: btnTextColor }} onClick={handleSubmit} className="q-fdov-btn-continue">
-            Submit
-          </div>
+          <PrimaryButton text='Submit' onClick={handleSubmit} style={buttonStyle} />
         </>
       ) : (
-        <div
-          style={{
-            fontFamily: font,
-            color: textColor,
-          }}
-          className="q-center"
-        >
+        <div className="q-center">
           No data Found
         </div>
       )}

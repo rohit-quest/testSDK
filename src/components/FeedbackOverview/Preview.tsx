@@ -1,6 +1,4 @@
-import React, { useState } from 'react'
 import { QuestProvider } from '../QuestWrapper';
-import showToast from '../toast/toastService';
 import FeedbackWorkflow from './FeedbackOverview';
 import FeedbackWorkflowOffline from './OfflineComponent.tsx';
 export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
@@ -20,27 +18,26 @@ export default function FeedbackWorkflowPreview({ online = true }: { online?: bo
             featureFlags={{}}
             apiType="PRODUCTION"
         >
-           <FeedbackWorkflow
-                    userId={userId}
-                    token={token}
-                    questIds={[
-                        'q-general-feedback',
-                        'q-report-a-bug',
-                        'q-request-a-feature',
-                        'q-contact-us',
-                    ]}
-                    contactUrl="https://calendly.com/sriya-persana/30min"
-                    isOpen={true}
-                    // onClose={() => setIsOpen(!isOpen)}
-                    zIndex={10}
-                    // btnColor={"#1972f5"}
-                    // topbarColor={"#1972f5"}
-                    // starBorderColor={"#1972f5"}
-                    // starColor={"#1972f5"}
-                    // tickBg={"#1972f5"}
-                    uniqueUserId="soumitra.petbindhi+25@gmail.com"
-                    uniqueEmailId="soumitra.petbindhi+25@gmail.com"
-                />
+            <FeedbackWorkflow
+                userId={userId}
+                token={token}
+                questIds={[
+                    'q-general-feedback',
+                    'q-report-a-bug',
+                    'q-request-a-feature',
+                    'q-contact-us',
+                ]}
+                styleConfig={{
+                    Body: {
+                        
+                    }
+                }}
+                contactUrl="https://calendly.com/sriya-persana/30min"
+                isOpen={true}
+                // onClose={() => setIsOpen(!isOpen)}
+                uniqueUserId="soumitra.petbindhi+25@gmail.com"
+                uniqueEmailId="soumitra.petbindhi+25@gmail.com"
+            />
         </QuestProvider>)
 
     return (<FeedbackWorkflowOffline
@@ -130,7 +127,7 @@ export default function FeedbackWorkflowPreview({ online = true }: { online?: bo
                         answer: "answer",
                         placeholder: ""
                     }]
-                    , [
+                , [
                     {
                         "type": "LINK_OPEN_READ",
                         "question": "",
@@ -145,8 +142,8 @@ export default function FeedbackWorkflowPreview({ online = true }: { online?: bo
                     },
                 ]
             ]
-        }        
-     >
+        }
+    >
 
     </FeedbackWorkflowOffline>)
 }

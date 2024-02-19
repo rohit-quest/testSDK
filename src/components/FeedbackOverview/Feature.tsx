@@ -1,31 +1,26 @@
+import { CSSProperties } from 'react';
+import { PrimaryButton } from '../Modules/NextButton';
 import './FeedbackOverview.css';
 
 interface FeatureContentProps {
-  btnColor?: string;
-  btnTextColor?: string;
-  font?: string;
-  textColor?: string;
   formdata: Array<{ [key: string]: any }>;
   handleSubmit?: (e: any) => void;
   handleUpdate: (e: any, id: string, j: string, k?: number) => void;
   answer: any;
   handleRemove: (e: any) => void;
-  crossLogoForInput: boolean,
   normalInput: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
   emailInput: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
   normalInput2: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
+  buttonStyle?: CSSProperties;
 }
 
 const FeatureContent: React.FC<FeatureContentProps> = ({
   formdata,
-  font,
-  textColor,
-  btnColor,
-  btnTextColor,
   handleSubmit,
   normalInput,
   emailInput,
   normalInput2,
+  buttonStyle = {},
 }) => {
 
   return (
@@ -49,22 +44,10 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
               );
             }
           })}
-          <div
-          style={{backgroundColor: btnColor, color:btnTextColor, marginTop: '10px'}}
-            onClick={handleSubmit}
-            className="q-fdov-btn-continue"
-          >
-            Submit
-          </div>
+          <PrimaryButton text='Submit' onClick={handleSubmit} style={buttonStyle} />
         </>
       ) : (
-        <div
-          style={{
-            fontFamily: font,
-            color: textColor,
-          }}
-          className="q-center"
-        >
+        <div className="q-center">
           No data Found
         </div>
       )}

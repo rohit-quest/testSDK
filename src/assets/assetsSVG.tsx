@@ -213,7 +213,7 @@ export const textAreaIcon = () => {
     );
 };
 
-export const backButton = (handleBackClick) => {
+export const backButton = (handleBackClick: React.MouseEventHandler<SVGSVGElement> | undefined,color="#AFAFAF") => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -228,7 +228,7 @@ export const backButton = (handleBackClick) => {
                 fillRule="evenodd"
                 clipRule="evenodd"
                 d="M8.77529 4.55806C9.01936 4.80214 9.01936 5.19786 8.77529 5.44194L4.84223 9.375H16.6667C17.0119 9.375 17.2917 9.65482 17.2917 10C17.2917 10.3452 17.0119 10.625 16.6667 10.625H4.84223L8.77529 14.5581C9.01936 14.8021 9.01936 15.1979 8.77529 15.4419C8.53121 15.686 8.13548 15.686 7.8914 15.4419L2.8914 10.4419C2.64732 10.1979 2.64732 9.80214 2.8914 9.55806L7.8914 4.55806C8.13548 4.31398 8.53121 4.31398 8.77529 4.55806Z"
-                fill="#AFAFAF"
+                fill={color}
             />
         </svg>
     );

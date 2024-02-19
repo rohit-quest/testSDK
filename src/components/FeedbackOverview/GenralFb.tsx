@@ -1,12 +1,10 @@
 import { CSSProperties, useState } from 'react';
 import './FeedbackOverview.css';
 import Label from '../Modules/Label';
+import { PrimaryButton } from '../Modules/NextButton';
 
 interface GeneralFeedbackContentProps {
-  font?: string;
-  textColor?: string;
   starColor?: string;
-  btnColor?: string;
   btnTextColor?: string;
   starBorderColor?: string;
   formdata: Array<{ [key: string]: any }>;
@@ -15,26 +13,24 @@ interface GeneralFeedbackContentProps {
   answer: any;
   handleRemove?: (e: any) => void;
   ratingStyle?: "Star" | "Numbers" | "Smiles";
-  crossLogoForInput?: boolean,
   labelStyle?: CSSProperties,
   normalInput: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
   emailInput: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
   normalInput2: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
+  iconColor?: string
+  buttonStyle?: CSSProperties;
 }
 
 const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
   formdata,
-  font,
-  btnColor,
-  btnTextColor,
-  textColor,
   handleUpdate,
   handleSubmit,
   ratingStyle,
-  labelStyle,
   normalInput,
   emailInput,
   normalInput2,
+  buttonStyle = {},
+  labelStyle = {},
 }) => {
   const [rating, setRating] = useState<number>(0);
   const handleRatingChange2 = (e: any, id: any, rating: number) => {
@@ -152,18 +148,13 @@ function isValidEmail(email: string) {
               );
             }
           })}
-          <div style={{backgroundColor: btnColor, color:btnTextColor}} onClick={handleSubmit} className="q-fdov-btn-continue">
-            Send Feedback
-          </div>
+          <PrimaryButton text='Send Feedback'
+            onClick={handleSubmit}
+            style={buttonStyle}
+          />
         </>
       ) : (
-        <div
-          style={{
-            fontFamily: font,
-            color: textColor,
-          }}
-          className="q-center"
-        >
+        <div className="q-center">
           No data Found
         </div>
       )}
