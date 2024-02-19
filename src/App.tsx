@@ -92,71 +92,72 @@ function App() {
 
   const [data, setData] = useState([]);
 
-  const onSuccess = () => {
-    // const toast =  Toast.success({
-    //   text: 'success',
-    //   position: 'top-right',
-    //   pauseOnHover: true,
-    //   showProgress: false,
-    //   autoClose : 3000,
-    //   // image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s'
-    // });
+  // const onSuccess = () => {
+  //   const toast = Toast.success({
+  //     text: 'A successful tool',
+  //     position: 'top-right',
+  //     pauseOnHover: true,
+  //     showProgress: true,
+  //     autoClose: 100000,
+  //     background: 'yellow',
+  //     progressColor: 'red'
+  //   });
 
-    // showToast.success({text:'hello',duration:100000})
   
-  }
-  const onFailure = () => {
-    Toast.error({
-      text: 'error',
-      position: 'bottom-left',
-      pauseOnHover: true,
-      autoClose : 3000,
-      showProgress: false,
-      // image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s'
-    });
-  }
-  const onInfo = () => {
-    Toast.info({
-      text: 'info',
-      position: 'bottom-center',
-      pauseOnHover: true,
-      autoClose : 3000,
-      showProgress: false,
-      // image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s'
-    });
-  }
-  const onWarn = () => {
-    Toast.warning({
-      text: 'warning',
-      position: 'top-center',
-      pauseOnHover: true,
-      showProgress: false,
-      autoClose : 3000,
-      // image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s'
-    });
-  }
+  // }
+  // const onFailure = () => {
+  //   Toast.error({
+  //     text: 'A destructive toast',
+  //     position: 'bottom-left',
+  //     pauseOnHover: true,
+  //     autoClose : 300000,
+  //     showProgress: true,
+  //     image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s',
+      
+  //   });
+  // }
+  // const onInfo = () => {
+  //   Toast.info({
+  //     text: 'info',
+  //     position: 'bottom-center',
+  //     pauseOnHover: true,
+  //     autoClose : 3000,
+  //     showProgress: true,
+  //     // image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s'
+  //   });
+  // }
+  // const onWarn = () => {
+  //   Toast.warning({
+  //     text: 'A warning toast',
+  //     position: 'top-center',
+  //     pauseOnHover: true,
+  //     showProgress: true,
+  //     autoClose : 3000,
+  //     // image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s'
+  //   });
+  // }
 
-  const onDifferent = ()=>{
-    Toast.warning({
-      text: 'warning',
-      position: 'bottom-right',
-      pauseOnHover: true,
-      showProgress: false,
-      autoClose : 3000,
-      // image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s'
-    });
-  }
+  // const onDifferent = ()=>{
+  //   Toast.warning({
+  //     text: 'A warning toast',
+  //     position: 'bottom-right',
+  //     pauseOnHover: true,
+  //     showProgress: true,
+  //     autoClose : 3000,
+  //     // image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s'
+  //   });
+  // }
 
-  const onDifferentTwo = ()=>{
-    Toast.warning({
-      text: 'warning',
-      position: 'top-left',
-      pauseOnHover: true,
-      showProgress: false,
-      autoClose : 3000,
-      // image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s'
-    });
-  }
+  // const onDifferentTwo = ()=>{
+  //   Toast.error({
+  //     text: 'it to your preferred size. Experiment with different values',
+  //     position: 'top-left',
+  //     pauseOnHover: true,
+  //     showProgress: true,
+  //     autoClose : 100000,
+  //     // image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s'
+  //   });
+  // }
   return (
     <div
     style={{  alignItems: "center", justifyContent: "center", gap: "20px",height: "100vh" }}
@@ -192,12 +193,12 @@ function App() {
                 paymentBanefits={paymentBanefits}
                 forEntityId={"e-0000000000"}
             /> } */}
-          <button onClick={onSuccess}>success</button>
+          {/* <button onClick={onSuccess}>success</button>
           <button onClick={onInfo}>info</button>
           <button onClick={onFailure}>error</button>
           <button onClick={onWarn}>warning</button>
           <button onClick={onDifferent}>error</button>
-          <button onClick={onDifferentTwo}>warning</button>
+          <button onClick={onDifferentTwo}>warning</button> */}
         {/* <ModalPreview/> */}
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
@@ -218,9 +219,9 @@ function App() {
         {/* <OnBoardingPreview online /> */}
         {/* <MultiChoiceTwo options={['one', 'two', 'three']} checked={["two"]} /> */}
 
-        {/* <GetStartedPreview
+        <GetStartedPreview
    online={false}
- />  */}
+ /> 
 
         {/* <QuestForm
                     userId={userId}

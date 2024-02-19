@@ -1,8 +1,8 @@
-import {success,error,warning,info } from './svg'
+import { success, error, warning, info } from './svg'
 const DEFAULT_OPTIONS = {
   autoClose: 5000,
   position: "top-right",
-  onClose: () => {},
+  onClose: () => { },
   canClose: true,
   showProgress: true,
   defaultImages: {
@@ -10,7 +10,7 @@ const DEFAULT_OPTIONS = {
     warning: warning(),
     error: error(),
     info: info(),
-  }
+  },
 }
 
 export default class Toast {
@@ -25,14 +25,16 @@ export default class Toast {
   #pause
   #visibilityChange
   #shouldUnPause
-
+  #background
+  #borderColor
+  #progressColor
   constructor(options) {
     this.#toastElem = document.createElement("div")
     this.#toastElem.classList.add("toast")
     requestAnimationFrame(() => {
       this.#toastElem.classList.add("show")
     })
-    
+
     this.#removeBinded = this.remove.bind(this)
     this.#unpause = () => (this.#isPaused = false)
     this.#pause = () => (this.#isPaused = true)
@@ -41,21 +43,21 @@ export default class Toast {
     }
     this.update({ ...DEFAULT_OPTIONS, ...options })
   }
-static success(options) {
-  return new Toast({ ...options, className: 'success' });
-}
+  static success(options) {
+    return new Toast({ ...options, className: 'success' });
+  }
 
-static error(options) {
-  return new Toast({ ...options, className: 'error' });
-}
+  static error(options) {
+    return new Toast({ ...options, className: 'error' });
+  }
 
-static info(options) {
-  return new Toast({ ...options, className: 'info' });
-}
+  static info(options) {
+    return new Toast({ ...options, className: 'info' });
+  }
 
-static warning(options) {
-  return new Toast({ ...options, className: 'warning' });
-}
+  static warning(options) {
+    return new Toast({ ...options, className: 'warning' });
+  }
   set autoClose(value) {
     this.#autoClose = value
     this.#timeVisible = 0
@@ -96,16 +98,17 @@ static warning(options) {
     currentContainer.remove()
   }
 
+
   set image(src) {
     if (!src) {
-      console.log('i am called')
+
       const img = document.createElement("img");
       img.src = DEFAULT_OPTIONS.defaultImages[this.#toastElem.className] || DEFAULT_OPTIONS.defaultImages.info;
       this.#toastElem.insertBefore(img, this.#toastElem.firstChild);
     } else {
       const img = this.#toastElem.querySelector("img");
       if (img) {
-        img.remove(); 
+        img.remove();
       }
       const customImg = document.createElement("img");
       customImg.src = src;
@@ -116,6 +119,7 @@ static warning(options) {
   set text(value) {
     this.#toastElem.textContent = value
   }
+
 
   set canClose(value) {
     this.#toastElem.classList.toggle("can-close", value)
@@ -137,12 +141,16 @@ static warning(options) {
             "--progress",
             1 - this.#timeVisible / this.#autoClose
           )
+           if (this.#progressColor) {
+          this.#toastElem.style.setProperty("--progress-color", this.#progressColor);
+        }
         }
         this.#progressInterval = requestAnimationFrame(func)
       }
 
       this.#progressInterval = requestAnimationFrame(func)
     }
+    
   }
 
   set pauseOnHover(value) {
@@ -167,15 +175,27 @@ static warning(options) {
     Object.entries(options).forEach(([key, value]) => {
       this[key] = value;
     });
-  
-    if (options.className) {
+
+    if (options.image) {
+      this.image = options.image;
+      this.#toastElem.classList.add(options.className);
+    } else if (options.className) {
+
       this.image = DEFAULT_OPTIONS.defaultImages[options.className] || null;
       this.#toastElem.classList.add(options.className);
     } else {
-      this.image = options.image || null;
+
+      this.image = null;
     }
   }
-
+  set background(value) {
+    this.#background = value;
+    this.#toastElem.style.background = value;
+  }
+  set borderColor(value) {
+    this.#borderColor = value;
+    this.#toastElem.style.borderColor = value;
+  }
   remove() {
     cancelAnimationFrame(this.#autoCloseInterval)
     cancelAnimationFrame(this.#progressInterval)
@@ -190,10 +210,10 @@ static warning(options) {
   }
 }
 
-function createContainer(position,className) {
+function createContainer(position, className) {
   const container = document.createElement("div")
   container.classList.add("toast-container")
-  container.classList.add(className); 
+  container.classList.add(className);
   container.dataset.position = position
   document.body.append(container)
   return container
