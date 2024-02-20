@@ -4,7 +4,7 @@ import QuestLogin from "./components/Login/Login";
 import { answer } from "./components/QuestForm/response";
 import { HelpCenter } from "./components/HelpCenter/HelpCenter";
 import { ReferEarn, ReferShare } from "./components/Refer/ReferEarn";
-import { showToast } from "./components/toast/toastService";
+// import { showToast } from "./components/toast/toastService";
 import { QuestForm } from "./components/QuestForm/index";
 import Feedback from "./components/Feedback/Feedback";
 import FeedbackWorkflow from "./components/FeedbackOverview/FeedbackOverview";
@@ -121,7 +121,7 @@ function App() {
 
         {/* <SearchPreview online={false}/> */}
         {/* <SreakPreview/> */}
-
+        
         {/* { <Payment
                 stripePublishableKey="pk_test_51IGxpeHv3bPcUa5dtAAgA2TZPWjga0FPxWlK3GAnWUfzRXzO8l6Kc3zF2WBpjrvFHAle0Cy3Jqxc7djZxptd9mHe00KjsN2Im7"
                 userId="u-0000000000"
@@ -134,7 +134,14 @@ function App() {
                 forEntityId={"e-0000000000"}
             /> } */}
 
+          {/* <button onClick={onSuccess}>success</button>
+          <button onClick={onInfo}>info</button>
+          <button onClick={onFailure}>error</button>
+          <button onClick={onWarn}>warning</button>
+          <button onClick={onDifferent}>error</button>
+          <button onClick={onDifferentTwo}>warning</button> */}
         {/* <ModalPreview/> */}
+
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
 
@@ -153,7 +160,7 @@ function App() {
                 /> */}
         {/* <OnBoardingPreview online /> */}
 
-        {/* <GetStartedPreview
+        <GetStartedPreview
    online={false}
  />  */}
 {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
@@ -209,7 +216,7 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-        {/* <TutorialPreview /> */}
+        <TutorialPreview />
 
         <FeedbackWorkflowPreview online={true} />
 

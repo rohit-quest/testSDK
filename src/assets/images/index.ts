@@ -53,4 +53,7 @@ import arrowRight from "./arroRight.svg";
 import pendingIcon from "./pending.svg";
 import questPowered from "./questPowered.svg";
 import referIcon from "./refer.svg";
-export { whatsappSvg, twitterSvg, discordSvg, copySVG, googleImg, copyLargeSVG, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like, closePng, copyPng, twitterPng, telegramPng, discordPng, giftPng, creditBannerPng, creditCheck, helpCenter1, helpCenter2, emailLogo, crossLogo, alertLogo, toastTic, questionLogo, warnCross, primaryCross, errorCross, successCross, primaryAlert, userChatPng, aiChatPng, sendChatPng, leftArrowPng, linkPng, searchIcon,commandkeyIcon,enterIcon,questLogo,radioActive,radioInActive,downArroIcon,gsTick,upArrow,closeRounded,greenCheck,xbutton,emailIcon,arrowRight,pendingIcon,questPowered,referIcon };
+import emailLogo2 from "./emailLogo2.svg"
+import otpIcon from "./otpIcon.svg"
+import otpIcon2 from "./otpIcon2.svg"
+export { whatsappSvg, twitterSvg, discordSvg, copySVG, googleImg, copyLargeSVG, arrow, googleSvg, whiteStar, blackStar, tick, disLike, like, closePng, copyPng, twitterPng, telegramPng, discordPng, giftPng, creditBannerPng, creditCheck, helpCenter1, helpCenter2, emailLogo, crossLogo, alertLogo, toastTic, questionLogo, warnCross, primaryCross, errorCross, successCross, primaryAlert, userChatPng, aiChatPng, sendChatPng, leftArrowPng, linkPng, searchIcon,commandkeyIcon,enterIcon,questLogo,radioActive,radioInActive,downArroIcon,gsTick,upArrow,closeRounded,greenCheck,xbutton,emailIcon,arrowRight,pendingIcon,questPowered,referIcon,emailLogo2,otpIcon,otpIcon2 };

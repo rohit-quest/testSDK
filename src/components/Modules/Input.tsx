@@ -1,25 +1,26 @@
-import { CSSProperties, ChangeEventHandler } from "react";
-import { emailLogo, phoneLogo, calenderIcon } from "../../assets/assetsSVG";
-import './css/input.css'
+import { CSSProperties, ChangeEventHandler, KeyboardEventHandler } from "react";
+import { emailLogo, phoneLogo, userLogo, calenderIcon } from "../../assets/assetsSVG";
+import "./css/input.css";
 
 const LogoType = {
   email: emailLogo,
   phone: phoneLogo,
-  text: ()=> (<></>),
-  number : phoneLogo,
+  text: () => <></>,
+  number: phoneLogo,
   date: calenderIcon
-}
-export type logoType =  keyof typeof LogoType;
+};
+export type logoType = keyof typeof LogoType;
 interface PropType {
   placeholder?: string;
   type: keyof typeof LogoType;
   style?: CSSProperties | undefined;
   onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
-  iconColor? : string ,
-  value ? : string
+  onKeyUp?: KeyboardEventHandler<HTMLInputElement> | undefined;
+  iconColor?: string;
+  value?: string;
 }
 
-export const Input = ({ placeholder, type, style, onChange, iconColor, value }: PropType) => {
+export const Input = ({ placeholder, type, style, onChange, iconColor, value, onKeyUp }: PropType) => {
   return (
     (type === "date") ?
     <div className="q_input_cont" style={style}>
@@ -44,6 +45,7 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value }: 
         placeholder={placeholder}
         className="q_input_main_cont"
         onChange={onChange}
+        onKeyUp={onKeyUp}
         value={value}
         onWheel={event => { event.currentTarget.blur(); }}
         style={style}
@@ -51,4 +53,4 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value }: 
       {(LogoType[type])(iconColor || '#B9B9B9')}
     </div>
   );
-}
+};

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, CSSProperties } from 'react';
 import config from '../../config';
 import QuestContext from '../QuestWrapper';
 import './TutorialScreen.css';
@@ -9,6 +9,7 @@ import { greenCheck, pendingIcon } from '../../assets/images';
 import showToast from '../toast/toastService';
 import Cookies from 'universal-cookie';
 import QuestLabs from '../QuestLabs';
+import TopBar from '../Modules/TopBar';
 
 const cookies = new Cookies();
 let externalUserId = cookies.get("externalUserId");
@@ -39,7 +40,13 @@ interface TutorialProps {
   uniqueUserId?: string;
   uniqueEmailId?: string;
   iconColor?: string;
-  onLinkTrigger?: (link: string) => void
+  onLinkTrigger?: (link: string) => void;
+  styleConfig?: {
+    Body?: CSSProperties,
+    Heading?: CSSProperties,
+    Description?: CSSProperties,
+    topBar?: CSSProperties
+}
 }
 
 const TutorialScreen: React.FC<TutorialProps> = ({
@@ -48,15 +55,13 @@ const TutorialScreen: React.FC<TutorialProps> = ({
   userId,
   token,
   questId,
-  bgColor,
-  font,
-  textColor,
   isOpen = true,
   uniqueUserId,
   uniqueEmailId,
   iconColor='#939393',
   onClose = () => { },
-  onLinkTrigger = link =>{window.open(link, 'smallWindow', 'width=500,height=500');}
+  onLinkTrigger = link =>{window.open(link, 'smallWindow', 'width=500,height=500');},
+  styleConfig,
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
@@ -178,42 +183,18 @@ const TutorialScreen: React.FC<TutorialProps> = ({
 
 
   return (
-        <div className="q-tutorial-cont">
-          <div
+        <div className="q-tutorial-cont" style={styleConfig?.Body}>
+          <TopBar 
+            heading={heading}
+            iconColor={iconColor}
+            onClose={()=>{}}
+            description={subheading}
             style={{
-              height: "52px",
-              borderTopLeftRadius: "14px",
-              borderTopRightRadius: "14px",
-              fontFamily: font,
-              color: textColor,
+              headingStyle: styleConfig?.Heading,
+              descriptionStyle: styleConfig?.Description, ...styleConfig?.topBar,
             }}
-            className="q-tut-div"
-          >
-            <div>
-              <div className="q-tut-head">{heading}</div>
-              <div className="q-tut-subhead">{subheading}</div>
-            </div>
-            <div className="q-tut-bar-icons">
-              <span
-                style={{ width: "20px", height: "20px", flexShrink: 0 }}
-                onClick={() => {
-                  onClose();
-                }}
-              >
-              </span>
-            </div>
-          </div>
-          <div
-            style={{
-              ...(gradient
-                ? { backgroundImage: bgColor }
-                : { backgroundColor: bgColor }),
-              borderBottomLeftRadius: "14px",
-              borderBottomRightRadius: "14px",
-              paddingRight: "14px",
-              paddingLeft: "14px",
-            }}
-          >
+          />
+          <div>
             <div className="q-tut-cont">
             </div>
             <div>

@@ -620,7 +620,6 @@ console.log(styleConfig)
             </div>
         );
     };
-
     const singleChoiceTwo = (
         options: string[] | [],
         question: string,
@@ -1132,7 +1131,7 @@ console.log(answer)
                                         }}
                                     >
                                         {currentPage == designState.length - 1
-                                            ? (nextBtnText ? nextBtnText : "Submit")
+                                            ? (text ? text : "Submit")
                                             : "Continue"}
                                     </PrimaryButton>
                                 </div>

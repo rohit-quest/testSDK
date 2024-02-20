@@ -1,0 +1,18 @@
+.q_input_textArea {
+    padding: 10px 16px 64px 16px;
+    border-radius: 10px;
+    border: 1px solid #ECECEC;
+    color: black;
+    font-family: Figtree;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.q_input_textArea:focus {
+    outline: none;
+}

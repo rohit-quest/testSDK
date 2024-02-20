@@ -3,9 +3,11 @@ import axios from "axios";
 import config from "../../config";
 import OtpVerification from "./OtpVerification";
 import Loader from "./Loader";
-import { alertLogo, crossLogo, emailLogo } from "../../assets/images";
+import { alertLogo, crossLogo,emailLogo2  } from "../../assets/images";
 import showToast from "../toast/toastService";
-import QuestContext from '../QuestWrapper';
+import QuestContext from "../QuestWrapper";
+import { NormalInput } from "../Modules/Input";
+import { PrimaryButton } from "../Modules/NextButton";
 
 interface EmailLoginProps {
   btnColor?: string;
@@ -39,7 +41,8 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   const [mainValidEmail, setMainValidEmail] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
   const { apiType } = useContext(QuestContext.Context);
-  let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
+  let BACKEND_URL =
+    apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
   const handlesubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && e.currentTarget.value !== "") {
@@ -57,7 +60,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
     setMainValidEmail(isValidEmail);
     if (!isValidEmail || email.length === 0) {
       showToast.error(
-        "Invalid email address" + "\n" + "Please check your email address",
+        "Invalid email address" + "\n" + "Please check your email address"
       );
       return;
     }
@@ -100,8 +103,8 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
               Email
             </div>
             <div className="q-email-input">
-              <img src={emailLogo} className="q-email-logo" alt="" />
-              <img
+              <img src={emailLogo2} className="q-email-logo" alt="" />
+              {email &&  <img
                 src={crossLogo}
                 className="q-email-cross"
                 alt=""
@@ -109,9 +112,9 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                   setEmail("");
                   setMainValidEmail(true);
                 }}
-              />
+              />}
 
-              <input
+              {/* <input
                 id="q_email_login"
                 type="text"
                 placeholder="Enter your email id"
@@ -119,12 +122,19 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                 onChange={(e) => setEmail(e.target.value)}
                 onKeyUp={handlesubmit}
                 className="q-login-email-input"
+              /> */}
+              <NormalInput
+                type="text"
+                placeholder="Enter your email id"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyUp={handlesubmit}
               />
             </div>
             {!mainValidEmail && (
               <div className="q-login-p">Please enter a valid email id</div>
             )}
-            <div
+            {/* <div
               style={{
                 backgroundColor: btnColor,
                 fontFamily,
@@ -134,7 +144,8 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
               className="q-email-btn-continue"
             >
               Continue
-            </div>
+            </div> */}
+            <PrimaryButton text="Continue" onClick={sendOTPfunction}/>
           </div>
         </div>
       )}

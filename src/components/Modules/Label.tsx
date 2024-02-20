@@ -1,4 +1,5 @@
 import {CSSProperties} from 'react';
+import './css/label.css';
 
 interface Proptype {
     htmlFor?: string;
