@@ -194,6 +194,7 @@ function App() {
                 paymentBanefits={paymentBanefits}
                 forEntityId={"e-0000000000"}
             /> } */}
+
           {/* <button onClick={onSuccess}>success</button>
           <button onClick={onInfo}>info</button>
           <button onClick={onFailure}>error</button>
@@ -201,6 +202,7 @@ function App() {
           <button onClick={onDifferent}>error</button>
           <button onClick={onDifferentTwo}>warning</button> */}
         {/* <ModalPreview/> */}
+
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
 
