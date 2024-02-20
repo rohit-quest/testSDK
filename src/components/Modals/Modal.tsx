@@ -3,11 +3,12 @@ import { copyIcon, crossIcon, orIcon, rewardIcon, tickIcon, uploadIcon } from '.
 import "../expansion/Refer.css";
 import "./modal.css";
 import QuestLabs from '../QuestLabs';
-import { response, upload } from './response';
+import {  upload } from './response';
 import QuestContext from '../QuestWrapper';
 import config from '../../config';
 import { SecondaryButton } from '../Modules/PreviousButton';
 import { PrimaryButton } from '../Modules/NextButton';
+import { CSSProperties } from '@emotion/serialize';
 
 interface propsType {
   isOpen?: boolean;
@@ -25,10 +26,17 @@ interface propsType {
   iconColor?: string;
   secondaryIconColor?: string;
   reward?: boolean;
+  url? : string
   onUpload?: (file: File | null) => void;
   onProgressUpdate?: (progress: number) => void;
   headers?: Record<string,any>;
   onRewardClaim?: Function,
+  styleConfig?: {
+    Heading?: CSSProperties,
+    Description?: CSSProperties,
+    PrimaryButton?: CSSProperties,
+    SecondaryButton?: CSSProperties,
+}
 }
 
 export default function QuestMOdal({
@@ -43,6 +51,7 @@ export default function QuestMOdal({
   onProgressUpdate=()=>{},
   headers={},
   onRewardClaim=()=>{},
+  url, 
   rewardDescription = 'You have unlocked a new reward for your last transaction. Avail the reward now and enjoy!'
 }: propsType) {
   const [copy, setCopy] = useState([false, false]);
@@ -52,6 +61,7 @@ export default function QuestMOdal({
   const [uploading, setUpload] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [open, setOpen] = useState(isOpen);
+  const [apiResponse, setApiResponse] = useState<any>(null);
 
   useEffect(() => {
     setOpen(isOpen);
@@ -65,10 +75,21 @@ export default function QuestMOdal({
 
   useEffect(()=>onProgressUpdate(uploadProgress),[uploadProgress])
 
-  const handleUpload = (file: File) => {
+  const handleUpload = async(file: File) => {
     setUpload(true);
-    upload(file,BACKEND_URL,setUploadProgress, headers )
+  const response = await upload(file,BACKEND_URL,setUploadProgress, headers, url )
+    setApiResponse(response)
   }
+  
+  const getUploadData = () => {
+    if (apiResponse && url && headers) {
+      onUpload(apiResponse);
+    } else if (inpRef.current?.files && inpRef.current?.files[0]) {
+      onUpload(inpRef.current.files[0]);
+    }
+  };
+
+
   if (!open) return;
   if (reward)
     return (<div className='q_feed_back_modal'>
@@ -79,10 +100,11 @@ export default function QuestMOdal({
           <div className="q_modal_desc">{rewardDescription}</div>
         </div>
         <div className='q_modal_buttons'>
-          <div className="q_modal_cancel" onClick={()=>{setOpen(false)}}>Go to home</div>
-          <div className="q_modal_upload_button" onClick={()=>{onRewardClaim()}}>Avail now</div>
+        <SecondaryButton previousBtnText='Go to home' onClick={()=>{setOpen(false)}}  />
+        <PrimaryButton nextBtnText='Avail now' onClick={()=>{onRewardClaim()}} style={{ background: 'linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%)'}} />
         </div>
       </div>
+      <QuestLabs color={iconColor} />
     </div>)
   return (
     <div className='q_feed_back_modal'>
@@ -125,8 +147,8 @@ export default function QuestMOdal({
         <div className='q_modal_buttons'>
           {/* <div className="q_modal_cancel">Cancel</div> */}
           <SecondaryButton previousBtnText='Cancel' />
-          <PrimaryButton />
-          <div className="q_modal_upload_button" onClick={() => inpRef.current?.files && inpRef.current?.files[0] && onUpload(inpRef.current?.files[0])}>Upload</div>
+          <PrimaryButton  nextBtnText='Upload' onClick={() => inpRef.current?.files && inpRef.current?.files[0] &&   getUploadData()} style={{ background:(inpRef.current?.files && inpRef.current?.files[0]) ?  'linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%)':'grey'}} />
+          {/* <div className="q_modal_upload_button" onClick={() => inpRef.current?.files && inpRef.current?.files[0] && onUpload(inpRef.current?.files[0])}>Upload</div> */}
         </div>
       </div>
       <QuestLabs color={iconColor} />
