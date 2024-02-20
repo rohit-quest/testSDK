@@ -1,26 +1,26 @@
-@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 .questLabs-google a {
   outline: none;
 }
 .q-inputStyle {
   width: 43px !important;
   height: 35px;
-  border-radius:  10px;
-  border: 1.5px solid var(--neutral-grey-100, #ECECEC);
-  background: var(--neutral-pure-white-100, #FFF);  
+  border-radius: 10px;
+  border: 1.5px solid var(--neutral-grey-100, #ececec);
+  background: var(--neutral-pure-white-100, #fff);
   color: rgb(2, 2, 2);
   font-size: 14px;
 }
-.q-inputStyle:focus{
+.q-inputStyle:focus {
   outline: none;
 }
-.q-otp-label{
-font-size: 12px;
-font-style: normal;
-font-weight: 400;
-line-height: 16px;
+.q-otp-label {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
 }
-.q-containerStyle{
+.q-containerStyle {
   width: 320px !important;
   display: flex;
   justify-content: space-between;
@@ -59,7 +59,7 @@ line-height: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
-  color: var(--neutral-grey-400, #5E5E5E);
+  color: var(--neutral-grey-400, #5e5e5e);
 }
 .q-login-or-container {
   margin-top: 12px;
@@ -86,15 +86,17 @@ line-height: 16px;
   align-items: center;
   gap: 8px;
   border-radius: 10px;
-  border: 1.5px solid #2b2b2b;
+  border: 1.5px solid #efefef;
+  font-family: Figtree;
+  font-size: 14px;
 }
 .q-resend {
-  color:var(--neutral-grey-400, #5E5E5E);
+  color: var(--neutral-grey-400, #5e5e5e);
   text-align: center;
   font-size: 14px;
   font-style: normal;
- font-weight: 400;
- line-height: 20px;
+  font-weight: 400;
+  line-height: 20px;
 }
 .q-login-parent-container {
   display: flex;
@@ -112,6 +114,11 @@ line-height: 16px;
 .q-email-login-ctn {
   margin-top: 20px;
 }
+.q-email-login-ctn button {
+  margin-top: 20px;
+  cursor: pointer;
+  background: linear-gradient(84deg, #9035ff 0.36%, #0065ff 100.36%);
+}
 
 .q-email-text {
   color: #252525;
@@ -120,10 +127,12 @@ line-height: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: 16px;
+  margin-bottom: 4px;
 }
 
 .q-email-input {
   position: relative;
+
   width: 100%;
 }
 
@@ -135,7 +144,7 @@ line-height: 16px;
 .q-login-email-input {
   box-sizing: content-box;
   display: flex;
-  padding: 10px 12px 10px 32px;
+  padding: 8px 12px;
   align-items: center;
   gap: 8px;
   border-radius: 10px;
@@ -159,7 +168,7 @@ line-height: 16px;
 }
 
 .q-email-btn-continue {
-  box-sizing: content-box ;
+  box-sizing: content-box;
   display: flex;
   width: 280px;
   padding: 10px 20px;
@@ -175,6 +184,13 @@ line-height: 16px;
   line-height: 24px;
   margin-top: 20px;
   cursor: pointer;
+}
+.q-email-input input {
+  padding-left: 20px;
+}
+.q-email-input div {
+  border-radius: 6px;
+  border: 2px solid var(--Neutral-Grey-100, #ececec);
 }
 
 .q-or-continue {
