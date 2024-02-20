@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { CSSProperties, useEffect, useRef, useState } from "react";
 import config from "../../config";
 import axios from "axios";
 import { useContext } from "react";
@@ -13,7 +13,12 @@ import link from "../../assets/images/links.png";
 import Select, { StylesConfig } from "react-select";
 import {userLogo, crossLogo, leftArrow, rightArrow, calenderIcon, textAreaIcon, phoneLogo, emailLogo} from "../../assets/assetsSVG.tsx"
 import { Input, logoType } from "../Modules/Input.tsx";
-import { MultiChoice } from "../Modules/MultiChoice.tsx";
+import { MultiChoice, MultiChoiceTwo } from "../Modules/MultiChoice.tsx";
+import Label from "../Modules/Label.tsx";
+import SingleChoice from "../Modules/SingleChoice.tsx";
+import TextArea from "../Modules/TextArea.tsx";
+import { SecondaryButton } from "../Modules/SecondaryButton.tsx";
+import { PrimaryButton } from "../Modules/PrimaryButton.tsx";
 
 const Tick = ({fillColor="#6525B3",isActive=false,borderColor="#B9B9B9"}) => isActive?(<svg
     width="16"
@@ -57,44 +62,67 @@ interface QuestLoginProps {
     questId: string;
     uniqueUserId?: string;
     uniqueEmailId?: string;
-    design?: Array<Array<number>>;
-    color?: string;
-    bgColor?: string;
-    btnColor?: string;
-    inputBgColor?: string;
+    design?: Array<Array<number>> | undefined;
+    // color?: string;
+    // bgColor?: string;
+    // btnColor?: string;
+    // inputBgColor?: string;
     headingScreen?: HeadingScreen | HeadingScreen[] | any;
     singleChoose?: "modal1" | "modal2" | "modal3";
     multiChoice?:  "modal1" | "modal2";
-    screenHeight?: string;
+    // screenHeight?: string;
     getAnswers: Function | undefined;
     answer: any;
     setAnswer: React.Dispatch<React.SetStateAction<any>>;
     customComponents?: React.JSX.Element;
     customComponentPositions?: number;
-    inputBorder?: string;
-    btnSize?: string;
-    headingSize?: string;
-    descSize?: string;
-    inputFieldType?: { [key: string]: string };
-    defaultFont?: boolean;
+    // inputBorder?: string;
+    // btnSize?: string;
+    // headingSize?: string;
+    // descSize?: string;
+    // inputFieldType?: { [key: string]: string };
+    // defaultFont?: boolean;
     progress?: string[];
     loadingTracker?: boolean;
     setLoading?: Function;
-    linksLogoWidth?: string;
-    previousBtnText?: string;
+    // linksLogoWidth?: string;
+    // previousBtnText?: string;
     nextBtnText?: string;
-    progressbarColor?: string;
+    // progressbarColor?: string;
     progressBarMultiLine?: boolean;
-    progressBartabHeight?: string;
-    headingAlignment?: "left" | "right" | "center";
-    questionFontSize?: string;
-    answerFontSize?: string;
-    gap?: string;
+    // progressBartabHeight?: string;
+    // headingAlignment?: "left" | "right" | "center";
+    // questionFontSize?: string;
+    // answerFontSize?: string;
+    // gap?: string;
     controlBtnType?: "Arrow" | "Buttons";
-    progressBarType?: "modal1"|"modal2";
-    choiceColor?: string;
-    textInputModal?: "modal1"|"modal2";
-    template?: 1 | 2 | 3;
+    // progressBarType?: "modal1"|"modal2";
+    // choiceColor?: string;
+    // textInputModal?: "modal1"|"modal2";
+    template?: "multi-question" | "single-question";
+    styleConfig?: {
+        Form?: CSSProperties,
+        Heading?: CSSProperties,
+        Description?: CSSProperties,
+        Input?: CSSProperties,
+        Label?: CSSProperties,
+        TextArea?: CSSProperties,
+        PrimaryButton?: CSSProperties,
+        SecondaryButton?: CSSProperties,
+        SingleChoice?: {
+            style?: CSSProperties,
+            selectedStyle?: CSSProperties
+        },
+        MultiChoice?: {
+            style?: CSSProperties,
+            selectedStyle?: CSSProperties
+        },
+        ProgressBar?: {
+            completeTabColor?: string,
+            currentTabColor?: string,
+            pendingTabColor?: string
+        }
+    }
 }
 
 interface FormData {
@@ -116,89 +144,85 @@ interface Answer {
 
 function OnBoarding(props: QuestLoginProps) {
     const {
-        color,
-        bgColor,
-        inputBgColor,
-        inputBorder,
-        btnSize,
-        btnColor,
-        headingSize,
-        descSize,
+        // color,
+        // bgColor,
+        // inputBgColor,
+        // inputBorder,
+        // btnSize,
+        // btnColor,
+        // headingSize,
+        // descSize,
         headingScreen,
         singleChoose,
         multiChoice="modal1",
-        screenHeight,
+        // screenHeight,
         progress,
         getAnswers,
         answer,
         setAnswer,
         customComponents,
         customComponentPositions,
-        inputFieldType,
-        defaultFont,
+        // inputFieldType,
+        // defaultFont,
         userId,
         token,
         questId,
         loadingTracker,
         setLoading=()=>{},
-        linksLogoWidth,
-        previousBtnText,
+        // linksLogoWidth,
+        // previousBtnText,
         nextBtnText,
-        progressbarColor,
+        // progressbarColor,
         progressBarMultiLine,
-        progressBartabHeight,
-        headingAlignment,
-        questionFontSize,
-        answerFontSize,
-        gap,
+        // progressBartabHeight,
+        // headingAlignment,
+        // questionFontSize,
+        // answerFontSize,
+        // gap,
         controlBtnType,
         uniqueUserId,
         uniqueEmailId,
-        progressBarType="modal2",
-        choiceColor="#6525B3",
-        textInputModal = "modal1",
-        template
+        // progressBarType="modal2",
+        // choiceColor="#6525B3",
+        // textInputModal = "modal1",
+        template,
+        design = [],
+        styleConfig
     } = props;
 
-    let { design =[] } = props;
+    // let { design =[] } = props;
 
     const [formdata, setFormdata] = useState<FormData[] | []>([]);
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [btnFlag, setButtonFlag] = useState<boolean>(false);
     const [steps, setSteps] = useState<number[]>([]);
-    const { apiKey, apiSecret, entityId, featureFlags, apiType } = useContext(QuestContext.Context);
+    const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } = useContext(QuestContext.Context);
     const cookies = new Cookies()
     const progressRef = useRef<HTMLDivElement>(null)
-    const [designState,setDesign] = useState(design)
+    const [designState, setDesign] = useState(design || [])
 
     let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
     const templateDesign = () =>{
         switch (template) {
-            case 1:
-                break;
-            case 2:
+            case "multi-question":
                 {
-                    let arr = [];
-                    for (let i=1; i<=formdata.length; i++)
-                        arr.push(i);
-                    design = [arr];
                     setDesign([...design])
                     break;
                 }
-            case 3:
+            case "single-question":
                 {
                     let arr = [];
                     for(let i=1; i<=formdata.length; i++){
                         arr.push([i])
                     }
-                    design = arr;
-                    setDesign([...design])
+                    // let design = arr;
+                    setDesign([...arr])
                     break;
                 }
         }
     }
-
+console.log(styleConfig)
     useEffect(() => {
         if (entityId) {
             let externalUserId = cookies.get("externalUserId");
@@ -287,7 +311,12 @@ function OnBoarding(props: QuestLoginProps) {
     }, []);
 
     useEffect(() => {
-        templateDesign()
+        if (!!design.length) {
+            templateDesign()
+        }
+    }, [design])
+
+    useEffect(() => {
         let currentQuestions: any =
             !!designState && designState.length > 0 && checkDesignCriteria()
                 ? designState[currentPage]
@@ -376,36 +405,36 @@ function OnBoarding(props: QuestLoginProps) {
 
     const [wd, setWd] = useState(0)
 
-    const ProgressBarNew = () =>{
-        return ( <div className="q_onb_progress">
-        {progress?.map((text, i) => {
-            const isFilled = steps.includes(i);
-            const isActive = currentPage === i;
-            let color = isFilled ? '#098849' : isActive ? '#2C2C2C' : '#6E6E6E';
-            let border = `1px solid ${isFilled ? '#098849' : isActive ? '#2C2C2C' : '#6E6E6E'}`;
+    // const ProgressBarNew = () => {
+    //     return ( <div className="q_onb_progress">
+    //     {progress?.map((text, i) => {
+    //         const isFilled = steps.includes(i);
+    //         const isActive = currentPage === i;
+    //         let color = isFilled ? '#098849' : isActive ? '#2C2C2C' : '#6E6E6E';
+    //         let border = `1px solid ${isFilled ? '#098849' : isActive ? '#2C2C2C' : '#6E6E6E'}`;
     
-          return (
-              <div
-                  style={{
-                      width: `${100 / progress.length}%`,
-                      color,
-                      border,
-                  }}
-                  onClick={() => {
-                      if (isFilled && (i <= currentPage + 1)) {
-                          setCurrentPage(i);
-                      }
-                  }
-                  }
-                  className="q_onb_progress_tab"
-                  key={i}
-              >
-                  {text}
-              </div>
-          );
-        })}
-      </div>)
-    }
+    //       return (
+    //           <div
+    //               style={{
+    //                   width: `${100 / progress.length}%`,
+    //                   color,
+    //                   border,
+    //               }}
+    //               onClick={() => {
+    //                   if (isFilled && (i <= currentPage + 1)) {
+    //                       setCurrentPage(i);
+    //                   }
+    //               }
+    //               }
+    //               className="q_onb_progress_tab"
+    //               key={i}
+    //           >
+    //               {text}
+    //           </div>
+    //       );
+    //     })}
+    //   </div>)
+    // }
     
     const ProgressBar = () => {
         useEffect(() => {
@@ -421,63 +450,65 @@ function OnBoarding(props: QuestLoginProps) {
                             <div key={i}>
                                 {
                                     steps.includes(i) == true ?
-                                    <div className="q-onb-progress-comp" style={{borderColor: progressbarColor ? progressbarColor : "#098849", height: progressBarMultiLine ? progressBartabHeight : "auto"}}>
+                                    <div className="q-onb-progress-comp" style={{borderColor: styleConfig?.ProgressBar?.completeTabColor || "#098849"}}>
                                         <div 
                                             style={{
                                                 maxWidth: `${((((wd - (progress.length - 1) * 15)) / progress.length) - 32)}px`,
                                                 whiteSpace: progressBarMultiLine ? "normal" : "nowrap", 
                                                 overflow: progressBarMultiLine ? "" : "hidden", 
                                                 textOverflow: progressBarMultiLine ? "" : "ellipsis",
-                                                color: "#098849"
+                                                color: styleConfig?.ProgressBar?.completeTabColor || "#098849"
                                             }}
                                         >
                                             {prog}
                                         </div>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 21 20" fill="none">
-                                            <path opacity="0.3" d="M10.8333 18.3333C15.4357 18.3333 19.1667 14.6023 19.1667 9.99996C19.1667 5.39759 15.4357 1.66663 10.8333 1.66663C6.23095 1.66663 2.49999 5.39759 2.49999 9.99996C2.49999 14.6023 6.23095 18.3333 10.8333 18.3333Z" fill={progressbarColor ? progressbarColor : "#098849"}/>
-                                            <path d="M14.8074 6.51474C15.1215 6.17828 15.6488 6.1601 15.9853 6.47412C16.3217 6.78815 16.3399 7.31548 16.0259 7.65193L10.1925 13.9019C9.88787 14.2284 9.38003 14.2566 9.041 13.9661L6.12434 11.4661C5.7749 11.1665 5.73443 10.6404 6.03395 10.291C6.33347 9.94157 6.85955 9.9011 7.20899 10.2006L9.51916 12.1808L14.8074 6.51474Z" fill={progressbarColor ? progressbarColor : "#098849"}/>
+                                            <path opacity="0.3" d="M10.8333 18.3333C15.4357 18.3333 19.1667 14.6023 19.1667 9.99996C19.1667 5.39759 15.4357 1.66663 10.8333 1.66663C6.23095 1.66663 2.49999 5.39759 2.49999 9.99996C2.49999 14.6023 6.23095 18.3333 10.8333 18.3333Z" fill={"#098849"}/>
+                                            <path d="M14.8074 6.51474C15.1215 6.17828 15.6488 6.1601 15.9853 6.47412C16.3217 6.78815 16.3399 7.31548 16.0259 7.65193L10.1925 13.9019C9.88787 14.2284 9.38003 14.2566 9.041 13.9661L6.12434 11.4661C5.7749 11.1665 5.73443 10.6404 6.03395 10.291C6.33347 9.94157 6.85955 9.9011 7.20899 10.2006L9.51916 12.1808L14.8074 6.51474Z" fill={styleConfig?.ProgressBar?.completeTabColor || "#098849"}/>
                                         </svg>
                                         
-                                    </div>:(i==currentPage)?(<div className="q-onb-progress-comp" style={{borderColor: "#2C2C2C", height: progressBarMultiLine ? progressBartabHeight : "auto"}}>
+                                    </div>
+                                    :
+                                    (i==currentPage)?(<div className="q-onb-progress-comp" style={{borderColor: styleConfig?.ProgressBar?.currentTabColor || "#2C2C2C"}}>
                                         <div 
                                             style={{
                                                     maxWidth: `${((((wd - (progress.length - 1) * 15)) / progress.length) - 32)}px`, 
                                                     whiteSpace: progressBarMultiLine ? "normal" : "nowrap", 
                                                     overflow: progressBarMultiLine ? "" : "hidden", 
                                                     textOverflow: progressBarMultiLine ? "" : "ellipsis",
-                                                    color: "#2C2C2C"
+                                                    color: styleConfig?.ProgressBar?.currentTabColor || "#2C2C2C"
                                                 }}
                                             >
                                             {prog}
                                         </div>
-                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        {/* <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <rect width="20" height="20" fill="#2C2C2C"/>
                                             <path d="M-301 -113C-301 -114.105 -300.105 -115 -299 -115H2097C2098.1 -115 2099 -114.105 2099 -113V592C2099 593.105 2098.1 594 2097 594H-299C-300.105 594 -301 593.105 -301 592V-113Z" fill="#ECECEC"/>
                                             <rect width="376" height="68" transform="translate(-213 -20)" fill="white"/>
-                                            <path id="Oval 3" d="M10 3.33337V5.00004C12.7614 5.00004 15 7.23862 15 10C15 12.7615 12.7614 15 10 15C7.23857 15 5 12.7615 5 10C5 9.13364 5.21992 8.30109 5.63312 7.56266L4.17866 6.74882C3.6272 7.73435 3.33333 8.84683 3.33333 10C3.33333 13.6819 6.3181 16.6667 10 16.6667C13.6819 16.6667 16.6667 13.6819 16.6667 10C16.6667 6.31814 13.6819 3.33337 10 3.33337Z" fill="#2C2C2C"/>
-                                            <path d="M-299 -114H2097V-116H-299V-114ZM2098 -113V592H2100V-113H2098ZM2097 593H-299V595H2097V593ZM-300 592V-113H-302V592H-300ZM-299 593C-299.552 593 -300 592.552 -300 592H-302C-302 593.657 -300.657 595 -299 595V593ZM2098 592C2098 592.552 2097.55 593 2097 593V595C2098.66 595 2100 593.657 2100 592H2098ZM2097 -114C2097.55 -114 2098 -113.552 2098 -113H2100C2100 -114.657 2098.66 -116 2097 -116V-114ZM-299 -116C-300.657 -116 -302 -114.657 -302 -113H-300C-300 -113.552 -299.552 -114 -299 -114V-116Z" fill="#AFAFAF"/>
-                                        </svg>
+                                            <path id="Oval 3" d="M10 3.33337V5.00004C12.7614 5.00004 15 7.23862 15 10C15 12.7615 12.7614 15 10 15C7.23857 15 5 12.7615 5 10C5 9.13364 5.21992 8.30109 5.63312 7.56266L4.17866 6.74882C3.6272 7.73435 3.33333 8.84683 3.33333 10C3.33333 13.6819 6.3181 16.6667 10 16.6667C13.6819 16.6667 16.6667 13.6819 16.6667 10C16.6667 6.31814 13.6819 3.33337 10 3.33337Z" fill={styleConfig?.ProgressBar?.currentTabColor || "#2C2C2C"}/>
+                                            <path d="M-299 -114H2097V-116H-299V-114ZM2098 -113V592H2100V-113H2098ZM2097 593H-299V595H2097V593ZM-300 592V-113H-302V592H-300ZM-299 593C-299.552 593 -300 592.552 -300 592H-302C-302 593.657 -300.657 595 -299 595V593ZM2098 592C2098 592.552 2097.55 593 2097 593V595C2098.66 595 2100 593.657 2100 592H2098ZM2097 -114C2097.55 -114 2098 -113.552 2098 -113H2100C2100 -114.657 2098.66 -116 2097 -116V-114ZM-299 -116C-300.657 -116 -302 -114.657 -302 -113H-300C-300 -113.552 -299.552 -114 -299 -114V-116Z" fill={styleConfig?.ProgressBar?.currentTabColor || "#AFAFAF"}/>
+                                        </svg> */}
                                         
                                     </div>):(
-                                    <div className="q-onb-progress-comp" style={{borderColor: "#ECECEC", height: progressBarMultiLine ? progressBartabHeight : "auto"}}>
+                                    <div className="q-onb-progress-comp" style={{borderColor: styleConfig?.ProgressBar?.pendingTabColor || "#ECECEC"}}>
                                         <div 
                                             style={{
                                                     maxWidth: `${((((wd - (progress.length - 1) * 15)) / progress.length) - 32)}px`, 
                                                     whiteSpace: progressBarMultiLine ? "normal" : "nowrap", 
                                                     overflow: progressBarMultiLine ? "" : "hidden", 
                                                     textOverflow: progressBarMultiLine ? "" : "ellipsis",
-                                                    color: "#AFAFAF"
+                                                    color: styleConfig?.ProgressBar?.pendingTabColor || "#AFAFAF"
                                                 }}
                                             >
                                             {prog}
                                         </div>
-                                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        {/* <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <rect width="20" height="20" fill="#E9E9E9"/>
                                             <path d="M-301 -113C-301 -114.105 -300.105 -115 -299 -115H2097C2098.1 -115 2099 -114.105 2099 -113V592C2099 593.105 2098.1 594 2097 594H-299C-300.105 594 -301 593.105 -301 592V-113Z" fill="#ECECEC"/>
                                             <rect width="376" height="68" transform="translate(-213 -20)" fill="white"/>
-                                            <path id="Oval 3" d="M10 3.33337V5.00004C12.7614 5.00004 15 7.23862 15 10C15 12.7615 12.7614 15 10 15C7.23857 15 5 12.7615 5 10C5 9.13364 5.21992 8.30109 5.63312 7.56266L4.17866 6.74882C3.6272 7.73435 3.33333 8.84683 3.33333 10C3.33333 13.6819 6.3181 16.6667 10 16.6667C13.6819 16.6667 16.6667 13.6819 16.6667 10C16.6667 6.31814 13.6819 3.33337 10 3.33337Z" fill="#AFAFAF"/>
-                                            <path d="M-299 -114H2097V-116H-299V-114ZM2098 -113V592H2100V-113H2098ZM2097 593H-299V595H2097V593ZM-300 592V-113H-302V592H-300ZM-299 593C-299.552 593 -300 592.552 -300 592H-302C-302 593.657 -300.657 595 -299 595V593ZM2098 592C2098 592.552 2097.55 593 2097 593V595C2098.66 595 2100 593.657 2100 592H2098ZM2097 -114C2097.55 -114 2098 -113.552 2098 -113H2100C2100 -114.657 2098.66 -116 2097 -116V-114ZM-299 -116C-300.657 -116 -302 -114.657 -302 -113H-300C-300 -113.552 -299.552 -114 -299 -114V-116Z" fill="#AFAFAF"/>
-                                        </svg>
+                                            <path id="Oval 3" d="M10 3.33337V5.00004C12.7614 5.00004 15 7.23862 15 10C15 12.7615 12.7614 15 10 15C7.23857 15 5 12.7615 5 10C5 9.13364 5.21992 8.30109 5.63312 7.56266L4.17866 6.74882C3.6272 7.73435 3.33333 8.84683 3.33333 10C3.33333 13.6819 6.3181 16.6667 10 16.6667C13.6819 16.6667 16.6667 13.6819 16.6667 10C16.6667 6.31814 13.6819 3.33337 10 3.33337Z" fill={styleConfig?.ProgressBar?.pendingTabColor || "#AFAFAF"}/>
+                                            <path d="M-299 -114H2097V-116H-299V-114ZM2098 -113V592H2100V-113H2098ZM2097 593H-299V595H2097V593ZM-300 592V-113H-302V592H-300ZM-299 593C-299.552 593 -300 592.552 -300 592H-302C-302 593.657 -300.657 595 -299 595V593ZM2098 592C2098 592.552 2097.55 593 2097 593V595C2098.66 595 2100 593.657 2100 592H2098ZM2097 -114C2097.55 -114 2098 -113.552 2098 -113H2100C2100 -114.657 2098.66 -116 2097 -116V-114ZM-299 -116C-300.657 -116 -302 -114.657 -302 -113H-300C-300 -113.552 -299.552 -114 -299 -114V-116Z" fill={styleConfig?.ProgressBar?.pendingTabColor || "#AFAFAF"}/>
+                                        </svg> */}
                                         
                                     </div>)
                                 }
@@ -506,28 +537,21 @@ function OnBoarding(props: QuestLoginProps) {
                         {customComponents}
                     </div>
                 }
-                <label
-                    className="q-onb-lebels"
-                    htmlFor="normalInput"
-                    style={{ color: color }}
-                >
-                    {question} {required && "*"}
-                </label>
-                {/* <div className="q-onb-input" style={{border: inputBorder}}>
-                    {textInputModal ==="modal2" && (inputType == "text" ? userLogo() : inputType == "number" ? phoneLogo() : emailLogo())}
-                    <input
-                        type={inputType}
-                        id="normalInput"
-                        name="normalInput"
-                        style={{ backgroundColor: inputBgColor, fontSize: answerFontSize }}
-                        onChange={(e) => handleUpdate(e, criteriaId, "")}
-                        value={answer[criteriaId]}
-                        placeholder={placeholder}
-                        className="q_sdk_input"
-                    />
-                    {textInputModal === "modal2" && crossLogo(criteriaId, handleRemove)}
-                </div> */}
-                <Input type={inputType} placeholder={placeholder} value={answer[criteriaId]} iconColor="red" onChange={(e)=>handleUpdate(e, criteriaId, "")}/>
+                <Label htmlFor="normalInput" style={{color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label}}>
+                    {`${question} ${!!required && "*"}`}
+                </Label>
+                <Input 
+                    type={inputType} 
+                    placeholder={placeholder} 
+                    value={answer[criteriaId]} 
+                    iconColor={styleConfig?.Input?.color || themeConfig?.primaryColor || "black"}
+                    onChange={(e)=>handleUpdate(e, criteriaId, "")} 
+                    style={{ 
+                        borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+                        color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+                        ...styleConfig?.Input   
+                    }}
+                />
             </div>
         );
     };
@@ -547,30 +571,20 @@ function OnBoarding(props: QuestLoginProps) {
                         {customComponents}
                     </div>
                 }
-                <label
-                    className="q-onb-lebels"
-                    htmlFor="dateInput"
-                    style={{ color: color }}
-                >
-                    {question} {required && "*"}
-                </label>
-                {/* <div className="q-onb-input" style={{border: inputBorder}}>
-                    <label className="q-onb-custom-date">
-                        <input
-                            type="date"
-                            id="dateInput"
-                            name="dateInput"
-                            value={answer[criteriaId]}
-                            style={{ backgroundColor: inputBgColor, fontSize: answerFontSize }}
-                            onChange={(e) => handleUpdate(e, criteriaId, "")}
-                            className="q_sdk_input q-onb-custom-datePicker"
-                        />
-                        <button id="q-onb-custom-date-text">{answer[criteriaId] ? <div style={{display: "inline"}} >{answer[criteriaId]}</div> : <div style={{display: "inline", color:"#8E8E8E"}}>{placeholder}</div>}</button>
-                    </label>
-                    {calenderIcon()}
-                    {textInputModal==="modal2" && crossLogo(criteriaId, handleRemove)}
-                </div> */}
-                <Input type={"date"} placeholder={placeholder} value={answer[criteriaId]} iconColor="red" onChange={(e)=>handleUpdate(e, criteriaId, "")}/>
+                <Label htmlFor="dateInput" style={{color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label}}>
+                    {`${question} ${!!required && "*"}`}
+                </Label>
+                <Input 
+                    type={"date"} 
+                    placeholder={placeholder} 
+                    value={answer[criteriaId]} 
+                    onChange={(e)=>handleUpdate(e, criteriaId, "")}
+                    style={{ 
+                        borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+                        color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+                        ...styleConfig?.Input
+                    }}
+                />
             </div>
         );
     };
@@ -590,25 +604,19 @@ function OnBoarding(props: QuestLoginProps) {
                         {customComponents}
                     </div>
                 }
-                <label
-                    className="q-onb-lebels"
-                    htmlFor="normalInput"
-                    style={{ color: color }}
-                >
-                    {question} {required && "*"}
-                </label>
-                <div className="q-onb-input" style={{alignItems: "flex-start", border: inputBorder}}>
-                    {textAreaIcon()}
-                    <textarea
-                        id="normalInput"
-                        name="normalInput"
-                        placeholder={placeholder}
-                        style={{ height: "120px", backgroundColor: inputBgColor, fontFamily: defaultFont == false ? "" : "'Figtree', sans-serif", maxWidth: "100%", fontSize: answerFontSize }}
-                        onChange={(e) => handleUpdate(e, criteriaId, "")}
-                        value={answer[criteriaId]}
-                    />
-                    {crossLogo(criteriaId, handleRemove)}
-                </div>
+                <Label htmlFor="textAreaInput" style={{color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label}}>
+                    {`${question} ${!!required && "*"}`}
+                </Label>
+                <TextArea
+                    onChange={(e) => handleUpdate(e, criteriaId, "")}
+                    placeholder={placeholder}
+                    value={answer[criteriaId]}
+                    style={{ 
+                        borderColor: styleConfig?.TextArea?.borderColor || themeConfig?.borderColor,
+                        color: styleConfig?.TextArea?.color || themeConfig?.primaryColor,
+                        ...styleConfig?.TextArea
+                    }}
+                />
             </div>
         );
     };
@@ -619,26 +627,9 @@ function OnBoarding(props: QuestLoginProps) {
         required: boolean,
         criteriaId: string,
         index: number,
-        manualInput: string | boolean
+        manualInput: string | boolean,
+        singleChoose: "modal1" | "modal2" | "modal3"
     ) => {
-        const customStyles: StylesConfig<any, false, any> = {
-            control: (base, state) => ({
-              ...base,
-              background: inputBgColor,
-              fontSize: answerFontSize || "14px",
-              border: inputBorder || "2px solid var(--neutral-grey-100, #ECECEC)",
-              borderRadius: "10px"
-            }),
-            option: (styles, { isDisabled, isFocused, isSelected }) => ({
-              ...styles,
-              backgroundColor: isFocused ? "grey" : inputBgColor || "#f9fafb",
-              color: ""
-            }),
-            menu: (provided) => ({
-              ...provided,
-              backgroundColor: inputBgColor || "#f9fafb",
-            })
-          };
         
         return (
             <div key={criteriaId}>
@@ -648,182 +639,41 @@ function OnBoarding(props: QuestLoginProps) {
                         {customComponents}
                     </div>
                 }
-                <label
-                    htmlFor={criteriaId}
-                    className="q-onb-lebels"
-                    style={{ color: color }}
-                >
-                    {question} {required && "*"}
-                </label>
-                {/* <div className="selectdiv">
-                    <select
-                        id={criteriaId}
-                        value={answer[criteriaId]}
-                        onChange={(e) => handleUpdate(e, criteriaId, "")}
-                        className="q-onb-singleChoiceOne"
-                        style={{ backgroundColor: inputBgColor, border: inputBorder }}
-                    >
-                        <option value="" disabled>Choose a option</option>
-                        {options.map((opt, id) => (
-                            <option value={opt} key={`sct${id}`}>
-                                {opt}
-                            </option>
-                        ))}
-                    </select>
-                </div> */}
-                <Select 
-                    isSearchable={true} 
-                    name={criteriaId} 
-                    options={options.map((opt: string) => {return {value: opt, label: opt}})} 
-                    onChange={(e) => handleUpdate({target: e}, criteriaId, "")}
-                    styles={customStyles}
-                    value={answer[criteriaId]?{value: answer[criteriaId], label: answer[criteriaId]}:''}
+                <Label htmlFor="textAreaInput" style={{color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label}}>
+                    {`${question} ${!!required && "*"}`}
+                </Label>
+                <SingleChoice
+                    options={options}
+                    type={singleChoose}
+                    onChange={(e) => singleChoose == "modal3" ? handleUpdate({target: e}, criteriaId, "") : handleUpdate(e, criteriaId, "radio")}
+                    checked={answer[criteriaId]}
+                    style={{
+                        borderColor: styleConfig?.SingleChoice?.style?.borderColor || themeConfig?.borderColor, 
+                        color: styleConfig?.SingleChoice?.style?.color || themeConfig?.secondaryColor, 
+                        ...styleConfig?.SingleChoice?.style
+                    }}
+                    selectedStyle={{
+                        accentColor: styleConfig?.SingleChoice?.selectedStyle?.accentColor || themeConfig?.primaryColor,
+                        ...styleConfig?.SingleChoice?.selectedStyle
+                    }}
                 />
                 {manualInput != false && answer[criteriaId] == manualInput &&
-                    <div className="q-onb-input" style={{border: inputBorder, marginTop: "10px"}}>
-                        {userLogo('')}
-                        <input
-                            type="text"
-                            id="normalInput"
-                            name="normalInput"
-                            style={{ backgroundColor: inputBgColor, fontSize: answerFontSize }}
-                            onChange={(e) => handleUpdate(e, (criteriaId + "/manual"), "")}
-                            value={answer[criteriaId + "/manual"]}
-                            placeholder="Please fill manually"
-                        />
-                        {crossLogo(criteriaId + "/manual", handleRemove)}
-                    </div>
+                    <Input
+                        type="text"
+                        onChange={(e) => handleUpdate(e, (criteriaId + "/manual"), "")}
+                        value={answer[criteriaId + "/manual"]}
+                        placeholder="Please fill manually"
+                        style={{ 
+                            borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+                            color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+                            ...styleConfig?.Input
+                        }}
+                    />
                 }
             </div>
         );
     };
     
-    const singleChoiceOne = (
-        options: string[] | [],
-        question: string,
-        required: boolean,
-        criteriaId: string,
-        index: number,
-        manualInput: string | boolean
-    ) => {
-        return (
-            <div key={criteriaId}>
-                {
-                    (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: "12px"}}>
-                        {customComponents}
-                    </div>
-                }
-                <div
-                    className="q-onb-singleChoiceOne-lebel"
-                    style={{ color: color }}
-                >
-                    {question} {required && "*"}
-                </div>
-                <div className="q-onb-singleChoiceOne-optDiv">
-                    {options.map((option: string, id: number) => (
-                        <div className="q_onb_singlehoiceOne_lebel" key={id}>
-                            <input
-                                id={`sct${criteriaId + id}`}
-                                type="radio"
-                                value={option}
-                                checked={answer[criteriaId] == option}
-                                onChange={(e) =>
-                                    handleUpdate(e, criteriaId, "radio")
-                                }
-                                style={{accentColor: choiceColor}}
-                                name={`default-radio${criteriaId}`}
-                                className="q-onb-singleChoiceOne-inp"
-                            />
-                            <label
-                                htmlFor={`sct${criteriaId + id}`}
-                                className="q-onb-singleChoiceOne-lebel3"
-                                style={{fontSize: answerFontSize, color: answer[criteriaId] == option ? choiceColor : ""}}
-                            >
-                                {option}
-                            </label>
-                        </div>
-                    ))}
-                </div>
-                {manualInput != false && answer[criteriaId] == manualInput &&
-                    <input 
-                        type="text" 
-                        name="" 
-                        id="" 
-                        className="q_sdk_input q-onb-input"
-                        style={{marginTop: "10px", fontSize: answerFontSize}}
-                        placeholder="Please fill manually"
-                        onChange={(e) => handleUpdate(e, (criteriaId + "/manual"), "")}
-                        value={answer[criteriaId + "/manual"]}
-                    />
-                }
-            </div>
-        );
-    };
-
-    const singleChoiceThree = (
-        options: string[] | [],
-        question: string,
-        required: boolean,
-        criteriaId: string,
-        index: number,
-        manualInput: string | boolean
-    ) => {
-        return (
-            <div key={criteriaId}>
-                {
-                    (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: "12px"}}>
-                        {customComponents}
-                    </div>
-                }
-                <div
-                    className="q-onb-singleChoiceOne-lebel"
-                    style={{ color: color }}
-                >
-                    {question} {required && "*"}
-                </div>
-                <div className="q_onb_single_choice_opt_div">
-                    {options.map((option: string, id: number) => (
-                        <div className="q_onb_singlehoiceThree_lebel" key={id}>
-                            <input
-                                id={`sct${criteriaId + id}`}
-                                type="radio"
-                                value={option}
-                                checked={answer[criteriaId] == option}
-                                onChange={(e) =>
-                                    handleUpdate(e, criteriaId, "radio")
-                                }
-                                style={{accentColor: choiceColor}}
-                                name={`default-radio${criteriaId}`}
-                                className="q-onb-singleChoiceOne-inp"
-                            />
-                            <label
-                                htmlFor={`sct${criteriaId + id}`}
-                                className="q-onb-singleChoiceOne-lebel3"
-                                style={{fontSize: answerFontSize, color: answer[criteriaId] == option ? choiceColor : ""}}
-                            >
-                                {option}
-                            </label>
-                        </div>
-                    ))}
-                </div>
-                {manualInput != false && answer[criteriaId] == manualInput &&
-                    <input 
-                        type="text" 
-                        name="" 
-                        id="" 
-                        className="q_sdk_input q-onb-input"
-                        style={{marginTop: "10px", fontSize: answerFontSize}}
-                        placeholder="Please fill manually"
-                        onChange={(e) => handleUpdate(e, (criteriaId + "/manual"), "")}
-                        value={answer[criteriaId + "/manual"]}
-                    />
-                }
-            </div>
-        );
-    };
-
     const multiChoiceOne = (
         options: string[] | [],
         question: string,
@@ -839,95 +689,27 @@ function OnBoarding(props: QuestLoginProps) {
                         {customComponents}
                     </div>
                 }
-                <div
-                    className="q-onb-singleChoiceOne-lebel"
-                    style={{ color: color }}
-                >
-                    {question} {required && "*"}
-                </div>
-                <div className="q-onb-singleChoiceOne-optDiv">
-                    <MultiChoice
-                        options={options}
-                        checked={answer[criteriaId]}
-                        checkedColor="#098849"
-                        handleChange={(option) => {
-                            if(option == answer[criteriaId]) {
-                            let ans = answer[criteriaId] || [];
-                            ans.push(option);
-                            setAnswer({
-                                ...answer,
-                                [criteriaId]: ans,
-                            });
-                            } else if (typeof answer[criteriaId] == "object" && answer[criteriaId].includes(option) == false) {
-                                let ans = answer[criteriaId];
-                                let mod_ans = ans.filter(
-                                    (an: string | number) => an != option
-                                );
-                                setAnswer({
-                                    ...answer,
-                                    [criteriaId]: mod_ans,
-                                });
-                            }
-                        }}
-                    />
-                </div>
+                <Label htmlFor="textAreaInput" style={{color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label}}>
+                    {`${question} ${!!required && "*"}`}
+                </Label>
+                <MultiChoice
+                    options={options}
+                    checked={answer[criteriaId]}
+                    onChange={(e) => handleUpdate(e, criteriaId, "check")}
+                    style={{
+                        borderColor: styleConfig?.MultiChoice?.style?.borderColor || themeConfig?.borderColor,
+                        color: styleConfig?.MultiChoice?.style?.color || themeConfig?.secondaryColor,
+                        ...styleConfig?.MultiChoice?.style
+                    }}
+                    selectedStyle={{
+                        color: styleConfig?.SingleChoice?.selectedStyle?.color || themeConfig?.primaryColor,
+                        ...styleConfig?.SingleChoice?.selectedStyle
+                    }}
+                />
             </div>
         );
     };
-
-    const multiChoiceThree = (
-        options: string[] | [],
-        question: string,
-        required: boolean,
-        criteriaId: string,
-        index: number
-    ) => {
-        return (
-            <div key={criteriaId}>
-                {
-                    (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: "12px"}}>
-                        {customComponents}
-                    </div>
-                }
-                <div
-                    className="q_onb_lebels"
-                    style={{ color: color }}
-                >
-                    {question} {required && "*"}
-                </div>
-                <div className="q_onb_miltiChoiceOne_ul">
-                    {options.map((option: string, id: number) => (
-                        <div key={id} style={{listStyleType: "none"}}>
-                            <input
-                                type="checkbox"
-                                id={`mct${criteriaId + id}`}
-                                value={option}
-                                checked={
-                                    !!answer[criteriaId] &&
-                                    answer[criteriaId].includes(option)
-                                }
-                                style={{display: "none"}}
-                                className="q_onb_multiChoiceOne_checkbox"
-                                onChange={(e) =>
-                                    handleUpdate(e, criteriaId, "check")
-                                }
-                            />
-                            <label
-                                htmlFor={`mct${criteriaId + id}`}
-                                className="q_onb_miltiChoiceOne_lebel"
-                            >
-                                <div style={{display: "block"}}>
-                                    <div style={{fontSize: answerFontSize ? answerFontSize : "14px"}}>{option}</div>
-                                </div>
-                            </label>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        );
-    };
-
+  
     const multiChoiceTwo = (
         options: string[] | [],
         question: string,
@@ -943,86 +725,61 @@ function OnBoarding(props: QuestLoginProps) {
                         {customComponents}
                     </div>
                 }
-                <div
-                    className="q-onb-lebels"
-                    style={{ color: color }}
-                >
-                    {question} {required && "*"}
-                </div>
-                <ul className="q-onb-miltiChoiceOne-ul">
-                    {options.map((option: string, id: number) => (
-                        <li key={id} style={{listStyleType: "none"}}>
-                            <input
-                                type="checkbox"
-                                id={`mct${criteriaId + id}`}
-                                value={option}
-                                checked={
-                                    !!answer[criteriaId] &&
-                                    answer[criteriaId].includes(option)
-                                }
-                                style={{display: "none"}}
-                                className="q-onb-multiChoiceOne-checkbox"
-                                onChange={(e) =>
-                                    handleUpdate(e, criteriaId, "check")
-                                }
-                            />
-                            <label
-                                htmlFor={`mct${criteriaId + id}`}
-                                className="q-onb-miltiChoiceOne-lebel"
-                            >
-                                <div style={{display: "block"}}>
-                                    <div style={{fontSize: answerFontSize ? answerFontSize : "14px"}}>{option}</div>
-                                </div>
-                            </label>
-                        </li>
-                    ))}
-                </ul>
+                <Label htmlFor="textAreaInput" style={{color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label}}>
+                    {`${question} ${!!required && "*"}`}
+                </Label>
+                <MultiChoiceTwo
+                    options={options}
+                    checked={!!answer[criteriaId] && answer[criteriaId]}
+                    onChange={(e) => handleUpdate(e, criteriaId, "check")}
+                    style={{borderColor: styleConfig?.MultiChoice?.style?.borderColor || themeConfig?.borderColor, ...styleConfig?.MultiChoice?.style}}
+                />
             </div>
         );
     };
 
-    const chooseLogo = (links: string) => {
-        if (links.includes("calendly")) {
-            return calendly
-        } else if (links.includes("slack")) {
-            return slack
-        } else if (links.includes("twitter")) {
-            return twitter
-        } else if (links.includes("discord")) {
-            return discord
-        } else {
-            return link
-        }
-    }
+    // const chooseLogo = (links: string) => {
+    //     if (links.includes("calendly")) {
+    //         return calendly
+    //     } else if (links.includes("slack")) {
+    //         return slack
+    //     } else if (links.includes("twitter")) {
+    //         return twitter
+    //     } else if (links.includes("discord")) {
+    //         return discord
+    //     } else {
+    //         return link
+    //     }
+    // }
 
-    const linksCriteria = (
-        linkTitle: string,
-        criteriaId: string,
-        linkUrl: string,
-        index: number,
-    ) => {
-        return (
-            <div key={criteriaId}>
-                {
-                    (customComponentPositions == index + 1) &&
-                    <div style={{paddingBottom: "12px"}}>
-                        {customComponents}
-                    </div>
-                }
-                <a href={linkUrl} target="_blank" style={{textDecoration: "none"}}>
-                    <div className="q-onb-link-div">
-                        <img src={chooseLogo(linkUrl)} style={{width: linksLogoWidth }}/>
-                        <div className="q-onb-link-div-ch">
-                            <div style={{ color: color ? color : "black" }}>{linkTitle}</div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-                                <path d="M2 11H14.2L8.6 16.6L10 18L18 10L10 2L8.6 3.4L14.2 9H2V11Z" className="q-onb-arrow"/>
-                            </svg>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        );
-    };
+    // const linksCriteria = (
+    //     linkTitle: string,
+    //     criteriaId: string,
+    //     linkUrl: string,
+    //     index: number,
+    // ) => {
+    //     return (
+    //         <div key={criteriaId}>
+    //             {
+    //                 (customComponentPositions == index + 1) &&
+    //                 <div style={{paddingBottom: "12px"}}>
+    //                     {customComponents}
+    //                 </div>
+    //             }
+    //             <a href={linkUrl} target="_blank" style={{textDecoration: "none"}}>
+    //                 <div className="q-onb-link-div">
+    //                     <img src={chooseLogo(linkUrl)} style={{width: linksLogoWidth }}/>
+    //                     <div className="q-onb-link-div-ch">
+    //                         <div style={{ color: color ? color : "black" }}>{linkTitle}</div>
+    //                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+    //                             <path d="M2 11H14.2L8.6 16.6L10 18L18 10L10 2L8.6 3.4L14.2 9H2V11Z" className="q-onb-arrow"/>
+    //                         </svg>
+    //                     </div>
+    //                 </div>
+    //             </a>
+    //         </div>
+    //     );
+    // };
 
     function checkDesignCriteria() {
         if(!designState?.length) return;
@@ -1045,7 +802,8 @@ function OnBoarding(props: QuestLoginProps) {
         }
         if (
             arr.length == formdata.length &&
-            Math.max(...arr) == formdata.length
+            Math.max(...arr) == formdata.length &&
+            Math.min(...arr) == 1
             ) {
                 fl = true;
             }
@@ -1103,41 +861,41 @@ function OnBoarding(props: QuestLoginProps) {
     if (featureFlags[config.FLAG_CONSTRAINTS.OnboardingFlag]?.isEnabled == false) {
         return (<div></div>)
     }
-
+console.log(answer)
     return (
-        <div className="q-onb-home" style={{ background: bgColor, height: screenHeight ? screenHeight : "fit-content", fontFamily: defaultFont == false ? "" : "'Figtree', sans-serif" }}>
+        <div className="q-onb-home" style={{ background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "fit-content", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form}}>
             <div
                className="q-onb-ch"
             >
                 {formdata.length > 0 && !!headingScreen &&
                     (typeof headingScreen == "object" && !!headingScreen.name ? (
                         <div className="q-onb-main-heading">
-                            <div className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
+                            <div className="q-onb-main-h3" style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }}>
                                 {headingScreen?.name}
                             </div>
-                            <div className="q-onb-main-h4" style={{ fontSize: descSize, textAlign: headingAlignment }}>{headingScreen?.desc}</div>
+                            <div className="q-onb-main-h4" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description }}>{headingScreen?.desc}</div>
                         </div>
                     ) : !!headingScreen[currentPage] ? (
                         <div className="q-onb-main-heading">
-                            <div className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
+                            <div className="q-onb-main-h3" style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }}>
                                 {headingScreen[currentPage]?.name}
                             </div>
-                            <div className="q-onb-main-h4" style={{ fontSize: descSize, textAlign: headingAlignment }}>
+                            <div className="q-onb-main-h4" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description }}>
                                 {headingScreen[currentPage]?.desc}
                             </div>
                         </div>
                     ) : (
                         <div className="q-onb-main-heading">
-                            <div className="q-onb-main-h3" style={{ fontSize: headingSize, textAlign: headingAlignment }}>
+                            <div className="q-onb-main-h3" style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }}>
                                 {headingScreen[0]?.name}
                             </div>
-                            <div className="q-onb-main-h4" style={{ fontSize: descSize, textAlign: headingAlignment }}>
+                            <div className="q-onb-main-h4" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description }}>
                                 {headingScreen[0]?.desc}
                             </div>
                         </div>
                     ))}
-                    {(template == 1) &&(formdata.length > 0) &&(progressBarType==="modal2"? <ProgressBarNew />:<ProgressBar /> )}
-                    <div className="q-onb-main-first" style={{fontSize: questionFontSize}}>
+                    {(template === "multi-question") && (formdata.length > 0) && (<ProgressBar /> )}
+                    <div className="q-onb-main-first">
                     {!!designState && designState.length > 0 && checkDesignCriteria()
                         ? designState[currentPage].map((num: number) =>
                         (formdata[num - 1].type == "USER_INPUT_TEXT"
@@ -1185,32 +943,33 @@ function OnBoarding(props: QuestLoginProps) {
                                 )
                                 : formdata[num - 1].type ==
                                     "USER_INPUT_SINGLE_CHOICE"
-                                    ? !!singleChoose && singleChoose == "modal2"
-                                        ? singleChoiceTwo(
+                                    ? !!singleChoose 
+                                        &&  singleChoiceTwo(
                                             formdata[num - 1].options || [],
                                             formdata[num - 1]?.question || "",
                                             formdata[num - 1]?.required || false,
                                             formdata[num - 1].criteriaId || "",
                                             num - 1,
-                                            formdata[num - 1]?.manualInput
+                                            formdata[num - 1]?.manualInput,
+                                            singleChoose
                                         )
-                                        : (singleChoose == "modal3")?
-                                        singleChoiceThree(
-                                            formdata[num - 1].options || [],
-                                            formdata[num - 1]?.question || "",
-                                            formdata[num - 1]?.required || false,
-                                            formdata[num - 1].criteriaId || "",
-                                            num - 1,
-                                            formdata[num - 1]?.manualInput
-                                        )
-                                        : singleChoiceOne(
-                                            formdata[num - 1].options || [],
-                                            formdata[num - 1]?.question || "",
-                                            formdata[num - 1]?.required || false,
-                                            formdata[num - 1].criteriaId || "",
-                                            num - 1,
-                                            formdata[num - 1]?.manualInput
-                                        )
+                                        // : (singleChoose == "modal3")?
+                                        // singleChoiceThree(
+                                        //     formdata[num - 1].options || [],
+                                        //     formdata[num - 1]?.question || "",
+                                        //     formdata[num - 1]?.required || false,
+                                        //     formdata[num - 1].criteriaId || "",
+                                        //     num - 1,
+                                        //     formdata[num - 1]?.manualInput
+                                        // )
+                                        // : singleChoiceOne(
+                                        //     formdata[num - 1].options || [],
+                                        //     formdata[num - 1]?.question || "",
+                                        //     formdata[num - 1]?.required || false,
+                                        //     formdata[num - 1].criteriaId || "",
+                                        //     num - 1,
+                                        //     formdata[num - 1]?.manualInput
+                                        // )
                                     : formdata[num - 1].type ==
                                         "USER_INPUT_MULTI_CHOICE"
                                         ? !!multiChoice && multiChoice == "modal2"
@@ -1227,14 +986,14 @@ function OnBoarding(props: QuestLoginProps) {
                                                 formdata[num - 1].criteriaId || "",
                                                 num - 1
                                             )
-                                        : formdata[num - 1].type == 
-                                            "LINK_OPEN_READ" 
-                                            ? linksCriteria(
-                                                formdata[num - 1].linkTitle,
-                                                formdata[num - 1].criteriaId,
-                                                formdata[num - 1].linkUrl,
-                                                num - 1
-                                            )
+                                        // : formdata[num - 1].type == 
+                                        //     "LINK_OPEN_READ" 
+                                        //     ? linksCriteria(
+                                        //         formdata[num - 1].linkTitle,
+                                        //         formdata[num - 1].criteriaId,
+                                        //         formdata[num - 1].linkUrl,
+                                        //         num - 1
+                                        //     )
                                             : null )
                         )
                         : formdata?.map((data, index) =>
@@ -1282,32 +1041,33 @@ function OnBoarding(props: QuestLoginProps) {
                                         data?.placeholder || data?.question || "",
                                     )
                                     : data.type == "USER_INPUT_SINGLE_CHOICE"
-                                        ? !!singleChoose && singleChoose == "modal2"
-                                            ? singleChoiceTwo(
+                                        ? !!singleChoose 
+                                            && singleChoiceTwo(
                                                 data.options || [],
                                                 data?.question || "",
                                                 data?.required || false,
                                                 data.criteriaId || "",
                                                 index,
-                                                data?.manualInput
+                                                data?.manualInput,
+                                                singleChoose
                                             )
-                                            : (singleChoose == "modal3")?
-                                            singleChoiceThree(
-                                                data.options || [],
-                                                data?.question || "",
-                                                data?.required || false,
-                                                data.criteriaId || "",
-                                                index,
-                                                data?.manualInput
-                                            )
-                                            : singleChoiceOne(
-                                                data.options || [],
-                                                data?.question || "",
-                                                data?.required || false,
-                                                data.criteriaId || "",
-                                                index,
-                                                data?.manualInput
-                                            )
+                                            // : (singleChoose == "modal3")?
+                                            // singleChoiceThree(
+                                            //     data.options || [],
+                                            //     data?.question || "",
+                                            //     data?.required || false,
+                                            //     data.criteriaId || "",
+                                            //     index,
+                                            //     data?.manualInput
+                                            // )
+                                            // : singleChoiceOne(
+                                            //     data.options || [],
+                                            //     data?.question || "",
+                                            //     data?.required || false,
+                                            //     data.criteriaId || "",
+                                            //     index,
+                                            //     data?.manualInput
+                                            // )
                                         : data.type == "USER_INPUT_MULTI_CHOICE"
                                             ? !!multiChoice && multiChoice == "modal2"
                                                 ? multiChoiceTwo(
@@ -1324,13 +1084,13 @@ function OnBoarding(props: QuestLoginProps) {
                                                     data.criteriaId || "",
                                                     index
                                                 )
-                                                : data.type == "LINK_OPEN_READ" 
-                                                    ? linksCriteria(
-                                                        data.linkTitle,
-                                                        data.criteriaId,
-                                                        data.linkUrl,
-                                                        index
-                                                    )
+                                                // : data.type == "LINK_OPEN_READ" 
+                                                //     ? linksCriteria(
+                                                //         data.linkTitle,
+                                                //         data.criteriaId,
+                                                //         data.linkUrl,
+                                                //         index
+                                                //     )
                                                     : null
                         )}
                     {formdata.length > 0 &&
@@ -1338,25 +1098,26 @@ function OnBoarding(props: QuestLoginProps) {
                             checkDesignCriteria() ? (
                                 controlBtnType == "Buttons" ?
                                 <div className="q-onb-main-criteria">
-                                    <button
-                                        className="q-onb-main-btn"
-                                        onClick={() =>
-                                            currentPage > 0 &&
-                                            setCurrentPage(currentPage - 1)
-                                        }
+                                    <SecondaryButton
                                         style={{
                                             opacity: currentPage == 0 ? "0" : "1",
                                             cursor:
                                                 currentPage == 0
                                                     ? "context-menu"
                                                     : "pointer",
+                                            borderColor: styleConfig?.SecondaryButton?.borderColor || themeConfig?.borderColor,
+                                            backgroundColor: styleConfig?.SecondaryButton?.backgroundColor || themeConfig?.backgroundColor,
+                                            ...styleConfig?.SecondaryButton
                                         }}
+                                        className="q-onb-main-btn"
+                                        onClick={() =>
+                                            currentPage > 0 &&
+                                            setCurrentPage(currentPage - 1)
+                                        }
                                     >
-                                        {" "}
-                                        {previousBtnText ? previousBtnText : "Previous"}
-                                    </button>
-                                    <button
-                                        className="q-onb-main-btn2"
+                                        Previous
+                                    </SecondaryButton>
+                                    <PrimaryButton
                                         onClick={() =>
                                             currentPage !=
                                             designState.length - 1
@@ -1364,18 +1125,20 @@ function OnBoarding(props: QuestLoginProps) {
                                                 : returnAnswers()
                                         }
                                         disabled={!btnFlag}
+                                        className="q-onb-main-btn2"
                                         style={{
-                                            backgroundColor: btnColor,
+                                            background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
+                                            ...styleConfig?.PrimaryButton
                                         }}
                                     >
                                         {currentPage == designState.length - 1
                                             ? (nextBtnText ? nextBtnText : "Submit")
                                             : "Continue"}
-                                    </button>
+                                    </PrimaryButton>
                                 </div>
                                 :
                                 <div className="q-onb-main-arrow-div">
-                                    <button 
+                                    <SecondaryButton
                                         className="q-onb-main-arrow"
                                         onClick={() =>
                                             currentPage > 0 &&
@@ -1387,11 +1150,14 @@ function OnBoarding(props: QuestLoginProps) {
                                                 currentPage == 0
                                                     ? "context-menu"
                                                     : "pointer",
+                                            borderColor: styleConfig?.SecondaryButton?.borderColor || themeConfig?.borderColor,
+                                            backgroundColor: styleConfig?.SecondaryButton?.backgroundColor || themeConfig?.backgroundColor,
+                                            ...styleConfig?.SecondaryButton
                                         }}
                                     >
                                         {leftArrow()}
-                                    </button>
-                                    <button
+                                    </SecondaryButton>
+                                    <PrimaryButton
                                         className="q-onb-main-arrow2"
                                         onClick={() =>
                                             currentPage !=
@@ -1401,25 +1167,26 @@ function OnBoarding(props: QuestLoginProps) {
                                         }
                                         disabled={!btnFlag}
                                         style={{
-                                            backgroundColor: btnColor,
+                                            background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
+                                            ...styleConfig?.PrimaryButton
                                         }}
                                     >
                                         {rightArrow()}
-                                    </button>
+                                    </PrimaryButton>
                                 </div>
                         ) : (
                             <div>
-                                <button
+                                <PrimaryButton
                                     className="q-onb-main-btn3"
                                     onClick={returnAnswers}
                                     disabled={!btnFlag}
                                     style={{
-                                        backgroundColor: btnColor,
-                                        width: btnSize
+                                        background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
+                                        ...styleConfig?.PrimaryButton
                                     }}
                                 >
                                     {nextBtnText ? nextBtnText : "Continue"}
-                                </button>
+                                </PrimaryButton>
                             </div>
                         ))}
                 </div>

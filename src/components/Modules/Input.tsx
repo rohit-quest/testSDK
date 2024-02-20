@@ -12,7 +12,6 @@ const LogoType = {
 export type logoType =  keyof typeof LogoType;
 interface PropType {
   placeholder?: string;
-  inputType?: string;
   type: keyof typeof LogoType;
   style?: CSSProperties | undefined;
   onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
@@ -20,7 +19,7 @@ interface PropType {
   value ? : string
 }
 
-export const Input = ({ placeholder, type, style , onChange, iconColor, value }: PropType) => {
+export const Input = ({ placeholder, type, style, onChange, iconColor, value }: PropType) => {
   return (
     (type === "date") ?
     <div className="q_input_cont" style={style}>
@@ -33,9 +32,9 @@ export const Input = ({ placeholder, type, style , onChange, iconColor, value }:
           onChange={onChange}
           value={value}
         />
-        {value ? <div style={{display: "inline", marginTop: "2px"}} >{value}</div> : <div style={{display: "inline", color:"#8E8E8E", marginTop: "2px"}}>{placeholder}</div>}
+        {value ? <div style={{display: "inline", marginTop: "2px", color: style?.color, fontSize: style?.fontSize}} >{value}</div> : <div style={{display: "inline", color: "#8E8E8E", marginTop: "2px", fontSize: style?.fontSize}}>{placeholder}</div>}
       </label>
-      {(LogoType["date"])(iconColor || '')}
+      {(LogoType["date"])(iconColor || "#B9B9B9")}
     </div>
     :
     <div className="q_input_cont" style={style}>
@@ -47,8 +46,9 @@ export const Input = ({ placeholder, type, style , onChange, iconColor, value }:
         onChange={onChange}
         value={value}
         onWheel={event => { event.currentTarget.blur(); }}
+        style={style}
       />
-      {(LogoType[type])(iconColor || '')}
+      {(LogoType[type])(iconColor || '#B9B9B9')}
     </div>
   );
 }
