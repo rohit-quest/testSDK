@@ -233,7 +233,7 @@ input[data-autocompleted] {
   gap: 12px;
   cursor: pointer;
   align-self: stretch;
-  border-radius: 0 0 20px 20px;
+  border-radius: 0 0 10px 10px;
 }
 
 .qt_toast {
