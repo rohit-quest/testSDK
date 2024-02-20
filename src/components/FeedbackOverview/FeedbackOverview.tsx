@@ -94,6 +94,7 @@ interface feedbackCompProps {
   descriptions?: Record<optionType, string>;
   backBtn?: boolean;
   iconColor?: string;
+
   styleConfig?: {
     Body?: React.CSSProperties,
     Heading?: React.CSSProperties,
@@ -105,6 +106,7 @@ interface feedbackCompProps {
     SecondaryButton?: React.CSSProperties,
     Modal?: React.CSSProperties,
   }
+
 }
 interface FormDataItem {
   type?: string;
@@ -129,6 +131,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   descriptions = { "General Feedback": "Welcome back, Please complete your details", "Report a Bug": "Describe your issue", "Contact us": "Invite other admins and moderators", "Request a Feature": "How can we make it better" },
   iconColor = "#939393",
   styleConfig = {}
+
 }) => {
   const [selectedOption, setSelectedOption] = useState<optionType | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
@@ -515,7 +518,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             <QuestLabs color={iconColor} backgroundColor={styleConfig.Body?.background || styleConfig.Body?.backgroundColor} />
           </div>
         ) : (
-          <div>
+          <div style={{paddingBottom: !showPoweredBy?"20px":0}}>
             <div className='q-fw-crossBtn'>
               <div onClick={() => onClose?.()}>{cross(iconColor)}</div>
             </div>
@@ -602,6 +605,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         )}
 
       </div></Modal>
+
   );
 };
 
