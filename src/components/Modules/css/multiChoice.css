@@ -1,0 +1,54 @@
+.q_multi_choice_box {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.q_mult_choice_option {
+    display: flex;
+    gap: 5px;
+    cursor: pointer;
+    align-items: center;
+}
+
+.q_check_box_off {
+    background-color: #fff;
+    border: 1px solid #B9B9B9;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+}
+
+.q_multi_choice_box_2 {
+    display: flex;
+    gap: 20px;
+}
+
+.q_mult_choice_option_2 {
+    border-radius: 15px;
+    padding: 2px 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.74);
+    font-family: Figtree;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    border: 1px solid #ECECEC;
+}
+
+.q_mult_choice_option_2_select {
+    border-radius: 15px;
+    padding: 2px 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    cursor: pointer;
+    color: white;
+    border: 1px solid transparent;
+    background: linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%);
+    
+}

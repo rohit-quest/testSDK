@@ -4,7 +4,7 @@ import QuestLogin from "./components/Login/Login";
 import { answer } from "./components/QuestForm/response";
 import { HelpCenter } from "./components/HelpCenter/HelpCenter";
 import { ReferEarn, ReferShare } from "./components/Refer/ReferEarn";
-import { showToast } from "./components/toast/toastService";
+// import { showToast } from "./components/toast/toastService";
 import { QuestForm } from "./components/QuestForm/index";
 import Feedback from "./components/Feedback/Feedback";
 import FeedbackWorkflow from "./components/FeedbackOverview/FeedbackOverview";
@@ -29,7 +29,13 @@ import FeedbackPreview from "./components/Feedback/Preview";
 import Survey from "./components/Feedback/Survey";
 import ModalPreview from "./components/Modals/Preview";
 import SurveyOffline from "./components/Feedback/OfflineComponent";
-import { NormalInput } from './components/Modules/Input'
+import { MultiChoice, MultiChoiceTwo } from './components/Modules/MultiChoice';
+import Toast from "./components/toast2/toast";
+
+
+
+
+
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-2aa597b4-341f-4c3c-a022-f56877a585c9";
 export const apiSecret =
@@ -86,9 +92,75 @@ function App() {
 
   const [data, setData] = useState([]);
 
+  // const onSuccess = () => {
+  //   const toast = Toast.success({
+  //     text: 'A successful tool',
+  //     position: 'top-right',
+  //     pauseOnHover: true,
+  //     showProgress: true,
+  //     autoClose: 100000,
+  //     background: 'yellow',
+  //     progressColor: 'red'
+  //   });
+
+  
+  // }
+  // const onFailure = () => {
+  //   Toast.error({
+  //     text: 'A destructive toast',
+  //     position: 'bottom-left',
+  //     pauseOnHover: true,
+  //     autoClose : 300000,
+  //     showProgress: true,
+  //     image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s',
+      
+  //   });
+  // }
+  // const onInfo = () => {
+  //   Toast.info({
+  //     text: 'info',
+  //     position: 'bottom-center',
+  //     pauseOnHover: true,
+  //     autoClose : 3000,
+  //     showProgress: true,
+  //     // image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s'
+  //   });
+  // }
+  // const onWarn = () => {
+  //   Toast.warning({
+  //     text: 'A warning toast',
+  //     position: 'top-center',
+  //     pauseOnHover: true,
+  //     showProgress: true,
+  //     autoClose : 3000,
+  //     // image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s'
+  //   });
+  // }
+
+  // const onDifferent = ()=>{
+  //   Toast.warning({
+  //     text: 'A warning toast',
+  //     position: 'bottom-right',
+  //     pauseOnHover: true,
+  //     showProgress: true,
+  //     autoClose : 3000,
+  //     // image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s'
+  //   });
+  // }
+
+  // const onDifferentTwo = ()=>{
+  //   Toast.error({
+  //     text: 'it to your preferred size. Experiment with different values',
+  //     position: 'top-left',
+  //     pauseOnHover: true,
+  //     showProgress: true,
+  //     autoClose : 100000,
+  //     // image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s'
+  //   });
+  // }
   return (
     <div
-    // style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
+    style={{  alignItems: "center", justifyContent: "center", gap: "20px",height: "100vh" }}
     >
       <QuestProvider
         apiKey={apiKey}
@@ -109,7 +181,7 @@ function App() {
 
         {/* <SearchPreview online={false}/> */}
         {/* <SreakPreview/> */}
-
+        
         {/* { <Payment
                 stripePublishableKey="pk_test_51IGxpeHv3bPcUa5dtAAgA2TZPWjga0FPxWlK3GAnWUfzRXzO8l6Kc3zF2WBpjrvFHAle0Cy3Jqxc7djZxptd9mHe00KjsN2Im7"
                 userId="u-0000000000"
@@ -121,7 +193,12 @@ function App() {
                 paymentBanefits={paymentBanefits}
                 forEntityId={"e-0000000000"}
             /> } */}
-
+          {/* <button onClick={onSuccess}>success</button>
+          <button onClick={onInfo}>info</button>
+          <button onClick={onFailure}>error</button>
+          <button onClick={onWarn}>warning</button>
+          <button onClick={onDifferent}>error</button>
+          <button onClick={onDifferentTwo}>warning</button> */}
         {/* <ModalPreview/> */}
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
@@ -139,11 +216,12 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-        <OnBoardingPreview online />
+        {/* <OnBoardingPreview online /> */}
+        {/* <MultiChoiceTwo options={['one', 'two', 'three']} checked={["two"]} /> */}
 
-        {/* <GetStartedPreview
+        <GetStartedPreview
    online={false}
- />  */}
+ /> 
 
         {/* <QuestForm
                     userId={userId}
@@ -168,7 +246,7 @@ function App() {
 
         {/* <TutorialPreview /> */}
 
-        {/* <FeedbackWorkflowPreview online={false} /> */}
+        <FeedbackWorkflowPreview online={true} />
 
         {/* <FeedbackPreview /> */}
 
@@ -211,7 +289,7 @@ function App() {
                     
                 /> */}
 
-              {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
+        {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
       </QuestProvider>
     </div>
   );

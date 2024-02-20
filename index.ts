@@ -58,7 +58,7 @@ import SearchOffline from "./src/components/Search/OfflineComponent";
 import QuestMOdalOffline from './src/components/Modals/OflineComponent';
 import SurveyOffline from "./src/components/Feedback/OfflineComponent.tsx";
 import FeedbackWorkflowOffline from './src/components/FeedbackOverview/OfflineComponent';
-
+import Toast from './src/components/toast2/Toast';
 export {
     QuestProvider,
     QuestLogin,
@@ -97,5 +97,6 @@ export {
     QuestMOdalOffline,
     Referral,
     SurveyOffline,
-    FeedbackWorkflowOffline
+    FeedbackWorkflowOffline,
+    Toast
 };
