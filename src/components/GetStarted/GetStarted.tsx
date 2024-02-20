@@ -42,6 +42,7 @@ type GetStartedProps = {
   footerBackgroundColor?: string;
   questIconColor?: string;
   showFooter?: boolean;
+  onLinkTrigger?: (url: string, index: number) => void;
   template?: 1 | 2;
   styleConfig?: {
     Heading?: CSSProperties,
@@ -88,6 +89,7 @@ function GetStarted({
   mainBackground = 'white',
   footerBackgroundColor = '#FBFBFB',
   questIconColor = '#939393',
+  onLinkTrigger = (url:string,index:number)=>{window.location.href=url},
   showFooter = true,
   styleConfig
 }: GetStartedProps) {
@@ -141,9 +143,6 @@ function GetStarted({
       });
   };
 
-  const onLinkTrigger = (url: any, id: any) => {
-    window.location.href = url;
-  }
 
   useEffect(() => {
     if (entityId) {

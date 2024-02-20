@@ -74,13 +74,13 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
                     "https://pin.questprotocol.xyz/ipfs/QmavuprWaHKvd5JZvkdgathYKLr5Zcshc1EPRzRzBJaPqw"
                 ]}
                 // anouncement
-                allowMultiClick={true}
+                allowMultiClick={false}
                 autoHide={false}
                 headingText="What’s new"
                 onCompleteAllStatus={() => {
                     // showToast.success({ text: "completed successfully" })
                 }}
-                template={1}
+                template={2}
                 showLoadingIndicator
 
                 // showDropDown
@@ -109,7 +109,9 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
         onCompleteAllStatus={() => {
             // showToast.success({ text: "completed successfully" })
         }}
-        onLink
+        onLinkTrigger = {()=>{
+            
+        }}
       
         offlineData={state}
     />)
