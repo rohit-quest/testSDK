@@ -236,7 +236,7 @@ input[data-autocompleted] {
   border-radius: 0 0 20px 20px;
 }
 
-.toast {
+.qt_toast {
   box-sizing: border-box;
   padding: 8px 12px;
   border: 1px solid #333;
@@ -251,28 +251,28 @@ input[data-autocompleted] {
   padding-right: 30px;
 }
 
-.toast img {
+.qt_toast img {
   width: 20px;
   height: 20px;
 }
 
-.toast-container[data-position$="-right"] .toast {
+.qt_toast-container[data-position$="-right"] .qt_toast {
   transform: translateX(110%);
 }
 
-.toast-container[data-position$="-left"] .toast {
+.qt_toast-container[data-position$="-left"] .qt_toast {
   transform: translateX(-110%);
 }
 
-.toast-container[data-position="top-center"] .toast {
+.qt_toast-container[data-position="top-center"] .qt_toast {
   transform: translateY(-100vh);
 }
 
-.toast-container[data-position="bottom-center"] .toast {
+.qt_toast-container[data-position="bottom-center"] .qt_toast {
   transform: translateY(100vh);
 }
 
-.toast-container .toast.show {
+.qt_toast-container .qt_toast.qt_show {
   transform: translate(0, 0);
 }
 
@@ -321,7 +321,7 @@ input[data-autocompleted] {
   right: 0;
 }
 
-.toast.can-close::after {
+.qt_toast::after {
   content: "\00D7";
   position: absolute;
   right: 12px;
@@ -331,7 +331,7 @@ input[data-autocompleted] {
   margin-left: 15px;
 }
 
-.toast-container {
+.qt_toast-container {
   position: fixed;
   margin: 10px;
   max-width: 300px;
@@ -347,45 +347,45 @@ input[data-autocompleted] {
   line-height: 16px;
 }
 
-.toast-container[data-position^="top-"] {
+.qt_toast-container[data-position^="top-"] {
   top: 0;
 }
 
-.toast-container[data-position^="bottom-"] {
+.qt_toast-container[data-position^="bottom-"] {
   bottom: 0;
 }
 
-.toast-container[data-position$="-right"] {
+.qt_toast-container[data-position$="-right"] {
   right: 0;
 }
 
-.toast-container[data-position$="-left"] {
+.qt_toast-container[data-position$="-left"] {
   left: 0;
 }
 
-.toast-container[data-position$="-center"] {
+.qt_toast-container[data-position$="-center"] {
   left: 50%;
   transform: translateX(-50%);
 }
 
-.toast.success {
+.qt_toast.success {
   border-radius: 8px;
   border: 1px solid #bee5c8;
   background: #ebffeb;
 }
 
-.toast.warning {
+.qt_toast.warning {
   border-radius: 8px;
   border: 1px solid #fadeaf;
   background: #fef7ea;
 }
 
-.toast.error {
+.qt_toast.error {
   border-radius: 8px;
   border: 1px solid #f5c5bb;
   background: #fcedea;
 }
-.toast.info {
+.qt_toast.info {
   border-radius: 8px;
   border: 1px solid #abcdf1;
   background: #e5effa;
