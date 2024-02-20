@@ -101,8 +101,8 @@ export default function QuestMOdal({
           <div className="q_modal_desc">{rewardDescription}</div>
         </div>
         <div className='q_modal_buttons'>
-        <SecondaryButton previousBtnText='Go to home' onClick={()=>{setOpen(false)}}  />
-        <PrimaryButton nextBtnText='Avail now' onClick={()=>{onRewardClaim()}} style={{ background: 'linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%)'}} />
+        <SecondaryButton text='Go to home' onClick={()=>{setOpen(false)}}  />
+        <PrimaryButton text='Avail now' onClick={()=>{onRewardClaim()}} style={{ background: 'linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%)'}} />
         </div>
       </div>
       <QuestLabs color={iconColor} />
@@ -147,8 +147,8 @@ export default function QuestMOdal({
 
         <div className='q_modal_buttons'>
           {/* <div className="q_modal_cancel">Cancel</div> */}
-          <SecondaryButton previousBtnText='Cancel' />
-          <PrimaryButton  nextBtnText='Upload' onClick={() => inpRef.current?.files && inpRef.current?.files[0] &&   getUploadData()} style={{ background:(inpRef.current?.files && inpRef.current?.files[0]) ?  'linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%)':'grey'}} />
+          <SecondaryButton text='Cancel' />
+          <PrimaryButton  text='Upload' onClick={() => inpRef.current?.files && inpRef.current?.files[0] &&   getUploadData()} style={{ background:(inpRef.current?.files && inpRef.current?.files[0]) ?  'linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%)':'grey'}} />
           {/* <div className="q_modal_upload_button" onClick={() => inpRef.current?.files && inpRef.current?.files[0] && onUpload(inpRef.current?.files[0])}>Upload</div> */}
         </div>
       </div>

@@ -145,7 +145,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
             >
               Continue
             </div> */}
-            <PrimaryButton nextBtnText="Continue" onClick={sendOTPfunction}/>
+            <PrimaryButton text="Continue" onClick={sendOTPfunction}/>
           </div>
         </div>
       )}

@@ -238,7 +238,7 @@ function OtpVerification({
           Verify with OTP
         </div> */}
         <div className="q_otp_btn_continue">
-          <PrimaryButton nextBtnText="Continue" onClick={verifyOTPfunction} />
+          <PrimaryButton text="Continue" onClick={verifyOTPfunction} />
         </div>
       </div>
     </div>

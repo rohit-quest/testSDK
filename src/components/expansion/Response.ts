@@ -28,7 +28,8 @@ export const response = async (questId = "", headers: {
     apiKey: string,
     userid: string,
     entityId: string,
-    token: string
+    token: string,
+    apisecret:string
 }) => {
     try {
         const request = `${config.BACKEND_URL}api/entities/${headers.entityId}/quests/${questId}/users/${headers.userid}/referralcode`;
