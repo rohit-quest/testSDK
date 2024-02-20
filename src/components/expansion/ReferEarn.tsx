@@ -2,7 +2,7 @@ import {
   referIcon,
 } from "../../assets/images";
 import "./Refer.css";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { response, shareOnPlatform } from "./Response.ts";
 import QuestContext from "../QuestWrapper.tsx";
 import { copyIcon, faceBookIcon, linkedInIcon, tickIcon, twitterIcon } from "./Svg.ts";
@@ -28,6 +28,7 @@ export interface referProp {
   onCopy?: (referalCode: string) => void;
   showReferralCode?: boolean;
   showPoweredBy?: boolean;
+  buttonStyle?: React.CSSProperties;
 }
 
 export const Referral = ({
@@ -48,6 +49,7 @@ export const Referral = ({
   onCopy = (referalCode: string) => { },
   showReferralCode = true,
   showPoweredBy = true,
+  buttonStyle={},
 }: referProp) => {
   const [shareCode, setCode] = useState("");
   const [copy, setCopy] = useState([false, false]);
@@ -55,9 +57,12 @@ export const Referral = ({
   const style = !!color && !!bgColor ? { color, backgroundColor: bgColor } : {};
 
   const handleCopy = (index: number) => {
-    navigator?.clipboard.writeText(shareCode);
+    navigator?.clipboard.writeText(!index?shareCode:referralLink+shareCode);
     setCopy(prev => prev.map((e, i) => i == index ? true : e));
-    onCopy(shareCode);
+    setTimeout(() => {
+      setCopy(prev => prev.map((e, i) => i == index ? false : e));
+    }, 3000);
+    onCopy(!index?shareCode:referralLink+shareCode);
   }
 
   useEffect(() => {
@@ -94,7 +99,7 @@ export const Referral = ({
             <img className="q_refer_copy_icon" src={copy[1] ? tickIcon(iconColor) : copyIcon(secondaryIconColor)} onClick={() => handleCopy(1)} alt="" />
           </div>
         </div>}
-        <div style={style} className="q_share_link_button" onClick={()=>{navigator.clipboard.writeText(shareCode);onCopy(shareCode)}}>{shareButtonText}</div>
+        <div style={buttonStyle} className="q_share_link_button" onClick={()=>{navigator.clipboard.writeText(shareCode);onCopy(shareCode)}}>{shareButtonText}</div>
         <div style={style} className="q_social_links">
           <img className="q_social_link_icon" onClick={() => shareOnPlatform(shareCode, "linkedin")} src={linkedInIcon(iconColor)} alt="" />
           <img className="q_social_link_icon" onClick={() => shareOnPlatform(referralLink, "facebook")} src={faceBookIcon(iconColor)} alt="" />
