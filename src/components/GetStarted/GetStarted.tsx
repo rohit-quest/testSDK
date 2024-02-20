@@ -308,6 +308,7 @@ function GetStarted({
   }
 
   return (
+    formdata.length > 0 &&
     <div
       style={{
         background: mainBackground

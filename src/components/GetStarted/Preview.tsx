@@ -80,7 +80,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
                 onCompleteAllStatus={() => {
                     // showToast.success({ text: "completed successfully" })
                 }}
-                template={2}
+                template={1}
                 showLoadingIndicator
 
                 // showDropDown
