@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { CSSProperties, useContext, useEffect, useRef, useState } from 'react'
 import { copyIcon, crossIcon, orIcon, rewardIcon, tickIcon, uploadIcon } from '../expansion/Svg'
 import "../expansion/Refer.css";
 import "./modal.css";
@@ -8,7 +8,7 @@ import QuestContext from '../QuestWrapper';
 import config from '../../config';
 import { SecondaryButton } from '../Modules/PreviousButton';
 import { PrimaryButton } from '../Modules/NextButton';
-import { CSSProperties } from '@emotion/serialize';
+
 
 interface propsType {
   isOpen?: boolean;
@@ -52,7 +52,8 @@ export default function QuestMOdal({
   headers={},
   onRewardClaim=()=>{},
   url, 
-  rewardDescription = 'You have unlocked a new reward for your last transaction. Avail the reward now and enjoy!'
+  rewardDescription = 'You have unlocked a new reward for your last transaction. Avail the reward now and enjoy!',
+  styleConfig
 }: propsType) {
   const [copy, setCopy] = useState([false, false]);
   const { apiKey, entityId, apiType } = useContext(QuestContext.Context);
@@ -110,8 +111,8 @@ export default function QuestMOdal({
     <div className='q_feed_back_modal'>
       <div className="q_feed_back_modal_head">
         <div>
-          <div className="q_modal_heading">{heading}</div>
-          <div className="q_modal_desc">{description}</div>
+          <div className="q_modal_heading" style={{...styleConfig?.Heading}} >{heading}</div>
+          <div className="q_modal_desc" style={{...styleConfig?.Description}}>{description}</div>
         </div>
         <img src={crossIcon(iconColor)} alt="" className='q_modal_cross_img' onClick={() => setOpen(false)} />
       </div>
