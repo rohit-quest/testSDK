@@ -349,18 +349,24 @@ input[data-autocompleted] {
 
 .qt_toast-container[data-position^="top-"] {
   top: 0;
+  margin-top: 20px;
 }
 
 .qt_toast-container[data-position^="bottom-"] {
   bottom: 0;
+  margin-bottom: 20px;
 }
 
 .qt_toast-container[data-position$="-right"] {
   right: 0;
+  margin-right: 20px;
+  margin-top: 20px;
 }
 
 .qt_toast-container[data-position$="-left"] {
   left: 0;
+  margin-left: 20px;
+  margin-top: 20px;
 }
 
 .qt_toast-container[data-position$="-center"] {
