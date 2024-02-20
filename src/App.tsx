@@ -211,7 +211,7 @@ function App() {
 
         {/* <TutorialPreview /> */}
 
-        {/* <FeedbackWorkflowPreview online={false} /> */}
+        <FeedbackWorkflowPreview online={true} />
 
         {/* <FeedbackPreview /> */}
 
