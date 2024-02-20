@@ -140,7 +140,7 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-        <OnBoardingPreview online />
+        {/* <OnBoardingPreview online /> */}
         {/* <MultiChoiceTwo options={['one', 'two', 'three']} checked={["two"]} /> */}
 
         {/* <GetStartedPreview
@@ -170,7 +170,7 @@ function App() {
 
         {/* <TutorialPreview /> */}
 
-        {/* <FeedbackWorkflowPreview online={false} /> */}
+        <FeedbackWorkflowPreview online={true} />
 
         {/* <FeedbackPreview /> */}
 
