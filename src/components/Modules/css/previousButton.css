@@ -15,4 +15,5 @@
   border-radius: 10px;
   border: 1.5px solid var(--Neutral-White-300, #efefef);
   background: var(--Neutral-White-100, #fff);
+  cursor: pointer;
 }

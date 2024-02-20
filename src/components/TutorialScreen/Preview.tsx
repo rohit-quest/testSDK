@@ -8,7 +8,7 @@ export const entityId = 'e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5'
 export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
 export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
 
-export default function TutorialPreview({online=false}) {
+export default function TutorialPreview({online=true}) {
 
     if (online)
     return (<QuestProvider
@@ -21,8 +21,13 @@ export default function TutorialPreview({online=false}) {
         <Tutorial
              questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
              userId={userId}
-             bgColor=''
              token={token}
+             styleConfig={{
+                Body: {
+                    backgroundColor: "black",
+                    color: "white"
+                }
+             }}
              heading='Your Application Progress'
              subheading='Welcome back, Please complete your application'
         />
