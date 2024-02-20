@@ -315,6 +315,7 @@
   cursor: pointer;
   border-radius: 10px;
 }
+
 .gs-single-card-dropDown {
   width: 100%;
   border-bottom: 1px solid #efefef;
@@ -329,12 +330,13 @@
 
 .gs_card_body_image {
   display: flex;
-  padding: 8px;
   align-items: center;
   gap: 8px;
   border-radius: 48px;
   background: var(--Primary-Grape-100, #f4ebff);
   justify-content: center;
+  width: 32px;
+  height: 32px;
 }
 
 .gs-card-img-button {
