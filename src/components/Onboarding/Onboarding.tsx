@@ -612,7 +612,6 @@ function OnBoarding(props: QuestLoginProps) {
             </div>
         );
     };
-
     const singleChoiceTwo = (
         options: string[] | [],
         question: string,
@@ -631,7 +630,7 @@ function OnBoarding(props: QuestLoginProps) {
             }),
             option: (styles, { isDisabled, isFocused, isSelected }) => ({
               ...styles,
-              backgroundColor: isFocused ? "grey" : inputBgColor || "#f9fafb",
+              backgroundColor: isFocused ? "#ADD8E6" : (containerStyle?.background || containerStyle?.backgroundColor || "#f9fafb"),
               color: ""
             }),
             menu: (provided) => ({

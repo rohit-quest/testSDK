@@ -1,6 +1,4 @@
-import React, { useState } from 'react'
 import { QuestProvider } from '../QuestWrapper';
-import showToast from '../toast/toastService';
 import FeedbackWorkflow from './FeedbackOverview';
 import FeedbackWorkflowOffline from './OfflineComponent.tsx';
 export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
@@ -10,7 +8,7 @@ export const entityId = 'e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5'
 export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
 export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
 
-export default function FeedbackWorkflowPreview({ online = true }: { online?: boolean }) {
+export default function FeedbackWorkflowPreview({ online = false }: { online?: boolean }) {
 
     if (online)
         return (<QuestProvider
@@ -20,27 +18,28 @@ export default function FeedbackWorkflowPreview({ online = true }: { online?: bo
             featureFlags={{}}
             apiType="PRODUCTION"
         >
-           <FeedbackWorkflow
-                    userId={userId}
-                    token={token}
-                    questIds={[
-                        'q-general-feedback',
-                        'q-report-a-bug',
-                        'q-request-a-feature',
-                        'q-contact-us',
-                    ]}
-                    contactUrl="https://calendly.com/sriya-persana/30min"
-                    isOpen={true}
-                    // onClose={() => setIsOpen(!isOpen)}
-                    zIndex={10}
-                    // btnColor={"#1972f5"}
-                    // topbarColor={"#1972f5"}
-                    // starBorderColor={"#1972f5"}
-                    // starColor={"#1972f5"}
-                    // tickBg={"#1972f5"}
-                    uniqueUserId="soumitra.petbindhi+25@gmail.com"
-                    uniqueEmailId="soumitra.petbindhi+25@gmail.com"
-                />
+
+            <FeedbackWorkflow
+                userId={userId}
+                token={token}
+                questIds={[
+                    'q-general-feedback',
+                    'q-report-a-bug',
+                    'q-request-a-feature',
+                    'q-contact-us',
+                ]}
+                styleConfig={{
+                    Body: {
+                        
+                    }
+                }}
+                contactUrl="https://calendly.com/sriya-persana/30min"
+                isOpen={true}
+                // onClose={() => setIsOpen(!isOpen)}
+                uniqueUserId="soumitra.petbindhi+25@gmail.com"
+                uniqueEmailId="soumitra.petbindhi+25@gmail.com"
+            />
+
         </QuestProvider>)
 
     return (<FeedbackWorkflowOffline
@@ -130,7 +129,7 @@ export default function FeedbackWorkflowPreview({ online = true }: { online?: bo
                         answer: "answer",
                         placeholder: ""
                     }]
-                    , [
+                , [
                     {
                         "type": "LINK_OPEN_READ",
                         "question": "",
@@ -145,8 +144,8 @@ export default function FeedbackWorkflowPreview({ online = true }: { online?: bo
                     },
                 ]
             ]
-        }        
-     >
+        }
+    >
 
     </FeedbackWorkflowOffline>)
 }

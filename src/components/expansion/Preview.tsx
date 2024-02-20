@@ -12,10 +12,14 @@ export default function ReferEarnPreview() {
     return (
         <QuestProvider apiKey={apiKey} apiSecret={apiSecret} featureFlags={{}} entityId={entityId}>
             <ReferEarn questId={questId}
-            //  invitationLink='https://questlabs.ai/'
+            token={token} userId={userId} 
+            onCopy={(referralCode) => console.log(referralCode)}
+             referralLink='https://questlabs.ai/'
+             
             // iconColor='red'
             // secondaryIconColor='red'
-              token={token} userId={userId} />
+            // gradientBackground={true}
+              />
         </QuestProvider>
     )
 }

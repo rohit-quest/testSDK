@@ -26,7 +26,6 @@ export const shareOnPlatform = (text: string, platform: Platform): void => {
 
 export const response = async (questId = "", headers: {
     apiKey: string,
-    apisecret: string,
     userid: string,
     entityId: string,
     token: string

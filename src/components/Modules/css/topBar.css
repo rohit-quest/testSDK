@@ -1,0 +1,32 @@
+.q_top_bar {
+    box-sizing: content-box;
+    height: 50px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom: 1px solid #EFEFEF;
+}
+
+.q_top_bar_desc {
+    color: #939393;
+    font-family: "Figtree";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+}
+
+.q_top_bar_heading {
+    overflow: hidden;
+    color: #2C2C2C;
+    text-overflow: ellipsis;
+    font-family: 'Figtree';
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 30px;
+    letter-spacing: -0.4px;
+}

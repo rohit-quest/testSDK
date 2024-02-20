@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { QuestProvider } from '../QuestWrapper'
 import QuestMOdal from './Modal'
 export const apiKey = 'k-2aa597b4-341f-4c3c-a022-f56877a585c9'

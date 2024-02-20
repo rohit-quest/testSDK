@@ -10,10 +10,10 @@
   padding: 12px 20px;
   display: flex;
   align-items: center;
-  margin-bottom: 1px;
   justify-content: space-between;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  border-bottom: 1px solid  #EFEFEF;
 }
 .q-fw-heading > img {
   width: 20px;
@@ -33,7 +33,7 @@
   line-height: 28px;
 }
 .q-fw-div {
-  width: 376px;
+  width: 350px;
   border-radius: 16px;
   box-shadow: 0px 0px 20px 0px #00000073;
   background-color: white;
@@ -48,7 +48,7 @@
 .q-fw-cards {
   cursor: pointer;
   display: flex;
-  padding: 12px;
+  padding: 15px;
   align-items: center;
   gap: 12px;
   align-self: stretch;
