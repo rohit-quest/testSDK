@@ -1,4 +1,5 @@
 import { CSSProperties, ChangeEventHandler } from 'react';
+import './css/textArea.css'
 
 interface TextAreaProps {
   value?: string;

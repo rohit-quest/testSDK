@@ -1,15 +1,16 @@
 import {CSSProperties} from 'react';
+import './css/label.css';
 
 interface Proptype {
-    htmlFor: string;
+    htmlFor?: string;
     style?: CSSProperties;
     text: string;
-    isRequired: boolean
+    isRequired?: boolean
 }
 
 const Label = ({htmlFor, style, text, isRequired}: Proptype) => {
     return (
-        <label htmlFor={htmlFor} style={style}>{text} {isRequired && "*"}</label>
+        <label className='q_default_label' htmlFor={htmlFor} style={style}>{text} {isRequired && "*"}</label>
     );
 }
 

@@ -29,6 +29,7 @@ import FeedbackPreview from "./components/Feedback/Preview";
 import Survey from "./components/Feedback/Survey";
 import ModalPreview from "./components/Modals/Preview";
 import SurveyOffline from "./components/Feedback/OfflineComponent";
+
 import { MultiChoice, MultiChoiceTwo } from './components/Modules/MultiChoice';
 import Toast from "./components/toast2/toast";
 
@@ -244,7 +245,7 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-        {/* <TutorialPreview /> */}
+        <TutorialPreview />
 
         <FeedbackWorkflowPreview online={true} />
 
