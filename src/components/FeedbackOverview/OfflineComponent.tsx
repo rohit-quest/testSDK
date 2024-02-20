@@ -5,9 +5,9 @@ import FeatureContent from './Feature';
 import { useContext } from 'react';
 import QuestContext from '../QuestWrapper';
 import config from '../../config';
-// import axios from 'axios';
+import axios from 'axios';
 import Loader from '../Login/Loader';
-// import Cookies from "universal-cookie";
+import Cookies from "universal-cookie";
 import showToast from '../toast/toastService';
 import QuestLabs from '../QuestLabs';
 import { Input } from '../Modules/Input';
@@ -74,9 +74,9 @@ const contact = (color: string = "#939393") => (
 type optionType = 'Contact us' | 'Request a Feature' | 'Report a Bug' | 'General Feedback'
 
 interface feedbackCompProps {
-  userId: string;
-  token: string;
-  questIds: string[];
+  // userId: string;
+  // token: string;
+  // questIds: string[];
   answer?: any;
   setAnswer?: any;
   getAnswers?: any;
@@ -89,8 +89,8 @@ interface feedbackCompProps {
   starBorderColor?: string;
   tickBg?: string;
   ratingStyle?: "Star" | "Numbers" | "Smiles";
-  uniqueUserId?: string;
-  uniqueEmailId?: string;
+  // uniqueUserId?: string;
+  // uniqueEmailId?: string;
   descriptions?: Record<optionType, string>;
   backBtn?: boolean;
   iconColor?: string;
@@ -104,8 +104,8 @@ interface feedbackCompProps {
     PrimaryButton?: React.CSSProperties,
     SecondaryButton?: React.CSSProperties,
     Modal?: React.CSSProperties,
-  }
-  offlineFormData?: FormDataItem[];
+  };
+  offlineFormData: FormDataItem[][];
 }
 interface FormDataItem {
   type?: string;
@@ -115,10 +115,10 @@ interface FormDataItem {
   required?: boolean;
   placeholder?: string;
 }
-const FeedbackWorkflowOffline: React.FC<feedbackCompProps> = ({
+const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   // userId,
   // token,
-  questIds,
+  // questIds,
   contactUrl,
   isOpen,
   onClose,
@@ -130,49 +130,47 @@ const FeedbackWorkflowOffline: React.FC<feedbackCompProps> = ({
   descriptions = { "General Feedback": "Welcome back, Please complete your details", "Report a Bug": "Describe your issue", "Contact us": "Invite other admins and moderators", "Request a Feature": "How can we make it better" },
   iconColor = "#939393",
   styleConfig = {},
-  offlineFormData
+  offlineFormData,
 }) => {
   const [selectedOption, setSelectedOption] = useState<optionType | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
-  const [formdata, setFormdata] = useState<{ [key: number]: [FormDataItem] }>(
-    {}
-  );
+  // const [offlineFormData, setFormdata] = useState<{ [key: number]: [FormDataItem] }>({});
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [submit, setSubmit] = useState<boolean>(false);
-  const { apiKey, apiSecret, entityId, featureFlags,apiType } = useContext(QuestContext.Context);
+  const { apiKey, apiSecret, entityId, featureFlags, apiType } = useContext(QuestContext.Context);
   const [answer, setAnswer] = useState<Record<string, string>>({});
-//   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
-console.log(offlineFormData)
+  let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
+
   const thanks = (
-<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clipRule="url(#clip0_4046_146)">
-<path d="M40 80C62.0914 80 80 62.0914 80 40C80 17.9086 62.0914 0 40 0C17.9086 0 0 17.9086 0 40C0 62.0914 17.9086 80 40 80Z" fill="url(#paint0_linear_4046_146)"/>
-<path d="M48.4167 79.0566C49.1837 78.9078 49.9463 78.7367 50.7033 78.5432C51.987 78.1844 53.2519 77.7617 54.4933 77.2766C55.7363 76.7955 56.9545 76.2526 58.1433 75.6499C59.3325 75.0449 60.4906 74.3807 61.6133 73.6599C62.7348 72.939 63.8195 72.1625 64.8633 71.3332C65.9091 70.5029 66.9125 69.6207 67.87 68.6899C68.8259 67.7614 69.7348 66.7858 70.5933 65.7666C71.4526 64.7465 72.2603 63.684 73.0133 62.5832C73.7662 61.4843 74.4638 60.3484 75.1033 59.1799C75.743 58.0097 76.3237 56.8082 76.8433 55.5799C77.3635 54.3514 77.8218 53.0976 78.2167 51.8232C78.5548 50.7075 78.8439 49.5776 79.0833 48.4366L55.3167 24.6732C53.3096 22.6573 50.9236 21.0581 48.2961 19.9677C45.6686 18.8774 42.8514 18.3174 40.0067 18.3199C37.1594 18.3168 34.3395 18.8765 31.7092 19.9668C29.0789 21.0572 26.6901 22.6566 24.68 24.6732C22.6649 26.6839 21.0661 29.0724 19.9753 31.7018C18.8845 34.3312 18.323 37.1499 18.323 39.9966C18.323 42.8433 18.8845 45.662 19.9753 48.2914C21.0661 50.9208 22.6649 53.3092 24.68 55.3199L48.4167 79.0566Z" fill="url(#paint1_linear_4046_146)"/>
-<path d="M40.0033 18.3232C45.5433 18.3232 51.0833 20.4398 55.3233 24.6765C57.3384 26.6872 58.9372 29.0756 60.028 31.705C61.1188 34.3344 61.6803 37.1532 61.6803 39.9998C61.6803 42.8465 61.1188 45.6653 60.028 48.2947C58.9372 50.9241 57.3384 53.3125 55.3233 55.3232C53.3126 57.3383 50.9242 58.937 48.2948 60.0279C45.6654 61.1187 42.8467 61.6802 40 61.6802C37.1533 61.6802 34.3346 61.1187 31.7052 60.0279C29.0758 58.937 26.6873 57.3383 24.6767 55.3232C22.6615 53.3125 21.0628 50.9241 19.972 48.2947C18.8811 45.6653 18.3196 42.8465 18.3196 39.9998C18.3196 37.1532 18.8811 34.3344 19.972 31.705C21.0628 29.0756 22.6615 26.6872 24.6767 24.6765C26.6867 22.6599 29.0756 21.0604 31.7059 19.9701C34.3361 18.8798 37.156 18.3201 40.0033 18.3232ZM49.87 33.3298C49.5544 33.3601 49.2539 33.4791 49.0033 33.6732L36.8233 42.8065L31.18 37.1665C29.9566 35.8932 27.5467 38.2998 28.8233 39.5232L35.49 46.1898C35.779 46.4631 36.1536 46.6281 36.5504 46.6566C36.9471 46.6852 37.3415 46.5756 37.6667 46.3465L51 36.3465C52.12 35.5298 51.43 33.3532 50.0433 33.3332C49.9867 33.3303 49.9299 33.3303 49.8733 33.3332L49.87 33.3298Z" fill="white"/>
-</g>
-<defs>
-<linearGradient id="paint0_linear_4046_146" x1="0.320001" y1="80" x2="87.5968" y2="71.0629" gradientUnits="userSpaceOnUse">
-<stop stop-color="#9035FF"/>
-<stop offset="1" stop-color="#0065FF"/>
-</linearGradient>
-<linearGradient id="paint1_linear_4046_146" x1="18.566" y1="79.0566" x2="84.8526" y2="72.2662" gradientUnits="userSpaceOnUse">
-<stop stop-color="#9035FF"/>
-<stop offset="1" stop-color="#0065FF"/>
-</linearGradient>
-<clipPath id="clip0_4046_146">
-<rect width="80" height="80" fill="white"/>
-</clipPath>
-</defs>
-</svg>
+    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g clipRule="url(#clip0_4046_146)">
+        <path d="M40 80C62.0914 80 80 62.0914 80 40C80 17.9086 62.0914 0 40 0C17.9086 0 0 17.9086 0 40C0 62.0914 17.9086 80 40 80Z" fill="url(#paint0_linear_4046_146)" />
+        <path d="M48.4167 79.0566C49.1837 78.9078 49.9463 78.7367 50.7033 78.5432C51.987 78.1844 53.2519 77.7617 54.4933 77.2766C55.7363 76.7955 56.9545 76.2526 58.1433 75.6499C59.3325 75.0449 60.4906 74.3807 61.6133 73.6599C62.7348 72.939 63.8195 72.1625 64.8633 71.3332C65.9091 70.5029 66.9125 69.6207 67.87 68.6899C68.8259 67.7614 69.7348 66.7858 70.5933 65.7666C71.4526 64.7465 72.2603 63.684 73.0133 62.5832C73.7662 61.4843 74.4638 60.3484 75.1033 59.1799C75.743 58.0097 76.3237 56.8082 76.8433 55.5799C77.3635 54.3514 77.8218 53.0976 78.2167 51.8232C78.5548 50.7075 78.8439 49.5776 79.0833 48.4366L55.3167 24.6732C53.3096 22.6573 50.9236 21.0581 48.2961 19.9677C45.6686 18.8774 42.8514 18.3174 40.0067 18.3199C37.1594 18.3168 34.3395 18.8765 31.7092 19.9668C29.0789 21.0572 26.6901 22.6566 24.68 24.6732C22.6649 26.6839 21.0661 29.0724 19.9753 31.7018C18.8845 34.3312 18.323 37.1499 18.323 39.9966C18.323 42.8433 18.8845 45.662 19.9753 48.2914C21.0661 50.9208 22.6649 53.3092 24.68 55.3199L48.4167 79.0566Z" fill="url(#paint1_linear_4046_146)" />
+        <path d="M40.0033 18.3232C45.5433 18.3232 51.0833 20.4398 55.3233 24.6765C57.3384 26.6872 58.9372 29.0756 60.028 31.705C61.1188 34.3344 61.6803 37.1532 61.6803 39.9998C61.6803 42.8465 61.1188 45.6653 60.028 48.2947C58.9372 50.9241 57.3384 53.3125 55.3233 55.3232C53.3126 57.3383 50.9242 58.937 48.2948 60.0279C45.6654 61.1187 42.8467 61.6802 40 61.6802C37.1533 61.6802 34.3346 61.1187 31.7052 60.0279C29.0758 58.937 26.6873 57.3383 24.6767 55.3232C22.6615 53.3125 21.0628 50.9241 19.972 48.2947C18.8811 45.6653 18.3196 42.8465 18.3196 39.9998C18.3196 37.1532 18.8811 34.3344 19.972 31.705C21.0628 29.0756 22.6615 26.6872 24.6767 24.6765C26.6867 22.6599 29.0756 21.0604 31.7059 19.9701C34.3361 18.8798 37.156 18.3201 40.0033 18.3232ZM49.87 33.3298C49.5544 33.3601 49.2539 33.4791 49.0033 33.6732L36.8233 42.8065L31.18 37.1665C29.9566 35.8932 27.5467 38.2998 28.8233 39.5232L35.49 46.1898C35.779 46.4631 36.1536 46.6281 36.5504 46.6566C36.9471 46.6852 37.3415 46.5756 37.6667 46.3465L51 36.3465C52.12 35.5298 51.43 33.3532 50.0433 33.3332C49.9867 33.3303 49.9299 33.3303 49.8733 33.3332L49.87 33.3298Z" fill="white" />
+      </g>
+      <defs>
+        <linearGradient id="paint0_linear_4046_146" x1="0.320001" y1="80" x2="87.5968" y2="71.0629" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#9035FF" />
+          <stop offset="1" stop-color="#0065FF" />
+        </linearGradient>
+        <linearGradient id="paint1_linear_4046_146" x1="18.566" y1="79.0566" x2="84.8526" y2="72.2662" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#9035FF" />
+          <stop offset="1" stop-color="#0065FF" />
+        </linearGradient>
+        <clipPath id="clip0_4046_146">
+          <rect width="80" height="80" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
 
-);
+  );
 
-  const handleOptionClick = (option: optionType, quest: string) => {
-    // let cookies = new Cookies();
-    // let externalUserId = cookies.get("externalUserId");
-    // let questUserId = cookies.get("questUserId");
-    // let questUserToken = cookies.get("questUserToken");
-    // let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
+  const handleOptionClick = (option: optionType) => {
+    let cookies = new Cookies();
+    let externalUserId = cookies.get("externalUserId");
+    let questUserId = cookies.get("questUserId");
+    let questUserToken = cookies.get("questUserToken");
+    let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
     // if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
     //   let header = {
     //     apiKey: apiKey,
@@ -180,7 +178,7 @@ console.log(offlineFormData)
     //     userId: questUserId,
     //     token: questUserToken,
     //   }
-    //   axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`, {count: 1}, {headers: header})
+    //   axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`, { count: 1 }, { headers: header })
     // } else if (uniqueUserId) {
     //   const body = {
     //     externalUserId: !!uniqueUserId && uniqueUserId,
@@ -195,167 +193,159 @@ console.log(offlineFormData)
     //     token: token,
     //   };
 
-    //   axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
+    //   axios.post(`${BACKEND_URL}api/users/external/login`, body, { headers })
     //     .then((res) => {
-    //       let {userId, token} = res.data;
-    //       let header = {...headers, ...{userId, token}}
+    //       let { userId, token } = res.data;
+    //       let header = { ...headers, ...{ userId, token } }
     //       let cookies = new Cookies();
     //       const date = new Date();
     //       date.setHours(date.getHours() + 12)
-    //       cookies.set("externalUserId", uniqueUserId, {path: "/", expires: date})
-    //       cookies.set("questUserId", userId, {path: "/", expires: date})
-    //       cookies.set("questUserToken", token, {path: "/", expires: date})
-    //       axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`, {count: 1}, {headers: header})
-    //   })
+    //       cookies.set("externalUserId", uniqueUserId, { path: "/", expires: date })
+    //       cookies.set("questUserId", userId, { path: "/", expires: date })
+    //       cookies.set("questUserToken", token, { path: "/", expires: date })
+    //       axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`, { count: 1 }, { headers: header })
+    //     })
     // }
-    
+
     if (option === 'Contact us' && contactUrl) {
       window.open(contactUrl, "_blank");
     } else {
       setSelectedOption(option);
-      setSelectedQuest(quest);
+      // setSelectedQuest();
       setAnswer({});
     }
   };
-
   function returnAnswers(index: number) {
 
     // const headers = {
-    //     apiKey: apiKey,
-    //     apisecret: apiSecret,
-    //     userId: userId,
-    //     token: token,
-    //   };
-    //   let cookies = new Cookies();
-    //   let externalUserId = cookies.get("externalUserId");
-    //   let questUserId = cookies.get("questUserId");
-    //   let questUserToken = cookies.get("questUserToken");
-    //   let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
-    //   if (answer.length !== 0) {
-    //     const ansArr = formdata[index].map((ans: any) => ({
-    //       question: ans?.question || '',
-    //       answer: [answer[ans?.criteriaId] || ''],
-    //       criteriaId: ans?.criteriaId || '',
-    //     }));
-    //     if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
-    //       let header = {
-    //         apiKey: apiKey,
-    //         apisecret: apiSecret,
-    //         userId: questUserId,
-    //         token: questUserToken,
-    //       }
-    //       setResult(header, userId)
-    //     } else {
-    //       setResult(headers, userId)
-    //     }
-  
-    //     function setResult(headers: object, userId: string) {
-    //       const request = `${BACKEND_URL}api/entities/${entityId}/quests/${selectedQuest}/verify-all?userId=${userId}`;
-    //         const requestData = {
-    //           criterias: ansArr,
-    //         };
-    //         setShowLoader(true);
-    //         axios
-    //           .post(request, requestData, { headers: headers })
-    //           .then((response) => {
-    //             if (response.data.success) {
-                  showToast.success({text:'Thank you for your feedback'});
-                  setSubmit(true);
-                  setTimeout(() => {
-                    setSubmit(false)
-                    setSelectedOption(null)
-                  }, 4000);
-    //               axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${selectedQuest}-com?userId=${userId}&questId=${selectedQuest}`, {count: 1}, {headers: headers})
-    //             } else {
-    //               showToast.error({text: response.data.error});
-    //             }
-    //           })
-    //           .catch((error) => {
-    //             console.error('Error:', error);
-    //           })
-    //           .finally(() => {
-    //             setShowLoader(false);
-    //           });
-    //     }
-    //   } else {
-    //     toast.error('Please fill in all required fields.');
-    //   }
+    //   apiKey: apiKey,
+    //   apisecret: apiSecret,
+    //   userId: userId,
+    //   token: token,
+    // };
+    // let cookies = new Cookies();
+    // let externalUserId = cookies.get("externalUserId");
+    // let questUserId = cookies.get("questUserId");
+    // let questUserToken = cookies.get("questUserToken");
+    if (Object.keys(answer).length !== 0) {
+      const ansArr = offlineFormData[index].map((ans: any) => ({
+        question: ans?.question || '',
+        answer: [answer[ans?.criteriaId] || ''],
+        criteriaId: ans?.criteriaId || '',
+      }));
+      // if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
+      //   let header = {
+      //     apiKey: apiKey,
+      //     apisecret: apiSecret,
+      //     userId: questUserId,
+      //     token: questUserToken,
+      //   }
+      //   setResult(header, header.userId)
+      // } else {
+      //   setResult(headers, userId)
+      // }
 
+      // function setResult(headers: object, userId: string) {
+      //   const request = `${BACKEND_URL}api/entities/${entityId}/quests/${selectedQuest}/verify-all?userId=${userId}`;
+      //   const requestData = {
+      //     criterias: ansArr,
+      //   };
+      //   setShowLoader(true);
+      //   axios
+      //     .post(request, requestData, { headers: headers })
+      //     .then((response) => {
+      //       if (response.data.success) {
+      showToast.success({ text: 'Thank you for your feedback' });
+      setSubmit(true);
+      setTimeout(() => {
+        setSubmit(false)
+        setSelectedOption(null)
+      }, 4000);
+      //           axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${selectedQuest}-com?userId=${userId}&questId=${selectedQuest}`, { count: 1 }, { headers: headers })
+      //         } else {
+      //           showToast.error({ text: response.data.error });
+      //         }
+      //       })
+      //       .catch((error) => {
+      //         console.error('Error:', error);
+      //       })
+      //       .finally(() => {
+      //         setShowLoader(false);
+      //       });
+      //   }
+      // } else {
+      //   showToast.error('Please fill in all required fields.');
+      // }
+
+    }
   }
-
 
   const handleBackClick = () => {
     setSelectedOption(null);
   };
-  function isDefaultQuestId(questId: string): boolean {
-    const defaultIdPattern =
-      /^q-[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
-    return !defaultIdPattern.test(questId);
-  }
-
-  function isValidEmail(email: string) {
-    if (!email) return false;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return !emailRegex.test(email);
-  }
+  // function isDefaultQuestId(questId: string): boolean {
+  //   const defaultIdPattern =
+  //     /^q-[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+  //   return !defaultIdPattern.test(questId);
+  // }
 
   useEffect(() => {
-    const headers = {
-      apiKey: apiKey,
-      apisecret: apiSecret,
-      // userId: userId,
-      // token: token,
-    };
+    // const headers = {
+    //   apiKey: apiKey,
+    //   apisecret: apiSecret,
+    //   userId: userId,
+    //   token: token,
+    // };
     let request;
     {
-    //   questIds.map((id, index) => {
-    //     const isDefault = isDefaultQuestId(id);
-    //     if (isDefault) {
-    //       request = `${BACKEND_URL}api/entities/${entityId}/default-quest/?userId=${userId}&defaultId=${id}`;
-    //       axios.post(request, {}, { headers: headers }).then((res) => {
-    //         let response = res.data.data;
-    //         let criterias = response?.eligibilityData?.map((criteria: any) => {
-    //           return {
-    //             type: criteria?.data?.criteriaType,
-    //             question: criteria?.data?.metadata?.title,
-    //             options: criteria?.data?.metadata?.options || [],
-    //             criteriaId: criteria?.data?.criteriaId,
-    //             required: !criteria?.data?.metadata?.isOptional,
-    //             placeholder: criteria?.data?.metadata?.placeholder,
-    //           };
-    //         });
-    //         criterias = Array.isArray(criterias) ? criterias : [];
-    //         setFormdata((prevFormdata) => {
-    //           const updatedFormdata = { ...prevFormdata };
-    //           updatedFormdata[index] = criterias;
-    //           return updatedFormdata;
-    //         });
-    //       });
-    //     } else {
-    //       request = `${BACKEND_URL}api/entities/${entityId}/quests/${id}?userId=${userId}`;
-    //       axios.get(request, { headers: headers }).then((res) => {
-    //         let response = res.data;
-    //         let criterias = response?.eligibilityData?.map((criteria: any) => {
-    //           return {
-    //             type: criteria?.data?.criteriaType,
-    //             question: criteria?.data?.metadata?.title,
-    //             options: criteria?.data?.metadata?.options || [],
-    //             criteriaId: criteria?.data?.criteriaId,
-    //             required: !criteria?.data?.metadata?.isOptional,
-    //             placeholder: criteria?.data?.metadata?.placeholder,
-    //           };
-    //         });
-    //         criterias = Array.isArray(criterias) ? criterias : [];
-    //         setFormdata((prevFormdata) => {
-    //           const updatedFormdata = { ...prevFormdata };
-    //           updatedFormdata[index] = criterias;
-    //           return updatedFormdata;
-    //         });
-    //       });
-    //     }
-    //   });
+      // questIds.map((id, index) => {
+      //   const isDefault = isDefaultQuestId(id);
+      //   if (isDefault) {
+      //     request = `${BACKEND_URL}api/entities/${entityId}/default-quest/?userId=${userId}&defaultId=${id}`;
+      //     axios.post(request, {}, { headers: headers }).then((res) => {
+      //       let response = res.data.data;
+      //       let criterias = response?.eligibilityData?.map((criteria: any) => {
+      //         return {
+      //           type: criteria?.data?.criteriaType,
+      //           question: criteria?.data?.metadata?.title,
+      //           options: criteria?.data?.metadata?.options || [],
+      //           criteriaId: criteria?.data?.criteriaId,
+      //           required: !criteria?.data?.metadata?.isOptional,
+      //           placeholder: criteria?.data?.metadata?.placeholder,
+      //         };
+      //       });
+      //       criterias = Array.isArray(criterias) ? criterias : [];
+      //       setFormdata((prevFormdata) => {
+      //         const updatedFormdata = { ...prevFormdata };
+      //         updatedFormdata[index] = criterias;
+      //         return updatedFormdata;
+      //       });
+      //     });
+      //   } else {
+      //     request = `${BACKEND_URL}api/entities/${entityId}/quests/${id}?userId=${userId}`;
+      //     axios.get(request, { headers: headers }).then((res) => {
+      //       let response = res.data;
+      //       let criterias = response?.eligibilityData?.map((criteria: any) => {
+      //         return {
+      //           type: criteria?.data?.criteriaType,
+      //           question: criteria?.data?.metadata?.title,
+      //           options: criteria?.data?.metadata?.options || [],
+      //           criteriaId: criteria?.data?.criteriaId,
+      //           required: !criteria?.data?.metadata?.isOptional,
+      //           placeholder: criteria?.data?.metadata?.placeholder,
+      //         };
+      //       });
+      //       criterias = Array.isArray(criterias) ? criterias : [];
+      //       setFormdata((prevFormdata) => {
+      //         const updatedFormdata = { ...prevFormdata };
+      //         updatedFormdata[index] = criterias;
+      //         return updatedFormdata;
+      //       });
+      //     });
+      //   }
+      // });
     }
-  }, [questIds]);
+  }, []);
 
   const handleUpdate = (e: any, id: string, j: string, k?: number) => {
     setAnswer({
@@ -375,7 +365,11 @@ console.log(offlineFormData)
       [id]: ""
     })
   }
-
+  function isValidEmail(email: string) {
+    if (!email) return false;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return !emailRegex.test(email);
+  }
   const normalInput = (question: string, criteriaId: string, placeholder?: string) => {
     return (
       <div className="" key={criteriaId}>
@@ -441,7 +435,7 @@ console.log(offlineFormData)
       <div className="q-fw-div" style={styleConfig.Body} id='disabledClick'>
         {selectedOption && !submit ? (
           <div>
-            <TopBar style={{headingStyle: styleConfig.Heading, descriptionStyle: styleConfig.Description}}
+            <TopBar style={{ headingStyle: styleConfig.Heading, descriptionStyle: styleConfig.Description }}
               description={descriptions[selectedOption]}
               heading={selectedOption}
               iconColor={iconColor}
@@ -453,7 +447,7 @@ console.log(offlineFormData)
                   starColor={starColor}
                   handleSubmit={() => returnAnswers(0)}
                   handleUpdate={handleUpdate}
-                  formdata={formdata[0]}
+                  formdata={offlineFormData[0] }
                   normalInput={normalInput}
                   emailInput={emailInput}
                   normalInput2={normalInput2}
@@ -469,7 +463,7 @@ console.log(offlineFormData)
                 <BugContent
                   handleSubmit={() => returnAnswers(1)}
                   handleUpdate={handleUpdate}
-                  formdata={formdata[1]}
+                  formdata={offlineFormData[1]}
                   answer={answer}
                   normalInput={normalInput}
                   normalInput2={normalInput2}
@@ -481,7 +475,7 @@ console.log(offlineFormData)
                 <FeatureContent
                   handleSubmit={() => returnAnswers(2)}
                   handleUpdate={handleUpdate}
-                  formdata={formdata[2]}
+                  formdata={offlineFormData[2]}
                   normalInput={normalInput}
                   normalInput2={normalInput2}
                   emailInput={emailInput}
@@ -527,9 +521,9 @@ console.log(offlineFormData)
               <div onClick={() => onClose?.()}>{cross(iconColor)}</div>
             </div>
             <div className='q-fw-content-box'>
-              {questIds[0] && (
+              {(
                 <div
-                  onClick={() => handleOptionClick('General Feedback', questIds[0])}
+                  onClick={() => handleOptionClick('General Feedback',)}
                   className="q-hover q-fw-cards"
                 >
                   <div className='q_feedback_icon'>{feedback(iconColor)}</div>
@@ -543,9 +537,9 @@ console.log(offlineFormData)
                   </div>
                 </div>
               )}
-              {questIds[1] && (
+              {(
                 <div
-                  onClick={() => handleOptionClick('Report a Bug', questIds[1])}
+                  onClick={() => handleOptionClick('Report a Bug',)}
                   className="q-hover q-fw-cards"
                 >
                   <div className='q_feedback_icon'>{bug(iconColor)}</div>
@@ -563,9 +557,9 @@ console.log(offlineFormData)
                   </div>
                 </div>
               )}
-              {questIds[2] && (
+              {(
                 <div
-                  onClick={() => handleOptionClick('Request a Feature', questIds[2])}
+                  onClick={() => handleOptionClick('Request a Feature',)}
                   className="q-hover q-fw-cards"
                 >
                   <div className='q_feedback_icon'>{feature(iconColor)}</div>
@@ -583,9 +577,9 @@ console.log(offlineFormData)
                   </div>
                 </div>
               )}
-              {questIds[3] && (
+              { (
                 <div
-                  onClick={() => handleOptionClick('Contact us', questIds[3])}
+                  onClick={() => handleOptionClick('Contact us',)}
                   className="q-hover q-fw-cards"
                 >
                   <div className='q_feedback_icon'>{contact(iconColor)}</div>
@@ -612,4 +606,4 @@ console.log(offlineFormData)
   );
 };
 
-export default FeedbackWorkflowOffline;
+export default FeedbackWorkflow;

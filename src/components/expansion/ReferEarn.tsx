@@ -58,7 +58,6 @@ export const Referral = ({
       apiKey,
       userid: userId,
       entityId,
-      apisecret: apiSecret,
       token,
     }).then((r) => setCode(r.referralCode || ""));
   }, []);

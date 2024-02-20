@@ -216,8 +216,6 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     }
   };
   function returnAnswers(index: number) {
-    console.log(answer)
-
     const headers = {
       apiKey: apiKey,
       apisecret: apiSecret,
