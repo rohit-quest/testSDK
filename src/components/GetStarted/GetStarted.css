@@ -23,6 +23,9 @@
   gap: 10px;
   align-items: center;
   justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
 }
 .gs-card-btn-container a {
   text-decoration: none;
@@ -162,8 +165,8 @@
 .q_gt_dropdown {
   display: flex;
   padding: 8px;
-  padding-left: 12px;
-  border-radius: 48px;
+  /* padding-left: 12px; */
+  border-radius: 50%;
   align-items: flex-start;
   gap: 8px;
   cursor: pointer;
@@ -343,12 +346,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ebfff7;
 }
 
 .q_gt_arrow-completed {
-  border-radius: 48px;
   width: 16px;
   height: 16px;
   padding: 8px;
-  background: #ebfff7;
 }

@@ -30,7 +30,7 @@ import Survey from "./components/Feedback/Survey";
 import ModalPreview from "./components/Modals/Preview";
 import SurveyOffline from "./components/Feedback/OfflineComponent";
 import Modal from "./components/Modules/Modal";
-import { NormalInput } from './components/Modules/Input'
+// import { NormalInput } from './components/Modules/Input'
 import OnBoarding from "./components/Onboarding/Onboarding";
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-2aa597b4-341f-4c3c-a022-f56877a585c9";
@@ -162,7 +162,7 @@ function App() {
 
         <GetStartedPreview
    online={false}
- />  */}
+ />  
 {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
 </Modal> */}
@@ -178,7 +178,7 @@ function App() {
   template="multi-question"
   design={[[1,5,4,3], [2,6], [7]]}
   progress={["das", "dasa", "sasas"]}
-  progressBarType="modal1"
+  // progressBarType="modal1"
   controlBtnType="Buttons"
   headingScreen= {[{"name":"Identity Insights","desc":"Revealing dimensions beyond words"},{"name":"Professional Details","desc":"Tell us more about your company"},{"name":"Title_3","desc":"Desc_3"}]}
   styleConfig={{

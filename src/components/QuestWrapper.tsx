@@ -14,6 +14,8 @@ type FeatureFlags = {
   [key: string]: FeatureFlag;
 };
 
+
+
 type ThemeConfig = {
   primaryColor?: string;
   secondaryColor?: string;
@@ -23,28 +25,6 @@ type ThemeConfig = {
   fontFamily?: string;
 }
 
-<<<<<<< HEAD
-type ThemeConfig = {
-  primaryColor?: string;
-  secondaryColor?: string;
-  borderColor?: string;
-  buttonColor?: string;
-  backgroundColor?: string;
-  fontFamily?: string;
-}
-
-=======
-const themeConfig={
-  backgroundColor: "black",
-  borderColor: "red",
-  buttonColor: "green",
-  primaryColor: "White",
-  secondaryColor: "gray",
-  fontFamily: ""
-}
-
-
->>>>>>> AllComponentsUpdate
 type Props = {
   children: ReactNode;
   apiKey: string;

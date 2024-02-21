@@ -222,7 +222,6 @@ function OnBoarding(props: QuestLoginProps) {
                 }
         }
     }
-console.log(styleConfig)
     useEffect(() => {
         if (entityId) {
             let externalUserId = cookies.get("externalUserId");
@@ -1130,9 +1129,7 @@ console.log(answer)
                                             ...styleConfig?.PrimaryButton
                                         }}
                                     >
-                                        {currentPage == designState.length - 1
-                                            ? (text ? text : "Submit")
-                                            : "Continue"}
+                                        {(nextBtnText ? nextBtnText : "Submit")}
                                     </PrimaryButton>
                                 </div>
                                 :

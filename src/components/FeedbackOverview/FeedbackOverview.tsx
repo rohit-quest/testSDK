@@ -376,7 +376,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     return (
       <div className="" key={criteriaId}>
         <Label htmlFor={'normalInput'}
-          text={question}
+          children={question}
           style={styleConfig.Label}
         />
         <Input
@@ -393,7 +393,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     return (
       <div className="" key={criteriaId}>
         <Label htmlFor={'normalInput'}
-          text={question}
+          children={question}
           style={styleConfig.Label}
         />
         <Input
@@ -415,7 +415,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     return (
       <div className="" key={criteriaId}>
         <Label htmlFor={'normalInput'}
-          text={question}
+          children={question}
           style={styleConfig.Label}
         />
         <TextArea
@@ -518,7 +518,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             <QuestLabs color={iconColor} backgroundColor={styleConfig.Body?.background || styleConfig.Body?.backgroundColor} />
           </div>
         ) : (
-          <div style={{paddingBottom: !showPoweredBy?"20px":0}}>
+          <div >
             <div className='q-fw-crossBtn'>
               <div onClick={() => onClose?.()}>{cross(iconColor)}</div>
             </div>
