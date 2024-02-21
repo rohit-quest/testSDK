@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { googleSvg } from '../../assets/images';
+import { google2, googleSvg } from '../../assets/images';
 import axios from 'axios';
 import config from '../../config';
 import queryString from 'query-string';
@@ -108,10 +108,11 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
               backgroundColor: btnColor,
               fontFamily,
               color: btnTextColor,
+              
             }}
           >
             Sign in with Google
-            <img className="ml-auto" src={googleSvg} alt="google-logo" />
+            <img className="ml-auto" src={google2} alt="google-logo" />
           </div>
         </a>
       </div>

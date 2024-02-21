@@ -6,10 +6,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 4px solid white;
 }
 
 .q_otp_icon2 {
   align-content: center;
+  justify-content: center;
+}
+.q_otp_main_cont {
+  width: 110px;
+  height: 110px;
+  background-color: #b045ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
   justify-content: center;
 }
 
@@ -52,15 +62,23 @@
   margin-top: 20px;
   cursor: pointer;
   background: linear-gradient(84deg, #9035ff 0.36%, #0065ff 100.36%);
+  color: var(--Neutral-White-100, #fff);
+  padding: 10px 16px;
+  /* justify-content: center;
+  align-items: center; */
+  /* gap: 4px; */
+  /* flex: 1 0 0; */
+  border-radius: 10px;
+  border: 1.5px solid #d1acff;
+  width: 100%;
 }
-.q_heading_cont{
+.q_heading_cont {
   display: flex;
-  justify-content:start;
+  justify-content: start;
   align-content: center;
   margin-bottom: 8px;
   gap: 12px;
 }
-
 
 .q-login-head2 {
   overflow: hidden;
@@ -71,6 +89,6 @@
   color: var(--grey-4, #141414);
   color: var(--neutral-grey-700, #252525);
 }
-.q_heading_cont  img{
- cursor: pointer;
+.q_heading_cont img {
+  cursor: pointer;
 }

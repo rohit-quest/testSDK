@@ -7,7 +7,7 @@ import QuestContext from "../QuestWrapper.tsx";
 import QuestLabs from "../QuestLabs.tsx";
 import config from "../../config.ts";
 import General from "../../general.ts";
-import { NormalInput } from "../Modules/Input.tsx";
+import { Input } from "../Modules/Input.tsx";
 
 type data = {
   text: string;
@@ -81,7 +81,7 @@ export default function Search(prop: propType): JSX.Element {
   const [searchResults, setResults] = useState<data>(defaultResult);
   const [isOpen, setOpen] = useState(false);
   const [selectedResultIndex, setSelectedResultIndex] = useState<number>(0);
-  const { apiKey, entityId, apiType, apiSecret } = useContext(
+  const { apiKey, entityId, apiType, apiSecret, themeConfig } = useContext(
     QuestContext.Context
   );
   const [data, setData] = useState<data>([]);
@@ -170,8 +170,13 @@ export default function Search(prop: propType): JSX.Element {
         {/* <input type="text" placeholder={prop.placeholder} ref={inputElement} onKeyDown={handleKeyDown} style={{ backgroundColor, color: prop.inputColor }}
           onChange={e => { onSearch(e.target.value); handleSearch(e.target.value) }} className='q_sdk_input q_search_input' /> */}
         <div className="q_searchBox_input_cont">
-          <NormalInput
-            style={{ ...styleConfig?.Input }}
+          <Input
+            style={{
+              borderColor:
+                styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+              color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+              ...styleConfig?.Input,
+            }}
             type="text"
             placeholder={prop.placeholder}
             ref={inputElement}
@@ -207,10 +212,25 @@ export default function Search(prop: propType): JSX.Element {
                 alt={""}
               />
               <div className="q_search_result_box">
-                <div style={{ color }} className="q_search_result_head">
+                <div
+                  style={{
+                    color:
+                      styleConfig?.Heading?.color || themeConfig?.primaryColor,
+                    ...styleConfig?.Heading,
+                  }}
+                  className="q_search_result_head"
+                >
                   {text}
                 </div>
-                <div style={{ color }} className="q_search_result_desc">
+                <div
+                  style={{
+                    color:
+                      styleConfig?.Description?.color ||
+                      themeConfig?.secondaryColor,
+                    ...styleConfig?.Description,
+                  }}
+                  className="q_search_result_desc"
+                >
                   {description || "Provide the required information"}
                 </div>
               </div>

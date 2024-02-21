@@ -5,7 +5,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 // import { getResponse } from "./response";
 // import QuestContext from "../QuestWrapper.tsx";
 import QuestLabs from "../QuestLabs.tsx";
-import { NormalInput } from "../Modules/Input.tsx";
+import { Input } from "../Modules/Input.tsx";
 // import config from "../../config.ts";
 
 type data = {
@@ -127,7 +127,8 @@ export default function SearchOffline(prop: propType): JSX.Element {
         {/* <input type="text" placeholder={prop.placeholder} ref={inputElement} onKeyDown={handleKeyDown} style={{ backgroundColor, color: prop.inputColor }}
           onChange={e => { onSearch(e.target.value); handleSearch(e.target.value) }} className='q_sdk_input q_search_input' /> */}
         <div className="q_searchBox_input_cont">
-          <NormalInput
+          <Input
+          
             type="text"
             placeholder={prop.placeholder}
             ref={inputElement}

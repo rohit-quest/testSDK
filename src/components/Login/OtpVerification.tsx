@@ -9,7 +9,7 @@ import Loader from "./Loader";
 import { useContext } from "react";
 import QuestContext from "../QuestWrapper";
 import { leftArrow2, otpIcon2 } from "../../assets/images";
-import { PrimaryButton } from "../Modules/NextButton";
+import { PrimaryButton } from "../Modules/PrimaryButton";
 
 interface OtpVerificationProps {
   otpScreen?: boolean;
@@ -76,7 +76,7 @@ function OtpVerification({
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const ref = useRef<number | null>(null);
   const { setUser } = useContext(QuestContext.Context);
-  const { apiType } = useContext(QuestContext.Context);
+  const { apiType,themeConfig } = useContext(QuestContext.Context);
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
@@ -200,11 +200,7 @@ function OtpVerification({
           />
           <div
             className="q-login-head2"
-            style={{
-              color: textColor,
-              fontFamily: fontFamily,
-              ...styleConfig?.Heading,
-            }}
+            style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }}
           >
             Confirm verification code
           </div>
@@ -233,21 +229,18 @@ function OtpVerification({
           <>
             <div
               className="q-resend"
-              style={{
-                color: textColor,
-                fontFamily,
-              }}
+              style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description }}
             >
               We’ve sent a verification code to
             </div>
-            <p className="q_email_otp">{email}</p>
+            <p  style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }} className="q_email_otp">{email}</p>
             {/* <div className="q-resend">
                 {modifyTime(Math.floor(sec / 60))}:{modifyTime(sec % 60)} sec
               </div> */}
           </>
           {/* )} */}
           <div style={{ marginTop: "20px" }}>
-            <div className="q-otp-label">Enter your otp</div>
+            {/* <div className="q-otp-label">Enter your otp</div> */}
             <OTPInput
               onChange={handleChange}
               value={OTP}
@@ -260,9 +253,9 @@ function OtpVerification({
               <div className="q-login-p">Please enter a valid OTP</div>
             )}
           </div>
-          <p className="q_otp_resend">
+          <p style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description }} className="q_otp_resend">
             Did not receive your code yet ?{" "}
-            <span onClick={sendOTPfunction}>Resend</span>
+            <span  style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }} onClick={sendOTPfunction}>Resend</span>
           </p>
         </div>
         {/* <div
@@ -279,8 +272,11 @@ function OtpVerification({
         </div> */}
         <div className="q_otp_btn_continue">
           <PrimaryButton
-            style={{ ...styleConfig?.PrimaryButton }}
-            nextBtnText="Continue"
+             style={{
+              background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
+              ...styleConfig?.PrimaryButton
+          }}
+            children="Continue"
             onClick={verifyOTPfunction}
           />
         </div>

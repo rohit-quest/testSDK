@@ -6,8 +6,9 @@ import Loader from "./Loader";
 import { alertLogo, crossLogo, emailLogo2 } from "../../assets/images";
 import showToast from "../toast/toastService";
 import QuestContext from "../QuestWrapper";
-import { NormalInput } from "../Modules/Input";
-import { PrimaryButton } from "../Modules/NextButton";
+import { Input } from "../Modules/Input";
+import { PrimaryButton } from "../Modules/PrimaryButton";
+import Label from "../Modules/Label";
 
 interface EmailLoginProps {
   otpScreen: boolean;
@@ -47,14 +48,14 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   apiSecret,
   btnTextColor,
   onSubmit,
-  styleConfig
+  styleConfig,
 }) => {
   const [sendOTP, setSendOTP] = useState(false);
   const [email, setEmail] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [mainValidEmail, setMainValidEmail] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
-  const { apiType } = useContext(QuestContext.Context);
+  const { apiType, themeConfig } = useContext(QuestContext.Context);
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
@@ -110,15 +111,23 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
       {!sendOTP && (
         <div className="questLabs">
           <div className="q-email-login-ctn">
-            <div
+            {/* <div
               style={{ color: textColor, fontFamily,...styleConfig?.Label }}
               className="q-email-text"
             >
               Email
-            </div>
+            </div> */}
+            <Label
+              style={{
+                color: styleConfig?.Label?.color || themeConfig?.primaryColor,
+                ...styleConfig?.Label,
+              }}
+            >
+              Email
+            </Label>
             <div className="q-email-input">
               <img src={emailLogo2} className="q-email-logo" alt="" />
-              {email && (
+              {/* {email && (
                 <img
                   src={crossLogo}
                   className="q-email-cross"
@@ -128,7 +137,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                     setMainValidEmail(true);
                   }}
                 />
-              )}
+              )} */}
 
               {/* <input
                 id="q_email_login"
@@ -139,8 +148,12 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                 onKeyUp={handlesubmit}
                 className="q-login-email-input"
               /> */}
-              <NormalInput
-              style={{...styleConfig?.Input}}
+              <Input
+                style={{ 
+                  borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+                  color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+                  ...styleConfig?.Input   
+              }}
                 type="text"
                 placeholder="Enter your email id"
                 value={email}
@@ -162,7 +175,16 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
             >
               Continue
             </div> */}
-            <PrimaryButton style={{...styleConfig?.PrimaryButton}} nextBtnText="Continue" onClick={sendOTPfunction} />
+            <PrimaryButton
+              style={{
+                background:
+                  styleConfig?.PrimaryButton?.background ||
+                  themeConfig?.buttonColor,
+                ...styleConfig?.PrimaryButton,
+              }}
+              children={"Continue"}
+              onClick={sendOTPfunction}
+            />
           </div>
         </div>
       )}
