@@ -21,6 +21,7 @@ import './src/components/Share/sharearticle.css'
 import './src/components/Search/search.css';
 import './src/components/Tour/walkThrough.css';
 import './src/components/Streak/DailyStrek.css'
+import "./src/components/Login/OtpVerification.css"
 import QuestLogin from "./src/components/Login/Login";
 import OnBoarding from "./src/components/Onboarding/Onboarding";
 import { QuestProvider } from "./src/components/QuestWrapper";

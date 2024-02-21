@@ -1,4 +1,4 @@
-import { CSSProperties, ChangeEventHandler, KeyboardEventHandler } from "react";
+import { CSSProperties, ChangeEventHandler, KeyboardEventHandler, RefObject } from "react";
 import { emailLogo, phoneLogo, userLogo, calenderIcon } from "../../assets/assetsSVG";
 import "./css/input.css";
 
@@ -16,11 +16,13 @@ interface PropType {
   style?: CSSProperties | undefined;
   onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
   onKeyUp?: KeyboardEventHandler<HTMLInputElement> | undefined;
+  onKeyDown?: KeyboardEventHandler<HTMLInputElement> | undefined;
   iconColor?: string;
   value?: string;
+  ref?: RefObject<HTMLInputElement>
 }
 
-export const Input = ({ placeholder, type, style, onChange, iconColor, value, onKeyUp }: PropType) => {
+export const Input = ({ placeholder, type, style, onChange, iconColor, value, onKeyUp, onKeyDown, ref }: PropType) => {
   return (
     (type === "date") ?
     <div className="q_input_cont" style={style}>
@@ -46,7 +48,9 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value, on
         className="q_input_main_cont"
         onChange={onChange}
         onKeyUp={onKeyUp}
+        onKeyDown={onKeyDown}
         value={value}
+        ref={ref}
         onWheel={event => { event.currentTarget.blur(); }}
         style={style}
       />

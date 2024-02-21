@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { CSSProperties, useEffect, useRef, useState } from "react";
 import "./OtpVerification.css";
 import OTPInput from "react-otp-input";
 import axios from "axios";
@@ -8,10 +8,14 @@ import config from "../../config";
 import Loader from "./Loader";
 import { useContext } from "react";
 import QuestContext from "../QuestWrapper";
-import { otpIcon, otpIcon2 } from "../../assets/images";
+import { leftArrow2, otpIcon2 } from "../../assets/images";
 import { PrimaryButton } from "../Modules/NextButton";
 
 interface OtpVerificationProps {
+  otpScreen?: boolean;
+  setOtpScreen: React.Dispatch<React.SetStateAction<boolean>>;
+  sendOTP?: boolean;
+  setSendOTP: React.Dispatch<React.SetStateAction<boolean>>;
   textColor?: string;
   fontFamily?: string;
   email: string;
@@ -30,9 +34,31 @@ interface OtpVerificationProps {
     token: string;
     userCredentials: object;
   }) => void;
+  styleConfig?: {
+    Form?: CSSProperties;
+    Heading?: CSSProperties;
+    Description?: CSSProperties;
+    Input?: CSSProperties;
+    Label?: CSSProperties;
+    TextArea?: CSSProperties;
+    PrimaryButton?: CSSProperties;
+    SecondaryButton?: CSSProperties;
+    SingleChoice?: {
+      style?: CSSProperties;
+      selectedStyle?: CSSProperties;
+    };
+    MultiChoice?: {
+      style?: CSSProperties;
+      selectedStyle?: CSSProperties;
+    };
+  };
 }
 
 function OtpVerification({
+  otpScreen,
+  setOtpScreen,
+  sendOTP,
+  setSendOTP,
   textColor,
   fontFamily,
   email,
@@ -43,6 +69,7 @@ function OtpVerification({
   apiSecret,
   btnTextColor,
   onSubmit,
+  styleConfig,
 }: OtpVerificationProps): JSX.Element {
   const [OTP, setOTP] = useState<string>("");
   const [sec, setsec] = useState<number>(300);
@@ -160,14 +187,27 @@ function OtpVerification({
     <div className="questLabs">
       <div style={{ boxSizing: "content-box" }} className="embeded-otp">
         {showLoader && <Loader />}
-        <div
-          className="q-login-h1"
-          style={{
-            color: textColor,
-            fontFamily: fontFamily,
-          }}
-        >
-          Confirm verification code
+        <div className="q_heading_cont">
+          {" "}
+          <img
+            onClick={() => {
+              setSendOTP(!sendOTP);
+              // setIsGoogle(!isGoogle)
+              setOtpScreen(!otpScreen);
+            }}
+            src={leftArrow2}
+            alt=""
+          />
+          <div
+            className="q-login-head2"
+            style={{
+              color: textColor,
+              fontFamily: fontFamily,
+              ...styleConfig?.Heading,
+            }}
+          >
+            Confirm verification code
+          </div>
         </div>
         <div className="q_outer_cont">
           <div className="q_otp_main_cont">
@@ -238,7 +278,11 @@ function OtpVerification({
           Verify with OTP
         </div> */}
         <div className="q_otp_btn_continue">
-          <PrimaryButton text="Continue" onClick={verifyOTPfunction} />
+          <PrimaryButton
+            style={{ ...styleConfig?.PrimaryButton }}
+            nextBtnText="Continue"
+            onClick={verifyOTPfunction}
+          />
         </div>
       </div>
     </div>

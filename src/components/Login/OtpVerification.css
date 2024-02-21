@@ -53,3 +53,24 @@
   cursor: pointer;
   background: linear-gradient(84deg, #9035ff 0.36%, #0065ff 100.36%);
 }
+.q_heading_cont{
+  display: flex;
+  justify-content:start;
+  align-content: center;
+  margin-bottom: 8px;
+  gap: 12px;
+}
+
+
+.q-login-head2 {
+  overflow: hidden;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 32px;
+  color: var(--grey-4, #141414);
+  color: var(--neutral-grey-700, #252525);
+}
+.q_heading_cont  img{
+ cursor: pointer;
+}
