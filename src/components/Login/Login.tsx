@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 import { useContext } from 'react';
 import QuestContext from '../QuestWrapper';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,6 +20,16 @@ export interface QuestLoginProps {
   backgroundColor?: string;
   font?: string;
   onSubmit?: ({ userId, token }: { userId: string, token: string }) => void;
+  styleConfig?: {
+    Heading?: CSSProperties,
+    Description?: CSSProperties,
+    Input?: CSSProperties,
+    Label?: CSSProperties,
+    TextArea?: CSSProperties,
+    PrimaryButton?: CSSProperties,
+    SecondaryButton?: CSSProperties,
+ 
+}
 }
 
 const QuestLogin: React.FC<QuestLoginProps> = ({
@@ -34,6 +44,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   backgroundColor,
   font,
   onSubmit,
+  styleConfig,
 }) => {
   const [isEmail, setIsEmail] = useState<boolean>(false);
   const [isGoogle, setIsGoogle] = useState<boolean>(false);
@@ -119,6 +130,8 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   style={{
                     color: textColor,
                     fontFamily: fontFamily,
+                    ...styleConfig?.Heading
+                    
                   }}
                 >
                   Welcome Back
@@ -128,6 +141,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   style={{
                     color: textColor,
                     fontFamily: fontFamily,
+                    ...styleConfig?.Description
                   }}
                 >
                   Welcome Back, Please enter your details
@@ -152,7 +166,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                     handleOtp,
                     redirectUri,
                     btnTextColor,
-                    onSubmit,
+                    onSubmit,otpScreen, setOtpScreen ,styleConfig
                   }}
                 />
                 {!otpScreen && isGoogle && (
@@ -180,6 +194,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                       apiSecret: apiSecret || '',
                       apiKey,
                       onSubmit,
+                      styleConfig
                     }}
                   />
                 )}

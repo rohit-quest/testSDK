@@ -1,4 +1,4 @@
-import { CSSProperties, ChangeEventHandler, KeyboardEventHandler } from "react";
+import { CSSProperties, ChangeEventHandler, KeyboardEventHandler, RefObject } from "react";
 import { emailLogo, phoneLogo, userLogo } from "../../assets/assetsSVG";
 import "./css/input.css";
 
@@ -16,8 +16,10 @@ interface InputType {
   style?: CSSProperties | undefined;
   onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
   onKeyUp?: KeyboardEventHandler<HTMLInputElement> | undefined;
+  onKeyDown?: KeyboardEventHandler<HTMLInputElement> | undefined;
   iconColor?: string;
   value?: string;
+  ref?: RefObject<HTMLInputElement>
 }
 
 export const NormalInput = ({
@@ -29,6 +31,8 @@ export const NormalInput = ({
   iconColor,
   value,
   onKeyUp,
+  onKeyDown,
+  ref
 }: InputType) => {
   return (
     <div className="q_input_cont" style={style}>
@@ -39,7 +43,9 @@ export const NormalInput = ({
         className="q_input_main_cont"
         onChange={onChange}
         onKeyUp={onKeyUp}
+        onKeyDown={onKeyDown}
         value={value}
+        ref={ref}
       />
       {LogoType[type](iconColor || "")}
     </div>
