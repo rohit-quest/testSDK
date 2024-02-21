@@ -8,7 +8,7 @@ interface TextAreaProps {
   placeholder?:string
 }
 
-const TextArea = ({ value, onChange, style,placeholder }: TextAreaProps) => {
+const TextArea = ({ value, onChange, style, placeholder }: TextAreaProps) => {
   return (
     <textarea
       className='q_input_textArea'

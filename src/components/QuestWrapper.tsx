@@ -14,6 +14,26 @@ type FeatureFlags = {
   [key: string]: FeatureFlag;
 };
 
+type ThemeConfig = {
+  primaryColor?: string;
+  secondaryColor?: string;
+  borderColor?: string;
+  buttonColor?: string;
+  backgroundColor?: string;
+  fontFamily?: string;
+}
+
+<<<<<<< HEAD
+type ThemeConfig = {
+  primaryColor?: string;
+  secondaryColor?: string;
+  borderColor?: string;
+  buttonColor?: string;
+  backgroundColor?: string;
+  fontFamily?: string;
+}
+
+=======
 const themeConfig={
   backgroundColor: "black",
   borderColor: "red",
@@ -24,6 +44,7 @@ const themeConfig={
 }
 
 
+>>>>>>> AllComponentsUpdate
 type Props = {
   children: ReactNode;
   apiKey: string;
@@ -31,7 +52,7 @@ type Props = {
   entityId: string;
   featureFlags?: FeatureFlags;
   apiType?: "STAGING" | "PRODUCTION";
-  themeConfig?:typeof themeConfig
+  themeConfig?: ThemeConfig
 };
 
 type User = {
@@ -50,7 +71,7 @@ export const Context = createContext<{
   setUser: (user: User) => void,
   featureFlags: Record<string, { isEnabled: boolean }>,
   apiType: "PRODUCTION" | "STAGING",
-  themeConfig?:typeof themeConfig
+  themeConfig: ThemeConfig
 }>({
   apiKey: "",
   apiSecret: "",
@@ -59,7 +80,7 @@ export const Context = createContext<{
   setUser: (user: User) => { },
   featureFlags: {},
   apiType: "PRODUCTION",
-  themeConfig
+  themeConfig: {}
 });
 
 
@@ -107,6 +128,7 @@ export const QuestProvider = (props: Props) => {
         apiType: props.apiType || "PRODUCTION",
         user,
         setUser,
+        themeConfig: props.themeConfig || {},
       }}
     >
       {props.children}
