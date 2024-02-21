@@ -79,8 +79,8 @@ interface QuestLoginProps {
     loadingTracker?: boolean;
     setLoading?: Function;
     linksLogoWidth?: string;
-    previousBtnText?: string;
-    nextBtnText?: string;
+    text?: string;
+    text?: string;
     progressbarColor?: string;
     progressBarMultiLine?: boolean;
     progressBartabHeight?: string;
@@ -141,8 +141,8 @@ function OnBoardingOffline(props: QuestLoginProps) {
         loadingTracker,
         setLoading=()=>{},
         linksLogoWidth,
-        previousBtnText,
-        nextBtnText,
+        text,
+        text,
         progressbarColor,
         progressBarMultiLine,
         progressBartabHeight,
@@ -1335,7 +1335,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                                         }}
                                     >
                                         {" "}
-                                        {previousBtnText ? previousBtnText : "Previous"}
+                                        {text ? text : "Previous"}
                                     </button>
                                     <button
                                         className="q-onb-main-btn2"
@@ -1351,7 +1351,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                                         }}
                                     >
                                         {currentPage == designState.length - 1
-                                            ? (nextBtnText ? nextBtnText : "Submit")
+                                            ? (text ? text : "Submit")
                                             : "Continue"}
                                     </button>
                                 </div>
@@ -1400,7 +1400,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                                         width: btnSize
                                     }}
                                 >
-                                    {nextBtnText ? nextBtnText : "Continue"}
+                                    {text ? text : "Continue"}
                                 </button>
                             </div>
                         ))}

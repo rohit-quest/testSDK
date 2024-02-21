@@ -29,13 +29,9 @@ import FeedbackPreview from "./components/Feedback/Preview";
 import Survey from "./components/Feedback/Survey";
 import ModalPreview from "./components/Modals/Preview";
 import SurveyOffline from "./components/Feedback/OfflineComponent";
-import { MultiChoice, MultiChoiceTwo } from './components/Modules/MultiChoice';
-import Toast from "./components/toast2/toast";
-
-
-
-
-
+import Modal from "./components/Modules/Modal";
+import { NormalInput } from './components/Modules/Input'
+import OnBoarding from "./components/Onboarding/Onboarding";
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-2aa597b4-341f-4c3c-a022-f56877a585c9";
 export const apiSecret =
@@ -91,83 +87,27 @@ function App() {
   };
 
   const [data, setData] = useState([]);
+  const [isOpen, setIsOpen] = useState(true);
+  const [answer, setAnswer] = useState([]);
 
-  // const onSuccess = () => {
-  //   const toast = Toast.success({
-  //     text: 'A successful tool',
-  //     position: 'top-right',
-  //     pauseOnHover: true,
-  //     showProgress: true,
-  //     autoClose: 100000,
-  //     background: 'yellow',
-  //     progressColor: 'red'
-  //   });
-
-  
-  // }
-  // const onFailure = () => {
-  //   Toast.error({
-  //     text: 'A destructive toast',
-  //     position: 'bottom-left',
-  //     pauseOnHover: true,
-  //     autoClose : 300000,
-  //     showProgress: true,
-  //     image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s',
-      
-  //   });
-  // }
-  // const onInfo = () => {
-  //   Toast.info({
-  //     text: 'info',
-  //     position: 'bottom-center',
-  //     pauseOnHover: true,
-  //     autoClose : 3000,
-  //     showProgress: true,
-  //     // image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s'
-  //   });
-  // }
-  // const onWarn = () => {
-  //   Toast.warning({
-  //     text: 'A warning toast',
-  //     position: 'top-center',
-  //     pauseOnHover: true,
-  //     showProgress: true,
-  //     autoClose : 3000,
-  //     // image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s'
-  //   });
-  // }
-
-  // const onDifferent = ()=>{
-  //   Toast.warning({
-  //     text: 'A warning toast',
-  //     position: 'bottom-right',
-  //     pauseOnHover: true,
-  //     showProgress: true,
-  //     autoClose : 3000,
-  //     // image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s'
-  //   });
-  // }
-
-  // const onDifferentTwo = ()=>{
-  //   Toast.error({
-  //     text: 'it to your preferred size. Experiment with different values',
-  //     position: 'top-left',
-  //     pauseOnHover: true,
-  //     showProgress: true,
-  //     autoClose : 100000,
-  //     // image : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2PcWn_jTZUr1J-5D6TriY13U-Hl_zqo7GMM8pUZG-g&s'
-  //   });
-  // }
   return (
     <div
-    style={{  alignItems: "center", justifyContent: "center", gap: "20px",height: "100vh" }}
+    // style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
     >
       <QuestProvider
-        apiKey={apiKey}
+        apiKey={"k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be"}
         apiSecret={apiSecret}
-        entityId={entityId}
+        entityId={"e-0000000000"}
         featureFlags={{}}
         apiType="STAGING"
+        themeConfig={{
+          backgroundColor: "black",
+          borderColor: "red",
+          buttonColor: "green",
+          primaryColor: "White",
+          secondaryColor: "gray",
+          fontFamily: ""
+        }}
       >
         {/* <SpinTheWheel
                     userId={userId}
@@ -193,6 +133,7 @@ function App() {
                 paymentBanefits={paymentBanefits}
                 forEntityId={"e-0000000000"}
             /> } */}
+
           {/* <button onClick={onSuccess}>success</button>
           <button onClick={onInfo}>info</button>
           <button onClick={onFailure}>error</button>
@@ -200,6 +141,7 @@ function App() {
           <button onClick={onDifferent}>error</button>
           <button onClick={onDifferentTwo}>warning</button> */}
         {/* <ModalPreview/> */}
+
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
 
@@ -217,12 +159,42 @@ function App() {
                 // descriptioin="this is descripiton"
                 /> */}
         {/* <OnBoardingPreview online /> */}
-        {/* <MultiChoiceTwo options={['one', 'two', 'three']} checked={["two"]} /> */}
 
         <GetStartedPreview
    online={false}
- /> 
-
+ />  */}
+{/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
+  <h1>ddddddddd</h1>
+</Modal> */}
+<OnBoarding
+  questId="q-daf9940a-c2fb-4762-adce-57b9b1fda08c"
+  answer={answer}
+  setAnswer={setAnswer}
+  token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTRjYzUxMGE0LWU2NzAtNGVkMy1hYmUzLWMzNTFjMTliYjk5MiIsImlhdCI6MTcwODE1Njk3MSwiZXhwIjoxNzA4NzYxNzcxfQ.LedIalQtCHdsh9vjAPuOQmqyU9dNkcqWjuBC0o4RkXM"
+  userId="u-4cc510a4-e670-4ed3-abe3-c351c19bb992"
+  getAnswers={(e) => console.log(e)}
+  singleChoose="modal1"
+  multiChoice="modal1"
+  template="multi-question"
+  design={[[1,5,4,3], [2,6], [7]]}
+  progress={["das", "dasa", "sasas"]}
+  progressBarType="modal1"
+  controlBtnType="Buttons"
+  headingScreen= {[{"name":"Identity Insights","desc":"Revealing dimensions beyond words"},{"name":"Professional Details","desc":"Tell us more about your company"},{"name":"Title_3","desc":"Desc_3"}]}
+  styleConfig={{
+    Form: {
+      
+    },
+    Input: {
+      
+    },
+    ProgressBar: {
+      // completeTabColor: "red",
+      // currentTabColor: "green",
+      // pendingTabColor: "blue",
+    }
+  }}
+/>
         {/* <QuestForm
                     userId={userId}
                     questId={questId}
@@ -244,7 +216,7 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-        {/* <TutorialPreview /> */}
+        <TutorialPreview />
 
         <FeedbackWorkflowPreview online={true} />
 
@@ -289,7 +261,7 @@ function App() {
                     
                 /> */}
 
-        {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
+              {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
       </QuestProvider>
     </div>
   );
