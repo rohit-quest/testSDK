@@ -14,6 +14,16 @@ type FeatureFlags = {
   [key: string]: FeatureFlag;
 };
 
+const themeConfig={
+  backgroundColor: "black",
+  borderColor: "red",
+  buttonColor: "green",
+  primaryColor: "White",
+  secondaryColor: "gray",
+  fontFamily: ""
+}
+
+
 type Props = {
   children: ReactNode;
   apiKey: string;
@@ -21,6 +31,7 @@ type Props = {
   entityId: string;
   featureFlags?: FeatureFlags;
   apiType?: "STAGING" | "PRODUCTION";
+  themeConfig?:typeof themeConfig
 };
 
 type User = {
@@ -30,6 +41,7 @@ type User = {
   refreshToken?: string
 };
 
+
 export const Context = createContext<{
   apiKey: string,
   apiSecret?: string,
@@ -38,6 +50,7 @@ export const Context = createContext<{
   setUser: (user: User) => void,
   featureFlags: Record<string, { isEnabled: boolean }>,
   apiType: "PRODUCTION" | "STAGING",
+  themeConfig?:typeof themeConfig
 }>({
   apiKey: "",
   apiSecret: "",
@@ -46,6 +59,7 @@ export const Context = createContext<{
   setUser: (user: User) => { },
   featureFlags: {},
   apiType: "PRODUCTION",
+  themeConfig
 });
 
 

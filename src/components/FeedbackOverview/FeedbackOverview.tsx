@@ -117,6 +117,7 @@ interface feedbackCompProps {
   backBtn?: boolean;
   iconColor?: string;
   crossLogoForInput?: boolean;
+  showPoweredBy?: boolean;
 }
 interface FormDataItem {
   type?: string;
@@ -150,7 +151,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   topBar=false,
   backBtn=false,
   iconColor = "#939393",
-  crossLogoForInput = false
+  crossLogoForInput = false,
+  showPoweredBy = true,
 }) => {
   const [selectedOption, setSelectedOption] = useState<optionType | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
@@ -530,7 +532,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           <QuestLabs color={iconColor}/>
           </div>
         ) : (
-          <div>
+          <div style={{paddingBottom: !showPoweredBy?"20px":0}}>
             <div className='q-fw-crossBtn'>
             <div onClick={() => onClose?.(false)}>{cross}</div>
             </div>
@@ -611,12 +613,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             )}
           </div>
           <div>
-          <QuestLabs color={iconColor}/>
           </div>
           </div>
         )}
+        {showPoweredBy && <QuestLabs color={iconColor}/>}
       </div>
-      
     </div>
   );
 };

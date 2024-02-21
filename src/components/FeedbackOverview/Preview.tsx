@@ -23,6 +23,7 @@ export default function FeedbackWorkflowPreview({ online = true }: { online?: bo
            <FeedbackWorkflow
                     userId={userId}
                     token={token}
+                    showPoweredBy={true}
                     questIds={[
                         'q-general-feedback',
                         'q-report-a-bug',

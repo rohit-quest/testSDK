@@ -11,7 +11,7 @@ export const entityId = 'e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5'
 export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
 export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
 
-export default function OnBoardingPreview({ online = false }: {online?: boolean}) {
+export default function OnBoardingPreview({ online = true }: {online?: boolean}) {
 
   const [answer, setAnswer] = useState<answer>([])
   function printAnswer() {
@@ -117,7 +117,7 @@ export default function OnBoardingPreview({ online = false }: {online?: boolean}
           setAnswer={setAnswer}
           token={token}
           answerFontSize="14px"
-          template={2}
+          template={1}
           progress={["Personal sdrerwtr", "Professional", "Additional",]}
           previousBtnText="Go Back"
           nextBtnText="Submit and Continue"
@@ -134,7 +134,7 @@ export default function OnBoardingPreview({ online = false }: {online?: boolean}
           inputBgColor=""
           // inputBorder="1px solid #6525B3"
           singleChoose="modal3"
-          multiChoice="modal2"
+          multiChoice="modal1"
           design={[[1, 2], [3, 4], [5, 6]]}
           // progressBarMultiLine = {true}
           // design={[]}
