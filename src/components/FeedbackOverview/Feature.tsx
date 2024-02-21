@@ -44,7 +44,7 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
               );
             }
           })}
-          <PrimaryButton children='Submit' onClick={handleSubmit} style={buttonStyle} />
+          <PrimaryButton className='q-fdov-btn-continue' children='Submit' onClick={handleSubmit} style={buttonStyle} />
         </>
       ) : (
         <div className="q-center">

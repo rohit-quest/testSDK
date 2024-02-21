@@ -12,7 +12,7 @@
 .q_input_main_cont {
   flex: 1;
   border: none;
-  color: black;
+  color: #2C2C2C;
   font-family: Figtree;
   font-size: 14px;
   font-style: normal;
@@ -132,7 +132,7 @@
   gap: 8px;
   align-self: stretch;
   border-radius: 10px;
-  border: 1px solid var(--Neutral-Grey-100, #ececec);
+  border: 1px solid #ececec;
   resize: none;
   color: black;
   font-family: Figtree;
@@ -146,11 +146,11 @@
 }
 
 .q_input_textArea:focus {
-  border: 1px solid var(--Neutral-Grey-100, #ececec);
+  border: 1px solid  #ececec;
 }
 
 .q_input_textArea:hover {
-  border: 1px solid var(--Neutral-Grey-100, #ececec);
+  border: 1px solid  #ececec;
 }
 
 .q_module_lebels {
@@ -160,5 +160,5 @@
   font-style: normal;
   font-weight: 400;
   line-height: 16px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }

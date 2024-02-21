@@ -152,6 +152,7 @@ function isValidEmail(email: string) {
             children='Send Feedback'
             onClick={handleSubmit}
             style={buttonStyle}
+            className='q-fdov-btn-continue'
           />
         </>
       ) : (
