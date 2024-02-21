@@ -1,8 +1,8 @@
 .q-tutorial-cont {
   background-color: white;
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
-  border-radius: 14px;
-  padding-bottom: 1px;
+  border-radius: 10px;
+  /* padding-bottom: 1px; */
   max-width: 376px;
 }
 

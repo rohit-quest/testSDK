@@ -23,9 +23,9 @@ export default function TutorialPreview({online=true}) {
              userId={userId}
              token={token}
              styleConfig={{
-                Body: {
+                Form: {
                     backgroundColor: "black",
-                    color: "white"
+                    // color: "white"
                 }
              }}
              heading='Your Application Progress'
@@ -64,6 +64,14 @@ export default function TutorialPreview({online=true}) {
                     "status": false
                 }
             ]}
+            styleConfig={{
+                Form: {
+                    backgroundColor: "black",
+                    // color: "white"
+                },
+                // Heading :{fontSize:'50px',color:'pink'},
+                // Description:{fontSize:'100px',color:'red'}
+             }}
         />
     ) 
 }

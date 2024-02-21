@@ -42,11 +42,12 @@ interface TutorialProps {
   iconColor?: string;
   onLinkTrigger?: (link: string) => void;
   styleConfig?: {
-    Body?: CSSProperties,
+    Form?: CSSProperties,
     Heading?: CSSProperties,
     Description?: CSSProperties,
     topBar?: CSSProperties
 }
+ footerBackgroundColor?:string
 }
 
 const TutorialScreen: React.FC<TutorialProps> = ({
@@ -62,10 +63,11 @@ const TutorialScreen: React.FC<TutorialProps> = ({
   onClose = () => { },
   onLinkTrigger = link =>{window.open(link, 'smallWindow', 'width=500,height=500');},
   styleConfig,
+  footerBackgroundColor
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
-  const { apiKey, apiSecret, entityId,apiType } = useContext(QuestContext.Context);
+  const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(QuestContext.Context);
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
   const [gradient, setGradient] = useState<boolean>(false);
   const [showLoader, setShowLoader] = useState<boolean>(false);
@@ -180,18 +182,22 @@ const TutorialScreen: React.FC<TutorialProps> = ({
   const [minimze, setMin] = useState(false);
 
   if (!isOpen) return <></>;
-
+console.log(styleConfig)
 
   return (
-        <div className="q-tutorial-cont" style={styleConfig?.Body}>
+        <div className="q-tutorial-cont" 
+        style={{
+          background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
+        }}
+        >
           <TopBar 
             heading={heading}
             iconColor={iconColor}
             onClose={()=>{}}
             description={subheading}
             style={{
-              headingStyle: styleConfig?.Heading,
-              descriptionStyle: styleConfig?.Description, ...styleConfig?.topBar,
+              headingStyle: {  color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading },
+              descriptionStyle: { color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description } ,
             }}
           />
           <div>
@@ -205,15 +211,15 @@ const TutorialScreen: React.FC<TutorialProps> = ({
                     {index<(formdata.length-1) &&<div style={{background: step.status?"#73DCA7":"#EFEFEF"}} className="q_tutorial_progress_connector"></div>}
                   </div>
                   <div className="q_tutorial_box_content">
-                    <div className="q_tut_step">STEP {index+1}</div>
-                    <div className="q_tut_box_head">{step.title}</div>
-                    <div className="q_tut_box_desc">{step.subheading}</div>
+                    <div className="q_tut_step"  style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>STEP {index+1}</div>
+                    <div className="q_tut_box_head"  style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}>{step.title}</div>
+                    <div className="q_tut_box_desc"  style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>{step.subheading}</div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          <QuestLabs  color={iconColor}/>
+          <QuestLabs backgroundColor={footerBackgroundColor}  color={iconColor}/>
         </div>
   );
 };

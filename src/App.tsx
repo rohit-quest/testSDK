@@ -100,14 +100,14 @@ function App() {
         entityId={"e-0000000000"}
         featureFlags={{}}
         apiType="STAGING"
-        themeConfig={{
-          backgroundColor: "black",
-          borderColor: "red",
-          buttonColor: "green",
-          primaryColor: "White",
-          secondaryColor: "gray",
-          fontFamily: ""
-        }}
+        // themeConfig={{
+        //   backgroundColor: "black",
+        //   borderColor: "red",
+        //   buttonColor: "green",
+        //   primaryColor: "White",
+        //   secondaryColor: "gray",
+        //   fontFamily: ""
+        // }}
       >
         {/* <SpinTheWheel
                     userId={userId}
@@ -160,13 +160,13 @@ function App() {
                 /> */}
         {/* <OnBoardingPreview online /> */}
 
-        <GetStartedPreview
+        {/* <GetStartedPreview
    online={false}
- />  
+ />   */}
 {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
 </Modal> */}
-<OnBoarding
+{/* <OnBoarding
   questId="q-daf9940a-c2fb-4762-adce-57b9b1fda08c"
   answer={answer}
   setAnswer={setAnswer}
@@ -194,7 +194,7 @@ function App() {
       // pendingTabColor: "blue",
     }
   }}
-/>
+/> */}
         {/* <QuestForm
                     userId={userId}
                     questId={questId}
@@ -216,9 +216,9 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-        <TutorialPreview />
+        <TutorialPreview online={false} />
 
-        <FeedbackWorkflowPreview online={true} />
+        {/* <FeedbackWorkflowPreview online={true} /> */}
 
         {/* <FeedbackPreview /> */}
 
