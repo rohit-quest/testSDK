@@ -28,9 +28,10 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                     'q-request-a-feature',
                     'q-contact-us',
                 ]}
+                // showPoweredBy={false}
                 styleConfig={{
                     Body: {
-                        
+
                     }
                 }}
                 contactUrl="https://calendly.com/sriya-persana/30min"
@@ -46,7 +47,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
         contactUrl="https://calendly.com/sriya-persana/30min"
         isOpen={true}
         // onClose={() => setIsOpen(!isOpen)}
-        zIndex={10} questIds={[]} offlineFormData={
+        offlineFormData={
             [
                 [{
                     "type": "RATING",
@@ -54,7 +55,6 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                     "options": [""],
                     "criteriaId": "ec-84192fef-c91c5-d4ace713aaeb",
                     "required": true,
-                    answer: "answer",
                 },
                 {
                     "type": "USER_INPUT_TEXT",
@@ -62,7 +62,6 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                     "options": [""],
                     "criteriaId": "ec-84192fef-c917-410f-4ace713aae",
                     "required": true,
-                    answer: "answer",
                 },
                 {
                     "type": "USER_INPUT_TEXTAREA",
@@ -70,7 +69,6 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                     "options": [""],
                     "criteriaId": "ec-84192fef-c917-410f-9d4ace713aae",
                     "required": true,
-                    answer: "answer",
                 }],
                 [
                     {
@@ -79,7 +77,6 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                         "options": [""],
                         "criteriaId": "ec-84192fef-c917-410f-4ace713aee",
                         "required": true,
-                        answer: "answer",
                         placeholder: ""
                     },
                     {
@@ -88,7 +85,6 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                         "options": [""],
                         "criteriaId": "ec-84192fef-c917-410f-9ace713aef",
                         "required": true,
-                        answer: "answer",
                         placeholder: ""
                     },
                     {
@@ -97,7 +93,6 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                         "options": [""],
                         "criteriaId": "ec-84192fef-c7-410f-9bc5-d4ce713aaeg",
                         "required": true,
-                        answer: "answer",
                         placeholder: ""
                     }
                 ],
@@ -108,7 +103,6 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                         "options": [""],
                         "criteriaId": "ec-84192fef-c917-410f-d4ace713aeh",
                         "required": true,
-                        answer: "answer",
                         placeholder: ""
                     },
                     {
@@ -117,7 +111,6 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                         "options": [""],
                         "criteriaId": "ec-84192fef-c917-4101jioaaei",
                         "required": true,
-                        answer: "answer",
                         placeholder: ""
                     },
                     {
@@ -126,21 +119,14 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                         "options": [""],
                         "criteriaId": "ec-84192fef-c9170f-9bc5acjie713aaej",
                         "required": true,
-                        answer: "answer",
                         placeholder: ""
                     }]
                 , [
                     {
                         "type": "LINK_OPEN_READ",
                         "question": "",
-                        "options": [],
                         "criteriaId": "ec-e32b88d7-0e43-4254-9c94-44859ceedcdc",
                         "required": true,
-                        "linkTitle": "QuestLabs",
-                        "linkUrl": "https://www.questlabs.ai/",
-                        "manualInput": false,
-                        "title": "QuestLabs",
-                        "url": "https://www.questlabs.ai/",
                     },
                 ]
             ]

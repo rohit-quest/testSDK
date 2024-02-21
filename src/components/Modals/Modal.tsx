@@ -7,7 +7,7 @@ import {  upload } from './response';
 import QuestContext from '../QuestWrapper';
 import config from '../../config';
 import { SecondaryButton } from '../Modules/PreviousButton';
-import { PrimaryButton } from '../Modules/NextButton';
+import { PrimaryButton } from '../Modules/PrimaryButton';
 
 
 interface propsType {

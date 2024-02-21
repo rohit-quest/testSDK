@@ -17,7 +17,7 @@ import General from '../../general';
 import Label from '../Modules/Label';
 import { Input } from '../Modules/Input';
 import TextArea from '../Modules/TextArea';
-import { PrimaryButton } from '../Modules/NextButton';
+import { PrimaryButton } from '../Modules/PrimaryButton';
 import { SecondaryButton } from '../Modules/PreviousButton';
 
   const thanks = (

@@ -374,7 +374,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     return (
       <div className="" key={criteriaId}>
         <Label htmlFor={'normalInput'}
-          text={question}
+          children={question}
           style={styleConfig.Label}
         />
         <Input
@@ -391,7 +391,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     return (
       <div className="" key={criteriaId}>
         <Label htmlFor={'normalInput'}
-          text={question}
+          children={question}
           style={styleConfig.Label}
         />
         <Input
@@ -413,7 +413,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     return (
       <div className="" key={criteriaId}>
         <Label htmlFor={'normalInput'}
-          text={question}
+          children={question}
           style={styleConfig.Label}
         />
         <TextArea

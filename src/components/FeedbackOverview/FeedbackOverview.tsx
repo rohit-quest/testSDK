@@ -94,7 +94,7 @@ interface feedbackCompProps {
   descriptions?: Record<optionType, string>;
   backBtn?: boolean;
   iconColor?: string;
-
+  showPoweredBy?: boolean;
   styleConfig?: {
     Body?: React.CSSProperties,
     Heading?: React.CSSProperties,
@@ -130,8 +130,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   uniqueEmailId,
   descriptions = { "General Feedback": "Welcome back, Please complete your details", "Report a Bug": "Describe your issue", "Contact us": "Invite other admins and moderators", "Request a Feature": "How can we make it better" },
   iconColor = "#939393",
-  styleConfig = {}
-
+  styleConfig = {},
+  showPoweredBy = true,
 }) => {
   const [selectedOption, setSelectedOption] = useState<optionType | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
@@ -376,7 +376,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     return (
       <div className="" key={criteriaId}>
         <Label htmlFor={'normalInput'}
-          text={question}
+          children={question}
           style={styleConfig.Label}
         />
         <Input
@@ -393,7 +393,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     return (
       <div className="" key={criteriaId}>
         <Label htmlFor={'normalInput'}
-          text={question}
+          children={question}
           style={styleConfig.Label}
         />
         <Input
@@ -415,7 +415,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     return (
       <div className="" key={criteriaId}>
         <Label htmlFor={'normalInput'}
-          text={question}
+          children={question}
           style={styleConfig.Label}
         />
         <TextArea
@@ -599,10 +599,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               )}
             </div>
             <div>
-              <QuestLabs color={iconColor} />
             </div>
           </div>
         )}
+        {showPoweredBy && <QuestLabs color={iconColor} />}
 
       </div></Modal>
 
