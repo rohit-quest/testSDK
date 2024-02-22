@@ -41,8 +41,6 @@ type offlineGetStartedProps = {
   arrowColor?: string;
   showLoadingIndicator?: boolean;
   allowMultiClick?: boolean;
-  footerBackgroundColor?: string;
-  questIconColor?: string;
   showFooter?: boolean;
   onLinkTrigger?: (url: string, index: number) => void;
   template?: 1 | 2;
@@ -71,8 +69,6 @@ function OfflineGetStarted({
   arrowColor,
   showLoadingIndicator = true,
   allowMultiClick = false,
-  footerBackgroundColor = 'transparent',
-  questIconColor = '#939393',
   showFooter = true,
   styleConfig,
   offlineData,
@@ -88,8 +84,8 @@ function OfflineGetStarted({
   const [dropdowns, setDropdown] = useState<Array<boolean>>([]);
   const [data, setData] = useState(offlineData)
 
-  const completedPercentage = (data.reduce((a, b) => a + (b.completed ? 1 : 0), 0)) * 100 / data.length;
-
+  const completedPercentage = data?.length ? (data?.reduce((a, b) => a + (b.completed ? 1 : 0), 0)) * 100 / data?.length: 0;
+  useEffect(()=>{offlineData?.length && setData(offlineData)},[offlineData])
 
   const handleCriteriaClick = (criteriaId: string | undefined, url: string) => {
     const update = data.map((item, index) => {
@@ -146,7 +142,7 @@ function OfflineGetStarted({
         )}
       <div className="gs-cards-container" style={{ padding: showProgressBar ? '0px 20px 20px 20px' : '20px', gap: template == 2 ? '0px' : '16px' }}>
         {(autoHide === true ? !allCriteriaCompleted : true) &&
-          data.map((e, i) =>
+          data?.length && data.map((e, i) =>
             template == 2 ? (
               <div
                 key={i}
