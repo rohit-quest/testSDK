@@ -1,5 +1,5 @@
 import './FeedbackOverview.css';
-import { PrimaryButton } from '../Modules/NextButton';
+import { PrimaryButton } from '../Modules/PrimaryButton';
 import { CSSProperties } from 'react';
 
 interface BugContentProps {
@@ -44,7 +44,7 @@ const BugContent: React.FC<BugContentProps> = ({
               );
             }
           })}
-          <PrimaryButton text='Submit' onClick={handleSubmit} style={buttonStyle} />
+          <PrimaryButton children='Submit' className='q-fdov-btn-continue' onClick={handleSubmit} style={buttonStyle} />
         </>
       ) : (
         <div className="q-center">

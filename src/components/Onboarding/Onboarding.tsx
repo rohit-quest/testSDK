@@ -222,7 +222,6 @@ function OnBoarding(props: QuestLoginProps) {
                 }
         }
     }
-console.log(styleConfig)
     useEffect(() => {
         if (entityId) {
             let externalUserId = cookies.get("externalUserId");
@@ -314,7 +313,7 @@ console.log(styleConfig)
         if (!!design.length) {
             templateDesign()
         }
-    }, [design])
+    }, [design, template])
 
     useEffect(() => {
         let currentQuestions: any =
@@ -860,9 +859,9 @@ console.log(styleConfig)
     if (featureFlags[config.FLAG_CONSTRAINTS.OnboardingFlag]?.isEnabled == false) {
         return (<div></div>)
     }
-console.log(answer)
+
     return (
-        <div className="q-onb-home" style={{ background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "fit-content", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form}}>
+        <div className="q-onb-home" style={{ background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor || "#fff", height: styleConfig?.Form?.height || "fit-content", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form}}>
             <div
                className="q-onb-ch"
             >
@@ -893,7 +892,7 @@ console.log(answer)
                             </div>
                         </div>
                     ))}
-                    {(template === "multi-question") && (formdata.length > 0) && (<ProgressBar /> )}
+                    {(template === "multi-question") && (formdata.length > 0) && (!!progress?.length) && (<ProgressBar /> )}
                     <div className="q-onb-main-first">
                     {!!designState && designState.length > 0 && checkDesignCriteria()
                         ? designState[currentPage].map((num: number) =>
@@ -1130,9 +1129,7 @@ console.log(answer)
                                             ...styleConfig?.PrimaryButton
                                         }}
                                     >
-                                        {currentPage == designState.length - 1
-                                            ? (text ? text : "Submit")
-                                            : "Continue"}
+                                        {(nextBtnText ? nextBtnText : "Submit")}
                                     </PrimaryButton>
                                 </div>
                                 :

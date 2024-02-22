@@ -1,5 +1,5 @@
 import { CSSProperties } from 'react';
-import { PrimaryButton } from '../Modules/NextButton';
+import { PrimaryButton } from '../Modules/PrimaryButton';
 import './FeedbackOverview.css';
 
 interface FeatureContentProps {
@@ -44,7 +44,7 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
               );
             }
           })}
-          <PrimaryButton text='Submit' onClick={handleSubmit} style={buttonStyle} />
+          <PrimaryButton className='q-fdov-btn-continue' children='Submit' onClick={handleSubmit} style={buttonStyle} />
         </>
       ) : (
         <div className="q-center">

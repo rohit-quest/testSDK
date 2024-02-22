@@ -106,7 +106,7 @@ export const Referral = ({
           <img className="q_social_link_icon" onClick={() => shareOnPlatform(shareCode, "twitter")} src={twitterIcon(iconColor)} alt="" />
         </div>
       </div>
-      {!gradientBackground && <QuestLabs backgroundColor={bgColor} color={secondaryIconColor} />}
+      {!gradientBackground && <QuestLabs style={{background: bgColor,color: iconColor}} />}
     </div>
   );
 
@@ -117,7 +117,7 @@ export const Referral = ({
     </div>
     {jsx}
     <div className="q_gradient_quest_powered">
-    {showPoweredBy&&<QuestLabs backgroundColor={bgColor} color={secondaryIconColor} />}
+    {showPoweredBy && <QuestLabs style={{background: bgColor,color: iconColor}} />}
     </div>
   </div>
   return jsx;

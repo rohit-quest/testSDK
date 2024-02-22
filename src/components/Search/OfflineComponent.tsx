@@ -1,18 +1,18 @@
 import "./search.css";
 import { questLogo } from "../../assets/images";
 import { commandkeyIcon, searchIcon } from "./Svg.ts";
-import { useContext, useEffect, useRef, useState } from "react";
+import { CSSProperties, useContext, useEffect, useRef, useState } from "react";
 // import { getResponse } from "./response";
-// import QuestContext from "../QuestWrapper.tsx";
+import QuestContext from "../QuestWrapper.tsx";
 import QuestLabs from "../QuestLabs.tsx";
-import { NormalInput } from "../Modules/Input.tsx";
+import { Input } from "../Modules/Input.tsx";
 // import config from "../../config.ts";
 
 type data = {
   text: string;
   icon: string;
   link: string;
-  resultType: "command" | "action" | undefined;
+  resultType?: "command" | "action" | undefined;
   description: string;
   longDescription?: string;
 }[];
@@ -21,9 +21,6 @@ interface propType {
   data?: data;
   wholerScreen?: boolean;
   open?: boolean | "ON_CTRL_K_KEY";
-  color?: string;
-  backgroundColor?: string;
-  inputColor?: string;
   defaultResult?: data;
   defulatResultLength?: number;
   onSearch?: (str: string) => void;
@@ -39,13 +36,19 @@ interface propType {
   onResultClick?: (link: string) => void;
   iconColor?: string;
   offlineFormatData: data;
+  styleConfig?: {
+    Body?: CSSProperties;
+    Heading?: CSSProperties;
+    Description?: CSSProperties;
+    Input?: CSSProperties;
+    Label?: CSSProperties;
+    Footer?: CSSProperties;
+  };
 }
 
 export default function SearchOffline(prop: propType): JSX.Element {
   const {
     wholerScreen = true,
-    color = "#6E6E6E",
-    backgroundColor = "white",
     defaultResult = [],
     defulatResultLength = 10,
     onSearch = (str: string) => {},
@@ -53,13 +56,14 @@ export default function SearchOffline(prop: propType): JSX.Element {
     token = "",
     userId = "",
     onResultClick = (link: string) => window.open(link, "_blank"),
+    styleConfig,
     offlineFormatData = [],
   } = prop;
   const inputElement = useRef<HTMLInputElement>(null);
   const [searchResults, setResults] = useState<data>(defaultResult);
   const [isOpen, setOpen] = useState(false);
   const [selectedResultIndex, setSelectedResultIndex] = useState<number>(0);
-  // const { apiKey, entityId } = useContext(QuestContext.Context);
+  const {themeConfig } = useContext(QuestContext.Context);
   const [data, setData] = useState<data>([]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -117,7 +121,7 @@ export default function SearchOffline(prop: propType): JSX.Element {
   };
 
   const jsx = (
-    <div className="q_search_bar" style={{ color, backgroundColor }}>
+    <div className="q_search_bar" style={{color: themeConfig.primaryColor,...styleConfig?.Body}}>
       <div className="q_search_box">
         <img
           className="q_search_bar_icon"
@@ -127,7 +131,8 @@ export default function SearchOffline(prop: propType): JSX.Element {
         {/* <input type="text" placeholder={prop.placeholder} ref={inputElement} onKeyDown={handleKeyDown} style={{ backgroundColor, color: prop.inputColor }}
           onChange={e => { onSearch(e.target.value); handleSearch(e.target.value) }} className='q_sdk_input q_search_input' /> */}
         <div className="q_searchBox_input_cont">
-          <NormalInput
+          <Input
+            style={{ ...styleConfig?.Input }}
             type="text"
             placeholder={prop.placeholder}
             ref={inputElement}
@@ -138,7 +143,6 @@ export default function SearchOffline(prop: propType): JSX.Element {
             }}
           />
         </div>
-
         <div className="q_search_command_key">
           <img src={commandkeyIcon(prop.iconColor)} alt="" />
         </div>
@@ -164,10 +168,10 @@ export default function SearchOffline(prop: propType): JSX.Element {
                 alt={""}
               />
               <div className="q_search_result_box">
-                <div style={{ color }} className="q_search_result_head">
+                <div style={styleConfig?.Heading} className="q_search_result_head">
                   {text}
                 </div>
-                <div style={{ color }} className="q_search_result_desc">
+                <div style={styleConfig?.Description} className="q_search_result_desc">
                   {description || "Provide the required information"}
                 </div>
               </div>
@@ -180,10 +184,10 @@ export default function SearchOffline(prop: propType): JSX.Element {
               src={searchResults[selectedResultIndex]?.icon || questLogo}
               alt=""
             />
-            <div style={{ color }} className="q_search_details_head">
+            <div style={{ color: themeConfig.primaryColor ,...styleConfig?.Heading }} className="q_search_details_head">
               {searchResults[selectedResultIndex]?.text}
             </div>
-            <div style={{ color }} className="q_search_result_desc">
+            <div style={{ color: themeConfig.secondaryColor ,...styleConfig?.Description  }} className="q_search_result_desc">
               {searchResults[selectedResultIndex]?.longDescription ||
                 searchResults[selectedResultIndex]?.description}
             </div>
@@ -194,20 +198,20 @@ export default function SearchOffline(prop: propType): JSX.Element {
           </div>
         )}
       </div>
-      <QuestLabs backgroundColor={backgroundColor} color={prop.iconColor} />
+      <QuestLabs style={styleConfig?.Footer} />
     </div>
   );
 
   const sectionsJsx = (
     <div className="q_search_bar">
       <div className="q_search_box">
-        <img className="q_search_bar_icon" src={searchIcon(color)} alt="" />
+        <img className="q_search_bar_icon" src={searchIcon(themeConfig.secondaryColor)} alt="" />
         <input
           type="text"
           placeholder={prop.placeholder}
           ref={inputElement}
           onKeyDown={handleKeyDown}
-          style={{ backgroundColor, color: prop.inputColor }}
+          style={{color: themeConfig.primaryColor,...styleConfig?.Input}}
           onChange={(e) => {
             onSearch(e.target.value);
             handleSearch(e.target.value);
@@ -247,10 +251,10 @@ export default function SearchOffline(prop: propType): JSX.Element {
                       alt={""}
                     />
                     <div className="q_search_result_box">
-                      <div style={{ color }} className="q_search_result_head">
+                      <div style={{ color: themeConfig.primaryColor,...styleConfig?.Heading }} className="q_search_result_head">
                         {text}
                       </div>
-                      <div style={{ color }} className="q_search_result_desc">
+                      <div style={{ color: themeConfig.secondaryColor, ...styleConfig?.Description }} className="q_search_result_desc">
                         {description}
                       </div>
                     </div>
@@ -285,10 +289,10 @@ export default function SearchOffline(prop: propType): JSX.Element {
                       className="q_search_result_icon"
                     />
                     <div className="q_search_result_box">
-                      <div style={{ color }} className="q_search_result_head">
+                      <div style={{ color: themeConfig.primaryColor, ...styleConfig?.Heading}} className="q_search_result_head">
                         {text}
                       </div>
-                      <div style={{ color }} className="q_search_result_desc">
+                      <div style={{ color: themeConfig.secondaryColor, ...styleConfig?.Description }} className="q_search_result_desc">
                         {description}
                       </div>
                     </div>
@@ -318,7 +322,7 @@ export default function SearchOffline(prop: propType): JSX.Element {
           </div>
         )}
       </div>
-      <QuestLabs backgroundColor={backgroundColor} color={prop.iconColor} />
+      <QuestLabs style={styleConfig?.Footer} />
     </div>
   );
 

@@ -13,17 +13,16 @@ import {
 } from "../../assets/images";
 import { arrowRight, downArroIcon, upArrow } from "./Svgs";
 import QuestLabs from "../QuestLabs";
+import { PrimaryButton } from "../Modules/PrimaryButton";
+import { SecondaryButton } from "../Modules/SecondaryButton";
 
 type GetStartedProps = {
   userId: string;
   token: string;
   questId: string;
   cardBackground?: string;
-  cardHeadingColor?: string;
   mainBackground?: string;
-  cardDescriptionColor?: string;
   onCompleteAllStatus?: () => void;
-  buttonBackground?: string;
   iconUrls: Array<string>;
   uniqueUserId?: string;
   uniqueEmailId?: string;
@@ -34,7 +33,6 @@ type GetStartedProps = {
   showProgressBar?: boolean;
   completedButtonColor?: string;
   completedButtonBackgroundColor?: string;
-  cardWidth?: string;
   arrowColor?: string;
   showLoadingIndicator?: boolean;
   showAnnouncement?: boolean;
@@ -44,11 +42,13 @@ type GetStartedProps = {
   showFooter?: boolean;
   onLinkTrigger?: (url: string, index: number) => void;
   template?: 1 | 2;
-  styleConfig?: {
-    Heading?: CSSProperties,
+  styleConfig ?: {
+    Heading ?: CSSProperties,
     Description?: CSSProperties,
     PrimaryButton?: CSSProperties,
     SecondaryButton?: CSSProperties,
+    Form?:CSSProperties,
+    Footer?:CSSProperties
 }
 };
 interface TutorialStep {
@@ -64,15 +64,13 @@ interface TutorialStep {
   longDescription?: string;
   imageUrl?: string;
 }
+
 function GetStarted({
   userId,
   token,
   questId,
-  cardBackground = 'grey',
-  cardHeadingColor = '#2C2C2C',
-  cardDescriptionColor = '#939393',
+  cardBackground = 'transparent',
   onCompleteAllStatus,
-  buttonBackground,
   iconUrls,
   uniqueUserId,
   cardBorderColor = '#EFEFEF',
@@ -86,15 +84,14 @@ function GetStarted({
   showLoadingIndicator = true,
   showAnnouncement = false,
   allowMultiClick = false,
-  mainBackground = 'white',
-  footerBackgroundColor = '#FBFBFB',
+  footerBackgroundColor = 'transparent',
   questIconColor = '#939393',
-  onLinkTrigger = (url:string,index:number)=>{window.location.href=url},
+  onLinkTrigger = (url:string, index: number)=>{window.location.href=url},
   showFooter = true,
   styleConfig
 }: GetStartedProps) {
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
-  const { apiKey, apiSecret, entityId, featureFlags, apiType } = useContext(
+  const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } = useContext(
     QuestContext.Context
   );
   const [showLoader, setShowLoader] = useState<boolean>(false);
@@ -311,7 +308,7 @@ function GetStarted({
     formdata.length > 0 &&
     <div
       style={{
-        background: mainBackground
+        background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
       }}
       className="get_started_box"
     >
@@ -321,10 +318,10 @@ function GetStarted({
         : true) && (
         <div className="gs-heading-div">
           <div>
-            <div style={{  ...styleConfig?.Heading }} className="gs-heading">
+            <div style={{  color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }} className="gs-heading">
               {headingText || "Quickstart Guide"}
             </div>
-            <div style={{ ...styleConfig?.Description }} className="gs-subheading">
+            <div style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description }} className="gs-subheading">
               {descriptionText ||
                 "Get started with Quest and explore how Quest can take your customer engagement to the next level"}
             </div>
@@ -374,13 +371,13 @@ function GetStarted({
                   </div>
                   <div className="gs-card-text">
                     <div
-                      style={{ color: cardHeadingColor }}
+                      style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
                       className="gs-card-head"
                     >
                       {e.title}
                     </div>
                     <div
-                      style={{ color: cardDescriptionColor }}
+                       style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
                       className="gs-card-desc"
                     >
                       {e.description}
@@ -410,24 +407,25 @@ function GetStarted({
                 </div>
                 {dropdowns[i] && (
                   <div className="gs_card_dropdown">
-                    <div className="gs_drop_desc">{e.longDescription}</div>
+                    <div className="gs_drop_desc"  style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>{e.longDescription}</div>
                     <div className="gs_drop_btns">
-                      <div
-                        className="gs_start_btn"
-                        style={{ background: buttonBackground }}
-                        onClick={() =>
+                      <PrimaryButton className={'gs_start_btn'} children={"Start Now"} onClick={(event) =>{
+                          event.stopPropagation()
                           !(!allowMultiClick && e.completed) &&
                           handleCriteriaClick(e.criteriaId, e.url)
+                         }
                         }
-                      >
-                        {e.btn2 || "Start Now"}
-                      </div>
-                      <div
-                        className="gs_visit_btn"
-                        onClick={() => window.open(e.url)}
-                      >
-                        {e.btn1 || "Visit WebSite"}
-                      </div>
+                        disabled={(!allowMultiClick && e.completed)}
+                        style={{
+                          background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
+                          ...styleConfig?.PrimaryButton
+                         }}
+                        />
+                      <SecondaryButton
+                       style={{...styleConfig?.SecondaryButton}}
+                       onClick={() => window.open(e.url)} 
+                      className="gs_visit_btn" 
+                      children={ e.btn1 || "Visit Website"} />
                     </div>
                   </div>
                 )}
@@ -457,19 +455,19 @@ function GetStarted({
                   </div>
                   <div className="gs-card-text">
                     <div
-                      style={{ color: cardHeadingColor }}
+                      style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
                       className="gs-card-head"
                     >
                       {e.title}
                     </div>
                     <div
-                      style={{ color: cardDescriptionColor }}
+                      style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
                       className="gs-card-desc"
                     >
                       {e.description}
                     </div>
                   </div>
-                  <div className="gs-card-btn-container">
+                  {/* <div className="gs-card-btn-container"> */}
                     <div
                       className="gs-card-img-button"
                     >
@@ -485,7 +483,7 @@ function GetStarted({
                     </div>
                   </div>
                 </div>
-              </div>
+              // </div>
             )
           )}
       </div>
@@ -493,7 +491,7 @@ function GetStarted({
         ? !!formdata.length && !allCriteriaCompleted
         : true)) &&
         <div>
-          <QuestLabs backgroundColor={footerBackgroundColor} color={questIconColor} />
+          <QuestLabs style={styleConfig?.Footer} />
         </div>
       }
     </div>

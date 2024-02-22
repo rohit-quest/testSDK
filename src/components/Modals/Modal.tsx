@@ -6,16 +6,13 @@ import QuestLabs from '../QuestLabs';
 import {  upload } from './response';
 import QuestContext from '../QuestWrapper';
 import config from '../../config';
-import { SecondaryButton } from '../Modules/PreviousButton';
-import { PrimaryButton } from '../Modules/NextButton';
+import { SecondaryButton } from '../Modules/SecondaryButton';
+import { PrimaryButton } from '../Modules/PrimaryButton';
 
 
 interface propsType {
   isOpen?: boolean;
   questId?: string;
-  headingColor?: string;
-  color?: string;
-  bgColor?: string;
   isArticle?: boolean
   heading?: string;
   rewardHeading?: string;
@@ -26,7 +23,8 @@ interface propsType {
   iconColor?: string;
   secondaryIconColor?: string;
   reward?: boolean;
-  url? : string
+  url? : string;
+  footerBackground?: string
   onUpload?: (file: File | null) => void;
   onProgressUpdate?: (progress: number) => void;
   headers?: Record<string,any>;
@@ -36,6 +34,8 @@ interface propsType {
     Description?: CSSProperties,
     PrimaryButton?: CSSProperties,
     SecondaryButton?: CSSProperties,
+    Form?:CSSProperties,
+    Footer?:CSSProperties
 }
 }
 
@@ -53,10 +53,11 @@ export default function QuestMOdal({
   onRewardClaim=()=>{},
   url, 
   rewardDescription = 'You have unlocked a new reward for your last transaction. Avail the reward now and enjoy!',
+  footerBackground,
   styleConfig
 }: propsType) {
   const [copy, setCopy] = useState([false, false]);
-  const { apiKey, entityId, apiType } = useContext(QuestContext.Context);
+  const {  apiType, themeConfig } = useContext(QuestContext.Context);
   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
   const inpRef = useRef<HTMLInputElement>(null)
   const [uploading, setUpload] = useState(false);
@@ -93,26 +94,39 @@ export default function QuestMOdal({
 
   if (!open) return;
   if (reward)
-    return (<div className='q_feed_back_modal'>
+    return (<div className='q_feed_back_modal' 
+    style={{
+      background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
+    }}
+    >
       <img src={rewardIcon()} alt="" className='q_modal_reward_img' />
       <div className="q_modal_reward_content">
         <div>
-          <div className="q_modal_heading">{rewardHeading}</div>
-          <div className="q_modal_desc">{rewardDescription}</div>
+          <div className="q_modal_heading" style={{  color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }}>{rewardHeading}</div>
+          <div className="q_modal_desc" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description }}>{rewardDescription}</div>
         </div>
         <div className='q_modal_buttons'>
-        <SecondaryButton text='Go to home' onClick={()=>{setOpen(false)}}  />
-        <PrimaryButton text='Avail now' onClick={()=>{onRewardClaim()}} style={{ background: 'linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%)'}} />
+        <SecondaryButton className='q_modal_cancel'  children='Go to home'  onClick={()=>{setOpen(false)}} style={{...styleConfig?.SecondaryButton}} />
+        <PrimaryButton className='q_modal_upload_button' children='Avail now' onClick={()=>{onRewardClaim()}} 
+        style={{
+          background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
+          ...styleConfig?.PrimaryButton
+         }}
+        />
         </div>
       </div>
-      <QuestLabs color={iconColor} />
+      <QuestLabs style={styleConfig?.Footer} />
     </div>)
-  return (
-    <div className='q_feed_back_modal'>
+    return (
+    <div className='q_feed_back_modal' 
+    style={{
+      background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
+    }}
+    >
       <div className="q_feed_back_modal_head">
         <div>
-          <div className="q_modal_heading" style={{...styleConfig?.Heading}} >{heading}</div>
-          <div className="q_modal_desc" style={{...styleConfig?.Description}}>{description}</div>
+          <div className="q_modal_heading" style={{  color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }} >{heading}</div>
+          <div className="q_modal_desc" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description }}>{description}</div>
         </div>
         <img src={crossIcon(iconColor)} alt="" className='q_modal_cross_img' onClick={() => setOpen(false)} />
       </div>
@@ -123,23 +137,21 @@ export default function QuestMOdal({
           const file = e.dataTransfer.files[0];
           if (file) handleUpload(file)
         }}>
-          {uploading ? (<div className="q_modal_progress-wrapper">{uploadProgress}%</div>
+          {uploading ? (<div className="q_modal_progress-wrapper" style={{color: styleConfig?.Heading?.color || themeConfig?.primaryColor}}>{uploadProgress}%</div>
           ) : <img src={uploadIcon()} alt="" className="q_modal_upload_img" />}
           <div className='q_modal_upload_text_box' >
-            <div className="q_modal_upload_text">Drag and drop your file here</div>
-            <div className="q_modal_upload_mini_text">or, click to Browse (1MB max)</div>
+            <div className="q_modal_upload_text" style={{color: styleConfig?.Heading?.color || themeConfig?.primaryColor}} >Drag and drop your file here</div>
+            <div className="q_modal_upload_mini_text" style={{color: styleConfig?.Description?.color || themeConfig?.secondaryColor}}>or, click to Browse (1MB max)</div>
             <input ref={inpRef} onChange={e => e.target.files && handleUpload(e.target.files[0])} type="file" style={{ display: "none" }} />
           </div>
         </div>
-        <div className="q_modal_desc">Some data formats, such as dates, numbers, and colours, may not be recognised.</div>
+        <div style={{color: styleConfig?.Description?.color || themeConfig?.secondaryColor}} className="q_modal_desc">Some data formats, such as dates, numbers, and colours, may not be recognised.</div>
         <img src={orIcon()} alt="" />
-
-
           {invitationLink && <>
             <div className="q_refer_code_content">
-            <div className="q_refer_text">Invitation Link</div>
+            <div className="q_refer_text" style={{color: styleConfig?.Heading?.color || themeConfig?.primaryColor}}>Invitation Link</div>
             <div className="q_refer_code_box">
-              <div className="q_refer_code">{invitationLink}</div>
+              <div className="q_refer_code" style={{color: styleConfig?.Description?.color || themeConfig?.secondaryColor}}>{invitationLink}</div>
               <img className="q_refer_copy_icon" src={copy[1] ? tickIcon() : copyIcon(iconColor)} onClick={() => handleCopy(1)} alt="" />
             </div>
             </div>
@@ -147,12 +159,17 @@ export default function QuestMOdal({
 
         <div className='q_modal_buttons'>
           {/* <div className="q_modal_cancel">Cancel</div> */}
-          <SecondaryButton text='Cancel' />
-          <PrimaryButton  text='Upload' onClick={() => inpRef.current?.files && inpRef.current?.files[0] &&   getUploadData()} style={{ background:(inpRef.current?.files && inpRef.current?.files[0]) ?  'linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%)':'grey'}} />
+          <SecondaryButton children='Cancel' style={{...styleConfig?.SecondaryButton}} className='q_modal_cancel' />
+          <PrimaryButton  children='Upload' className='q_modal_upload_button'  onClick={() => inpRef.current?.files && inpRef.current?.files[0] &&   getUploadData()} disabled={!(inpRef.current?.files && inpRef.current?.files[0])}
+           style={{
+            background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
+            ...styleConfig?.PrimaryButton
+           }}
+          />
           {/* <div className="q_modal_upload_button" onClick={() => inpRef.current?.files && inpRef.current?.files[0] && onUpload(inpRef.current?.files[0])}>Upload</div> */}
         </div>
       </div>
-      <QuestLabs color={iconColor} />
+      <QuestLabs style={styleConfig?.Footer} />
     </div>
   )
 }

@@ -1,8 +1,8 @@
 .q-tutorial-cont {
   background-color: white;
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
-  border-radius: 14px;
-  padding-bottom: 1px;
+  border-radius: 10px;
+  /* padding-bottom: 1px; */
   max-width: 376px;
 }
 
@@ -178,10 +178,12 @@
 
 .q_tutorial_box {
   display: flex;
-  width: 336px;
+  /* width: 336px; */
   padding: 12px 0px;
   align-items: center;
   gap: 12px;
+  position: relative;
+  
 }
 
 .q_tutorial_box_content {
@@ -226,27 +228,48 @@
   display: flex;
   padding: 8px;
   border-radius: 50%;
-  background: var(--Neutral-White-200, #fbfbfb);
   align-items: flex-start;
   gap: 8px;
   box-sizing: content-box;
-  z-index: 1;
-  height: 16px;
-  width: 16px;
+  z-index: 100;
+  height: 32px;
+  width: 32px;
+  position: relative;
 }
 
 .q_tutorial_progress {
-  position: relative;
+  z-index: 1;
+  /* background: var(--Neutral-White-200, #fbfbfb);
+  height: 32px;
+  width: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
 }
 
 .q_tutorial_progress_connector {
   position: absolute;
-  stroke-width: 1px;
   background: #73dca7;
-  right: 50%;
-  bottom: -55px;
-  width: 2px;
-  z-index: 0;
-  height: 55px;
+  width: 1px;
+  z-index: -1;
   transition: all 2s;
+  left: 15px;
+
+}
+.q-tut-card-cont {
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  
+}
+.q_tutorial_progress_img_cont{
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FBFBFB;
+  border-radius: 50%;
 }
