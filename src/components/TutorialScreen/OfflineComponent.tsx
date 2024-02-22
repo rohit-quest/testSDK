@@ -184,6 +184,21 @@ const OfflineComponent: React.FC<TutorialProps> = ({
 
   // const [minimze, setMin] = useState(false);
 
+  const handleStepLoad = (index: number, height: number) => {
+    const connector = document.querySelector(`#q_tutorial_progress_connector_${index}`) as HTMLElement;
+    const nextContent = document.querySelector(`#q_tutorial_box_content_${index + 1}`) as HTMLElement;
+
+    if (connector && nextContent) {
+      let connectorHeight = (height - 32) / 2 + (nextContent.offsetHeight - 32) / 2 + 24;
+  
+      connector.style.height = `${connectorHeight}px`;
+  
+      if (index === formdata.length - 1) {
+        connector.style.display = 'none';
+      }
+    }
+  };
+
   if (!isOpen) return <></>;
 
 
@@ -203,23 +218,50 @@ const OfflineComponent: React.FC<TutorialProps> = ({
           descriptionStyle: { color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description } ,
         }}
       />
-      <div>
-        <div className="q-tut-cont">
-        </div>
+      <div className='q-tut-card-cont'>
         <div>
-          {formdata.map((step, index) => (
-            <div className="q_tutorial_box" key={index} onClick={()=>handleNextStep(step.id,step.url)}>
-              <div className='q_tutorial_progress'>
-                <img className='q_tutorial_progress_icon' style={{background: step.status?"#01ff0111":"#FBFBFB",width: step.status?"8px":"16px",height: step.status?"8px":"16px"}} src={step.status?greenCheck:pendingIcon} alt="" />
-                {index<(formdata.length-1) &&<div style={{background: step.status?"#73DCA7":"#EFEFEF"}} className="q_tutorial_progress_connector"></div>}
+        {formdata.map((step, index) => (
+          <div
+            className="q_tutorial_box"
+            id={`q_tutorial_box_${index}`}
+            key={index}
+            onClick={() => handleNextStep(step.id, step.url)}
+          >
+            <div className="q_tutorial_progress">
+            <div className='q_tutorial_progress_img_cont' 
+              style={{
+                background: step.status ? '#01ff0111' : '#FBFBFB',
+              }}
+              >
+              <img
+                className="q_tutorial_progress_icon"
+                style={{
+                  width: step.status ? '8px' : '16px',
+                  height: step.status ? '8px' : '16px',
+                }}
+                src={step.status ? greenCheck : pendingIcon}
+                alt=""
+              />
               </div>
-              <div className="q_tutorial_box_content">
-                <div className="q_tut_step"  style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>STEP {index+1}</div>
-                <div className="q_tut_box_head"  style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}>{step.title}</div>
-                <div className="q_tut_box_desc"  style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>{step.subheading}</div>
-              </div>
+              {index < formdata.length - 1 && (
+                <div
+                  id={`q_tutorial_progress_connector_${index}`}
+                  style={{ background: step.status ? '#73DCA7' : '#EFEFEF' }}
+                  className="q_tutorial_progress_connector"
+                ></div>
+              )}
             </div>
-          ))}
+            <div
+              id={`q_tutorial_box_content_${index}`}
+              className="q_tutorial_box_content"
+              ref={(ref) => ref && handleStepLoad(index, ref.offsetHeight)}
+            >
+              <div className="q_tut_step" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>STEP {index + 1}</div>
+              <div className="q_tut_box_head" style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}>{step.title}</div>
+              <div className="q_tut_box_desc" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>{step.subheading}</div>
+            </div>
+          </div>
+        ))}
         </div>
       </div>
       <QuestLabs  color={iconColor}/>

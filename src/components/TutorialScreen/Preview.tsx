@@ -24,7 +24,7 @@ export default function TutorialPreview({online=true}) {
              token={token}
              styleConfig={{
                 Form: {
-                    backgroundColor: "black",
+                    // backgroundColor: "black",
                     // color: "white"
                 }
              }}
@@ -51,7 +51,7 @@ export default function TutorialPreview({online=true}) {
                     id: 1,
                     "title": "Explore Questlabs",
                     "url": "https://www.questlabs.ai/",
-                    "subheading": "AI-Powered User Experiences to Increase in-app Adoption ",
+                    "subheading": "AI-Powered User Experiences to Increase in-app Adoption AI-Powered User Experiences to Increase in-app Adoption AI-Powered User Experiences to Increase in-app Adoption ",
                     "criteriaId": "ec-e32b88d7-0e43-4254-9c94-44859ceedcdc",
                     "status": false
                 },
@@ -66,7 +66,7 @@ export default function TutorialPreview({online=true}) {
             ]}
             styleConfig={{
                 Form: {
-                    backgroundColor: "black",
+                    // backgroundColor: "black",
                     // color: "white"
                 },
                 // Heading :{fontSize:'50px',color:'pink'},

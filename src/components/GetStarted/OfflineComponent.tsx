@@ -59,7 +59,7 @@ type offlineGetStartedProps = {
 
 
 function OfflineGetStarted({
-  cardBackground = 'white',
+  cardBackground = 'transparent',
   iconUrls,
   cardBorderColor = '#EFEFEF',
   headingText,
@@ -70,7 +70,7 @@ function OfflineGetStarted({
   arrowColor,
   showLoadingIndicator = true,
   allowMultiClick = false,
-  footerBackgroundColor = '#FBFBFB',
+  footerBackgroundColor = 'transparent',
   questIconColor = '#939393',
   showFooter = true,
   styleConfig,

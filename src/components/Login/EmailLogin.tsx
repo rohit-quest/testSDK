@@ -6,8 +6,8 @@ import Loader from "./Loader";
 import { alertLogo, crossLogo, emailLogo2 } from "../../assets/images";
 import showToast from "../toast/toastService";
 import QuestContext from "../QuestWrapper";
-import { NormalInput } from "../Modules/Input";
-import { PrimaryButton } from "../Modules/NextButton";
+import { Input } from "../Modules/Input";
+import { PrimaryButton } from "../Modules/PrimaryButton";
 
 interface EmailLoginProps {
   otpScreen: boolean;
@@ -139,7 +139,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                 onKeyUp={handlesubmit}
                 className="q-login-email-input"
               /> */}
-              <NormalInput
+              <Input
               style={{...styleConfig?.Input}}
                 type="text"
                 placeholder="Enter your email id"
@@ -162,7 +162,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
             >
               Continue
             </div> */}
-            <PrimaryButton style={{...styleConfig?.PrimaryButton}} nextBtnText="Continue" onClick={sendOTPfunction} />
+            <PrimaryButton style={{...styleConfig?.PrimaryButton}} children="Continue" onClick={sendOTPfunction} />
           </div>
         </div>
       )}

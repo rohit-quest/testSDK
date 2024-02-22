@@ -80,7 +80,6 @@ interface QuestLoginProps {
     setLoading?: Function;
     linksLogoWidth?: string;
     text?: string;
-    text?: string;
     progressbarColor?: string;
     progressBarMultiLine?: boolean;
     progressBartabHeight?: string;
@@ -141,7 +140,6 @@ function OnBoardingOffline(props: QuestLoginProps) {
         loadingTracker,
         setLoading=()=>{},
         linksLogoWidth,
-        text,
         text,
         progressbarColor,
         progressBarMultiLine,
@@ -525,7 +523,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                     {question} {required && "*"}
                 </label>
                 <div className="q-onb-input" style={{border: inputBorder}}>
-                    {textInputModal ==="modal2" && (inputType == "text" ? userLogo() : inputType == "number" ? phoneLogo() : emailLogo())}
+                    {textInputModal ==="modal2" && (inputType == "text" ? userLogo('#B9B9B9') : inputType == "number" ? phoneLogo('#B9B9B9') : emailLogo('#B9B9B9'))}
                     <input
                         type={inputType}
                         id="normalInput"
@@ -690,7 +688,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                 />
                 {manualInput != false && answer[criteriaId] == manualInput &&
                     <div className="q-onb-input" style={{border: inputBorder, marginTop: "10px"}}>
-                        {userLogo()}
+                        {userLogo('#B9B9B9')}
                         <input
                             type="text"
                             id="normalInput"

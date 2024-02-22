@@ -9,7 +9,7 @@ import Loader from "./Loader";
 import { useContext } from "react";
 import QuestContext from "../QuestWrapper";
 import { leftArrow2, otpIcon2 } from "../../assets/images";
-import { PrimaryButton } from "../Modules/NextButton";
+import { PrimaryButton } from "../Modules/PrimaryButton";
 
 interface OtpVerificationProps {
   otpScreen?: boolean;
@@ -280,7 +280,7 @@ function OtpVerification({
         <div className="q_otp_btn_continue">
           <PrimaryButton
             style={{ ...styleConfig?.PrimaryButton }}
-            nextBtnText="Continue"
+            children="Continue"
             onClick={verifyOTPfunction}
           />
         </div>

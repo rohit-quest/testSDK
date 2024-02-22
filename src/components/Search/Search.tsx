@@ -7,7 +7,7 @@ import QuestContext from "../QuestWrapper.tsx";
 import QuestLabs from "../QuestLabs.tsx";
 import config from "../../config.ts";
 import General from "../../general.ts";
-import { NormalInput } from "../Modules/Input.tsx";
+import { Input } from "../Modules/Input.tsx";
 
 type data = {
   text: string;
@@ -170,7 +170,7 @@ export default function Search(prop: propType): JSX.Element {
         {/* <input type="text" placeholder={prop.placeholder} ref={inputElement} onKeyDown={handleKeyDown} style={{ backgroundColor, color: prop.inputColor }}
           onChange={e => { onSearch(e.target.value); handleSearch(e.target.value) }} className='q_sdk_input q_search_input' /> */}
         <div className="q_searchBox_input_cont">
-          <NormalInput
+          <Input
             style={{ ...styleConfig?.Input }}
             type="text"
             placeholder={prop.placeholder}

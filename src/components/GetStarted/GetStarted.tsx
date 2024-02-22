@@ -42,14 +42,13 @@ type GetStartedProps = {
   showFooter?: boolean;
   onLinkTrigger?: (url: string, index: number) => void;
   template?: 1 | 2;
-  styleConfig?: {
-    Heading?: CSSProperties,
+  styleConfig ?: {
+    Heading ?: CSSProperties,
     Description?: CSSProperties,
     PrimaryButton?: CSSProperties,
     SecondaryButton?: CSSProperties,
     Form?:CSSProperties,
-  
-}
+  }
 };
 interface TutorialStep {
   id: number;
@@ -64,11 +63,12 @@ interface TutorialStep {
   longDescription?: string;
   imageUrl?: string;
 }
+
 function GetStarted({
   userId,
   token,
   questId,
-  cardBackground = 'white',
+  cardBackground = 'transparent',
   onCompleteAllStatus,
   iconUrls,
   uniqueUserId,
@@ -83,9 +83,9 @@ function GetStarted({
   showLoadingIndicator = true,
   showAnnouncement = false,
   allowMultiClick = false,
-  footerBackgroundColor = '#FBFBFB',
+  footerBackgroundColor = 'transparent',
   questIconColor = '#939393',
-  onLinkTrigger = (url:string,index:number)=>{window.location.href=url},
+  onLinkTrigger = (url:string, index: number)=>{window.location.href=url},
   showFooter = true,
   styleConfig
 }: GetStartedProps) {
