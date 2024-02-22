@@ -37,8 +37,6 @@ type GetStartedProps = {
   showLoadingIndicator?: boolean;
   showAnnouncement?: boolean;
   allowMultiClick?: boolean;
-  footerBackgroundColor?: string;
-  questIconColor?: string;
   showFooter?: boolean;
   onLinkTrigger?: (url: string, index: number) => void;
   template?: 1 | 2;
@@ -84,8 +82,6 @@ function GetStarted({
   showLoadingIndicator = true,
   showAnnouncement = false,
   allowMultiClick = false,
-  footerBackgroundColor = 'transparent',
-  questIconColor = '#939393',
   onLinkTrigger = (url:string, index: number)=>{window.location.href=url},
   showFooter = true,
   styleConfig
@@ -101,7 +97,7 @@ function GetStarted({
 
   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
   const cookies = new Cookies();
-  const completedPercentage = (formdata.reduce((a, b) => a + (b.completed ? 1 : 0), 0) * 100) / formdata.length;
+  const completedPercentage = (formdata?.reduce((a, b) => a + (b.completed ? 1 : 0), 0) * 100) / formdata.length;
   let externalUserId = cookies.get("externalUserId");
   let questUserId = cookies.get("questUserId");
   let questUserToken = cookies.get("questUserToken");

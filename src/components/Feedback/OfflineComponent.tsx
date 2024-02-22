@@ -16,6 +16,7 @@ import QuestLabs from '../QuestLabs';
 import { Input } from '../Modules/Input';
 import Label from '../Modules/Label';
 import TextArea from '../Modules/TextArea';
+import TopBar from '../Modules/TopBar';
 
   const thanks = (
     <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -63,7 +64,7 @@ interface FeedbackProps {
   offlineFormData: Array<FormDataItem>;
   ratingType ?: string;
   styleConfig?: {
-    Body?: React.CSSProperties,
+    Form?: React.CSSProperties,
     Heading?: React.CSSProperties,
     Description?: React.CSSProperties,
     Input?: React.CSSProperties,
@@ -72,6 +73,7 @@ interface FeedbackProps {
     PrimaryButton?: React.CSSProperties,
     SecondaryButton?: React.CSSProperties,
     Modal?: React.CSSProperties,
+    Footer?: React.CSSProperties,
   }
 }
 interface FormDataItem {
@@ -111,7 +113,7 @@ const SurveyOffline = ({
   const [likePopup, setLikePopup] = useState<boolean>(false);
   const [thanksPopup, setThanksPopup] = useState<boolean>(false);
   const [gradient, setGradient] = useState<boolean>(false);
-//   const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
+  const { themeConfig } = useContext(QuestContext.Context);
   const [answer, setAnswer] = useState<any>({});
   const [page,setPage] = useState(0);
 
@@ -326,7 +328,7 @@ function isValidEmail(email: string) {
       <div className="" key={criteriaId}>
         <Label
           htmlFor="normalInput"
-          text={question}
+          children={question}
           style={styleConfig?.Label}
         />
         <Input
@@ -344,7 +346,7 @@ function isValidEmail(email: string) {
       <div className="" key={criteriaId}>
         <Label 
           htmlFor="normalInput"
-          text={question}
+          children={question}
           style={styleConfig?.Label}
         />
         <Input
@@ -367,7 +369,7 @@ function isValidEmail(email: string) {
       <div className="" key={criteriaId}>
        <Label 
           htmlFor="normalInput"
-          text={question}
+          children={question}
           style={styleConfig?.Label}
         />
         <TextArea
@@ -490,13 +492,9 @@ const singleChoiceOne = (
     );
 };
 
-  return (
+return (
       <div
-        style={{
-          ...(gradient
-            ? { backgroundImage: bgColor }
-            : { backgroundColor: bgColor }),
-        }}
+        style={{background: themeConfig.backgroundColor, color: themeConfig.primaryColor, ...styleConfig?.Form}}
         className="q-feedback-cont"
         id = 'q-surveyOffline'
       >
@@ -506,30 +504,14 @@ const singleChoiceOne = (
             <>
               {!thanksPopup && (
                 <div>
-                  <div className="q-fd-topbar">
-                    <div>
-                      <div
-                        className="q-fd-heading"
-                        style={{
-                          fontFamily: font,
-                          color: textColor,
-                          fontSize: '20px',
-                        }}
-                      >
-                        {heading}
-                      </div>
-                      <div
-                        className="q-fd-sub"
-                        style={{
-                          fontFamily: font,
-                          color: textColor,
-                          marginTop : '4px'
-                        }}
-                      >
-                        {subHeading}
-                      </div>
-                    </div>
-                  </div>
+                  <TopBar
+                    heading={heading || ''}
+                    description={subHeading || ''}
+                    style={{
+                      headingStyle: styleConfig?.Heading,
+                      descriptionStyle: styleConfig?.Description,
+                      iconStyle: { display: "none" },
+                    }} />
                   <form onSubmit={e=>{
                     e.preventDefault();
                     ((offlineFormData.length/itemsPerPage)<=page+1)?returnAnswers():handleNext()
@@ -620,6 +602,7 @@ const singleChoiceOne = (
                         </button>
                       </div>
                   </form>
+               <QuestLabs style={styleConfig?.Footer} />
                 </div>
               )}
               {thanksPopup && (
@@ -648,7 +631,7 @@ const singleChoiceOne = (
                    </div>
                  </div>
                </div>
-             <QuestLabs color={iconColor || "#AFAFAF"}/>
+               <QuestLabs style={styleConfig?.Footer} />
              </div>
               )}
             </>

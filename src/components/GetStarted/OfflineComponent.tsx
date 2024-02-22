@@ -41,8 +41,6 @@ type offlineGetStartedProps = {
   arrowColor?: string;
   showLoadingIndicator?: boolean;
   allowMultiClick?: boolean;
-  footerBackgroundColor?: string;
-  questIconColor?: string;
   showFooter?: boolean;
   onLinkTrigger?: (url: string, index: number) => void;
   template?: 1 | 2;
@@ -71,8 +69,6 @@ function OfflineGetStarted({
   arrowColor,
   showLoadingIndicator = true,
   allowMultiClick = false,
-  footerBackgroundColor = 'transparent',
-  questIconColor = '#939393',
   showFooter = true,
   styleConfig,
   offlineData, 
@@ -88,7 +84,7 @@ function OfflineGetStarted({
   const [dropdowns, setDropdown] = useState<Array<boolean>>([]);
   const [data ,setData] =useState(offlineData)
 
-  const completedPercentage = (data.reduce((a, b) => a + (b.completed ? 1 : 0), 0)) * 100 / data.length;
+  const completedPercentage = data?.length ? (data?.reduce((a, b) => a + (b.completed ? 1 : 0), 0)) * 100 / data?.length: 0;
 
 
   const handleCriteriaClick = (criteriaId: string | undefined, url: string) => {

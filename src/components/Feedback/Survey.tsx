@@ -19,6 +19,7 @@ import { Input } from '../Modules/Input';
 import TextArea from '../Modules/TextArea';
 import { PrimaryButton } from '../Modules/PrimaryButton';
 import { SecondaryButton } from '../Modules/SecondaryButton';
+import TopBar from '../Modules/TopBar';
 
 
   const thanks = (
@@ -87,8 +88,6 @@ const Survey: React.FC<FeedbackProps> = ({
   userId,
   token,
   questId,
-  btnColor,
-  btnTextColor,
   textColor,
   font,
   bgColor,
@@ -529,29 +528,14 @@ const singleChoiceOne = (
             <>
               {!thanksPopup && (
                 <div>
-                  <div className="q-fd-topbar">
-                    <div>
-                      <div
-                        className="q-fd-heading"
-                        style={{
-                          fontFamily: font,
-                          color: textColor,
-                          fontSize: '24px',
-                        }}
-                      >
-                        {heading}
-                      </div>
-                      <div
-                        className="q-fd-sub"
-                        style={{
-                          fontFamily: font,
-                          color: textColor,
-                        }}
-                      >
-                        {subHeading}
-                      </div>
-                    </div>
-                  </div>
+                  <TopBar
+                    heading={heading || ''}
+                    description={subHeading || ''}
+                    style={{
+                      headingStyle: styleConfig?.Heading,
+                      descriptionStyle: styleConfig?.Description,
+                      iconStyle: { display: "none" },
+                    }} />
                   <form onSubmit={e=>{
                     e.preventDefault();
                     ((data.length/itemsPerPage)<=page+1)?returnAnswers():handleNext()
@@ -622,6 +606,7 @@ const singleChoiceOne = (
                         />
                       </div>
                   </form>
+               <QuestLabs style={styleConfig?.Footer} />  
                 </div>
               )}
               {thanksPopup && (

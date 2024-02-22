@@ -17,14 +17,14 @@ import Modal from '../Modules/Modal';
 import TopBar from '../Modules/TopBar';
 
 const feedback = (color: string = "#939393") => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path opacity="0.5" d="M2 6.66671C2 4.15255 2 2.89547 2.78105 2.11442C3.5621 1.33337 4.81918 1.33337 7.33333 1.33337H8.66667C11.1808 1.33337 12.4379 1.33337 13.219 2.11442C14 2.89547 14 4.15255 14 6.66671V9.33337C14 11.8475 14 13.1046 13.219 13.8857C12.4379 14.6667 11.1808 14.6667 8.66667 14.6667H7.33333C4.81918 14.6667 3.5621 14.6667 2.78105 13.8857C2 13.1046 2 11.8475 2 9.33337V6.66671Z" fill={color} />
     <path fillRule="evenodd" clipRule="evenodd" d="M4.83334 6.66663C4.83334 6.39048 5.0572 6.16663 5.33334 6.16663H10.6667C10.9428 6.16663 11.1667 6.39048 11.1667 6.66663C11.1667 6.94277 10.9428 7.16663 10.6667 7.16663H5.33334C5.0572 7.16663 4.83334 6.94277 4.83334 6.66663Z" fill={color} />
     <path fillRule="evenodd" clipRule="evenodd" d="M4.83334 9.33337C4.83334 9.05723 5.0572 8.83337 5.33334 8.83337H8.66668C8.94282 8.83337 9.16668 9.05723 9.16668 9.33337C9.16668 9.60952 8.94282 9.83337 8.66668 9.83337H5.33334C5.0572 9.83337 4.83334 9.60952 4.83334 9.33337Z" fill={color} />
   </svg>
 );
 const bug = (color: string = "#939393") => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path opacity="0.5" fillRule="evenodd" clipRule="evenodd" d="M12.6667 7.95837V10C12.6667 12.4085 10.8422 14.3907 8.50001 14.6402V10C8.50001 9.7239 8.27615 9.50004 8.00001 9.50004C7.72387 9.50004 7.50001 9.7239 7.50001 10V14.6402C5.15779 14.3907 3.33334 12.4085 3.33334 10V7.95837C3.33334 6.84682 4.02423 5.89663 5.00001 5.51381C5.29689 5.39733 5.62015 5.33337 5.95834 5.33337H10.0417C10.3799 5.33337 10.7031 5.39733 11 5.51381C11.9758 5.89663 12.6667 6.84682 12.6667 7.95837Z" fill={color} />
     <path d="M12.6667 9.83337V8.83337H14.6667C14.9428 8.83337 15.1667 9.05723 15.1667 9.33337C15.1667 9.60951 14.9428 9.83337 14.6667 9.83337H12.6667Z" fill={color} />
     <path d="M11.6637 12.8909C11.8709 12.6286 12.0506 12.3436 12.1983 12.0402L13.8903 12.8863C14.1373 13.0098 14.2374 13.3101 14.1139 13.5571C13.9904 13.8041 13.69 13.9042 13.443 13.7807L11.6637 12.8909Z" fill={color} />
@@ -41,7 +41,7 @@ const bug = (color: string = "#939393") => (
   </svg>
 );
 const feature = (color: string = "#939393") => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path opacity="0.5" d="M2.30965 13.6904C3.28596 14.6667 4.85731 14.6667 8.00001 14.6667C11.1427 14.6667 12.7141 14.6667 13.6904 13.6904C14.6667 12.7141 14.6667 11.1427 14.6667 8.00004C14.6667 4.85734 14.6667 3.286 13.6904 2.30968C12.7141 1.33337 11.1427 1.33337 8.00001 1.33337C4.85731 1.33337 3.28596 1.33337 2.30965 2.30968C1.33334 3.286 1.33334 4.85734 1.33334 8.00004C1.33334 11.1427 1.33334 12.7141 2.30965 13.6904Z" fill={color} />
     <path d="M11.3333 8.44437C11.3333 11.2888 8.96295 11.9999 7.77777 11.9999C6.74073 11.9999 4.66666 11.2888 4.66666 8.44437C4.66666 7.20719 5.37527 6.42176 5.97061 6.02642C6.2428 5.84568 6.58133 5.9612 6.59893 6.28746C6.63743 7.00132 7.1876 7.57473 7.61366 7.00066C8.00362 6.47524 8.19607 5.76174 8.19607 5.33326C8.19607 4.70207 8.83499 4.30098 9.33384 4.68769C10.3062 5.44146 11.3333 6.70382 11.3333 8.44437Z" fill={color} />
   </svg>
@@ -63,7 +63,7 @@ const cross = (color = "#AFAFAF", onClick?: () => void) => (
   </div>
 );
 const contact = (color: string = "#939393") => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="24" height="24" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path opacity="0.5" d="M14.6667 8.00004C14.6667 11.6819 11.6819 14.6667 8.00001 14.6667C4.31811 14.6667 1.33334 11.6819 1.33334 8.00004C1.33334 4.31814 4.31811 1.33337 8.00001 1.33337C11.6819 1.33337 14.6667 4.31814 14.6667 8.00004Z" fill={color} />
     <path d="M8 5.16663C7.58579 5.16663 7.25 5.50241 7.25 5.91663C7.25 6.19277 7.02614 6.41663 6.75 6.41663C6.47386 6.41663 6.25 6.19277 6.25 5.91663C6.25 4.95013 7.0335 4.16663 8 4.16663C8.9665 4.16663 9.75 4.95013 9.75 5.91663C9.75 6.39052 9.56098 6.82128 9.25531 7.13593C9.1938 7.19925 9.13512 7.25787 9.07915 7.3138L9.07915 7.3138C8.93526 7.45757 8.8092 7.58352 8.6986 7.72562C8.55258 7.91324 8.5 8.05113 8.5 8.16663V8.66663C8.5 8.94277 8.27614 9.16663 8 9.16663C7.72386 9.16663 7.5 8.94277 7.5 8.66663V8.16663C7.5 7.72983 7.70334 7.37625 7.90945 7.11143C8.06195 6.91549 8.25363 6.72419 8.40918 6.56894L8.40918 6.56894C8.45611 6.5221 8.49975 6.47855 8.53803 6.43914C8.66972 6.30358 8.75 6.11999 8.75 5.91663C8.75 5.50241 8.41421 5.16663 8 5.16663Z" fill={color} />
     <path d="M8 11.3333C8.36819 11.3333 8.66667 11.0348 8.66667 10.6666C8.66667 10.2984 8.36819 9.99996 8 9.99996C7.63181 9.99996 7.33333 10.2984 7.33333 10.6666C7.33333 11.0348 7.63181 11.3333 8 11.3333Z" fill={color} />
@@ -94,8 +94,9 @@ interface feedbackCompProps {
   descriptions?: Record<optionType, string>;
   backBtn?: boolean;
   iconColor?: string;
+
   styleConfig?: {
-    Form?: React.CSSProperties,
+    Body?: React.CSSProperties,
     Heading?: React.CSSProperties,
     Description?: React.CSSProperties,
     Input?: React.CSSProperties,
@@ -130,7 +131,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   uniqueEmailId,
   descriptions = { "General Feedback": "Welcome back, Please complete your details", "Report a Bug": "Describe your issue", "Contact us": "Invite other admins and moderators", "Request a Feature": "How can we make it better" },
   iconColor = "#939393",
-  styleConfig,
+  styleConfig = {}
+
 }) => {
   const [selectedOption, setSelectedOption] = useState<optionType | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
@@ -139,10 +141,9 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   );
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [submit, setSubmit] = useState<boolean>(false);
-  const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } = useContext(QuestContext.Context);
+  const { apiKey, apiSecret, entityId, featureFlags, apiType } = useContext(QuestContext.Context);
   const [answer, setAnswer] = useState<Record<string, string>>({});
   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
-  const labelStyle = {color: themeConfig.primaryColor,...styleConfig?.Label};
 
   const thanks = (
     <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -278,6 +279,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     } else {
       showToast.error('Please fill in all required fields.');
     }
+
   }
 
 
@@ -376,11 +378,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       <div className="" key={criteriaId}>
         <Label htmlFor={'normalInput'}
           children={question}
-          style={labelStyle}
+          style={styleConfig.Label}
         />
         <Input
           type='text'
-          style={styleConfig?.Input}
+          style={styleConfig.Input}
           placeholder={placeholder}
           value={answer[criteriaId]}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
@@ -393,11 +395,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       <div className="" key={criteriaId}>
         <Label htmlFor={'normalInput'}
           children={question}
-          style={labelStyle}
+          style={styleConfig.Label}
         />
         <Input
           type='email'
-          style={styleConfig?.Input}
+          style={styleConfig.Input}
           placeholder={placeholder}
           value={answer[criteriaId]}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
@@ -415,7 +417,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       <div className="" key={criteriaId}>
         <Label htmlFor={'normalInput'}
           children={question}
-          style={labelStyle}
+          style={styleConfig.Label}
         />
         <TextArea
           onChange={(e) => handleUpdate(e, criteriaId, "")}
@@ -431,16 +433,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose || (() => { })} style={{ padding: 0, background: 'transparent', ...styleConfig?.Modal }}>
+    <Modal isOpen={isOpen} onClose={onClose || (() => { })} style={{ padding: 0, background: 'transparent', ...styleConfig.Modal }}>
       {showLoader && <Loader />}
-      <div className="q-fw-div" style={{color: themeConfig.primaryColor,background: themeConfig.backgroundColor,...styleConfig?.Form}} id='disabledClick'>
+      <div className="q-fw-div" style={styleConfig.Body} id='disabledClick'>
         {selectedOption && !submit ? (
           <div>
-            <TopBar style={{
-              headingStyle: {color: themeConfig.primaryColor, ...styleConfig?.Heading },
-              descriptionStyle: {color: themeConfig.secondaryColor,...styleConfig?.Description},
-              background: themeConfig.backgroundColor
-            }}
+            <TopBar style={{headingStyle: styleConfig.Heading, descriptionStyle: styleConfig.Description}}
               description={descriptions[selectedOption]}
               heading={selectedOption}
               iconColor={iconColor}
@@ -461,7 +459,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   handleRemove={handleRemove}
                   ratingStyle={ratingStyle}
                   iconColor={iconColor}
-                  buttonStyle={styleConfig?.PrimaryButton}
+                  buttonStyle={styleConfig.PrimaryButton}
                 />
               )}
               {selectedOption === 'Report a Bug' && (
@@ -518,9 +516,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 </div>
               </div>
             </div>
+            <QuestLabs style={styleConfig?.Footer} />
           </div>
         ) : (
-          <div >
+          <div>
             <div className='q-fw-crossBtn'>
               <div onClick={() => onClose?.()}>{cross(iconColor)}</div>
             </div>
@@ -532,14 +531,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 >
                   <div className='q_feedback_icon'>{feedback(iconColor)}</div>
                   <div style={{ marginLeft: '8px' }}>
-                    <div className='q-fw-tab-heading'
-                   style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
-                    >
+                    <div className='q-fw-tab-heading'>
                       General Feedback
                     </div>
-                    <div className='q-fw-tab-description'
-                    style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
-                    >
+                    <div className='q-fw-tab-description'>
                       Give general feedback on this page
                     </div>
                   </div>
@@ -553,16 +548,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   <div className='q_feedback_icon'>{bug(iconColor)}</div>
                   <div style={{ marginLeft: '10px' }}>
                     <div>
-                      <div className='q-fw-tab-heading' 
-                      style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
-                      >
+                      <div className='q-fw-tab-heading'>
                         Report a Bug
                       </div>
                     </div>
                     <div>
-                      <div className='q-fw-tab-description'
-                      style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
-                      >
+                      <div className='q-fw-tab-description'>
                         Let us know what's broken
                       </div>
                     </div>
@@ -577,16 +568,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   <div className='q_feedback_icon'>{feature(iconColor)}</div>
                   <div style={{ marginLeft: '10px' }}>
                     <div>
-                      <div className='q-fw-tab-heading'
-                      style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
-                      >
+                      <div className='q-fw-tab-heading'>
                         Request a Feature
                       </div>
                     </div>
                     <div>
-                      <div className='q-fw-tab-description'
-                      style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
-                      >
+                      <div className='q-fw-tab-description'>
                         Tell us how we can improve
                       </div>
                     </div>
@@ -601,26 +588,23 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   <div className='q_feedback_icon'>{contact(iconColor)}</div>
                   <div style={{ marginLeft: '10px' }}>
                     <div>
-                      <div className='q-fw-tab-heading'
-                      style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
-                      >
+                      <div className='q-fw-tab-heading'>
                         Contact us
                       </div>
                     </div>
                     <div>
-                      <div className='q-fw-tab-description'
-                      style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
-                      >Tell us how we can help</div>
+                      <div className='q-fw-tab-description'>Tell us how we can help</div>
                     </div>
                   </div>
                 </div>
               )}
             </div>
             <div>
+            <QuestLabs style={styleConfig?.Footer} />
             </div>
           </div>
         )}
-        <QuestLabs style={styleConfig?.Footer} />
+
       </div></Modal>
 
   );
