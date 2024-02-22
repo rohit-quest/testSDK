@@ -3,7 +3,7 @@ import axios from "axios";
 import config from "../../config";
 import OtpVerification from "./OtpVerification";
 import Loader from "./Loader";
-import { alertLogo, crossLogo, emailLogo2 } from "../../assets/images";
+import { crossLogo, emailLogo2 } from "../../assets/images";
 import showToast from "../toast/toastService";
 import QuestContext from "../QuestWrapper";
 import { Input } from "../Modules/Input";
@@ -111,12 +111,6 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
       {!sendOTP && (
         <div className="questLabs">
           <div className="q-email-login-ctn">
-            {/* <div
-              style={{ color: textColor, fontFamily,...styleConfig?.Label }}
-              className="q-email-text"
-            >
-              Email
-            </div> */}
             <Label
               style={{
                 color: styleConfig?.Label?.color || themeConfig?.primaryColor,
@@ -153,7 +147,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                   borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
                   color: styleConfig?.Input?.color || themeConfig?.primaryColor,
                   ...styleConfig?.Input   
-              }}
+                }}
                 type="text"
                 placeholder="Enter your email id"
                 value={email}

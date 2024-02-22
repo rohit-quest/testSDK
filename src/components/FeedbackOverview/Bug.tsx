@@ -44,7 +44,7 @@ const BugContent: React.FC<BugContentProps> = ({
               );
             }
           })}
-          <PrimaryButton children='Submit' onClick={handleSubmit} style={buttonStyle} />
+          <PrimaryButton children='Submit' className='q-fdov-btn-continue' onClick={handleSubmit} style={buttonStyle} />
         </>
       ) : (
         <div className="q-center">

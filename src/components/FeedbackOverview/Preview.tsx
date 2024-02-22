@@ -17,6 +17,9 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
             entityId={entityId}
             featureFlags={{}}
             apiType="PRODUCTION"
+            themeConfig={{
+                primaryColor: "red",
+            }}
         >
 
             <FeedbackWorkflow
@@ -30,10 +33,13 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                 ]}
                 // showPoweredBy={false}
                 styleConfig={{
-                    Body: {
-
-                    }
+                    Form: {
+                        
+                    },
+                    Heading:{color:'red'},
+                    Description:{color:'black'}
                 }}
+                // footerBackgroundColor='red'
                 contactUrl="https://calendly.com/sriya-persana/30min"
                 isOpen={true}
                 // onClose={() => setIsOpen(!isOpen)}

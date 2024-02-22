@@ -14,6 +14,7 @@ type FeatureFlags = {
   [key: string]: FeatureFlag;
 };
 
+
 type ThemeConfig = {
   primaryColor?: string;
   secondaryColor?: string;
@@ -22,8 +23,6 @@ type ThemeConfig = {
   backgroundColor?: string;
   fontFamily?: string;
 }
-
-
 
 type Props = {
   children: ReactNode;

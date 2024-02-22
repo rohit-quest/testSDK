@@ -24,6 +24,8 @@ export default function ModalPreview({ online = true }) {
                     token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcwODQxOTU1MSwiZXhwIjoxNzA5MDI0MzUxfQ.XmHvdhNZSXgGncanDjWrEd_r2SyTQUYvyPXHRqBgviw',
                     apiKey:'k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be'
                 }}
+                // footerBackground='blue'
+                // iconColor='yellow'
             />
         </QuestProvider>
     )

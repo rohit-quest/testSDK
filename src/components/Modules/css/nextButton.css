@@ -1,18 +1,19 @@
 .q_next_button_main_cont {
   color: #FFF;
-  font-family: Figtree;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 20px;
+  display: flex;
   padding: 10px 16px;
   justify-content: center;
   align-items: center;
   gap: 4px;
-  flex: 1 0 0;
+  align-self: stretch;
   border-radius: 10px;
   border: 1.5px solid #D1ACFF;
   background: linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  flex: 1 0 0;
 }
 
 .q_next_button_main_cont:disabled {

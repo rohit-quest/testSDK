@@ -36,17 +36,18 @@ interface TutorialProps {
   textColor?: string;
   font?: string;
   isOpen?: boolean;
-  onClose?: Function;
   uniqueUserId?: string;
   uniqueEmailId?: string;
   iconColor?: string;
   onLinkTrigger?: (link: string) => void;
   styleConfig?: {
-    Body?: CSSProperties,
+    Form?: CSSProperties,
     Heading?: CSSProperties,
     Description?: CSSProperties,
-    topBar?: CSSProperties
+    topBar?: CSSProperties,
+    Footer?: CSSProperties
 }
+ footerBackgroundColor?:string
 }
 
 const TutorialScreen: React.FC<TutorialProps> = ({
@@ -59,13 +60,12 @@ const TutorialScreen: React.FC<TutorialProps> = ({
   uniqueUserId,
   uniqueEmailId,
   iconColor='#939393',
-  onClose = () => { },
   onLinkTrigger = link =>{window.open(link, 'smallWindow', 'width=500,height=500');},
   styleConfig,
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
-  const { apiKey, apiSecret, entityId,apiType } = useContext(QuestContext.Context);
+  const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(QuestContext.Context);
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
   const [gradient, setGradient] = useState<boolean>(false);
   const [showLoader, setShowLoader] = useState<boolean>(false);
@@ -179,43 +179,92 @@ const TutorialScreen: React.FC<TutorialProps> = ({
 
   const [minimze, setMin] = useState(false);
 
+  const handleStepLoad = (index: number, height: number) => {
+    const connector = document.querySelector(`#q_tutorial_progress_connector_${index}`) as HTMLElement;
+    const nextContent = document.querySelector(`#q_tutorial_box_content_${index + 1}`) as HTMLElement;
+    //  console.log(height,nextContent.offsetHeight ,'187')
+    if (connector && nextContent) {
+      let connectorHeight = (height - 32) / 2 + (nextContent.offsetHeight - 32) / 2 + 24;
+  
+      connector.style.height = `${connectorHeight}px`;
+  
+      if (index === formdata.length - 1) {
+        connector.style.display = 'none';
+      }
+    }
+  };
+  
+
   if (!isOpen) return <></>;
+console.log(styleConfig)
 
-
-  return (
-        <div className="q-tutorial-cont" style={styleConfig?.Body}>
-          <TopBar 
-            heading={heading}
-            iconColor={iconColor}
-            onClose={()=>{}}
-            description={subheading}
-            style={{
-              headingStyle: styleConfig?.Heading,
-              descriptionStyle: styleConfig?.Description, ...styleConfig?.topBar,
-            }}
-          />
-          <div>
-            <div className="q-tut-cont">
+return (
+  <div className="q-tutorial-cont"
+  style={{
+    background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
+  }}
+  >
+    <TopBar 
+      heading={heading}
+      iconColor={iconColor}
+      onClose={() => {}}
+      description={subheading}
+      style={{
+        headingStyle: { color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading },
+        descriptionStyle: { color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description },
+      }}
+    />
+    <div className='q-tut-card-cont'>
+      <div>
+        {formdata.map((step, index) => (
+          <div
+            className="q_tutorial_box"
+            id={`q_tutorial_box_${index}`}
+            key={index}
+            onClick={() => handleNextStep(step.id, step.url)}
+          >
+            <div className="q_tutorial_progress">
+              <div className='q_tutorial_progress_img_cont' 
+              style={{
+                background: step.status ? '#01ff0111' : '#FBFBFB',
+              }}
+              >
+              <img
+                className="q_tutorial_progress_icon"
+                style={{
+                  width: step.status ? '8px' : '16px',
+                  height: step.status ? '8px' : '16px',
+                }}
+                src={step.status ? greenCheck : pendingIcon}
+                alt=""
+              />
+              </div>
+             
+              {index < formdata.length - 1 && (
+                <div
+                  id={`q_tutorial_progress_connector_${index}`}
+                  style={{ background: step.status ? '#73DCA7' : '#EFEFEF' }}
+                  className="q_tutorial_progress_connector"
+                ></div>
+              )}
             </div>
-            <div>
-              {formdata.map((step, index) => (
-                <div className="q_tutorial_box" key={index} onClick={()=>handleNextStep(step.id,step.url)}>
-                  <div className='q_tutorial_progress'>
-                    <img className='q_tutorial_progress_icon' style={{background: step.status?"#01ff0111":"#FBFBFB",width: step.status?"8px":"16px",height: step.status?"8px":"16px"}} src={step.status?greenCheck:pendingIcon} alt="" />
-                    {index<(formdata.length-1) &&<div style={{background: step.status?"#73DCA7":"#EFEFEF"}} className="q_tutorial_progress_connector"></div>}
-                  </div>
-                  <div className="q_tutorial_box_content">
-                    <div className="q_tut_step">STEP {index+1}</div>
-                    <div className="q_tut_box_head">{step.title}</div>
-                    <div className="q_tut_box_desc">{step.subheading}</div>
-                  </div>
-                </div>
-              ))}
+            <div
+              id={`q_tutorial_box_content_${index}`}
+              className="q_tutorial_box_content"
+              ref={(ref) => ref && handleStepLoad(index, ref.offsetHeight)}
+            >
+              <div className="q_tut_step" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>STEP {index + 1}</div>
+              <div className="q_tut_box_head" style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}>{step.title}</div>
+              <div className="q_tut_box_desc" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>{step.subheading}</div>
             </div>
           </div>
-          <QuestLabs  color={iconColor}/>
-        </div>
-  );
+        ))}
+      </div>
+    </div>
+    <QuestLabs style={styleConfig?.Footer} />
+  </div>
+);
+
 };
 
 export default TutorialScreen;

@@ -18,7 +18,8 @@ import Label from '../Modules/Label';
 import { Input } from '../Modules/Input';
 import TextArea from '../Modules/TextArea';
 import { PrimaryButton } from '../Modules/PrimaryButton';
-import { SecondaryButton } from '../Modules/PreviousButton';
+import { SecondaryButton } from '../Modules/SecondaryButton';
+
 
   const thanks = (
     <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -76,6 +77,7 @@ interface FeedbackProps {
     PrimaryButton?: React.CSSProperties,
     SecondaryButton?: React.CSSProperties,
     Modal?: React.CSSProperties,
+    Footer?: React.CSSProperties,
   }
 }
 
@@ -114,22 +116,17 @@ const Survey: React.FC<FeedbackProps> = ({
   const [thanksPopup, setThanksPopup] = useState<boolean>(false);
   const [formdata, setFormdata] = useState<FormDataItem[]>([]);
   const [gradient, setGradient] = useState<boolean>(false);
-  const { apiKey, apiSecret, entityId ,apiType} = useContext(QuestContext.Context);
+  const { apiKey, apiSecret, entityId ,apiType, themeConfig} = useContext(QuestContext.Context);
   const [answer, setAnswer] = useState<any>({});
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [session, setSession] = useState<string>('');
   const [isVisible, setIsVisible] = useState(true);
   const [page,setPage] = useState(0);
   const [data,setData] = useState<FormDataItem[]>([]);
-  const [next,setNext] = useState(false);
   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
   const handleNext = () => {
     setPage(prevPage => Math.min(prevPage + 1, Math.ceil(formdata.length / 2) - 1));
-  };
-
-  const handlePrev = () => {
-    setPage(prevPage => Math.max(prevPage - 1, 0));
   };
 
   const dislike = (
@@ -361,7 +358,7 @@ function isValidEmail(email: string) {
       <div className="" key={criteriaId}>
         <Label 
           htmlFor="normalInput"
-          text={question}
+          children={question}
           style={styleConfig?.Label}
         />
         <Input
@@ -379,7 +376,7 @@ function isValidEmail(email: string) {
       <div className="" key={criteriaId}>
         <Label 
           htmlFor="normalInput"
-          text={question}
+          children={question}
           style={styleConfig?.Label}
         />
         <Input
@@ -402,7 +399,7 @@ function isValidEmail(email: string) {
       <div className="" key={criteriaId}>
         <Label 
           htmlFor="normalInput"
-          text={question}
+          children={question}
           style={styleConfig?.Label}
         />
         <TextArea
@@ -464,12 +461,12 @@ function isValidEmail(email: string) {
           </div>
           <div className="q-feed-btns-div">
             <SecondaryButton
-              text='Skip'
+              children='Skip'
               onClick={() => handleComments(criteriaId, comment)}
               style={styleConfig?.SecondaryButton}
             />
             <PrimaryButton 
-              text='Submit'
+              children='Submit'
               onClick={() => handleComments(criteriaId, comment)}
               style={styleConfig?.PrimaryButton}
             />
@@ -523,7 +520,7 @@ const singleChoiceOne = (
 
   return (
       <div
-        style={styleConfig?.Body}
+        style={{color: themeConfig.primaryColor,background: themeConfig.backgroundColor,...styleConfig?.Body}}
         className="q-feedback-cont"
       >
         {formdata.length > 0 ? (
@@ -614,13 +611,13 @@ const singleChoiceOne = (
                     })}
                       <div className='q_feedback_buttons'>
                         <SecondaryButton
-                          text={(0==page)?'Cancel':'Previous'}
+                          children={(0==page)?'Cancel':'Previous'}
                           onClick={()=>(0==page)?onCancel():setPage(c=>c-1)}
                           style={styleConfig?.SecondaryButton}
                         />
                         <PrimaryButton
                           style={styleConfig?.PrimaryButton}
-                          text={((data.length/itemsPerPage)<=page+1)?'Submit':'Next'}
+                          children={((data.length/itemsPerPage)<=page+1)?'Submit':'Next'}
                           type='submit'
                         />
                       </div>
@@ -653,7 +650,7 @@ const singleChoiceOne = (
                    </div>
                  </div>
                </div>
-             <QuestLabs color={iconColor || "#AFAFAF"}/>
+               <QuestLabs style={styleConfig?.Footer} />
              </div>
               )}
             </>

@@ -138,7 +138,7 @@ export const CrossSelling = ({
                 <div style={style} onClick={()=>claimRewardHandler()} className="q_share_link_button">{shareButtonText}</div>
                 <div style={style} onClick={()=>backButtonTrigger()} className="q_share_link_button_2">Go to home</div>
             </div>
-            {!gradientBackground && <QuestLabs backgroundColor={bgColor} color={iconColor} />}
+            {!gradientBackground &&<QuestLabs style={{background: bgColor,color: iconColor}} />}
         </div>
     );
 
@@ -149,7 +149,7 @@ export const CrossSelling = ({
         </div>
         {jsx}
         <div className="q_gradient_quest_powered">
-            <QuestLabs backgroundColor={bgColor} color={iconColor} />
+            <QuestLabs style={{background: bgColor,color: iconColor}} />
         </div>
     </div>
     return jsx;

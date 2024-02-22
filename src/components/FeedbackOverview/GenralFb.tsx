@@ -1,7 +1,8 @@
-import { CSSProperties, useState } from 'react';
+import { CSSProperties, useContext, useState } from 'react';
 import './FeedbackOverview.css';
 import Label from '../Modules/Label';
-import { PrimaryButton } from '../Modules/PrimaryButton';
+import { PrimaryButton } from '../Modules/PrimaryButton'
+import QuestContext from '../QuestWrapper';
 
 interface GeneralFeedbackContentProps {
   starColor?: string;
@@ -63,11 +64,8 @@ const blackStar = (
     </svg>
 );
 
-function isValidEmail(email: string) {
-  if (!email) return false;
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return !emailRegex.test(email);
-}
+const { themeConfig } = useContext(QuestContext.Context);
+
 
 
   return (
@@ -148,9 +146,11 @@ function isValidEmail(email: string) {
               );
             }
           })}
-          <PrimaryButton children='Send Feedback'
+          <PrimaryButton 
+            children='Send Feedback'
             onClick={handleSubmit}
             style={buttonStyle}
+            className='q-fdov-btn-continue'
           />
         </>
       ) : (
