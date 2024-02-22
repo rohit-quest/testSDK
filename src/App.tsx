@@ -216,9 +216,9 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-        <TutorialPreview online={false} />
+        {/* <TutorialPreview online={false} /> */}
 
-        {/* <FeedbackWorkflowPreview online={true} /> */}
+        <FeedbackWorkflowPreview online={true} />
 
         {/* <FeedbackPreview /> */}
 

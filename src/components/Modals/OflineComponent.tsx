@@ -118,7 +118,7 @@ export default function QuestMOdalOffline({
           <div className="q_modal_upload_button">Upload</div>
         </div>
       </div>
-      <QuestLabs color={iconColor} />
+      <QuestLabs style={{color: iconColor}} />
     </div>
   )
 }

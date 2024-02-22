@@ -51,7 +51,8 @@ type offlineGetStartedProps = {
     Description?: CSSProperties,
     PrimaryButton?: CSSProperties,
     SecondaryButton?: CSSProperties,
-    Form?:CSSProperties
+    Form?:CSSProperties,
+    Footer?:CSSProperties
   } ;
   offlineData:offlineData[]
 };
@@ -289,7 +290,7 @@ function OfflineGetStarted({
         ? !!data.length && !allCriteriaCompleted
         : true)) &&
         <div>
-          <QuestLabs backgroundColor={footerBackgroundColor} color={questIconColor} />
+          <QuestLabs style={styleConfig?.Footer} />
         </div>
       }
     </div>

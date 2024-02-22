@@ -38,53 +38,55 @@ export default function SearchPreview({ online = false }) {
         return (
             <SearchOffline
             open={true}
-            defaultResultLength={5}
-            
+            styleConfig={{
+                // Body: {
+                //     backgroundColor: "black",
+                //     color: "white"
+                // },
+                // Heading: {
+                //     backgroundColor: "black",
+                //     color: "white"
+                // },
+                // Description: {
+                //     backgroundColor: "black",
+                //     color: "white"
+                // },
+                // Footer: {
+                //     backgroundColor: "black",
+                //     color: "white"
+                // }
+            }}
+            defulatResultLength={5}
             offlineFormatData={[
                 {
                     icon: 'Layers',
                     link: "/admin/campaigns",
-                    linkUrl: "/admin/campaigns",
                     text: "Campaigns",
-                    linkTitle: "Campaigns",
-                    "type": "LINK_OPEN_READ",
-                    criteriaId: criteriaId(),
+                    description: ''
                 },
                 {
                     icon: 'Layers',
                     link: "/admin/campaigns/template",
-                    linkUrl: "/admin/campaigns/template",
                     text: "Create Campaign",
-                    linkTitle: "Create Campaign",
-                    "type": "LINK_OPEN_READ",
-                    criteriaId: criteriaId()
+                    description: ''
                 },
                 {
                     icon: 'membershipsIcon',
                     link: "/admin/memberships",
-                    linkUrl: "/admin/memberships",
                     text: "Memberships",
-                    linkTitle: "Memberships",
-                    "type": "LINK_OPEN_READ",
-                    criteriaId: criteriaId()
+                    description: ''
                 },
                 {
                     icon: 'settingsIcon',
                     link: "/admin/settings",
-                    linkUrl: "/admin/settings",
                     text: "Settings",
-                    linkTitle: "Settings",
-                    "type": "LINK_OPEN_READ",
-                    criteriaId: criteriaId()
+                    description: ''
                 },
                 {
                     icon: 'Audience',
                     link: "/admin/audience",
-                    linkUrl: "/admin/audience",
                     text: "Audience",
-                    linkTitle: "Audience",
-                    "type": "LINK_OPEN_READ",
-                    criteriaId: criteriaId()
+                    description: ''
                 }]}
         />
     )

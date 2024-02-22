@@ -48,7 +48,8 @@ type GetStartedProps = {
     PrimaryButton?: CSSProperties,
     SecondaryButton?: CSSProperties,
     Form?:CSSProperties,
-  }
+    Footer?:CSSProperties
+}
 };
 interface TutorialStep {
   id: number;
@@ -490,7 +491,7 @@ function GetStarted({
         ? !!formdata.length && !allCriteriaCompleted
         : true)) &&
         <div>
-          <QuestLabs backgroundColor={footerBackgroundColor} color={questIconColor} />
+          <QuestLabs style={styleConfig?.Footer} />
         </div>
       }
     </div>

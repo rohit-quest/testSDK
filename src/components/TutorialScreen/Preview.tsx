@@ -69,6 +69,11 @@ export default function TutorialPreview({online=true}) {
                     // backgroundColor: "black",
                     // color: "white"
                 },
+                Footer:{
+                    backgroundColor: "black",
+                    color: "white"
+                
+                }
                 // Heading :{fontSize:'50px',color:'pink'},
                 // Description:{fontSize:'100px',color:'red'}
              }}

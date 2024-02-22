@@ -3,7 +3,7 @@ import axios from "axios";
 import config from "../../config";
 import OtpVerification from "./OtpVerification";
 import Loader from "./Loader";
-import { alertLogo, crossLogo, emailLogo2 } from "../../assets/images";
+import { crossLogo, emailLogo2 } from "../../assets/images";
 import showToast from "../toast/toastService";
 import QuestContext from "../QuestWrapper";
 import { Input } from "../Modules/Input";
@@ -54,7 +54,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [mainValidEmail, setMainValidEmail] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
-  const { apiType } = useContext(QuestContext.Context);
+  const { apiType, themeConfig } = useContext(QuestContext.Context);
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
@@ -111,7 +111,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
         <div className="questLabs">
           <div className="q-email-login-ctn">
             <div
-              style={{ color: textColor, fontFamily,...styleConfig?.Label }}
+              style={{ color: themeConfig.primaryColor,background: themeConfig.backgroundColor, fontFamily,...styleConfig?.Label }}
               className="q-email-text"
             >
               Email
