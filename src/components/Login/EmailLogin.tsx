@@ -8,6 +8,7 @@ import showToast from "../toast/toastService";
 import QuestContext from "../QuestWrapper";
 import { Input } from "../Modules/Input";
 import { PrimaryButton } from "../Modules/PrimaryButton";
+import Label from "../Modules/Label";
 
 interface EmailLoginProps {
   otpScreen: boolean;
@@ -47,7 +48,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   apiSecret,
   btnTextColor,
   onSubmit,
-  styleConfig
+  styleConfig,
 }) => {
   const [sendOTP, setSendOTP] = useState(false);
   const [email, setEmail] = useState("");
@@ -110,15 +111,17 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
       {!sendOTP && (
         <div className="questLabs">
           <div className="q-email-login-ctn">
-            <div
-              style={{ color: themeConfig.primaryColor,background: themeConfig.backgroundColor, fontFamily,...styleConfig?.Label }}
-              className="q-email-text"
+            <Label
+              style={{
+                color: styleConfig?.Label?.color || themeConfig?.primaryColor,
+                ...styleConfig?.Label,
+              }}
             >
               Email
-            </div>
+            </Label>
             <div className="q-email-input">
               <img src={emailLogo2} className="q-email-logo" alt="" />
-              {email && (
+              {/* {email && (
                 <img
                   src={crossLogo}
                   className="q-email-cross"
@@ -128,7 +131,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                     setMainValidEmail(true);
                   }}
                 />
-              )}
+              )} */}
 
               {/* <input
                 id="q_email_login"
@@ -140,7 +143,11 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                 className="q-login-email-input"
               /> */}
               <Input
-              style={{...styleConfig?.Input}}
+                style={{ 
+                  borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+                  color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+                  ...styleConfig?.Input   
+                }}
                 type="text"
                 placeholder="Enter your email id"
                 value={email}
@@ -162,7 +169,16 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
             >
               Continue
             </div> */}
-            <PrimaryButton style={{...styleConfig?.PrimaryButton}} children="Continue" onClick={sendOTPfunction} />
+            <PrimaryButton
+              style={{
+                background:
+                  styleConfig?.PrimaryButton?.background ||
+                  themeConfig?.buttonColor,
+                ...styleConfig?.PrimaryButton,
+              }}
+              children={"Continue"}
+              onClick={sendOTPfunction}
+            />
           </div>
         </div>
       )}

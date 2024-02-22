@@ -130,7 +130,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   uniqueEmailId,
   descriptions = { "General Feedback": "Welcome back, Please complete your details", "Report a Bug": "Describe your issue", "Contact us": "Invite other admins and moderators", "Request a Feature": "How can we make it better" },
   iconColor = "#939393",
-  styleConfig ,
+  styleConfig,
 }) => {
   const [selectedOption, setSelectedOption] = useState<optionType | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);

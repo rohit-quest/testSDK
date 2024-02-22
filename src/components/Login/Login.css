@@ -69,8 +69,8 @@
 }
 .login-or-line {
   height: 0.5px;
-  width: 100px;
-  background-color: #afafaf;
+  width: 140px;
+  background-color: #e0e0e0;
 }
 .powered-by {
   margin-top: 0.75rem;
@@ -89,6 +89,9 @@
   border: 1.5px solid #efefef;
   font-family: Figtree;
   font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
 }
 .q-resend {
   color: var(--neutral-grey-400, #5e5e5e);
@@ -118,6 +121,15 @@
   margin-top: 20px;
   cursor: pointer;
   background: linear-gradient(84deg, #9035ff 0.36%, #0065ff 100.36%);
+  color: var(--Neutral-White-100, #fff);
+  padding: 10px 16px;
+  /* justify-content: center;
+  align-items: center; */
+  /* gap: 4px; */
+  /* flex: 1 0 0; */
+  border-radius: 10px;
+  border: 1.5px solid #d1acff;
+  width: 100%;
 }
 
 .q-email-text {
@@ -192,12 +204,15 @@
   border-radius: 6px;
   border: 2px solid var(--Neutral-Grey-100, #ececec);
 }
+.quest_footer div{
+ text-align: center;
+}
 
 .q-or-continue {
-  color: var(--grey-0, var(--neutral-grey-200, #afafaf));
+  color: #e0e0e0;
   font-family: Hanken Grotesk;
-  font-size: 12px;
+  font-size: 10px;
   font-style: normal;
   font-weight: 400;
-  line-height: 16px;
+  line-height: 12px;
 }

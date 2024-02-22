@@ -13,9 +13,9 @@ interface buttonType {
 }
 
 
-export const PrimaryButton = ({ disabled, children, style, onClick, className,type }:buttonType) => {
+export const PrimaryButton = ({ disabled, children, style, onClick, className, type }:buttonType) => {
   const { themeConfig } = useContext(QuestContext.Context);
-
+  
   return (
     <button className={` ${className} q_next_button_main_cont`} type={type} style={{background: themeConfig.buttonColor,...style}} onClick={onClick} disabled={disabled}>
       {children}

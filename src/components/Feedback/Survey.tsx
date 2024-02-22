@@ -20,6 +20,7 @@ import TextArea from '../Modules/TextArea';
 import { PrimaryButton } from '../Modules/PrimaryButton';
 import { SecondaryButton } from '../Modules/SecondaryButton';
 
+
   const thanks = (
     <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g clipRule="url(#clip0_4046_146)">

@@ -15,7 +15,6 @@ type FeatureFlags = {
 };
 
 
-
 type ThemeConfig = {
   primaryColor?: string;
   secondaryColor?: string;

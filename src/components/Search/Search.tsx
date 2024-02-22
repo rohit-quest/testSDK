@@ -157,7 +157,12 @@ export default function Search(prop: propType): JSX.Element {
           onChange={e => { onSearch(e.target.value); handleSearch(e.target.value) }} className='q_sdk_input q_search_input' /> */}
         <div className="q_searchBox_input_cont">
           <Input
-            style={{ ...styleConfig?.Input }}
+            style={{
+              borderColor:
+                styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+              color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+              ...styleConfig?.Input,
+            }}
             type="text"
             placeholder={prop.placeholder}
             ref={inputElement}
@@ -193,10 +198,25 @@ export default function Search(prop: propType): JSX.Element {
                 alt={""}
               />
               <div className="q_search_result_box">
-                <div style={styleConfig?.Heading} className="q_search_result_head">
+                <div
+                  style={{
+                    color:
+                      styleConfig?.Heading?.color || themeConfig?.primaryColor,
+                    ...styleConfig?.Heading,
+                  }}
+                  className="q_search_result_head"
+                >
                   {text}
                 </div>
-                <div style={styleConfig?.Description} className="q_search_result_desc">
+                <div
+                  style={{
+                    color:
+                      styleConfig?.Description?.color ||
+                      themeConfig?.secondaryColor,
+                    ...styleConfig?.Description,
+                  }}
+                  className="q_search_result_desc"
+                >
                   {description || "Provide the required information"}
                 </div>
               </div>

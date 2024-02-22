@@ -31,6 +31,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                     'q-request-a-feature',
                     'q-contact-us',
                 ]}
+                // showPoweredBy={false}
                 styleConfig={{
                     Form: {
                         
