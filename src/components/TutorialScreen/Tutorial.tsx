@@ -44,7 +44,6 @@ interface TutorialProps {
     Form?: CSSProperties,
     Heading?: CSSProperties,
     Description?: CSSProperties,
-    topBar?: CSSProperties,
     Footer?: CSSProperties
 }
  footerBackgroundColor?:string
@@ -177,7 +176,6 @@ const TutorialScreen: React.FC<TutorialProps> = ({
     functions.getKeys({userid: userId|| "",apikey: apiKey,entityId,token: token||""})
   }, []);
 
-  const [minimze, setMin] = useState(false);
 
   const handleStepLoad = (index: number, height: number) => {
     const connector = document.querySelector(`#q_tutorial_progress_connector_${index}`) as HTMLElement;

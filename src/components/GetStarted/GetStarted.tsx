@@ -21,7 +21,6 @@ type GetStartedProps = {
   token: string;
   questId: string;
   cardBackground?: string;
-  mainBackground?: string;
   onCompleteAllStatus?: () => void;
   iconUrls: Array<string>;
   uniqueUserId?: string;
@@ -42,14 +41,14 @@ type GetStartedProps = {
   showFooter?: boolean;
   onLinkTrigger?: (url: string, index: number) => void;
   template?: 1 | 2;
-  styleConfig ?: {
-    Heading ?: CSSProperties,
+  styleConfig?: {
+    Heading?: CSSProperties,
     Description?: CSSProperties,
     PrimaryButton?: CSSProperties,
     SecondaryButton?: CSSProperties,
-    Form?:CSSProperties,
-    Footer?:CSSProperties
-}
+    Form?: CSSProperties,
+    Footer?: CSSProperties
+  }
 };
 interface TutorialStep {
   id: number;
@@ -84,9 +83,7 @@ function GetStarted({
   showLoadingIndicator = true,
   showAnnouncement = false,
   allowMultiClick = false,
-  footerBackgroundColor = 'transparent',
-  questIconColor = '#939393',
-  onLinkTrigger = (url:string, index: number)=>{window.location.href=url},
+  onLinkTrigger = (url: string, index: number) => { window.location.href = url },
   showFooter = true,
   styleConfig
 }: GetStartedProps) {
@@ -187,43 +184,43 @@ function GetStarted({
         fetchData(headers);
       }
 
-  function fetchData(header: any) {
-    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}`;
-    axios.get(request, { headers: header }).then((res) => {
-      let response = res.data;
-      let criterias = response?.eligibilityData?.map((criteria: any) => {
-        return {
-          type: criteria?.data?.criteriaType,
-          title: criteria?.data?.metadata?.linkActionName,
-          url: criteria?.data?.metadata?.linkActionUrl,
-          description:
-            criteria?.data?.metadata?.description ||
-            "this is the description",
-          btn1: criteria?.data?.metadata?.btn1,
-          btn2: criteria?.data?.metadata?.btn2,
-          btn1Link: criteria?.data?.metadata?.btn1Link,
-          criteriaId: criteria?.data?.criteriaId,
-          completed: criteria?.completed,
-          longDescription:
-            criteria?.longDescription ||
-            "Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users",
-          imageUrl: criteria?.imageUrl,
-        };
-      });
-      const allCriteriasCompleted = criterias.every(
-        (criteria: any) => criteria.completed === true
-      );
-      if (allCriteriasCompleted) {
-        setAllCriteriaCompleted(true);
+      function fetchData(header: any) {
+        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}`;
+        axios.get(request, { headers: header }).then((res) => {
+          let response = res.data;
+          let criterias = response?.eligibilityData?.map((criteria: any) => {
+            return {
+              type: criteria?.data?.criteriaType,
+              title: criteria?.data?.metadata?.linkActionName,
+              url: criteria?.data?.metadata?.linkActionUrl,
+              description:
+                criteria?.data?.metadata?.description ||
+                "this is the description",
+              btn1: criteria?.data?.metadata?.btn1,
+              btn2: criteria?.data?.metadata?.btn2,
+              btn1Link: criteria?.data?.metadata?.btn1Link,
+              criteriaId: criteria?.data?.criteriaId,
+              completed: criteria?.completed,
+              longDescription:
+                criteria?.longDescription ||
+                "Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users",
+              imageUrl: criteria?.imageUrl,
+            };
+          });
+          const allCriteriasCompleted = criterias.every(
+            (criteria: any) => criteria.completed === true
+          );
+          if (allCriteriasCompleted) {
+            setAllCriteriaCompleted(true);
+          }
+          criterias = Array.isArray(criterias) ? criterias : [];
+          if (!dropdowns.length)
+            setDropdown(new Array(criterias.length).fill(false));
+          setFormdata([...criterias]);
+        });
       }
-      criterias = Array.isArray(criterias) ? criterias : [];
-      if (!dropdowns.length)
-        setDropdown(new Array(criterias.length).fill(false));
-      setFormdata([...criterias]);
-    });
-  }
-}
-}, [criteriaSubmit]);
+    }
+  }, [criteriaSubmit]);
 
   useEffect(() => {
     if (allCriteriaCompleted) {
@@ -308,7 +305,7 @@ function GetStarted({
     formdata.length > 0 &&
     <div
       style={{
-        background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
+        background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
       }}
       className="get_started_box"
     >
@@ -316,18 +313,18 @@ function GetStarted({
       {(autoHide === true
         ? !!formdata.length && !allCriteriaCompleted
         : true) && (
-        <div className="gs-heading-div">
-          <div>
-            <div style={{  color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }} className="gs-heading">
-              {headingText || "Quickstart Guide"}
-            </div>
-            <div style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description }} className="gs-subheading">
-              {descriptionText ||
-                "Get started with Quest and explore how Quest can take your customer engagement to the next level"}
+          <div className="gs-heading-div">
+            <div>
+              <div style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }} className="gs-heading">
+                {headingText || "Quickstart Guide"}
+              </div>
+              <div style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description }} className="gs-subheading">
+                {descriptionText ||
+                  "Get started with Quest and explore how Quest can take your customer engagement to the next level"}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
       {(autoHide === true ? !!formdata.length && !allCriteriaCompleted : true) &&
         showProgressBar && (
           <div className="q_gt_progress">
@@ -377,7 +374,7 @@ function GetStarted({
                       {e.title}
                     </div>
                     <div
-                       style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
+                      style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
                       className="gs-card-desc"
                     >
                       {e.description}
@@ -385,9 +382,9 @@ function GetStarted({
                   </div>
                   <div>
                     {
-                      <div className="q_gt_dropdown">
+                      <div className="gs-card-img-button">
                         {e.completed ? (
-                          <img src={greenCheck} alt="" className="q_gt_arrow-completed" />
+                            <img src={greenCheck} alt="" className="q_gt_arrow-completed" />
                         ) : (
                           <img
                             src={
@@ -407,25 +404,26 @@ function GetStarted({
                 </div>
                 {dropdowns[i] && (
                   <div className="gs_card_dropdown">
-                    <div className="gs_drop_desc"  style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>{e.longDescription}</div>
+                    <div className="gs_drop_desc" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>{e.longDescription}</div>
                     <div className="gs_drop_btns">
-                      <PrimaryButton className={'gs_start_btn'} children={"Start Now"} onClick={(event) =>{
-                          event.stopPropagation()
-                          !(!allowMultiClick && e.completed) &&
+                      <PrimaryButton className={'gs_start_btn'} children={"Start Now"} onClick={(event) => {
+                        event.stopPropagation()
+                        !(!allowMultiClick && e.completed) &&
                           handleCriteriaClick(e.criteriaId, e.url)
-                         }
-                        }
+                      }
+                      }
                         disabled={(!allowMultiClick && e.completed)}
                         style={{
+                          flex: 'inherit',
                           background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
                           ...styleConfig?.PrimaryButton
-                         }}
-                        />
+                        }}
+                      />
                       <SecondaryButton
-                       style={{...styleConfig?.SecondaryButton}}
-                       onClick={() => window.open(e.url)} 
-                      className="gs_visit_btn" 
-                      children={ e.btn1 || "Visit Website"} />
+                        style={{ ...styleConfig?.SecondaryButton }}
+                        onClick={() => window.open(e.url)}
+                        className="gs_visit_btn"
+                        children={e.btn1 || "Visit Website"} />
                     </div>
                   </div>
                 )}
@@ -434,12 +432,12 @@ function GetStarted({
               <div
                 key={i}
                 className="gs-single-card"
-                onClick={() =>{
+                onClick={() => {
                   !(!allowMultiClick && e.completed) &&
-                  handleCriteriaClick(e.criteriaId, e.url)
-                  console.log(e.completed,allowMultiClick)
-                  }
+                    handleCriteriaClick(e.criteriaId, e.url)
+                  console.log(e.completed, allowMultiClick)
                 }
+              }
               >
                 <div
                   className="gs_card_body"
@@ -468,21 +466,21 @@ function GetStarted({
                     </div>
                   </div>
                   {/* <div className="gs-card-btn-container"> */}
-                    <div
-                      className="gs-card-img-button"
-                    >
-                      {e.completed ? (
-                        <img src={greenCheck} className="q_gt_arrow-completed" alt="" />
-                      ) : (
-                        <img
-                          className="q_gt_arrow"
-                          src={arrowRight(arrowColor)}
-                          alt=""
-                        />
-                      )}
-                    </div>
+                  <div
+                    className="gs-card-img-button"
+                  >
+                    {e.completed ? (
+                      <img src={greenCheck} className="q_gt_arrow-completed" alt="" />
+                    ) : (
+                      <img
+                        className="q_gt_arrow"
+                        src={arrowRight(arrowColor)}
+                        alt=""
+                      />
+                    )}
                   </div>
                 </div>
+              </div>
               // </div>
             )
           )}
