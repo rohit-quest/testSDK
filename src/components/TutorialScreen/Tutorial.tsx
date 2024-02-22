@@ -261,7 +261,7 @@ return (
         ))}
       </div>
     </div>
-    <QuestLabs backgroundColor={footerBackgroundColor} color={iconColor} />
+    <QuestLabs style={styleConfig?.Footer} />
   </div>
 );
 

@@ -43,7 +43,7 @@ interface TutorialProps {
   onLinkTrigger?: (link: string) => void
   offlineFormatData?: TutorialStep[];
   styleConfig?: {
-    Body?: CSSProperties,
+    Form?: CSSProperties,
     Heading?: CSSProperties,
     Description?: CSSProperties,
     topBar?: CSSProperties,
@@ -205,7 +205,7 @@ const OfflineComponent: React.FC<TutorialProps> = ({
   return (
     <div className="q-tutorial-cont"
       style={{
-        background: styleConfig?.Body?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Body?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Body
+        background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
       }}
     >
       <TopBar
