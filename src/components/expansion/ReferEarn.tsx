@@ -83,7 +83,7 @@ export const Referral = ({
   }, []);
 
   const jsx = (
-    <div className="q_refer_and_earn" style={{background: themeConfig.backgroundColor,color: themeConfig.primaryColor,...styleConfig?.Form}}>
+    <div className="q_refer_and_earn" style={{background: themeConfig.backgroundColor || "#FFF",color: themeConfig.primaryColor,...styleConfig?.Form}}>
       <div className="q_refer_head" >
         <img src={referIcon} className="refer_head_img" alt="" />
       </div>

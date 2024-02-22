@@ -65,6 +65,9 @@ export default function SreakPreview({ online = true }) {
             entityId={entityId}
             featureFlags={{}}
             apiType="PRODUCTION"
+            themeConfig={{
+                
+            }}
         >
             <DailyStreak
                 // description=''
@@ -74,7 +77,10 @@ export default function SreakPreview({ online = true }) {
                 metric=''
                 token=''
                 userId=''
-                color=''
+                styleConfig={{
+                    // Description: { color: 'red' },
+                    // Form: { background: 'blue' }
+                }}
                 stepDetails={[
                     {description:"This is the longest streak you’ve ever head1",title: "Confident reader",range: 3},
                     {description:"This is the longest streak you’ve ever head2",title: "Responsible reader",range: 2},
