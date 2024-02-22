@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './css/topBar.css'
+import QuestContext from '../QuestWrapper';
 
 interface PropType {
     heading: string,
@@ -23,6 +24,8 @@ export default function TopBar({
     style,
 }:PropType) {
 
+    const {themeConfig} = useContext(QuestContext.Context);
+
     const cross = (color = "#AFAFAF", onClick?: () => void) => (
         <img onClick={() => onClick?.()} style={{ cursor: "pointer", ...style?.iconStyle,background: "inherit",backgroundColor: "inherit" }}
         src={createUrl(`
@@ -43,11 +46,11 @@ export default function TopBar({
       );
 
     return (
-        <div className="q_top_bar" style={style}>
+        <div className="q_top_bar" style={{background: themeConfig.backgroundColor,...style}}>
             <div className='q_top_bar_heading'>
                 <div>
-                    <div style={style?.headingStyle}>{heading}</div>
-                    <div style={style?.descriptionStyle} className='q_top_bar_desc'>{description}</div>
+                    <div style={{color: themeConfig.primaryColor,...style?.headingStyle}}>{heading}</div>
+                    <div style={{color: themeConfig.secondaryColor,...style?.descriptionStyle}} className='q_top_bar_desc'>{description}</div>
                 </div>
             </div>
             {cross(iconColor, onClose)}

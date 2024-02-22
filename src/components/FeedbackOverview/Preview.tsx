@@ -17,6 +17,9 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
             entityId={entityId}
             featureFlags={{}}
             apiType="PRODUCTION"
+            themeConfig={{
+                primaryColor: "red",
+            }}
         >
 
             <FeedbackWorkflow

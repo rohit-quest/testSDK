@@ -1,5 +1,6 @@
-import { CSSProperties, ChangeEventHandler, KeyboardEventHandler, RefObject } from "react";
-import { emailLogo, phoneLogo, userLogo, calenderIcon } from "../../assets/assetsSVG";
+import { CSSProperties, ChangeEventHandler, KeyboardEventHandler, RefObject, useContext } from "react";
+import { emailLogo, phoneLogo, calenderIcon } from "../../assets/assetsSVG";
+import QuestContext from "../QuestWrapper";
 import "./css/input.css";
 
 const LogoType = {
@@ -23,9 +24,11 @@ interface PropType {
 }
 
 export const Input = ({ placeholder, type, style, onChange, iconColor, value, onKeyUp, onKeyDown, ref }: PropType) => {
+  const { themeConfig } = useContext(QuestContext.Context);
+
   return (
     (type === "date") ?
-    <div className="q_input_cont" style={style}>
+    <div className="q_input_cont" style={{borderColor: themeConfig.borderColor,color: themeConfig.primaryColor,...style}}>
       <label htmlFor="dateInput" className="q_input_custom_datePicker_label">
         <input
           type={type}
@@ -40,7 +43,7 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value, on
       {(LogoType["date"])(iconColor || "#B9B9B9")}
     </div>
     :
-    <div className="q_input_cont" style={style}>
+    <div className="q_input_cont" style={{color: themeConfig.primaryColor,...style}}>
       <input
         type={type}
         name="normalInput"

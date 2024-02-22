@@ -94,7 +94,6 @@ interface feedbackCompProps {
   descriptions?: Record<optionType, string>;
   backBtn?: boolean;
   iconColor?: string;
-  footerBackgroundColor?: string;
   styleConfig?: {
     Form?: React.CSSProperties,
     Heading?: React.CSSProperties,
@@ -131,8 +130,6 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   descriptions = { "General Feedback": "Welcome back, Please complete your details", "Report a Bug": "Describe your issue", "Contact us": "Invite other admins and moderators", "Request a Feature": "How can we make it better" },
   iconColor = "#939393",
   styleConfig ,
-  footerBackgroundColor
-
 }) => {
   const [selectedOption, setSelectedOption] = useState<optionType | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
@@ -144,6 +141,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } = useContext(QuestContext.Context);
   const [answer, setAnswer] = useState<Record<string, string>>({});
   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
+  const labelStyle = {color: themeConfig.primaryColor,...styleConfig?.Label};
 
   const thanks = (
     <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -377,7 +375,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       <div className="" key={criteriaId}>
         <Label htmlFor={'normalInput'}
           children={question}
-          style={styleConfig?.Label}
+          style={labelStyle}
         />
         <Input
           type='text'
@@ -394,7 +392,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       <div className="" key={criteriaId}>
         <Label htmlFor={'normalInput'}
           children={question}
-          style={styleConfig?.Label}
+          style={labelStyle}
         />
         <Input
           type='email'
@@ -416,7 +414,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       <div className="" key={criteriaId}>
         <Label htmlFor={'normalInput'}
           children={question}
-          style={styleConfig?.Label}
+          style={labelStyle}
         />
         <TextArea
           onChange={(e) => handleUpdate(e, criteriaId, "")}
@@ -434,18 +432,14 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose || (() => { })} style={{ padding: 0, background: 'transparent', ...styleConfig?.Modal }}>
       {showLoader && <Loader />}
-      <div className="q-fw-div"
-       style={{
-        background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
-      }}
-       id='disabledClick'>
+      <div className="q-fw-div" style={{color: themeConfig.primaryColor,background: themeConfig.backgroundColor,...styleConfig?.Form}} id='disabledClick'>
         {selectedOption && !submit ? (
           <div>
-            <TopBar 
-              style={{
-                headingStyle: {  color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading },
-                descriptionStyle: { color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description } ,
-              }}
+            <TopBar style={{
+              headingStyle: {color: themeConfig.primaryColor, ...styleConfig?.Heading },
+              descriptionStyle: {color: themeConfig.secondaryColor,...styleConfig?.Description},
+              background: themeConfig.backgroundColor
+            }}
               description={descriptions[selectedOption]}
               heading={selectedOption}
               iconColor={iconColor}
@@ -623,10 +617,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               )}
             </div>
             <div>
-              <QuestLabs backgroundColor={footerBackgroundColor} color={iconColor} />
+              <QuestLabs color={iconColor} />
             </div>
           </div>
         )}
+        <QuestLabs color={iconColor} />
 
       </div></Modal>
 
