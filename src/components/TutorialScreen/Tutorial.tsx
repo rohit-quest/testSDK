@@ -36,7 +36,6 @@ interface TutorialProps {
   textColor?: string;
   font?: string;
   isOpen?: boolean;
-  onClose?: Function;
   uniqueUserId?: string;
   uniqueEmailId?: string;
   iconColor?: string;
@@ -45,7 +44,8 @@ interface TutorialProps {
     Form?: CSSProperties,
     Heading?: CSSProperties,
     Description?: CSSProperties,
-    topBar?: CSSProperties
+    topBar?: CSSProperties,
+    Footer?: CSSProperties
 }
  footerBackgroundColor?:string
 }
@@ -60,10 +60,8 @@ const TutorialScreen: React.FC<TutorialProps> = ({
   uniqueUserId,
   uniqueEmailId,
   iconColor='#939393',
-  onClose = () => { },
   onLinkTrigger = link =>{window.open(link, 'smallWindow', 'width=500,height=500');},
   styleConfig,
-  footerBackgroundColor
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
@@ -219,7 +217,7 @@ console.log(styleConfig)
               ))}
             </div>
           </div>
-          <QuestLabs backgroundColor={footerBackgroundColor}  color={iconColor}/>
+          <QuestLabs style={styleConfig?.Footer} />
         </div>
   );
 };

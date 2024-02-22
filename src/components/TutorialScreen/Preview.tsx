@@ -26,6 +26,10 @@ export default function TutorialPreview({online=true}) {
                 Form: {
                     backgroundColor: "black",
                     // color: "white"
+                },
+                Footer:{
+                    backgroundColor: "black",
+                    // color: "white"
                 }
              }}
              heading='Your Application Progress'
@@ -65,10 +69,15 @@ export default function TutorialPreview({online=true}) {
                 }
             ]}
             styleConfig={{
-                Form: {
+                Body: {
                     backgroundColor: "black",
                     // color: "white"
                 },
+                Footer:{
+                    backgroundColor: "black",
+                    color: "white"
+                
+                }
                 // Heading :{fontSize:'50px',color:'pink'},
                 // Description:{fontSize:'100px',color:'red'}
              }}

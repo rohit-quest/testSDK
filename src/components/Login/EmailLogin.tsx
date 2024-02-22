@@ -3,11 +3,11 @@ import axios from "axios";
 import config from "../../config";
 import OtpVerification from "./OtpVerification";
 import Loader from "./Loader";
-import { alertLogo, crossLogo, emailLogo2 } from "../../assets/images";
+import { crossLogo, emailLogo2 } from "../../assets/images";
 import showToast from "../toast/toastService";
 import QuestContext from "../QuestWrapper";
-import { NormalInput } from "../Modules/Input";
-import { PrimaryButton } from "../Modules/NextButton";
+import { Input } from "../Modules/Input";
+import { PrimaryButton } from "../Modules/PrimaryButton";
 
 interface EmailLoginProps {
   otpScreen: boolean;
@@ -54,7 +54,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [mainValidEmail, setMainValidEmail] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
-  const { apiType } = useContext(QuestContext.Context);
+  const { apiType, themeConfig } = useContext(QuestContext.Context);
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
@@ -111,7 +111,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
         <div className="questLabs">
           <div className="q-email-login-ctn">
             <div
-              style={{ color: textColor, fontFamily,...styleConfig?.Label }}
+              style={{ color: themeConfig.primaryColor,background: themeConfig.backgroundColor, fontFamily,...styleConfig?.Label }}
               className="q-email-text"
             >
               Email
@@ -139,7 +139,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                 onKeyUp={handlesubmit}
                 className="q-login-email-input"
               /> */}
-              <NormalInput
+              <Input
               style={{...styleConfig?.Input}}
                 type="text"
                 placeholder="Enter your email id"
@@ -162,7 +162,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
             >
               Continue
             </div> */}
-            <PrimaryButton style={{...styleConfig?.PrimaryButton}} nextBtnText="Continue" onClick={sendOTPfunction} />
+            <PrimaryButton style={{...styleConfig?.PrimaryButton}} children="Continue" onClick={sendOTPfunction} />
           </div>
         </div>
       )}

@@ -34,7 +34,8 @@ interface propsType {
     Description?: CSSProperties,
     PrimaryButton?: CSSProperties,
     SecondaryButton?: CSSProperties,
-    Form?:CSSProperties
+    Form?:CSSProperties,
+    Footer?:CSSProperties
 }
 }
 
@@ -114,7 +115,7 @@ export default function QuestMOdal({
         />
         </div>
       </div>
-      <QuestLabs backgroundColor={footerBackground} color={iconColor} />
+      <QuestLabs style={styleConfig?.Footer} />
     </div>)
     return (
     <div className='q_feed_back_modal' 
@@ -168,7 +169,7 @@ export default function QuestMOdal({
           {/* <div className="q_modal_upload_button" onClick={() => inpRef.current?.files && inpRef.current?.files[0] && onUpload(inpRef.current?.files[0])}>Upload</div> */}
         </div>
       </div>
-      <QuestLabs backgroundColor={footerBackground} color={iconColor} />
+      <QuestLabs style={styleConfig?.Footer} />
     </div>
   )
 }

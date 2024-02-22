@@ -43,11 +43,12 @@ interface TutorialProps {
   onLinkTrigger?: (link: string) => void
   offlineFormatData?: TutorialStep[];
   styleConfig?: {
-    Form?: CSSProperties,
+    Body?: CSSProperties,
     Heading?: CSSProperties,
     Description?: CSSProperties,
-    topBar?: CSSProperties
-}
+    topBar?: CSSProperties,
+    Footer?: CSSProperties
+  }
 }
 
 const OfflineComponent: React.FC<TutorialProps> = ({
@@ -62,22 +63,21 @@ const OfflineComponent: React.FC<TutorialProps> = ({
   isOpen = true,
   // uniqueUserId,
   // uniqueEmailId,
-  iconColor='#939393',
+  iconColor = '#939393',
   onClose = () => { },
-  onLinkTrigger = link =>{window.open(link, 'smallWindow', 'width=500,height=500');},
+  onLinkTrigger = link => { window.open(link, 'smallWindow', 'width=500,height=500'); },
   styleConfig,
-  offlineFormatData=[]
+  offlineFormatData = []
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
-  const { themeConfig} = useContext(QuestContext.Context);
+  const { themeConfig } = useContext(QuestContext.Context);
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
   const [gradient, setGradient] = useState<boolean>(false);
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [hoverStates, setHoverStates] = useState(
     Array(formdata.length).fill(true)
   );
-
   // let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
   const handleNextStep = (id: any, url: string) => {
@@ -95,29 +95,29 @@ const OfflineComponent: React.FC<TutorialProps> = ({
 
     // setShowLoader(true);
     // axios
-      // .post(request, json, { headers: headers })
-      // .then((response) => {
-        // if (response.data.success) {
-          onLinkTrigger(url)
-          const filterData = formdata.map((item) => {
-            if (!item.status && item.id == id) {
-              item['status'] = true
-              setCompletedSteps((prevSteps) => [...prevSteps, currentStep]);
-            }
-            return item
-          })
-            setFormdata(filterData);
-            showToast.success('Task completed'); 
-        // } else {
-          // showToast.error(response.data.error);
-        // }
-      // })
-      // .catch((error) => {
-        // console.error('Error:', error);
-      // })
-      // .finally(() => {
-        // setShowLoader(false);
-      // });
+    // .post(request, json, { headers: headers })
+    // .then((response) => {
+    // if (response.data.success) {
+    onLinkTrigger(url)
+    const filterData = formdata.map((item) => {
+      if (!item.status && item.id == id) {
+        item['status'] = true
+        setCompletedSteps((prevSteps) => [...prevSteps, currentStep]);
+      }
+      return item
+    })
+    setFormdata(filterData);
+    showToast.success('Task completed');
+    // } else {
+    // showToast.error(response.data.error);
+    // }
+    // })
+    // .catch((error) => {
+    // console.error('Error:', error);
+    // })
+    // .finally(() => {
+    // setShowLoader(false);
+    // });
   };
 
 
@@ -135,7 +135,7 @@ const OfflineComponent: React.FC<TutorialProps> = ({
     //     entityId: entityId,
     //     email: uniqueEmailId
     //   }
-      
+
     //   if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
     //     let header = {...headers, ...{userId: questUserId, token: questUserToken}}
     //     fetchData(header)
@@ -154,10 +154,10 @@ const OfflineComponent: React.FC<TutorialProps> = ({
     //   } else {
     //     fetchData(headers)
     //   }
-      
+
     //   function fetchData(header: any) {
     //     const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}`;
-  
+
     //     axios.get(request, { headers: header }).then((res) => {
     //       let response = res.data;
     //       let criterias = response?.eligibilityData?.map((criteria: any) => {
@@ -170,7 +170,7 @@ const OfflineComponent: React.FC<TutorialProps> = ({
     //           status: criteria?.completed,
     //         };
     //       });
-          setFormdata(offlineFormatData);
+    setFormdata(offlineFormatData);
     //     });
 
     //   }
@@ -188,19 +188,19 @@ const OfflineComponent: React.FC<TutorialProps> = ({
 
 
   return (
-    <div className="q-tutorial-cont" 
-    style={{
-      background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
-    }}
+    <div className="q-tutorial-cont"
+      style={{
+        background: styleConfig?.Body?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Body?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Body
+      }}
     >
-      <TopBar 
+      <TopBar
         heading={heading}
         iconColor={iconColor}
-        onClose={()=>{}}
+        onClose={() => { }}
         description={subheading}
         style={{
-          headingStyle: {  color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading },
-          descriptionStyle: { color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description } ,
+          headingStyle: { color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading },
+          descriptionStyle: { color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description },
         }}
       />
       <div>
@@ -208,23 +208,23 @@ const OfflineComponent: React.FC<TutorialProps> = ({
         </div>
         <div>
           {formdata.map((step, index) => (
-            <div className="q_tutorial_box" key={index} onClick={()=>handleNextStep(step.id,step.url)}>
+            <div className="q_tutorial_box" key={index} onClick={() => handleNextStep(step.id, step.url)}>
               <div className='q_tutorial_progress'>
-                <img className='q_tutorial_progress_icon' style={{background: step.status?"#01ff0111":"#FBFBFB",width: step.status?"8px":"16px",height: step.status?"8px":"16px"}} src={step.status?greenCheck:pendingIcon} alt="" />
-                {index<(formdata.length-1) &&<div style={{background: step.status?"#73DCA7":"#EFEFEF"}} className="q_tutorial_progress_connector"></div>}
+                <img className='q_tutorial_progress_icon' style={{ background: step.status ? "#01ff0111" : "#FBFBFB", width: step.status ? "8px" : "16px", height: step.status ? "8px" : "16px" }} src={step.status ? greenCheck : pendingIcon} alt="" />
+                {index < (formdata.length - 1) && <div style={{ background: step.status ? "#73DCA7" : "#EFEFEF" }} className="q_tutorial_progress_connector"></div>}
               </div>
               <div className="q_tutorial_box_content">
-                <div className="q_tut_step"  style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>STEP {index+1}</div>
-                <div className="q_tut_box_head"  style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}>{step.title}</div>
-                <div className="q_tut_box_desc"  style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>{step.subheading}</div>
+                <div className="q_tut_step" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>STEP {index + 1}</div>
+                <div className="q_tut_box_head" style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}>{step.title}</div>
+                <div className="q_tut_box_desc" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>{step.subheading}</div>
               </div>
             </div>
           ))}
         </div>
       </div>
-      <QuestLabs  color={iconColor}/>
+      <QuestLabs style={styleConfig?.Footer} />
     </div>
-);
+  );
 };
 
 export default OfflineComponent;

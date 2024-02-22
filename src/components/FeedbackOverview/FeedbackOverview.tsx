@@ -104,6 +104,7 @@ interface feedbackCompProps {
     PrimaryButton?: React.CSSProperties,
     SecondaryButton?: React.CSSProperties,
     Modal?: React.CSSProperties,
+    Footer?: React.CSSProperties,
   }
 
 }
@@ -517,7 +518,6 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 </div>
               </div>
             </div>
-            <QuestLabs color={iconColor} backgroundColor={styleConfig?.Form?.background || styleConfig?.Form?.backgroundColor} />
           </div>
         ) : (
           <div >
@@ -617,12 +617,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               )}
             </div>
             <div>
-              <QuestLabs color={iconColor} />
             </div>
           </div>
         )}
-        <QuestLabs color={iconColor} />
-
+        <QuestLabs style={styleConfig?.Footer} />
       </div></Modal>
 
   );
