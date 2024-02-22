@@ -29,6 +29,7 @@ export interface QuestLoginProps {
     TextArea?: CSSProperties;
     PrimaryButton?: CSSProperties;
     SecondaryButton?: CSSProperties;
+    Form?:CSSProperties
   };
 }
 
@@ -42,7 +43,6 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   btnTextColor,
   textColor = "#252525",
   backgroundColor,
-  font,
   onSubmit,
   styleConfig,
 }) => {
@@ -115,7 +115,11 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
 
   return (
     <>
-      <div className="questLabs">
+      <div className="questLabs" 
+      style={{
+        background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
+      }}
+      >
         <ToastContainer />
         <div className="q-login-parent-container">
           <div

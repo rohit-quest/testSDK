@@ -216,12 +216,13 @@ function OfflineGetStarted({
                         disabled={(!allowMultiClick && e.completed)}
                         style={{
                           flex: 'inherit',
+                          width:'fit-content',
                           background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
                           ...styleConfig?.PrimaryButton
                         }}
                       />
                       <SecondaryButton
-                        style={{ ...styleConfig?.SecondaryButton }}
+                        style={{ ...styleConfig?.SecondaryButton, flex: 'inherit', width:'fit-content' }}
                         onClick={() => window.open(e.url)}
                         className="gs_visit_btn"
                         children={e.btn1 || "Visit Website"} />
@@ -236,7 +237,6 @@ function OfflineGetStarted({
                 onClick={() => {
                   !(!allowMultiClick && e.completed) &&
                     handleCriteriaClick(e.criteriaId, e.url)
-                  console.log(e.completed, allowMultiClick)
                 }
                 }
               >

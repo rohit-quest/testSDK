@@ -382,7 +382,7 @@ function GetStarted({
                     {
                       <div className="gs-card-img-button">
                         {e.completed ? (
-                            <img src={greenCheck} alt="" className="q_gt_arrow-completed" />
+                          <img src={greenCheck} alt="" className="q_gt_arrow-completed" />
                         ) : (
                           <img
                             src={
@@ -413,12 +413,17 @@ function GetStarted({
                         disabled={(!allowMultiClick && e.completed)}
                         style={{
                           flex: 'inherit',
+                          width: 'fit-content',
                           background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
                           ...styleConfig?.PrimaryButton
                         }}
                       />
                       <SecondaryButton
-                        style={{ ...styleConfig?.SecondaryButton }}
+                        style={{
+                          ...styleConfig?.SecondaryButton,
+                          flex: 'inherit',
+                          width: 'fit-content'
+                        }}
                         onClick={() => window.open(e.url)}
                         className="gs_visit_btn"
                         children={e.btn1 || "Visit Website"} />
@@ -433,9 +438,8 @@ function GetStarted({
                 onClick={() => {
                   !(!allowMultiClick && e.completed) &&
                     handleCriteriaClick(e.criteriaId, e.url)
-                  console.log(e.completed, allowMultiClick)
                 }
-              }
+                }
               >
                 <div
                   className="gs_card_body"
