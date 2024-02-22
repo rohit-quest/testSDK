@@ -146,7 +146,7 @@ export default function Search(prop: propType): JSX.Element {
   };
 
   const jsx = (
-    <div className="q_search_bar" style={{color: themeConfig.primaryColor,...styleConfig?.Body}}>
+    <div className="q_search_bar" style={{background: themeConfig.backgroundColor,color: themeConfig.primaryColor,...styleConfig?.Body}}>
       <div className="q_search_box">
         <img
           className="q_search_bar_icon"

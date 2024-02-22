@@ -5,8 +5,8 @@ import QuestContext from '../QuestWrapper';
 interface PropType {
     heading: string,
     description: string,
-    iconColor: string,
-    onClose: () => void,
+    iconColor?: string,
+    onClose?: () => void,
     style?: React.CSSProperties & {
         headingStyle?: React.CSSProperties,
         descriptionStyle?: React.CSSProperties,
