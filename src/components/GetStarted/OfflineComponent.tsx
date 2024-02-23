@@ -102,7 +102,7 @@ function OfflineGetStarted({
     setDropdown(new Array(offlineData.length).fill(false))
   }, [])
 
-  
+
   return (
     <div
       style={{
@@ -185,7 +185,7 @@ function OfflineGetStarted({
                     {
                       <div className="gs-card-img-button">
                         {e.completed ? (
-                          <img src={greenCheck} alt="" className="q_gt_arrow-completed" />
+                          <div className="q_gt_arrow-completed"><GetStartedSvgs type={'greenCheck'} color={'#098849'} /></div>
                         ) : (
                           <div className="q_gt_arrow">
                             {dropdowns[i] ? (
@@ -272,7 +272,7 @@ function OfflineGetStarted({
                     className="gs-card-img-button"
                   >
                     {e.completed ? (
-                      <img src={greenCheck} className="q_gt_arrow-completed" alt="" />
+                      <div className="q_gt_arrow-completed"><GetStartedSvgs type={'greenCheck'} color={'#098849'} /></div>
                     ) : (
                       // <img
                       //   className="q_gt_arrow"

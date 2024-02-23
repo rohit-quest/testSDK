@@ -294,7 +294,7 @@ function GetStarted({
     }
   }, [allCriteriaCompleted]);
 
-  
+
 
   if (featureFlags[config.FLAG_CONSTRAINTS.GetStartedFlag]?.isEnabled == false) {
     return <div></div>;
@@ -381,24 +381,24 @@ function GetStarted({
                   </div>
                   <div>
                     {
-                   <div className="gs-card-img-button">
-                   {e.completed ? (
-                     <img src={greenCheck} alt="" className="q_gt_arrow-completed" />
-                   ) : (
-                     <div className="q_gt_arrow">
-                       {dropdowns[i] ? (
-                         <GetStartedSvgs type={'upArrow'} color={arrowColor} />
-                       ) : (
-                         e.completed ? (
-                           <img src={gsTick} alt="" className="q_gt_arrow" />
-                         ) : (
-                           <GetStartedSvgs type={'downArrowIcon'} color={arrowColor} />
-                         )
-                       )}
-                     </div>
+                      <div className="gs-card-img-button">
+                        {e.completed ? (
+                         <div className="q_gt_arrow-completed"><GetStartedSvgs type={'greenCheck'} color={'#098849'} /></div>
+                        ) : (
+                          <div className="q_gt_arrow">
+                            {dropdowns[i] ? (
+                              <GetStartedSvgs type={'upArrow'} color={arrowColor} />
+                            ) : (
+                              e.completed ? (
+                                <img src={gsTick} alt="" className="q_gt_arrow" />
+                              ) : (
+                                <GetStartedSvgs type={'downArrowIcon'} color={arrowColor} />
+                              )
+                            )}
+                          </div>
 
-                   )}
-                 </div>
+                        )}
+                      </div>
                     }
                   </div>
                 </div>
@@ -474,9 +474,10 @@ function GetStarted({
                     className="gs-card-img-button"
                   >
                     {e.completed ? (
-                      <img src={greenCheck} className="q_gt_arrow-completed" alt="" />
+
+                      <div className="q_gt_arrow-completed"><GetStartedSvgs type={'greenCheck'} color={'#098849'} /></div>
                     ) : (
-                      <div  className="q_gt_arrow">
+                      <div className="q_gt_arrow">
                         <GetStartedSvgs color={arrowColor} type={'arrowRight'} />
                       </div>
                       // <img
@@ -484,7 +485,7 @@ function GetStarted({
                       //   // src={arrowRight(arrowColor)}
                       //   alt=""
                       // />
-                     
+
                     )}
                   </div>
                 </div>
