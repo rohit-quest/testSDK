@@ -308,10 +308,13 @@
 
 .q_gt_arrow {
   border-radius: 48px;
-  width: 16px;
-  height: 16px;
-  padding: 8px;
+  width: 32px;
+  height: 32px;
+  /* padding: 8px; */
   background: #fbfbfb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .gs-single-card {

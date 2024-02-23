@@ -11,7 +11,7 @@ import {
   gsTick,
   questLogo,
 } from "../../assets/images";
-import { arrowRight, downArroIcon, upArrow } from "./Svgs";
+import GetStartedSvgs from "./Svgs";
 import QuestLabs from "../QuestLabs";
 import { PrimaryButton } from "../Modules/PrimaryButton";
 import { SecondaryButton } from "../Modules/SecondaryButton";
@@ -294,6 +294,7 @@ function GetStarted({
     }
   }, [allCriteriaCompleted]);
 
+  
 
   if (featureFlags[config.FLAG_CONSTRAINTS.GetStartedFlag]?.isEnabled == false) {
     return <div></div>;
@@ -380,23 +381,24 @@ function GetStarted({
                   </div>
                   <div>
                     {
-                      <div className="gs-card-img-button">
-                        {e.completed ? (
-                          <img src={greenCheck} alt="" className="q_gt_arrow-completed" />
-                        ) : (
-                          <img
-                            src={
-                              dropdowns[i]
-                                ? upArrow(arrowColor)
-                                : e.completed
-                                  ? gsTick
-                                  : downArroIcon(arrowColor)
-                            }
-                            alt=""
-                            className="q_gt_arrow"
-                          />
-                        )}
-                      </div>
+                   <div className="gs-card-img-button">
+                   {e.completed ? (
+                     <img src={greenCheck} alt="" className="q_gt_arrow-completed" />
+                   ) : (
+                     <div className="q_gt_arrow">
+                       {dropdowns[i] ? (
+                         <GetStartedSvgs type={'upArrow'} color={arrowColor} />
+                       ) : (
+                         e.completed ? (
+                           <img src={gsTick} alt="" className="q_gt_arrow" />
+                         ) : (
+                           <GetStartedSvgs type={'downArrowIcon'} color={arrowColor} />
+                         )
+                       )}
+                     </div>
+
+                   )}
+                 </div>
                     }
                   </div>
                 </div>
@@ -474,11 +476,15 @@ function GetStarted({
                     {e.completed ? (
                       <img src={greenCheck} className="q_gt_arrow-completed" alt="" />
                     ) : (
-                      <img
-                        className="q_gt_arrow"
-                        src={arrowRight(arrowColor)}
-                        alt=""
-                      />
+                      <div  className="q_gt_arrow">
+                        <GetStartedSvgs color={arrowColor} type={'arrowRight'} />
+                      </div>
+                      // <img
+                      //   className="q_gt_arrow"
+                      //   // src={arrowRight(arrowColor)}
+                      //   alt=""
+                      // />
+                     
                     )}
                   </div>
                 </div>

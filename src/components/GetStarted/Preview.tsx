@@ -87,7 +87,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
             uniqueUserId="soumitra.petbindhi+1@gmail.com"
             showProgressBar
              showFooter={true}
-   mainBackground='pink'
+ 
             />
         </QuestProvider>)
 
@@ -104,7 +104,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
         // width="50vw" 
         autoHide={false}
 
-        arrowColor='red'
+        // arrowColor='red'
         headingText="What’s new"
         onCompleteAllStatus={() => {
             // showToast.success({ text: "completed successfully" })
@@ -112,6 +112,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
         onLinkTrigger = {()=>{
             
         }}
+        template={2}
       
         offlineData={state}
     />)

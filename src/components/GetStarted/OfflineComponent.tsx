@@ -4,10 +4,10 @@ import './GetStarted.css';
 import QuestContext from '../QuestWrapper';
 import Loader from '../Login/Loader';
 import { greenCheck, gsTick, helpCenter1, questLogo } from '../../assets/images';
-import { arrowRight, downArroIcon, upArrow } from './Svgs';
 import QuestLabs from '../QuestLabs';
 import { SecondaryButton } from '../Modules/SecondaryButton';
 import { PrimaryButton } from '../Modules/PrimaryButton';
+import GetStartedSvgs from './Svgs';
 
 
 interface offlineData {
@@ -84,8 +84,8 @@ function OfflineGetStarted({
   const [dropdowns, setDropdown] = useState<Array<boolean>>([]);
   const [data, setData] = useState(offlineData)
 
-  const completedPercentage = data?.length ? (data?.reduce((a, b) => a + (b.completed ? 1 : 0), 0)) * 100 / data?.length: 0;
-  useEffect(()=>{offlineData?.length && setData(offlineData)},[offlineData])
+  const completedPercentage = data?.length ? (data?.reduce((a, b) => a + (b.completed ? 1 : 0), 0)) * 100 / data?.length : 0;
+  useEffect(() => { offlineData?.length && setData(offlineData) }, [offlineData])
 
   const handleCriteriaClick = (criteriaId: string | undefined, url: string) => {
     const update = data.map((item, index) => {
@@ -102,7 +102,7 @@ function OfflineGetStarted({
     setDropdown(new Array(offlineData.length).fill(false))
   }, [])
 
-
+  
   return (
     <div
       style={{
@@ -187,17 +187,18 @@ function OfflineGetStarted({
                         {e.completed ? (
                           <img src={greenCheck} alt="" className="q_gt_arrow-completed" />
                         ) : (
-                          <img
-                            src={
-                              dropdowns[i]
-                                ? upArrow(arrowColor)
-                                : e.completed
-                                  ? gsTick
-                                  : downArroIcon(arrowColor)
-                            }
-                            alt=""
-                            className="q_gt_arrow"
-                          />
+                          <div className="q_gt_arrow">
+                            {dropdowns[i] ? (
+                              <GetStartedSvgs type={'upArrow'} color={arrowColor} />
+                            ) : (
+                              e.completed ? (
+                                <img src={gsTick} alt="" className="q_gt_arrow" />
+                              ) : (
+                                <GetStartedSvgs type={'downArrowIcon'} color={arrowColor} />
+                              )
+                            )}
+                          </div>
+
                         )}
                       </div>
                     }
@@ -216,13 +217,13 @@ function OfflineGetStarted({
                         disabled={(!allowMultiClick && e.completed)}
                         style={{
                           flex: 'inherit',
-                          width:'fit-content',
+                          width: 'fit-content',
                           background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
                           ...styleConfig?.PrimaryButton
                         }}
                       />
                       <SecondaryButton
-                        style={{ ...styleConfig?.SecondaryButton, flex: 'inherit', width:'fit-content' }}
+                        style={{ ...styleConfig?.SecondaryButton, flex: 'inherit', width: 'fit-content' }}
                         onClick={() => window.open(e.url)}
                         className="gs_visit_btn"
                         children={e.btn1 || "Visit Website"} />
@@ -273,11 +274,15 @@ function OfflineGetStarted({
                     {e.completed ? (
                       <img src={greenCheck} className="q_gt_arrow-completed" alt="" />
                     ) : (
-                      <img
-                        className="q_gt_arrow"
-                        src={arrowRight(arrowColor)}
-                        alt=""
-                      />
+                      // <img
+                      //   className="q_gt_arrow"
+                      //   src={arrowRight(arrowColor)}
+                      //   alt=""
+                      // />
+                      <div className="q_gt_arrow">
+                        <GetStartedSvgs type={'arrowRight'} color={arrowColor} />
+                      </div>
+
                     )}
                   </div>
                 </div>
