@@ -20,12 +20,12 @@ interface PropType {
   onKeyDown?: KeyboardEventHandler<HTMLInputElement> | undefined;
   iconColor?: string;
   value?: string;
+  logoPosition?: 'left' | 'right' | 'both'
   ref?: RefObject<HTMLInputElement>
 }
 
-export const Input = ({ placeholder, type, style, onChange, iconColor, value, onKeyUp, onKeyDown, ref }: PropType) => {
+export const Input = ({ placeholder, type, style, onChange, iconColor, value, onKeyUp, onKeyDown, ref,logoPosition = 'right' }: PropType) => {
   const { themeConfig } = useContext(QuestContext.Context);
-
   return (
     (type === "date") ?
     <div className="q_input_cont" style={{borderColor: themeConfig.borderColor,color: themeConfig.primaryColor,...style}}>
@@ -44,6 +44,7 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value, on
     </div>
     :
     <div className="q_input_cont" style={{color: themeConfig.primaryColor,...style}}>
+      { (logoPosition == 'left' || logoPosition == 'both') && (LogoType[type])(iconColor || '#B9B9B9')}
       <input
         type={type}
         name="normalInput"
@@ -55,9 +56,9 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value, on
         value={value}
         ref={ref}
         onWheel={event => { event.currentTarget.blur(); }}
-        style={style}
+        // style={style}
       />
-      {(LogoType[type])(iconColor || '#B9B9B9')}
+      { (logoPosition == 'right' || logoPosition == 'both') && (LogoType[type])(iconColor || '#B9B9B9')}
     </div>
   );
 };
