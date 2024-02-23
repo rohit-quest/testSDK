@@ -69,7 +69,7 @@ interface FeedbackProps {
   uniqueEmailId?: string;
   uniqueUserId?: string;
   styleConfig?: {
-    Body?: React.CSSProperties,
+    Form?: React.CSSProperties,
     Heading?: React.CSSProperties,
     Description?: React.CSSProperties,
     Input?: React.CSSProperties,
@@ -519,7 +519,7 @@ const singleChoiceOne = (
 
   return (
       <div
-        style={{color: themeConfig.primaryColor,background: themeConfig.backgroundColor,...styleConfig?.Body}}
+        style={{color: themeConfig.primaryColor,background: themeConfig.backgroundColor,...styleConfig?.Form}}
         className="q-feedback-cont"
       >
         {formdata.length > 0 ? (
