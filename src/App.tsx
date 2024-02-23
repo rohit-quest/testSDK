@@ -4,7 +4,7 @@ import QuestLogin from "./components/Login/Login";
 import { answer } from "./components/QuestForm/response";
 import { HelpCenter } from "./components/HelpCenter/HelpCenter";
 import { ReferEarn, ReferShare } from "./components/Refer/ReferEarn";
-import { showToast } from "./components/toast/toastService";
+// import { showToast } from "./components/toast/toastService";
 import { QuestForm } from "./components/QuestForm/index";
 import Feedback from "./components/Feedback/Feedback";
 import FeedbackWorkflow from "./components/FeedbackOverview/FeedbackOverview";
@@ -30,7 +30,7 @@ import Survey from "./components/Feedback/Survey";
 import ModalPreview from "./components/Modals/Preview";
 import SurveyOffline from "./components/Feedback/OfflineComponent";
 import Modal from "./components/Modules/Modal";
-import { NormalInput } from './components/Modules/Input'
+// import { NormalInput } from './components/Modules/Input'
 import OnBoarding from "./components/Onboarding/Onboarding";
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-2aa597b4-341f-4c3c-a022-f56877a585c9";
@@ -100,14 +100,14 @@ function App() {
         entityId={"e-0000000000"}
         featureFlags={{}}
         apiType="STAGING"
-        themeConfig={{
-          backgroundColor: "black",
-          borderColor: "red",
-          buttonColor: "green",
-          primaryColor: "White",
-          secondaryColor: "gray",
-          fontFamily: ""
-        }}
+        // themeConfig={{
+        //   backgroundColor: "black",
+        //   borderColor: "red",
+        //   buttonColor: "green",
+        //   primaryColor: "White",
+        //   secondaryColor: "gray",
+        //   fontFamily: ""
+        // }}
       >
         {/* <SpinTheWheel
                     userId={userId}
@@ -121,7 +121,7 @@ function App() {
 
         {/* <SearchPreview online={false}/> */}
         {/* <SreakPreview/> */}
-
+        
         {/* { <Payment
                 stripePublishableKey="pk_test_51IGxpeHv3bPcUa5dtAAgA2TZPWjga0FPxWlK3GAnWUfzRXzO8l6Kc3zF2WBpjrvFHAle0Cy3Jqxc7djZxptd9mHe00KjsN2Im7"
                 userId="u-0000000000"
@@ -134,7 +134,14 @@ function App() {
                 forEntityId={"e-0000000000"}
             /> } */}
 
+          {/* <button onClick={onSuccess}>success</button>
+          <button onClick={onInfo}>info</button>
+          <button onClick={onFailure}>error</button>
+          <button onClick={onWarn}>warning</button>
+          <button onClick={onDifferent}>error</button>
+          <button onClick={onDifferentTwo}>warning</button> */}
         {/* <ModalPreview/> */}
+
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
 
@@ -155,11 +162,11 @@ function App() {
 
         {/* <GetStartedPreview
    online={false}
- />  */}
+ />   */}
 {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
 </Modal> */}
-<OnBoarding
+{/* <OnBoarding
   questId="q-daf9940a-c2fb-4762-adce-57b9b1fda08c"
   answer={answer}
   setAnswer={setAnswer}
@@ -171,7 +178,7 @@ function App() {
   template="multi-question"
   design={[[1,5,4,3], [2,6], [7]]}
   progress={["das", "dasa", "sasas"]}
-  progressBarType="modal1"
+  // progressBarType="modal1"
   controlBtnType="Buttons"
   headingScreen= {[{"name":"Identity Insights","desc":"Revealing dimensions beyond words"},{"name":"Professional Details","desc":"Tell us more about your company"},{"name":"Title_3","desc":"Desc_3"}]}
   styleConfig={{
@@ -187,7 +194,7 @@ function App() {
       // pendingTabColor: "blue",
     }
   }}
-/>
+/> */}
         {/* <QuestForm
                     userId={userId}
                     questId={questId}
@@ -209,9 +216,7 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-        {/* <TutorialPreview /> */}
-
-        <FeedbackWorkflowPreview online={true} />
+        {/* <FeedbackWorkflowPreview online={true} /> */}
 
         {/* <FeedbackPreview /> */}
 

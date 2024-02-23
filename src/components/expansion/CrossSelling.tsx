@@ -3,13 +3,15 @@ import {
 } from "../../assets/images";
 import "./crossSelling.css";
 import "../expansion/Refer.css";
-import { useContext, useEffect, useRef, useState } from "react";
+import { CSSProperties, useContext, useEffect, useRef, useState } from "react";
 import { getResponse, response, shareOnPlatform } from "./Response.ts";
 import QuestContext from "../QuestWrapper.tsx";
 import { grabDealIcon } from "./Svg.ts";
 import QuestLabs from "../QuestLabs.tsx";
 import config from "../../config.ts";
 import General from "../../general.ts";
+import { SecondaryButton } from "../Modules/SecondaryButton.tsx";
+import { PrimaryButton } from "../Modules/PrimaryButton.tsx";
 
 export interface referProp {
     questId: string;
@@ -30,19 +32,30 @@ export interface referProp {
     claimRewardHandler?: Function;
     backButtonTrigger?: Function;
     uniqueEmailId?: string;
-    uniqueUserId?: string
+    uniqueUserId?: string;
+    styleConfig?: {
+        Form?: CSSProperties,
+        BackgroundWrapper?: CSSProperties,
+        Heading?: CSSProperties,
+        Description?: CSSProperties,
+        PrimaryButton?: CSSProperties,
+        SecondaryButton?: CSSProperties,
+        Timer?: {
+            primaryColor: string,
+            secondaryColor: string,
+            backgroundColor: string
+        },
+        Footer?: CSSProperties
+    }
 }
 
 export const CrossSelling = ({
     questId = "",
     userId = "",
     token = "",
-    color = "",
-    bgColor = "",
     heading = '50% off on limited products',
     description = 'Grab deals before they go off!!!',
     shareButtonText = "Avail now",
-    iconColor = "#939393",
     gradientBackground = false,
     primaryHeading = 'Grab your deal',
     primaryDescription = 'Welcome back, Please complete your details',
@@ -51,10 +64,10 @@ export const CrossSelling = ({
     claimRewardHandler = ()=>{},
     backButtonTrigger = ()=>{},
     uniqueEmailId,
-    uniqueUserId
+    uniqueUserId,
+    styleConfig
 }: referProp) => {
-    const { apiKey, apiSecret, entityId, apiType } = useContext(QuestContext.Context);
-    const style = !!color && !!bgColor ? { color, backgroundColor: bgColor } : {};
+    const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(QuestContext.Context);
     const BACKEND_URL = apiType === "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
     const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -108,48 +121,68 @@ export const CrossSelling = ({
     
 
     const jsx = (
-        <div className="q_refer_and_earn" style={style}>
-            <div className="q_refer_head" style={style}>
+        <div className="q_refer_and_earn" style={{background: styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Form}}>
+            <div className="q_refer_head">
                 <img src={grabDealIcon()} className="refer_head_img" alt="" />
             </div>
-            <div className="q_refer_content" style={style}>
-                <div className="refer_content_box" style={style}>
-                    <div className="q_refer_heading" style={style}>{heading}</div>
-                    <div className="q_refer_desc" style={style}>{description}</div>
+            <div className="q_refer_content">
+                <div className="refer_content_box">
+                    <div className="q_refer_heading" style={{color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading}}>{heading}</div>
+                    <div className="q_refer_desc" style={{color: styleConfig?.Description?.color || themeConfig?.primaryColor, ...styleConfig?.Description}}>{description}</div>
                 </div>
                 <div className="q_time_left">
-                    {showDays && !!timeLeft.days && (<div className="q_hours_left">
-                        <div>{timeLeft.days}</div>
-                        <div className="q_time_left_text">Days</div>
+                    {showDays && !!timeLeft.days && (<div className="q_hours_left" style={{background: styleConfig?.Timer?.backgroundColor}}>
+                        <div style={{color: styleConfig?.Timer?.primaryColor}}>{timeLeft.days}</div>
+                        <div className="q_time_left_text" style={{color: styleConfig?.Timer?.secondaryColor}}>Days</div>
                     </div>)}
-                    <div className="q_hours_left">
-                        <div>{timeLeft.hours < 10 ? 0 : ""}{timeLeft.hours}</div>
-                        <div className="q_time_left_text">Hours</div>
+                    <div className="q_hours_left" style={{background: styleConfig?.Timer?.backgroundColor}}>
+                        <div style={{color: styleConfig?.Timer?.primaryColor}}>{timeLeft.hours < 10 ? 0 : ""}{timeLeft.hours}</div>
+                        <div className="q_time_left_text" style={{color: styleConfig?.Timer?.secondaryColor}}>Hours</div>
                     </div>
-                    <div className="q_minutes_left">
-                        <div>{timeLeft.minutes < 10 ? 0 : ""}{timeLeft.minutes}</div>
-                        <div className="q_time_left_text">Minutes</div>
+                    <div className="q_minutes_left" style={{background: styleConfig?.Timer?.backgroundColor}}>
+                        <div style={{color: styleConfig?.Timer?.primaryColor}}>{timeLeft.minutes < 10 ? 0 : ""}{timeLeft.minutes}</div>
+                        <div className="q_time_left_text" style={{color: styleConfig?.Timer?.secondaryColor}}>Minutes</div>
                     </div>
-                    <div className="q_seconds_left">
-                        <div>{timeLeft.seconds < 10 ? 0 : ""}{timeLeft.seconds}</div>
-                        <div className="q_time_left_text">Seconds</div>
+                    <div className="q_seconds_left" style={{background: styleConfig?.Timer?.backgroundColor}}>
+                        <div style={{color: styleConfig?.Timer?.primaryColor}}>{timeLeft.seconds < 10 ? 0 : ""}{timeLeft.seconds}</div>
+                        <div className="q_time_left_text" style={{color: styleConfig?.Timer?.secondaryColor}}>Seconds</div>
                     </div>
                 </div>
-                <div style={style} onClick={()=>claimRewardHandler()} className="q_share_link_button">{shareButtonText}</div>
-                <div style={style} onClick={()=>backButtonTrigger()} className="q_share_link_button_2">Go to home</div>
+                <PrimaryButton 
+                    style={{
+                        background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
+                        ...styleConfig?.PrimaryButton
+                    }} 
+                    onClick={()=>claimRewardHandler()} 
+                    className="q_share_link_button"
+                >
+                    {shareButtonText}
+                </PrimaryButton>
+                <SecondaryButton 
+                    style={{
+                        borderColor: styleConfig?.SecondaryButton?.borderColor || themeConfig?.borderColor,
+                        backgroundColor: styleConfig?.SecondaryButton?.backgroundColor || themeConfig?.backgroundColor,
+                        color: styleConfig?.SecondaryButton?.color || themeConfig?.primaryColor,
+                        ...styleConfig?.SecondaryButton
+                    }}
+                    onClick={()=>backButtonTrigger()} 
+                    className="q_share_link_button_2"
+                >
+                    Go to home
+                </SecondaryButton>
             </div>
-            {!gradientBackground && <QuestLabs backgroundColor={bgColor} color={iconColor} />}
+            {!gradientBackground &&<QuestLabs style={styleConfig?.Footer} />}
         </div>
     );
 
-    if (gradientBackground) return <div className="q_gradient_background">
+    if (gradientBackground) return <div className="q_gradient_background" style={styleConfig?.BackgroundWrapper}>
         <div className="q_gradient_head">
             <div className="q_gradient_heading">{primaryHeading}</div>
             <div className="q_gradient_description">{primaryDescription}</div>
         </div>
         {jsx}
         <div className="q_gradient_quest_powered">
-            <QuestLabs backgroundColor={bgColor} color={iconColor} />
+            <QuestLabs style={styleConfig?.Footer} />
         </div>
     </div>
     return jsx;

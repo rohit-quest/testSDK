@@ -116,22 +116,22 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
           answer={answer}
           setAnswer={setAnswer}
           token={token}
-          answerFontSize="14px"
-          template={1}
+          // answerFontSize="14px"
+          // template={1}
           progress={["Personal sdrerwtr", "Professional", "Additional",]}
-          previousBtnText="Go Back"
-          nextBtnText="Submit and Continue"
-          color=""
-          bgColor="#fff"
+          // text="Go Back"
+          // text="Submit and Continue"
+          // color=""
+          // bgColor="#fff"
           controlBtnType="Buttons"
-          headingSize="24px"
-          descSize="18px"
-          inputFieldType={{
-            "ec-xxxxxxxxxxxxxxxxx": "textArea"
-          }}
-          btnColor=""
-          btnSize="200px"
-          inputBgColor=""
+          // headingSize="24px"
+          // descSize="18px"
+          // inputFieldType={{
+          //   "ec-xxxxxxxxxxxxxxxxx": "textArea"
+          // }}
+          // btnColor=""
+          // btnSize="200px"
+          // inputBgColor=""
           // inputBorder="1px solid #6525B3"
           singleChoose="modal3"
           multiChoice="modal1"
@@ -145,8 +145,9 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
         }
           customComponents={<CustomButton />}
           getAnswers={printAnswer}
-          screenHeight=""
-          progressBarType="modal1"
+          // screenHeight=""
+          // progressBarType="modal1"
+          
         />
       </QuestProvider>
     )
@@ -156,8 +157,8 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
       setAnswer={setAnswer}
       answerFontSize="14px"
       progress={["Personal", "Professional", "Additional",]}
-      previousBtnText="Go Back"
-      nextBtnText="Submit and Continue"
+      text="Go Back"
+      // text="Submit and Continue"
       color=""
       bgColor="#fff"
       controlBtnType="Buttons"
@@ -181,6 +182,9 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
       screenHeight=""
       progressBarType="modal1"
       offlineFormData={state.offlineFormData}
+      styleConfig={{
+        
+      }}
     />
   )
 }

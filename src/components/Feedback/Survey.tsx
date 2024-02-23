@@ -14,6 +14,13 @@ import showToast from '../toast/toastService';
 import Rating from '../Rating/Rating';
 import QuestLabs from '../QuestLabs';
 import General from '../../general';
+import Label from '../Modules/Label';
+import { Input } from '../Modules/Input';
+import TextArea from '../Modules/TextArea';
+import { PrimaryButton } from '../Modules/PrimaryButton';
+import { SecondaryButton } from '../Modules/SecondaryButton';
+import TopBar from '../Modules/TopBar';
+
 
   const thanks = (
     <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -61,6 +68,18 @@ interface FeedbackProps {
   ratingType? : string;
   uniqueEmailId?: string;
   uniqueUserId?: string;
+  styleConfig?: {
+    Form?: React.CSSProperties,
+    Heading?: React.CSSProperties,
+    Description?: React.CSSProperties,
+    Input?: React.CSSProperties,
+    Label?: React.CSSProperties,
+    TextArea?: React.CSSProperties,
+    PrimaryButton?: React.CSSProperties,
+    SecondaryButton?: React.CSSProperties,
+    Modal?: React.CSSProperties,
+    Footer?: React.CSSProperties,
+  }
 }
 
 const Survey: React.FC<FeedbackProps> = ({
@@ -69,22 +88,18 @@ const Survey: React.FC<FeedbackProps> = ({
   userId,
   token,
   questId,
-  btnColor,
-  btnTextColor,
   textColor,
   font,
   bgColor,
   supportUrl,
   onSubmit,
   ratingType = 'number' ,
-  delay = 1000,
-  isInline = false,
-  crossLogoForInput = false,
   onCancel = ()=>{},
   itemsPerPage=5,
   iconColor = '',
   uniqueEmailId,
-  uniqueUserId
+  uniqueUserId,
+  styleConfig,
 }) => {
   interface FormDataItem {
     type?: string;
@@ -100,22 +115,17 @@ const Survey: React.FC<FeedbackProps> = ({
   const [thanksPopup, setThanksPopup] = useState<boolean>(false);
   const [formdata, setFormdata] = useState<FormDataItem[]>([]);
   const [gradient, setGradient] = useState<boolean>(false);
-  const { apiKey, apiSecret, entityId ,apiType} = useContext(QuestContext.Context);
+  const { apiKey, apiSecret, entityId ,apiType, themeConfig} = useContext(QuestContext.Context);
   const [answer, setAnswer] = useState<any>({});
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [session, setSession] = useState<string>('');
   const [isVisible, setIsVisible] = useState(true);
   const [page,setPage] = useState(0);
   const [data,setData] = useState<FormDataItem[]>([]);
-  const [next,setNext] = useState(false);
   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
   const handleNext = () => {
     setPage(prevPage => Math.min(prevPage + 1, Math.ceil(formdata.length / 2) - 1));
-  };
-  console.log(data)
-  const handlePrev = () => {
-    setPage(prevPage => Math.max(prevPage - 1, 0));
   };
 
   const dislike = (
@@ -264,14 +274,6 @@ const cross = (
     }
   };
 
-  const handleRemove = (id: string) => {
-    setAnswer({
-      ...answer,
-      [id]: ""
-    })
-  }
-
-
   function returnAnswers() {
     const headers = {
       apiKey: apiKey,
@@ -353,59 +355,36 @@ function isValidEmail(email: string) {
   const normalInput = (question: string, criteriaId: string, placeholder?:string) => {
     return (
       <div className="" key={criteriaId}>
-        <label
-          className="q-fdov-levels"
+        <Label 
           htmlFor="normalInput"
-          style={{
-            fontFamily: font,
-            color: textColor,
-          }}
-        >
-          {question}
-        </label>
-        <div className="q-fdov-input">
-            {/* {userLogo()} */}
-            <input
-              className='q_sdk_input q_fw_input'
-              type="text"
-              required
-              id="normalInput"
-              name="normalInput"
-              onChange={(e) => handleUpdate(e, criteriaId, "")}
-              value={answer[criteriaId]}
-              placeholder={placeholder}
-            />
-            {crossLogoForInput && crossLogo(criteriaId, handleRemove)}
-        </div>
+          children={question}
+          style={styleConfig?.Label}
+        />
+        <Input
+          type="text"
+          style={styleConfig?.Input}
+          onChange={(e) => handleUpdate(e, criteriaId, "")}
+          value={answer[criteriaId]}
+          placeholder={placeholder}
+        />
       </div>
     );
   };
   const emailInput = (question: string, criteriaId: string, placeholder?:string) => {
     return (
       <div className="" key={criteriaId}>
-        <label
-          className="q-fdov-levels"
+        <Label 
           htmlFor="normalInput"
-          style={{
-            fontFamily: font,
-            color: textColor,
-          }}
-        >
-          {question}
-        </label>
-        <div className="q-fdov-input">
-            <input
-              className='q_sdk_input q_fw_input'
-              type="email"
-              id="normalInput"
-              required
-              name="normalInput"
-              onChange={(e) => handleUpdate(e, criteriaId, "")}
-              value={answer[criteriaId]}
-              placeholder={placeholder}
-            />
-            {crossLogoForInput ? crossLogo(criteriaId, handleRemove): emailLogo()}
-        </div>
+          children={question}
+          style={styleConfig?.Label}
+        />
+        <Input
+          type="email"
+          style={styleConfig?.Input}
+          onChange={(e) => handleUpdate(e, criteriaId, "")}
+          value={answer[criteriaId]}
+          placeholder={placeholder}
+        />
         {
           isValidEmail(answer[criteriaId]) &&
           <div className='q-input-email-checks'>This is not a valid email</div>
@@ -417,24 +396,17 @@ function isValidEmail(email: string) {
   const normalInput2 = (question: string, criteriaId: string, placeholder?:string) => {
     return (
       <div className="" key={criteriaId}>
-        <label
-          className="q-fdov-levels"
-        >
-          {question}
-        </label>
-        <div className="q_feedback_input" style={{alignItems: "flex-start"}}>
-            {/* {textAreaIcon()} */}
-            <textarea
-            className='q_fw_textarea'
-              id="normalInput2"
-              required
-              name="normalInput"
-              onChange={(e) => handleUpdate(e, criteriaId, "")}
-              value={answer[criteriaId]}
-              placeholder={placeholder}
-            />
-            {crossLogoForInput && crossLogo(criteriaId, handleRemove)}
-        </div>
+        <Label 
+          htmlFor="normalInput"
+          children={question}
+          style={styleConfig?.Label}
+        />
+        <TextArea
+          style={styleConfig?.TextArea}
+          onChange={(e) => handleUpdate(e, criteriaId, "")}
+          value={answer[criteriaId]}
+          placeholder={placeholder}
+        />
       </div>
     );
   };
@@ -487,22 +459,16 @@ function isValidEmail(email: string) {
             </div>
           </div>
           <div className="q-feed-btns-div">
-            <button
+            <SecondaryButton
+              children='Skip'
               onClick={() => handleComments(criteriaId, comment)}
-              className="q-btn-feed"
-            >
-              Skip
-            </button>
-            <button
+              style={styleConfig?.SecondaryButton}
+            />
+            <PrimaryButton 
+              children='Submit'
               onClick={() => handleComments(criteriaId, comment)}
-              className="q-btn-feed"
-              style={{
-                backgroundColor: btnColor ? btnColor : '#333333',
-                color: btnTextColor ? btnTextColor : 'white',
-              }}
-            >
-              Submit
-            </button>
+              style={styleConfig?.PrimaryButton}
+            />
           </div>
         </div>
       </div>
@@ -553,11 +519,7 @@ const singleChoiceOne = (
 
   return (
       <div
-        style={{
-          ...(gradient
-            ? { backgroundImage: bgColor }
-            : { backgroundColor: bgColor }),
-        }}
+        style={{color: themeConfig.primaryColor,background: themeConfig.backgroundColor,...styleConfig?.Form}}
         className="q-feedback-cont"
       >
         {formdata.length > 0 ? (
@@ -566,29 +528,14 @@ const singleChoiceOne = (
             <>
               {!thanksPopup && (
                 <div>
-                  <div className="q-fd-topbar">
-                    <div>
-                      <div
-                        className="q-fd-heading"
-                        style={{
-                          fontFamily: font,
-                          color: textColor,
-                          fontSize: '24px',
-                        }}
-                      >
-                        {heading}
-                      </div>
-                      <div
-                        className="q-fd-sub"
-                        style={{
-                          fontFamily: font,
-                          color: textColor,
-                        }}
-                      >
-                        {subHeading}
-                      </div>
-                    </div>
-                  </div>
+                  <TopBar
+                    heading={heading || ''}
+                    description={subHeading || ''}
+                    style={{
+                      headingStyle: styleConfig?.Heading,
+                      descriptionStyle: styleConfig?.Description,
+                      iconStyle: { display: "none" },
+                    }} />
                   <form onSubmit={e=>{
                     e.preventDefault();
                     ((data.length/itemsPerPage)<=page+1)?returnAnswers():handleNext()
@@ -633,17 +580,6 @@ const singleChoiceOne = (
                                 marginTop: '5px',
                               }}
                             >
-                              {/* {[1, 2, 3, 4, 5].map((star) => (
-                                <div
-                                  className="q-star-div"
-                                  key={star}
-                                  onClick={() =>
-                                    handleRatingChange(data.criteriaId, star)
-                                  }
-                                >
-                                  {star <= rating ? blackStar : whiteStar}
-                                </div>
-                              ))} */}
                               <Rating 
                                count={5}
                                getCurrentRating={(item) =>
@@ -658,27 +594,19 @@ const singleChoiceOne = (
                       }
                     })}
                       <div className='q_feedback_buttons'>
-                        <div onClick={
-                            ()=>(0==page)?onCancel():setPage(c=>c-1)
-                        }
-                          className="q-fdov-btn-cancel"
-                        >
-            {(0==page)?'Cancel':'Previous'}
-
-                        </div>
-                        <button
-                        type='submit'
-                          style={{
-                            backgroundColor: btnColor,
-                            color: btnTextColor,
-                            fontFamily: font,
-                          }}
-                          className="q-fdov-btn-continue"
-                        >
-                        {((data.length/itemsPerPage)<=page+1)?'Submit':'Next'}
-                        </button>
+                        <SecondaryButton
+                          children={(0==page)?'Cancel':'Previous'}
+                          onClick={()=>(0==page)?onCancel():setPage(c=>c-1)}
+                          style={styleConfig?.SecondaryButton}
+                        />
+                        <PrimaryButton
+                          style={styleConfig?.PrimaryButton}
+                          children={((data.length/itemsPerPage)<=page+1)?'Submit':'Next'}
+                          type='submit'
+                        />
                       </div>
                   </form>
+               <QuestLabs style={styleConfig?.Footer} />  
                 </div>
               )}
               {thanksPopup && (
@@ -707,7 +635,7 @@ const singleChoiceOne = (
                    </div>
                  </div>
                </div>
-             <QuestLabs color={iconColor || "#AFAFAF"}/>
+               <QuestLabs style={styleConfig?.Footer} />
              </div>
               )}
             </>

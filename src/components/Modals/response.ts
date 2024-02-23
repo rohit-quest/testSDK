@@ -59,32 +59,33 @@ export const response = async (questId = "", headers: {
 export const upload = async (
     file: File,
     BACKEND_URL = "",
-    setUploadProgress:Dispatch<SetStateAction<number>>,
-    headers: Record<string,any>,
+    setUploadProgress: Dispatch<SetStateAction<number>>,
+    headers: Record<string, any>,
+    url
 ): Promise<{ success: boolean; data?: Quest }> => {
     try {
-        const request = BACKEND_URL;
+        const request = url || BACKEND_URL;
 
         const formData = new FormData();
         formData.append('uploaded_file', file);
-        
+
         const response = await axios.post(
-           request,
+            request,
             formData,
             {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-                ...headers
-              },
-              onUploadProgress: (progressEvent) => {
-                const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                setUploadProgress(percentCompleted)
-                console.log(`Upload progress: ${percentCompleted}%`);
-              },
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    ...headers
+                },
+                onUploadProgress: (progressEvent) => {
+                    const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                    setUploadProgress(percentCompleted);
+                    
+                },
             }
-          );
+        );
 
-        
+        return response.data; 
     } catch (e) {
         console.error("Error:", e);
         return { success: false };

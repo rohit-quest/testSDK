@@ -14,6 +14,7 @@ type FeatureFlags = {
   [key: string]: FeatureFlag;
 };
 
+
 type ThemeConfig = {
   primaryColor?: string;
   secondaryColor?: string;
@@ -39,6 +40,7 @@ type User = {
   userCredentials?: object
   refreshToken?: string
 };
+
 
 export const Context = createContext<{
   apiKey: string,

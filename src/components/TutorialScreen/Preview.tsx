@@ -8,7 +8,7 @@ export const entityId = 'e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5'
 export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
 export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
 
-export default function TutorialPreview({online=false}) {
+export default function TutorialPreview({online=true}) {
 
     if (online)
     return (<QuestProvider
@@ -21,8 +21,13 @@ export default function TutorialPreview({online=false}) {
         <Tutorial
              questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
              userId={userId}
-             bgColor=''
              token={token}
+             styleConfig={{
+                Form: {
+                    // backgroundColor: "black",
+                    // color: "white"
+                }
+             }}
              heading='Your Application Progress'
              subheading='Welcome back, Please complete your application'
         />
@@ -46,7 +51,7 @@ export default function TutorialPreview({online=false}) {
                     id: 1,
                     "title": "Explore Questlabs",
                     "url": "https://www.questlabs.ai/",
-                    "subheading": "AI-Powered User Experiences to Increase in-app Adoption ",
+                    "subheading": "AI-Powered User Experiences to Increase in-app Adoption AI-Powered User Experiences to Increase in-app Adoption AI-Powered User Experiences to Increase in-app Adoption ",
                     "criteriaId": "ec-e32b88d7-0e43-4254-9c94-44859ceedcdc",
                     "status": false
                 },
@@ -59,6 +64,19 @@ export default function TutorialPreview({online=false}) {
                     "status": false
                 }
             ]}
+            styleConfig={{
+                Form: {
+                    // backgroundColor: "black",
+                    // color: "white"
+                },
+                Footer:{
+                    backgroundColor: "black",
+                    color: "white"
+                
+                }
+                // Heading :{fontSize:'50px',color:'pink'},
+                // Description:{fontSize:'100px',color:'red'}
+             }}
         />
     ) 
 }

@@ -102,6 +102,7 @@ interface QuestLoginProps {
     template?: "multi-question" | "single-question";
     styleConfig?: {
         Form?: CSSProperties,
+        Topbar?: CSSProperties,
         Heading?: CSSProperties,
         Description?: CSSProperties,
         Input?: CSSProperties,
@@ -222,7 +223,6 @@ function OnBoarding(props: QuestLoginProps) {
                 }
         }
     }
-console.log(styleConfig)
     useEffect(() => {
         if (entityId) {
             let externalUserId = cookies.get("externalUserId");
@@ -314,7 +314,7 @@ console.log(styleConfig)
         if (!!design.length) {
             templateDesign()
         }
-    }, [design])
+    }, [design, template])
 
     useEffect(() => {
         let currentQuestions: any =
@@ -620,7 +620,6 @@ console.log(styleConfig)
             </div>
         );
     };
-
     const singleChoiceTwo = (
         options: string[] | [],
         question: string,
@@ -861,22 +860,22 @@ console.log(styleConfig)
     if (featureFlags[config.FLAG_CONSTRAINTS.OnboardingFlag]?.isEnabled == false) {
         return (<div></div>)
     }
-console.log(answer)
+
     return (
-        <div className="q-onb-home" style={{ background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "fit-content", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form}}>
+        <div className="q-onb-home" style={{ background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor || "#fff", height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form}}>
             <div
                className="q-onb-ch"
             >
                 {formdata.length > 0 && !!headingScreen &&
                     (typeof headingScreen == "object" && !!headingScreen.name ? (
-                        <div className="q-onb-main-heading">
+                        <div className="q-onb-main-heading" style={styleConfig?.Topbar}>
                             <div className="q-onb-main-h3" style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }}>
                                 {headingScreen?.name}
                             </div>
                             <div className="q-onb-main-h4" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description }}>{headingScreen?.desc}</div>
                         </div>
                     ) : !!headingScreen[currentPage] ? (
-                        <div className="q-onb-main-heading">
+                        <div className="q-onb-main-heading" style={styleConfig?.Topbar}>
                             <div className="q-onb-main-h3" style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }}>
                                 {headingScreen[currentPage]?.name}
                             </div>
@@ -885,7 +884,7 @@ console.log(answer)
                             </div>
                         </div>
                     ) : (
-                        <div className="q-onb-main-heading">
+                        <div className="q-onb-main-heading" style={styleConfig?.Topbar}>
                             <div className="q-onb-main-h3" style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }}>
                                 {headingScreen[0]?.name}
                             </div>
@@ -894,7 +893,7 @@ console.log(answer)
                             </div>
                         </div>
                     ))}
-                    {(template === "multi-question") && (formdata.length > 0) && (<ProgressBar /> )}
+                    {(template === "multi-question") && (formdata.length > 0) && (designState.length > 1) && (!!progress?.length) && (<ProgressBar /> )}
                     <div className="q-onb-main-first">
                     {!!designState && designState.length > 0 && checkDesignCriteria()
                         ? designState[currentPage].map((num: number) =>
@@ -953,23 +952,6 @@ console.log(answer)
                                             formdata[num - 1]?.manualInput,
                                             singleChoose
                                         )
-                                        // : (singleChoose == "modal3")?
-                                        // singleChoiceThree(
-                                        //     formdata[num - 1].options || [],
-                                        //     formdata[num - 1]?.question || "",
-                                        //     formdata[num - 1]?.required || false,
-                                        //     formdata[num - 1].criteriaId || "",
-                                        //     num - 1,
-                                        //     formdata[num - 1]?.manualInput
-                                        // )
-                                        // : singleChoiceOne(
-                                        //     formdata[num - 1].options || [],
-                                        //     formdata[num - 1]?.question || "",
-                                        //     formdata[num - 1]?.required || false,
-                                        //     formdata[num - 1].criteriaId || "",
-                                        //     num - 1,
-                                        //     formdata[num - 1]?.manualInput
-                                        // )
                                     : formdata[num - 1].type ==
                                         "USER_INPUT_MULTI_CHOICE"
                                         ? !!multiChoice && multiChoice == "modal2"
@@ -986,14 +968,6 @@ console.log(answer)
                                                 formdata[num - 1].criteriaId || "",
                                                 num - 1
                                             )
-                                        // : formdata[num - 1].type == 
-                                        //     "LINK_OPEN_READ" 
-                                        //     ? linksCriteria(
-                                        //         formdata[num - 1].linkTitle,
-                                        //         formdata[num - 1].criteriaId,
-                                        //         formdata[num - 1].linkUrl,
-                                        //         num - 1
-                                        //     )
                                             : null )
                         )
                         : formdata?.map((data, index) =>
@@ -1051,23 +1025,6 @@ console.log(answer)
                                                 data?.manualInput,
                                                 singleChoose
                                             )
-                                            // : (singleChoose == "modal3")?
-                                            // singleChoiceThree(
-                                            //     data.options || [],
-                                            //     data?.question || "",
-                                            //     data?.required || false,
-                                            //     data.criteriaId || "",
-                                            //     index,
-                                            //     data?.manualInput
-                                            // )
-                                            // : singleChoiceOne(
-                                            //     data.options || [],
-                                            //     data?.question || "",
-                                            //     data?.required || false,
-                                            //     data.criteriaId || "",
-                                            //     index,
-                                            //     data?.manualInput
-                                            // )
                                         : data.type == "USER_INPUT_MULTI_CHOICE"
                                             ? !!multiChoice && multiChoice == "modal2"
                                                 ? multiChoiceTwo(
@@ -1084,14 +1041,7 @@ console.log(answer)
                                                     data.criteriaId || "",
                                                     index
                                                 )
-                                                // : data.type == "LINK_OPEN_READ" 
-                                                //     ? linksCriteria(
-                                                //         data.linkTitle,
-                                                //         data.criteriaId,
-                                                //         data.linkUrl,
-                                                //         index
-                                                //     )
-                                                    : null
+                                                : null
                         )}
                     {formdata.length > 0 &&
                         (!!designState && designState.length > 1 &&
@@ -1107,6 +1057,7 @@ console.log(answer)
                                                     : "pointer",
                                             borderColor: styleConfig?.SecondaryButton?.borderColor || themeConfig?.borderColor,
                                             backgroundColor: styleConfig?.SecondaryButton?.backgroundColor || themeConfig?.backgroundColor,
+                                            color: styleConfig?.SecondaryButton?.color || themeConfig?.primaryColor,
                                             ...styleConfig?.SecondaryButton
                                         }}
                                         className="q-onb-main-btn"
@@ -1131,9 +1082,7 @@ console.log(answer)
                                             ...styleConfig?.PrimaryButton
                                         }}
                                     >
-                                        {currentPage == designState.length - 1
-                                            ? (nextBtnText ? nextBtnText : "Submit")
-                                            : "Continue"}
+                                        {(nextBtnText ? nextBtnText : "Submit")}
                                     </PrimaryButton>
                                 </div>
                                 :
@@ -1152,6 +1101,8 @@ console.log(answer)
                                                     : "pointer",
                                             borderColor: styleConfig?.SecondaryButton?.borderColor || themeConfig?.borderColor,
                                             backgroundColor: styleConfig?.SecondaryButton?.backgroundColor || themeConfig?.backgroundColor,
+                                            borderRadius: styleConfig?.SecondaryButton?.borderRadius || "50%",
+                                            color: styleConfig?.SecondaryButton?.color || themeConfig?.primaryColor,
                                             ...styleConfig?.SecondaryButton
                                         }}
                                     >
@@ -1168,6 +1119,7 @@ console.log(answer)
                                         disabled={!btnFlag}
                                         style={{
                                             background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
+                                            borderRadius: styleConfig?.SecondaryButton?.borderRadius || "50px",
                                             ...styleConfig?.PrimaryButton
                                         }}
                                     >
