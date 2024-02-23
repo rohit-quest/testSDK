@@ -110,7 +110,7 @@ function OtpVerification({
 
   async function verifyOTPfunction(): Promise<void> {
     if (OTP.length !== 6) {
-      toast.error("Login failed" + "\n" + "res.data.error");
+      // toast.error("Login failed" + "\n" + "res.data.error");
       return;
     }
 
@@ -128,7 +128,7 @@ function OtpVerification({
       );
 
       if (response.data.success) {
-        toast.success("Congratulations!!!" + "\n" + "Successfully Logged in");
+        // toast.success("Congratulations!!!" + "\n" + "Successfully Logged in");
         if (onSubmit) {
           onSubmit({
             userId: response.data.userId,
@@ -147,7 +147,7 @@ function OtpVerification({
           window.location.href = redirectURL;
         }
       } else {
-        toast.error("Login failed" + "\n" + response.data.error);
+        // toast.error("Login failed" + "\n" + response.data.error);
       }
     } catch (error) {
       console.error(error);

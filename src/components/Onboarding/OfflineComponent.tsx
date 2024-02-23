@@ -102,6 +102,7 @@ interface QuestLoginProps {
     template?: "multi-question" | "single-question";
     styleConfig?: {
         Form?: CSSProperties,
+        Topbar?: CSSProperties,
         Heading?: CSSProperties,
         Description?: CSSProperties,
         Input?: CSSProperties,
@@ -867,14 +868,14 @@ function OnBoardingOffline(props: QuestLoginProps) {
             >
                 {offlineFormData.length > 0 && !!headingScreen &&
                     (typeof headingScreen == "object" && !!headingScreen.name ? (
-                        <div className="q-onb-main-heading">
+                        <div className="q-onb-main-heading" style={styleConfig?.Topbar}>
                             <div className="q-onb-main-h3" style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }}>
                                 {headingScreen?.name}
                             </div>
                             <div className="q-onb-main-h4" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description }}>{headingScreen?.desc}</div>
                         </div>
                     ) : !!headingScreen[currentPage] ? (
-                        <div className="q-onb-main-heading">
+                        <div className="q-onb-main-heading" style={styleConfig?.Topbar}>
                             <div className="q-onb-main-h3" style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }}>
                                 {headingScreen[currentPage]?.name}
                             </div>
@@ -883,7 +884,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                             </div>
                         </div>
                     ) : (
-                        <div className="q-onb-main-heading">
+                        <div className="q-onb-main-heading" style={styleConfig?.Topbar}>
                             <div className="q-onb-main-h3" style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }}>
                                 {headingScreen[0]?.name}
                             </div>
@@ -1148,6 +1149,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                                                     : "pointer",
                                             borderColor: styleConfig?.SecondaryButton?.borderColor || themeConfig?.borderColor,
                                             backgroundColor: styleConfig?.SecondaryButton?.backgroundColor || themeConfig?.backgroundColor,
+                                            borderRadius: styleConfig?.SecondaryButton?.borderRadius || "50px",
                                             ...styleConfig?.SecondaryButton
                                         }}
                                     >
@@ -1164,6 +1166,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                                         disabled={!btnFlag}
                                         style={{
                                             background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
+                                            borderRadius: styleConfig?.SecondaryButton?.borderRadius || "50px",
                                             ...styleConfig?.PrimaryButton
                                         }}
                                     >

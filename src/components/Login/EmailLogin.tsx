@@ -74,9 +74,9 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   const sendOTPfunction = () => {
     setMainValidEmail(isValidEmail);
     if (!isValidEmail || email.length === 0) {
-      showToast.error(
-        "Invalid email address" + "\n" + "Please check your email address"
-      );
+      // showToast.error(
+      //   "Invalid email address" + "\n" + "Please check your email address"
+      // );
       return;
     }
     setShowLoader(true);

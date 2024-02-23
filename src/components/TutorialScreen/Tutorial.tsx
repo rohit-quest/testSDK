@@ -44,7 +44,8 @@ interface TutorialProps {
     Form?: CSSProperties,
     Heading?: CSSProperties,
     Description?: CSSProperties,
-    Footer?: CSSProperties
+    Footer?: CSSProperties,
+    TopBar?: CSSProperties,
 }
  footerBackgroundColor?:string
 }
@@ -210,6 +211,7 @@ return (
       style={{
         headingStyle: { color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading },
         descriptionStyle: { color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description },
+        topbarStyle: styleConfig?.TopBar
       }}
     />
     <div className='q-tut-card-cont'>
@@ -230,8 +232,8 @@ return (
               <img
                 className="q_tutorial_progress_icon"
                 style={{
-                  width: step.status ? '8px' : '16px',
-                  height: step.status ? '8px' : '16px',
+                  width: '16px',
+                  height: '16px',
                 }}
                 src={step.status ? greenCheck : pendingIcon}
                 alt=""

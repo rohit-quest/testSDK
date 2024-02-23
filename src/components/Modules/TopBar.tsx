@@ -10,7 +10,8 @@ interface PropType {
     style?: React.CSSProperties & {
         headingStyle?: React.CSSProperties,
         descriptionStyle?: React.CSSProperties,
-        iconStyle?: React.CSSProperties
+        iconStyle?: React.CSSProperties,
+        topbarStyle?: React.CSSProperties,
     }
 }
 
@@ -27,7 +28,7 @@ export default function TopBar({
     const {themeConfig} = useContext(QuestContext.Context);
 
     const cross = (color = "#AFAFAF", onClick?: () => void) => (
-        <img onClick={() => onClick?.()} style={{ cursor: "pointer", ...style?.iconStyle,background: "inherit",backgroundColor: "inherit" }}
+        <img onClick={() => onClick?.()} style={{ cursor: "pointer", ...style?.iconStyle, background: "inherit", backgroundColor: "inherit" }}
         src={createUrl(`
         <svg
             width="20"
@@ -46,7 +47,7 @@ export default function TopBar({
       );
 
     return (
-        <div className="q_top_bar" style={{background: themeConfig.backgroundColor,...style}}>
+        <div className="q_top_bar" style={{background: themeConfig.backgroundColor, ...style?.topbarStyle}}>
             <div className='q_top_bar_heading'>
                 <div>
                     <div style={{color: themeConfig.primaryColor,...style?.headingStyle}}>{heading}</div>
