@@ -2,6 +2,7 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.308);
     border-radius: 10px;
     width: 376px;
+    background: white;
 }
 .q_feed_back_modal_head {
     display: flex;
@@ -9,7 +10,6 @@
     padding: 20px;
     border-bottom: 1px solid #EFEFEF;
     align-items: flex-start;
-    background: white;
     justify-content: space-between;
     align-items: flex-start;
     gap: 20px;
