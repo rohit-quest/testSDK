@@ -445,7 +445,9 @@ function GetStarted({
               >
                 <div
                   className="gs_card_body"
-                  style={{ background: cardBackground }}
+                  style={{ background: cardBackground ,
+                    border: `1px solid ${cardBorderColor}`,
+                  }}
                 >
                   <div className="gs_card_body_image">
                     <img
