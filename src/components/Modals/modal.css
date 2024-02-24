@@ -8,7 +8,6 @@
     border-radius: 10px 10px 0 0;
     padding: 20px;
     border-bottom: 1px solid #EFEFEF;
-    background: #FFF;
     align-items: flex-start;
     justify-content: space-between;
     align-items: flex-start;
@@ -38,7 +37,6 @@
 .q_modal_content {
     display: flex;
     padding: 20px;
-    background: #FFF;
     flex-direction: column;
     align-items: flex-start;
     gap: 20px;
@@ -116,7 +114,6 @@
     padding: 32px 12px;
     border-radius: 10px;
     border: 1px dashed #E0E0E0;
-    background: #FFF;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -132,7 +129,6 @@
 .q_modal_reward_content{
     display: flex;
     padding: 40px 20px;
-    background: var(--Neutral-White-100, #FFF);
     flex-direction: column;
     align-items: center;
     gap: 20px;
