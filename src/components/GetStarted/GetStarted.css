@@ -79,7 +79,7 @@
   align-self: stretch;
 }
 .gs-subheading {
-  color: var(--Neutral-Black-100, #939393);
+  color:  #939393;
   font-family: Figtree;
   font-size: 12px;
   font-style: normal;
@@ -119,7 +119,7 @@
 .q_gt_progress_bar {
   display: flex;
   align-self: stretch;
-  color: var(--Neutral-Black-400, #2c2c2c);
+  color:  #2c2c2c;
   font-family: Figtree;
   font-size: 10px;
   font-style: normal;
@@ -142,7 +142,7 @@
 .q_progress_bar_pending {
   height: 6px;
   border-radius: 8px;
-  background: var(--Neutral-White-300, #efefef);
+  background: #efefef;
   align-self: stretch;
 }
 
@@ -180,7 +180,7 @@
   gap: 12px;
   align-self: stretch;
   border-radius: 10px;
-  border: 1px solid var(--Neutral-White-300, #efefef);
+  border: 1px solid #efefef;
 }
 .gs_card_body_dropDown {
   display: flex;
@@ -229,7 +229,7 @@
   justify-content: center;
   align-items: center;
   gap: 4px;
-  color: var(--Neutral-White-100, #fff);
+  color: #fff;
   font-family: Figtree;
   font-size: 14px;
   font-style: normal;
@@ -242,12 +242,12 @@
   display: flex;
   padding: 10px 16px;
   border-radius: 10px;
-  border: 1.5px solid var(--Neutral-White-300, #efefef);
-  background: var(--Neutral-White-100, #fff);
+  border: 1.5px solid  #efefef;
+  background:  #fff;
   justify-content: center;
   align-items: center;
   gap: 4px;
-  color: var(--Neutral-Black-400, #2c2c2c);
+  color:  #2c2c2c;
   font-family: Figtree;
   font-size: 14px;
   font-style: normal;
@@ -258,7 +258,7 @@
 
 .gs_drop_desc {
   align-self: stretch;
-  color: var(--Neutral-Black-100, #939393);
+  color:  #939393;
   font-family: Figtree;
   font-size: 12px;
   font-style: normal;
@@ -267,7 +267,7 @@
 }
 
 .gs_card_btn_2 {
-  color: var(--neutral-opacity-white-80, rgba(255, 255, 255, 0.8));
+  color:  rgba(255, 255, 255, 0.8);
   font-family: Figtree;
   font-size: 10.675px;
   font-style: normal;
@@ -281,7 +281,7 @@
   align-items: center;
   gap: 6.1px;
   border-radius: 7.625px;
-  background: var(--Primary-Grape-500, #9035ff);
+  background: #9035ff;
   box-sizing: content-box;
   white-space: nowrap;
 }
@@ -293,11 +293,11 @@
   align-items: flex-start;
   gap: 20px;
   align-self: stretch;
-  border-bottom: 1px solid var(--Neutral-White-300, #efefef);
+  border-bottom: 1px solid  #efefef;
 }
 
 .gs_steps {
-  color: var(--Neutral-Black-100, #939393);
+  color: #939393;
   text-align: right;
   font-family: Figtree;
   font-size: 12px;
@@ -340,7 +340,7 @@
   align-items: center;
   gap: 8px;
   border-radius: 48px;
-  background: var(--Primary-Grape-100, #f4ebff);
+  background:  #f4ebff;
   justify-content: center;
   width: 32px;
   height: 32px;
