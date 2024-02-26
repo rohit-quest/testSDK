@@ -274,7 +274,8 @@ function OtpVerification({
           <PrimaryButton
              style={{
               background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
-              ...styleConfig?.PrimaryButton
+              ...styleConfig?.PrimaryButton,
+              fontFamily: themeConfig?.fontFamily || "'Figtree', sans-serif",
           }}
             children="Continue"
             onClick={verifyOTPfunction}

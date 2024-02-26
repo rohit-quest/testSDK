@@ -19,6 +19,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
             apiType="PRODUCTION"
             themeConfig={{
                 primaryColor: "red",
+                fontFamily:"system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"
             }}
         >
 

@@ -1,6 +1,6 @@
 import "./css/previousButton.css";
-import { CSSProperties, MouseEventHandler, ReactNode } from "react";
-
+import { CSSProperties, MouseEventHandler, ReactNode, useContext } from "react";
+import QuestContext from "../QuestWrapper";
 interface buttonType {
   children?: ReactNode;
   style?: CSSProperties | undefined;
@@ -16,8 +16,9 @@ export const SecondaryButton = ({
   disabled,
   className
 }: buttonType) => {
+  const { themeConfig } = useContext(QuestContext.Context);
   return (
-    <button className={`q_prev_button_main_cont ${className}`} style={style} onClick={onClick} disabled={disabled || false}>
+    <button className={`q_prev_button_main_cont ${className}`} style={{...style, fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif"}} onClick={onClick} disabled={disabled || false}>
       {children}
     </button>
   );

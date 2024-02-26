@@ -130,7 +130,7 @@
   background: linear-gradient(84deg, #9035ff 0.36%, #0065ff 100.36%);
   cursor: pointer;
   color: var(--neutral-pure-white-100, #fff);
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -155,7 +155,7 @@
 
 .q_feedback_desc {
   color: var(--Neutral-Black-100, #939393);
-  font-family: "Figtree";
+  /* font-family: "Figtree"; */
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -173,7 +173,7 @@
 .q_fw_submit_desc {
   color:  #939393;
   text-align: center;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -193,7 +193,7 @@
   border: 1.5px solid var(--Neutral-White-300, #efefef);
   background: var(--Neutral-White-100, #fff);
   color: var(--Neutral-Black-400, #2c2c2c);
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 14px;
   font-style: normal;
   cursor: pointer;
@@ -219,7 +219,7 @@
 
 .q-fw-tab-heading {
   color: #2c2c2c;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -230,7 +230,7 @@
   overflow: hidden;
   color: #939393;
   text-overflow: ellipsis;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -240,7 +240,7 @@
 
 .q_fw_input {
   color: black;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -273,7 +273,7 @@ overflow: hidden;
 color:  #2C2C2C;
 text-align: center;
 text-overflow: ellipsis;
-font-family: Figtree;
+/* font-family: Figtree; */
 font-size: 20px;
 font-style: normal;
 font-weight: 600;

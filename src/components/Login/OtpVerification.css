@@ -32,7 +32,7 @@
 .q_otp_resend {
   color: #afafaf;
 
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -50,7 +50,7 @@
   color: #252525;
   text-align: center;
   text-overflow: ellipsis;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 18px;
   font-style: normal;
   font-weight: 600;

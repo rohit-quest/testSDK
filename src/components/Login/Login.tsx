@@ -49,7 +49,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   const [isEmail, setIsEmail] = useState<boolean>(false);
   const [isGoogle, setIsGoogle] = useState<boolean>(false);
   // const [bgColor, setBgColor] = useState<string>("#ffffff");
-  const [fontFamily, setFontFamily] = useState<string>("Figtree");
+  // const [fontFamily, setFontFamily] = useState<string>("Figtree");
   const [gradient, setGradient] = useState<boolean>(false);
   const [otpScreen, setOtpScreen] = useState<boolean>(false);
   const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(
@@ -167,7 +167,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   <EmailLogin
                     {...{
                       textColor,
-                      fontFamily,
+                      // fontFamily,
                       apiKey,
                       apiSecret: apiSecret || "",
                       redirectURL,
@@ -196,8 +196,9 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                       <div
                         style={{
                           color: textColor,
-                          fontFamily,
+                          // fontFamily,
                           display: "inline",
+                          // fontFamily:themeConfig.fontFamily || "'Figtree', sans-serif"
                         }}
                         className="q-or-continue"
                       >
@@ -210,7 +211,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                     <GoogleLogin
                       {...{
                         btnTextColor,
-                        fontFamily,
+                        // fontFamily,
                         btnColor,
                         entityId,
                         redirectUri,
@@ -229,7 +230,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                 <GoogleLogin
                   {...{
                     btnTextColor,
-                    fontFamily,
+                    // fontFamily,
                     btnColor,
                     entityId,
                     redirectUri,

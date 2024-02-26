@@ -12,7 +12,6 @@
 
 .q_top_bar_desc {
     color: #939393;
-    font-family: "Figtree";
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -23,7 +22,6 @@
     overflow: hidden;
     color: #2C2C2C;
     text-overflow: ellipsis;
-    font-family: 'Figtree';
     font-size: 20px;
     font-style: normal;
     font-weight: 600;

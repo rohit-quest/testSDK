@@ -43,7 +43,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   handleOtp,
   entityId,
   textColor,
-  fontFamily,
+  // fontFamily,
   apiKey,
   apiSecret,
   btnTextColor,
@@ -149,7 +149,8 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                   ...styleConfig?.Input,   
                   borderRadius :'6px',
                   border : '1.5px solid #ECECEC',
-                  padding : '8px 12px'
+                  padding : '8px 12px',
+                  // fontFamily:themeConfig.fontFamily || "'Figtree', sans-serif"
                 }}
                 logoPosition='left'
                 type="email"
@@ -180,6 +181,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                   styleConfig?.PrimaryButton?.background ||
                   themeConfig?.buttonColor,
                 ...styleConfig?.PrimaryButton,
+                fontFamily:themeConfig.fontFamily || "'Figtree', sans-serif"
               }}
               children={"Continue"}
               onClick={sendOTPfunction}
@@ -195,7 +197,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
           setSendOTP={setSendOTP}
           apiKey={apiKey}
           apiSecret={apiSecret}
-          fontFamily={fontFamily}
+          // fontFamily={fontFamily}
           textColor={textColor}
           btnColor={btnColor}
           redirectURL={redirectURL}

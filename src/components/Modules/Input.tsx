@@ -1,6 +1,8 @@
 import { CSSProperties, ChangeEventHandler, KeyboardEventHandler, RefObject, useContext } from "react";
 import { emailLogo, phoneLogo, calenderIcon } from "../../assets/assetsSVG";
 import QuestContext from "../QuestWrapper";
+
+
 import "./css/input.css";
 
 const LogoType = {
@@ -56,7 +58,9 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value, on
         value={value}
         ref={ref}
         onWheel={event => { event.currentTarget.blur(); }}
-        // style={style}
+        style={
+          {fontFamily:themeConfig.fontFamily || "'Figtree', sans-serif"}
+        }
       />
       { (logoPosition == 'right' || logoPosition == 'both') && (LogoType[type])(iconColor || '#B9B9B9')}
     </div>

@@ -100,14 +100,14 @@ function App() {
         entityId={"e-0000000000"}
         featureFlags={{}}
         apiType="STAGING"
-        // themeConfig={{
-        //   backgroundColor: "black",
-        //   borderColor: "red",
-        //   buttonColor: "green",
-        //   primaryColor: "White",
-        //   secondaryColor: "gray",
-        //   fontFamily: ""
-        // }}
+        themeConfig={{
+          // backgroundColor: "black",
+          // borderColor: "red",
+          // buttonColor: "green",
+          // primaryColor: "White",
+          // secondaryColor: "gray",
+          fontFamily: "cursive"
+        }}
       >
         {/* <SpinTheWheel
                     userId={userId}
@@ -161,7 +161,7 @@ function App() {
         {/* <OnBoardingPreview online /> */}
 
         {/* <GetStartedPreview
-   online={false}
+   online={true}
  />   */}
 {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
@@ -236,7 +236,7 @@ function App() {
                     // isArticle={true}
             /> */}
 
-        {/* <QuestLogin
+        <QuestLogin
                     // questId=""
                     textColor=""
                     btnTextColor=""
@@ -245,7 +245,7 @@ function App() {
                     googleClientId="103575086200-2gijbo8rldrv5sg60u0u1rl4cmldhm8a.apps.googleusercontent.com"
                     redirectUri="http://localhost:3000"
                     redirectURL="https://www.questlabs.ai/"
-                ></QuestLogin> */}
+                ></QuestLogin>
 
         {/* <ShareArticle
                     bgColor=""
