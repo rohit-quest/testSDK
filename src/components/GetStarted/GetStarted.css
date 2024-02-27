@@ -75,6 +75,8 @@
 }
 .gs-subheading {
   color:  #939393;
+  font-family: Figtree;
+  color:  #939393;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -132,7 +134,7 @@
 .q_progress_bar_pending {
   height: 6px;
   border-radius: 8px;
-  background: var(--Neutral-White-300, #efefef);
+  background: #efefef;
   align-self: stretch;
 }
 
@@ -279,10 +281,11 @@
   gap: 20px;
   align-self: stretch;
   border-bottom: 1px solid  #efefef;
+  border-bottom: 1px solid  #efefef;
 }
 
 .gs_steps {
-  color: var(--Neutral-Black-100, #939393);
+  color: #939393;
   text-align: right;
   font-size: 12px;
   font-style: normal;
