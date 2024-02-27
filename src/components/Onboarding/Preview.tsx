@@ -109,6 +109,14 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
         entityId={entityId}
         featureFlags={{}}
         apiType="PRODUCTION"
+        themeConfig={{
+          // backgroundColor: "black",
+          // borderColor: "red",
+          // buttonColor: "green",
+          // primaryColor: "White",
+          // secondaryColor: "gray",
+          fontFamily: "cursive"
+        }}
       >
         <OnBoarding
           userId={userId}
@@ -117,7 +125,7 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
           setAnswer={setAnswer}
           token={token}
           // answerFontSize="14px"
-          // template={1}
+          template={'multi-question'}
           progress={["Personal sdrerwtr", "Professional", "Additional",]}
           // text="Go Back"
           // text="Submit and Continue"
@@ -133,8 +141,8 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
           // btnSize="200px"
           // inputBgColor=""
           // inputBorder="1px solid #6525B3"
-          singleChoose="modal3"
-          multiChoice="modal1"
+          singleChoose="modal1"
+          multiChoice="modal2"
           design={[[1, 2], [3, 4], [5, 6]]}
           // progressBarMultiLine = {true}
           // design={[]}
@@ -147,6 +155,7 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
           getAnswers={printAnswer}
           // screenHeight=""
           // progressBarType="modal1"
+          styleConfig={{Form : {border:'1px solid black'}}}
           
         />
       </QuestProvider>

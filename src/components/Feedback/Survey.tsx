@@ -519,7 +519,10 @@ const singleChoiceOne = (
 
   return (
       <div
-        style={{color: themeConfig.primaryColor,background: themeConfig.backgroundColor,...styleConfig?.Form}}
+        style={{
+          // color: themeConfig.primaryColor,background: themeConfig.backgroundColor,...styleConfig?.Form
+          background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
+        }}
         className="q-feedback-cont"
       >
         {formdata.length > 0 ? (

@@ -121,7 +121,10 @@ export const CrossSelling = ({
     
 
     const jsx = (
-        <div className="q_refer_and_earn" style={{background: styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Form}}>
+        <div className="q_refer_and_earn" style={{
+            // background: styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Form
+            background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
+            }}>
             <div className="q_refer_head">
                 <img src={grabDealIcon()} className="refer_head_img" alt="" />
             </div>

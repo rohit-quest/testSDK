@@ -123,7 +123,7 @@
 }
 
 .q-fdov-btn-continue {
-  box-sizing: content-box;
+  /* box-sizing: content-box; */
   padding: 10px 16px;
   border-radius: 10px;
   border: 1.5px solid #d1acff;

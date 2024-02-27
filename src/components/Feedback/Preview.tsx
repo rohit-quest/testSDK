@@ -71,7 +71,7 @@ export default function FeedbackPreview({ online = true }) {
                     heading={"Share Your FeedBack"}
                     subHeading={"How was your experience?"}
                     styleConfig={{
-                        Body: {
+                        Form: {
                             font: "sans",
                             color: "red",
                             // backgroundColor: "gray"
