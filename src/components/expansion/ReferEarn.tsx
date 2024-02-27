@@ -106,12 +106,14 @@ export const Referral = ({
             <img className="q_refer_copy_icon" src={copy[1] ? tickIcon(styleConfig?.Icon?.color) : copyIcon(secondaryIconColor)} onClick={() => handleCopy(1)} alt="" />
           </div>
         </div>}
+        
         <PrimaryButton 
           children={shareButtonText}
           style={styleConfig?.PrimaryButton}
           onClick={()=>{navigator.clipboard.writeText(referralLink+shareCode);onCopy(shareCode)}}
           type="button"
         />
+       
         <div  className="q_social_links">
           <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(shareCode, "linkedin")} src={linkedInIcon(styleConfig?.Icon?.color)} alt="" />
           <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(referralLink, "facebook")} src={faceBookIcon(styleConfig?.Icon?.color)} alt="" />

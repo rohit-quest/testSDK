@@ -64,6 +64,7 @@
     align-items: flex-start;
     gap: 6px;
     align-self: stretch;
+    font-size: 12px;
 }
 
 .q_refer_text {

@@ -121,7 +121,7 @@ function App() {
 
         {/* <SearchPreview online={false}/> */}
         {/* <SreakPreview/> */}
-        
+        {/* <TutorialPreview online={false}/> */}
         {/* { <Payment
                 stripePublishableKey="pk_test_51IGxpeHv3bPcUa5dtAAgA2TZPWjga0FPxWlK3GAnWUfzRXzO8l6Kc3zF2WBpjrvFHAle0Cy3Jqxc7djZxptd9mHe00KjsN2Im7"
                 userId="u-0000000000"
@@ -220,7 +220,7 @@ function App() {
 
         {/* <FeedbackPreview /> */}
 
-        {/* <ReferEarnPreview/> */}
+        <ReferEarnPreview/>
 
         {/* <CrossSellingPreview/> */}
 
