@@ -18,8 +18,8 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
             featureFlags={{}}
             apiType="PRODUCTION"
             themeConfig={{
-                primaryColor: "red",
-                fontFamily:"system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif"
+                // primaryColor: "red",
+                // fontFamily:"cursive"
             }}
         >
 
@@ -37,8 +37,8 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                     Form: {
                         
                     },
-                    Heading:{color:'red'},
-                    Description:{color:'black'}
+                    // Heading:{color:'red'},
+                    // Description:{color:'black'}
                 }}
                 // footerBackgroundColor='red'
                 contactUrl="https://calendly.com/sriya-persana/30min"

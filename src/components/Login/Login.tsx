@@ -128,14 +128,9 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
           >
             <div className="q-login-body">
               {!otpScreen && (
-                <>
+                <div className="q-login-header">
                   <div
                     className="q-login-h1"
-                    // style={{
-                    //   color: textColor,
-                    //   fontFamily: fontFamily,
-                    //   ...styleConfig?.Heading,
-                    // }}
                     style={{
                       color:
                         styleConfig?.Heading?.color ||
@@ -156,13 +151,11 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   >
                     Welcome Back, Please enter your details
                   </div>
-                </>
+                </div>
               )}
               {isEmail && (
                 <div
-                  style={{
-                    width: "100%",
-                  }}
+                  className="q-login-mid-cont"
                 >
                   <EmailLogin
                     {...{

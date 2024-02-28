@@ -1,7 +1,7 @@
 .q_top_bar {
     box-sizing: content-box;
     height: 50px;
-    padding: 12px 20px;
+    padding:20px;
     display: flex;
     align-items: center;
     justify-content: space-between;

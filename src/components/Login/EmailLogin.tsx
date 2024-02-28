@@ -106,11 +106,12 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   };
 
   return (
-    <div>
+    <div style={{width:'100%'}}>
       {showLoader && <Loader />}
       {!sendOTP && (
-        <div className="questLabs">
+        // <div className="questLabs">
           <div className="q-email-login-ctn">
+            <div>
             <Label
               style={{
                 color: styleConfig?.Label?.color || themeConfig?.primaryColor,
@@ -160,10 +161,12 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                 onKeyUp={handlesubmit}
                 
               />
-            {/* </div> */}
-            {!mainValidEmail && (
+               {!mainValidEmail && (
               <div className="q-login-p">Please enter a valid email id</div>
             )}
+              </div>
+            {/* </div> */}
+           
             {/* <div
               style={{
                 backgroundColor: btnColor,
@@ -187,7 +190,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
               onClick={sendOTPfunction}
             />
           </div>
-        </div>
+        // </div>
       )}
       {sendOTP && (
         <OtpVerification

@@ -865,7 +865,9 @@ function OnBoarding(props: QuestLoginProps) {
 
     return (
         formdata && (
-        <div className="q-onb-home" style={{ background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor || "#fff", height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form}}>
+        <div className="q-onb-home" style={{
+             background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor || "#fff", height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
+             }}>
             <div
                className="q-onb-ch"
             >

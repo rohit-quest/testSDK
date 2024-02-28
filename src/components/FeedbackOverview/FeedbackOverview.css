@@ -33,7 +33,7 @@
   line-height: 28px;
 }
 .q-fw-div {
-  width: 350px;
+  width: 376px;
   border-radius: 16px;
   box-shadow: 0px 0px 20px 0px #00000073;
   background-color: white;
@@ -48,13 +48,13 @@
 .q-fw-cards {
   cursor: pointer;
   display: flex;
-  padding: 15px;
+  padding: 12px;
   align-items: center;
   gap: 12px;
   align-self: stretch;
 }
 
-.q-fw-crossBtn {
+/* .q-fw-crossBtn {
   position: relative;
   height: 10px;
   margin-bottom: 10px;
@@ -65,7 +65,16 @@
   right: 20px;
   top: 20px;
   cursor: pointer;
+} */
+.q-fw-crossBtn{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 20px;
+  align-self: stretch;
+  padding: 20px;
 }
+
 .fd-powered-by {
   padding-bottom: 20px;
   font-size: 0.875rem;
@@ -139,12 +148,7 @@
 }
 
 .q_feedback_icon {
- /* padding: 8px;
-  padding-bottom: 2px;
-  border-radius: 50%;
-  box-sizing: content-box; */
-  width: 32px;
-  height: 32px;
+  padding: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -152,6 +156,7 @@
   background: var(--Neutral-White-200, #fbfbfb); 
   border-radius: 50%;
 }
+
 
 .q_feedback_desc {
   color: var(--Neutral-Black-100, #939393);
@@ -213,8 +218,7 @@
 }
 
 .q-fw-content-box {
-  margin-top: 35px;
-  padding: 0 20px;
+  padding: 0 20px 20px 20px;
 }
 
 .q-fw-tab-heading {

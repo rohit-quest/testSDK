@@ -41,7 +41,6 @@
 }
 .q_searchBox_input_cont input {
   font-size: 16px;
-
 }
 
 .q_search_bar_icon {
@@ -67,7 +66,7 @@
 
 .q_search_bar .q_search_input {
   color: #2c2c2c;
-  font-family: "Figtree";
+  /* font-family: "Figtree"; */
   font-size: 16px;
   font-style: normal;
   /* width: 494px; */
@@ -86,7 +85,7 @@
   padding: 10px 12px;
   cursor: pointer;
   color: #6e6e6e;
-  font-family: "Figtree";
+  /* font-family: "Figtree"; */
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -115,20 +114,13 @@
 }
 
 .q_search_result_icon {
-  box-sizing: content-box;
-  display: flex;
-  padding: 8px;
   width: 16px;
-  border-radius: 50%;
-  background: #f4ebff;
-  align-items: flex-start;
-  gap: 8px;
 }
 
 .q_search_result_head {
   align-self: stretch;
   color: #2c2c2c;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -138,7 +130,7 @@
 .q_search_result_desc {
   display: -webkit-box;
   color: #939393;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -159,7 +151,7 @@
   align-items: center;
   gap: 4px;
   color: #2c2c2c;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -195,7 +187,7 @@
 .q_search_details_head {
   align-self: stretch;
   color: #2c2c2c;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -218,4 +210,16 @@
   .q_search_results {
     min-width: 0;
   }
+}
+
+.q-search-img-cont {
+  display: flex;
+  padding: 8px;
+  align-items: flex-start;
+  gap: 8px;
+  justify-content: center;
+  background: #f4ebff;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
 }

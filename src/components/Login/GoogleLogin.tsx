@@ -95,8 +95,8 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
   }
 
   return (
-    <div className="q-google-login-btn">
-      <div style={{ marginTop: "10px", position: "relative" }}>
+    <div className="q-google-login-btn" style={{width:'100%'}}>
+      <div style={{ position: "relative" }}>
         {showLoader && <Loader />}
         <a
           style={{ textDecoration: 'none', color: 'black' }}

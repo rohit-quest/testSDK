@@ -106,9 +106,10 @@ function App() {
           // buttonColor: "green",
           // primaryColor: "White",
           // secondaryColor: "gray",
-          fontFamily: "cursive"
+          // fontFamily: "cursive"
         }}
       >
+        {/* <TutorialPreview online={false} /> */}
         {/* <SpinTheWheel
                     userId={userId}
                     questId={questId}
@@ -216,7 +217,7 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-        {/* <FeedbackWorkflowPreview online={true} /> */}
+        {/* <FeedbackWorkflowPreview online={false} /> */}
 
         {/* <FeedbackPreview /> */}
 
@@ -236,7 +237,7 @@ function App() {
                     // isArticle={true}
             /> */}
 
-        <QuestLogin
+               {/* <QuestLogin
                     // questId=""
                     textColor=""
                     btnTextColor=""
@@ -245,7 +246,7 @@ function App() {
                     googleClientId="103575086200-2gijbo8rldrv5sg60u0u1rl4cmldhm8a.apps.googleusercontent.com"
                     redirectUri="http://localhost:3000"
                     redirectURL="https://www.questlabs.ai/"
-                ></QuestLogin>
+                ></QuestLogin> */}
 
         {/* <ShareArticle
                     bgColor=""

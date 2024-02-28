@@ -37,7 +37,7 @@ interface propType {
   iconColor?: string;
   offlineFormatData: data;
   styleConfig?: {
-    Body?: CSSProperties;
+    Form?: CSSProperties;
     Heading?: CSSProperties;
     Description?: CSSProperties;
     Input?: CSSProperties;
@@ -121,7 +121,9 @@ export default function SearchOffline(prop: propType): JSX.Element {
   };
 
   const jsx = (
-    <div className="q_search_bar" style={{background: themeConfig.backgroundColor,color: themeConfig.primaryColor,...styleConfig?.Body}}>
+    <div className="q_search_bar" style={{
+      background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor || "#fff", height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
+      }}>
       <div className="q_search_box">
         <img
           className="q_search_bar_icon"
@@ -162,11 +164,14 @@ export default function SearchOffline(prop: propType): JSX.Element {
               onMouseEnter={() => setSelectedResultIndex(i)}
               onMouseLeave={() => setSelectedResultIndex(0)}
             >
+              <div className="q-search-img-cont">
               <img
                 src={(prop.icons?.length && prop.icons[i]) || icon || questLogo}
                 className="q_search_result_icon"
                 alt={""}
               />
+              </div>
+              
               <div className="q_search_result_box">
                 <div style={styleConfig?.Heading} className="q_search_result_head">
                   {text}

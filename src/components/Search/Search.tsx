@@ -39,7 +39,7 @@ interface propType {
   uniqueUserId?: string;
   uniqueEmailId?: string;
   styleConfig?: {
-    Body?: CSSProperties;
+    Form?: CSSProperties;
     Heading?: CSSProperties;
     Description?: CSSProperties;
     Input?: CSSProperties;
@@ -54,7 +54,7 @@ export default function Search(prop: propType): JSX.Element {
     wholerScreen = true,
     defaultResult = [],
     defulatResultLength = 10,
-    onSearch = (str: string) => {},
+    onSearch = (str: string) => { },
     questId = "",
     token = "",
     userId = "",
@@ -146,7 +146,9 @@ export default function Search(prop: propType): JSX.Element {
   };
 
   const jsx = (
-    <div className="q_search_bar" style={{background: themeConfig.backgroundColor,color: themeConfig.primaryColor,...styleConfig?.Body}}>
+    <div className="q_search_bar" style={{ 
+      background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor || "#fff", height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
+       }}>
       <div className="q_search_box">
         <img
           className="q_search_bar_icon"
@@ -192,11 +194,14 @@ export default function Search(prop: propType): JSX.Element {
               onMouseEnter={() => setSelectedResultIndex(i)}
               onMouseLeave={() => setSelectedResultIndex(0)}
             >
-              <img
-                src={(prop.icons?.length && prop.icons[i]) || icon || questLogo}
-                className="q_search_result_icon"
-                alt={""}
-              />
+              <div className="q-search-img-cont">
+                <img
+                  src={(prop.icons?.length && prop.icons[i]) || icon || questLogo}
+                  className="q_search_result_icon"
+                  alt={""}
+                />
+              </div>
+
               <div className="q_search_result_box">
                 <div
                   style={{
@@ -229,10 +234,10 @@ export default function Search(prop: propType): JSX.Element {
               src={searchResults[selectedResultIndex]?.icon || questLogo}
               alt=""
             />
-            <div style={{ color: themeConfig.primaryColor ,...styleConfig?.Heading }} className="q_search_details_head">
+            <div style={{ color: themeConfig.primaryColor, ...styleConfig?.Heading }} className="q_search_details_head">
               {searchResults[selectedResultIndex]?.text}
             </div>
-            <div style={{ color: themeConfig.secondaryColor ,...styleConfig?.Description  }} className="q_search_result_desc">
+            <div style={{ color: themeConfig.secondaryColor, ...styleConfig?.Description }} className="q_search_result_desc">
               {searchResults[selectedResultIndex]?.longDescription ||
                 searchResults[selectedResultIndex]?.description}
             </div>
@@ -256,7 +261,7 @@ export default function Search(prop: propType): JSX.Element {
           placeholder={prop.placeholder}
           ref={inputElement}
           onKeyDown={handleKeyDown}
-          style={{color: themeConfig.primaryColor,...styleConfig?.Input}}
+          style={{ color: themeConfig.primaryColor, ...styleConfig?.Input }}
           onChange={(e) => {
             onSearch(e.target.value);
             handleSearch(e.target.value);
@@ -296,7 +301,7 @@ export default function Search(prop: propType): JSX.Element {
                       alt={""}
                     />
                     <div className="q_search_result_box">
-                      <div style={{ color: themeConfig.primaryColor,...styleConfig?.Heading }} className="q_search_result_head">
+                      <div style={{ color: themeConfig.primaryColor, ...styleConfig?.Heading }} className="q_search_result_head">
                         {text}
                       </div>
                       <div style={{ color: themeConfig.secondaryColor, ...styleConfig?.Description }} className="q_search_result_desc">
@@ -334,7 +339,7 @@ export default function Search(prop: propType): JSX.Element {
                       className="q_search_result_icon"
                     />
                     <div className="q_search_result_box">
-                      <div style={{ color: themeConfig.primaryColor, ...styleConfig?.Heading}} className="q_search_result_head">
+                      <div style={{ color: themeConfig.primaryColor, ...styleConfig?.Heading }} className="q_search_result_head">
                         {text}
                       </div>
                       <div style={{ color: themeConfig.secondaryColor, ...styleConfig?.Description }} className="q_search_result_desc">
