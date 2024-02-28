@@ -458,7 +458,7 @@ function isValidEmail(email: string) {
     );
   };
 
-console
+
 
 const singleChoiceOne = (
     options: string[],
