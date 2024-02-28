@@ -58,6 +58,9 @@ export default function FeedbackPreview({ online = true }) {
                 apiKey={apiKey}
                 apiSecret={apiSecret}
                 entityId={entityId}
+                themeConfig={{
+                    fontFamily:'cursive'
+                }}
             >
                 <Survey
                     userId={userId}

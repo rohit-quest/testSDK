@@ -10,24 +10,30 @@ const apiSecret = ""
 
 export default function ReferEarnPreview() {
     return (
-        <QuestProvider apiKey={apiKey} apiSecret={apiSecret} featureFlags={{}} entityId={entityId} themeConfig={{backgroundColor: 'red'}}>
+        <QuestProvider apiKey={apiKey} apiSecret={apiSecret} featureFlags={{}} entityId={entityId} 
+        themeConfig={{
+            // fontFamily: 'cursive'
+        }}
+        >
+
+
             <ReferEarn questId={questId}
             token={token} userId={userId} 
             onCopy={(referralCode) => console.log(referralCode)}
              referralLink='https://questlabs.ai/'
              styleConfig={{
                     Form: {
-                        backgroundColor: 'blue',
-                        color: 'red'
+                        // backgroundColor: 'blue',
+                        // color: 'red'
                     },
                     Heading: {
-                        color: 'red'
+                        // color: 'red'
                     },
                 
              }}
             // iconColor='red'
             // secondaryIconColor='red'
-            // gradientBackground={true}
+            gradientBackground={true}
               />
         </QuestProvider>
     )

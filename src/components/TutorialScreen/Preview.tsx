@@ -18,7 +18,7 @@ export default function TutorialPreview({ online = true }) {
             featureFlags={{}}
             apiType="PRODUCTION"
             themeConfig={
-                { fontFamily: 'cursive' }
+                {  }
             }
         >
             <Tutorial
@@ -44,7 +44,7 @@ export default function TutorialPreview({ online = true }) {
             featureFlags={{}}
             apiType="PRODUCTION"
             themeConfig={
-                { fontFamily: 'cursive' }
+                {  }
             }
         >
             <OfflineComponent

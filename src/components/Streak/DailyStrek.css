@@ -1,17 +1,21 @@
+
+.q_daily_streak_cont{
+  max-width: 400px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.226);
+}
+
 .q_daily_streak {
   display: flex;
-  background: #fff;
   flex-direction: column;
   align-items: center;
   gap: 20px;
-  border-radius: 10px;
-  max-width: 400px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.226);
+  padding: 20px;
 }
 
 .q_steak_days_box {
   display: flex;
-  padding-top: 20px;
   flex-direction: column;
   align-items: center;
 }
@@ -19,7 +23,7 @@
 .q_streak_days {
   display: -webkit-box;
   color: #9035ff;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 36px;
   font-style: normal;
   font-weight: 600;
@@ -32,7 +36,7 @@
 .q_steak_days_text {
   align-self: stretch;
   color: #9035ff;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
@@ -44,7 +48,7 @@
 .q_streak_desc {
   align-self: stretch;
   color: #2c2c2c;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -58,7 +62,6 @@
   gap: 12px;
   justify-content: center;
   align-self: stretch;
-  margin: 0px 20px;
 }
 
 .q_streak_step {
@@ -84,7 +87,7 @@
 .q_streak_step_title {
   align-self: stretch;
   color: #b9b9b9;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 10px;
   font-style: normal;
   font-weight: 400;

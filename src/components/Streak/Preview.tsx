@@ -66,7 +66,7 @@ export default function SreakPreview({ online = true }) {
             featureFlags={{}}
             apiType="PRODUCTION"
             themeConfig={{
-                
+                fontFamily:'cursive'
             }}
         >
             <DailyStreak

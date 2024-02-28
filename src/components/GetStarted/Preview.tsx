@@ -60,7 +60,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
             entityId="e-26629b73-a96b-436f-8198-d49572d9d156"
             featureFlags={{}}
             apiType="STAGING"
-            themeConfig={{fontFamily:''}}
+            themeConfig={{fontFamily:'cursive'}}
         >
             <GetStarted
                 questId="q-68c04087-0b68-40a9-8df3-e91932302810"

@@ -81,6 +81,7 @@ export const Referral = ({
       token,
     }).then((r) => setCode(r.referralCode || ""));
   }, []);
+console.log(styleConfig,themeConfig)
 
   const jsx = (
     <div className="q_refer_and_earn" style={{
@@ -112,7 +113,7 @@ export const Referral = ({
         
         <PrimaryButton 
           children={shareButtonText}
-          style={styleConfig?.PrimaryButton}
+          style={{border:styleConfig?.PrimaryButton?.border ||'1.5px solid #D1ACFF',...styleConfig?.PrimaryButton}}
           onClick={()=>{navigator.clipboard.writeText(referralLink+shareCode);onCopy(shareCode)}}
           type="button"
         />
@@ -128,7 +129,9 @@ export const Referral = ({
     </div>
   );
 
-  if (gradientBackground) return <div className="q_gradient_background">
+  if (gradientBackground) return <div className="q_gradient_background" style={{
+    fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif"
+  }}>
     <div className="q_gradient_head">
       <div className="q_gradient_heading" style={styleConfig?.Heading}>{primaryHeading}</div>
       <div className="q_gradient_description" style={styleConfig?.Description}>{primaryDescription}</div>

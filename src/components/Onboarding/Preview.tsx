@@ -115,7 +115,7 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
           // buttonColor: "green",
           // primaryColor: "White",
           // secondaryColor: "gray",
-          fontFamily: "cursive"
+          // fontFamily: "cursive"
         }}
       >
         <OnBoarding
@@ -127,10 +127,12 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
           // answerFontSize="14px"
           template={'multi-question'}
           progress={["Personal sdrerwtr", "Professional", "Additional",]}
+          
           // text="Go Back"
           // text="Submit and Continue"
           // color=""
           // bgColor="#fff"
+          showFooter={false}
           controlBtnType="Buttons"
           // headingSize="24px"
           // descSize="18px"

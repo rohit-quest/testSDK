@@ -10,7 +10,11 @@ const apiSecret = ""
 
 export default function CrossSellingPreview() {
     return (
-        <QuestProvider apiKey={apiKey} apiSecret={apiSecret} featureFlags={{}} entityId={entityId}>
+        <QuestProvider apiKey={apiKey} apiSecret={apiSecret} featureFlags={{}} entityId={entityId}
+        themeConfig={{
+            fontFamily: 'cursive'
+        }}
+        >
             <CrossSelling 
                 questId={questId}
                 //  invitationLink='https://questlabs.ai/'

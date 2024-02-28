@@ -12,7 +12,7 @@
 .q_survey_heading {
     overflow: hidden;
     color: #2C2C2C;
-    font-family: Figtree;
+    /* font-family: Figtree; */
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
@@ -24,7 +24,7 @@
 .q_feedback_desc {
     color: #939393;
     /* Body sm/400 */
-    font-family: Figtree;
+    /* font-family: Figtree; */
     font-size: 12px;
     font-style: normal;
     font-weight: 400;

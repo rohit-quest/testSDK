@@ -95,55 +95,59 @@ export default function DailyStreak({
 
   return (
     <div
-      className="q_daily_streak"
       style={{
-        background: themeConfig.backgroundColor,
-        color: themeConfig.secondaryColor,
-        ...styleConfig?.Form,
+        background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor || "#fff", height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
       }}
+      className="q_daily_streak_cont"
+
     >
-      <div className="q_steak_days_box">
-        <div className="q_streak_days">{days}</div>
-        <div className="q_steak_days_text" style={descriptionStyle}>
-          Streak days
+      <div
+        className="q_daily_streak"
+      >
+        <div className="q_steak_days_box">
+          <div className="q_streak_days">{days}</div>
+          <div className="q_steak_days_text" style={descriptionStyle}>
+            Streak days
+          </div>
         </div>
-      </div>
-      <div className="q_streak_desc" style={descriptionStyle}>
-        {stepDetails[currentActive].description}
-      </div>
-      <div className="q_streak_steps">
-        {stepDetails.map((step, i) => {
-          const sumOfRanges = stepDetails
-            .slice(0, i + 1)
-            .reduce((sum, s) => sum + s.range, 0);
-          const isActive = sumOfRanges <= days;
-          const imgSrc = isActive
-            ? filledStreakImg || streakIcon(true)
-            : pendingStreakImg || streakIcon(false);
-          return (
-            <div key={i} className={"q_streak_step"}>
-              <div className={"q_img_cont "  + (isActive? "q_img_cont_active" : "q_img_cont_disable")  }>
-                <img src={imgSrc} alt="" />
+        <div className="q_streak_desc" style={descriptionStyle}>
+          {stepDetails[currentActive].description}
+        </div>
+        <div className="q_streak_steps">
+          {stepDetails.map((step, i) => {
+            const sumOfRanges = stepDetails
+              .slice(0, i + 1)
+              .reduce((sum, s) => sum + s.range, 0);
+            const isActive = sumOfRanges <= days;
+            const imgSrc = isActive
+              ? filledStreakImg || streakIcon(true)
+              : pendingStreakImg || streakIcon(false);
+            return (
+              <div key={i} className={"q_streak_step"}>
+                <div className={"q_img_cont " + (isActive ? "q_img_cont_active" : "q_img_cont_disable")}>
+                  <img src={imgSrc} alt="" />
+                </div>
+                <div
+                  className={
+                    "q_streak_step_title " +
+                    (isActive ? "q_streak_step_active" : "q_streak_step_disable")
+                  }
+                >
+                  {step.title}
+                </div>
+                <div
+                  className={
+                    "q_streak_dot " +
+                    (isActive ? "q_streak_dot_active" : "q_streak_dot_disable")
+                  }
+                ></div>
               </div>
-              <div
-                className={
-                  "q_streak_step_title " +
-                  (isActive ? "q_streak_step_active" : "q_streak_step_disable")
-                }
-              >
-                {step.title}
-              </div>
-              <div
-                className={
-                  "q_streak_dot " +
-                  (isActive ? "q_streak_dot_active" : "q_streak_dot_disable")
-                }
-              ></div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
       <QuestLabs style={styleConfig?.Footer} />
     </div>
+
   );
 }

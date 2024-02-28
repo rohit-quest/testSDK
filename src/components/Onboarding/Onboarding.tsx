@@ -101,6 +101,7 @@ interface QuestLoginProps {
     // choiceColor?: string;
     // textInputModal?: "modal1"|"modal2";
     template?: "multi-question" | "single-question";
+    showFooter?: false | true
     styleConfig?: {
         Form?: CSSProperties,
         Topbar?: CSSProperties,
@@ -190,7 +191,8 @@ function OnBoarding(props: QuestLoginProps) {
         // textInputModal = "modal1",
         template,
         design = [],
-        styleConfig
+        styleConfig,
+        showFooter = true
     } = props;
 
     // let { design =[] } = props;
@@ -864,7 +866,7 @@ function OnBoarding(props: QuestLoginProps) {
     }
 
     return (
-        formdata && (
+        formdata.length > 0 && (
         <div className="q-onb-home" style={{
              background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor || "#fff", height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
              }}>
@@ -1154,6 +1156,7 @@ function OnBoarding(props: QuestLoginProps) {
                                     onClick={returnAnswers}
                                     disabled={!btnFlag}
                                     style={{
+                                        border :styleConfig?.SecondaryButton?.border || '1.5px solid #afafaf',
                                         background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
                                         ...styleConfig?.PrimaryButton
                                     }}
@@ -1163,7 +1166,7 @@ function OnBoarding(props: QuestLoginProps) {
                             </div>
                         ))}
                 </div>
-               {formdata &&  <QuestLabs style={styleConfig?.Footer} /> }
+               {(formdata && showFooter) &&  <QuestLabs style={styleConfig?.Footer} /> }
             </div>
         </div>
         )

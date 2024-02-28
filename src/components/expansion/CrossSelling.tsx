@@ -178,7 +178,9 @@ export const CrossSelling = ({
         </div>
     );
 
-    if (gradientBackground) return <div className="q_gradient_background" style={styleConfig?.BackgroundWrapper}>
+    if (gradientBackground) return <div className="q_gradient_background" style={{
+        fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+        ...styleConfig?.BackgroundWrapper}}>
         <div className="q_gradient_head">
             <div className="q_gradient_heading">{primaryHeading}</div>
             <div className="q_gradient_description">{primaryDescription}</div>
