@@ -74,9 +74,9 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   const sendOTPfunction = () => {
     setMainValidEmail(isValidEmail);
     if (!isValidEmail || email.length === 0) {
-      showToast.error(
-        "Invalid email address" + "\n" + "Please check your email address"
-      );
+      // showToast.error(
+      //   "Invalid email address" + "\n" + "Please check your email address"
+      // );
       return;
     }
     setShowLoader(true);
@@ -119,8 +119,8 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
             >
               Email
             </Label>
-            <div className="q-email-input">
-              <img src={emailLogo2} className="q-email-logo" alt="" />
+            {/* <div className="q-email-input"> */}
+              {/* <img src={emailLogo2} className="q-email-logo-pq" alt="" /> */}
               {/* {email && (
                 <img
                   src={crossLogo}
@@ -146,15 +146,20 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                 style={{ 
                   borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
                   color: styleConfig?.Input?.color || themeConfig?.primaryColor,
-                  ...styleConfig?.Input   
+                  ...styleConfig?.Input,   
+                  borderRadius :'6px',
+                  border : '1.5px solid #ECECEC',
+                  padding : '8px 12px'
                 }}
-                type="text"
+                logoPosition='left'
+                type="email"
                 placeholder="Enter your email id"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onKeyUp={handlesubmit}
+                
               />
-            </div>
+            {/* </div> */}
             {!mainValidEmail && (
               <div className="q-login-p">Please enter a valid email id</div>
             )}

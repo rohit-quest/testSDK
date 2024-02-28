@@ -265,7 +265,7 @@ textarea:focus {
     display: flex;
     padding: 10px 16px;
     border-radius: 10px;
-    border: 1.5px solid #D1ACFF;
+    border: 0px;
     background: linear-gradient(90deg, #9035FF 0.36%, #0065FF 100.36%);
     justify-content: center;
     align-items: center;

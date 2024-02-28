@@ -66,7 +66,7 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
       )
       .then((res) => {
         if (res.data.success === true) {
-          toast.success('Congratulations!!!' + '\n' + 'Successfully Logged in');
+          // toast.success('Congratulations!!!' + '\n' + 'Successfully Logged in');
           if (onSubmit) {
             onSubmit({ userId: res.data.userId, token: res.data.token, userCredentials : res.data.credentials,
               refreshToken : res.data.refreshToken });
@@ -82,12 +82,12 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
           }
         } else if (res.data.success === false) {
           console.log(res.data.error);
-          toast.error('Unable to login' + '\n' + `${res.data.error}`);
+          // toast.error('Unable to login' + '\n' + `${res.data.error}`);
         }
       })
       .catch((err) => {
         console.error(err);
-        toast.error(err.message);
+        // toast.error(err.message);
       })
       .finally(() => {
         setShowLoader(false);
@@ -111,7 +111,7 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
               
             }}
           >
-            Sign in with Google
+            <p>Sign in with Google</p>
             <img className="ml-auto" src={google2} alt="google-logo" />
           </div>
         </a>

@@ -15,7 +15,7 @@ export default function ModalPreview({ online = true }) {
             apiType="STAGING"
         >
             <QuestMOdal
-                reward={false}
+                reward={true}
                 invitationLink='https://discord.gg/hjYWqJvZHg'
                 onUpload={(file) => console.log(file)}
                 url={'https://staging.questprotocol.xyz/api/upload-img'}
@@ -26,6 +26,7 @@ export default function ModalPreview({ online = true }) {
                 }}
                 // footerBackground='blue'
                 // iconColor='yellow'
+                
             />
         </QuestProvider>
     )

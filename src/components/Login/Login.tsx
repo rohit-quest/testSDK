@@ -48,7 +48,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
 }) => {
   const [isEmail, setIsEmail] = useState<boolean>(false);
   const [isGoogle, setIsGoogle] = useState<boolean>(false);
-  const [bgColor, setBgColor] = useState<string>("#ffffff");
+  // const [bgColor, setBgColor] = useState<string>("#ffffff");
   const [fontFamily, setFontFamily] = useState<string>("Figtree");
   const [gradient, setGradient] = useState<boolean>(false);
   const [otpScreen, setOtpScreen] = useState<boolean>(false);
@@ -116,17 +116,13 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   return (
     <>
       <div className="questLabs" 
-      style={{
-        background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
-      }}
+     
       >
         <ToastContainer />
         <div className="q-login-parent-container">
           <div
             style={{
-              ...(gradient
-                ? { backgroundImage: bgColor }
-                : { backgroundColor: bgColor }),
+              background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
             }}
             className="q-login-container"
           >

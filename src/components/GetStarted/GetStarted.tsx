@@ -11,7 +11,7 @@ import {
   gsTick,
   questLogo,
 } from "../../assets/images";
-import { arrowRight, downArroIcon, upArrow } from "./Svgs";
+import GetStartedSvgs from "./Svgs";
 import QuestLabs from "../QuestLabs";
 import { PrimaryButton } from "../Modules/PrimaryButton";
 import { SecondaryButton } from "../Modules/SecondaryButton";
@@ -295,6 +295,7 @@ function GetStarted({
   }, [allCriteriaCompleted]);
 
 
+
   if (featureFlags[config.FLAG_CONSTRAINTS.GetStartedFlag]?.isEnabled == false) {
     return <div></div>;
   }
@@ -382,19 +383,20 @@ function GetStarted({
                     {
                       <div className="gs-card-img-button">
                         {e.completed ? (
-                          <img src={greenCheck} alt="" className="q_gt_arrow-completed" />
+                         <div className="q_gt_arrow-completed"><GetStartedSvgs type={'greenCheck'} color={'#098849'} /></div>
                         ) : (
-                          <img
-                            src={
-                              dropdowns[i]
-                                ? upArrow(arrowColor)
-                                : e.completed
-                                  ? gsTick
-                                  : downArroIcon(arrowColor)
-                            }
-                            alt=""
-                            className="q_gt_arrow"
-                          />
+                          <div className="q_gt_arrow">
+                            {dropdowns[i] ? (
+                              <GetStartedSvgs type={'upArrow'} color={arrowColor} />
+                            ) : (
+                              e.completed ? (
+                                <img src={gsTick} alt="" className="q_gt_arrow" />
+                              ) : (
+                                <GetStartedSvgs type={'downArrowIcon'} color={arrowColor} />
+                              )
+                            )}
+                          </div>
+
                         )}
                       </div>
                     }
@@ -443,7 +445,9 @@ function GetStarted({
               >
                 <div
                   className="gs_card_body"
-                  style={{ background: cardBackground }}
+                  style={{ background: cardBackground ,
+                    border: `1px solid ${cardBorderColor}`,
+                  }}
                 >
                   <div className="gs_card_body_image">
                     <img
@@ -472,13 +476,18 @@ function GetStarted({
                     className="gs-card-img-button"
                   >
                     {e.completed ? (
-                      <img src={greenCheck} className="q_gt_arrow-completed" alt="" />
+
+                      <div className="q_gt_arrow-completed"><GetStartedSvgs type={'greenCheck'} color={'#098849'} /></div>
                     ) : (
-                      <img
-                        className="q_gt_arrow"
-                        src={arrowRight(arrowColor)}
-                        alt=""
-                      />
+                      <div className="q_gt_arrow">
+                        <GetStartedSvgs color={arrowColor} type={'arrowRight'} />
+                      </div>
+                      // <img
+                      //   className="q_gt_arrow"
+                      //   // src={arrowRight(arrowColor)}
+                      //   alt=""
+                      // />
+
                     )}
                   </div>
                 </div>

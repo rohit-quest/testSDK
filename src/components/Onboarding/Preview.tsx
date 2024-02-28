@@ -182,6 +182,9 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
       screenHeight=""
       progressBarType="modal1"
       offlineFormData={state.offlineFormData}
+      styleConfig={{
+        
+      }}
     />
   )
 }

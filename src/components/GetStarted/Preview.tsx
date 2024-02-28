@@ -67,6 +67,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
                 token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcwODE2NTEwMCwiZXhwIjoxNzA4NzY5OTAwfQ.IvLdEQnnT4oEYjgyb6ADWd9hS2qxYRY_eh3aITHxQlg"}
                 // buttonColor="yellow"
                 cardBackground="yellowGreen"
+                cardBorderColor='red'
                 iconUrls={[
                     "https://pin.questprotocol.xyz/ipfs/QmWSjM2BwmSW7pda3YmWxyFQ7sCJ9PVmVAwj1W9K7XAHhG",
                     "https://pin.questprotocol.xyz/ipfs/QmRC5SwJpBup4wRB32DxjPV2fEnccpJkuMTBtzS9aiJg42",
@@ -87,7 +88,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
             uniqueUserId="soumitra.petbindhi+1@gmail.com"
             showProgressBar
              showFooter={true}
-   mainBackground='pink'
+ 
             />
         </QuestProvider>)
 
@@ -104,7 +105,8 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
         // width="50vw" 
         autoHide={false}
 
-        arrowColor='red'
+        // arrowColor='red'
+        cardBorderColor='red'
         headingText="What’s new"
         onCompleteAllStatus={() => {
             // showToast.success({ text: "completed successfully" })
@@ -112,6 +114,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
         onLinkTrigger = {()=>{
             
         }}
+        template={1}
       
         offlineData={state}
     />)
