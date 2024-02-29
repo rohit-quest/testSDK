@@ -102,7 +102,7 @@ const SurveyOffline = ({
   crossLogoForInput = false,
   onCancel = ()=>{},
   itemsPerPage=5,
-  iconColor = '',
+  iconColor = '#939393',
   ratingType = 'number',
   offlineFormData=[],
   styleConfig={}
