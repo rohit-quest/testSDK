@@ -1,7 +1,7 @@
 export interface RatingProps {
     defaultRating?: number;
     getCurrentRating?: (rating: number) => void;
-    type?: 'emoji' | 'number' | 'colored' | 'star';
+    type?: string
     count?: number;
     colouredButtons?: string[];
 }

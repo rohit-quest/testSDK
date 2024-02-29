@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
+import { CSSProperties, useContext, useState } from 'react';
 import './FeedbackOverview.css';
-import { backButton, userLogo, crossLogo, emailLogo, textAreaIcon } from "../../assets/assetsSVG"
+import Label from '../Modules/Label';
+import { PrimaryButton } from '../Modules/PrimaryButton'
+import QuestContext from '../QuestWrapper';
 
 interface GeneralFeedbackContentProps {
-  font?: string;
-  textColor?: string;
   starColor?: string;
-  btnColor?: string;
   btnTextColor?: string;
   starBorderColor?: string;
   formdata: Array<{ [key: string]: any }>;
@@ -15,23 +14,24 @@ interface GeneralFeedbackContentProps {
   answer: any;
   handleRemove?: (e: any) => void;
   ratingStyle?: "Star" | "Numbers" | "Smiles";
-  crossLogoForInput?: boolean
+  labelStyle?: CSSProperties,
+  normalInput: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
+  emailInput: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
+  normalInput2: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
+  iconColor?: string
+  buttonStyle?: CSSProperties;
 }
 
 const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
   formdata,
-  starColor,
-  font,
-  btnColor,
-  btnTextColor,
-  textColor,
-  starBorderColor,
   handleUpdate,
   handleSubmit,
-  answer,
-  handleRemove,
   ratingStyle,
-  crossLogoForInput
+  normalInput,
+  emailInput,
+  normalInput2,
+  buttonStyle = {},
+  labelStyle = {},
 }) => {
   const [rating, setRating] = useState<number>(0);
   const handleRatingChange2 = (e: any, id: any, rating: number) => {
@@ -64,102 +64,9 @@ const blackStar = (
     </svg>
 );
 
-function isValidEmail(email: string) {
-  if (!email) return false;
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return !emailRegex.test(email);
-}
+const { themeConfig } = useContext(QuestContext.Context);
 
-  const normalInput = (question: string, criteriaId: string, placeholder?:string) => {
-    return (
-      <div className="" key={criteriaId}>
-        <label
-          className="q-fdov-levels"
-          htmlFor="normalInput"
-          style={{
-            fontFamily: font,
-            color: textColor,
-          }}
-        >
-          {question}
-        </label>
-        <div className="q-fdov-input">
-            {/* {userLogo()} */}
-            <input
-              className='q_sdk_input q_fw_input'
-              type="text"
-              id="normalInput"
-              name="normalInput"
-              onChange={(e) => handleUpdate(e, criteriaId, "")}
-              value={answer[criteriaId]}
-              placeholder={placeholder}
-            />
-            {crossLogoForInput && crossLogo(criteriaId, handleRemove)}
-        </div>
-      </div>
-    );
-  };
-  const emailInput = (question: string, criteriaId: string, placeholder?:string) => {
-    return (
-      <div className="" key={criteriaId}>
-        <label
-          className="q-fdov-levels"
-          htmlFor="normalInput"
-          style={{
-            fontFamily: font,
-            color: textColor,
-          }}
-        >
-          {question}
-        </label>
-        <div className="q-fdov-input">
-            <input
-              className='q_sdk_input'
-              type="email"
-              id="normalInput"
-              name="normalInput"
-              onChange={(e) => handleUpdate(e, criteriaId, "")}
-              value={answer[criteriaId]}
-              placeholder={placeholder}
-            />
-            {crossLogoForInput ? crossLogo(criteriaId, handleRemove): emailLogo()}
-        </div>
-        {
-          isValidEmail(answer[criteriaId]) &&
-          <div className='q-input-email-checks'>This is not a valid email</div>
-        }
-      </div>
-    );
-  };
 
-  const normalInput2 = (question: string, criteriaId: string, placeholder?:string) => {
-    return (
-      <div className="" key={criteriaId}>
-        <label
-          className="q-fdov-levels"
-          style={{
-            fontFamily: font,
-            color: textColor,
-          }}
-        >
-          {question}
-        </label>
-        <div className="q-fdov-input" style={{alignItems: "flex-start"}}>
-            {/* {textAreaIcon()} */}
-            <textarea
-            className='q_sdk_textarea'
-              id="normalInput2"
-              name="normalInput"
-              onChange={(e) => handleUpdate(e, criteriaId, "")}
-              value={answer[criteriaId]}
-              placeholder={placeholder}
-              style={{height: "120px", padding: "0px", boxSizing:"content-box" , fontFamily: "'Figtree', sans-serif"}}
-            />
-            {crossLogoForInput && crossLogo(criteriaId, handleRemove)}
-        </div>
-      </div>
-    );
-  };
 
   return (
     <div className='q-fdov-ch-boxes'>
@@ -175,22 +82,11 @@ function isValidEmail(email: string) {
             } else if (data.type === 'RATING') {
               return (
                 <div key={data.criteriaId}>
-                  <div
-                    className="q-fdov-levels"
-                    style={{
-                      fontFamily: font,
-                      color: textColor,
-                    }}
-                  >
-                    {data.question
-                      ? data.question
-                      : 'How would you rate your experience ?'}
-                  </div>
-                  <div
-                    style={{
-                      marginTop: "8px"
-                    }}
-                  >
+                  <Label htmlFor={'normalInput'}
+                    children={data.question? data.question: 'How would you rate your experience ?'}
+                    style={labelStyle}
+                  />
+                  <div>
                     { ratingStyle == "Numbers" ?
                     <div 
                       style={{
@@ -250,18 +146,15 @@ function isValidEmail(email: string) {
               );
             }
           })}
-          <div style={{backgroundColor: btnColor, color:btnTextColor}} onClick={handleSubmit} className="q-fdov-btn-continue">
-            Send Feedback
-          </div>
+          <PrimaryButton 
+            children='Send Feedback'
+            onClick={handleSubmit}
+            style={buttonStyle}
+            className='q-fdov-btn-continue'
+          />
         </>
       ) : (
-        <div
-          style={{
-            fontFamily: font,
-            color: textColor,
-          }}
-          className="q-center"
-        >
+        <div className="q-center">
           No data Found
         </div>
       )}

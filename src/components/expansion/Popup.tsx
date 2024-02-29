@@ -8,11 +8,11 @@ interface PopupProps {
 }
 
 const PopupComponent: React.FC<PopupProps> = ({ isOpen, onClose, children }) => {
-    const popupRef = useRef(null);
+    const popupRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const handleOutsideClick = (event: MouseEvent) => {
-            if (isOpen && popupRef.current && !popupRef.current.contains(event.target as Node)) {
+            if (isOpen && popupRef.current && !popupRef.current?.contains(event.target as Node)) {
                 onClose();
             }
         };

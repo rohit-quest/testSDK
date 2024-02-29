@@ -51,13 +51,13 @@
 /* INPUT BOX, DATE INPUT, TEXTAREA */
 .q-onb-input {
     display: flex;
-    padding: 10px 12px;
+    padding: 10px 16px;
     box-sizing: content-box;
     align-items: center;
     gap: 8px;
     align-self: stretch;
     border-radius: 10px;
-    border: 2px solid var(--neutral-grey-100, #ECECEC);
+    border: 1px solid var(--Neutral-Grey-100, #ECECEC);
 }
 
 .q-onb-input>input,
@@ -265,7 +265,7 @@ textarea:focus {
     display: flex;
     padding: 10px 16px;
     border-radius: 10px;
-    border: 1.5px solid #D1ACFF;
+    border: 0px;
     background: linear-gradient(90deg, #9035FF 0.36%, #0065FF 100.36%);
     justify-content: center;
     align-items: center;
@@ -380,7 +380,7 @@ textarea:focus {
 }
 
 .q-onb-progress {
-    padding: 20px;
+    padding: 0px 20px 20px;
     max-width: 768px;
     margin: auto;
     width: 100%;
@@ -454,8 +454,9 @@ textarea:focus {
     position: absolute;
     opacity: 0;
     width: 100%;
-    height: 100%;
+    height: 20px;
     border: 0;
+    top: 0;
     overflow: hidden;
     cursor: pointer;
 }

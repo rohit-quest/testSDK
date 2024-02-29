@@ -2,55 +2,74 @@ import {
   referIcon,
 } from "../../assets/images";
 import "./Refer.css";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { response, shareOnPlatform } from "./Response.ts";
 import QuestContext from "../QuestWrapper.tsx";
 import { copyIcon, faceBookIcon, linkedInIcon, tickIcon, twitterIcon } from "./Svg.ts";
 import QuestLabs from "../QuestLabs.tsx";
+import { PrimaryButton } from "../Modules/PrimaryButton.tsx";
+import Label from "../Modules/Label.tsx";
 
 export interface referProp {
   questId: string;
   headingColor?: string;
   userId: string;
   token: string;
-  color?: string;
-  bgColor?: string;
   isArticle?: boolean
   heading?: string;
   description?: String;
-  invitationLink?: string;
+  referralLink?: string;
   shareButtonText?: string;
-  iconColor?: string;
   secondaryIconColor?: string;
   gradientBackground?: boolean;
   primaryHeading?: string;
-  primaryDescription?: string
+  primaryDescription?: string;
+  onCopy?: (referalCode: string) => void;
+  showReferralCode?: boolean;
+  showPoweredBy?: boolean;
+  styleConfig?: {
+    Form?: React.CSSProperties,
+    Heading?: React.CSSProperties,
+    Description?: React.CSSProperties,
+    Input?: React.CSSProperties,
+    Label?: React.CSSProperties,
+    TextArea?: React.CSSProperties,
+    PrimaryButton?: React.CSSProperties,
+    SecondaryButton?: React.CSSProperties,
+    Modal?: React.CSSProperties,
+    Footer?: React.CSSProperties,
+    Icon?: React.CSSProperties,
+  }
 }
 
 export const Referral = ({
   questId = "",
   userId = "",
   token = "",
-  color = "",
-  bgColor = "",
   heading = 'Referral link and code',
   description = 'Share your unique referral code with friends and receive 10 coins in credits each time a friend signs up!',
-  invitationLink = "https://questlabs.ai/",
+  referralLink = "",
   shareButtonText = "Copy Referral Link",
-  iconColor = "#0065FF",
-  secondaryIconColor = "black",
+  secondaryIconColor = "#939393",
   gradientBackground = false,
   primaryHeading = 'Refer and earn!',
-  primaryDescription = 'Welcome back, Please complete your details'
+  primaryDescription = 'Welcome back, Please complete your details',
+  onCopy = (referalCode: string) => { },
+  showReferralCode = true,
+  showPoweredBy = true,
+  styleConfig
 }: referProp) => {
   const [shareCode, setCode] = useState("");
   const [copy, setCopy] = useState([false, false]);
-  const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
-  const style = !!color && !!bgColor ? { color, backgroundColor: bgColor } : {};
+  const { apiKey, apiSecret, entityId, themeConfig } = useContext(QuestContext.Context);
 
   const handleCopy = (index: number) => {
-    navigator?.clipboard.writeText(shareCode);
+    navigator?.clipboard.writeText(!index?shareCode:referralLink+shareCode);
     setCopy(prev => prev.map((e, i) => i == index ? true : e));
+    setTimeout(() => {
+      setCopy(prev => prev.map((e, i) => i == index ? false : e));
+    }, 3000);
+    onCopy(!index?shareCode:referralLink+shareCode);
   }
 
   useEffect(() => {
@@ -58,54 +77,61 @@ export const Referral = ({
       apiKey,
       userid: userId,
       entityId,
-      apisecret: apiSecret,
+      apisecret: apiSecret||"",
       token,
     }).then((r) => setCode(r.referralCode || ""));
   }, []);
 
   const jsx = (
-    <div className="q_refer_and_earn" style={style}>
-      <div className="q_refer_head" style={style}>
+    <div className="q_refer_and_earn" style={{background: themeConfig.backgroundColor || "#FFF",color: themeConfig.primaryColor,...styleConfig?.Form}}>
+      <div className="q_refer_head" >
         <img src={referIcon} className="refer_head_img" alt="" />
       </div>
-      <div className="q_refer_content" style={style}>
-        <div className="refer_content_box" style={style}>
-          <div className="q_refer_heading" style={style}>{heading}</div>
-          <div className="q_refer_desc" style={style}>{description}</div>
+      <div className="q_refer_content" >
+        <div className="refer_content_box" >
+          <div className="q_refer_heading" style={styleConfig?.Heading}>{heading}</div>
+          <div className="q_refer_desc" style={styleConfig?.Description}>{description}</div>
         </div>
-        <div style={style} className="q_refer_code_content">
-          <div style={style} className="q_refer_text">Referal Code</div>
-          <div style={style} className="q_refer_code_box">
-            <div style={style} className="q_refer_code">{shareCode}</div>
-            <img className="q_refer_copy_icon" src={copy[0] ? tickIcon(iconColor) : copyIcon(secondaryIconColor)} onClick={() => handleCopy(0)} alt="" />
-          </div>
-        </div>
-        {invitationLink && <div style={style} className="q_refer_code_content">
-          <div style={style} className="q_refer_text">Invitation Link</div>
-          <div style={style} className="q_refer_code_box">
-            <div style={style} className="q_refer_code">{invitationLink}</div>
-            <img className="q_refer_copy_icon" src={copy[1] ? tickIcon(iconColor) : copyIcon(secondaryIconColor)} onClick={() => handleCopy(1)} alt="" />
+        { showReferralCode && <div  className="q_refer_code_content">
+          <Label children={'Referal Code'} style={styleConfig?.Label} />
+          <div  className="q_refer_code_box">
+            <div  className="q_refer_code">{shareCode}</div>
+            <img className="q_refer_copy_icon" src={copy[0] ? tickIcon(styleConfig?.Icon?.color) : copyIcon(secondaryIconColor)} onClick={() => handleCopy(0)} alt="" />
           </div>
         </div>}
-        <div style={style} className="q_share_link_button" onClick={()=>navigator.clipboard.writeText(shareCode)}>{shareButtonText}</div>
-        <div style={style} className="q_social_links">
-          <img className="q_social_link_icon" onClick={() => shareOnPlatform(shareCode, "linkedin")} src={linkedInIcon(iconColor)} alt="" />
-          <img className="q_social_link_icon" onClick={() => shareOnPlatform(invitationLink, "facebook")} src={faceBookIcon(iconColor)} alt="" />
-          <img className="q_social_link_icon" onClick={() => shareOnPlatform(shareCode, "twitter")} src={twitterIcon(iconColor)} alt="" />
+        {referralLink && <div  className="q_refer_code_content">
+          <Label children={'Invitation Link'} style={styleConfig?.Label} />
+          <div  className="q_refer_code_box">
+            <div  className="q_refer_code">{referralLink}{shareCode}</div>
+            <img className="q_refer_copy_icon" src={copy[1] ? tickIcon(styleConfig?.Icon?.color) : copyIcon(secondaryIconColor)} onClick={() => handleCopy(1)} alt="" />
+          </div>
+        </div>}
+        <PrimaryButton 
+          children={shareButtonText}
+          style={styleConfig?.PrimaryButton}
+          onClick={()=>{navigator.clipboard.writeText(referralLink+shareCode);onCopy(shareCode)}}
+          type="button"
+        />
+        <div  className="q_social_links">
+          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(shareCode, "linkedin")} src={linkedInIcon(styleConfig?.Icon?.color)} alt="" />
+          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(referralLink, "facebook")} src={faceBookIcon(styleConfig?.Icon?.color)} alt="" />
+          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(shareCode, "twitter")} src={twitterIcon(styleConfig?.Icon?.color)} alt="" />
         </div>
       </div>
-      {!gradientBackground && <QuestLabs backgroundColor={bgColor} color={secondaryIconColor} />}
+      {!gradientBackground && <QuestLabs style={styleConfig?.Footer} />
+}
     </div>
   );
 
   if (gradientBackground) return <div className="q_gradient_background">
     <div className="q_gradient_head">
-      <div className="q_gradient_heading">{primaryHeading}</div>
-      <div className="q_gradient_description">{primaryDescription}</div>
+      <div className="q_gradient_heading" style={styleConfig?.Heading}>{primaryHeading}</div>
+      <div className="q_gradient_description" style={styleConfig?.Description}>{primaryDescription}</div>
     </div>
     {jsx}
     <div className="q_gradient_quest_powered">
-    <QuestLabs backgroundColor={bgColor} color={secondaryIconColor} />
+    {showPoweredBy && <QuestLabs style={styleConfig?.Footer} />
+}
     </div>
   </div>
   return jsx;

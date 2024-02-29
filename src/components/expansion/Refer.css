@@ -2,13 +2,13 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.308);
     border-radius: 10px;
     width: 400px;
+    background: #FFF;
 }
 
 .q_refer_head {
     display: flex;
     padding: 40px 20px;
     border-radius: 10px 10px 0 0;
-    background: #FFF;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -24,7 +24,6 @@
 .q_refer_content {
     display: flex;
     padding: 0px 20px 28px 20px;
-    background: #FFF;
     flex-direction: column;
     align-items: center;
     gap: 20px;
@@ -66,7 +65,9 @@
     gap: 6px;
     align-self: stretch;
 }
-
+.q_refer_code_content label{
+    font-size: 12px;
+}
 .q_refer_text {
     align-self: stretch;
     color: #4C4C4C;
@@ -96,6 +97,10 @@
     font-style: normal;
     font-weight: 400;
     line-height: 20px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 
 .q_share_link_button {
@@ -103,7 +108,7 @@
     padding: 10px 16px;
     border-radius: 10px;
     cursor: pointer;
-    border: 1.5px solid #D1ACFF;
+    border: 0px;
     background: linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%);
     justify-content: center;
     align-items: center;
@@ -153,6 +158,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: 16px;
+    margin: 4px 20px;
 }
 
 .q_gradient_heading {
@@ -175,6 +181,7 @@
     align-items: center;
     justify-content: center;
     background: var(--Gradient-1, linear-gradient(265deg, #3378FF 4.66%, #9442FE 85.05%));
+    border-radius: 10px;
 }
 
 .q_gradient_head {

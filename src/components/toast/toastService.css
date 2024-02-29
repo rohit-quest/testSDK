@@ -13,6 +13,37 @@
   align-items: center;
   gap: 12px;
   padding: 8px 12px;
+  /* animation-name: slideIn;
+  animation-duration: 0.1s; */
+  width: fit-content;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(-100%);
+  }
+  60% {
+    transform: translateY(15%);
+  }
+  80% {
+    transform: translateY(-5%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromTop {
+  0% {
+    top: -100%;
+  }
+  100% {
+    top: 1rem;
+  }
+}
+
+.q-toast.animate-top {
+  animation: slideInFromTop 0.5s ease;
 }
 
 .q-toast-msg {

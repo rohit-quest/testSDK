@@ -1,6 +1,4 @@
-import React, { useState } from 'react'
 import { QuestProvider } from '../QuestWrapper';
-import showToast from '../toast/toastService';
 import FeedbackWorkflow from './FeedbackOverview';
 import FeedbackWorkflowOffline from './OfflineComponent.tsx';
 export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
@@ -10,7 +8,7 @@ export const entityId = 'e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5'
 export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
 export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
 
-export default function FeedbackWorkflowPreview({ online = true }: { online?: boolean }) {
+export default function FeedbackWorkflowPreview({ online = false }: { online?: boolean }) {
 
     if (online)
         return (<QuestProvider
@@ -19,35 +17,43 @@ export default function FeedbackWorkflowPreview({ online = true }: { online?: bo
             entityId={entityId}
             featureFlags={{}}
             apiType="PRODUCTION"
+            themeConfig={{
+                primaryColor: "red",
+            }}
         >
-           <FeedbackWorkflow
-                    userId={userId}
-                    token={token}
-                    questIds={[
-                        'q-general-feedback',
-                        'q-report-a-bug',
-                        'q-request-a-feature',
-                        'q-contact-us',
-                    ]}
-                    contactUrl="https://calendly.com/sriya-persana/30min"
-                    isOpen={true}
-                    // onClose={() => setIsOpen(!isOpen)}
-                    zIndex={10}
-                    // btnColor={"#1972f5"}
-                    // topbarColor={"#1972f5"}
-                    // starBorderColor={"#1972f5"}
-                    // starColor={"#1972f5"}
-                    // tickBg={"#1972f5"}
-                    uniqueUserId="soumitra.petbindhi+25@gmail.com"
-                    uniqueEmailId="soumitra.petbindhi+25@gmail.com"
-                />
+
+            <FeedbackWorkflow
+                userId={userId}
+                token={token}
+                questIds={[
+                    'q-general-feedback',
+                    'q-report-a-bug',
+                    'q-request-a-feature',
+                    'q-contact-us',
+                ]}
+                // showPoweredBy={false}
+                styleConfig={{
+                    Form: {
+                        
+                    },
+                    Heading:{color:'red'},
+                    Description:{color:'black'}
+                }}
+                // footerBackgroundColor='red'
+                contactUrl="https://calendly.com/sriya-persana/30min"
+                isOpen={true}
+                // onClose={() => setIsOpen(!isOpen)}
+                uniqueUserId="soumitra.petbindhi+25@gmail.com"
+                uniqueEmailId="soumitra.petbindhi+25@gmail.com"
+            />
+
         </QuestProvider>)
 
     return (<FeedbackWorkflowOffline
         contactUrl="https://calendly.com/sriya-persana/30min"
         isOpen={true}
         // onClose={() => setIsOpen(!isOpen)}
-        zIndex={10} questIds={[]} offlineFormData={
+        offlineFormData={
             [
                 [{
                     "type": "RATING",
@@ -55,7 +61,6 @@ export default function FeedbackWorkflowPreview({ online = true }: { online?: bo
                     "options": [""],
                     "criteriaId": "ec-84192fef-c91c5-d4ace713aaeb",
                     "required": true,
-                    answer: "answer",
                 },
                 {
                     "type": "USER_INPUT_TEXT",
@@ -63,7 +68,6 @@ export default function FeedbackWorkflowPreview({ online = true }: { online?: bo
                     "options": [""],
                     "criteriaId": "ec-84192fef-c917-410f-4ace713aae",
                     "required": true,
-                    answer: "answer",
                 },
                 {
                     "type": "USER_INPUT_TEXTAREA",
@@ -71,7 +75,6 @@ export default function FeedbackWorkflowPreview({ online = true }: { online?: bo
                     "options": [""],
                     "criteriaId": "ec-84192fef-c917-410f-9d4ace713aae",
                     "required": true,
-                    answer: "answer",
                 }],
                 [
                     {
@@ -80,7 +83,6 @@ export default function FeedbackWorkflowPreview({ online = true }: { online?: bo
                         "options": [""],
                         "criteriaId": "ec-84192fef-c917-410f-4ace713aee",
                         "required": true,
-                        answer: "answer",
                         placeholder: ""
                     },
                     {
@@ -89,7 +91,6 @@ export default function FeedbackWorkflowPreview({ online = true }: { online?: bo
                         "options": [""],
                         "criteriaId": "ec-84192fef-c917-410f-9ace713aef",
                         "required": true,
-                        answer: "answer",
                         placeholder: ""
                     },
                     {
@@ -98,7 +99,6 @@ export default function FeedbackWorkflowPreview({ online = true }: { online?: bo
                         "options": [""],
                         "criteriaId": "ec-84192fef-c7-410f-9bc5-d4ce713aaeg",
                         "required": true,
-                        answer: "answer",
                         placeholder: ""
                     }
                 ],
@@ -109,7 +109,6 @@ export default function FeedbackWorkflowPreview({ online = true }: { online?: bo
                         "options": [""],
                         "criteriaId": "ec-84192fef-c917-410f-d4ace713aeh",
                         "required": true,
-                        answer: "answer",
                         placeholder: ""
                     },
                     {
@@ -118,7 +117,6 @@ export default function FeedbackWorkflowPreview({ online = true }: { online?: bo
                         "options": [""],
                         "criteriaId": "ec-84192fef-c917-4101jioaaei",
                         "required": true,
-                        answer: "answer",
                         placeholder: ""
                     },
                     {
@@ -127,26 +125,19 @@ export default function FeedbackWorkflowPreview({ online = true }: { online?: bo
                         "options": [""],
                         "criteriaId": "ec-84192fef-c9170f-9bc5acjie713aaej",
                         "required": true,
-                        answer: "answer",
                         placeholder: ""
                     }]
-                    , [
+                , [
                     {
                         "type": "LINK_OPEN_READ",
                         "question": "",
-                        "options": [],
                         "criteriaId": "ec-e32b88d7-0e43-4254-9c94-44859ceedcdc",
                         "required": true,
-                        "linkTitle": "QuestLabs",
-                        "linkUrl": "https://www.questlabs.ai/",
-                        "manualInput": false,
-                        "title": "QuestLabs",
-                        "url": "https://www.questlabs.ai/",
                     },
                 ]
             ]
-        }        
-     >
+        }
+    >
 
     </FeedbackWorkflowOffline>)
 }

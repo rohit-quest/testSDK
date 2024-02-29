@@ -1,27 +1,27 @@
 .q-tutorial-cont {
   background-color: white;
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
-  border-radius: 14px;
-  padding-bottom: 1px;
+  border-radius: 10px;
+  /* padding-bottom: 1px; */
   max-width: 376px;
 }
 
 .q-tut-div {
-  font-family: 'Figtree';
+  font-family: "Figtree";
   text-align: left;
   box-sizing: content-box;
   padding: 12px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 376px;
   align-items: center;
+  border-bottom: 1px solid var(--Neutral-White-300, #efefef);
 }
 
 .q-tut-head {
   overflow: hidden;
-  color: var(--Neutral-Black-400, #2C2C2C);
-  font-family: 'Figtree';
+  color: var(--Neutral-Black-400, #2c2c2c);
+  font-family: "Figtree";
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -31,7 +31,7 @@
 
 .q-tut-subhead {
   color: #939393;
-  font-family: 'Figtree';
+  font-family: "Figtree";
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -101,7 +101,7 @@
 }
 
 .q-tut-title-completed {
-  color: var(--neutral-grey-300, #8E8E8E);
+  color: var(--neutral-grey-300, #8e8e8e);
 }
 
 .q-tut-title-notcompleted {
@@ -135,10 +135,11 @@
   font-size: 16px;
   margin: auto;
   box-sizing: content-box;
-  padding: 10px 20px;line-height: 24px; /* 150% */
+  padding: 10px 20px;
+  line-height: 24px; /* 150% */
   font-weight: 500;
   margin-bottom: 27px;
-  border: 2px solid var(--neutral-grey-600, #2B2B2B);
+  border: 2px solid var(--neutral-grey-600, #2b2b2b);
   border-radius: 10px;
 }
 
@@ -175,15 +176,17 @@
   margin: 15px 0 15px 10px;
 }
 
-.q_tutorial_box{
+.q_tutorial_box {
   display: flex;
-  width: 336px;
+  /* width: 336px; */
   padding: 12px 0px;
   align-items: center;
   gap: 12px;
+  position: relative;
+  
 }
 
-.q_tutorial_box_content{
+.q_tutorial_box_content {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -192,8 +195,8 @@
   flex: 1 0 0;
 }
 
-.q_tut_step{
-  color:  #B9B9B9;
+.q_tut_step {
+  color: #b9b9b9;
   font-family: Figtree;
   font-size: 10px;
   font-style: normal;
@@ -203,7 +206,7 @@
 }
 
 .q_tut_box_head {
-  color: #2C2C2C;
+  color: #2c2c2c;
   font-family: Figtree;
   font-size: 14px;
   font-style: normal;
@@ -213,7 +216,7 @@
 
 .q_tut_box_desc {
   align-self: stretch;
-  color: var(--Neutral-White-500, #B9B9B9);
+  color: var(--Neutral-White-500, #b9b9b9);
   font-family: Figtree;
   font-size: 12px;
   font-style: normal;
@@ -221,30 +224,52 @@
   line-height: 16px;
 }
 
-.q_tutorial_progress_icon{
+.q_tutorial_progress_icon {
   display: flex;
-  padding: 8px;
+  /* padding: 8px; */
   border-radius: 50%;
-  background: var(--Neutral-White-200, #FBFBFB);
   align-items: flex-start;
   gap: 8px;
   box-sizing: content-box;
-  z-index: 1;
-  height: 16px;
-  width: 16px;
-}
-
-.q_tutorial_progress{
+  z-index: 100;
+  height: 32px;
+  width: 32px;
   position: relative;
 }
 
-.q_tutorial_progress_connector{
+.q_tutorial_progress {
+  z-index: 1;
+  /* background: var(--Neutral-White-200, #fbfbfb);
+  height: 32px;
+  width: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
+}
+
+.q_tutorial_progress_connector {
   position: absolute;
-  stroke-width: 1px;
-  background:  #73DCA7;
-  right: 50%;
-  bottom: -55px;
-  width: 2px;
-  z-index: 0;
-  height: 55px;
+  background: #73dca7;
+  width: 1px;
+  z-index: -1;
+  transition: all 2s;
+  left: 15px;
+
+}
+.q-tut-card-cont {
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  
+}
+.q_tutorial_progress_img_cont{
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #FBFBFB;
+  border-radius: 50%;
 }

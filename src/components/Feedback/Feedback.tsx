@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import QuestContext from '../QuestWrapper';
 import axios from 'axios';
 import config from '../../config';
@@ -6,11 +6,13 @@ import './Feedback.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import Loader from '../Login/Loader';
+import "../Onboarding/onboarding.css"
 import '../FeedbackOverview/FeedbackOverview.css'
 import crossCircle from "../../assets/images/crossCircle.png"
 import { userLogo, crossLogo, leftArrow, rightArrow, calenderIcon, textAreaIcon, phoneLogo, emailLogo, crossLogoFeedback } from "../../assets/assetsSVG"
 import showToast from '../toast/toastService';
 import Rating from '../Rating/Rating';
+import General from '../../general';
 
 interface FeedbackProps {
   heading?: string;
@@ -28,7 +30,9 @@ interface FeedbackProps {
   delay?: number;
   isInline?: boolean;
   crossLogoForInput?: boolean;
-  oncancel?: Function 
+  onCancel?: Function ;
+  uniqueEmailId?: string;
+  uniqueUserId?: string
 }
 
 const Feedback: React.FC<FeedbackProps> = ({
@@ -47,7 +51,9 @@ const Feedback: React.FC<FeedbackProps> = ({
   delay = 1000,
   isInline = false,
   crossLogoForInput = false,
-  oncancel = ()=>{}
+  onCancel = ()=>{},
+  uniqueEmailId,
+  uniqueUserId
 }) => {
   interface FormDataItem {
     type?: string;
@@ -63,11 +69,13 @@ const Feedback: React.FC<FeedbackProps> = ({
   const [thanksPopup, setThanksPopup] = useState<boolean>(false);
   const [formdata, setFormdata] = useState<FormDataItem[]>([]);
   const [gradient, setGradient] = useState<boolean>(false);
-  const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
+  const { apiKey, apiSecret, entityId ,apiType} = useContext(QuestContext.Context);
   const [answer, setAnswer] = useState<any>({});
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [session, setSession] = useState<string>('');
   const [isVisible, setIsVisible] = useState(true);
+  let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
+
 
   const dislike = (
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -139,7 +147,7 @@ const Feedback: React.FC<FeedbackProps> = ({
         userId: userId,
         token: token,
       };
-      const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}`;
+      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}`;
 
       axios.get(request, { headers: headers }).then((res) => {
         let response = res.data;
@@ -157,6 +165,10 @@ const Feedback: React.FC<FeedbackProps> = ({
         criterias = Array.isArray(criterias) ? criterias : [];
         setFormdata([...criterias]);
       });
+    }
+    if(entityId && uniqueUserId){
+      const functions = new General('')
+      functions.getExternalLogin({ apiType, uniqueUserId, entityId, userId, apiKey, apiSecret, token, uniqueEmailId })
     }
   }, []);
 
@@ -212,7 +224,7 @@ const Feedback: React.FC<FeedbackProps> = ({
         answer: [answer[ans?.criteriaId] || ''],
         criteriaId: ans?.criteriaId || '',
       }));
-      const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${userId}`;
+      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${userId}`;
       const requestData = {
         criterias: ansArr,
         userId,
@@ -428,13 +440,11 @@ function isValidEmail(email: string) {
     );
   };
 
-
 const singleChoiceOne = (
-    options: string[] | [],
+    options: string[],
     question: string,
     required: boolean,
     criteriaId: string,
-    manualInput: string | boolean
 ) => {
     return (
         <div key={criteriaId}>
@@ -466,17 +476,6 @@ const singleChoiceOne = (
                     </div>
                 ))}
             </div>
-            {manualInput != false && answer[criteriaId] == manualInput &&
-                <input 
-                    type="text" 
-                    name="" 
-                    id="" 
-                    className="q_sdk_input q-onb-input"
-                    placeholder="Please fill manually"
-                    onChange={(e) => handleUpdate(e, (criteriaId + "/manual"), "")}
-                    value={answer[criteriaId + "/manual"]}
-                />
-            }
         </div>
     );
 };
@@ -539,7 +538,6 @@ const singleChoiceOne = (
                           data?.question || "",
                           data?.required || false,
                           data.criteriaId || "",
-                          data?.manualInput
                       )
                       } else if (data.type === 'USER_INPUT_TEXTAREA') {
                         return normalInput2(
@@ -586,7 +584,7 @@ const singleChoiceOne = (
                       }
                     })}
                       <div className='q_feedback_buttons'>
-                        <div onClick={()=>oncancel()}
+                        <div onClick={()=>onCancel()}
                           className="q-fdov-btn-cancel"
                         >
                           Cancel

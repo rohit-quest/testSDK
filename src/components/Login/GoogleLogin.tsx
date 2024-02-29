@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { googleSvg } from '../../assets/images';
+import { google2, googleSvg } from '../../assets/images';
 import axios from 'axios';
 import config from '../../config';
 import queryString from 'query-string';
@@ -18,7 +18,7 @@ interface GoogleLoginProps {
   googleClientId: string;
   apiSecret: string;
   apiKey: string;
-  onSubmit?: ({ userId, token }: { userId: string, token: string }) => void;
+  onSubmit?: ({ userId, token , userCredentials, refreshToken }: { userId: string, token: string, userCredentials: object, refreshToken:string }) => void;
 }
 
 function GoogleLogin(props: GoogleLoginProps): JSX.Element {
@@ -38,7 +38,8 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const params = queryString.parse(window.location.search);
   const googleCode = params.code as string;
-  const { setUser } = useContext(QuestContext.Context);
+  const { setUser, apiType } = useContext(QuestContext.Context);
+  let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
   useEffect(() => {
     if (googleCode) {
@@ -50,7 +51,7 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
     setShowLoader(true);
     axios
       .post(
-        `${config.BACKEND_URL}api/users/google/login`,
+        `${BACKEND_URL}api/users/google/login`,
         {
           code,
           redirectUri: redirectUri,
@@ -65,23 +66,28 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
       )
       .then((res) => {
         if (res.data.success === true) {
-          toast.success('Congratulations!!!' + '\n' + 'Successfully Logged in');
+          // toast.success('Congratulations!!!' + '\n' + 'Successfully Logged in');
           if (onSubmit) {
-            onSubmit({ userId: res.data.userId, token: res.data.token });
+            onSubmit({ userId: res.data.userId, token: res.data.token, userCredentials : res.data.credentials,
+              refreshToken : res.data.refreshToken });
           }
           setUser({
             userId: res.data.userId,
             token: res.data.token,
+            userCredentials : res.data.credentials,
+            refreshToken : res.data.refreshToken
           });
-          window.location.href = redirectURL;
+          if (redirectURL) {
+            window.location.href = redirectURL;
+          }
         } else if (res.data.success === false) {
           console.log(res.data.error);
-          toast.error('Unable to login' + '\n' + `${res.data.error}`);
+          // toast.error('Unable to login' + '\n' + `${res.data.error}`);
         }
       })
       .catch((err) => {
         console.error(err);
-        toast.error(err.message);
+        // toast.error(err.message);
       })
       .finally(() => {
         setShowLoader(false);
@@ -102,10 +108,11 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
               backgroundColor: btnColor,
               fontFamily,
               color: btnTextColor,
+              
             }}
           >
-            Sign in with Google
-            <img className="ml-auto" src={googleSvg} alt="google-logo" />
+            <p>Sign in with Google</p>
+            <img className="ml-auto" src={google2} alt="google-logo" />
           </div>
         </a>
       </div>

@@ -1,4 +1,4 @@
-import { ReferEarn } from './ReferEarn'
+import { Referral as ReferEarn } from './ReferEarn'
 import { QuestProvider } from '../QuestWrapper'
 
 const entityId='e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5';
@@ -10,12 +10,25 @@ const apiSecret = ""
 
 export default function ReferEarnPreview() {
     return (
-        <QuestProvider apiKey={apiKey} apiSecret={apiSecret} featureFlags={{}} entityId={entityId}>
+        <QuestProvider apiKey={apiKey} apiSecret={apiSecret} featureFlags={{}} entityId={entityId} >
             <ReferEarn questId={questId}
-            //  invitationLink='https://questlabs.ai/'
+            token={token} userId={userId} 
+            onCopy={(referralCode) => console.log(referralCode)}
+             referralLink='https://questlabs.ai/'
+             styleConfig={{
+                    // Form: {
+                    //     backgroundColor: 'blue',
+                    //     color: 'red'
+                    // },
+                    // Heading: {
+                    //     color: 'red'
+                    // },
+                
+             }}
             // iconColor='red'
             // secondaryIconColor='red'
-              token={token} userId={userId} />
+            gradientBackground={true}
+              />
         </QuestProvider>
     )
 }

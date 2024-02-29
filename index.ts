@@ -21,6 +21,7 @@ import './src/components/Share/sharearticle.css'
 import './src/components/Search/search.css';
 import './src/components/Tour/walkThrough.css';
 import './src/components/Streak/DailyStrek.css'
+import "./src/components/Login/OtpVerification.css"
 import QuestLogin from "./src/components/Login/Login";
 import OnBoarding from "./src/components/Onboarding/Onboarding";
 import { QuestProvider } from "./src/components/QuestWrapper";
@@ -56,7 +57,9 @@ import OnBoardingOffline from "./src/components/Onboarding/OfflineComponent";
 import GetStartedOffline from "./src/components/GetStarted/OfflineComponent.tsx";
 import SearchOffline from "./src/components/Search/OfflineComponent";
 import QuestMOdalOffline from './src/components/Modals/OflineComponent';
-
+import SurveyOffline from "./src/components/Feedback/OfflineComponent.tsx";
+import FeedbackWorkflowOffline from './src/components/FeedbackOverview/OfflineComponent';
+import Toast from './src/components/toast2/Toast';
 export {
     QuestProvider,
     QuestLogin,
@@ -93,5 +96,8 @@ export {
     GetStartedOffline,
     SearchOffline,
     QuestMOdalOffline,
-    Referral
+    Referral,
+    SurveyOffline,
+    FeedbackWorkflowOffline,
+    Toast
 };
