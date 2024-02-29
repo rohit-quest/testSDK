@@ -28,6 +28,7 @@ import FeedbackWorkflowPreview from "./components/FeedbackOverview/Preview";
 import FeedbackPreview from "./components/Feedback/Preview";
 import Survey from "./components/Feedback/Survey";
 import ModalPreview from "./components/Modals/Preview";
+
 import SurveyOffline from "./components/Feedback/OfflineComponent";
 import Modal from "./components/Modules/Modal";
 // import { NormalInput } from './components/Modules/Input'
@@ -134,6 +135,7 @@ function App() {
                 forEntityId={"e-0000000000"}
             /> } */}
 
+
           {/* <button onClick={onSuccess}>success</button>
           <button onClick={onInfo}>info</button>
           <button onClick={onFailure}>error</button>
@@ -144,6 +146,7 @@ function App() {
 
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
+
 
         {/* 
                 <HelpCenter
@@ -159,6 +162,7 @@ function App() {
                 // descriptioin="this is descripiton"
                 /> */}
         {/* <OnBoardingPreview online /> */}
+
 
         {/* <GetStartedPreview
    online={false}
@@ -196,6 +200,7 @@ function App() {
   }}
 /> */}
         {/* <QuestForm
+
                     userId={userId}
                     questId={questId}
                     answer={answer}
