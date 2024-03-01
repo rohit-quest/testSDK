@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { QuestProvider } from '../QuestWrapper';
 import SearchOffline from './OfflineComponent';
 import Search from './Search';
@@ -18,7 +17,7 @@ export default function SearchPreview({ online = false }) {
             apiSecret="s-7462f377-2ce4-4593-a907-3a2a00cdf91be06358a-d95d-4576-b3b4-a07dda2dab36"
             entityId={entityId}
             featureFlags={{}}
-            apiType="PRODUCTION"
+            apiType="STAGING"
         >
             <Search
                 // color='red'

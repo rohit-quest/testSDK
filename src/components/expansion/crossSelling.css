@@ -33,7 +33,7 @@
 .q_time_left_text{
     align-self: stretch;
     color: #939393;
-    font-family: Figtree;
+    /* font-family: Figtree; */
     font-size: 12px;
     font-style: normal;
     font-weight: 500;

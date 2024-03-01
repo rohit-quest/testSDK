@@ -13,7 +13,7 @@
   flex: 1;
   border: none;
   color: #2C2C2C;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -69,7 +69,7 @@
   flex: 1;
   border: none;
   color: black;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -135,7 +135,7 @@
   border: 1px solid #ececec;
   resize: none;
   color: black;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 14px;
   font-style: normal;
   font-weight: 400;

@@ -66,7 +66,7 @@ export default function SreakPreview({ online = true }) {
             featureFlags={{}}
             apiType="PRODUCTION"
             themeConfig={{
-                
+                fontFamily:'cursive'
             }}
         >
             <DailyStreak
@@ -86,7 +86,7 @@ export default function SreakPreview({ online = true }) {
                     {description:"This is the longest streak you’ve ever head2",title: "Responsible reader",range: 2},
                     {description:"This is the longest streak you’ve ever head3",title: "Serious learner",range: 5},
                     {description:"This is the longest streak you’ve ever head4",title: "Absolute reader",range: 3},
-                    // {description:"This is the longest streak you’ve ever head5",title: "Professional reader",range: 1},
+                    {description:"This is the longest streak you’ve ever head5",title: "Professional reader",range: 1},
                 ]} 
                 // description={''} 
                            />

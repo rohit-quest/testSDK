@@ -4,6 +4,7 @@ import OnBoarding from './Onboarding'
 import { QuestProvider } from '../QuestWrapper';
 import { answer } from '../QuestForm/response';
 import showToast from '../toast/toastService';
+import Toast from '../toast2/Toast';
 export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
 export const apiKey = 'k-68a0c6b8-b27f-49c6-a315-b0c9cba15bf4'
 export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
@@ -15,7 +16,7 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
 
   const [answer, setAnswer] = useState<answer>([])
   function printAnswer() {
-    showToast.success({ text: "You have submitted the form successfully you can find more on Quest admin dashboard" })
+    Toast.success({ text: "You have submitted the form successfully you can find more on Quest admin dashboard" })
   }
 
   // Mock CustomButton Component
@@ -109,6 +110,14 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
         entityId={entityId}
         featureFlags={{}}
         apiType="PRODUCTION"
+        themeConfig={{
+          // backgroundColor: "black",
+          // borderColor: "red",
+          // buttonColor: "green",
+          // primaryColor: "White",
+          // secondaryColor: "gray",
+          // fontFamily: "cursive"
+        }}
       >
         <OnBoarding
           userId={userId}
@@ -117,13 +126,15 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
           setAnswer={setAnswer}
           token={token}
           // answerFontSize="14px"
-          // template={1}
+          template={'multi-question'}
           progress={["Personal sdrerwtr", "Professional", "Additional",]}
+          
           // text="Go Back"
           // text="Submit and Continue"
           // color=""
           // bgColor="#fff"
-          controlBtnType="Buttons"
+          showFooter={false}
+          controlBtnType="Arrow"
           // headingSize="24px"
           // descSize="18px"
           // inputFieldType={{
@@ -133,8 +144,8 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
           // btnSize="200px"
           // inputBgColor=""
           // inputBorder="1px solid #6525B3"
-          singleChoose="modal3"
-          multiChoice="modal1"
+          singleChoose="modal1"
+          multiChoice="modal2"
           design={[[1, 2], [3, 4], [5, 6]]}
           // progressBarMultiLine = {true}
           // design={[]}
@@ -147,6 +158,7 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
           getAnswers={printAnswer}
           // screenHeight=""
           // progressBarType="modal1"
+          styleConfig={{Form : {border:'1px solid black'}}}
           
         />
       </QuestProvider>
@@ -154,33 +166,35 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
   return (
     <OnBoardingOff
       answer={answer}
+      
       setAnswer={setAnswer}
-      answerFontSize="14px"
+      // answerFontSize="14px"
       progress={["Personal", "Professional", "Additional",]}
-      text="Go Back"
+      // text="Go Back"
       // text="Submit and Continue"
-      color=""
-      bgColor="#fff"
-      controlBtnType="Buttons"
-      headingSize="24px"
-      descSize="18px"
-      inputFieldType={{
-        "ec-xxxxxxxxxxxxxxxxx": "textArea"
-      }}
-      btnColor=""
-      btnSize="200px"
-      inputBgColor=""
+      // color=""
+      // bgColor="#fff"
+      controlBtnType="Arrow"
+      // headingSize="24px"
+      // descSize="18px"
+      // inputFieldType={{
+      //   "ec-xxxxxxxxxxxxxxxxx": "textArea"
+      // }}
+      // btnColor=""
+      // btnSize="200px"
+      // inputBgColor=""
       // inputBorder="1px solid #6525B3"
-      singleChoose="modal2"
+      singleChoose="modal1"
       multiChoice="modal1"
       design={[[1, 2], [3, 4], [5, 6]]}
+
       headingScreen={[{ name: "Tell us about yourself", desc: "this is description" },
       { name: "Tell us more about your company", desc: "description for this " },
       { name: "A little more will help us guide you the best", desc: "description for this " }]}
       customComponents={<CustomButton />}
       getAnswers={printAnswer}
-      screenHeight=""
-      progressBarType="modal1"
+      // screenHeight=""
+      // progressBarType="modal1"
       offlineFormData={state.offlineFormData}
       styleConfig={{
         

@@ -33,7 +33,7 @@
   line-height: 28px;
 }
 .q-fw-div {
-  width: 350px;
+  width: 376px;
   border-radius: 16px;
   box-shadow: 0px 0px 20px 0px #00000073;
   background-color: white;
@@ -48,13 +48,13 @@
 .q-fw-cards {
   cursor: pointer;
   display: flex;
-  padding: 15px;
+  padding: 12px;
   align-items: center;
   gap: 12px;
   align-self: stretch;
 }
 
-.q-fw-crossBtn {
+/* .q-fw-crossBtn {
   position: relative;
   height: 10px;
   margin-bottom: 10px;
@@ -65,7 +65,16 @@
   right: 20px;
   top: 20px;
   cursor: pointer;
+} */
+.q-fw-crossBtn{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 20px;
+  align-self: stretch;
+  padding: 20px;
 }
+
 .fd-powered-by {
   padding-bottom: 20px;
   font-size: 0.875rem;
@@ -123,14 +132,14 @@
 }
 
 .q-fdov-btn-continue {
-  box-sizing: content-box;
+  /* box-sizing: content-box; */
   padding: 10px 16px;
   border-radius: 10px;
   border: 1.5px solid #d1acff;
   background: linear-gradient(84deg, #9035ff 0.36%, #0065ff 100.36%);
   cursor: pointer;
   color: var(--neutral-pure-white-100, #fff);
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -139,12 +148,7 @@
 }
 
 .q_feedback_icon {
- /* padding: 8px;
-  padding-bottom: 2px;
-  border-radius: 50%;
-  box-sizing: content-box; */
-  width: 32px;
-  height: 32px;
+  padding: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -153,9 +157,10 @@
   border-radius: 50%;
 }
 
+
 .q_feedback_desc {
   color: var(--Neutral-Black-100, #939393);
-  font-family: "Figtree";
+  /* font-family: "Figtree"; */
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -173,7 +178,7 @@
 .q_fw_submit_desc {
   color:  #939393;
   text-align: center;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -193,7 +198,7 @@
   border: 1.5px solid var(--Neutral-White-300, #efefef);
   background: var(--Neutral-White-100, #fff);
   color: var(--Neutral-Black-400, #2c2c2c);
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 14px;
   font-style: normal;
   cursor: pointer;
@@ -213,13 +218,12 @@
 }
 
 .q-fw-content-box {
-  margin-top: 35px;
-  padding: 0 20px;
+  padding: 0 20px 20px 20px;
 }
 
 .q-fw-tab-heading {
   color: #2c2c2c;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -230,7 +234,7 @@
   overflow: hidden;
   color: #939393;
   text-overflow: ellipsis;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -240,7 +244,7 @@
 
 .q_fw_input {
   color: black;
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -273,7 +277,7 @@ overflow: hidden;
 color:  #2C2C2C;
 text-align: center;
 text-overflow: ellipsis;
-font-family: Figtree;
+/* font-family: Figtree; */
 font-size: 20px;
 font-style: normal;
 font-weight: 600;

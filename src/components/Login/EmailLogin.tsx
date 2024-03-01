@@ -43,7 +43,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   handleOtp,
   entityId,
   textColor,
-  fontFamily,
+  // fontFamily,
   apiKey,
   apiSecret,
   btnTextColor,
@@ -106,11 +106,12 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   };
 
   return (
-    <div>
+    <div style={{width:'100%'}}>
       {showLoader && <Loader />}
       {!sendOTP && (
-        <div className="questLabs">
+        // <div className="questLabs">
           <div className="q-email-login-ctn">
+            <div>
             <Label
               style={{
                 color: styleConfig?.Label?.color || themeConfig?.primaryColor,
@@ -149,7 +150,8 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                   ...styleConfig?.Input,   
                   borderRadius :'6px',
                   border : '1.5px solid #ECECEC',
-                  padding : '8px 12px'
+                  padding : '8px 12px',
+                  // fontFamily:themeConfig.fontFamily || "'Figtree', sans-serif"
                 }}
                 logoPosition='left'
                 type="email"
@@ -159,10 +161,12 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                 onKeyUp={handlesubmit}
                 
               />
-            {/* </div> */}
-            {!mainValidEmail && (
+               {!mainValidEmail && (
               <div className="q-login-p">Please enter a valid email id</div>
             )}
+              </div>
+            {/* </div> */}
+           
             {/* <div
               style={{
                 backgroundColor: btnColor,
@@ -180,12 +184,13 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                   styleConfig?.PrimaryButton?.background ||
                   themeConfig?.buttonColor,
                 ...styleConfig?.PrimaryButton,
+                fontFamily:themeConfig.fontFamily || "'Figtree', sans-serif"
               }}
               children={"Continue"}
               onClick={sendOTPfunction}
             />
           </div>
-        </div>
+        // </div>
       )}
       {sendOTP && (
         <OtpVerification
@@ -195,7 +200,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
           setSendOTP={setSendOTP}
           apiKey={apiKey}
           apiSecret={apiSecret}
-          fontFamily={fontFamily}
+          // fontFamily={fontFamily}
           textColor={textColor}
           btnColor={btnColor}
           redirectURL={redirectURL}

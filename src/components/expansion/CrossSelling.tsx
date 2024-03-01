@@ -56,7 +56,7 @@ export const CrossSelling = ({
     heading = '50% off on limited products',
     description = 'Grab deals before they go off!!!',
     shareButtonText = "Avail now",
-    gradientBackground = false,
+    gradientBackground = true,
     primaryHeading = 'Grab your deal',
     primaryDescription = 'Welcome back, Please complete your details',
     showDays = false,
@@ -121,7 +121,10 @@ export const CrossSelling = ({
     
 
     const jsx = (
-        <div className="q_refer_and_earn" style={{background: styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Form}}>
+        <div className="q_refer_and_earn" style={{
+            // background: styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Form
+            background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
+            }}>
             <div className="q_refer_head">
                 <img src={grabDealIcon()} className="refer_head_img" alt="" />
             </div>
@@ -175,7 +178,9 @@ export const CrossSelling = ({
         </div>
     );
 
-    if (gradientBackground) return <div className="q_gradient_background" style={styleConfig?.BackgroundWrapper}>
+    if (gradientBackground) return <div className="q_gradient_background" style={{
+        fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+        ...styleConfig?.BackgroundWrapper}}>
         <div className="q_gradient_head">
             <div className="q_gradient_heading">{primaryHeading}</div>
             <div className="q_gradient_description">{primaryDescription}</div>

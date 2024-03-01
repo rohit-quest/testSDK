@@ -1,98 +1,124 @@
+
+.q_daily_streak_cont{
+  max-width: 400px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.226);
+}
+
 .q_daily_streak {
-    display: flex;
-    background: #FFF;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    border-radius: 10px;
-    max-width: 400px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.226);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
 }
 
 .q_steak_days_box {
-    display: flex;
-    padding: 20px 0;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .q_streak_days {
-    display: -webkit-box;
-    color: #9035FF;
-    font-family: Figtree;
-    font-size: 36px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 44px;
-    letter-spacing: -1.44px;
-    text-align: center;
-    text-overflow: ellipsis;
+  display: -webkit-box;
+  color: #9035ff;
+  /* font-family: Figtree; */
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 44px;
+  letter-spacing: -1.44px;
+  text-align: center;
+  text-overflow: ellipsis;
 }
 
 .q_steak_days_text {
-    align-self: stretch;
-    color: #9035FF;
-    font-family: Figtree;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 16px;
-    text-align: center;
+  align-self: stretch;
+  color: #9035ff;
+  /* font-family: Figtree; */
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  text-align: center;
+  margin: 0px 20px;
 }
 
 .q_streak_desc {
-    align-self: stretch;
-    color: #2C2C2C;
-    font-family: Figtree;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 16px;
-    text-align: center;
+  align-self: stretch;
+  color: #2c2c2c;
+  /* font-family: Figtree; */
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  text-align: center;
 }
 
 .q_streak_steps {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    justify-content: center;
-    align-self: stretch;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  justify-content: center;
+  align-self: stretch;
 }
 
 .q_streak_step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 0 0;
+  width: 57px;
+  height: 100px;
+  gap: 12px;
+}
+
+.q_img_cont {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .q_streak_step_title {
-    align-self: stretch;
-    color: #B9B9B9;
-    font-family: Figtree;
-    font-size: 10px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 12px;
-    letter-spacing: -0.1px;
-    text-align: center;
+  align-self: stretch;
+  color: #b9b9b9;
+  /* font-family: Figtree; */
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: -0.1px;
+  text-align: center;
 }
 
-.q_daily_streak .q_streak_step_active{
-    color: #2C2C2C;
+.q_daily_streak .q_streak_step_active {
+  color: #2c2c2c;
 }
 
-.q_streak_dot{
-    display: inline-block;
-    width: 4px;
-    height: 4px;
+.q_streak_dot {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
 }
 
-.q_streak_dot_active{
-    background-color:  #9035FF;
+.q_streak_dot_active {
+  background-color: #9035ff;
 }
 
-.q_streak_dot_disable{
-    background-color: #B9B9B9;
+.q_streak_dot_disable {
+  background-color: #b9b9b9;
+}
+
+.q_img_cont_active {
+  background-color: #f4ebff;
+}
+
+.q_img_cont_disable {
+  background-color: #fbfbfb;
 }

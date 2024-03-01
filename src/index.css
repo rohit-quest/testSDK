@@ -108,7 +108,7 @@
 
 .q-hover:hover {
   background-color: #f4f5f6;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 .q-parent-container {
@@ -144,7 +144,7 @@ html {
   -moz-tab-size: 4;
   -o-tab-size: 4;
   tab-size: 4;
-  font-family: "Figtree", sans-serif;
+  /* font-family: "Figtree", sans-serif; */
   font-feature-settings: normal;
   font-variation-settings: normal;
 }
@@ -166,7 +166,6 @@ body {
 }
 
 .questLabs textarea {
-  font-family: inherit;
   padding-top: 2%;
 }
 
@@ -176,9 +175,7 @@ body {
   height: unset;
   width: unset;
   font-size: unset;
-  font-family: "Figtree";
   font-weight: unset; */
-  font-family: Figtree;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -196,9 +193,7 @@ body {
   height: unset;
   width: unset;
   font-size: unset;
-  font-family: "Figtree";
   font-weight: unset; */
-  font-family: Figtree;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -216,7 +211,6 @@ input[data-autocompleted] {
 .powered_by_quest div {
   flex: 1 0 0;
   color: #939393;
-  font-family: Figtree;
   font-size: 10px;
   font-style: normal;
   font-weight: 400;

@@ -183,7 +183,7 @@ const TutorialScreen: React.FC<TutorialProps> = ({
     const nextContent = document.querySelector(`#q_tutorial_box_content_${index + 1}`) as HTMLElement;
     //  console.log(height,nextContent.offsetHeight ,'187')
     if (connector && nextContent) {
-      let connectorHeight = (height - 32) / 2 + (nextContent.offsetHeight - 32) / 2 + 24;
+      let connectorHeight = (height - 32) / 2 + (nextContent.offsetHeight - 32) / 2 + 32;
   
       connector.style.height = `${connectorHeight}px`;
   
@@ -195,7 +195,6 @@ const TutorialScreen: React.FC<TutorialProps> = ({
   
 
   if (!isOpen) return <></>;
-console.log(styleConfig)
 
 return (
   <div className="q-tutorial-cont"
@@ -215,7 +214,7 @@ return (
       }}
     />
     <div className='q-tut-card-cont'>
-      <div>
+      {/* <div> */}
         {formdata.map((step, index) => (
           <div
             className="q_tutorial_box"
@@ -259,7 +258,7 @@ return (
             </div>
           </div>
         ))}
-      </div>
+      {/* </div> */}
     </div>
     <QuestLabs style={styleConfig?.Footer} />
   </div>

@@ -101,15 +101,16 @@ function App() {
         entityId={"e-0000000000"}
         featureFlags={{}}
         apiType="STAGING"
-        // themeConfig={{
-        //   backgroundColor: "black",
-        //   borderColor: "red",
-        //   buttonColor: "green",
-        //   primaryColor: "White",
-        //   secondaryColor: "gray",
-        //   fontFamily: ""
-        // }}
+        themeConfig={{
+          // backgroundColor: "black",
+          // borderColor: "red",
+          // buttonColor: "green",
+          // primaryColor: "White",
+          // secondaryColor: "gray",
+          // fontFamily: "cursive"
+        }}
       >
+        {/* <TutorialPreview online={false} /> */}
         {/* <SpinTheWheel
                     userId={userId}
                     questId={questId}
@@ -122,7 +123,7 @@ function App() {
 
         {/* <SearchPreview online={false}/> */}
         {/* <SreakPreview/> */}
-        
+        {/* <TutorialPreview online={false}/> */}
         {/* { <Payment
                 stripePublishableKey="pk_test_51IGxpeHv3bPcUa5dtAAgA2TZPWjga0FPxWlK3GAnWUfzRXzO8l6Kc3zF2WBpjrvFHAle0Cy3Jqxc7djZxptd9mHe00KjsN2Im7"
                 userId="u-0000000000"
@@ -165,7 +166,7 @@ function App() {
 
 
         {/* <GetStartedPreview
-   online={false}
+   online={true}
  />   */}
 {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
@@ -221,11 +222,11 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-        {/* <FeedbackWorkflowPreview online={true} /> */}
+        {/* <FeedbackWorkflowPreview online={false} /> */}
 
         {/* <FeedbackPreview /> */}
 
-        {/* <ReferEarnPreview/> */}
+        <ReferEarnPreview/>
 
         {/* <CrossSellingPreview/> */}
 
@@ -241,7 +242,7 @@ function App() {
                     // isArticle={true}
             /> */}
 
-        {/* <QuestLogin
+               {/* <QuestLogin
                     // questId=""
                     textColor=""
                     btnTextColor=""

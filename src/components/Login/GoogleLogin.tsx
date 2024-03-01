@@ -10,7 +10,7 @@ import QuestContext from '../QuestWrapper';
 
 interface GoogleLoginProps {
   btnTextColor?: string;
-  fontFamily?: string;
+  // fontFamily?: string;
   btnColor?: string;
   entityId: string;
   redirectUri: string;
@@ -24,7 +24,7 @@ interface GoogleLoginProps {
 function GoogleLogin(props: GoogleLoginProps): JSX.Element {
   const {
     btnTextColor,
-    fontFamily,
+    // fontFamily,
     btnColor,
     entityId,
     redirectUri,
@@ -95,8 +95,8 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
   }
 
   return (
-    <div className="q-google-login-btn">
-      <div style={{ marginTop: "10px", position: "relative" }}>
+    <div className="q-google-login-btn" style={{width:'100%'}}>
+      <div style={{ position: "relative" }}>
         {showLoader && <Loader />}
         <a
           style={{ textDecoration: 'none', color: 'black' }}
@@ -106,7 +106,7 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
             className='q-g-btn'
             style={{
               backgroundColor: btnColor,
-              fontFamily,
+              // fontFamily,
               color: btnTextColor,
               
             }}

@@ -49,7 +49,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   const [isEmail, setIsEmail] = useState<boolean>(false);
   const [isGoogle, setIsGoogle] = useState<boolean>(false);
   // const [bgColor, setBgColor] = useState<string>("#ffffff");
-  const [fontFamily, setFontFamily] = useState<string>("Figtree");
+  // const [fontFamily, setFontFamily] = useState<string>("Figtree");
   const [gradient, setGradient] = useState<boolean>(false);
   const [otpScreen, setOtpScreen] = useState<boolean>(false);
   const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(
@@ -128,14 +128,9 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
           >
             <div className="q-login-body">
               {!otpScreen && (
-                <>
+                <div className="q-login-header">
                   <div
                     className="q-login-h1"
-                    // style={{
-                    //   color: textColor,
-                    //   fontFamily: fontFamily,
-                    //   ...styleConfig?.Heading,
-                    // }}
                     style={{
                       color:
                         styleConfig?.Heading?.color ||
@@ -156,18 +151,16 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   >
                     Welcome Back, Please enter your details
                   </div>
-                </>
+                </div>
               )}
               {isEmail && (
                 <div
-                  style={{
-                    width: "100%",
-                  }}
+                  className="q-login-mid-cont"
                 >
                   <EmailLogin
                     {...{
                       textColor,
-                      fontFamily,
+                      // fontFamily,
                       apiKey,
                       apiSecret: apiSecret || "",
                       redirectURL,
@@ -196,8 +189,9 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                       <div
                         style={{
                           color: textColor,
-                          fontFamily,
+                          // fontFamily,
                           display: "inline",
+                          // fontFamily:themeConfig.fontFamily || "'Figtree', sans-serif"
                         }}
                         className="q-or-continue"
                       >
@@ -210,7 +204,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                     <GoogleLogin
                       {...{
                         btnTextColor,
-                        fontFamily,
+                        // fontFamily,
                         btnColor,
                         entityId,
                         redirectUri,
@@ -229,7 +223,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                 <GoogleLogin
                   {...{
                     btnTextColor,
-                    fontFamily,
+                    // fontFamily,
                     btnColor,
                     entityId,
                     redirectUri,

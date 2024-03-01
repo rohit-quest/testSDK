@@ -33,7 +33,7 @@
 .q_refer_heading {
     display: -webkit-box;
     color: #2C2C2C;
-    font-family: Figtree;
+    /* font-family: Figtree; */
     font-size: 20px;
     font-weight: 600;
     line-height: 30px;
@@ -44,7 +44,7 @@
 .q_refer_desc {
     align-self: stretch;
     color: #939393;
-    font-family: Figtree;
+    /* font-family: Figtree; */
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -64,6 +64,7 @@
     align-items: flex-start;
     gap: 6px;
     align-self: stretch;
+    font-size: 12px;
 }
 .q_refer_code_content label{
     font-size: 12px;
@@ -71,7 +72,7 @@
 .q_refer_text {
     align-self: stretch;
     color: #4C4C4C;
-    font-family: Figtree;
+    /* font-family: Figtree; */
     font-size: 12px;
     font-style: normal;
     font-weight: 500;
@@ -92,7 +93,7 @@
     flex: 1 0 0;
     align-self: stretch;
     color: #939393;
-    font-family: Figtree;
+    /* font-family: Figtree; */
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -114,7 +115,7 @@
     align-items: center;
     gap: 4px;
     color: #FFF;
-    font-family: Figtree;
+    /* font-family: Figtree; */
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
@@ -153,7 +154,7 @@
     color: #FFF;
     text-align: center;
     text-overflow: ellipsis;
-    font-family: Figtree;
+    /* font-family: Figtree; */
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -165,7 +166,7 @@
     overflow: hidden;
     color: #FFF;
     text-align: center;
-    font-family: Figtree;
+    /* font-family: Figtree; */
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
@@ -181,7 +182,6 @@
     align-items: center;
     justify-content: center;
     background: var(--Gradient-1, linear-gradient(265deg, #3378FF 4.66%, #9442FE 85.05%));
-    border-radius: 10px;
 }
 
 .q_gradient_head {
@@ -191,13 +191,17 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: 10px;
 }
 
 .q_gradient_quest_powered{
     width: 100%;
     margin-top: 30px;
 }
+.q_gradient_background {
+    border-radius: 10px;
+}
 
 .q_gradient_background .powered_by_quest{
-    border-radius: 0 0 5px 5px;
+    border-radius: 0 0 10px 10px;
 }

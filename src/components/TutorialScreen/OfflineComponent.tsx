@@ -177,19 +177,14 @@ const OfflineComponent: React.FC<TutorialProps> = ({
     // }
   }, [offlineFormatData]);
 
-  // useEffect(() => {
-  //   const functions = new General("");
-  //   functions.getKeys({userid: userId|| "",apikey: apiKey,entityId,token: token||""})
-  // }, []);
 
-  // const [minimze, setMin] = useState(false);
 
   const handleStepLoad = (index: number, height: number) => {
     const connector = document.querySelector(`#q_tutorial_progress_connector_${index}`) as HTMLElement;
     const nextContent = document.querySelector(`#q_tutorial_box_content_${index + 1}`) as HTMLElement;
 
     if (connector && nextContent) {
-      let connectorHeight = (height - 32) / 2 + (nextContent.offsetHeight - 32) / 2 + 24;
+      let connectorHeight = (height - 32) / 2 + (nextContent.offsetHeight - 32) / 2 + 32;
   
       connector.style.height = `${connectorHeight}px`;
   
@@ -220,7 +215,7 @@ const OfflineComponent: React.FC<TutorialProps> = ({
         }}
       />
       <div className='q-tut-card-cont'>
-        <div>
+        {/* <div> */}
         {formdata.map((step, index) => (
           <div
             className="q_tutorial_box"
@@ -264,7 +259,7 @@ const OfflineComponent: React.FC<TutorialProps> = ({
           </div>
         ))}
         </div>
-      </div>
+      {/* </div> */}
       <QuestLabs style={styleConfig?.Footer} />
     </div>
   );

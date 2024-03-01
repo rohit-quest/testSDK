@@ -5,7 +5,7 @@
   max-width: 28rem;
   margin: 0 auto;
   border-radius: 12px;
-  font-family: "Figtree", sans-serif;
+  /* font-family: "Figtree", sans-serif; */
 }
 
 .q-sub {
@@ -255,5 +255,5 @@ p {
   border-radius: 10px;
   border: 1px solid #ececec;
   width: 90%;
-  font-family: "Figtree";
+  /* font-family: "Figtree"; */
 }

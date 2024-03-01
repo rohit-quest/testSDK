@@ -60,11 +60,12 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
             entityId="e-26629b73-a96b-436f-8198-d49572d9d156"
             featureFlags={{}}
             apiType="STAGING"
+            themeConfig={{fontFamily:'cursive'}}
         >
             <GetStarted
                 questId="q-68c04087-0b68-40a9-8df3-e91932302810"
                 userId="u-8268f5e1-f5a1-440c-a333-0f5578a73847"
-                token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcwODE2NTEwMCwiZXhwIjoxNzA4NzY5OTAwfQ.IvLdEQnnT4oEYjgyb6ADWd9hS2qxYRY_eh3aITHxQlg"}
+                token={"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcwODk3NTgxOCwiZXhwIjoxNzA5NTgwNjE4fQ.kGRKlJfOXvjzlnIE7z1Qky1Ozi27tOs_nLgdFuTy46M"}
                 // buttonColor="yellow"
                 cardBackground="yellowGreen"
                 cardBorderColor='red'
@@ -81,7 +82,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
                 onCompleteAllStatus={() => {
                     // showToast.success({ text: "completed successfully" })
                 }}
-                template={1}
+                template={2}
                 showLoadingIndicator
 
                 // showDropDown

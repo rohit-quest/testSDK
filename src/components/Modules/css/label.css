@@ -1,6 +1,6 @@
 .q_default_label {
     color: var(--Neutral-Black-300, #4C4C4C);
-    font-family: Figtree;
+    /* font-family: Figtree; */
     font-size: 12px;
     font-style: normal;
     font-weight: 500;

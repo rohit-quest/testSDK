@@ -3,6 +3,7 @@ import './FeedbackOverview.css';
 import Label from '../Modules/Label';
 import { PrimaryButton } from '../Modules/PrimaryButton'
 import QuestContext from '../QuestWrapper';
+import QuestLabs from '../QuestLabs';
 
 interface GeneralFeedbackContentProps {
   starColor?: string;

@@ -12,7 +12,7 @@
   border: 1px solid var(--Neutral-White-300, #efefef);
   align-items: center;
   color: var(--Neutral-Black-100, #939393);
-  font-family: Figtree;
+  /* font-family: Figtree; */
   font-size: 12px;
   font-style: normal;
   font-weight: 400;

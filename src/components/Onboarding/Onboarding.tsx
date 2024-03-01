@@ -19,6 +19,7 @@ import SingleChoice from "../Modules/SingleChoice.tsx";
 import TextArea from "../Modules/TextArea.tsx";
 import { SecondaryButton } from "../Modules/SecondaryButton.tsx";
 import { PrimaryButton } from "../Modules/PrimaryButton.tsx";
+import QuestLabs from "../QuestLabs.tsx";
 
 const Tick = ({fillColor="#6525B3",isActive=false,borderColor="#B9B9B9"}) => isActive?(<svg
     width="16"
@@ -100,6 +101,7 @@ interface QuestLoginProps {
     // choiceColor?: string;
     // textInputModal?: "modal1"|"modal2";
     template?: "multi-question" | "single-question";
+    showFooter?: false | true
     styleConfig?: {
         Form?: CSSProperties,
         Topbar?: CSSProperties,
@@ -123,6 +125,7 @@ interface QuestLoginProps {
             currentTabColor?: string,
             pendingTabColor?: string
         }
+        Footer? : CSSProperties
     }
 }
 
@@ -188,7 +191,8 @@ function OnBoarding(props: QuestLoginProps) {
         // textInputModal = "modal1",
         template,
         design = [],
-        styleConfig
+        styleConfig,
+        showFooter = true
     } = props;
 
     // let { design =[] } = props;
@@ -862,7 +866,10 @@ function OnBoarding(props: QuestLoginProps) {
     }
 
     return (
-        <div className="q-onb-home" style={{ background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor || "#fff", height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form}}>
+        formdata.length > 0 && (
+        <div className="q-onb-home" style={{
+             background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor || "#fff", height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
+             }}>
             <div
                className="q-onb-ch"
             >
@@ -893,8 +900,9 @@ function OnBoarding(props: QuestLoginProps) {
                             </div>
                         </div>
                     ))}
-                    {(template === "multi-question") && (formdata.length > 0) && (designState.length > 1) && (!!progress?.length) && (<ProgressBar /> )}
+                    
                     <div className="q-onb-main-first">
+                    {(template === "multi-question") && (formdata.length > 0) && (designState.length > 1) && (!!progress?.length) && (<ProgressBar /> )}
                     {!!designState && designState.length > 0 && checkDesignCriteria()
                         ? designState[currentPage].map((num: number) =>
                         (formdata[num - 1].type == "USER_INPUT_TEXT"
@@ -1048,26 +1056,31 @@ function OnBoarding(props: QuestLoginProps) {
                             checkDesignCriteria() ? (
                                 controlBtnType == "Buttons" ?
                                 <div className="q-onb-main-criteria">
-                                    <SecondaryButton
-                                        style={{
-                                            opacity: currentPage == 0 ? "0" : "1",
-                                            cursor:
-                                                currentPage == 0
-                                                    ? "context-menu"
-                                                    : "pointer",
-                                            borderColor: styleConfig?.SecondaryButton?.borderColor || themeConfig?.borderColor,
-                                            backgroundColor: styleConfig?.SecondaryButton?.backgroundColor || themeConfig?.backgroundColor,
-                                            color: styleConfig?.SecondaryButton?.color || themeConfig?.primaryColor,
-                                            ...styleConfig?.SecondaryButton
-                                        }}
-                                        className="q-onb-main-btn"
-                                        onClick={() =>
-                                            currentPage > 0 &&
-                                            setCurrentPage(currentPage - 1)
-                                        }
-                                    >
-                                        Previous
-                                    </SecondaryButton>
+                                    {
+                                     currentPage > 0 &&
+                                     <SecondaryButton
+                                     style={{
+                                         opacity: currentPage == 0 ? "0" : "1",
+                                         cursor:
+                                             currentPage == 0
+                                                 ? "context-menu"
+                                                 : "pointer",
+                                         borderColor: styleConfig?.SecondaryButton?.borderColor || themeConfig?.borderColor,
+                                         backgroundColor: styleConfig?.SecondaryButton?.backgroundColor || themeConfig?.backgroundColor,
+                                         color: styleConfig?.SecondaryButton?.color || themeConfig?.primaryColor,
+                                         ...styleConfig?.SecondaryButton
+                                     }}
+                                     className="q-onb-main-btn"
+                                     onClick={() =>
+                                         currentPage > 0 &&
+                                         setCurrentPage(currentPage - 1)
+                                     }
+                                 >
+                                     Previous
+                                 </SecondaryButton>
+                                     
+                                    }
+                                   
                                     <PrimaryButton
                                         onClick={() =>
                                             currentPage !=
@@ -1082,7 +1095,9 @@ function OnBoarding(props: QuestLoginProps) {
                                             ...styleConfig?.PrimaryButton
                                         }}
                                     >
-                                        {(nextBtnText ? nextBtnText : "Submit")}
+                                        {currentPage == designState.length - 1
+                                            ? (nextBtnText ? nextBtnText : "Submit")
+                                            : "Continue"}
                                     </PrimaryButton>
                                 </div>
                                 :
@@ -1094,6 +1109,11 @@ function OnBoarding(props: QuestLoginProps) {
                                             setCurrentPage(currentPage - 1)
                                         }
                                         style={{
+                                            height: styleConfig?.SecondaryButton?.width || '44px',
+                                            width: styleConfig?.SecondaryButton?.width || '44px',
+                                            borderRadius: styleConfig?.SecondaryButton?.borderRadius|| '50%',
+                                            padding : styleConfig?.SecondaryButton?.padding || '10px',
+                                            border :styleConfig?.SecondaryButton?.border || '1.5px solid #afafaf',
                                             opacity: currentPage == 0 ? "0" : "1",
                                             cursor:
                                                 currentPage == 0
@@ -1101,7 +1121,6 @@ function OnBoarding(props: QuestLoginProps) {
                                                     : "pointer",
                                             borderColor: styleConfig?.SecondaryButton?.borderColor || themeConfig?.borderColor,
                                             backgroundColor: styleConfig?.SecondaryButton?.backgroundColor || themeConfig?.backgroundColor,
-                                            borderRadius: styleConfig?.SecondaryButton?.borderRadius || "50%",
                                             color: styleConfig?.SecondaryButton?.color || themeConfig?.primaryColor,
                                             ...styleConfig?.SecondaryButton
                                         }}
@@ -1118,8 +1137,12 @@ function OnBoarding(props: QuestLoginProps) {
                                         }
                                         disabled={!btnFlag}
                                         style={{
+                                            height : styleConfig?.PrimaryButton?.height || '44px',
+                                            width: styleConfig?.PrimaryButton?.width || '44px',
+                                            borderRadius :styleConfig?.PrimaryButton?.borderRadius || '50%',
+                                            padding : styleConfig?.PrimaryButton?.padding || '10px',
+                                            border : styleConfig?.PrimaryButton?.border ||'1.5px solid #D1ACFF',
                                             background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
-                                            borderRadius: styleConfig?.SecondaryButton?.borderRadius || "50px",
                                             ...styleConfig?.PrimaryButton
                                         }}
                                     >
@@ -1133,6 +1156,7 @@ function OnBoarding(props: QuestLoginProps) {
                                     onClick={returnAnswers}
                                     disabled={!btnFlag}
                                     style={{
+                                        border :styleConfig?.SecondaryButton?.border || '1.5px solid #afafaf',
                                         background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
                                         ...styleConfig?.PrimaryButton
                                     }}
@@ -1142,8 +1166,10 @@ function OnBoarding(props: QuestLoginProps) {
                             </div>
                         ))}
                 </div>
+               {(formdata && showFooter) &&  <QuestLabs style={styleConfig?.Footer} /> }
             </div>
         </div>
+        )
     );
 }
 

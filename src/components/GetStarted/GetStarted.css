@@ -1,8 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Figtree:wght@300&family=Hanken+Grotesk:wght@500&family=Mulish:wght@200&display=swap");
 
 .get_started_box {
-  /* margin: auto; */
-  /* border: 1px solid black; */
   border-radius: 10px;
   background: white;
 }
@@ -36,7 +34,6 @@
   flex: 1;
 }
 .gs-card-btn2 {
-  font-family: Figtree;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -52,7 +49,6 @@
   cursor: pointer;
 }
 .gs-card-btn1 {
-  font-family: Figtree;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -67,7 +63,6 @@
   overflow: hidden;
   color: #2c2c2c;
   text-overflow: ellipsis;
-  font-family: Figtree;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -80,7 +75,7 @@
 }
 .gs-subheading {
   color:  #939393;
-  font-family: Figtree;
+  color:  #939393;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -89,7 +84,6 @@
 }
 .gs-card-head {
   color: #2c2c2c;
-  font-family: Figtree;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -98,7 +92,6 @@
 }
 .gs-card-desc {
   color: #939393;
-  font-family: Figtree;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -120,7 +113,6 @@
   display: flex;
   align-self: stretch;
   color:  #2c2c2c;
-  font-family: Figtree;
   font-size: 10px;
   font-style: normal;
   font-weight: 600;
@@ -131,7 +123,6 @@
 }
 
 .q_progress_bar_completed {
-  /* width: 12px; */
   height: 6px;
   border-radius: 8px;
   box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.12);
@@ -148,11 +139,10 @@
 
 .q_progress_percentage {
   color: #9035ff;
-  font-family: Figtree;
   font-size: 10px;
   font-style: normal;
   font-weight: 700;
-  line-height: 12px; /* 120% */
+  line-height: 12px;
   letter-spacing: -0.1px;
   align-self: stretch;
 }
@@ -180,7 +170,7 @@
   gap: 12px;
   align-self: stretch;
   border-radius: 10px;
-  border: 1px solid #efefef;
+  border: 1px solid  #efefef;
 }
 .gs_card_body_dropDown {
   display: flex;
@@ -230,7 +220,6 @@
   align-items: center;
   gap: 4px;
   color: #fff;
-  font-family: Figtree;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -242,13 +231,12 @@
   display: flex;
   padding: 10px 16px;
   border-radius: 10px;
-  border: 1.5px solid  #efefef;
+  border: 1.5px solid #efefef;
   background:  #fff;
   justify-content: center;
   align-items: center;
   gap: 4px;
   color:  #2c2c2c;
-  font-family: Figtree;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -259,7 +247,6 @@
 .gs_drop_desc {
   align-self: stretch;
   color:  #939393;
-  font-family: Figtree;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -267,8 +254,7 @@
 }
 
 .gs_card_btn_2 {
-  color:  rgba(255, 255, 255, 0.8);
-  font-family: Figtree;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 10.675px;
   font-style: normal;
   font-weight: 600;
@@ -281,7 +267,7 @@
   align-items: center;
   gap: 6.1px;
   border-radius: 7.625px;
-  background: #9035ff;
+  background:  #9035ff;
   box-sizing: content-box;
   white-space: nowrap;
 }
@@ -294,12 +280,12 @@
   gap: 20px;
   align-self: stretch;
   border-bottom: 1px solid  #efefef;
+  border-bottom: 1px solid  #efefef;
 }
 
 .gs_steps {
   color: #939393;
   text-align: right;
-  font-family: Figtree;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -310,11 +296,11 @@
   border-radius: 48px;
   width: 32px;
   height: 32px;
-  /* padding: 8px; */
   background: #fbfbfb;
   display: flex;
   align-items: center;
   justify-content: center;
+  /* font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
 }
 
 .gs-single-card {
@@ -340,7 +326,7 @@
   align-items: center;
   gap: 8px;
   border-radius: 48px;
-  background:  #f4ebff;
+  background:#f4ebff;
   justify-content: center;
   width: 32px;
   height: 32px;

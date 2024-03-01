@@ -16,7 +16,6 @@ interface QuestLabsProps {
 
 export default function QuestLabs({ style, icon = true }: QuestLabsProps) {
     const { themeConfig } = useContext(QuestContext.Context)
-    console.log(style)
     return (
         <div style={{ color: themeConfig.secondaryColor, ...style }} onClick={() => { window.open("https://www.questlabs.ai/", "_blank") }} className='powered_by_quest'>
             <div style={{color: themeConfig.secondaryColor||style?.color}}>Powered by Quest Labs</div>

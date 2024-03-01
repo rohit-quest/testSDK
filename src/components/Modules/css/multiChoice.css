@@ -10,7 +10,7 @@
     cursor: pointer;
     align-items: center;
     color: var(--Neutral-White-500, #B9B9B9);
-    font-family: Figtree;
+    /* font-family: Figtree; */
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -42,7 +42,7 @@
     align-items: center;
     cursor: pointer;
     color: rgba(0, 0, 0, 0.74);
-    font-family: Figtree;
+    /* font-family: Figtree; */
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
