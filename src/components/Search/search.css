@@ -222,4 +222,5 @@
   height: 16px;
   width: 16px;
   border-radius: 50%;
+  box-sizing: content-box;
 }
