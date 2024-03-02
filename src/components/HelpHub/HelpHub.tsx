@@ -8,17 +8,10 @@ import HelpHubChat from "./HelpHubChat";
 import HelpHubHelp from "./HelpHubHelp";
 import HelpHubTasks from "./HelpHubTasks";
 import HelpHubUpdates from "./HelpHubUpdates";
-// import { HelpChat } from "../HelpCenter/HelpChat";
+
 const HelpHub = () => {
   const [selectedSection, setSelectedSection] = useState("Home");
-  console.log(selectedSection);
-  // const pageArr: Array<string> = ['home', 'chat', 'help', 'updates', 'tasks'];
-
   const [helpHub, setHelpHub] = useState(false);
-
-  // const obj = {
-  //   'home': <HelpHubHome />
-  // }
 
   return (
     <div>
@@ -181,12 +174,12 @@ const HelpHub = () => {
               </div>
 
               {/* Footer: powered by quest labs  */}
-              <div className="helphubFooterCont">
-                <div className="helphubFooterText">Powered by Quest Labs</div>
-                <div>
-                  <HelphubSvg type="footerLogo" />
+                <div className="helphubFooterCont">
+                  <div className="helphubFooterText">Powered by Quest Labs</div>
+                  <div>
+                    <HelphubSvg type="footerLogo" />
+                  </div>
                 </div>
-              </div>
 
             </div>
           </div>

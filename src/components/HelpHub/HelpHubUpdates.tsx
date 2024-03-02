@@ -1,20 +1,9 @@
-import React, { useState } from 'react'
-import QuestWhiteLogo from "../../assets/images/QuestWhiteLogo.svg";
-import Modal1 from "../../assets/images/HelpHubModal1.jpeg";
-import Modal2 from "../../assets/images/HelpHubModal2.jpeg";
-import Modal3 from "../../assets/images/HelpHubModal3.jpeg";
-import QuestImage from "../../assets/images/HelphubQuest.png";
-
-
+import  { useState } from 'react'
 import CancelButton from "../../assets/images/CancelButton.svg";
 import SearchIcons from "../../assets/images/SearchIcons.svg";
-import TaskStatusDone from "../../assets/images/TaskStatusDone.svg";
-import TaskStatusPending from "../../assets/images/TaskStatusPending.svg";
 import OpenSectionButton from "../../assets/images/OpenSectionButton.svg";
-import HelpHubHomeEmoji5 from "../../assets/images/HelpHubHomeEmoji5.svg";
 import UnreadUpdateLogo from "../../assets/images/UnreadUpdateLogo.svg";
 import ReadUpdateLogo from "../../assets/images/ReadUpdateLogo.svg";
-
 
 const HelpHubUpdates = () => {
 

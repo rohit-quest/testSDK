@@ -1,3 +1,7 @@
+*::-webkit-scrollbar {
+  display: none;
+}
+
 .helphubIconUpperCont {
   position: fixed;
   bottom: 20px;
@@ -129,6 +133,13 @@
   border: 1.5px solid var(--Neutral-White-300, #efefef);
   background: var(--Neutral-White-100, #fff);
   box-shadow: 0px 4px 20px 4px rgba(87, 87, 87, 0.08);
+}
+
+.q-helhub-Send-Cont-aero {
+  transform: rotateZ('90deg');
+}
+.q-helhub-Send-Cont-aero img {
+  transform: rotate(-90deg);
 }
 
 .q-helphub-send-msg {
@@ -462,11 +473,6 @@
   margin-top: -6px;
 }
 
-
-
-
-
-
 /* complete profile  */
 .q-helphub-compProfile {
   display: flex;
@@ -564,7 +570,6 @@
   background: var(--Primary-Grape-500, #9035FF);
   box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.12);
 }
-
 
 /* Review  */
 .q-helphub-review {
@@ -682,21 +687,7 @@
 /************Complete Chat section CSS Starts here***********/
 
 .helpHubChat {
-  /* position: absolute; */
-  /* right: 10px; */
-  /* bottom: 65px; */
-  /* max-height: 760px; */
-  /* width: 440px; */
-  height: calc(100vh - 100px);
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* border-radius: 12px; */
-  /* box-shadow: 0px 4px 20px 4px rgba(87, 87, 87, 0.08); */
-  /* overflow: hidden; */
-  /* opacity: 0; */
-  /* Set initial opacity to 0 */
-  /* transform: translateY(-20px); */
-  /* transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; */
+  height: 100%;
 }
 
 /* heading style  */
@@ -781,18 +772,35 @@
   flex: 1 0 0;
   align-self: stretch;
   background: var(--Neutral-White-100, #FFF);
-  position: relative;
+  height: 100px;
+  overflow: hidden;
+  min-height: calc(100% - 131px);
+  overflow-y: scroll;
+}
+
+.q-helphub-chatpage-lower-container::-webkit-scrollbar {
+  display: none;
 }
 
 /* for personal chats  */
-
-
 .q-helphub-personal-chat {
   position: absolute;
-  width: 100%;
-  height: calc(100vh - 138px);
-  /* background-color: blue; */
-  top: -90px;
+  padding: 20px;
+  overflow: hidden;
+  height: 100%;
+  top: -20px;
+}
+
+.q-helphub-personal-chat .sec-div .personal-chat-messages-cont {
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  align-self: stretch;
+  background: var(--Neutral-White-100, #FFF);
+  min-height: calc(100% - 30px);
+  height: 1px;
+  overflow-y: scroll;
 }
 
 .q-helphub-personal-chat .personal-chat-upper-cont {
@@ -808,17 +816,13 @@
   flex: 1 0 0;
   color: var(--Neutral-Black-300, #4C4C4C);
   text-align: center;
-
-  /* Title sm/400 */
   font-family: Figtree;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: 28px;
-  /* 155.556% */
   letter-spacing: -0.18px;
 }
-
 
 .personal-chat-upper-cont img {
   cursor: pointer;
@@ -829,24 +833,32 @@
 }
 
 .personal-chat-messages-cont {
-  display: flex;
+  /* display: flex;
   padding: 20px;
   flex-direction: column;
   align-items: center;
   gap: 20px;
   align-self: stretch;
   background: var(--Neutral-White-100, #FFF);
-
-  flex: 1 0 0;
+personal-chat-messages-cont
+  flex: 1 0 0; */
   /* background-color: #0056ff; */
-  height: 446px;
+  /* height: 446px; */
   /* background-color: #9035FF; */
-  overflow-y: scroll;
+  /* height: calc(100% - 1000px); */
+  /* min-height: 100px; */
+  /* max-height: calc(100% - 400px); */
+  /* background-color: blue; */
+  /* min-height: calc(100% - 1000px); */
+  /* height: 1000px; */
+  /* overflow: hidden; */
+  /* overflow-y: scroll; */
+  /* overflow-y: scroll; */
   /* min-height: calc(100vh - 800px); */
-}
-
-.personal-chat-messages-cont::-webkit-scrollbar {
-  display: none;
+  /* height: 1px; */
+  /* height: 100px; */
+  /* background-color: ; */
+  /* overflow: hidden; */
 }
 
 
@@ -858,22 +870,14 @@
   gap: 28px;
   align-self: stretch;
   border-bottom: 1px solid var(--Neutral-White-300, #EFEFEF);
-
 }
-
 
 .gen-feed-img-cont {
   display: flex;
-  /* padding: 20px 0px; */
-  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
   gap: 28px;
-  /* align-self: stretch; */
-  /* border-bottom: 1px solid var(--Neutral-White-300, #EFEFEF); */
   position: relative;
-
-  /* background-color: #9035FF; */
 }
 
 .gen-feed-img-cont div {
@@ -900,7 +904,6 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
 
 .personal-gen-feed-text-cont {
   display: flex;
@@ -946,10 +949,6 @@
   align-items: center;
   gap: 12px;
   align-self: stretch;
-  /* width: 100%; */
-  /* height: 187px; */
-  /* min-height: calc(100vh - 800000px); */
-
 }
 
 .personal-chat-messages-cont-conver .sender-messages {
@@ -963,7 +962,6 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  /* align-items: center; */
   gap: 8px;
 }
 
@@ -971,7 +969,6 @@
   display: flex;
   padding: 12px;
   flex-direction: column;
-  /* align-items: flex-start; */
   gap: 8px;
   border-radius: 12px;
   background: var(--Neutral-White-200, #FBFBFB);
@@ -989,7 +986,6 @@
   line-height: 20px;
   /* 142.857% */
 }
-
 
 .receiver-messages {
   display: flex;
@@ -1021,12 +1017,6 @@
   line-height: 20px;
   /* 142.857% */
 }
-
-
-
-
-
-
 
 .personal-messages-send-message-cont {
   display: flex;
@@ -1068,24 +1058,12 @@
   height: 20px;
 }
 
-
-
-
-
-
-
-
-
-/* 
-.q-helphub-chats-section-con::-webkit-scrollbar {
-  display: none;
-} */
+/* for personal chats ends */
 
 .q-helphub-search-chats-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
   gap: 12px;
   align-self: stretch;
 }
@@ -1119,10 +1097,6 @@
   align-items: center;
   flex-direction: column;
   gap: 12px;
-  align-self: stretch;
-  flex: 1 0 0;
-  min-height: calc(100vh - 398px);
-  overflow-y: scroll;
 }
 
 .q-helphub-chats-section::-webkit-scrollbar {
@@ -1146,7 +1120,7 @@
   align-items: center;
   gap: 8px;
   border-radius: 48px;
-  background: url(<path-to-image>), lightgray 50% / cover no-repeat;
+  /* background: url(<path-to-image>), lightgray 50% / cover no-repeat; */
 }
 
 .q-helphub-chat-message {
@@ -1179,15 +1153,11 @@
   overflow: hidden;
   color: var(--Neutral-White-500, #B9B9B9);
   text-overflow: ellipsis;
-  /* white-space: nowrap; */
-  /* Body sm/400 */
   font-family: Figtree;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: 16px;
-
-  /* 133.333% */
 }
 
 .q-helphub-chat-btn {
@@ -1219,7 +1189,6 @@
   align-items: center;
   gap: 8px;
   border-radius: 48px;
-
 }
 
 /* single chat  */
@@ -1234,9 +1203,8 @@
   /* box-shadow: 0px 4px 28px 4px rgba(144, 53, 255, 0.12); */
   background-color: transparent;
   position: absolute;
-  bottom: -30px;
   left: 50%;
-  left: 50%;
+  bottom: 90px;
   transform: translate(-50%, -50%);
 }
 
@@ -1262,11 +1230,12 @@
   font-style: normal;
   font-weight: 600;
   line-height: 20px;
-  /* 142.857% */
 }
 
 /* Help style start here  */
-.helpHubHelpCont {}
+.helpHubHelpCont {
+  height: 100%;
+}
 
 .q-helphub-help-upper-cont {
   display: flex;
@@ -1346,6 +1315,14 @@
   gap: 8px;
   align-self: stretch;
   background: var(--Neutral-White-100, #FFF);
+  min-height: calc(100% - 110px);
+  height: 1px;
+  /* overflow: hidden; */
+  overflow-y: scroll;
+}
+
+.q-helphub-help-lower-cont::-webkit-scrollbar {
+  display: none;
 }
 
 .q-helphub-help-lower-cont-data {
@@ -1366,15 +1343,11 @@
   border-radius: 10px;
   border: 1px solid var(--Neutral-White-400, #E0E0E0);
   background: var(--Neutral-White-100, #FFF);
-
-
 }
 
 .q-helphub-help-search-cont input {
   align-self: stretch;
   color: var(--Neutral-Black-100, #939393);
-  /* display: flex; */
-  /* Body lg/400 */
   font-family: Figtree;
   font-size: 16px;
   font-style: normal;
@@ -1389,15 +1362,10 @@
   display: flex;
   padding: 12px 0px;
   align-items: center;
-  /* gap: 12px; */
   flex-direction: column;
   align-items: flex-start;
   align-self: stretch;
-
   flex: 1 0 0;
-  min-height: calc(100vh - 420px);
-  overflow-y: scroll;
-  /* scroll-behavior: smooth; */
 }
 
 .q-helphub-help-faqs-cont::-webkit-scrollbar {
@@ -1412,8 +1380,6 @@
   align-self: stretch;
   border-bottom: 1.5px solid var(--Neutral-White-300, #EFEFEF);
   background: var(--neutral-opacity-white-80, rgba(255, 255, 255, 0.80));
-
-
 }
 
 .q-helphub-help-total-faqs div {
@@ -1431,9 +1397,6 @@
 
 .q-helphub-help-total-faqs-cont {
   width: 100%;
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* background-color: black; */
 }
 
 /* close  */
@@ -1449,13 +1412,11 @@
   align-self: stretch;
   border-bottom: 1.5px solid var(--Neutral-White-300, #EFEFEF);
   background: var(--Neutral-White-100, #FFF);
-  /* background-color: #0056ff; */
 }
 
 .q-helphub-help-single-faq-close .text {
   width: 100%;
   display: flex;
-  /* background-color: black; */
   gap: 20px;
   align-self: stretch;
   justify-content: space-between;
@@ -1497,13 +1458,11 @@
 }
 
 .q-helphub-help-single-faq-open .text {
-  /* background-color: #0056ff; */
   display: flex;
   align-items: center;
   gap: 20px;
   align-self: stretch;
   justify-content: space-between;
-  /* justify-content: s; */
 }
 
 .q-helphub-help-single-faq-open .text .head {
@@ -1521,7 +1480,6 @@
 
 .q-helphub-help-single-faq-open .text .but {
   transform: rotateZ(180deg);
-  /* background-color: blue; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1540,12 +1498,11 @@
   /* 142.857% */
 }
 
-
-
-
 /* updates style start here  */
 
-.helpHubTaskCont {}
+.helpHubUpdatesCont {
+  height: 100%;
+}
 
 .q-helphub-updates-upper-cont {
   display: flex;
@@ -1625,6 +1582,13 @@
   gap: 8px;
   align-self: stretch;
   background: var(--Neutral-White-100, #FFF);
+  min-height: calc(100% - 138px);
+  height: 10px;
+  overflow-y: scroll;
+}
+
+.q-helphub-updates-lower-cont::-webkit-scrollbar {
+  display: none;
 }
 
 .q-helphub-updates-lower-cont-data {
@@ -1650,8 +1614,6 @@
 .q-helphub-updates-search-cont input {
   align-self: stretch;
   color: var(--Neutral-Black-100, #939393);
-  /* display: flex; */
-  /* Body lg/400 */
   font-family: Figtree;
   font-size: 16px;
   font-style: normal;
@@ -1663,13 +1625,7 @@
 }
 
 .q-helphub-updates-task-cont {
-  /* padding: 50px; */
-  /* min-height: calc(455px - 455px); */
-  height: 344px;
-  overflow-y: scroll;
-  overflow-y: scroll;
-  /* background-color: black; */
-  /* min-height: calc(100vh - 300px); */
+  height: 0px;
 }
 
 .q-helphub-updates-task-cont::-webkit-scrollbar {
@@ -1815,14 +1771,10 @@
   /* 142.857% */
 }
 
-
-
-
-
-
-
 /* Task Style starts here  */
-.helpHubTaskCont {}
+.helpHubTaskCont {
+  height: 100%;
+}
 
 .q-helphub-tasks-upper-cont {
   display: flex;
@@ -1834,7 +1786,6 @@
   border-bottom: 1px solid var(--Neutral-White-300, #EFEFEF);
   background: var(--Neutral-White-100, #FFF);
 }
-
 
 .q-helphub-tasks-upper-cont-text {
   display: flex;
@@ -1902,6 +1853,14 @@
   gap: 8px;
   align-self: stretch;
   background: var(--Neutral-White-100, #FFF);
+  min-height: calc(100% - 110px);
+  height: 1px;
+  /* overflow: hidden; */
+  overflow-y: scroll;
+}
+
+.q-helphub-tasks-lower-cont::-webkit-scrollbar {
+  display: none;
 }
 
 .q-helphub-tasks-lower-cont-data {
@@ -1927,8 +1886,6 @@
 .q-helphub-tasks-search-cont input {
   align-self: stretch;
   color: var(--Neutral-Black-100, #939393);
-  /* display: flex; */
-  /* Body lg/400 */
   font-family: Figtree;
   font-size: 16px;
   font-style: normal;
@@ -1978,13 +1935,8 @@
 }
 
 .q-helphub-tasks-task-cont {
-  /* padding: 50px; */
-  /* min-height: calc(455px - 455px); */
-  height: 100px;
   overflow-y: scroll;
   overflow-y: scroll;
-  background-color: black;
-  min-height: calc(100vh - 456px);
 }
 
 .q-helphub-tasks-task-cont::-webkit-scrollbar {
@@ -1995,7 +1947,6 @@
   display: flex;
   padding: 20px 0px;
   align-items: center;
-  /* justify-content: space-between; */
   justify-content: space-between;
   gap: 12px;
   align-self: stretch;
