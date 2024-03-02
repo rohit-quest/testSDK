@@ -30,10 +30,12 @@
   position: relative;
   padding: 10px 20px;
   border-bottom: 1px solid #efefef;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  gap: 12px;
 }
 .q_searchBox_input_cont {
-  margin-left: 12px;
+  /* margin-left: 12px; */
+ flex: 1 0 0;
 }
 .q_searchBox_input_cont div {
   width: 100%;
@@ -44,7 +46,7 @@
 }
 
 .q_search_bar_icon {
-  position: absolute;
+  /* position: absolute; */
 }
 
 .q_search_command_key {

@@ -109,6 +109,8 @@ interface feedbackCompProps {
     SecondaryButton?: React.CSSProperties,
     Modal?: React.CSSProperties,
     Footer?: React.CSSProperties,
+    listHeading?:React.CSSProperties,
+    listDescription?:React.CSSProperties
   };
   showFooter?:boolean
   offlineFormData: FormDataItem[][];
@@ -547,12 +549,16 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   <div className='q_feedback_icon'>{feedback(iconColor)}</div>
                   <div>
                     <div className='q-fw-tab-heading'
-                    style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
+                     style={{ color: styleConfig.listHeading?.color || styleConfig?.Heading?.color || themeConfig?.primaryColor ,
+                      ...styleConfig?.listHeading
+                      }}
                     >
                       General Feedback
                     </div>
                     <div className='q-fw-tab-description'
-                     style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
+                      style={{ color:styleConfig?.listDescription?.color || styleConfig?.Description?.color || themeConfig?.secondaryColor ,
+                        ...styleConfig?.listDescription
+                      }}
                     >
                       Give general feedback on this page
                     </div>
@@ -568,14 +574,18 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   <div>
                     <div>
                       <div className='q-fw-tab-heading'
-                      style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
+                      style={{ color: styleConfig.listHeading?.color || styleConfig?.Heading?.color || themeConfig?.primaryColor ,
+                        ...styleConfig?.listHeading
+                        }}
                       >
                         Report a Bug
                       </div>
                     </div>
                     <div>
                       <div className='q-fw-tab-description'
-                       style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
+                        style={{ color:styleConfig?.listDescription?.color || styleConfig?.Description?.color || themeConfig?.secondaryColor ,
+                          ...styleConfig?.listDescription
+                        }}
                       >
                         Let us know what's broken
                       </div>
@@ -592,14 +602,18 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   <div>
                     <div>
                       <div className='q-fw-tab-heading'
-                      style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
+                       style={{ color: styleConfig.listHeading?.color || styleConfig?.Heading?.color || themeConfig?.primaryColor ,
+                        ...styleConfig?.listHeading
+                        }}
                       >
                         Request a Feature
                       </div>
                     </div>
                     <div>
                       <div className='q-fw-tab-description'
-                       style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
+                        style={{ color:styleConfig?.listDescription?.color || styleConfig?.Description?.color || themeConfig?.secondaryColor ,
+                          ...styleConfig?.listDescription
+                        }}
                       >
                         Tell us how we can improve
                       </div>
@@ -616,14 +630,18 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   <div>
                     <div>
                       <div className='q-fw-tab-heading'
-                      style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
+                      style={{ color: styleConfig.listHeading?.color || styleConfig?.Heading?.color || themeConfig?.primaryColor ,
+                        ...styleConfig?.listHeading
+                        }}
                       >
                         Contact us
                       </div>
                     </div>
                     <div>
                       <div className='q-fw-tab-description'
-                       style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
+                       style={{ color:styleConfig?.listDescription?.color || styleConfig?.Description?.color || themeConfig?.secondaryColor ,
+                        ...styleConfig?.listDescription
+                      }}
                       >Tell us how we can help</div>
                     </div>
                   </div>

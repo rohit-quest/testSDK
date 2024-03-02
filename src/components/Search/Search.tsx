@@ -149,7 +149,7 @@ export default function Search(prop: propType): JSX.Element {
 
   const jsx = (
     <div className="q_search_bar" style={{ 
-      background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor || "#fff", height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
+      background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor , height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
        }}>
       <div className="q_search_box">
         <img
@@ -165,7 +165,9 @@ export default function Search(prop: propType): JSX.Element {
               borderColor:
                 styleConfig?.Input?.borderColor || themeConfig?.borderColor,
               color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+              padding : '0px',
               ...styleConfig?.Input,
+              
             }}
             type="text"
             placeholder={prop.placeholder}
