@@ -111,10 +111,10 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
         featureFlags={{}}
         apiType="PRODUCTION"
         themeConfig={{
-          // backgroundColor: "black",
+          backgroundColor: "blue",
           // borderColor: "red",
           // buttonColor: "green",
-          // primaryColor: "White",
+          primaryColor: "White",
           // secondaryColor: "gray",
           // fontFamily: "cursive"
         }}

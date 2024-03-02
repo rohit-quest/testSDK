@@ -45,13 +45,12 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value, on
       {(LogoType["date"])(iconColor || "#B9B9B9")}
     </div>
     :
-    <div className="q_input_cont" style={{color: themeConfig.primaryColor,...style}}>
+    <div className="q_input_cont" style={style}>
       { (logoPosition == 'left' || logoPosition == 'both') && (LogoType[type])(iconColor || '#B9B9B9')}
       <input
         type={type}
         name="normalInput"
-        placeholder={placeholder}                fill={iconColor || "#8E8E8E"}
-
+        placeholder={placeholder}                
         className="q_input_main_cont"
         onChange={onChange}
         onKeyUp={onKeyUp}
@@ -60,7 +59,9 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value, on
         ref={ref}
         onWheel={event => { event.currentTarget.blur(); }}
         style={
-          {fontFamily:themeConfig.fontFamily || "'Figtree', sans-serif"}
+          {fontFamily:themeConfig.fontFamily || "'Figtree', sans-serif",
+           color : themeConfig.primaryColor
+        }
         }
       />
       { (logoPosition == 'right' || logoPosition == 'both') && (LogoType[type])(iconColor || '#B9B9B9')}
