@@ -50,7 +50,8 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value, on
       <input
         type={type}
         name="normalInput"
-        placeholder={placeholder}
+        placeholder={placeholder}                fill={iconColor || "#8E8E8E"}
+
         className="q_input_main_cont"
         onChange={onChange}
         onKeyUp={onKeyUp}

@@ -48,9 +48,9 @@ const feature = (color: string = "#939393") => (
 );
 const cross = (color = "#AFAFAF", onClick?: () => void) => (
   <div onClick={() => onClick?.()} style={{
-    cursor: "pointer", background: '#FBFBFB', padding:'4px',
+    cursor: "pointer", background: '#FBFBFB', padding: '4px',
     display: 'flex', alignItems: 'center', justifyContent: 'center',
-    borderRadius :'4px'
+    borderRadius: '4px'
   }}>
     <svg
       width="16"
@@ -98,7 +98,7 @@ interface feedbackCompProps {
   descriptions?: Record<optionType, string>;
   backBtn?: boolean;
   iconColor?: string;
-
+  showFooter?: boolean;
   styleConfig?: {
     Form?: React.CSSProperties,
     Heading?: React.CSSProperties,
@@ -135,7 +135,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   uniqueEmailId,
   descriptions = { "General Feedback": "Welcome back, Please complete your details", "Report a Bug": "Describe your issue", "Contact us": "Invite other admins and moderators", "Request a Feature": "How can we make it better" },
   iconColor = "#939393",
-  styleConfig = {}
+  styleConfig = {},
+  showFooter = true
 
 }) => {
   const [selectedOption, setSelectedOption] = useState<optionType | null>(null);
@@ -502,7 +503,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 <div></div>
               )}
             </div>
-            <QuestLabs style={styleConfig.Footer} />
+            {showFooter && <QuestLabs style={styleConfig?.Footer} />}
           </div>
         ) : submit ? (
           <div>
@@ -530,10 +531,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 </div>
               </div>
             </div>
-            <QuestLabs style={styleConfig.Footer} />
+            {showFooter && <QuestLabs style={styleConfig?.Footer} />}
           </div>
         ) : (
-          <div style={{ border: '1px solid black' }}>
+          <div>
             <div className='q-fw-crossBtn'>
               <div onClick={() => onClose?.()}>{cross(iconColor)}</div>
             </div>
@@ -630,7 +631,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               )}
             </div>
             <div>
-              <QuestLabs style={styleConfig?.Footer} />
+              {showFooter && <QuestLabs style={styleConfig?.Footer} />}
             </div>
           </div>
         )}

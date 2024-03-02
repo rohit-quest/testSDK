@@ -29,6 +29,7 @@ const SingleChoice: React.FC<SingleChoiceProps> = ({
   const containerStyle: CSSProperties = {
     ...style,
     flexDirection: type === 'modal2' ? 'column' : 'row',
+    gap: type === 'modal2' ? '12px' : '8px'
   };
 
   const customStyles: StylesConfig<any, false, any> = {
@@ -36,7 +37,7 @@ const SingleChoice: React.FC<SingleChoiceProps> = ({
       ...base,
       background: containerStyle?.background || containerStyle?.backgroundColor || "transparent",
       fontSize: containerStyle?.fontSize || "14px",
-      border: containerStyle?.border || `${containerStyle?.borderWidth || "1px"} solid ${containerStyle?.borderColor}` ||"1px solid var(--neutral-grey-100, #ECECEC)",
+      border: `${containerStyle?.borderWidth || "1px"} solid ${containerStyle?.borderColor || "var(--neutral-grey-100, #ECECEC)"}`,
       borderRadius: "10px",
       color: containerStyle?.color || "black",
       ...containerStyle
@@ -52,7 +53,7 @@ const SingleChoice: React.FC<SingleChoiceProps> = ({
       backgroundColor: (containerStyle?.background || containerStyle?.backgroundColor || "#f9fafb") as string,
     })
   };
-
+// console.log(type)
   return (
     (type === "modal3") ?
     <div>
@@ -69,9 +70,11 @@ const SingleChoice: React.FC<SingleChoiceProps> = ({
     <div className="q-singlechoice-input-cont" style={containerStyle}>
       {options.map((option: string, id: number) => {
         const labelContainerStyle: CSSProperties = {
-          border: (type === 'modal1') ? (checked === option ? `1px solid ${selectedStyle?.borderColor || selectedStyle?.accentColor || '#6525B3'}` : `1px solid ${style?.borderColor || "#EFEFEF"}`) : "0px",
+          border: checked === option
+          ? `1px solid ${selectedStyle?.borderColor || selectedStyle?.accentColor || '#6525B3'}`
+          : `1px solid ${style?.borderColor || "#EFEFEF"}`,
           width: type === 'modal2' ? '100%' : 'fit-content',
-          padding: type === 'modal2' ? '0px 2px' : '0px 16px',
+          padding: type === 'modal2' ? '10px 16px' : '8px 16px',
           gap: type === 'modal2' ? '8px' : '4px',
         };
 
@@ -83,10 +86,10 @@ const SingleChoice: React.FC<SingleChoiceProps> = ({
               checked={checked === option}
               onChange={onChange}
               className="q-singlechoice-input"
-              style={{ accentColor: selectedStyle?.accentColor || "#6525B3", padding: type === 'modal2' ? '10px 0px' : '8px 0px' }}
+              style={{ accentColor: selectedStyle?.accentColor || "#6525B3"}}
               id={option}
             />
-            <label style={{ color: checked === option ? (selectedStyle?.color || selectedStyle?.accentColor || "#6525B3") : (style?.color || '#939393'), padding: type === 'modal2' ? '2px 0px' : '8px 0px' }} htmlFor={option}>{option}</label>
+            <label style={{ color: checked === option ? (selectedStyle?.color || selectedStyle?.accentColor || "#6525B3") : (style?.color || '#939393') }} htmlFor={option}>{option}</label>
           </div>
         );
       })}

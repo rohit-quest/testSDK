@@ -47,6 +47,7 @@ interface propType {
     Footer?: CSSProperties;
     Icon?: CSSProperties;
   };
+  showFooter?: boolean
 }
 
 export default function Search(prop: propType): JSX.Element {
@@ -62,6 +63,7 @@ export default function Search(prop: propType): JSX.Element {
     uniqueUserId,
     uniqueEmailId,
     styleConfig,
+    showFooter = true
   } = prop;
   const inputElement = useRef<HTMLInputElement>(null);
   const [searchResults, setResults] = useState<data>(defaultResult);
@@ -248,7 +250,7 @@ export default function Search(prop: propType): JSX.Element {
           </div>
         )}
       </div>
-      <QuestLabs style={styleConfig?.Footer} />
+   { showFooter &&  <QuestLabs style={styleConfig?.Footer} />}
     </div>
   );
 
@@ -372,7 +374,7 @@ export default function Search(prop: propType): JSX.Element {
           </div>
         )}
       </div>
-      <QuestLabs style={styleConfig?.Footer} />
+   { showFooter &&  <QuestLabs style={styleConfig?.Footer} />}
     </div>
   );
 

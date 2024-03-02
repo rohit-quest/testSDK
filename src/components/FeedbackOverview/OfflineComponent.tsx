@@ -98,7 +98,6 @@ interface feedbackCompProps {
   descriptions?: Record<optionType, string>;
   backBtn?: boolean;
   iconColor?: string;
-  footerBackgroundColor?: string;
   styleConfig?: {
     Form?: React.CSSProperties,
     Heading?: React.CSSProperties,
@@ -111,6 +110,7 @@ interface feedbackCompProps {
     Modal?: React.CSSProperties,
     Footer?: React.CSSProperties,
   };
+  showFooter?:boolean
   offlineFormData: FormDataItem[][];
 }
 interface FormDataItem {
@@ -137,7 +137,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   iconColor = "#939393",
   styleConfig = {},
   offlineFormData,
-  footerBackgroundColor
+  showFooter = true
+  
 }) => {
   const [selectedOption, setSelectedOption] = useState<optionType | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
@@ -502,7 +503,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 <div></div>
               )}
             </div>
-            <QuestLabs style={styleConfig.Footer} />
+            {showFooter &&  <QuestLabs style={styleConfig?.Footer} /> }
           </div>
         ) : submit ? (
           <div>
@@ -530,7 +531,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 </div>
               </div>
             </div>
-            <QuestLabs style={styleConfig.Footer} />
+            {showFooter &&  <QuestLabs style={styleConfig?.Footer} /> }
           </div>
         ) : (
           <div>
@@ -630,7 +631,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               )}
             </div>
             <div>
-              <QuestLabs style={styleConfig.Footer} />
+            {showFooter &&
+            <QuestLabs style={styleConfig.Footer} />
+            }  
+            
+            
             </div>
           </div>
         )}

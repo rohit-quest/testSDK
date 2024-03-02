@@ -26,6 +26,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
             <FeedbackWorkflow
                 userId={userId}
                 token={token}
+                showFooter={false}
                 questIds={[
                     'q-general-feedback',
                     'q-report-a-bug',
@@ -46,6 +47,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                 // onClose={() => setIsOpen(!isOpen)}
                 uniqueUserId="soumitra.petbindhi+25@gmail.com"
                 uniqueEmailId="soumitra.petbindhi+25@gmail.com"
+                
             />
 
         </QuestProvider>)
@@ -54,6 +56,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
         contactUrl="https://calendly.com/sriya-persana/30min"
         isOpen={true}
         // onClose={() => setIsOpen(!isOpen)}
+        showFooter={false}
         offlineFormData={
             [
                 [{

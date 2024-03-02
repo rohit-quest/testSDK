@@ -75,6 +75,7 @@ interface FeedbackProps {
     Modal?: React.CSSProperties,
     Footer?: React.CSSProperties,
   }
+  showFooter?: boolean
 }
 interface FormDataItem {
     type?: string;
@@ -105,7 +106,8 @@ const SurveyOffline = ({
   iconColor = '#939393',
   ratingType = 'number',
   offlineFormData=[],
-  styleConfig={}
+  styleConfig={},
+  showFooter = true
 }: FeedbackProps) => {
 
   const [rating, setRating] = useState<number>(0);
@@ -619,7 +621,7 @@ return (
                         </button>
                       </div>
                   </form>
-               <QuestLabs style={styleConfig?.Footer} />
+                  {showFooter &&  <QuestLabs style={styleConfig?.Footer} /> }
                 </div>
               )}
                {thanksPopup && (
@@ -648,7 +650,7 @@ return (
                    </div>
                  </div>
                </div>
-               <QuestLabs style={styleConfig.Footer} />
+               {showFooter &&  <QuestLabs style={styleConfig?.Footer} /> }
              </div>
               )}
             </>

@@ -33,6 +33,7 @@ export default function TutorialPreview({ online = true }) {
                 }}
                 heading='Your Application Progress'
                 subheading='Welcome back, Please complete your application'
+                showFooter={false}
             />
         </QuestProvider>
         )
@@ -46,6 +47,7 @@ export default function TutorialPreview({ online = true }) {
             themeConfig={
                 {  }
             }
+
         >
             <OfflineComponent
                 isOpen
@@ -90,6 +92,7 @@ export default function TutorialPreview({ online = true }) {
                     // Heading :{fontSize:'50px',color:'pink'},
                     // Description:{fontSize:'100px',color:'red'}
                 }}
+                // showFooter={false}
             />
         </QuestProvider>
     )

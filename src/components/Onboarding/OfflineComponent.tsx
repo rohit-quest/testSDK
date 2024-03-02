@@ -197,7 +197,6 @@ function OnBoardingOffline(props: QuestLoginProps) {
         showFooter = true
     } = props;
 
-
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [btnFlag, setButtonFlag] = useState<boolean>(false);
     const [steps, setSteps] = useState<number[]>([]);
@@ -549,7 +548,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                     type={inputType}
                     placeholder={placeholder}
                     value={answer[criteriaId]}
-                    iconColor={styleConfig?.Input?.color || themeConfig?.primaryColor || "black"}
+                    iconColor={styleConfig?.Input?.color || themeConfig?.primaryColor || "#B9B9B9"}
                     onChange={(e) => handleUpdate(e, criteriaId, "")}
                     style={{
                         borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
@@ -634,7 +633,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
         manualInput: string | boolean,
         singleChoose: "modal1" | "modal2" | "modal3"
     ) => {
-
+        console.log(singleChoose , '636')
         return (
             <div key={criteriaId}>
                 {

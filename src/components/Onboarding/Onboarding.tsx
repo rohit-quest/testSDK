@@ -196,7 +196,6 @@ function OnBoarding(props: QuestLoginProps) {
     } = props;
 
     // let { design =[] } = props;
-
     const [formdata, setFormdata] = useState<FormData[] | []>([]);
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [btnFlag, setButtonFlag] = useState<boolean>(false);
@@ -548,7 +547,7 @@ function OnBoarding(props: QuestLoginProps) {
                     type={inputType} 
                     placeholder={placeholder} 
                     value={answer[criteriaId]} 
-                    iconColor={styleConfig?.Input?.color || themeConfig?.primaryColor || "black"}
+                    iconColor={styleConfig?.Input?.color || themeConfig?.primaryColor || "#B9B9B9"}
                     onChange={(e)=>handleUpdate(e, criteriaId, "")} 
                     style={{ 
                         borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
@@ -633,7 +632,7 @@ function OnBoarding(props: QuestLoginProps) {
         manualInput: string | boolean,
         singleChoose: "modal1" | "modal2" | "modal3"
     ) => {
-        
+
         return (
             <div key={criteriaId}>
                 {
@@ -659,6 +658,7 @@ function OnBoarding(props: QuestLoginProps) {
                         accentColor: styleConfig?.SingleChoice?.selectedStyle?.accentColor || themeConfig?.primaryColor,
                         ...styleConfig?.SingleChoice?.selectedStyle
                     }}
+                    
                 />
                 {manualInput != false && answer[criteriaId] == manualInput &&
                     <Input

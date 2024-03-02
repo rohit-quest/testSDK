@@ -45,7 +45,8 @@ type GetStartedProps = {
     PrimaryButton?: CSSProperties,
     SecondaryButton?: CSSProperties,
     Form?: CSSProperties,
-    Footer?: CSSProperties
+    Footer?: CSSProperties,
+    Card?: CSSProperties
   }
 };
 interface TutorialStep {
@@ -66,11 +67,11 @@ function GetStarted({
   userId,
   token,
   questId,
-  cardBackground = 'transparent',
+  // cardBackground = 'transparent',
   onCompleteAllStatus,
   iconUrls,
   uniqueUserId,
-  cardBorderColor = '#EFEFEF',
+  // cardBorderColor = '#EFEFEF',
   headingText,
   descriptionText,
   uniqueEmailId,
@@ -345,8 +346,9 @@ function GetStarted({
               <div
                 key={i}
                 style={{
-                  background: cardBackground,
-                  borderBottom: `1px solid ${cardBorderColor}`,
+                  // background: cardBackground,
+                  // borderBottom: `1px solid ${cardBorderColor}`,
+                  ...styleConfig?.Card
                 }}
                 onClick={() =>
                   setDropdown((prev) =>
@@ -383,7 +385,7 @@ function GetStarted({
                     {
                       <div className="gs-card-img-button">
                         {e.completed ? (
-                         <div className="q_gt_arrow-completed"><GetStartedSvgs type={'greenCheck'} color={'#098849'} /></div>
+                          <div className="q_gt_arrow-completed"><GetStartedSvgs type={'greenCheck'} color={'#098849'} /></div>
                         ) : (
                           <div className="q_gt_arrow">
                             {dropdowns[i] ? (
@@ -441,12 +443,13 @@ function GetStarted({
                   !(!allowMultiClick && e.completed) &&
                     handleCriteriaClick(e.criteriaId, e.url)
                 }
+
                 }
               >
                 <div
                   className="gs_card_body"
-                  style={{ background: cardBackground ,
-                    border: `1px solid ${cardBorderColor}`,
+                  style={{
+                    ...styleConfig?.Card
                   }}
                 >
                   <div className="gs_card_body_image">

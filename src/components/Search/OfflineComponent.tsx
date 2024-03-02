@@ -44,6 +44,7 @@ interface propType {
     Label?: CSSProperties;
     Footer?: CSSProperties;
   };
+  showFooter?: boolean
 }
 
 export default function SearchOffline(prop: propType): JSX.Element {
@@ -57,6 +58,7 @@ export default function SearchOffline(prop: propType): JSX.Element {
     userId = "",
     onResultClick = (link: string) => window.open(link, "_blank"),
     styleConfig,
+    showFooter = true,
     offlineFormatData = [],
   } = prop;
   const inputElement = useRef<HTMLInputElement>(null);
@@ -203,7 +205,7 @@ export default function SearchOffline(prop: propType): JSX.Element {
           </div>
         )}
       </div>
-      <QuestLabs style={styleConfig?.Footer} />
+   { showFooter &&  <QuestLabs style={styleConfig?.Footer} />}
     </div>
   );
 
@@ -327,7 +329,7 @@ export default function SearchOffline(prop: propType): JSX.Element {
           </div>
         )}
       </div>
-      <QuestLabs style={styleConfig?.Footer} />
+    {showFooter &&  <QuestLabs style={styleConfig?.Footer} />}
     </div>
   );
 

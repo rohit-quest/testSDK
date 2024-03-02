@@ -27,6 +27,7 @@ export interface referProp {
   onCopy?: (referalCode: string) => void;
   showReferralCode?: boolean;
   showPoweredBy?: boolean;
+  showFooter?: boolean;
   styleConfig?: {
     Form?: React.CSSProperties,
     Heading?: React.CSSProperties,
@@ -56,7 +57,7 @@ export const Referral = ({
   primaryDescription = 'Welcome back, Please complete your details',
   onCopy = (referalCode: string) => { },
   showReferralCode = true,
-  showPoweredBy = true,
+  showFooter = true,
   styleConfig
 }: referProp) => {
   const [shareCode, setCode] = useState("");
@@ -124,7 +125,7 @@ console.log(styleConfig,themeConfig)
           <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(shareCode, "twitter")} src={twitterIcon(styleConfig?.Icon?.color)} alt="" />
         </div>
       </div>
-      {!gradientBackground && <QuestLabs style={styleConfig?.Footer} />
+      {(!gradientBackground && showFooter) && <QuestLabs style={styleConfig?.Footer} />
 }
     </div>
   );
@@ -138,7 +139,7 @@ console.log(styleConfig,themeConfig)
     </div>
     {jsx}
     <div className="q_gradient_quest_powered">
-    {showPoweredBy && <QuestLabs style={styleConfig?.Footer} />
+    {showFooter && <QuestLabs style={styleConfig?.Footer} />
 }
     </div>
   </div>

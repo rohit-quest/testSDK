@@ -34,7 +34,8 @@ export default function ReferEarnPreview() {
              }}
             // iconColor='red'
             // secondaryIconColor='red'
-            gradientBackground={true}
+            // gradientBackground={true}
+            showFooter={false}
               />
         </QuestProvider>
     )

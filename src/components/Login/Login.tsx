@@ -31,6 +31,7 @@ export interface QuestLoginProps {
     SecondaryButton?: CSSProperties;
     Form?:CSSProperties
   };
+  showFooter?: boolean;
 }
 
 const QuestLogin: React.FC<QuestLoginProps> = ({
@@ -45,6 +46,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   backgroundColor,
   onSubmit,
   styleConfig,
+  showFooter = true
 }) => {
   const [isEmail, setIsEmail] = useState<boolean>(false);
   const [isGoogle, setIsGoogle] = useState<boolean>(false);
@@ -246,7 +248,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
             </div> */}
             </div>
             <div className="quest_footer">
-              <QuestLabs />
+          { showFooter &&   <QuestLabs />}
             </div>
           </div>
         </div>

@@ -31,6 +31,7 @@ export default function SearchPreview({ online = false }) {
                 // onResultClick={link=>{window.location.href=link}}
                 token={token}
                 sections={false}
+                // showFooter={false}
                 />
         </QuestProvider>
         )
@@ -56,6 +57,7 @@ export default function SearchPreview({ online = false }) {
                 // }
             }}
             defulatResultLength={5}
+            showFooter={false}
             offlineFormatData={[
                 {
                     icon: 'Layers',

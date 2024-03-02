@@ -168,7 +168,6 @@ class Toast {
   }
 
   set showProgress(value: boolean | undefined) {
-    console.log("showProgress method called with value:", value);
     this.#toastElem.classList.toggle("progress", value);
     this.#toastElem.style.setProperty("--progress", "1");
 

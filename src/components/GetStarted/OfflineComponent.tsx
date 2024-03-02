@@ -50,7 +50,8 @@ type offlineGetStartedProps = {
     PrimaryButton?: CSSProperties,
     SecondaryButton?: CSSProperties,
     Form?: CSSProperties,
-    Footer?: CSSProperties
+    Footer?: CSSProperties,
+    Card?: CSSProperties
   };
   offlineData: offlineData[]
 };
@@ -147,8 +148,9 @@ function OfflineGetStarted({
               <div
                 key={i}
                 style={{
-                  background: cardBackground,
-                  borderBottom: `1px solid ${cardBorderColor}`,
+                  // background: cardBackground,
+                  // borderBottom: `1px solid ${cardBorderColor}`,
+                  ...styleConfig?.Card
                 }}
                 onClick={() =>
                   setDropdown((prev) =>
@@ -243,8 +245,10 @@ function OfflineGetStarted({
               >
                 <div
                   className="gs_card_body"
-                  style={{ background: cardBackground,
-                    border: `1px solid ${cardBorderColor}`,
+                  style={{ 
+                    // background: cardBackground,
+                    // border: `1px solid ${cardBorderColor}`,
+                    ...styleConfig?.Card
                   }}
                 >
                   <div className="gs_card_body_image">

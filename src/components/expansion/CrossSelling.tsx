@@ -46,7 +46,8 @@ export interface referProp {
             backgroundColor: string
         },
         Footer?: CSSProperties
-    }
+    };
+    showFooter?:boolean
 }
 
 export const CrossSelling = ({
@@ -56,7 +57,7 @@ export const CrossSelling = ({
     heading = '50% off on limited products',
     description = 'Grab deals before they go off!!!',
     shareButtonText = "Avail now",
-    gradientBackground = true,
+    gradientBackground = false,
     primaryHeading = 'Grab your deal',
     primaryDescription = 'Welcome back, Please complete your details',
     showDays = false,
@@ -65,7 +66,8 @@ export const CrossSelling = ({
     backButtonTrigger = ()=>{},
     uniqueEmailId,
     uniqueUserId,
-    styleConfig
+    styleConfig,
+    showFooter = true
 }: referProp) => {
     const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(QuestContext.Context);
     const BACKEND_URL = apiType === "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
@@ -174,7 +176,7 @@ export const CrossSelling = ({
                     Go to home
                 </SecondaryButton>
             </div>
-            {!gradientBackground &&<QuestLabs style={styleConfig?.Footer} />}
+            {(!gradientBackground && showFooter) && <QuestLabs style={styleConfig?.Footer} />}
         </div>
     );
 
@@ -187,7 +189,7 @@ export const CrossSelling = ({
         </div>
         {jsx}
         <div className="q_gradient_quest_powered">
-            <QuestLabs style={styleConfig?.Footer} />
+        {showFooter && <QuestLabs style={styleConfig?.Footer} />}
         </div>
     </div>
     return jsx;
