@@ -29,6 +29,8 @@ import FeedbackPreview from "./components/Feedback/Preview";
 import Survey from "./components/Feedback/Survey";
 import ModalPreview from "./components/Modals/Preview";
 import PreviewLeaderboard from "./components/Leaderboard/Preview";
+import HelpHub from "./components/HelpHub/HelpHub";
+
 import SurveyOffline from "./components/Feedback/OfflineComponent";
 import Modal from "./components/Modules/Modal";
 // import { NormalInput } from './components/Modules/Input'
@@ -36,6 +38,7 @@ import OnBoarding from "./components/Onboarding/Onboarding";
 import DailyStreak from "./components/Streak/DailyStreak";
 import ChallengesPreview from "./components/Challenges/ChallengesPreview";
 import GamifiedQuizPreview from "./components/GamifiedQuiz/GamifiedQuizPreview";
+import { HelpChat } from "./components/HelpCenter/HelpChat";
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-2aa597b4-341f-4c3c-a022-f56877a585c9";
 export const apiSecret =
@@ -78,6 +81,7 @@ const paymentBanefits = [
     notIncluded: [],
   },
 ];
+
 function App() {
   // Mocked function for getAnswers prop
 
@@ -151,6 +155,7 @@ function App() {
           <button onClick={onDifferentTwo}>warning</button> */}
         {/* <ModalPreview/> */}
 
+        <HelpHub />
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
         <GamifiedQuizPreview online={true} />
 
@@ -174,6 +179,7 @@ function App() {
         {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
 </Modal> */}
+        {/* <OnBoarding
         {/* <OnBoarding
   questId="q-daf9940a-c2fb-4762-adce-57b9b1fda08c"
   answer={answer}

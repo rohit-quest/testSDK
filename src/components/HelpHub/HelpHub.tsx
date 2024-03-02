@@ -4,24 +4,63 @@ import "./HelpHub.css";
 import HelphubSvg from "./HelphubSvg";
 import { useState } from "react";
 import HelpHubHome from "./HelpHubHome";
+import HelpHubChat from "./HelpHubChat";
+import HelpHubHelp from "./HelpHubHelp";
+import HelpHubTasks from "./HelpHubTasks";
+import HelpHubUpdates from "./HelpHubUpdates";
+// import { HelpChat } from "../HelpCenter/HelpChat";
 const HelpHub = () => {
   const [selectedSection, setSelectedSection] = useState("Home");
-  const [helpHub, setHelpHub] = useState(false)
+  console.log(selectedSection);
+  // const pageArr: Array<string> = ['home', 'chat', 'help', 'updates', 'tasks'];
+
+  const [helpHub, setHelpHub] = useState(false);
+
+  // const obj = {
+  //   'home': <HelpHubHome />
+  // }
 
   return (
     <div>
       <div className={"helphubIconUpperCont"}>
-        <div className={"helhubIconCont"} onClick={() => setHelpHub((prev) => !prev)}>
+
+        {/* help button  */}
+        <div className={
+          "helhubIconCont"} onClick={() => setHelpHub((prev) => !prev)}>
           <img src={helpIcon} />
         </div>
 
-        {helpHub &&
+        {
+          helpHub &&
           <div className={"helpHubMainCont animated"}>
-            <HelpHubHome />
+
+
+            {
+              selectedSection === 'Home' ? <HelpHubHome /> : ""
+            }
+            {
+              selectedSection === 'Chat' ? <HelpHubChat /> : ""
+            }
+            {
+              selectedSection === 'Help' ? <HelpHubHelp /> : ""
+            }
+            {
+              selectedSection === 'Updates' ? <HelpHubUpdates /> : ""
+            }
+            {
+              selectedSection === 'Tasks' ? <HelpHubTasks /> : ""
+            }
+
 
             <div className="helphubBottomCont">
+
+              {/* bottom navigation buttons  */}
               <div className="helphubSvgCont">
-                <div onClick={() => setSelectedSection("Home")}>
+
+                {/* home  */}
+                <div onClick={() => setSelectedSection("Home")}
+                >
+                  {/* Home icon  */}
                   <HelphubSvg
                     type={"home"}
                     primaryColor={
@@ -31,6 +70,7 @@ const HelpHub = () => {
                       selectedSection == "Home" ? "white" : "#B9B9B9"
                     }
                   />
+                  {/* Home text  */}
                   <div
                     style={{
                       color: selectedSection == "Home" ? "#9035FF" : "#b9b9b9",
@@ -41,7 +81,10 @@ const HelpHub = () => {
                     Home
                   </div>
                 </div>
+
+                {/* chat page */}
                 <div onClick={() => setSelectedSection("Chat")}>
+                  {/* Chat icon  */}
                   <HelphubSvg
                     type={"Chat"}
                     primaryColor={
@@ -51,6 +94,7 @@ const HelpHub = () => {
                       selectedSection == "Chat" ? "white" : "#B9B9B9"
                     }
                   />
+                  {/* chat text  */}
                   <div
                     style={{
                       color: selectedSection == "Chat" ? "#9035FF" : "#b9b9b9",
@@ -61,7 +105,10 @@ const HelpHub = () => {
                     Chat
                   </div>
                 </div>
+
+                {/* help page  */}
                 <div onClick={() => setSelectedSection("Help")}>
+                  {/* help icon  */}
                   <HelphubSvg
                     type={"Help"}
                     primaryColor={
@@ -71,6 +118,7 @@ const HelpHub = () => {
                       selectedSection == "Help" ? "white" : "#B9B9B9"
                     }
                   />
+                  {/* chat text  */}
                   <div
                     style={{
                       color: selectedSection == "Help" ? "#9035FF" : "#b9b9b9",
@@ -81,7 +129,10 @@ const HelpHub = () => {
                     Help
                   </div>
                 </div>
+
+                {/* update page */}
                 <div onClick={() => setSelectedSection("Updates")}>
+                  {/* update icon */}
                   <HelphubSvg
                     type={"Updates"}
                     primaryColor={
@@ -91,6 +142,8 @@ const HelpHub = () => {
                       selectedSection == "Updates" ? "white" : "#B9B9B9"
                     }
                   />
+
+                  {/* update text  */}
                   <div
                     style={{
                       color: selectedSection == "Updates" ? "#9035FF" : "#b9b9b9",
@@ -101,7 +154,10 @@ const HelpHub = () => {
                     Updates
                   </div>
                 </div>
+
+                {/* task page */}
                 <div onClick={() => setSelectedSection("Tasks")}>
+                  {/* task icon  */}
                   <HelphubSvg
                     type={"Tasks"}
                     primaryColor={
@@ -111,6 +167,7 @@ const HelpHub = () => {
                       selectedSection == "Tasks" ? "white" : "#B9B9B9"
                     }
                   />
+                  {/* ttask text  */}
                   <div
                     style={{
                       color: selectedSection == "Tasks" ? "#9035FF" : "#b9b9b9",
@@ -123,12 +180,14 @@ const HelpHub = () => {
                 </div>
               </div>
 
+              {/* Footer: powered by quest labs  */}
               <div className="helphubFooterCont">
                 <div className="helphubFooterText">Powered by Quest Labs</div>
                 <div>
                   <HelphubSvg type="footerLogo" />
                 </div>
               </div>
+
             </div>
           </div>
         }
