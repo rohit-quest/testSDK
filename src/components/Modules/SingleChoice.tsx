@@ -53,7 +53,6 @@ const SingleChoice: React.FC<SingleChoiceProps> = ({
       backgroundColor: (containerStyle?.background || containerStyle?.backgroundColor || "#f9fafb") as string,
     })
   };
-// console.log(type)
   return (
     (type === "modal3") ?
     <div>

@@ -633,7 +633,6 @@ function OnBoardingOffline(props: QuestLoginProps) {
         manualInput: string | boolean,
         singleChoose: "modal1" | "modal2" | "modal3"
     ) => {
-        console.log(singleChoose , '636')
         return (
             <div key={criteriaId}>
                 {
