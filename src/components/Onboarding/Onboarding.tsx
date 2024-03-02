@@ -701,12 +701,12 @@ function OnBoarding(props: QuestLoginProps) {
                     onChange={(e) => handleUpdate(e, criteriaId, "check")}
                     style={{
                         borderColor: styleConfig?.MultiChoice?.style?.borderColor || themeConfig?.borderColor,
-                        color: styleConfig?.MultiChoice?.style?.color || themeConfig?.secondaryColor,
+                        color: styleConfig?.MultiChoice?.style?.color || themeConfig?.primaryColor,
                         ...styleConfig?.MultiChoice?.style
                     }}
                     selectedStyle={{
-                        color: styleConfig?.SingleChoice?.selectedStyle?.color || themeConfig?.primaryColor,
-                        ...styleConfig?.SingleChoice?.selectedStyle
+                        color: styleConfig?.MultiChoice?.selectedStyle?.color || themeConfig?.primaryColor,
+                        ...styleConfig?.MultiChoice?.selectedStyle
                     }}
                 />
             </div>
@@ -735,7 +735,14 @@ function OnBoarding(props: QuestLoginProps) {
                     options={options}
                     checked={!!answer[criteriaId] && answer[criteriaId]}
                     onChange={(e) => handleUpdate(e, criteriaId, "check")}
-                    style={{borderColor: styleConfig?.MultiChoice?.style?.borderColor || themeConfig?.borderColor, ...styleConfig?.MultiChoice?.style}}
+                    style={{borderColor: styleConfig?.MultiChoice?.style?.borderColor  || themeConfig?.borderColor, ...styleConfig?.MultiChoice?.style,
+                        color: styleConfig?.MultiChoice?.style?.color || themeConfig?.primaryColor,
+                        ...styleConfig?.MultiChoice?.style
+                    }}
+                    selectedStyle={{
+                        color: styleConfig?.MultiChoice?.selectedStyle?.color || themeConfig?.primaryColor,
+                        ...styleConfig?.MultiChoice?.selectedStyle
+                    }}
                 />
             </div>
         );

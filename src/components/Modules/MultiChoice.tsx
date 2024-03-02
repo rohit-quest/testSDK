@@ -1,6 +1,5 @@
-import { CSSProperties, useState } from 'react';
+import { CSSProperties, useContext, useState } from 'react';
 import './css/multiChoice.css'
-
 interface propType {
   options: string[] | [];
   checked?: string[];
@@ -25,10 +24,11 @@ const CheckBoxImg = ({ backgroundColor = "#6525B3", color = 'white' }) => (
 )
 
 
+
 export const MultiChoice = ({
   options,
   checked,
-  selectedStyle = {color: "#6525B3"},
+  selectedStyle =  { color: "#6525B3"},
   style,
   onChange=()=>{},
 }: propType
@@ -47,7 +47,7 @@ export const MultiChoice = ({
   }
 
   const [checkedState, setCheckedState] = useState(checked || []);
-
+    console.log(selectedStyle , '50')
   return (
     <div className="q_multi_choice_box">
       {options.map((option: string, id: number) => (
@@ -88,7 +88,7 @@ export const MultiChoiceTwo = ({
   return (
     <div className="q_multi_choice_box_2">
       {options.map((option: string, id: number) => (
-        <div style={checkedState?.includes(option) ? selectedStyle : style}
+        <div style={{...checkedState?.includes(option) ? selectedStyle : style}}
           className={checkedState?.includes(option) ? "q_mult_choice_option_2_select" : "q_mult_choice_option_2"}
           key={id} onClick={() => {onClick(id); onChange({target: {value: option, checked: !checkedState.includes(option)}})}}>
           {option}

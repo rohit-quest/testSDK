@@ -114,7 +114,7 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
           backgroundColor: "blue",
           // borderColor: "red",
           // buttonColor: "green",
-          primaryColor: "White",
+          primaryColor: "pink",
           // secondaryColor: "gray",
           // fontFamily: "cursive"
         }}
