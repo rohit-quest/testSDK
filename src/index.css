@@ -106,10 +106,10 @@
   border-color: #333;
 }
 
-.q-hover:hover {
+/* .q-hover:hover {
   background-color: #f4f5f6;
   border-radius: 8px;
-}
+} */
 
 .q-parent-container {
   display: flex;

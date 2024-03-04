@@ -21,7 +21,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                 // primaryColor: "red",
                 // fontFamily:"cursive"
                 backgroundColor:'red',
-                primaryColor:'white'
+                // primaryColor:'white'
             }}
         >
 
@@ -40,10 +40,15 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                     Form: {
 
                     },
-                    Description: { color: 'red' },
+                    listHover :{
+                        iconColor:'blue',
+                        iconBackground:'grey',
+                        background:'yellow'
+                    }
+                    // Description: { color: 'red' },
                     // listDescription:{color:'yellow'}
-                    Heading: { color: 'red' },
-                    listHeading: { color: 'blue' }
+                    // Heading: { color: 'red' },
+                    // listHeading: { color: 'blue' }
                 }}
                 // footerBackgroundColor='red'
                 contactUrl="https://calendly.com/sriya-persana/30min"
@@ -65,8 +70,14 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
             Description: { color: 'red' },
             // listDescription:{color:'yellow'}
             Heading: { color: 'red' },
-            listHeading: { color: 'blue' }
+            listHeading: { color: 'blue' },
+            // listHover :{
+            //     iconColor:'blue',
+            //     iconBackground:'grey',
+            //     background:'yellow'
+            // }
         }}
+
         offlineFormData={
             [
                 [{

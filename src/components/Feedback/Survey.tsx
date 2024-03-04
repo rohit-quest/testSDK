@@ -161,7 +161,7 @@ const Survey: React.FC<FeedbackProps> = ({
 
   const cross = (color = "#AFAFAF") => (
     <div style={{
-      cursor: "pointer", background: '#FBFBFB', padding:'4px',
+      cursor: "pointer",  padding:'4px',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       borderRadius :'4px'
     }}>
