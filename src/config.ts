@@ -1,5 +1,6 @@
 class config {
     static BACKEND_URL = 'https://api.questprotocol.xyz/';
+    static BASE_IPFS_URL = "https://pin.questprotocol.xyz/ipfs/"
     static BACKEND_URL_STAGING = 'https://staging.questprotocol.xyz/';
     static FLAG_CONSTRAINTS = {
         OnboardingFlag: "quest.sdk.onboardings",
