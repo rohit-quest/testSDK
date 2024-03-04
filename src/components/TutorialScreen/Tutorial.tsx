@@ -47,7 +47,8 @@ interface TutorialProps {
     Footer?: CSSProperties,
     TopBar?: CSSProperties,
 }
- footerBackgroundColor?:string
+ footerBackgroundColor?:string;
+ showFooter?: boolean;
 }
 
 const TutorialScreen: React.FC<TutorialProps> = ({
@@ -62,6 +63,7 @@ const TutorialScreen: React.FC<TutorialProps> = ({
   iconColor='#939393',
   onLinkTrigger = link =>{window.open(link, 'smallWindow', 'width=500,height=500');},
   styleConfig,
+  showFooter = true
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
@@ -260,7 +262,7 @@ return (
         ))}
       {/* </div> */}
     </div>
-    <QuestLabs style={styleConfig?.Footer} />
+   { showFooter && <QuestLabs style={styleConfig?.Footer} /> }
   </div>
 );
 

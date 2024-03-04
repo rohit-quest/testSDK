@@ -196,7 +196,6 @@ function OnBoarding(props: QuestLoginProps) {
     } = props;
 
     // let { design =[] } = props;
-
     const [formdata, setFormdata] = useState<FormData[] | []>([]);
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [btnFlag, setButtonFlag] = useState<boolean>(false);
@@ -548,7 +547,7 @@ function OnBoarding(props: QuestLoginProps) {
                     type={inputType} 
                     placeholder={placeholder} 
                     value={answer[criteriaId]} 
-                    iconColor={styleConfig?.Input?.color || themeConfig?.primaryColor || "black"}
+                    iconColor={styleConfig?.Input?.color || themeConfig?.primaryColor || "#B9B9B9"}
                     onChange={(e)=>handleUpdate(e, criteriaId, "")} 
                     style={{ 
                         borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
@@ -633,7 +632,7 @@ function OnBoarding(props: QuestLoginProps) {
         manualInput: string | boolean,
         singleChoose: "modal1" | "modal2" | "modal3"
     ) => {
-        
+
         return (
             <div key={criteriaId}>
                 {
@@ -659,6 +658,7 @@ function OnBoarding(props: QuestLoginProps) {
                         accentColor: styleConfig?.SingleChoice?.selectedStyle?.accentColor || themeConfig?.primaryColor,
                         ...styleConfig?.SingleChoice?.selectedStyle
                     }}
+                    
                 />
                 {manualInput != false && answer[criteriaId] == manualInput &&
                     <Input
@@ -701,12 +701,12 @@ function OnBoarding(props: QuestLoginProps) {
                     onChange={(e) => handleUpdate(e, criteriaId, "check")}
                     style={{
                         borderColor: styleConfig?.MultiChoice?.style?.borderColor || themeConfig?.borderColor,
-                        color: styleConfig?.MultiChoice?.style?.color || themeConfig?.secondaryColor,
+                        color: styleConfig?.MultiChoice?.style?.color || themeConfig?.primaryColor,
                         ...styleConfig?.MultiChoice?.style
                     }}
                     selectedStyle={{
-                        color: styleConfig?.SingleChoice?.selectedStyle?.color || themeConfig?.primaryColor,
-                        ...styleConfig?.SingleChoice?.selectedStyle
+                        color: styleConfig?.MultiChoice?.selectedStyle?.color || themeConfig?.primaryColor,
+                        ...styleConfig?.MultiChoice?.selectedStyle
                     }}
                 />
             </div>
@@ -735,7 +735,14 @@ function OnBoarding(props: QuestLoginProps) {
                     options={options}
                     checked={!!answer[criteriaId] && answer[criteriaId]}
                     onChange={(e) => handleUpdate(e, criteriaId, "check")}
-                    style={{borderColor: styleConfig?.MultiChoice?.style?.borderColor || themeConfig?.borderColor, ...styleConfig?.MultiChoice?.style}}
+                    style={{borderColor: styleConfig?.MultiChoice?.style?.borderColor  || themeConfig?.borderColor, ...styleConfig?.MultiChoice?.style,
+                        color: styleConfig?.MultiChoice?.style?.color || themeConfig?.primaryColor,
+                        ...styleConfig?.MultiChoice?.style
+                    }}
+                    selectedStyle={{
+                        color: styleConfig?.MultiChoice?.selectedStyle?.color || themeConfig?.primaryColor,
+                        ...styleConfig?.MultiChoice?.selectedStyle
+                    }}
                 />
             </div>
         );

@@ -1,7 +1,8 @@
 .q_multi_choice_box {
     display: flex;
-    gap: 20px;
+    gap: 16px;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .q_mult_choice_option {
@@ -31,7 +32,8 @@
 
 .q_multi_choice_box_2 {
     display: flex;
-    gap: 20px;
+    gap: 16px;
+    flex-wrap:wrap;
 }
 
 .q_mult_choice_option_2 {

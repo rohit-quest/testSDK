@@ -44,6 +44,7 @@ interface propType {
     Label?: CSSProperties;
     Footer?: CSSProperties;
   };
+  showFooter?: boolean
 }
 
 export default function SearchOffline(prop: propType): JSX.Element {
@@ -57,6 +58,7 @@ export default function SearchOffline(prop: propType): JSX.Element {
     userId = "",
     onResultClick = (link: string) => window.open(link, "_blank"),
     styleConfig,
+    showFooter = true,
     offlineFormatData = [],
   } = prop;
   const inputElement = useRef<HTMLInputElement>(null);
@@ -122,7 +124,7 @@ export default function SearchOffline(prop: propType): JSX.Element {
 
   const jsx = (
     <div className="q_search_bar" style={{
-      background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor || "#fff", height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
+      background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor , height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
       }}>
       <div className="q_search_box">
         <img
@@ -134,7 +136,14 @@ export default function SearchOffline(prop: propType): JSX.Element {
           onChange={e => { onSearch(e.target.value); handleSearch(e.target.value) }} className='q_sdk_input q_search_input' /> */}
         <div className="q_searchBox_input_cont">
           <Input
-            style={{ ...styleConfig?.Input }}
+          style={{
+            borderColor:
+              styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+            color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+            padding : '0px',
+            ...styleConfig?.Input,
+            
+          }}
             type="text"
             placeholder={prop.placeholder}
             ref={inputElement}
@@ -203,7 +212,7 @@ export default function SearchOffline(prop: propType): JSX.Element {
           </div>
         )}
       </div>
-      <QuestLabs style={styleConfig?.Footer} />
+   { showFooter &&  <QuestLabs style={styleConfig?.Footer} />}
     </div>
   );
 
@@ -327,7 +336,7 @@ export default function SearchOffline(prop: propType): JSX.Element {
           </div>
         )}
       </div>
-      <QuestLabs style={styleConfig?.Footer} />
+    {showFooter &&  <QuestLabs style={styleConfig?.Footer} />}
     </div>
   );
 

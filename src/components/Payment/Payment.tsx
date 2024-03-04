@@ -94,7 +94,6 @@ const Payment: FC<CreditButtonProps> = ({
   };
 
   if (featureFlags[config.FLAG_CONSTRAINTS.PaymentFlag]?.isEnabled == false) {
-    console.log("hi");
     return <div></div>;
   }
 

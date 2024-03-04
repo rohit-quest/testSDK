@@ -29,8 +29,9 @@ export interface QuestLoginProps {
     TextArea?: CSSProperties;
     PrimaryButton?: CSSProperties;
     SecondaryButton?: CSSProperties;
-    Form?:CSSProperties
+    Form?: CSSProperties
   };
+  showFooter?: boolean;
 }
 
 const QuestLogin: React.FC<QuestLoginProps> = ({
@@ -45,6 +46,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   backgroundColor,
   onSubmit,
   styleConfig,
+  showFooter = true
 }) => {
   const [isEmail, setIsEmail] = useState<boolean>(false);
   const [isGoogle, setIsGoogle] = useState<boolean>(false);
@@ -115,111 +117,92 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
 
   return (
     <>
-      <div className="questLabs" 
+      {/* <div className="questLabs" 
      
+      > */}
+      {/* <ToastContainer /> */}
+      {/* <div className="q-login-parent-container"> */}
+      <div
+        style={{
+          background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
+        }}
+        className="q-login-container"
       >
-        <ToastContainer />
-        <div className="q-login-parent-container">
-          <div
-            style={{
-              background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
-            }}
-            className="q-login-container"
-          >
-            <div className="q-login-body">
-              {!otpScreen && (
-                <div className="q-login-header">
-                  <div
-                    className="q-login-h1"
-                    style={{
-                      color:
-                        styleConfig?.Heading?.color ||
-                        themeConfig?.primaryColor,
-                      ...styleConfig?.Heading,
-                    }}
-                  >
-                    Log in or sign up
-                  </div>
-                  <div
-                    className="q-login-h4"
-                    style={{
-                      color:
-                        styleConfig?.Description?.color ||
-                        themeConfig?.secondaryColor,
-                      ...styleConfig?.Description,
-                    }}
-                  >
-                    Welcome Back, Please enter your details
-                  </div>
-                </div>
-              )}
-              {isEmail && (
+        <div className="q-login-body">
+          {!otpScreen && (
+            <div className="q-login-header">
+              <div
+                className="q-login-h1"
+                style={{
+                  color:
+                    styleConfig?.Heading?.color ||
+                    themeConfig?.primaryColor,
+                  ...styleConfig?.Heading,
+                }}
+              >
+                Log in or sign up
+              </div>
+              <div
+                className="q-login-h4"
+                style={{
+                  color:
+                    styleConfig?.Description?.color ||
+                    themeConfig?.secondaryColor,
+                  ...styleConfig?.Description,
+                }}
+              >
+                Welcome Back, Please enter your details
+              </div>
+            </div>
+          )}
+          {isEmail && (
+            <div
+              className="q-login-mid-cont"
+            >
+              <EmailLogin
+                {...{
+                  textColor,
+                  // fontFamily,
+                  apiKey,
+                  apiSecret: apiSecret || "",
+                  redirectURL,
+                  btnColor,
+                  entityId,
+                  handleOtp,
+                  redirectUri,
+                  btnTextColor,
+                  onSubmit,
+                  otpScreen,
+                  setOtpScreen,
+                  styleConfig,
+                }}
+              />
+              {!otpScreen && isGoogle && (
                 <div
-                  className="q-login-mid-cont"
+                  className="q-login-or-container"
+                  style={{
+                    color:
+                      styleConfig?.Description?.color ||
+                      themeConfig?.secondaryColor,
+                    ...styleConfig?.Description,
+                  }}
                 >
-                  <EmailLogin
-                    {...{
-                      textColor,
+                  <div className="login-or-line"></div>
+                  <div
+                    style={{
+                      color: textColor,
                       // fontFamily,
-                      apiKey,
-                      apiSecret: apiSecret || "",
-                      redirectURL,
-                      btnColor,
-                      entityId,
-                      handleOtp,
-                      redirectUri,
-                      btnTextColor,
-                      onSubmit,
-                      otpScreen,
-                      setOtpScreen,
-                      styleConfig,
+                      display: "inline",
+                      // fontFamily:themeConfig.fontFamily || "'Figtree', sans-serif"
                     }}
-                  />
-                  {!otpScreen && isGoogle && (
-                    <div
-                      className="q-login-or-container"
-                      style={{
-                        color:
-                          styleConfig?.Description?.color ||
-                          themeConfig?.secondaryColor,
-                        ...styleConfig?.Description,
-                      }}
-                    >
-                      <div className="login-or-line"></div>
-                      <div
-                        style={{
-                          color: textColor,
-                          // fontFamily,
-                          display: "inline",
-                          // fontFamily:themeConfig.fontFamily || "'Figtree', sans-serif"
-                        }}
-                        className="q-or-continue"
-                      >
-                        OR
-                      </div>
-                      <div className="login-or-line"></div>
-                    </div>
-                  )}
-                  {!otpScreen && isGoogle && (
-                    <GoogleLogin
-                      {...{
-                        btnTextColor,
-                        // fontFamily,
-                        btnColor,
-                        entityId,
-                        redirectUri,
-                        redirectURL,
-                        googleClientId,
-                        apiSecret: apiSecret || "",
-                        apiKey,
-                        onSubmit,
-                        styleConfig,
-                      }}
-                    />
-                  )}
+                    className="q-or-continue"
+                  >
+                    OR
+                  </div>
+                  <div className="login-or-line"></div>
                 </div>
               )}
-              {!isEmail && isGoogle && (
+              {!otpScreen && isGoogle && (
                 <GoogleLogin
                   {...{
                     btnTextColor,
@@ -232,25 +215,36 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                     apiSecret: apiSecret || "",
                     apiKey,
                     onSubmit,
+                    styleConfig,
                   }}
                 />
               )}
-              {/* <p
-              className="powered-by"
-              style={{
-                color: textColor,
-                fontFamily,
+            </div>
+          )}
+          {!isEmail && isGoogle && (
+            <GoogleLogin
+              {...{
+                btnTextColor,
+                // fontFamily,
+                btnColor,
+                entityId,
+                redirectUri,
+                redirectURL,
+                googleClientId,
+                apiSecret: apiSecret || "",
+                apiKey,
+                onSubmit,
               }}
-            >
-              Powered by Quest Labs
-            </div> */}
-            </div>
-            <div className="quest_footer">
-              <QuestLabs />
-            </div>
-          </div>
+            />
+          )}
+
+        </div>
+        <div className="quest_footer">
+          {showFooter && <QuestLabs />}
         </div>
       </div>
+      {/* </div>
+      </div> */}
     </>
   );
 };

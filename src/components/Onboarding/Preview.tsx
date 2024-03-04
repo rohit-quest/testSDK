@@ -73,7 +73,7 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
         placeholder: ""
       },
       {
-        "type": "USER_INPUT_MULTI_CHOICE",
+        "type": "USER_INPUT_SINGLE_CHOICE",
         "question": "Your hobbies?",
         "options": [ "Playing", "Coding", "Gaming"],
         "criteriaId": "ec-87fb0e54-c0e3-4fad-a865-37da2f9d68fb",
@@ -111,10 +111,10 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
         featureFlags={{}}
         apiType="PRODUCTION"
         themeConfig={{
-          // backgroundColor: "black",
+          backgroundColor: "blue",
           // borderColor: "red",
           // buttonColor: "green",
-          // primaryColor: "White",
+          primaryColor: "pink",
           // secondaryColor: "gray",
           // fontFamily: "cursive"
         }}
@@ -126,7 +126,7 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
           setAnswer={setAnswer}
           token={token}
           // answerFontSize="14px"
-          template={'multi-question'}
+          // template={''}
           progress={["Personal sdrerwtr", "Professional", "Additional",]}
           
           // text="Go Back"
@@ -144,9 +144,9 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
           // btnSize="200px"
           // inputBgColor=""
           // inputBorder="1px solid #6525B3"
-          singleChoose="modal1"
+          singleChoose="modal3"
           multiChoice="modal2"
-          design={[[1, 2], [3, 4], [5, 6]]}
+          design={[[1, 2], [3, 4], [5, 6,7]]}
           // progressBarMultiLine = {true}
           // design={[]}
           headingScreen={[{ name: "Tell us about yourself", desc: "this is description" },
@@ -186,7 +186,7 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
       // inputBorder="1px solid #6525B3"
       singleChoose="modal1"
       multiChoice="modal1"
-      design={[[1, 2], [3, 4], [5, 6]]}
+      design={[[1, 2], [3, 4], [5, 6 , 7]]}
 
       headingScreen={[{ name: "Tell us about yourself", desc: "this is description" },
       { name: "Tell us more about your company", desc: "description for this " },

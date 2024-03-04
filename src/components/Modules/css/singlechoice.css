@@ -3,6 +3,7 @@
   align-items: center;
   gap: 8px;
   align-self: stretch;
+  flex-wrap: wrap;
 }
 .q_singlehoice_label_cont {
   display: flex;

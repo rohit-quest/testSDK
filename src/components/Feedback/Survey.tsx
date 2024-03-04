@@ -80,6 +80,7 @@ interface FeedbackProps {
     Modal?: React.CSSProperties,
     Footer?: React.CSSProperties,
   }
+  showFooter?:boolean
 }
 
 const Survey: React.FC<FeedbackProps> = ({
@@ -99,6 +100,7 @@ const Survey: React.FC<FeedbackProps> = ({
   iconColor = '#939393',
   uniqueEmailId,
   uniqueUserId,
+  showFooter = true,
   styleConfig = {},
 }) => {
   interface FormDataItem {
@@ -159,7 +161,7 @@ const Survey: React.FC<FeedbackProps> = ({
 
   const cross = (color = "#AFAFAF") => (
     <div style={{
-      cursor: "pointer", background: '#FBFBFB', padding:'4px',
+      cursor: "pointer",  padding:'4px',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       borderRadius :'4px'
     }}>
@@ -621,7 +623,7 @@ const singleChoiceOne = (
                         />
                       </div>
                   </form>
-               <QuestLabs style={styleConfig?.Footer} />  
+                  {showFooter &&  <QuestLabs style={styleConfig?.Footer} /> }
                 </div>
               )}
               {thanksPopup && (
@@ -650,7 +652,7 @@ const singleChoiceOne = (
                    </div>
                  </div>
                </div>
-               <QuestLabs style={styleConfig.Footer} />
+               {showFooter &&  <QuestLabs style={styleConfig?.Footer} /> }
              </div>
               )}
             </>

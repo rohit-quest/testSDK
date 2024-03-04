@@ -48,7 +48,7 @@ const feature = (color: string = "#939393") => (
 );
 const cross = (color = "#AFAFAF", onClick?: () => void) => (
   <div onClick={() => onClick?.()} style={{
-    cursor: "pointer", background: '#FBFBFB', padding:'4px',
+    cursor: "pointer", padding:'4px',
     display: 'flex', alignItems: 'center', justifyContent: 'center',
     borderRadius :'4px'
   }}>
@@ -98,7 +98,6 @@ interface feedbackCompProps {
   descriptions?: Record<optionType, string>;
   backBtn?: boolean;
   iconColor?: string;
-  footerBackgroundColor?: string;
   styleConfig?: {
     Form?: React.CSSProperties,
     Heading?: React.CSSProperties,
@@ -110,7 +109,15 @@ interface feedbackCompProps {
     SecondaryButton?: React.CSSProperties,
     Modal?: React.CSSProperties,
     Footer?: React.CSSProperties,
+    listHeading?:React.CSSProperties,
+    listDescription?:React.CSSProperties,
+    listHover?: {
+      background?: string,
+      iconBackground?: string,
+      iconColor?: string
+    }
   };
+  showFooter?:boolean
   offlineFormData: FormDataItem[][];
 }
 interface FormDataItem {
@@ -137,7 +144,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   iconColor = "#939393",
   styleConfig = {},
   offlineFormData,
-  footerBackgroundColor
+  showFooter = true
+  
 }) => {
   const [selectedOption, setSelectedOption] = useState<optionType | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
@@ -145,6 +153,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [submit, setSubmit] = useState<boolean>(false);
   const { apiKey, apiSecret, entityId, featureFlags, apiType,themeConfig } = useContext(QuestContext.Context);
+  const [cardHovered, setCardHovered] = useState([false, false, false, false]);
   const [answer, setAnswer] = useState<Record<string, string>>({});
   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
@@ -502,7 +511,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 <div></div>
               )}
             </div>
-            <QuestLabs style={styleConfig.Footer} />
+            {showFooter &&  <QuestLabs style={styleConfig?.Footer} /> }
           </div>
         ) : submit ? (
           <div>
@@ -530,7 +539,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 </div>
               </div>
             </div>
-            <QuestLabs style={styleConfig.Footer} />
+            {showFooter &&  <QuestLabs style={styleConfig?.Footer} /> }
           </div>
         ) : (
           <div>
@@ -542,16 +551,25 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 <div
                   onClick={() => handleOptionClick('General Feedback',)}
                   className="q-hover q-fw-cards"
+                  onMouseEnter={() => setCardHovered([true, false, false, false])}
+                  onMouseLeave={() => setCardHovered([false, false, false, false])}
+                  style={{ background: cardHovered[0] ? styleConfig.listHover?.background || '#FBFBFB' : 'transparent', borderRadius: '8px' }}
                 >
-                  <div className='q_feedback_icon'>{feedback(iconColor)}</div>
+                 <div className='q_feedback_icon'
+                    style={{ background: cardHovered[0] ? styleConfig.listHover?.iconBackground || '#F4EBFF' : '#FBFBFB' }}
+                  >{feedback(cardHovered[0] ? styleConfig.listHover?.iconColor || '#9035FF' : iconColor)}</div>
                   <div>
                     <div className='q-fw-tab-heading'
-                    style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
+                     style={{ color: styleConfig.listHeading?.color || styleConfig?.Heading?.color || themeConfig?.primaryColor ,
+                      ...styleConfig?.listHeading
+                      }}
                     >
                       General Feedback
                     </div>
                     <div className='q-fw-tab-description'
-                     style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
+                      style={{ color:styleConfig?.listDescription?.color || styleConfig?.Description?.color || themeConfig?.secondaryColor ,
+                        ...styleConfig?.listDescription
+                      }}
                     >
                       Give general feedback on this page
                     </div>
@@ -562,19 +580,28 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 <div
                   onClick={() => handleOptionClick('Report a Bug',)}
                   className="q-hover q-fw-cards"
+                  onMouseEnter={() => setCardHovered([false, true, false, false])}
+                  onMouseLeave={() => setCardHovered([false, false, false, false])}
+                  style={{ background: cardHovered[1] ? styleConfig.listHover?.background || '#FBFBFB' : 'transparent', borderRadius: '8px' }}
                 >
-                  <div className='q_feedback_icon'>{bug(iconColor)}</div>
+                 <div className='q_feedback_icon'
+                    style={{ background: cardHovered[1] ? styleConfig.listHover?.iconBackground || '#F4EBFF' : '#FBFBFB' }}
+                  >{bug(cardHovered[1] ? styleConfig.listHover?.iconColor || '#9035FF' : iconColor)}</div>
                   <div>
                     <div>
                       <div className='q-fw-tab-heading'
-                      style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
+                      style={{ color: styleConfig.listHeading?.color || styleConfig?.Heading?.color || themeConfig?.primaryColor ,
+                        ...styleConfig?.listHeading
+                        }}
                       >
                         Report a Bug
                       </div>
                     </div>
                     <div>
                       <div className='q-fw-tab-description'
-                       style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
+                        style={{ color:styleConfig?.listDescription?.color || styleConfig?.Description?.color || themeConfig?.secondaryColor ,
+                          ...styleConfig?.listDescription
+                        }}
                       >
                         Let us know what's broken
                       </div>
@@ -586,19 +613,28 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 <div
                   onClick={() => handleOptionClick('Request a Feature',)}
                   className="q-hover q-fw-cards"
+                  onMouseEnter={() => setCardHovered([false, false, true, false])}
+                  onMouseLeave={() => setCardHovered([false, false, false, false])}
+                  style={{ background: cardHovered[2] ? styleConfig.listHover?.background || '#FBFBFB' : 'transparent', borderRadius: '8px' }}
                 >
-                  <div className='q_feedback_icon'>{feature(iconColor)}</div>
+                <div className='q_feedback_icon'
+                    style={{ background: cardHovered[2] ? styleConfig.listHover?.iconBackground || '#F4EBFF' : '#FBFBFB' }}
+                  >{feature(cardHovered[2] ? styleConfig.listHover?.iconColor || '#9035FF' : iconColor)}</div>
                   <div>
                     <div>
                       <div className='q-fw-tab-heading'
-                      style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
+                       style={{ color: styleConfig.listHeading?.color || styleConfig?.Heading?.color || themeConfig?.primaryColor ,
+                        ...styleConfig?.listHeading
+                        }}
                       >
                         Request a Feature
                       </div>
                     </div>
                     <div>
                       <div className='q-fw-tab-description'
-                       style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
+                        style={{ color:styleConfig?.listDescription?.color || styleConfig?.Description?.color || themeConfig?.secondaryColor ,
+                          ...styleConfig?.listDescription
+                        }}
                       >
                         Tell us how we can improve
                       </div>
@@ -610,19 +646,28 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 <div
                   onClick={() => handleOptionClick('Contact us',)}
                   className="q-hover q-fw-cards"
+                  onMouseEnter={() => setCardHovered([false, false, false, true])}
+                  onMouseLeave={() => setCardHovered([false, false, false, false])}
+                  style={{ background: cardHovered[3] ? styleConfig.listHover?.background || '#FBFBFB' : 'transparent', borderRadius: '8px' }}
                 >
-                  <div className='q_feedback_icon'>{contact(iconColor)}</div>
+                  <div className='q_feedback_icon'
+                    style={{ background: cardHovered[3] ? styleConfig.listHover?.iconBackground || '#F4EBFF' : '#FBFBFB' }}
+                  >{contact(cardHovered[3] ? styleConfig.listHover?.iconColor || '#9035FF' : iconColor)}</div>
                   <div>
                     <div>
                       <div className='q-fw-tab-heading'
-                      style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
+                      style={{ color: styleConfig.listHeading?.color || styleConfig?.Heading?.color || themeConfig?.primaryColor ,
+                        ...styleConfig?.listHeading
+                        }}
                       >
                         Contact us
                       </div>
                     </div>
                     <div>
                       <div className='q-fw-tab-description'
-                       style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
+                       style={{ color:styleConfig?.listDescription?.color || styleConfig?.Description?.color || themeConfig?.secondaryColor ,
+                        ...styleConfig?.listDescription
+                      }}
                       >Tell us how we can help</div>
                     </div>
                   </div>
@@ -630,7 +675,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               )}
             </div>
             <div>
-              <QuestLabs style={styleConfig.Footer} />
+            {showFooter &&
+            <QuestLabs style={styleConfig.Footer} />
+            }  
+            
+            
             </div>
           </div>
         )}

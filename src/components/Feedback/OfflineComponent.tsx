@@ -75,6 +75,7 @@ interface FeedbackProps {
     Modal?: React.CSSProperties,
     Footer?: React.CSSProperties,
   }
+  showFooter?: boolean
 }
 interface FormDataItem {
     type?: string;
@@ -105,7 +106,8 @@ const SurveyOffline = ({
   iconColor = '#939393',
   ratingType = 'number',
   offlineFormData=[],
-  styleConfig={}
+  styleConfig={},
+  showFooter = true
 }: FeedbackProps) => {
 
   const [rating, setRating] = useState<number>(0);
@@ -154,7 +156,7 @@ const SurveyOffline = ({
 
   const cross = (color = "#AFAFAF") => (
     <div style={{
-      cursor: "pointer", background: '#FBFBFB', padding:'4px',
+      cursor: "pointer",padding:'4px',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       borderRadius :'4px'
     }}>
@@ -619,7 +621,7 @@ return (
                         </button>
                       </div>
                   </form>
-               <QuestLabs style={styleConfig?.Footer} />
+                  {showFooter &&  <QuestLabs style={styleConfig?.Footer} /> }
                 </div>
               )}
                {thanksPopup && (
@@ -648,7 +650,7 @@ return (
                    </div>
                  </div>
                </div>
-               <QuestLabs style={styleConfig.Footer} />
+               {showFooter &&  <QuestLabs style={styleConfig?.Footer} /> }
              </div>
               )}
             </>

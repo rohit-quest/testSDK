@@ -48,7 +48,8 @@ interface TutorialProps {
     Description?: CSSProperties,
     TopBar?: CSSProperties,
     Footer?: CSSProperties
-  }
+  };
+  showFooter?: boolean
 }
 
 const OfflineComponent: React.FC<TutorialProps> = ({
@@ -67,7 +68,8 @@ const OfflineComponent: React.FC<TutorialProps> = ({
   onClose = () => { },
   onLinkTrigger = link => { window.open(link, 'smallWindow', 'width=500,height=500'); },
   styleConfig,
-  offlineFormatData = []
+  offlineFormatData = [],
+  showFooter = true
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
@@ -260,7 +262,7 @@ const OfflineComponent: React.FC<TutorialProps> = ({
         ))}
         </div>
       {/* </div> */}
-      <QuestLabs style={styleConfig?.Footer} />
+      {showFooter &&   <QuestLabs style={styleConfig?.Footer} />}
     </div>
   );
 };

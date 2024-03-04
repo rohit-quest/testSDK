@@ -197,7 +197,6 @@ function OnBoardingOffline(props: QuestLoginProps) {
         showFooter = true
     } = props;
 
-
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [btnFlag, setButtonFlag] = useState<boolean>(false);
     const [steps, setSteps] = useState<number[]>([]);
@@ -549,7 +548,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                     type={inputType}
                     placeholder={placeholder}
                     value={answer[criteriaId]}
-                    iconColor={styleConfig?.Input?.color || themeConfig?.primaryColor || "black"}
+                    iconColor={styleConfig?.Input?.color || themeConfig?.primaryColor || "#B9B9B9"}
                     onChange={(e) => handleUpdate(e, criteriaId, "")}
                     style={{
                         borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
@@ -634,7 +633,6 @@ function OnBoardingOffline(props: QuestLoginProps) {
         manualInput: string | boolean,
         singleChoose: "modal1" | "modal2" | "modal3"
     ) => {
-
         return (
             <div key={criteriaId}>
                 {
@@ -736,7 +734,15 @@ function OnBoardingOffline(props: QuestLoginProps) {
                     options={options}
                     checked={!!answer[criteriaId] && answer[criteriaId]}
                     onChange={(e) => handleUpdate(e, criteriaId, "check")}
-                    style={{ borderColor: styleConfig?.MultiChoice?.style?.borderColor || themeConfig?.borderColor, ...styleConfig?.MultiChoice?.style }}
+                    style={{
+                        borderColor: styleConfig?.MultiChoice?.style?.borderColor || themeConfig?.borderColor,
+                        color: styleConfig?.MultiChoice?.style?.color || themeConfig?.primaryColor,
+                        ...styleConfig?.MultiChoice?.style
+                    }}
+                    selectedStyle={{
+                        color: styleConfig?.MultiChoice?.selectedStyle?.color || themeConfig?.primaryColor,
+                        ...styleConfig?.MultiChoice?.selectedStyle
+                    }}
                 />
             </div>
         );

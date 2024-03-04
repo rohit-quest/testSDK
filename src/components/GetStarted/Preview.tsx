@@ -88,8 +88,10 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
                 // showDropDown
             uniqueUserId="soumitra.petbindhi+1@gmail.com"
             showProgressBar
-             showFooter={true}
- 
+             showFooter={false}
+             styleConfig={{
+                // Card:{backgroundColor:'red',borderBottom:'1px solid blue'}
+             }}
             />
         </QuestProvider>)
 

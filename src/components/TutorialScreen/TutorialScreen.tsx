@@ -30,6 +30,7 @@ interface TutorialProps {
   font?: string;
   isOpen?: boolean;
   onClose?: Function;
+  showFooter?: boolean;
 }
 
 const Tutorial: React.FC<TutorialProps> = ({
@@ -44,6 +45,7 @@ const Tutorial: React.FC<TutorialProps> = ({
   font,
   textColor,
   isOpen = true,
+  showFooter = true,
   onClose = () => { },
 }) => {
   const [currentStep, setCurrentStep] = useState(0);

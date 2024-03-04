@@ -20,12 +20,15 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
             themeConfig={{
                 // primaryColor: "red",
                 // fontFamily:"cursive"
+                backgroundColor:'red',
+                // primaryColor:'white'
             }}
         >
 
             <FeedbackWorkflow
                 userId={userId}
                 token={token}
+                showFooter={true}
                 questIds={[
                     'q-general-feedback',
                     'q-report-a-bug',
@@ -35,10 +38,17 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                 // showPoweredBy={false}
                 styleConfig={{
                     Form: {
-                        
+
                     },
-                    // Heading:{color:'red'},
-                    // Description:{color:'black'}
+                    listHover :{
+                        iconColor:'blue',
+                        iconBackground:'grey',
+                        background:'yellow'
+                    }
+                    // Description: { color: 'red' },
+                    // listDescription:{color:'yellow'}
+                    // Heading: { color: 'red' },
+                    // listHeading: { color: 'blue' }
                 }}
                 // footerBackgroundColor='red'
                 contactUrl="https://calendly.com/sriya-persana/30min"
@@ -46,6 +56,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                 // onClose={() => setIsOpen(!isOpen)}
                 uniqueUserId="soumitra.petbindhi+25@gmail.com"
                 uniqueEmailId="soumitra.petbindhi+25@gmail.com"
+
             />
 
         </QuestProvider>)
@@ -54,6 +65,19 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
         contactUrl="https://calendly.com/sriya-persana/30min"
         isOpen={true}
         // onClose={() => setIsOpen(!isOpen)}
+        showFooter={true}
+        styleConfig={{
+            Description: { color: 'red' },
+            // listDescription:{color:'yellow'}
+            Heading: { color: 'red' },
+            listHeading: { color: 'blue' },
+            // listHover :{
+            //     iconColor:'blue',
+            //     iconBackground:'grey',
+            //     background:'yellow'
+            // }
+        }}
+
         offlineFormData={
             [
                 [{

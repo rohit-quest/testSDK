@@ -80,6 +80,7 @@ export default function FeedbackPreview({ online = true }) {
                             // backgroundColor: "gray"
                         }
                     }}
+                    showFooter={false}
                     supportUrl={"supportUrl"}
                     delay={5000}
                     isInline={true}
@@ -91,5 +92,7 @@ export default function FeedbackPreview({ online = true }) {
         subHeading={"How was your experience?"}
         itemsPerPage={2}
         offlineFormData={state}
+        showFooter={false}
+
     />)
 }
