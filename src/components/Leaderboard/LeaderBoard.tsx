@@ -87,15 +87,13 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({
   }, []);
   return (
     <div>
-      {leaderboardData ? (
+      {leaderboardData && 
         <LeaderBoardShow
           leaderboardUserData={leaderboardData}
           memberShip={leaderboardData.membershipsTiers}
           styleConfig={styleConfig}
-        />
-      ) : (
-        <div>Loading...</div>
-      )}
+        />}
+     
     </div>
   );
 };
