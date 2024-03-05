@@ -23,6 +23,7 @@ interface EmailLoginProps {
   fontFamily?: string;
   apiKey: string;
   apiSecret: string;
+  IconColor?:string;
   onSubmit?: ({ userId, token }: { userId: string; token: string }) => void;
   styleConfig?: {
     Heading?: CSSProperties;
@@ -32,6 +33,14 @@ interface EmailLoginProps {
     TextArea?: CSSProperties;
     PrimaryButton?: CSSProperties;
     SecondaryButton?: CSSProperties;
+    Form?: CSSProperties;
+    Footer?:CSSProperties;
+    IconStyle?:{
+      BorderColor?: string
+      Background? : string;
+      color? :string;
+    }
+    OtpInput?:CSSProperties
   };
 }
 
@@ -49,6 +58,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   btnTextColor,
   onSubmit,
   styleConfig,
+  IconColor 
 }) => {
   const [sendOTP, setSendOTP] = useState(false);
   const [email, setEmail] = useState("");
@@ -105,6 +115,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
       });
   };
 
+
   return (
     <div style={{width:'100%'}}>
       {showLoader && <Loader />}
@@ -114,7 +125,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
             <div>
             <Label
               style={{
-                color: styleConfig?.Label?.color || themeConfig?.primaryColor,
+                color: styleConfig?.Label?.color || styleConfig?.Heading?.color || themeConfig?.primaryColor , 
                 ...styleConfig?.Label,
               }}
             >
@@ -144,14 +155,14 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
                 className="q-login-email-input"
               /> */}
               <Input
+               iconColor={ IconColor ||  styleConfig?.Input?.color || themeConfig?.primaryColor || 'rgb(185, 185, 185)'}
                 style={{ 
-                  borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
-                  color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+                  borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor ,
+                  color: styleConfig?.Input?.color || styleConfig?.Heading?.color ||  themeConfig?.primaryColor,
                   ...styleConfig?.Input,   
                   borderRadius :'6px',
-                  border : '1.5px solid #ECECEC',
+                  borderWidth:'1.5px',
                   padding : '8px 12px',
-                  // fontFamily:themeConfig.fontFamily || "'Figtree', sans-serif"
                 }}
                 logoPosition='left'
                 type="email"

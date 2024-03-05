@@ -19,7 +19,8 @@ export interface QuestLoginProps {
   btnTextColor?: string;
   textColor?: string;
   backgroundColor?: string;
-  font?: string;
+  font ?: string;
+  IconColor?:string;
   onSubmit?: ({ userId, token }: { userId: string; token: string }) => void;
   styleConfig?: {
     Heading?: CSSProperties;
@@ -29,7 +30,14 @@ export interface QuestLoginProps {
     TextArea?: CSSProperties;
     PrimaryButton?: CSSProperties;
     SecondaryButton?: CSSProperties;
-    Form?: CSSProperties
+    Form?: CSSProperties;
+    Footer?:CSSProperties;
+    IconStyle?:{
+      BorderColor?: string
+      Background? : string;
+      color? :string;
+    }
+    OtpInput?:CSSProperties
   };
   showFooter?: boolean;
 }
@@ -46,6 +54,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   backgroundColor,
   onSubmit,
   styleConfig,
+  IconColor,
   showFooter = true
 }) => {
   const [isEmail, setIsEmail] = useState<boolean>(false);
@@ -175,6 +184,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   otpScreen,
                   setOtpScreen,
                   styleConfig,
+                  IconColor
                 }}
               />
               {!otpScreen && isGoogle && (
@@ -187,10 +197,10 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                     ...styleConfig?.Description,
                   }}
                 >
-                  <div className="login-or-line"></div>
+                  <div className="login-or-line" style={{backgroundColor : styleConfig?.Description?.color || themeConfig?.secondaryColor}}></div>
                   <div
                     style={{
-                      color: textColor,
+                      color: styleConfig?.Description?.color || themeConfig?.secondaryColor,
                       // fontFamily,
                       display: "inline",
                       // fontFamily:themeConfig.fontFamily || "'Figtree', sans-serif"
@@ -199,7 +209,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   >
                     OR
                   </div>
-                  <div className="login-or-line"></div>
+                  <div className="login-or-line" style={{ backgroundColor : styleConfig?.Description?.color || themeConfig?.secondaryColor}}></div>
                 </div>
               )}
               {!otpScreen && isGoogle && (
@@ -216,6 +226,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                     apiKey,
                     onSubmit,
                     styleConfig,
+                    IconColor
                   }}
                 />
               )}
@@ -234,13 +245,15 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                 apiSecret: apiSecret || "",
                 apiKey,
                 onSubmit,
+                styleConfig,
+                IconColor
               }}
             />
           )}
 
         </div>
         <div className="quest_footer">
-          {showFooter && <QuestLabs />}
+          {showFooter && <QuestLabs style={styleConfig?.Footer} />}
         </div>
       </div>
       {/* </div>

@@ -11,6 +11,7 @@ import QuestContext from "../QuestWrapper";
 import { leftArrow2, otpIcon2 } from "../../assets/images";
 import { PrimaryButton } from "../Modules/PrimaryButton";
 
+
 interface OtpVerificationProps {
   otpScreen?: boolean;
   setOtpScreen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,7 +36,6 @@ interface OtpVerificationProps {
     userCredentials: object;
   }) => void;
   styleConfig?: {
-    Form?: CSSProperties;
     Heading?: CSSProperties;
     Description?: CSSProperties;
     Input?: CSSProperties;
@@ -43,14 +43,14 @@ interface OtpVerificationProps {
     TextArea?: CSSProperties;
     PrimaryButton?: CSSProperties;
     SecondaryButton?: CSSProperties;
-    SingleChoice?: {
-      style?: CSSProperties;
-      selectedStyle?: CSSProperties;
-    };
-    MultiChoice?: {
-      style?: CSSProperties;
-      selectedStyle?: CSSProperties;
-    };
+    Form?: CSSProperties;
+    Footer?:CSSProperties;
+    IconStyle?:{
+      BorderColor?: string
+      Background? : string;
+      color? :string;
+    }
+    OtpInput?:CSSProperties
   };
 }
 
@@ -107,6 +107,14 @@ function OtpVerification({
   const handleChange = (otp: string): void => {
     setOTP(otp);
   };
+
+   const LoginSvg = (color= "#F4EBFF") => {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52" fill="none">
+        <path fillRule="evenodd" clipRule="evenodd" d="M7.4603 11.6605C5 14.1208 5 18.0806 5 26.0002C5 33.9198 5 37.8796 7.4603 40.3399C9.92061 42.8002 13.8804 42.8002 21.8 42.8002H30.2C38.1196 42.8002 42.0794 42.8002 44.5397 40.3399C47 37.8796 47 33.9198 47 26.0002C47 18.0806 47 14.1208 44.5397 11.6605C42.0794 9.2002 38.1196 9.2002 30.2 9.2002H21.8C13.8804 9.2002 9.92061 9.2002 7.4603 11.6605ZM39.8099 16.5919C40.3668 17.2601 40.2765 18.2533 39.6083 18.8101L34.9957 22.654C33.1343 24.2052 31.6257 25.4624 30.2941 26.3188C28.9071 27.2109 27.5563 27.7744 26 27.7744C24.4437 27.7744 23.0929 27.2109 21.7059 26.3188C20.3743 25.4624 18.8657 24.2052 17.0043 22.654L12.3917 18.8101C11.7235 18.2533 11.6332 17.2601 12.1901 16.5919C12.7469 15.9237 13.7401 15.8334 14.4083 16.3902L18.942 20.1683C20.9012 21.801 22.2614 22.9309 23.4098 23.6695C24.5215 24.3844 25.2753 24.6244 26 24.6244C26.7246 24.6244 27.4785 24.3844 28.5902 23.6695C29.7386 22.9309 31.0988 21.801 33.058 20.1683L37.5917 16.3902C38.2599 15.8334 39.2531 15.9237 39.8099 16.5919Z" fill={color} />
+      </svg>
+    );
+  }
 
   async function verifyOTPfunction(): Promise<void> {
     if (OTP.length !== 6) {
@@ -183,6 +191,7 @@ function OtpVerification({
       });
   }
 
+
   return (
     <div className="questLabs">
       <div style={{ boxSizing: "content-box" }} className="embeded-otp">
@@ -206,9 +215,9 @@ function OtpVerification({
           </div>
         </div>
         <div className="q_outer_cont">
-          <div className="q_otp_main_cont">
-            <div className="q_otp_cont">
-              <img className="q_otp_icon2" src={otpIcon2} alt="image" />
+          <div className="q_otp_main_cont" style={{backgroundColor:styleConfig?.IconStyle?.BorderColor}}>
+            <div className="q_otp_cont" style={{ background:styleConfig?.IconStyle?.Background}}>
+              {LoginSvg(styleConfig?.IconStyle?.color ||  '#F4EBFF')}
             </div>
           </div>
         </div>
@@ -229,11 +238,11 @@ function OtpVerification({
           <>
             <div
               className="q-resend"
-              style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description }}
+              style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
             >
               We’ve sent a verification code to
             </div>
-            <p  style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }} className="q_email_otp">{email}</p>
+            <p  style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }} className="q_email_otp">{email}</p>
             {/* <div className="q-resend">
                 {modifyTime(Math.floor(sec / 60))}:{modifyTime(sec % 60)} sec
               </div> */}
@@ -244,18 +253,37 @@ function OtpVerification({
             <OTPInput
               onChange={handleChange}
               value={OTP}
-              inputStyle="q-inputStyle"
+              inputStyle={"q-inputStyle"}
               containerStyle="q-containerStyle"
               numInputs={6}
-              renderInput={(props) => <input {...props} placeholder={"-"} />}
+              renderInput={(props) =>
+                <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <input
+                  {...props}
+                  placeholder={"-"}
+                  style={{
+                    backgroundColor: styleConfig?.OtpInput?.backgroundColor || "transparent",
+                    borderColor: styleConfig?.OtpInput?.borderColor || themeConfig.borderColor,
+                    color : styleConfig?.Heading?.color || themeConfig.primaryColor,
+                    ...styleConfig?.OtpInput,
+                  }}
+                />
+              </div>
+                }
             />
             {OTP.length < 6 && OTP.length > 0 && (
               <div className="q-login-p">Please enter a valid OTP</div>
             )}
           </div>
-          <p style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description }} className="q_otp_resend">
+          <p style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }} className="q_otp_resend">
             Did not receive your code yet ?{" "}
-            <span  style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }} onClick={sendOTPfunction}>Resend</span>
+            <span  style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }} onClick={sendOTPfunction}>Resend</span>
           </p>
         </div>
         {/* <div
