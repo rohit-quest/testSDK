@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { CSSProperties, useEffect, useState } from 'react';
 import { google2, googleSvg } from '../../assets/images';
 import axios from 'axios';
 import config from '../../config';
@@ -7,6 +7,7 @@ import Loader from './Loader';
 import { toast } from 'react-toastify';
 import { useContext } from 'react';
 import QuestContext from '../QuestWrapper';
+import { SecondaryButton } from '../Modules/SecondaryButton';
 
 interface GoogleLoginProps {
   btnTextColor?: string;
@@ -19,6 +20,23 @@ interface GoogleLoginProps {
   apiSecret: string;
   apiKey: string;
   onSubmit?: ({ userId, token , userCredentials, refreshToken }: { userId: string, token: string, userCredentials: object, refreshToken:string }) => void;
+  styleConfig?: {
+    Heading?: CSSProperties;
+    Description?: CSSProperties;
+    Input?: CSSProperties;
+    Label?: CSSProperties;
+    TextArea?: CSSProperties;
+    PrimaryButton?: CSSProperties;
+    SecondaryButton?: CSSProperties;
+    Form?: CSSProperties;
+    Footer?:CSSProperties;
+    IconStyle?:{
+      BorderColor?: string
+      Background? : string;
+      color? :string;
+    }
+    OtpInput?:CSSProperties
+  };
 }
 
 function GoogleLogin(props: GoogleLoginProps): JSX.Element {
@@ -32,13 +50,15 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
     googleClientId,
     apiSecret,
     apiKey,
-    onSubmit
+    onSubmit,
+    styleConfig
   } = props;
 
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const params = queryString.parse(window.location.search);
   const googleCode = params.code as string;
-  const { setUser, apiType } = useContext(QuestContext.Context);
+  const { setUser, apiType, themeConfig} = useContext(QuestContext.Context);
+  
   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
   useEffect(() => {
@@ -102,7 +122,18 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
           style={{ textDecoration: 'none', color: 'black' }}
           href={`https://accounts.google.com/o/oauth2/auth?client_id=${googleClientId}&redirect_uri=${redirectUri}&scope=profile%20email&response_type=code`}
         >
-          <div
+          <SecondaryButton 
+           style={{ 
+            borderColor: styleConfig?.SecondaryButton?.borderColor || themeConfig?.borderColor,
+            background: styleConfig?.SecondaryButton?.backgroundColor,
+            color: styleConfig?.SecondaryButton?.color,
+            ...styleConfig?.SecondaryButton
+        }}
+          >
+            <p>Sign in with Google</p>
+            <img className="ml-auto" src={google2} alt="google-logo" />
+          </SecondaryButton>
+          {/* <div
             className='q-g-btn'
             style={{
               backgroundColor: btnColor,
@@ -111,9 +142,8 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
               
             }}
           >
-            <p>Sign in with Google</p>
-            <img className="ml-auto" src={google2} alt="google-logo" />
-          </div>
+           
+          </div> */}
         </a>
       </div>
     </div>

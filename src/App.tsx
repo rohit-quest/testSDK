@@ -103,10 +103,10 @@ function App() {
         apiType="STAGING"
         themeConfig={{
           // backgroundColor: "black",
-          // borderColor: "red",
+          borderColor: "blue",
           // buttonColor: "green",
-          // primaryColor: "White",
-          // secondaryColor: "gray",
+          // primaryColor: "red",
+          // secondaryColor: "blue",
           // fontFamily: "cursive"
         }}
       >
@@ -162,7 +162,7 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-        {/* <OnBoardingPreview online /> */}
+        {/* <OnBoardingPreview online={false} /> */}
 
 
         {/* <GetStartedPreview
@@ -226,7 +226,7 @@ function App() {
 
         {/* <FeedbackPreview /> */}
 
-        <ReferEarnPreview/>
+        {/* <ReferEarnPreview/> */}
 
         {/* <CrossSellingPreview/> */}
 
@@ -242,7 +242,7 @@ function App() {
                     // isArticle={true}
             /> */}
 
-               {/* <QuestLogin
+               <QuestLogin
                     // questId=""
                     textColor=""
                     btnTextColor=""
@@ -251,7 +251,29 @@ function App() {
                     googleClientId="103575086200-2gijbo8rldrv5sg60u0u1rl4cmldhm8a.apps.googleusercontent.com"
                     redirectUri="http://localhost:3000"
                     redirectURL="https://www.questlabs.ai/"
-                ></QuestLogin> */}
+                    styleConfig={{
+                      Heading :{
+                        // fontSize:'29px',
+                        color:'red'
+                      },
+                      OtpInput:{
+                        background:'green',
+                        color:'white'
+                      },
+                      IconStyle :{
+                        color:'blue',
+                        Background:'red',
+                        BorderColor:'pink'
+                      },
+                      SecondaryButton :{
+                        color:'red',
+                        background:"grey"
+                      },
+                      Input:{
+                        // color:'red'
+                      }
+                    }}
+                ></QuestLogin>
 
         {/* <ShareArticle
                     bgColor=""
