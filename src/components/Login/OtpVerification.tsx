@@ -209,7 +209,7 @@ function OtpVerification({
           />
           <div
             className="q-login-head2"
-            style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }}
+            style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor}}
           >
             Confirm verification code
           </div>
