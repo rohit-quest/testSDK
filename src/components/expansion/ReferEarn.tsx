@@ -3,12 +3,14 @@ import {
 } from "../../assets/images";
 import "./Refer.css";
 import React, { useContext, useEffect, useState } from "react";
-import { response, shareOnPlatform } from "./Response.ts";
+import { shareOnPlatform } from "./Response.tsx";
 import QuestContext from "../QuestWrapper.tsx";
 import { copyIcon, faceBookIcon, linkedInIcon, tickIcon, twitterIcon } from "./Svg.ts";
 import QuestLabs from "../QuestLabs.tsx";
 import { PrimaryButton } from "../Modules/PrimaryButton.tsx";
 import Label from "../Modules/Label.tsx";
+import axios from "axios";
+import config from "../../config.ts";
 
 export interface referProp {
   questId: string;
@@ -62,33 +64,56 @@ export const Referral = ({
 }: referProp) => {
   const [shareCode, setCode] = useState("");
   const [copy, setCopy] = useState([false, false]);
-  const { apiKey, apiSecret, entityId, themeConfig } = useContext(QuestContext.Context);
-
+  const { apiKey, apiSecret, entityId, themeConfig, apiType } = useContext(QuestContext.Context);
   const handleCopy = (index: number) => {
-    navigator?.clipboard.writeText(!index?shareCode:referralLink+shareCode);
+    navigator?.clipboard.writeText(!index ? shareCode : referralLink + shareCode);
     setCopy(prev => prev.map((e, i) => i == index ? true : e));
     setTimeout(() => {
       setCopy(prev => prev.map((e, i) => i == index ? false : e));
     }, 3000);
-    onCopy(!index?shareCode:referralLink+shareCode);
+    onCopy(!index ? shareCode : referralLink + shareCode);
   }
+  const response = async (
+    questId = "",
+    headers: {
+      apiKey: string;
+      userid: string;
+      entityId: string;
+      token: string;
+      apisecret: string;
+    }
+  ) => {
+
+
+    let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
+
+
+    try {
+      const request = `${BACKEND_URL}api/entities/${headers.entityId}/quests/${questId}/users/${headers.userid}/referralcode`;
+      const { data }: { data: { success: boolean; referralCode?: string } } =
+        await axios.get(request, { headers });
+      return data;
+    } catch (e) {
+      return { success: false };
+    }
+  };
 
   useEffect(() => {
+    console.log('apicheck')
     response(questId, {
       apiKey,
       userid: userId,
       entityId,
-      apisecret: apiSecret||"",
+      apisecret: apiSecret || "",
       token,
     }).then((r) => setCode(r.referralCode || ""));
   }, []);
-console.log(styleConfig,themeConfig)
 
   const jsx = (
     <div className="q_refer_and_earn" style={{
       // background: themeConfig.backgroundColor || "#FFF",color: themeConfig.primaryColor,...styleConfig?.Form
       background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
-      }}>
+    }}>
       <div className="q_refer_head" >
         <img src={referIcon} className="refer_head_img" alt="" />
       </div>
@@ -97,36 +122,36 @@ console.log(styleConfig,themeConfig)
           <div className="q_refer_heading" style={styleConfig?.Heading}>{heading}</div>
           <div className="q_refer_desc" style={styleConfig?.Description}>{description}</div>
         </div>
-        { showReferralCode && <div  className="q_refer_code_content">
+        {showReferralCode && <div className="q_refer_code_content">
           <Label children={'Referal Code'} style={styleConfig?.Label} />
-          <div  className="q_refer_code_box">
-            <div  className="q_refer_code">{shareCode}</div>
+          <div className="q_refer_code_box">
+            <div className="q_refer_code">{shareCode}</div>
             <img className="q_refer_copy_icon" src={copy[0] ? tickIcon(styleConfig?.Icon?.color) : copyIcon(secondaryIconColor)} onClick={() => handleCopy(0)} alt="" />
           </div>
         </div>}
-        {referralLink && <div  className="q_refer_code_content">
+        {referralLink && <div className="q_refer_code_content">
           <Label children={'Invitation Link'} style={styleConfig?.Label} />
-          <div  className="q_refer_code_box">
-            <div  className="q_refer_code">{referralLink}{shareCode}</div>
+          <div className="q_refer_code_box">
+            <div className="q_refer_code">{referralLink}{shareCode}</div>
             <img className="q_refer_copy_icon" src={copy[1] ? tickIcon(styleConfig?.Icon?.color) : copyIcon(secondaryIconColor)} onClick={() => handleCopy(1)} alt="" />
           </div>
         </div>}
-        
-        <PrimaryButton 
+
+        <PrimaryButton
           children={shareButtonText}
-          style={{border:styleConfig?.PrimaryButton?.border ||'1.5px solid #D1ACFF',...styleConfig?.PrimaryButton}}
-          onClick={()=>{navigator.clipboard.writeText(referralLink+shareCode);onCopy(shareCode)}}
+          style={{ border: styleConfig?.PrimaryButton?.border || '1.5px solid #D1ACFF', ...styleConfig?.PrimaryButton }}
+          onClick={() => { navigator.clipboard.writeText(referralLink + shareCode); onCopy(shareCode) }}
           type="button"
         />
-       
-        <div  className="q_social_links">
-          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(shareCode, "linkedin")} src={linkedInIcon(styleConfig?.Icon?.color)} alt="" />
-          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(referralLink, "facebook")} src={faceBookIcon(styleConfig?.Icon?.color)} alt="" />
-          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(shareCode, "twitter")} src={twitterIcon(styleConfig?.Icon?.color)} alt="" />
+
+        <div className="q_social_links">
+          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(referralLink+shareCode, "linkedin")} src={linkedInIcon(styleConfig?.Icon?.color)} alt="" />
+          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(referralLink+shareCode, "facebook")} src={faceBookIcon(styleConfig?.Icon?.color)} alt="" />
+          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(referralLink+shareCode, "twitter")} src={twitterIcon(styleConfig?.Icon?.color)} alt="" />
         </div>
       </div>
       {(!gradientBackground && showFooter) && <QuestLabs style={styleConfig?.Footer} />
-}
+      }
     </div>
   );
 
@@ -139,8 +164,8 @@ console.log(styleConfig,themeConfig)
     </div>
     {jsx}
     <div className="q_gradient_quest_powered">
-    {showFooter && <QuestLabs style={styleConfig?.Footer} />
-}
+      {showFooter && <QuestLabs style={styleConfig?.Footer} />
+      }
     </div>
   </div>
   return jsx;
