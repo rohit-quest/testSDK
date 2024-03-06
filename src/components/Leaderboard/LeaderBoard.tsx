@@ -34,11 +34,20 @@ interface LeaderboardResponse {
 }
 
 export interface StyleConfig {
+  Form?:CSSProperties;
   MainHeading?: CSSProperties;
   Heading?: CSSProperties;
   Description?: CSSProperties;
+  PointsBackground?:CSSProperties
   PointsColor?: CSSProperties;
+  InnerBackground?:CSSProperties;
+  IndexColor?:CSSProperties;
+  IndexBackground?:CSSProperties;
   ProgressBarColor?: CSSProperties;
+  IconStyle?:{
+    color? :string;
+  }
+  Footer?: CSSProperties;
 }
 
 interface LeaderBoardProps {
@@ -78,7 +87,11 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({
           }
         );
 
-        setLeaderboardData(response.data);
+        if (response.status === 200) {
+          setLeaderboardData(response.data);
+        } else {
+          console.error("Unexpected status code:", response.status);
+        }
       } catch (error) {
         console.error("Error fetching leaderboard data:", error);
       }

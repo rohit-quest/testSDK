@@ -1,5 +1,10 @@
-import {  useContext } from "react";
-import { topLeadFirst, topLeadSecond, topLeadThird } from "../../assets/images";
+import { useContext } from "react";
+import {
+  questLogo,
+  topLeadFirst,
+  topLeadSecond,
+  topLeadThird,
+} from "../../assets/images";
 import QuestContext from "../QuestWrapper";
 import LeaderBoardCard from "./LeaderBoardCard";
 import { StyleConfig } from "./LeaderBoard";
@@ -55,11 +60,7 @@ const TopLeaderBoard: React.FC<TopLeaderBoardProps> = ({
             <div className="q_topleaderboard_innercard">
               <img
                 className="q_topleaderboard_inner_image"
-                src={
-                  second.imageUrl
-                    ? second.imageUrl
-                    : "https://s3-alpha-sig.figma.com/img/58f6/4ff0/54d06f3a384066cdbef6da983e8d5bd0?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=LWD~HC70t0BKXwKL5OJDE3Cp6FvXUyqdpFv4E5g4c4NrIJyQLHnciGJcaUi0y5P0TTYDNTgWnwyARpE-BjmR7xbFO3mXHelDd1GhcHrHxFL-anHBDX0vqg01moMl0GoohNH1wqPdLMlpEsKdLNpwPROt7fjz~f-aI~XJvKk5zjql-b7tW2s3yM8-0I~O~e4OMg7rsyBsbeeRX4ar-Egjm49U851lemg0KZt4g8M5~8VfX-YM0YuefgvGaOPzBmONom3IETmVBa2LI0LzEjnPcxSsRp1~rkOjd0VOOT2kyR~XLDVHc5KhjcWUT1aUQv5n5C81LRiKAGm41k1JrmKEOQ__"
-                }
+                src={second.imageUrl ? second.imageUrl : questLogo}
                 alt="logo"
               />
               <div
@@ -68,7 +69,13 @@ const TopLeaderBoard: React.FC<TopLeaderBoardProps> = ({
               >
                 {second.name ? second.name : "Quest User"}
               </div>
-              <div style={{color:styleConfig?.PointsColor?.color}} className="q_topleaderboard_point">
+              <div
+                style={{
+                  color: styleConfig?.PointsColor?.color,
+                  background: styleConfig?.PointsBackground?.background,
+                }}
+                className="q_topleaderboard_point"
+              >
                 {second.runningXP} points
               </div>
               <img src={topLeadSecond} alt="second" />
@@ -80,11 +87,7 @@ const TopLeaderBoard: React.FC<TopLeaderBoardProps> = ({
             <div className="q_topleaderboard_innercard">
               <img
                 className="q_topleaderboard_inner_image_first"
-                src={
-                  first.imageUrl
-                    ? first.imageUrl
-                    : "https://s3-alpha-sig.figma.com/img/58f6/4ff0/54d06f3a384066cdbef6da983e8d5bd0?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=LWD~HC70t0BKXwKL5OJDE3Cp6FvXUyqdpFv4E5g4c4NrIJyQLHnciGJcaUi0y5P0TTYDNTgWnwyARpE-BjmR7xbFO3mXHelDd1GhcHrHxFL-anHBDX0vqg01moMl0GoohNH1wqPdLMlpEsKdLNpwPROt7fjz~f-aI~XJvKk5zjql-b7tW2s3yM8-0I~O~e4OMg7rsyBsbeeRX4ar-Egjm49U851lemg0KZt4g8M5~8VfX-YM0YuefgvGaOPzBmONom3IETmVBa2LI0LzEjnPcxSsRp1~rkOjd0VOOT2kyR~XLDVHc5KhjcWUT1aUQv5n5C81LRiKAGm41k1JrmKEOQ__"
-                }
+                src={first.imageUrl ? first.imageUrl : questLogo}
                 alt="logo"
               />
               <div
@@ -93,7 +96,13 @@ const TopLeaderBoard: React.FC<TopLeaderBoardProps> = ({
               >
                 {first.name ? first.name : "Quest User"}
               </div>
-              <div style={{color:styleConfig?.PointsColor?.color}} className="q_topleaderboard_point">
+              <div
+                style={{
+                  color: styleConfig?.PointsColor?.color,
+                  background: styleConfig?.PointsBackground?.background,
+                }}
+                className="q_topleaderboard_point"
+              >
                 {first.runningXP} points
               </div>
               <img src={topLeadFirst} alt="second" />
@@ -105,11 +114,7 @@ const TopLeaderBoard: React.FC<TopLeaderBoardProps> = ({
             <div className="q_topleaderboard_innercard">
               <img
                 className="q_topleaderboard_inner_image"
-                src={
-                  third.imageUrl
-                    ? third.imageUrl
-                    : "https://s3-alpha-sig.figma.com/img/58f6/4ff0/54d06f3a384066cdbef6da983e8d5bd0?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=LWD~HC70t0BKXwKL5OJDE3Cp6FvXUyqdpFv4E5g4c4NrIJyQLHnciGJcaUi0y5P0TTYDNTgWnwyARpE-BjmR7xbFO3mXHelDd1GhcHrHxFL-anHBDX0vqg01moMl0GoohNH1wqPdLMlpEsKdLNpwPROt7fjz~f-aI~XJvKk5zjql-b7tW2s3yM8-0I~O~e4OMg7rsyBsbeeRX4ar-Egjm49U851lemg0KZt4g8M5~8VfX-YM0YuefgvGaOPzBmONom3IETmVBa2LI0LzEjnPcxSsRp1~rkOjd0VOOT2kyR~XLDVHc5KhjcWUT1aUQv5n5C81LRiKAGm41k1JrmKEOQ__"
-                }
+                src={third.imageUrl ? third.imageUrl : questLogo}
                 alt="logo"
               />
               <div
@@ -118,7 +123,13 @@ const TopLeaderBoard: React.FC<TopLeaderBoardProps> = ({
               >
                 {third.name ? third.name : "Quest User"}
               </div>
-              <div style={{color:styleConfig?.PointsColor?.color}} className="q_topleaderboard_point">
+              <div
+                style={{
+                  color: styleConfig?.PointsColor?.color,
+                  background: styleConfig?.PointsBackground?.background,
+                }}
+                className="q_topleaderboard_point"
+              >
                 {third.runningXP} points
               </div>
               <img src={topLeadThird} alt="second" />
@@ -126,7 +137,10 @@ const TopLeaderBoard: React.FC<TopLeaderBoardProps> = ({
           </div>
         )}
       </div>
-      <div className="q_position_cont">
+      <div
+        style={{ background: styleConfig?.InnerBackground?.background }}
+        className="q_position_cont"
+      >
         <div>
           <div
             style={{

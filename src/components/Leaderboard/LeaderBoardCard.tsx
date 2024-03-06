@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import QuestContext from "../QuestWrapper";
-import { leaderboardCup } from "../../assets/images";
+import { leaderboardCup, questLogo } from "../../assets/images";
 import { LeaderProps } from "./TopLeaderBoard";
 import config from "../../config";
 import { StyleConfig } from "./LeaderBoard";
+import { LeaderboardCupSvg } from "./LeaderboardSvg";
 
 interface MemberShip {
   membershipTier: number;
@@ -123,14 +124,14 @@ const LeaderBoardCard: React.FC<LeaderBoardCardProps> = ({
 
   return (
     <div className="q_leaderboardcard_main_cont">
-      <div className="q_count_base">{index + 4}</div>
+      <div style={{color:styleConfig?.IndexColor?.color,background:styleConfig?.IndexBackground?.background}} className="q_count_base">{index + 4}</div>
 
       <img
         className="q_profile_cont"
         src={
           item.imageUrl
             ? item.imageUrl
-            : "https://s3-alpha-sig.figma.com/img/58f6/4ff0/54d06f3a384066cdbef6da983e8d5bd0?Expires=1710115200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=LWD~HC70t0BKXwKL5OJDE3Cp6FvXUyqdpFv4E5g4c4NrIJyQLHnciGJcaUi0y5P0TTYDNTgWnwyARpE-BjmR7xbFO3mXHelDd1GhcHrHxFL-anHBDX0vqg01moMl0GoohNH1wqPdLMlpEsKdLNpwPROt7fjz~f-aI~XJvKk5zjql-b7tW2s3yM8-0I~O~e4OMg7rsyBsbeeRX4ar-Egjm49U851lemg0KZt4g8M5~8VfX-YM0YuefgvGaOPzBmONom3IETmVBa2LI0LzEjnPcxSsRp1~rkOjd0VOOT2kyR~XLDVHc5KhjcWUT1aUQv5n5C81LRiKAGm41k1JrmKEOQ__"
+            :questLogo
         }
         alt="logo"
       />
@@ -145,15 +146,15 @@ const LeaderBoardCard: React.FC<LeaderBoardCardProps> = ({
           >
             {item.name ?? "Quest User"}
           </div>
-
-          <img className="q_trophy_cont" src={leaderboardCup} alt="icon" />
+          {LeaderboardCupSvg(styleConfig?.IconStyle?.color||"#9035FF")}
+          {/* <img className="q_trophy_cont" src=LeaderboardCupSvg alt="icon" /> */}
         </div>
 
         <div className="q_leaderboardcard_progressbar">
           <div
             style={{
               width: `${progressBarWidth}%`,
-              background: styleConfig?.ProgressBarColor?.color,
+              background: styleConfig?.ProgressBarColor?.background,
             }}
             className="LeaderBoardCardProgressBarinner"
           ></div>

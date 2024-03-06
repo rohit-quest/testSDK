@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import "./leaderboard.css";
 import QuestLabs from "../QuestLabs";
@@ -45,8 +45,6 @@ const LeaderBoardShow: React.FC<LeaderBoardShowProps> = ({
   const [third, setThird] = useState<LeaderProps | null>(null);
   const [rest, setRest] = useState<LeaderProps[]>([]);
 
-
-
   useEffect(() => {
     if (
       leaderboardUserData &&
@@ -70,7 +68,7 @@ const LeaderBoardShow: React.FC<LeaderBoardShowProps> = ({
   }, [leaderboardUserData]);
 
   return (
-    <div className="q_leaderboard_main_cont">
+    <div  style={{ background: styleConfig?.Form?.background }} className="q_leaderboard_main_cont">
       <div
         style={{ color: styleConfig?.MainHeading?.color }}
         className="q_leaderboard_main_heading"
@@ -102,19 +100,9 @@ const LeaderBoardShow: React.FC<LeaderBoardShowProps> = ({
           </div>
         )}
       </div>
-
-      <QuestLabs
-        style={{
-          position: "absolute",
-          textAlign: "center",
-          width: "100%",
-          left: 0,
-          boxSizing: "border-box",
-          bottom: "0",
-          zIndex: "4",
-        }}
-        icon={false}
-      />
+      <div className="q_footer_leaderboard">
+        <QuestLabs style={styleConfig?.Footer} />
+      </div>
     </div>
   );
 };

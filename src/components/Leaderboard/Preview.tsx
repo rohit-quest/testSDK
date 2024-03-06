@@ -12,7 +12,7 @@ const PreviewLeaderboard = () => {
 
   return (
     <QuestProvider apiKey={apiKey} apiSecret={apiSecret} entityId={entityId} apiType="STAGING">
-      <LeaderBoard token={token} userId={userId}/>
+      <LeaderBoard  token={token} userId={userId} />
     </QuestProvider>
   )
 }
