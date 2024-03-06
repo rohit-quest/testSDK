@@ -76,8 +76,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
     }
     const newEmail = e.currentTarget.value;
     setEmail(newEmail);
-    const emailRegex =
-      /^[A-Za-z0-9._]{3,}@[a-zA-Z]{3,}[.]{1,1}[a-zA-Z.]{2,6}$/g;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     setIsValidEmail(emailRegex.test(newEmail));
   };
 
