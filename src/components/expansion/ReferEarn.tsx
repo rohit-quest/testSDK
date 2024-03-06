@@ -3,7 +3,7 @@ import {
 } from "../../assets/images";
 import "./Refer.css";
 import React, { useContext, useEffect, useState } from "react";
-import { shareOnPlatform } from "./Response.tsx";
+import { shareOnPlatform } from "./Response.ts";
 import QuestContext from "../QuestWrapper.tsx";
 import { copyIcon, faceBookIcon, linkedInIcon, tickIcon, twitterIcon } from "./Svg.ts";
 import QuestLabs from "../QuestLabs.tsx";
@@ -30,6 +30,7 @@ export interface referProp {
   showReferralCode?: boolean;
   showPoweredBy?: boolean;
   showFooter?: boolean;
+  gradientBackgroundColor?: string
   styleConfig?: {
     Form?: React.CSSProperties,
     Heading?: React.CSSProperties,
@@ -42,7 +43,9 @@ export interface referProp {
     Modal?: React.CSSProperties,
     Footer?: React.CSSProperties,
     Icon?: React.CSSProperties,
+
   }
+
 }
 
 export const Referral = ({
@@ -60,6 +63,7 @@ export const Referral = ({
   onCopy = (referalCode: string) => { },
   showReferralCode = true,
   showFooter = true,
+  gradientBackgroundColor,
   styleConfig
 }: referProp) => {
   const [shareCode, setCode] = useState("");
@@ -145,9 +149,9 @@ export const Referral = ({
         />
 
         <div className="q_social_links">
-          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(referralLink+shareCode, "linkedin")} src={linkedInIcon(styleConfig?.Icon?.color)} alt="" />
-          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(referralLink+shareCode, "facebook")} src={faceBookIcon(styleConfig?.Icon?.color)} alt="" />
-          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(referralLink+shareCode, "twitter")} src={twitterIcon(styleConfig?.Icon?.color)} alt="" />
+          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(referralLink + shareCode, "linkedin")} src={linkedInIcon(styleConfig?.Icon?.color)} alt="" />
+          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(referralLink + shareCode, "facebook")} src={faceBookIcon(styleConfig?.Icon?.color)} alt="" />
+          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(referralLink + shareCode, "twitter")} src={twitterIcon(styleConfig?.Icon?.color)} alt="" />
         </div>
       </div>
       {(!gradientBackground && showFooter) && <QuestLabs style={styleConfig?.Footer} />
@@ -156,7 +160,7 @@ export const Referral = ({
   );
 
   if (gradientBackground) return <div className="q_gradient_background" style={{
-    fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif"
+    fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", background: gradientBackgroundColor
   }}>
     <div className="q_gradient_head">
       <div className="q_gradient_heading" style={styleConfig?.Heading}>{primaryHeading}</div>
