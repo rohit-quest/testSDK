@@ -106,7 +106,6 @@
   height: 48px;
   gap: 8px;
   border-radius: 48px;
-  background: url(<path-to-image>), lightgray 50% / cover no-repeat;
 }
 
 .q_count_base {
