@@ -28,11 +28,12 @@ import FeedbackWorkflowPreview from "./components/FeedbackOverview/Preview";
 import FeedbackPreview from "./components/Feedback/Preview";
 import Survey from "./components/Feedback/Survey";
 import ModalPreview from "./components/Modals/Preview";
-
+import PreviewLeaderboard from './components/Leaderboard/Preview'
 import SurveyOffline from "./components/Feedback/OfflineComponent";
 import Modal from "./components/Modules/Modal";
 // import { NormalInput } from './components/Modules/Input'
 import OnBoarding from "./components/Onboarding/Onboarding";
+import DailyStreak from "./components/Streak/DailyStreak";
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-2aa597b4-341f-4c3c-a022-f56877a585c9";
 export const apiSecret =
@@ -103,14 +104,15 @@ function App() {
         apiType="STAGING"
         themeConfig={{
           // backgroundColor: "black",
-          borderColor: "blue",
+          // borderColor: "blue",
           // buttonColor: "green",
-          // primaryColor: "red",
+          //  primaryColor: "green",
           // secondaryColor: "blue",
           // fontFamily: "cursive"
         }}
       >
         {/* <TutorialPreview online={false} /> */}
+        
         {/* <SpinTheWheel
                     userId={userId}
                     questId={questId}
@@ -122,6 +124,7 @@ function App() {
                     wheelImage={'https://quest-media-storage-bucket.s3.us-east-2.amazonaws.com/1706540110821-wrapit2.png'} /> */}
 
         {/* <SearchPreview online={false}/> */}
+        
         {/* <SreakPreview/> */}
         {/* <TutorialPreview online={false}/> */}
         {/* { <Payment
@@ -162,7 +165,7 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-        {/* <OnBoardingPreview online={false} /> */}
+        {/* <OnBoardingPreview online={true} /> */}
 
 
         {/* <GetStartedPreview
@@ -222,7 +225,7 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-        {/* <FeedbackWorkflowPreview online={false} /> */}
+        <FeedbackWorkflowPreview online={true} />
 
         {/* <FeedbackPreview /> */}
 
@@ -241,8 +244,8 @@ function App() {
                     // color="blue"
                     // isArticle={true}
             /> */}
-
-               <QuestLogin
+           {/* <PreviewLeaderboard /> */}
+               {/* <QuestLogin
                     // questId=""
                     textColor=""
                     btnTextColor=""
@@ -273,7 +276,7 @@ function App() {
                         // color:'red'
                       }
                     }}
-                ></QuestLogin>
+                ></QuestLogin> */}
 
         {/* <ShareArticle
                     bgColor=""
@@ -288,6 +291,7 @@ function App() {
                 /> */}
 
               {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
+              {/* <SreakPreview online /> */}
       </QuestProvider>
     </div>
   );

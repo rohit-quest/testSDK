@@ -103,7 +103,7 @@ export const Referral = ({
   };
 
   useEffect(() => {
-    console.log('apicheck')
+
     response(questId, {
       apiKey,
       userid: userId,

@@ -43,10 +43,10 @@ export default function SearchPreview({ online = false }) {
                 //     backgroundColor: "black",
                 //     color: "white"
                 // },
-                // Heading: {
-                //     backgroundColor: "black",
-                //     color: "white"
-                // },
+                Heading: {
+                    // backgroundColor: "black",
+                    color: "red"
+                },
                 // Description: {
                 //     backgroundColor: "black",
                 //     color: "white"
@@ -55,7 +55,15 @@ export default function SearchPreview({ online = false }) {
                 //     backgroundColor: "black",
                 //     color: "white"
                 // }
+                listHover :{
+                    background:'grey',
+                    Heading:'blue',
+                    Description:'pink',
+                    iconBackground:'yellow',
+                    // Description:'pink'
+                }
             }}
+            
             defulatResultLength={5}
             showFooter={false}
             offlineFormatData={[
