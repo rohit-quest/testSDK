@@ -106,7 +106,7 @@ function App() {
           // backgroundColor: "black",
           // borderColor: "blue",
           // buttonColor: "green",
-           primaryColor: "green",
+          //  primaryColor: "green",
           // secondaryColor: "blue",
           // fontFamily: "cursive"
         }}
@@ -225,7 +225,7 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-        {/* <FeedbackWorkflowPreview online={true} /> */}
+        <FeedbackWorkflowPreview online={true} />
 
         {/* <FeedbackPreview /> */}
 
@@ -244,7 +244,7 @@ function App() {
                     // color="blue"
                     // isArticle={true}
             /> */}
-           <PreviewLeaderboard />
+           {/* <PreviewLeaderboard /> */}
                {/* <QuestLogin
                     // questId=""
                     textColor=""
