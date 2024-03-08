@@ -300,7 +300,9 @@ function GetStarted({
   if (featureFlags[config.FLAG_CONSTRAINTS.GetStartedFlag]?.isEnabled == false) {
     return <div></div>;
   }
-
+  if (showLoadingIndicator && showLoader) {
+    return <Loader />
+  }
   return (
     formdata.length > 0 &&
     <div
@@ -309,7 +311,7 @@ function GetStarted({
       }}
       className="get_started_box"
     >
-      {showLoadingIndicator && showLoader && <Loader />}
+
       {(autoHide === true
         ? !!formdata.length && !allCriteriaCompleted
         : true) && (

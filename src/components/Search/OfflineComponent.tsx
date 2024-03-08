@@ -43,8 +43,14 @@ interface propType {
     Input?: CSSProperties;
     Label?: CSSProperties;
     Footer?: CSSProperties;
+    listHover?: {
+      background?: string;
+      iconBackground?: string;
+      Heading?: string;
+      Description?: string;
+    };
   };
-  showFooter?: boolean
+  showFooter?: boolean;
 }
 
 export default function SearchOffline(prop: propType): JSX.Element {
@@ -52,7 +58,7 @@ export default function SearchOffline(prop: propType): JSX.Element {
     wholerScreen = true,
     defaultResult = [],
     defulatResultLength = 10,
-    onSearch = (str: string) => {},
+    onSearch = (str: string) => { },
     questId = "",
     token = "",
     userId = "",
@@ -65,7 +71,7 @@ export default function SearchOffline(prop: propType): JSX.Element {
   const [searchResults, setResults] = useState<data>(defaultResult);
   const [isOpen, setOpen] = useState(false);
   const [selectedResultIndex, setSelectedResultIndex] = useState<number>(0);
-  const {themeConfig } = useContext(QuestContext.Context);
+  const { themeConfig } = useContext(QuestContext.Context);
   const [data, setData] = useState<data>([]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -122,10 +128,18 @@ export default function SearchOffline(prop: propType): JSX.Element {
     setResults(filtered);
   };
 
+
   const jsx = (
-    <div className="q_search_bar" style={{
-      background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor , height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" , ...styleConfig?.Form
-      }}>
+    <div
+      className="q_search_bar"
+      style={{
+        background:
+          styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor,
+        height: styleConfig?.Form?.height || "auto",
+        fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+        ...styleConfig?.Form,
+      }}
+    >
       <div className="q_search_box">
         <img
           className="q_search_bar_icon"
@@ -136,14 +150,13 @@ export default function SearchOffline(prop: propType): JSX.Element {
           onChange={e => { onSearch(e.target.value); handleSearch(e.target.value) }} className='q_sdk_input q_search_input' /> */}
         <div className="q_searchBox_input_cont">
           <Input
-          style={{
-            borderColor:
-              styleConfig?.Input?.borderColor || themeConfig?.borderColor,
-            color: styleConfig?.Input?.color || themeConfig?.primaryColor,
-            padding : '0px',
-            ...styleConfig?.Input,
-            
-          }}
+            style={{
+              borderColor:
+                styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+              color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+              padding: "0px",
+              ...styleConfig?.Input,
+            }}
             type="text"
             placeholder={prop.placeholder}
             ref={inputElement}
@@ -167,25 +180,65 @@ export default function SearchOffline(prop: propType): JSX.Element {
                 "q_search_res_box " +
                 (i === selectedResultIndex && "q_heilight_search")
               }
+              style={{
+                background:
+                  i === selectedResultIndex
+                    ? styleConfig?.listHover?.background
+                    : "transparent",
+              }}
               onClick={() => {
                 onResultClick(link);
               }}
               onMouseEnter={() => setSelectedResultIndex(i)}
               onMouseLeave={() => setSelectedResultIndex(0)}
             >
-              <div className="q-search-img-cont">
-              <img
-                src={(prop.icons?.length && prop.icons[i]) || icon || questLogo}
-                className="q_search_result_icon"
-                alt={""}
-              />
+              <div
+                className="q-search-img-cont"
+                style={{
+                  background:
+                    i === selectedResultIndex
+                      ? styleConfig?.listHover?.iconBackground
+                      : "#f4ebff",
+                }}
+              >
+                <img
+                  src={
+                    (prop.icons?.length && prop.icons[i]) || icon || questLogo
+                  }
+                  className="q_search_result_icon"
+                  alt={""}
+                />
               </div>
-              
+
               <div className="q_search_result_box">
-                <div style={styleConfig?.Heading} className="q_search_result_head">
+                <div
+                  style={{
+                    color:
+                      i === selectedResultIndex
+                        ? styleConfig?.listHover?.Heading ||
+                        themeConfig?.primaryColor ||
+                        styleConfig?.Heading?.color
+                        : styleConfig?.Heading?.color ||
+                        themeConfig?.primaryColor,
+                    ...styleConfig?.Heading,
+                  }}
+                  className="q_search_result_head"
+                >
                   {text}
                 </div>
-                <div style={styleConfig?.Description} className="q_search_result_desc">
+                <div
+                  style={{
+                    color:
+                      i === selectedResultIndex
+                        ? styleConfig?.listHover?.Description ||
+                        styleConfig?.Description?.color ||
+                        themeConfig?.secondaryColor
+                        : styleConfig?.Description?.color ||
+                        themeConfig?.secondaryColor,
+                    ...styleConfig?.Description,
+                  }}
+                  className="q_search_result_desc"
+                >
                   {description || "Provide the required information"}
                 </div>
               </div>
@@ -198,10 +251,22 @@ export default function SearchOffline(prop: propType): JSX.Element {
               src={searchResults[selectedResultIndex]?.icon || questLogo}
               alt=""
             />
-            <div style={{ color: themeConfig.primaryColor ,...styleConfig?.Heading }} className="q_search_details_head">
+            <div
+              style={{
+                color: themeConfig.primaryColor,
+                ...styleConfig?.Heading,
+              }}
+              className="q_search_details_head"
+            >
               {searchResults[selectedResultIndex]?.text}
             </div>
-            <div style={{ color: themeConfig.secondaryColor ,...styleConfig?.Description  }} className="q_search_result_desc">
+            <div
+              style={{
+                color: themeConfig.secondaryColor,
+                ...styleConfig?.Description,
+              }}
+              className="q_search_result_desc"
+            >
               {searchResults[selectedResultIndex]?.longDescription ||
                 searchResults[selectedResultIndex]?.description}
             </div>
@@ -212,20 +277,24 @@ export default function SearchOffline(prop: propType): JSX.Element {
           </div>
         )}
       </div>
-   { showFooter &&  <QuestLabs style={styleConfig?.Footer} />}
+      {showFooter && <QuestLabs style={styleConfig?.Footer} />}
     </div>
   );
 
   const sectionsJsx = (
     <div className="q_search_bar">
       <div className="q_search_box">
-        <img className="q_search_bar_icon" src={searchIcon(themeConfig.secondaryColor)} alt="" />
+        <img
+          className="q_search_bar_icon"
+          src={searchIcon(themeConfig.secondaryColor)}
+          alt=""
+        />
         <input
           type="text"
           placeholder={prop.placeholder}
           ref={inputElement}
           onKeyDown={handleKeyDown}
-          style={{color: themeConfig.primaryColor,...styleConfig?.Input}}
+          style={{ color: themeConfig.primaryColor, ...styleConfig?.Input }}
           onChange={(e) => {
             onSearch(e.target.value);
             handleSearch(e.target.value);
@@ -252,6 +321,12 @@ export default function SearchOffline(prop: propType): JSX.Element {
                     onClick={() => {
                       window.open(link, "_blank");
                     }}
+                    style={{
+                      background:
+                        i === selectedResultIndex
+                          ? styleConfig?.listHover?.background
+                          : "transparent",
+                    }}
                     onMouseEnter={() => setSelectedResultIndex(i)}
                     onMouseLeave={() => setSelectedResultIndex(0)}
                   >
@@ -265,10 +340,37 @@ export default function SearchOffline(prop: propType): JSX.Element {
                       alt={""}
                     />
                     <div className="q_search_result_box">
-                      <div style={{ color: themeConfig.primaryColor,...styleConfig?.Heading }} className="q_search_result_head">
+                      <div
+                        // style={{ color: themeConfig.primaryColor, ...styleConfig?.Heading }}
+
+                        style={{
+                          color:
+                            i === selectedResultIndex
+                              ? styleConfig?.listHover?.Heading ||
+                              styleConfig?.Heading?.color ||
+                              themeConfig?.primaryColor
+                              : styleConfig?.Heading?.color ||
+                              themeConfig?.primaryColor,
+                          ...styleConfig?.Heading,
+                        }}
+                        className="q_search_result_head"
+                      >
                         {text}
                       </div>
-                      <div style={{ color: themeConfig.secondaryColor, ...styleConfig?.Description }} className="q_search_result_desc">
+                      <div
+                        style={{
+                          color:
+                            i === selectedResultIndex
+                              ? styleConfig?.listHover?.Description ||
+                              styleConfig?.Description?.color ||
+                              themeConfig?.secondaryColor
+                              : styleConfig?.Description?.color ||
+                              themeConfig?.secondaryColor,
+                          ...styleConfig?.Description,
+                        }}
+                        // style={{ color: themeConfig.secondaryColor, ...styleConfig?.Description }}
+                        className="q_search_result_desc"
+                      >
                         {description}
                       </div>
                     </div>
@@ -292,6 +394,12 @@ export default function SearchOffline(prop: propType): JSX.Element {
                     }}
                     onMouseEnter={() => setSelectedResultIndex(i)}
                     onMouseLeave={() => setSelectedResultIndex(0)}
+                    style={{
+                      background:
+                        i === selectedResultIndex
+                          ? styleConfig?.listHover?.background
+                          : "transparent",
+                    }}
                   >
                     <img
                       src={
@@ -303,10 +411,34 @@ export default function SearchOffline(prop: propType): JSX.Element {
                       className="q_search_result_icon"
                     />
                     <div className="q_search_result_box">
-                      <div style={{ color: themeConfig.primaryColor, ...styleConfig?.Heading}} className="q_search_result_head">
+                      <div
+                        style={{
+                          color:
+                            i === selectedResultIndex
+                              ? styleConfig?.listHover?.Heading ||
+                              styleConfig?.Heading?.color ||
+                              themeConfig?.primaryColor
+                              : styleConfig?.Heading?.color ||
+                              themeConfig?.primaryColor,
+                          ...styleConfig?.Heading,
+                        }}
+                        className="q_search_result_head"
+                      >
                         {text}
                       </div>
-                      <div style={{ color: themeConfig.secondaryColor, ...styleConfig?.Description }} className="q_search_result_desc">
+                      <div
+                        style={{
+                          color:
+                            i === selectedResultIndex
+                              ? styleConfig?.listHover?.Description ||
+                              styleConfig?.Description?.color ||
+                              themeConfig?.primaryColor
+                              : styleConfig?.Description?.color ||
+                              themeConfig?.primaryColor,
+                          ...styleConfig?.Description,
+                        }}
+                        className="q_search_result_desc"
+                      >
                         {description}
                       </div>
                     </div>
@@ -336,7 +468,7 @@ export default function SearchOffline(prop: propType): JSX.Element {
           </div>
         )}
       </div>
-    {showFooter &&  <QuestLabs style={styleConfig?.Footer} />}
+      {showFooter && <QuestLabs style={styleConfig?.Footer} />}
     </div>
   );
 

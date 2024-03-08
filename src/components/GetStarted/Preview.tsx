@@ -83,7 +83,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
                     // showToast.success({ text: "completed successfully" })
                 }}
                 template={2}
-                showLoadingIndicator
+                showLoadingIndicator={true}
 
                 // showDropDown
             uniqueUserId="soumitra.petbindhi+1@gmail.com"

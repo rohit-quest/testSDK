@@ -20,7 +20,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
             themeConfig={{
                 // primaryColor: "red",
                 // fontFamily:"cursive"
-                backgroundColor:'red',
+                // backgroundColor:'red',
                 // primaryColor:'white'
             }}
         >
@@ -35,28 +35,31 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                     'q-request-a-feature',
                     'q-contact-us',
                 ]}
+                 
                 // showPoweredBy={false}
-                styleConfig={{
-                    Form: {
+                // styleConfig={{
+                //     Form: {
 
-                    },
-                    listHover :{
-                        iconColor:'blue',
-                        iconBackground:'grey',
-                        background:'yellow'
-                    }
-                    // Description: { color: 'red' },
-                    // listDescription:{color:'yellow'}
-                    // Heading: { color: 'red' },
-                    // listHeading: { color: 'blue' }
-                }}
-                // footerBackgroundColor='red'
-                contactUrl="https://calendly.com/sriya-persana/30min"
+                //     },
+                //     listHover :{
+                //         iconColor:'blue',
+                //         iconBackground:'grey',
+                //         background:'yellow',
+                //         Heading:'green',
+                //         Description:'red'
+                //     }
+                //     // Description: { color: 'red' },
+                //     // listDescription:{color:'yellow'}
+                //     // Heading: { color: 'red' },
+                //     // listHeading: { color: 'blue' }
+                // }}
+                // // footerBackgroundColor='red'
+                // contactUrl="https://calendly.com/sriya-persana/30min"
                 isOpen={true}
-                // onClose={() => setIsOpen(!isOpen)}
-                uniqueUserId="soumitra.petbindhi+25@gmail.com"
-                uniqueEmailId="soumitra.petbindhi+25@gmail.com"
-
+                // // onClose={() => setIsOpen(!isOpen)}
+                // uniqueUserId="soumitra.petbindhi+25@gmail.com"
+                // uniqueEmailId="soumitra.petbindhi+25@gmail.com"
+ 
             />
 
         </QuestProvider>)
@@ -67,15 +70,18 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
         // onClose={() => setIsOpen(!isOpen)}
         showFooter={true}
         styleConfig={{
-            Description: { color: 'red' },
+            // Description: { color: 'red' },
             // listDescription:{color:'yellow'}
             Heading: { color: 'red' },
-            listHeading: { color: 'blue' },
-            // listHover :{
-            //     iconColor:'blue',
-            //     iconBackground:'grey',
-            //     background:'yellow'
-            // }
+            // listHeading: { color: 'blue' },
+
+            listHover :{
+                iconColor:'blue',
+                iconBackground:'grey',
+                background:'yellow',
+                Heading:'green',
+                Description:'red'
+            }
         }}
 
         offlineFormData={
