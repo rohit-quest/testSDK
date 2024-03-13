@@ -174,10 +174,10 @@ const TutorialScreen: React.FC<TutorialProps> = ({
     }
   }, []);
 
-  useEffect(() => {
-    const functions = new General("");
-    functions.getKeys({userid: userId|| "",apikey: apiKey,entityId,token: token||""})
-  }, []);
+  // useEffect(() => {
+  //   const functions = new General("");
+  //   functions.getKeys({userid: userId|| "",apikey: apiKey,entityId, token: token || ""})
+  // }, []);
 
 
   const handleStepLoad = (index: number, height: number) => {
