@@ -59,6 +59,7 @@ import GetStartedOffline from "./src/components/GetStarted/OfflineComponent.tsx"
 import SearchOffline from "./src/components/Search/OfflineComponent";
 import QuestMOdalOffline from './src/components/Modals/OflineComponent';
 import SurveyOffline from "./src/components/Feedback/OfflineComponent.tsx";
+import Survey from "./src/components/Feedback/Survey.tsx";
 import FeedbackWorkflowOffline from './src/components/FeedbackOverview/OfflineComponent';
 import LeaderBoard from "./src/components/Leaderboard/LeaderBoard.tsx";
 import Toast from './src/components/toast2/Toast';
@@ -102,5 +103,6 @@ export {
     SurveyOffline,
     FeedbackWorkflowOffline,
     LeaderBoard,
-    Toast
+    Toast,
+    Survey
 };
