@@ -1,6 +1,6 @@
 .q_challenges_main_cont {
   padding: 0px 20px;
-  height: 802px;
+  height: calc(100vh - 50px);
   width: 440px;
   background: linear-gradient(
     13deg,

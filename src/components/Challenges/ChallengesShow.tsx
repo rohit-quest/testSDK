@@ -9,7 +9,7 @@ import { ICriteria, StyleConfig } from "./Challenges";
 interface Props {
   suggestions: ICriteria[];
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
-  styleConfig?:StyleConfig
+  styleConfig?: StyleConfig
 }
 
 const ChallengesShow: React.FC<Props> = ({
@@ -21,11 +21,11 @@ const ChallengesShow: React.FC<Props> = ({
 
   return (
     <div
-      style={{ background: themeConfig?.backgroundColor || styleConfig?.Form?.backgroundColor }}
+      style={{ background: themeConfig?.backgroundColor || styleConfig?.Form?.backgroundColor, fontFamily: styleConfig?.Form?.fontFamily || themeConfig?.fontFamily, ...styleConfig?.Form }}
       className="q_challenges_main_cont"
     >
       <div
-        style={{ color: styleConfig?.MainHeading?.color }}
+        style={{ color: styleConfig?.MainHeading?.color || themeConfig?.primaryColor, ...styleConfig?.MainHeading }}
         className="q_challenges_main_heading"
       >
         Challenges
@@ -43,10 +43,10 @@ const ChallengesShow: React.FC<Props> = ({
           styleConfig={styleConfig}
         />
       </div>
-      <div  className="q_footer_challenges">
+      <div className="q_footer_challenges">
         <QuestLabs style={styleConfig?.Footer} />
       </div>
-    </div>
+    </div >
   );
 };
 

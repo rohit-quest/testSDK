@@ -23,11 +23,11 @@ const ChallengesCard: React.FC<Props> = ({
 
   return (
     <div
-      style={{ background: styleConfig?.InnerBackground?.background }}
+      style={{ background: styleConfig?.InnerBackground?.background || themeConfig?.backgroundColor }}
       className="q_challenges_card_cont_main"
     >
-      <div 
-        style={{ color:themeConfig?.primaryColor ||styleConfig?.Heading?.color }}
+      <div
+        style={{ color: themeConfig?.primaryColor || styleConfig?.Heading?.color }}
         className="q_challenges_card_heading"
       >
         Task List
