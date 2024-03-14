@@ -1,6 +1,6 @@
 .q_challenges_main_cont {
   padding: 0px 20px;
-  height: calc(100vh - 50px);
+  height: 802px;
   width: 440px;
   background: linear-gradient(
     13deg,
@@ -104,6 +104,7 @@
   position: relative;
   z-index: 4;
   overflow: auto;
+  padding-bottom: 14px;
 }
 
 .q_challenges_inner_card_main_cont {
