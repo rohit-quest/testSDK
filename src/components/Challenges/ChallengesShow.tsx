@@ -21,7 +21,7 @@ const ChallengesShow: React.FC<Props> = ({
 
   return (
     <div
-      style={{ background: themeConfig?.backgroundColor || styleConfig?.Form?.backgroundColor, fontFamily: styleConfig?.Form?.fontFamily || themeConfig?.fontFamily, ...styleConfig?.Form }}
+      style={{ background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, fontFamily: styleConfig?.Form?.fontFamily || themeConfig?.fontFamily, ...styleConfig?.Form }}
       className="q_challenges_main_cont"
     >
       <div

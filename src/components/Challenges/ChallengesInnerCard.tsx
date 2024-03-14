@@ -33,7 +33,7 @@ const ChallengesInnerCard: React.FC<Props> = ({
       </div>
       <div className="q_challenges_inner_card_name_cont">
         <div
-        style={{ color:themeConfig?.primaryColor ||styleConfig?.Heading?.color }}
+          style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
           className="q_challenges_inner_card_name_head"
         >
           {title}

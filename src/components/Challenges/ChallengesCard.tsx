@@ -27,7 +27,7 @@ const ChallengesCard: React.FC<Props> = ({
       className="q_challenges_card_cont_main"
     >
       <div
-        style={{ color: themeConfig?.primaryColor || styleConfig?.Heading?.color }}
+        style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
         className="q_challenges_card_heading"
       >
         Task List
