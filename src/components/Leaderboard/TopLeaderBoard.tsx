@@ -8,6 +8,7 @@ import {
 import QuestContext from "../QuestWrapper";
 import LeaderBoardCard from "./LeaderBoardCard";
 import { StyleConfig } from "./LeaderBoard";
+import config from "../../config";
 
 export interface LeaderProps {
   userId: string;
@@ -52,90 +53,102 @@ const TopLeaderBoard: React.FC<TopLeaderBoardProps> = ({
 }) => {
   const { themeConfig } = useContext(QuestContext.Context);
 
+  const imageFix = (imageUrl:string)=>{
+      if (imageUrl && !imageUrl.includes("http")) {
+        let newItem = `${config.BASE_IPFS_URL}${imageUrl}`;
+       return newItem
+      }else {
+        return imageUrl
+      }
+   
+  }
+
   return (
     <>
       <div className="q_topleaderboard_main_cont">
-        {second && (
-          <div className="q_topleaderboard_second">
-            <div className="q_topleaderboard_innercard">
-              <img
-                className="q_topleaderboard_inner_image"
-                src={second.imageUrl ? second.imageUrl : questLogo}
-                alt="logo"
-              />
-              <div
-                style={{ color: styleConfig?.MainHeading?.color }}
-                className="q_topleaderboard_name"
-              >
-                {second.name ? second.name : "Quest User"}
+        <div className="q_topleaderboard_container">
+          {second && (
+            <div className="q_topleaderboard_second">
+              <div className="q_topleaderboard_innercard">
+                <img
+                  className="q_topleaderboard_inner_image"
+                  src={second.imageUrl ? imageFix(second?.imageUrl) : questLogo}
+                  alt="logo"
+                />
+                <div
+                  style={{ color: styleConfig?.MainHeading?.color }}
+                  className="q_topleaderboard_name"
+                >
+                  {second.name ? second.name : "Quest User"}
+                </div>
+                <div
+                  style={{
+                    color: styleConfig?.PointsColor?.color,
+                    background: styleConfig?.PointsBackground?.background,
+                  }}
+                  className="q_topleaderboard_point"
+                >
+                  {second.runningXP} points
+                </div>
+                <img src={topLeadSecond} alt="second" />
               </div>
-              <div
-                style={{
-                  color: styleConfig?.PointsColor?.color,
-                  background: styleConfig?.PointsBackground?.background,
-                }}
-                className="q_topleaderboard_point"
-              >
-                {second.runningXP} points
-              </div>
-              <img src={topLeadSecond} alt="second" />
             </div>
-          </div>
-        )}
-        {first && (
-          <div className="q_topleaderboard_first">
-            <div className="q_topleaderboard_innercard">
-              <img
-                className="q_topleaderboard_inner_image_first"
-                src={first.imageUrl ? first.imageUrl : questLogo}
-                alt="logo"
-              />
-              <div
-                style={{ color: styleConfig?.MainHeading?.color }}
-                className="q_topleaderboard_name"
-              >
-                {first.name ? first.name : "Quest User"}
+          )}
+          {first && (
+            <div className="q_topleaderboard_first">
+              <div className="q_topleaderboard_innercard">
+                <img
+                  className="q_topleaderboard_inner_image_first"
+                  src={first.imageUrl ? imageFix(first?.imageUrl) : questLogo}
+                  alt="logo"
+                />
+                <div
+                  style={{ color: styleConfig?.MainHeading?.color }}
+                  className="q_topleaderboard_name"
+                >
+                  {first.name ? first.name : "Quest User"}
+                </div>
+                <div
+                  style={{
+                    color: styleConfig?.PointsColor?.color,
+                    background: styleConfig?.PointsBackground?.background,
+                  }}
+                  className="q_topleaderboard_point"
+                >
+                  {first.runningXP} points
+                </div>
+                <img src={topLeadFirst} alt="second" />
               </div>
-              <div
-                style={{
-                  color: styleConfig?.PointsColor?.color,
-                  background: styleConfig?.PointsBackground?.background,
-                }}
-                className="q_topleaderboard_point"
-              >
-                {first.runningXP} points
-              </div>
-              <img src={topLeadFirst} alt="second" />
             </div>
-          </div>
-        )}
-        {third && (
-          <div className="q_topleaderboard_third">
-            <div className="q_topleaderboard_innercard">
-              <img
-                className="q_topleaderboard_inner_image"
-                src={third.imageUrl ? third.imageUrl : questLogo}
-                alt="logo"
-              />
-              <div
-                style={{ color: styleConfig?.MainHeading?.color }}
-                className="q_topleaderboard_name"
-              >
-                {third.name ? third.name : "Quest User"}
+          )}
+          {third && (
+            <div className="q_topleaderboard_third">
+              <div className="q_topleaderboard_innercard">
+                <img
+                  className="q_topleaderboard_inner_image"
+                  src={third.imageUrl ? imageFix(third?.imageUrl) : questLogo}
+                  alt="logo"
+                />
+                <div
+                  style={{ color: styleConfig?.MainHeading?.color }}
+                  className="q_topleaderboard_name"
+                >
+                  {third.name ? third.name : "Quest User"}
+                </div>
+                <div
+                  style={{
+                    color: styleConfig?.PointsColor?.color,
+                    background: styleConfig?.PointsBackground?.background,
+                  }}
+                  className="q_topleaderboard_point"
+                >
+                  {third.runningXP} points
+                </div>
+                <img src={topLeadThird} alt="second" />
               </div>
-              <div
-                style={{
-                  color: styleConfig?.PointsColor?.color,
-                  background: styleConfig?.PointsBackground?.background,
-                }}
-                className="q_topleaderboard_point"
-              >
-                {third.runningXP} points
-              </div>
-              <img src={topLeadThird} alt="second" />
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
       <div
         style={{ background: styleConfig?.InnerBackground?.background }}
