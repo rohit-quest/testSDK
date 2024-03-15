@@ -17,9 +17,8 @@ import {
 import { createDefaultQuest, getDefaultQuest } from "./Helphub.service";
 import config from "../../config";
 
-const HelpHub = (props: HelpHubProps) => {
-    const { userId, token, questId, uniqueUserId, uniqueEmailId, styleConfig, contentConfig } =
-        props;
+const HelpHubOffline = (props: HelpHubProps) => {
+    const { userId, token, questId, uniqueUserId, uniqueEmailId } = props;
 
     const { apiKey, entityId, featureFlags, apiType, themeConfig } = useContext(
         QuestContext.Context
@@ -32,6 +31,8 @@ const HelpHub = (props: HelpHubProps) => {
     const [chieldQuestCriteria, setChieldQuestCriteria] = useState<
         QuestCriteriaWithStatusType[][]
     >([]);
+
+    console.log(parentQuest);
 
     const getOrCreateQuest = async () => {
         let qId = questId || "q-default-helphub";
@@ -64,7 +65,7 @@ const HelpHub = (props: HelpHubProps) => {
     }, []);
 
     return (
-        <div style={{fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif"}}>
+        <div>
             <div className={"helphubIconUpperCont"}>
                 {/* help button  */}
                 <div
@@ -83,8 +84,6 @@ const HelpHub = (props: HelpHubProps) => {
                                 parentQuest={parentQuest}
                                 userId={userId}
                                 token={token}
-                                styleConfig={styleConfig}
-                                contentConfig={contentConfig?.Home}
                             />
                         ) : (
                             ""
@@ -97,8 +96,6 @@ const HelpHub = (props: HelpHubProps) => {
                                         ? chieldQuestCriteria[1]
                                         : []
                                 }
-                                styleConfig={styleConfig}
-                                contentConfig={contentConfig?.Help}
                             />
                         ) : (
                             ""
@@ -110,7 +107,6 @@ const HelpHub = (props: HelpHubProps) => {
                                         ? chieldQuestCriteria[2]
                                         : []
                                 }
-                                contentConfig={contentConfig?.Updates}
                                 questId={parentQuest?.childQuestIDs[2] || ""}
                                 userId={userId}
                                 token={token}
@@ -125,7 +121,6 @@ const HelpHub = (props: HelpHubProps) => {
                                         ? chieldQuestCriteria[3]
                                         : []
                                 }
-                                contentConfig={contentConfig?.Tasks}
                                 questId={parentQuest?.childQuestIDs[3] || ""}
                                 userId={userId}
                                 token={token}
@@ -332,4 +327,4 @@ const HelpHub = (props: HelpHubProps) => {
     );
 };
 
-export default HelpHub;
+export default HelpHubOffline;
