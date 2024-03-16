@@ -51,12 +51,12 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
 
 
     return (
-        <div className={"helpHubUpdatesCont"} style={styleConfig?.Updates?.Form}>
+        <div className={"helpHubUpdatesCont"} style={{background: themeConfig?.backgroundColor || "#fff", ...styleConfig?.Updates?.Form}}>
             <div className='q-helphub-updates-upper-cont '>
                 <div className='q-helphub-updates-upper-cont-text'>
                     <div>
                         <div className='q-helphub-updates-upper-cont-text-head' style={{color: themeConfig?.primaryColor, ...styleConfig?.Updates?.Topbar?.Heading}}>{contentConfig?.heading || "Updates"}</div>
-                        <div className='q-helphub-updates-upper-cont-text-para' style={{color: themeConfig?.secondaryColor, ...styleConfig?.Updates?.Topbar?.Heading}}>
+                        <div className='q-helphub-updates-upper-cont-text-para' style={{color: themeConfig?.secondaryColor, ...styleConfig?.Updates?.Topbar?.SubHeading}}>
                             {contentConfig?.subHeading || "Welcome back, Please talk to us to understand"}
                         </div>
                     </div>
@@ -79,24 +79,51 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                         {/* for one task */}
                         {/* unread update  */}
                         {
-                            filterData.map((value: QuestCriteriaWithStatusType, index: number) => {
-                                return <div
-                                    className={`q-helphub-updates-single-update-${claimStatus.includes(value?.data?.criteriaId) ? "read" : "unread"}`}
+                            filterData.map((value: QuestCriteriaWithStatusType, index: number) => (
+                                claimStatus.includes(value?.data?.criteriaId) ?
+                                <div
+                                    className={`q-helphub-updates-single-update-read`}
                                     key={index}
                                     onClick={() => readUpdate(value?.data?.criteriaId, value?.data?.metadata?.linkActionUrl)}
                                 >
                                     <div className='update-time'>
+                                        <img src={ReadUpdateLogo} alt="" /> 
+                                        <div style={{color: themeConfig?.secondaryColor, ...styleConfig?.Updates?.Card?.SubHeading}}>
+                                            {
+                                                getTimeDifference(value?.data?.createdAt)
+                                            }
+                                        </div>
+                                    </div>
+
+                                    <div className='update-question'>
+                                        <div className='ques' style={{color: themeConfig?.primaryColor, ...styleConfig?.Updates?.Card?.Heading}}>
+                                            {
+                                                value?.data?.metadata?.linkActionName
+                                            }
+                                        </div>
+                                        <div className='btn'>
+                                            <img src={OpenSectionButton} alt="" />
+                                        </div>
+                                    </div>
+
+                                    <div className='update-message' style={{color: themeConfig?.secondaryColor, ...styleConfig?.Updates?.Card?.SubHeading}}>
                                         {
-                                            claimStatus.includes(value?.data?.criteriaId) 
-                                            ? <img src={ReadUpdateLogo} alt="" /> 
-                                            // : <img src={UnreadUpdateLogo} alt="" />
-                                            : 
-                                            <div className='q-helphub-updates-unread'>
-                                                <span className='q-helphub-updates-unread-span1'></span>
-                                                <span className='q-helphub-updates-unread-span2'></span>
-                                            </div>
+                                            value?.data?.metadata?.description
                                         }
-                                        <div>
+                                    </div>
+                                </div>
+                                :
+                                <div
+                                    className={`q-helphub-updates-single-update-unread`}
+                                    key={index}
+                                    onClick={() => readUpdate(value?.data?.criteriaId, value?.data?.metadata?.linkActionUrl)}
+                                >
+                                    <div className='update-time'>
+                                        <div className='q-helphub-updates-unread'>
+                                            <span className='q-helphub-updates-unread-span1'></span>
+                                            <span className='q-helphub-updates-unread-span2'></span>
+                                        </div>
+                                        <div style={{color: themeConfig?.secondaryColor, ...styleConfig?.Updates?.Card?.SubHeading}}>
                                             {
                                                 getTimeDifference(value?.data?.createdAt)
                                             }
@@ -114,13 +141,13 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                                         </div>
                                     </div>
 
-                                    <div className='update-message'>
+                                    <div className='update-message' style={{color: themeConfig?.secondaryColor, ...styleConfig?.Updates?.Card?.SubHeading}}>
                                         {
                                             value?.data?.metadata?.description
                                         }
                                     </div>
                                 </div>
-                            })
+                            ))
                         }
 
                     </div>

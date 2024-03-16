@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import OpenSectionButton from "../../assets/images/OpenSectionButton.svg";
 import InfoButton from "../../assets/images/InfoButton.svg";
 import SendMessageEmojiIcon from "../../assets/images/SendMessageEmojiIcon.svg";
@@ -7,8 +7,19 @@ import SendMessageSendIcon from "../../assets/images/SendMessageSendIcon.svg";
 import CancelButton from "../../assets/images/CancelButton.svg";
 import SearchIcons from "../../assets/images/SearchIcons.svg";
 import HelphubSvg from './HelphubSvg';
+import { HelpHubChatTypes } from './HelpHub.type';
+import QuestContext from "../QuestWrapper";
 
-const HelpHubChat = () => {
+
+const HelpHubChat = (props: HelpHubChatTypes) => {
+    const {
+        contentConfig,
+        styleConfig
+    } = props
+
+    const { themeConfig } = useContext(
+        QuestContext.Context
+    );
     const [showPersonalChat, setShowPersonalChat] = useState(false);
     const [chat, setChats] = useState([
         {
@@ -74,18 +85,18 @@ const HelpHubChat = () => {
     ]);
 
     return (
-        <div className={"helpHubChat"}>
+        <div className={"helpHubChat"} style={{background: themeConfig?.backgroundColor || "#fff", ...styleConfig?.Chat?.Form}}>
             {/* upper container  :chats*/}
             <div className='q-helphub-chatpage-upper-container'>
                 <div className='q-helphub-chatpage-text-container'>
                     <div className='q-helphub-chatpage-head-para'>
                         {/* for heading  */}
-                        <div className='q-helphub-chatpage-heading'>
-                            Chats
+                        <div className='q-helphub-chatpage-heading' style={{color: themeConfig?.primaryColor, ...styleConfig?.Chat?.Topbar?.Heading}}>
+                            {contentConfig?.heading || "Chats"}
                         </div >
                         {/* for para */}
-                        <div className='q-helphub-chatpage-para'>
-                            Welcome back, Please talk to us to understand
+                        <div className='q-helphub-chatpage-para' style={{color: themeConfig?.secondaryColor, ...styleConfig?.Chat?.Topbar?.Heading}}>
+                            {contentConfig?.subHeading || "Welcome back, Please talk to us to understand"}
                         </div>
                     </div>
 
@@ -101,7 +112,7 @@ const HelpHubChat = () => {
                 {/* search and chats container */}
                 <div className='q-helphub-search-chats-container'>
                     {/* search  */}
-                    <div className='q-helphub-search-container'>
+                    <div className='q-helphub-search-container' style={{...styleConfig?.Chat?.Searchbox}}>
                         <input className='q-helphub-search-input' type="text" placeholder='Search for help...' />
                         <div className='q-helphub-search-btn'>
                             <img src={SearchIcons} alt="" />
@@ -121,10 +132,10 @@ const HelpHubChat = () => {
                                     </div>
 
                                     <div className='q-helphub-chat-message'>
-                                        <div className='q-helphub-chat-sender-name'>
+                                        <div className='q-helphub-chat-sender-name' style={{color: themeConfig?.primaryColor, ...styleConfig?.Updates?.Card?.Heading}}>
                                             {value.senderName}
                                         </div>
-                                        <div className='q-helphub-chat-sender-message'>
+                                        <div className='q-helphub-chat-sender-message' style={{color: themeConfig?.primaryColor, ...styleConfig?.Updates?.Card?.SubHeading}}>
                                             {value.senderMessage}
                                         </div>
                                     </div>

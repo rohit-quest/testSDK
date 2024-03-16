@@ -49,7 +49,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
 
 
     return (
-        <div className={"helpHubTaskCont"} style={styleConfig?.Tasks?.Form}>
+        <div className={"helpHubTaskCont"} style={{background: themeConfig?.backgroundColor || "#fff", ...styleConfig?.Tasks?.Form}}>
             <div className='q-helphub-tasks-upper-cont '>
                 <div className='q-helphub-tasks-upper-cont-text'>
                     <div>

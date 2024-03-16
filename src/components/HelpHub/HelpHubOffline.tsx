@@ -17,8 +17,9 @@ import {
 import { createDefaultQuest, getDefaultQuest } from "./Helphub.service";
 import config from "../../config";
 
-const HelpHubOffline = (props: HelpHubProps) => {
-    const { userId, token, questId, uniqueUserId, uniqueEmailId } = props;
+const HelpHub = (props: HelpHubProps) => {
+    const { userId, token, questId, uniqueUserId, uniqueEmailId, styleConfig, contentConfig, showFooter } =
+        props;
 
     const { apiKey, entityId, featureFlags, apiType, themeConfig } = useContext(
         QuestContext.Context
@@ -32,8 +33,6 @@ const HelpHubOffline = (props: HelpHubProps) => {
         QuestCriteriaWithStatusType[][]
     >([]);
 
-    console.log(parentQuest);
-
     const getOrCreateQuest = async () => {
         let qId = questId || "q-default-helphub";
         let getResult = await getDefaultQuest(
@@ -42,7 +41,7 @@ const HelpHubOffline = (props: HelpHubProps) => {
             qId,
             userId,
             token,
-            apiKey
+            apiKey,
         );
         if (!getResult?.success) {
             let createQuest = await createDefaultQuest(
@@ -65,7 +64,7 @@ const HelpHubOffline = (props: HelpHubProps) => {
     }, []);
 
     return (
-        <div>
+        <div style={{fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif"}}>
             <div className={"helphubIconUpperCont"}>
                 {/* help button  */}
                 <div
@@ -84,11 +83,17 @@ const HelpHubOffline = (props: HelpHubProps) => {
                                 parentQuest={parentQuest}
                                 userId={userId}
                                 token={token}
+                                styleConfig={styleConfig}
+                                contentConfig={contentConfig?.Home}
                             />
                         ) : (
                             ""
                         )}
-                        {selectedSection === "Chat" ? <HelpHubChat /> : ""}
+                        {selectedSection === "Chat" ? 
+                            <HelpHubChat
+                                styleConfig={styleConfig}
+                            /> 
+                            : ""}
                         {selectedSection === "Help" ? (
                             <HelpHubHelp
                                 faqData={
@@ -96,6 +101,8 @@ const HelpHubOffline = (props: HelpHubProps) => {
                                         ? chieldQuestCriteria[1]
                                         : []
                                 }
+                                styleConfig={styleConfig}
+                                contentConfig={contentConfig?.Help}
                             />
                         ) : (
                             ""
@@ -107,6 +114,8 @@ const HelpHubOffline = (props: HelpHubProps) => {
                                         ? chieldQuestCriteria[2]
                                         : []
                                 }
+                                contentConfig={contentConfig?.Updates}
+                                styleConfig={styleConfig}
                                 questId={parentQuest?.childQuestIDs[2] || ""}
                                 userId={userId}
                                 token={token}
@@ -121,6 +130,8 @@ const HelpHubOffline = (props: HelpHubProps) => {
                                         ? chieldQuestCriteria[3]
                                         : []
                                 }
+                                contentConfig={contentConfig?.Tasks}
+                                styleConfig={styleConfig}
                                 questId={parentQuest?.childQuestIDs[3] || ""}
                                 userId={userId}
                                 token={token}
@@ -131,7 +142,7 @@ const HelpHubOffline = (props: HelpHubProps) => {
 
                         <div className="helphubBottomCont">
                             {/* bottom navigation buttons  */}
-                            <div className="helphubSvgCont">
+                            <div className="helphubSvgCont" style={{background: themeConfig?.backgroundColor || "#fff", ...styleConfig?.Footer}}>
                                 {/* home  */}
                                 <div onClick={() => setSelectedSection("Home")}>
                                     {/* Home icon  */}
@@ -311,6 +322,7 @@ const HelpHubOffline = (props: HelpHubProps) => {
                             </div>
 
                             {/* Footer: powered by quest labs  */}
+                            { showFooter != false &&
                             <div className="helphubFooterCont">
                                 <div className="helphubFooterText">
                                     Powered by Quest Labs
@@ -319,6 +331,7 @@ const HelpHubOffline = (props: HelpHubProps) => {
                                     <HelphubSvg type="footerLogo" />
                                 </div>
                             </div>
+                        }
                         </div>
                     </div>
                 )}
@@ -327,4 +340,4 @@ const HelpHubOffline = (props: HelpHubProps) => {
     );
 };
 
-export default HelpHubOffline;
+export default HelpHub;

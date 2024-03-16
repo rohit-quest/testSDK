@@ -202,7 +202,7 @@
   align-self: stretch;
   border-radius: 10px;
   border: 1px solid var(--Neutral-White-400, #e0e0e0);
-  background: var(--Neutral-White-100, #fff);
+  /* background: var(--Neutral-White-100, #fff); */
   gap: 20px;
 }
 
@@ -216,6 +216,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 24px;
+  background: transparent;
   /* 150% */
 }
 
@@ -269,7 +270,7 @@
   padding: 12px 20px;
   align-items: flex-start;
   align-self: stretch;
-  background: var(--Neutral-White-100, #fff);
+  /* background: var(--Neutral-White-100, #fff); */
   box-shadow: 0px -16px 16px 0px rgba(0, 0, 0, 0.04);
   /* width: 100%; */
 }
@@ -301,7 +302,7 @@
   align-items: center;
   gap: 12px;
   align-self: stretch;
-  background: var(--Neutral-White-200, #fbfbfb);
+  background: var(--Neutral-White-200, #fbfbfb);  
   height: 12px;
 }
 
@@ -771,7 +772,6 @@
   gap: 20px;
   align-self: stretch;
   border-bottom: 1px solid var(--Neutral-White-300, #EFEFEF);
-  background: var(--Neutral-White-100, #FFF);
 }
 
 .q-helphub-chatpage-text-container {
@@ -826,7 +826,6 @@
   align-items: flex-start;
   gap: 8px;
   border-radius: 4px;
-  background: var(--Neutral-White-200, #FBFBFB);
   cursor: pointer;
 }
 
@@ -841,7 +840,6 @@
   align-items: center;
   flex: 1 0 0;
   align-self: stretch;
-  background: var(--Neutral-White-100, #FFF);
   height: 100px;
   overflow: hidden;
   min-height: calc(100% - 131px);
@@ -1224,7 +1222,7 @@ personal-chat-messages-cont
 .q-helphub-chat-btn {
   width: 16px;
   height: 16px;
-  background-color: white;
+  background-color: transparent;
   border: none;
   cursor: pointer;
 }
@@ -1305,7 +1303,7 @@ personal-chat-messages-cont
   gap: 20px;
   align-self: stretch;
   border-bottom: 1px solid var(--Neutral-White-300, #EFEFEF);
-  background: var(--Neutral-White-100, #FFF);
+  /* background: var(--Neutral-White-100, #FFF); */
 }
 
 .q-helphub-help-upper-cont-text {
@@ -1361,7 +1359,7 @@ personal-chat-messages-cont
   align-items: flex-start;
   gap: 8px;
   border-radius: 4px;
-  background: var(--Neutral-White-200, #FBFBFB);
+  /* background: var(--Neutral-White-200, #FBFBFB); */
   cursor: pointer;
 }
 
@@ -1372,7 +1370,7 @@ personal-chat-messages-cont
   align-items: center;
   gap: 8px;
   align-self: stretch;
-  background: var(--Neutral-White-100, #FFF);
+  /* background: var(--Neutral-White-100, #FFF); */
   min-height: calc(100% - 110px);
   height: 1px;
   /* overflow: hidden; */
@@ -1400,7 +1398,7 @@ personal-chat-messages-cont
   align-self: stretch;
   border-radius: 10px;
   border: 1px solid var(--Neutral-White-400, #E0E0E0);
-  background: var(--Neutral-White-100, #FFF);
+  /* background: var(--Neutral-White-100, #FFF); */
 }
 
 .q-helphub-help-search-cont input {
@@ -1438,7 +1436,7 @@ personal-chat-messages-cont
   gap: 12px;
   align-self: stretch;
   border-bottom: 1.5px solid var(--Neutral-White-300, #EFEFEF);
-  background: var(--neutral-opacity-white-80, rgba(255, 255, 255, 0.80));
+  /* background: var(--neutral-opacity-white-80, rgba(255, 255, 255, 0.80)); */
 }
 
 .q-helphub-help-total-faqs div {
@@ -1469,7 +1467,7 @@ personal-chat-messages-cont
   gap: 20px;
   align-self: stretch;
   border-bottom: 1.5px solid var(--Neutral-White-300, #EFEFEF);
-  background: var(--Neutral-White-100, #FFF);
+  /* background: var(--Neutral-White-100, #FFF); */
 }
 
 .q-helphub-help-single-faq-close .text {
@@ -1513,7 +1511,7 @@ personal-chat-messages-cont
   gap: 8px;
   align-self: stretch;
   border-bottom: 1.5px solid var(--Neutral-White-300, #EFEFEF);
-  background: var(--Neutral-White-100, #FFF);
+  /* background: var(--Neutral-White-100, #FFF); */
   cursor: pointer;
 }
 
@@ -1571,7 +1569,6 @@ personal-chat-messages-cont
   gap: 20px;
   align-self: stretch;
   border-bottom: 1px solid var(--Neutral-White-300, #EFEFEF);
-  background: var(--Neutral-White-100, #FFF);
 }
 
 .q-helphub-updates-upper-cont-text {
@@ -1627,7 +1624,6 @@ personal-chat-messages-cont
   align-items: flex-start;
   gap: 8px;
   border-radius: 4px;
-  background: var(--Neutral-White-200, #FBFBFB);
   cursor: pointer;
 }
 
@@ -1638,7 +1634,6 @@ personal-chat-messages-cont
   align-items: center;
   gap: 8px;
   align-self: stretch;
-  background: var(--Neutral-White-100, #FFF);
   min-height: calc(100% - 138px);
   height: 10px;
   overflow-y: scroll;
@@ -1665,7 +1660,6 @@ personal-chat-messages-cont
   align-self: stretch;
   border-radius: 10px;
   border: 1px solid var(--Neutral-White-400, #E0E0E0);
-  background: var(--Neutral-White-100, #FFF);
 }
 
 .q-helphub-updates-search-cont input {
@@ -1700,7 +1694,6 @@ personal-chat-messages-cont
   gap: 8px;
   align-self: stretch;
   border-bottom: 1.5px solid var(--Neutral-White-300, #EFEFEF);
-  background: var(--Neutral-White-100, #FFF);
   cursor: pointer;
 }
 
@@ -1768,7 +1761,6 @@ personal-chat-messages-cont
   gap: 8px;
   align-self: stretch;
   border-bottom: 1.5px solid var(--Neutral-White-300, #EFEFEF);
-  background: var(--Neutral-White-100, #FFF);
   cursor: pointer;
   width: 100%;
 }
@@ -1839,7 +1831,7 @@ personal-chat-messages-cont
   gap: 20px;
   align-self: stretch;
   border-bottom: 1px solid var(--Neutral-White-300, #EFEFEF);
-  background: var(--Neutral-White-100, #FFF);
+  /* background: var(--Neutral-White-100, #FFF); */
 }
 
 .q-helphub-tasks-upper-cont-text {
@@ -1895,7 +1887,7 @@ personal-chat-messages-cont
   align-items: flex-start;
   gap: 8px;
   border-radius: 4px;
-  background: var(--Neutral-White-200, #FBFBFB);
+  /* background: var(--Neutral-White-200, #FBFBFB); */
 }
 
 .q-helphub-tasks-lower-cont {
@@ -1905,7 +1897,7 @@ personal-chat-messages-cont
   align-items: center;
   gap: 8px;
   align-self: stretch;
-  background: var(--Neutral-White-100, #FFF);
+  /* background: var(--Neutral-White-100, #FFF); */
   min-height: calc(100% - 110px);
   height: 1px;
   /* overflow: hidden; */
@@ -1933,7 +1925,7 @@ personal-chat-messages-cont
   align-self: stretch;
   border-radius: 10px;
   border: 1px solid var(--Neutral-White-400, #E0E0E0);
-  background: var(--Neutral-White-100, #FFF);
+  /* background: var(--Neutral-White-100, #FFF); */
 }
 
 .q-helphub-tasks-search-cont input {
@@ -2004,7 +1996,7 @@ personal-chat-messages-cont
   gap: 12px;
   align-self: stretch;
   border-bottom: 1.5px solid var(--Neutral-White-300, #EFEFEF);
-  background: var(--Neutral-White-100, #FFF);
+  /* background: var(--Neutral-White-100, #FFF); */
   cursor: pointer;
   width: 100%;
 }

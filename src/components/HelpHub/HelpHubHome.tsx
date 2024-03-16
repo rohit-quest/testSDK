@@ -258,13 +258,15 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
                                             onClick={() =>
                                                 setSelectedSection("Help")
                                             }
-                                            style={{
-                                                color: themeConfig?.secondaryColor,
-                                                ...styleConfig?.Home
-                                                    ?.SubHeading,
-                                            }}
                                         >
-                                            <div className="q-helphub-search-messege-title">
+                                            <div 
+                                                className="q-helphub-search-messege-title"
+                                                style={{
+                                                    color: themeConfig?.secondaryColor,
+                                                    ...styleConfig?.Home
+                                                        ?.SubHeading,
+                                                }}
+                                            >
                                                 {
                                                     value?.data?.metadata
                                                         ?.question

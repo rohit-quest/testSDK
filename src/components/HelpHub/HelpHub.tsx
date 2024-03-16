@@ -18,7 +18,7 @@ import { createDefaultQuest, getDefaultQuest } from "./Helphub.service";
 import config from "../../config";
 
 const HelpHub = (props: HelpHubProps) => {
-    const { userId, token, questId, uniqueUserId, uniqueEmailId, styleConfig, contentConfig } =
+    const { userId, token, questId, uniqueUserId, uniqueEmailId, styleConfig, contentConfig, showFooter } =
         props;
 
     const { apiKey, entityId, featureFlags, apiType, themeConfig } = useContext(
@@ -41,7 +41,7 @@ const HelpHub = (props: HelpHubProps) => {
             qId,
             userId,
             token,
-            apiKey
+            apiKey,
         );
         if (!getResult?.success) {
             let createQuest = await createDefaultQuest(
@@ -89,7 +89,11 @@ const HelpHub = (props: HelpHubProps) => {
                         ) : (
                             ""
                         )}
-                        {selectedSection === "Chat" ? <HelpHubChat /> : ""}
+                        {selectedSection === "Chat" ? 
+                            <HelpHubChat
+                                styleConfig={styleConfig}
+                            /> 
+                            : ""}
                         {selectedSection === "Help" ? (
                             <HelpHubHelp
                                 faqData={
@@ -111,6 +115,7 @@ const HelpHub = (props: HelpHubProps) => {
                                         : []
                                 }
                                 contentConfig={contentConfig?.Updates}
+                                styleConfig={styleConfig}
                                 questId={parentQuest?.childQuestIDs[2] || ""}
                                 userId={userId}
                                 token={token}
@@ -126,6 +131,7 @@ const HelpHub = (props: HelpHubProps) => {
                                         : []
                                 }
                                 contentConfig={contentConfig?.Tasks}
+                                styleConfig={styleConfig}
                                 questId={parentQuest?.childQuestIDs[3] || ""}
                                 userId={userId}
                                 token={token}
@@ -136,7 +142,7 @@ const HelpHub = (props: HelpHubProps) => {
 
                         <div className="helphubBottomCont">
                             {/* bottom navigation buttons  */}
-                            <div className="helphubSvgCont">
+                            <div className="helphubSvgCont" style={{background: themeConfig?.backgroundColor || "#fff", ...styleConfig?.Footer}}>
                                 {/* home  */}
                                 <div onClick={() => setSelectedSection("Home")}>
                                     {/* Home icon  */}
@@ -316,6 +322,7 @@ const HelpHub = (props: HelpHubProps) => {
                             </div>
 
                             {/* Footer: powered by quest labs  */}
+                            { showFooter != false &&
                             <div className="helphubFooterCont">
                                 <div className="helphubFooterText">
                                     Powered by Quest Labs
@@ -324,6 +331,7 @@ const HelpHub = (props: HelpHubProps) => {
                                     <HelphubSvg type="footerLogo" />
                                 </div>
                             </div>
+                        }
                         </div>
                     </div>
                 )}

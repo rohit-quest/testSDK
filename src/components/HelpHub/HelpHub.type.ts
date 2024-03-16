@@ -8,7 +8,7 @@ type HelphubStyleConfig = {
         Heading?: CSSProperties;
         SubHeading?: CSSProperties;
         Button?: CSSProperties;
-    },
+    };
     Chat?: {
         Form?: CSSProperties;
         Topbar?: {
@@ -21,7 +21,7 @@ type HelphubStyleConfig = {
             Image?: CSSProperties;
         };
         Searchbox?: CSSProperties;
-    },
+    };
     Help?: {
         Form?: CSSProperties;
         Topbar?: {
@@ -33,7 +33,7 @@ type HelphubStyleConfig = {
             SubHeading?: CSSProperties;
         };
         Searchbox?: CSSProperties;
-    },
+    };
     Updates?: {
         Form?: CSSProperties;
         Topbar?: {
@@ -45,7 +45,7 @@ type HelphubStyleConfig = {
             SubHeading?: CSSProperties;
         };
         Searchbox?: CSSProperties;
-    },
+    };
     Tasks?: {
         Form?: CSSProperties;
         Topbar?: {
@@ -57,7 +57,8 @@ type HelphubStyleConfig = {
             SubHeading?: CSSProperties;
         };
         Searchbox?: CSSProperties;
-    },
+    };
+    Footer?: CSSProperties;
 };
 
 
@@ -103,6 +104,7 @@ export interface HelpHubProps {
         Updates?: HelpHubOthersContentTypes;
         Tasks?: HelpHubOthersContentTypes;
     }
+    showFooter?: boolean;
 }
 
 export interface HelpHubHomeTypes {
@@ -113,6 +115,11 @@ export interface HelpHubHomeTypes {
     token?: string;
     styleConfig?: HelphubStyleConfig;
     contentConfig?: HelpHubHomeContentTypes;
+}
+
+export interface HelpHubChatTypes {
+    styleConfig?: HelphubStyleConfig;
+    contentConfig?: HelpHubOthersContentTypes;
 }
 
 export interface HelpHubFaqTypes {
