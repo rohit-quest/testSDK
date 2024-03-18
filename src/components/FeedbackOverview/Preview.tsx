@@ -36,21 +36,32 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                     'q-contact-us',
                 ]}
                  GeneralFeedback={{
-                    heading: "General Feedback asdasdasdasdas",
+                    heading: "General Fee",
                     description: "Give general feedsdasdasdback on this page",
+                    formHeading: "General Feedbackasddffd",
+                    formDescription: "Welcome back,sdfsdf Please complete your details",
+                    iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
                 }}
                 RequestFeature={{
                     heading: "Request a Featureqwqewqewqe",
                     description: "How can we msdsfdsdfake it better",
+                    formHeading: "Request a Feature",
+                    iconUrl:'https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg'
                 }}
                 ReportBug={{
                     heading: "Reportasdasd a Bug",
                     description: "Describazsdasde your issue",
+                    formHeading: "Report wewea Bug",
+                    formDescription: "Describe yosddffdur issue",
+                    iconUrl:'https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg'
                 }}
                 ContactUs={{
                     heading: "Contacasasdt us",
                     description: "Invite oasasdasdher admins and moderators",
+                    iconUrl:'https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg'
                 }}
+                contactUrl="https://calendly.com/sriya-persana/30min"
+
                 // showPoweredBy={false}
                 // styleConfig={{
                 //     Form: {
@@ -74,13 +85,14 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                 // // onClose={() => setIsOpen(!isOpen)}
                 // uniqueUserId="soumitra.petbindhi+25@gmail.com"
                 // uniqueEmailId="soumitra.petbindhi+25@gmail.com"
+                
  
             />
 
         </QuestProvider>)
 
     return (<FeedbackWorkflowOffline
-        contactUrl="https://calendly.com/sriya-persana/30min"
+        // contactUrl="https://calendly.com/sriya-persana/30min"
         isOpen={true}
         // onClose={() => setIsOpen(!isOpen)}
         showFooter={true}
@@ -98,22 +110,33 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                 Description:'red'
             }
         }}
-        GeneralFeedback={{
-            heading: "General Feedback asdasdasdasdas",
-            description: "Give general feedsdasdasdback on this page",
-        }}
-        RequestFeature={{
-            heading: "Request a Featureqwqewqewqe",
-            description: "How can we msdsfdsdfake it better",
-        }}
-        ReportBug={{
-            heading: "Reportasdasd a Bug",
-            description: "Describazsdasde your issue",
-        }}
-        ContactUs={{
-            heading: "Contacasasdt us",
-            description: "Invite oasasdasdher admins and moderators",
-        }}
+        contactUrl="https://calendly.com/sriya-persana/30min"
+
+        // GeneralFeedback={{
+        //     heading: "General Fee",
+        //     description: "Give general feedsdasdasdback on this page",
+        //     formHeading: "General Feedbackasddffd",
+        //     formDescription: "Welcome back,sdfsdf Please complete your details",
+        //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+        // }}
+        // RequestFeature={{
+        //     heading: "Request a Featureqwqewqewqe",
+        //     description: "How can we msdsfdsdfake it better",
+        //     formHeading: "Request a Feature",
+        //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+        // }}
+        // ReportBug={{
+        //     heading: "Reportasdasd a Bug",
+        //     description: "Describazsdasde your issue",
+        //     formHeading: "Report wewea Bug",
+        //     formDescription: "Describe yosddffdur issue",
+        //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+        // }}
+        // ContactUs={{
+        //     heading: "Contacasasdt us",
+        //     description: "Invite oasasdasdher admins and moderators",
+        //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+        // }}
         offlineFormData={
             [
                 [{
