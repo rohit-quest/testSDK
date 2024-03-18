@@ -1,7 +1,8 @@
 import { QuestProvider } from "../QuestWrapper";
 import { Challenges } from "./Challenges";
+import { ChallengesOffline } from "./OfflineComponent";
 
-const ChallengesPreview = () => {
+const ChallengesPreview = ({ online = true }) => {
   const apiKey = "k-fe5a805c-77ed-4cae-bd33-9591ebed2805";
   const apiSecret =
     "s-b1b50609-4728-4702-8bd8-679f4b6560f08bfe2b25-2d65-4ae2-a652-c344bae62a24";
@@ -24,19 +25,36 @@ const ChallengesPreview = () => {
     //   fontFamily: "sans-serif",
     // }}
     >
-      <Challenges
-        token={token}
-        userId={userId}
-        questId={questId}
-      // styleConfig={{
-      //   Form: { backgroundColor: "#000000" },
-      //   MainHeading: { color: "#551717" },
-      //   Heading: { color: "#35a52d" },
-      //   PointsColor: { color: "#d7429e" },
-      //   InnerBackground: { background: "#5dcad4" },
-      //   ProgressBarColor: { background: "#30d410" },
-      // }}
-      />
+      {online ?
+        <Challenges
+          token={token}
+          userId={userId}
+          questId={questId}
+        // styleConfig={{
+        //   Form: { backgroundColor: "#000000" },
+        //   MainHeading: { color: "#551717" },
+        //   Heading: { color: "#35a52d" },
+        //   PointsColor: { color: "#d7429e" },
+        //   InnerBackground: { background: "#5dcad4" },
+        //   ProgressBarColor: { background: "#30d410" },
+        // }}
+        />
+        :
+        <ChallengesOffline
+          token={token}
+          userId={userId}
+          questId={questId}
+        // styleConfig={{
+        //   Form: { backgroundColor: "#000000" },
+        //   MainHeading: { color: "#551717" },
+        //   Heading: { color: "#35a52d" },
+        //   PointsColor: { color: "#d7429e" },
+        //   InnerBackground: { background: "#5dcad4" },
+        //   ProgressBarColor: { background: "#30d410" },
+        // }}
+        />
+      }
+
     </QuestProvider>
   );
 };

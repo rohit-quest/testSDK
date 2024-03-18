@@ -227,7 +227,7 @@ function App() {
  */}
 
         {/* <FeedbackWorkflowPreview online={true} /> */}
-        <ChallengesPreview />
+        <ChallengesPreview online={true} />
         {/* <FeedbackPreview /> */}
 
         {/* <ReferEarnPreview/> */}
