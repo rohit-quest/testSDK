@@ -168,9 +168,9 @@ function App() {
         {/* <OnBoardingPreview online={true} /> */}
 
 
-        {/* <GetStartedPreview
+        <GetStartedPreview
    online={true}
- />   */}
+ />  
 {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
 </Modal> */}
@@ -225,7 +225,7 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-        {/* <FeedbackWorkflowPreview online={true} /> */}
+        {/* <FeedbackWorkflowPreview online={false} /> */}
 
         {/* <FeedbackPreview /> */}
 
@@ -245,7 +245,7 @@ function App() {
                     // isArticle={true}
             /> */}
            {/* <PreviewLeaderboard /> */}
-               <QuestLogin
+               {/* <QuestLogin
                     // questId=""
                     textColor=""
                     btnTextColor=""
@@ -276,7 +276,7 @@ function App() {
                         // color:'red'
                       }
                     }}
-                ></QuestLogin>
+                ></QuestLogin> */}
 
         {/* <ShareArticle
                     bgColor=""

@@ -46,7 +46,8 @@ type GetStartedProps = {
     SecondaryButton?: CSSProperties,
     Form?: CSSProperties,
     Footer?: CSSProperties,
-    Card?: CSSProperties
+    Card?: CSSProperties,
+    Topbar?:CSSProperties
   }
 };
 interface TutorialStep {
@@ -315,7 +316,7 @@ function GetStarted({
       {(autoHide === true
         ? !!formdata.length && !allCriteriaCompleted
         : true) && (
-          <div className="gs-heading-div">
+          <div className="gs-heading-div" style={{...styleConfig?.Topbar}}>
             <div>
               <div style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }} className="gs-heading">
                 {headingText || "Quickstart Guide"}

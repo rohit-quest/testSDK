@@ -35,7 +35,22 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                     'q-request-a-feature',
                     'q-contact-us',
                 ]}
-                 
+                 GeneralFeedback={{
+                    heading: "General Feedback asdasdasdasdas",
+                    description: "Give general feedsdasdasdback on this page",
+                }}
+                RequestFeature={{
+                    heading: "Request a Featureqwqewqewqe",
+                    description: "How can we msdsfdsdfake it better",
+                }}
+                ReportBug={{
+                    heading: "Reportasdasd a Bug",
+                    description: "Describazsdasde your issue",
+                }}
+                ContactUs={{
+                    heading: "Contacasasdt us",
+                    description: "Invite oasasdasdher admins and moderators",
+                }}
                 // showPoweredBy={false}
                 // styleConfig={{
                 //     Form: {
@@ -83,7 +98,22 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                 Description:'red'
             }
         }}
-
+        GeneralFeedback={{
+            heading: "General Feedback asdasdasdasdas",
+            description: "Give general feedsdasdasdback on this page",
+        }}
+        RequestFeature={{
+            heading: "Request a Featureqwqewqewqe",
+            description: "How can we msdsfdsdfake it better",
+        }}
+        ReportBug={{
+            heading: "Reportasdasd a Bug",
+            description: "Describazsdasde your issue",
+        }}
+        ContactUs={{
+            heading: "Contacasasdt us",
+            description: "Invite oasasdasdher admins and moderators",
+        }}
         offlineFormData={
             [
                 [{

@@ -200,6 +200,22 @@ interface feedbackCompProps {
   descriptions?: Record<optionType, string>;
   backBtn?: boolean;
   iconColor?: string;
+  GeneralFeedback?: {
+    heading?: string;
+    description?: string;
+  };
+  ReportBug?: {
+    heading?: string;
+    description?: string;
+  };
+  RequestFeature?: {
+    heading?: string;
+    description?: string;
+  };
+  ContactUs?: {
+    heading?: string;
+    description?: string;
+  };
   styleConfig?: {
     Form?: React.CSSProperties;
     Heading?: React.CSSProperties;
@@ -244,6 +260,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   ratingStyle,
   // uniqueUserId,
   // uniqueEmailId,
+  GeneralFeedback,
+  ReportBug,
+  ContactUs,
+  RequestFeature,
   descriptions = {
     "General Feedback": "Welcome back, Please complete your details",
     "Report a Bug": "Describe your issue",
@@ -603,7 +623,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   return (
     <Modal
       isOpen={isOpen}
-      onClose={onClose || (() => {})}
+      onClose={onClose || (() => { })}
       style={{ padding: 0, background: "transparent", ...styleConfig.Modal }}
     >
       {showLoader && <Loader />}
@@ -766,32 +786,34 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       style={{
                         color: cardHovered[0]
                           ? styleConfig?.listHover?.Heading ||
-                            styleConfig.listHeading?.color ||
-                            styleConfig?.Heading?.color ||
-                            themeConfig?.primaryColor
+                          styleConfig.listHeading?.color ||
+                          styleConfig?.Heading?.color ||
+                          themeConfig?.primaryColor
                           : styleConfig.listHeading?.color ||
-                            styleConfig?.Heading?.color ||
-                            themeConfig?.primaryColor,
+                          styleConfig?.Heading?.color ||
+                          themeConfig?.primaryColor,
                         ...styleConfig?.listHeading,
                       }}
                     >
-                      General Feedback
+                      {GeneralFeedback?.heading || "General Feedback"}
+
                     </div>
                     <div
                       className="q-fw-tab-description"
                       style={{
                         color: cardHovered[0]
                           ? styleConfig?.listHover?.Description ||
-                            styleConfig?.listDescription?.color ||
-                            styleConfig?.Description?.color ||
-                            themeConfig?.secondaryColor
+                          styleConfig?.listDescription?.color ||
+                          styleConfig?.Description?.color ||
+                          themeConfig?.secondaryColor
                           : styleConfig?.listDescription?.color ||
-                            styleConfig?.Description?.color ||
-                            themeConfig?.secondaryColor,
+                          styleConfig?.Description?.color ||
+                          themeConfig?.secondaryColor,
                         ...styleConfig?.listDescription,
                       }}
                     >
-                      Give general feedback on this page
+                      {GeneralFeedback?.description ||
+                        "Give general feedback on this page"}
                     </div>
                   </div>
                 </div>
@@ -834,16 +856,16 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         style={{
                           color: cardHovered[1]
                             ? styleConfig?.listHover?.Heading ||
-                              styleConfig.listHeading?.color ||
-                              styleConfig?.Heading?.color ||
-                              themeConfig?.primaryColor
+                            styleConfig.listHeading?.color ||
+                            styleConfig?.Heading?.color ||
+                            themeConfig?.primaryColor
                             : styleConfig.listHeading?.color ||
-                              styleConfig?.Heading?.color ||
-                              themeConfig?.primaryColor,
+                            styleConfig?.Heading?.color ||
+                            themeConfig?.primaryColor,
                           ...styleConfig?.listHeading,
                         }}
                       >
-                        Report a Bug
+                        {ReportBug?.heading || "Report a Bug"}
                       </div>
                     </div>
                     <div>
@@ -852,16 +874,17 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         style={{
                           color: cardHovered[1]
                             ? styleConfig?.listHover?.Description ||
-                              styleConfig?.listDescription?.color ||
-                              styleConfig?.Description?.color ||
-                              themeConfig?.secondaryColor
+                            styleConfig?.listDescription?.color ||
+                            styleConfig?.Description?.color ||
+                            themeConfig?.secondaryColor
                             : styleConfig?.listDescription?.color ||
-                              styleConfig?.Description?.color ||
-                              themeConfig?.secondaryColor,
+                            styleConfig?.Description?.color ||
+                            themeConfig?.secondaryColor,
                           ...styleConfig?.listDescription,
                         }}
                       >
-                        Let us know what's broken
+                       {ReportBug?.description || "Let us know what's broken"}
+                         
                       </div>
                     </div>
                   </div>
@@ -905,16 +928,16 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         style={{
                           color: cardHovered[2]
                             ? styleConfig?.listHover?.Heading ||
-                              styleConfig.listHeading?.color ||
-                              styleConfig?.Heading?.color ||
-                              themeConfig?.primaryColor
+                            styleConfig.listHeading?.color ||
+                            styleConfig?.Heading?.color ||
+                            themeConfig?.primaryColor
                             : styleConfig.listHeading?.color ||
-                              styleConfig?.Heading?.color ||
-                              themeConfig?.primaryColor,
+                            styleConfig?.Heading?.color ||
+                            themeConfig?.primaryColor,
                           ...styleConfig?.listHeading,
                         }}
                       >
-                        Request a Feature
+                      {RequestFeature?.heading || "Request a Feature"}
                       </div>
                     </div>
                     <div>
@@ -923,16 +946,16 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         style={{
                           color: cardHovered[2]
                             ? styleConfig?.listHover?.Description ||
-                              styleConfig?.listDescription?.color ||
-                              styleConfig?.Description?.color ||
-                              themeConfig?.secondaryColor
+                            styleConfig?.listDescription?.color ||
+                            styleConfig?.Description?.color ||
+                            themeConfig?.secondaryColor
                             : styleConfig?.listDescription?.color ||
-                              styleConfig?.Description?.color ||
-                              themeConfig?.secondaryColor,
+                            styleConfig?.Description?.color ||
+                            themeConfig?.secondaryColor,
                           ...styleConfig?.listDescription,
                         }}
                       >
-                        Tell us how we can improve
+                      {RequestFeature?.description || "Tell us how we can improve"}
                       </div>
                     </div>
                   </div>
@@ -976,16 +999,16 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         style={{
                           color: cardHovered[3]
                             ? styleConfig?.listHover?.Heading ||
-                              styleConfig.listHeading?.color ||
-                              styleConfig?.Heading?.color ||
-                              themeConfig?.primaryColor
+                            styleConfig.listHeading?.color ||
+                            styleConfig?.Heading?.color ||
+                            themeConfig?.primaryColor
                             : styleConfig.listHeading?.color ||
-                              styleConfig?.Heading?.color ||
-                              themeConfig?.primaryColor,
+                            styleConfig?.Heading?.color ||
+                            themeConfig?.primaryColor,
                           ...styleConfig?.listHeading,
                         }}
                       >
-                        Contact us
+                      {ContactUs?.heading || "Contact us"}
                       </div>
                     </div>
                     <div>
@@ -994,16 +1017,16 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         style={{
                           color: cardHovered[3]
                             ? styleConfig?.listHover?.Description ||
-                              styleConfig?.listDescription?.color ||
-                              styleConfig?.Description?.color ||
-                              themeConfig?.secondaryColor
+                            styleConfig?.listDescription?.color ||
+                            styleConfig?.Description?.color ||
+                            themeConfig?.secondaryColor
                             : styleConfig?.listDescription?.color ||
-                              styleConfig?.Description?.color ||
-                              themeConfig?.secondaryColor,
+                            styleConfig?.Description?.color ||
+                            themeConfig?.secondaryColor,
                           ...styleConfig?.listDescription,
                         }}
                       >
-                        Tell us how we can help
+                      {ContactUs?.description || "Tell us how we can help"}
                       </div>
                     </div>
                   </div>
