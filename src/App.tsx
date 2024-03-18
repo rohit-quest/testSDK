@@ -225,7 +225,7 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-        <FeedbackWorkflowPreview online={true} />
+        {/* <FeedbackWorkflowPreview online={true} /> */}
 
         {/* <FeedbackPreview /> */}
 
@@ -245,7 +245,7 @@ function App() {
                     // isArticle={true}
             /> */}
            {/* <PreviewLeaderboard /> */}
-               {/* <QuestLogin
+               <QuestLogin
                     // questId=""
                     textColor=""
                     btnTextColor=""
@@ -266,7 +266,7 @@ function App() {
                       IconStyle :{
                         color:'blue',
                         Background:'red',
-                        BorderColor:'pink'
+                        BorderColor:'linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%'
                       },
                       SecondaryButton :{
                         color:'red',
@@ -276,7 +276,7 @@ function App() {
                         // color:'red'
                       }
                     }}
-                ></QuestLogin> */}
+                ></QuestLogin>
 
         {/* <ShareArticle
                     bgColor=""

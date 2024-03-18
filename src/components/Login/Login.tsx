@@ -19,8 +19,11 @@ export interface QuestLoginProps {
   btnTextColor?: string;
   textColor?: string;
   backgroundColor?: string;
-  font ?: string;
-  IconColor?:string;
+  font?: string;
+  headingText?: string;
+  descriptionText?: string;
+  googleButtonText?: string;
+  IconColor?: string;
   onSubmit?: ({ userId, token }: { userId: string; token: string }) => void;
   styleConfig?: {
     Heading?: CSSProperties;
@@ -31,13 +34,13 @@ export interface QuestLoginProps {
     PrimaryButton?: CSSProperties;
     SecondaryButton?: CSSProperties;
     Form?: CSSProperties;
-    Footer?:CSSProperties;
-    IconStyle?:{
+    Footer?: CSSProperties;
+    IconStyle?: {
       BorderColor?: string
-      Background? : string;
-      color? :string;
+      Background?: string;
+      color?: string;
     }
-    OtpInput?:CSSProperties
+    OtpInput?: CSSProperties
   };
   showFooter?: boolean;
 }
@@ -55,12 +58,13 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   onSubmit,
   styleConfig,
   IconColor,
+  headingText,
+  descriptionText,
+  googleButtonText,
   showFooter = true
 }) => {
   const [isEmail, setIsEmail] = useState<boolean>(false);
   const [isGoogle, setIsGoogle] = useState<boolean>(false);
-  // const [bgColor, setBgColor] = useState<string>("#ffffff");
-  // const [fontFamily, setFontFamily] = useState<string>("Figtree");
   const [gradient, setGradient] = useState<boolean>(false);
   const [otpScreen, setOtpScreen] = useState<boolean>(false);
   const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(
@@ -149,7 +153,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   ...styleConfig?.Heading,
                 }}
               >
-                Log in or sign up
+                { headingText || 'Log in or sign up'}
               </div>
               <div
                 className="q-login-h4"
@@ -160,7 +164,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   ...styleConfig?.Description,
                 }}
               >
-                Welcome Back, Please enter your details
+                {descriptionText || 'Welcome Back, Please enter your details'}
               </div>
             </div>
           )}
@@ -197,7 +201,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                     ...styleConfig?.Description,
                   }}
                 >
-                  <div className="login-or-line" style={{backgroundColor : styleConfig?.Description?.color || themeConfig?.secondaryColor}}></div>
+                  <div className="login-or-line" style={{ backgroundColor: styleConfig?.Description?.color || themeConfig?.secondaryColor }}></div>
                   <div
                     style={{
                       color: styleConfig?.Description?.color || themeConfig?.secondaryColor,
@@ -209,7 +213,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   >
                     OR
                   </div>
-                  <div className="login-or-line" style={{ backgroundColor : styleConfig?.Description?.color || themeConfig?.secondaryColor}}></div>
+                  <div className="login-or-line" style={{ backgroundColor: styleConfig?.Description?.color || themeConfig?.secondaryColor }}></div>
                 </div>
               )}
               {!otpScreen && isGoogle && (
@@ -226,7 +230,8 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                     apiKey,
                     onSubmit,
                     styleConfig,
-                    IconColor
+                    IconColor,
+                    googleButtonText
                   }}
                 />
               )}
@@ -246,7 +251,8 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                 apiKey,
                 onSubmit,
                 styleConfig,
-                IconColor
+                IconColor,
+                googleButtonText
               }}
             />
           )}

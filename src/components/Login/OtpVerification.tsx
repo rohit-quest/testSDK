@@ -215,13 +215,13 @@ function OtpVerification({
           </div>
         </div>
         <div className="q_outer_cont">
-          <div className="q_otp_main_cont" style={{backgroundColor:styleConfig?.IconStyle?.BorderColor}}>
+          <div className="q_otp_main_cont" style={{background:styleConfig?.IconStyle?.BorderColor}}>
             <div className="q_otp_cont" style={{ background:styleConfig?.IconStyle?.Background}}>
               {LoginSvg(styleConfig?.IconStyle?.color ||  '#F4EBFF')}
             </div>
           </div>
         </div>
-        <div style={{ marginTop: "8px" }}>
+        <div>
           {/* {sec === 0 ? (
             <div
               className="q-resend"
@@ -243,11 +243,8 @@ function OtpVerification({
               We’ve sent a verification code to
             </div>
             <p  style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }} className="q_email_otp">{email}</p>
-            {/* <div className="q-resend">
-                {modifyTime(Math.floor(sec / 60))}:{modifyTime(sec % 60)} sec
-              </div> */}
           </>
-          {/* )} */}
+
           <div style={{ marginTop: "20px" }}>
             {/* <div className="q-otp-label">Enter your otp</div> */}
             <OTPInput
