@@ -19,7 +19,8 @@ interface GoogleLoginProps {
   googleClientId: string;
   apiSecret: string;
   apiKey: string;
-  onSubmit?: ({ userId, token , userCredentials, refreshToken }: { userId: string, token: string, userCredentials: object, refreshToken:string }) => void;
+  googleButtonText?: string;
+  onSubmit?: ({ userId, token, userCredentials, refreshToken }: { userId: string, token: string, userCredentials: object, refreshToken: string }) => void;
   styleConfig?: {
     Heading?: CSSProperties;
     Description?: CSSProperties;
@@ -29,13 +30,13 @@ interface GoogleLoginProps {
     PrimaryButton?: CSSProperties;
     SecondaryButton?: CSSProperties;
     Form?: CSSProperties;
-    Footer?:CSSProperties;
-    IconStyle?:{
+    Footer?: CSSProperties;
+    IconStyle?: {
       BorderColor?: string
-      Background? : string;
-      color? :string;
+      Background?: string;
+      color?: string;
     }
-    OtpInput?:CSSProperties
+    OtpInput?: CSSProperties
   };
 }
 
@@ -51,14 +52,15 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
     apiSecret,
     apiKey,
     onSubmit,
+    googleButtonText,
     styleConfig
   } = props;
 
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const params = queryString.parse(window.location.search);
   const googleCode = params.code as string;
-  const { setUser, apiType, themeConfig} = useContext(QuestContext.Context);
-  
+  const { setUser, apiType, themeConfig } = useContext(QuestContext.Context);
+
   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
   useEffect(() => {
@@ -88,14 +90,16 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
         if (res.data.success === true) {
           // toast.success('Congratulations!!!' + '\n' + 'Successfully Logged in');
           if (onSubmit) {
-            onSubmit({ userId: res.data.userId, token: res.data.token, userCredentials : res.data.credentials,
-              refreshToken : res.data.refreshToken });
+            onSubmit({
+              userId: res.data.userId, token: res.data.token, userCredentials: res.data.credentials,
+              refreshToken: res.data.refreshToken
+            });
           }
           setUser({
             userId: res.data.userId,
             token: res.data.token,
-            userCredentials : res.data.credentials,
-            refreshToken : res.data.refreshToken
+            userCredentials: res.data.credentials,
+            refreshToken: res.data.refreshToken
           });
           if (redirectURL) {
             window.location.href = redirectURL;
@@ -115,22 +119,22 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
   }
 
   return (
-    <div className="q-google-login-btn" style={{width:'100%'}}>
+    <div className="q-google-login-btn" style={{ width: '100%' }}>
       <div style={{ position: "relative" }}>
         {showLoader && <Loader />}
         <a
           style={{ textDecoration: 'none', color: 'black' }}
           href={`https://accounts.google.com/o/oauth2/auth?client_id=${googleClientId}&redirect_uri=${redirectUri}&scope=profile%20email&response_type=code`}
         >
-          <SecondaryButton 
-           style={{ 
-            borderColor: styleConfig?.SecondaryButton?.borderColor || themeConfig?.borderColor,
-            background: styleConfig?.SecondaryButton?.backgroundColor,
-            color: styleConfig?.SecondaryButton?.color,
-            ...styleConfig?.SecondaryButton
-        }}
+          <SecondaryButton
+            style={{
+              borderColor: styleConfig?.SecondaryButton?.borderColor || themeConfig?.borderColor,
+              background: styleConfig?.SecondaryButton?.backgroundColor,
+              color: styleConfig?.SecondaryButton?.color,
+              ...styleConfig?.SecondaryButton
+            }}
           >
-            <p>Sign in with Google</p>
+            <p>{googleButtonText || 'Sign in with Google'}</p>
             <img className="ml-auto" src={google2} alt="google-logo" />
           </SecondaryButton>
           {/* <div

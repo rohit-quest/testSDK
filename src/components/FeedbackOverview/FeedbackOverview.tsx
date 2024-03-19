@@ -174,10 +174,10 @@ const contact = (color: string = "#939393") => (
 );
 
 type optionType =
-  | "Contact us"
-  | "Request a Feature"
-  | "Report a Bug"
-  | "General Feedback";
+  | "ContactUs"
+  | "RequestFeature"
+  | "ReportBug"
+  | "GeneralFeedback";
 
 interface feedbackCompProps {
   userId: string;
@@ -193,6 +193,32 @@ interface feedbackCompProps {
   backgroundColor?: string;
   starColor?: string;
   starBorderColor?: string;
+  GeneralFeedback?: {
+    heading?: string;
+    description?: string;
+    formHeading?: string;
+    formDescription?: string;
+    iconUrl?: string;
+  };
+  ReportBug?: {
+    heading?: string;
+    description?: string;
+    formHeading?: string;
+    formDescription?: string;
+    iconUrl?: string;
+  };
+  RequestFeature?: {
+    heading?: string;
+    description?: string;
+    formHeading?: string;
+    formDescription?: string;
+    iconUrl?: string;
+  };
+  ContactUs?: {
+    heading?: string;
+    description?: string;
+    iconUrl?: string;
+  };
   tickBg?: string;
   ratingStyle?: "Star" | "Numbers" | "Smiles";
   uniqueUserId?: string;
@@ -243,6 +269,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   ratingStyle,
   uniqueUserId,
   uniqueEmailId,
+  GeneralFeedback,
+  ReportBug,
+  RequestFeature,
+  ContactUs,
   descriptions = {
     "General Feedback": "Welcome back, Please complete your details",
     "Report a Bug": "Describe your issue",
@@ -380,9 +410,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         });
     }
 
-    if (option === "Contact us" && contactUrl) {
+    if (option === "ContactUs" && contactUrl) {
       window.open(contactUrl, "_blank");
     } else {
+
       setSelectedOption(option);
       setSelectedQuest(quest);
       setAnswer({});
@@ -627,7 +658,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   return (
     <Modal
       isOpen={isOpen}
-      onClose={onClose || (() => {})}
+      onClose={onClose || (() => { })}
       style={{ padding: 0, background: "transparent", ...styleConfig.Modal }}
     >
       {showLoader && <Loader />}
@@ -658,13 +689,31 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   ...styleConfig?.Description,
                 },
               }}
-              description={descriptions[selectedOption]}
-              heading={selectedOption}
+              description={
+                selectedOption == "ContactUs"
+                  ? ContactUs?.description ||
+                  "Invite other admins and moderators"
+                  : selectedOption == "RequestFeature"
+                    ? RequestFeature?.formDescription || "How can we make it better"
+                    : selectedOption == "ReportBug"
+                      ? ReportBug?.formDescription || "Describe your issue"
+                      : GeneralFeedback?.formDescription ||
+                      "Give general feedback on this page"
+              }
+              heading={
+                selectedOption == "ContactUs"
+                  ? ContactUs?.heading || "Contact us"
+                  : selectedOption == "RequestFeature"
+                    ? RequestFeature?.formHeading || "Request a Feature"
+                    : selectedOption == "ReportBug"
+                      ? ReportBug?.formHeading || "Report a Bug"
+                      : GeneralFeedback?.formHeading || "General Feedback"
+              }
               iconColor={iconColor}
               onClose={handleBackClick}
             />
             <div style={{ padding: "20px" }}>
-              {selectedOption === "General Feedback" && (
+              {selectedOption === "GeneralFeedback" && (
                 <GeneralFeedbackContent
                   starColor={starColor}
                   handleSubmit={() => returnAnswers(0)}
@@ -681,7 +730,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   buttonStyle={styleConfig.PrimaryButton}
                 />
               )}
-              {selectedOption === "Report a Bug" && (
+              {selectedOption === "ReportBug" && (
                 <BugContent
                   handleSubmit={() => returnAnswers(1)}
                   handleUpdate={handleUpdate}
@@ -693,7 +742,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   handleRemove={handleRemove}
                 />
               )}
-              {selectedOption === "Request a Feature" && (
+              {selectedOption === "RequestFeature" && (
                 <FeatureContent
                   handleSubmit={() => returnAnswers(2)}
                   handleUpdate={handleUpdate}
@@ -705,7 +754,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   handleRemove={handleRemove}
                 />
               )}
-              {selectedOption === "Contact us" && <div></div>}
+              {selectedOption === "ContactUs" && <div></div>}
             </div>
             {showFooter && <QuestLabs style={styleConfig?.Footer} />}
           </div>
@@ -756,7 +805,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               {questIds[0] && (
                 <div
                   onClick={() =>
-                    handleOptionClick("General Feedback", questIds[0])
+                    handleOptionClick("GeneralFeedback", questIds[0])
                   }
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
@@ -780,11 +829,15 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         : "#FBFBFB",
                     }}
                   >
-                    {feedback(
+                    {GeneralFeedback?.iconUrl ? <img className="q_feedback_icon_imgurl" src={GeneralFeedback?.iconUrl} /> : feedback(cardHovered[0]
+                      ? styleConfig.listHover?.iconColor || "#9035FF"
+                      : iconColor
+                    )}
+                    {/* {feedback(
                       cardHovered[0]
                         ? styleConfig.listHover?.iconColor || "#9035FF"
                         : iconColor
-                    )}
+                    )} */}
                   </div>
                   <div>
                     <div
@@ -792,39 +845,40 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       style={{
                         color: cardHovered[0]
                           ? styleConfig?.listHover?.Heading ||
-                            styleConfig.listHeading?.color ||
-                            styleConfig?.Heading?.color ||
-                            themeConfig?.primaryColor
+                          styleConfig.listHeading?.color ||
+                          styleConfig?.Heading?.color ||
+                          themeConfig?.primaryColor
                           : styleConfig.listHeading?.color ||
-                            styleConfig?.Heading?.color ||
-                            themeConfig?.primaryColor,
+                          styleConfig?.Heading?.color ||
+                          themeConfig?.primaryColor,
                         ...styleConfig?.listHeading,
                       }}
                     >
-                      General Feedback
+                      {GeneralFeedback?.heading || "General Feedback"}
                     </div>
                     <div
                       className="q-fw-tab-description"
                       style={{
                         color: cardHovered[0]
                           ? styleConfig?.listHover?.Description ||
-                            styleConfig?.listDescription?.color ||
-                            styleConfig?.Description?.color ||
-                            themeConfig?.secondaryColor
+                          styleConfig?.listDescription?.color ||
+                          styleConfig?.Description?.color ||
+                          themeConfig?.secondaryColor
                           : styleConfig?.listDescription?.color ||
-                            styleConfig?.Description?.color ||
-                            themeConfig?.secondaryColor,
+                          styleConfig?.Description?.color ||
+                          themeConfig?.secondaryColor,
                         ...styleConfig?.listDescription,
                       }}
                     >
-                      Give general feedback on this page
+                      {GeneralFeedback?.description ||
+                        "Give general feedback on this page"}
                     </div>
                   </div>
                 </div>
               )}
               {questIds[1] && (
                 <div
-                  onClick={() => handleOptionClick("Report a Bug", questIds[1])}
+                  onClick={() => handleOptionClick("ReportBug", questIds[1])}
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
                     setCardHovered([false, true, false, false])
@@ -847,11 +901,14 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         : "#FBFBFB",
                     }}
                   >
-                    {bug(
+                    {ReportBug?.iconUrl ? <img className="q_feedback_icon_imgurl" src={ReportBug?.iconUrl} /> : bug(cardHovered[1]
+                      ? styleConfig.listHover?.iconColor || "#9035FF"
+                      : iconColor)}
+                    {/* {bug(
                       cardHovered[1]
                         ? styleConfig.listHover?.iconColor || "#9035FF"
                         : iconColor
-                    )}
+                    )} */}
                   </div>
                   <div>
                     <div>
@@ -860,16 +917,16 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         style={{
                           color: cardHovered[1]
                             ? styleConfig?.listHover?.Heading ||
-                              styleConfig.listHeading?.color ||
-                              styleConfig?.Heading?.color ||
-                              themeConfig?.primaryColor
+                            styleConfig.listHeading?.color ||
+                            styleConfig?.Heading?.color ||
+                            themeConfig?.primaryColor
                             : styleConfig.listHeading?.color ||
-                              styleConfig?.Heading?.color ||
-                              themeConfig?.primaryColor,
+                            styleConfig?.Heading?.color ||
+                            themeConfig?.primaryColor,
                           ...styleConfig?.listHeading,
                         }}
                       >
-                        Report a Bug
+                        {ReportBug?.heading || "Report a Bug"}
                       </div>
                     </div>
                     <div>
@@ -878,16 +935,16 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         style={{
                           color: cardHovered[1]
                             ? styleConfig?.listHover?.Description ||
-                              styleConfig?.listDescription?.color ||
-                              styleConfig?.Description?.color ||
-                              themeConfig?.secondaryColor
+                            styleConfig?.listDescription?.color ||
+                            styleConfig?.Description?.color ||
+                            themeConfig?.secondaryColor
                             : styleConfig?.listDescription?.color ||
-                              styleConfig?.Description?.color ||
-                              themeConfig?.secondaryColor,
+                            styleConfig?.Description?.color ||
+                            themeConfig?.secondaryColor,
                           ...styleConfig?.listDescription,
                         }}
                       >
-                        Let us know what's broken
+                        {ReportBug?.description || "Let us know what's broken"}
                       </div>
                     </div>
                   </div>
@@ -896,7 +953,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               {questIds[2] && (
                 <div
                   onClick={() =>
-                    handleOptionClick("Request a Feature", questIds[2])
+                    handleOptionClick("RequestFeature", questIds[2])
                   }
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
@@ -920,11 +977,14 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         : "#FBFBFB",
                     }}
                   >
-                    {feature(
+                    {RequestFeature?.iconUrl ? <img className="q_feedback_icon_imgurl" src={RequestFeature?.iconUrl} /> : feature(cardHovered[2]
+                      ? styleConfig.listHover?.iconColor || "#9035FF"
+                      : iconColor)}
+                    {/* {feature(
                       cardHovered[2]
                         ? styleConfig.listHover?.iconColor || "#9035FF"
                         : iconColor
-                    )}
+                    )} */}
                   </div>
                   <div>
                     <div>
@@ -933,16 +993,16 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         style={{
                           color: cardHovered[2]
                             ? styleConfig?.listHover?.Heading ||
-                              styleConfig.listHeading?.color ||
-                              styleConfig?.Heading?.color ||
-                              themeConfig?.primaryColor
+                            styleConfig.listHeading?.color ||
+                            styleConfig?.Heading?.color ||
+                            themeConfig?.primaryColor
                             : styleConfig.listHeading?.color ||
-                              styleConfig?.Heading?.color ||
-                              themeConfig?.primaryColor,
+                            styleConfig?.Heading?.color ||
+                            themeConfig?.primaryColor,
                           ...styleConfig?.listHeading,
                         }}
                       >
-                        Request a Feature
+                        {RequestFeature?.heading || "Request a Feature"}
                       </div>
                     </div>
                     <div>
@@ -951,16 +1011,17 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         style={{
                           color: cardHovered[2]
                             ? styleConfig?.listHover?.Description ||
-                              styleConfig?.listDescription?.color ||
-                              styleConfig?.Description?.color ||
-                              themeConfig?.secondaryColor
+                            styleConfig?.listDescription?.color ||
+                            styleConfig?.Description?.color ||
+                            themeConfig?.secondaryColor
                             : styleConfig?.listDescription?.color ||
-                              styleConfig?.Description?.color ||
-                              themeConfig?.secondaryColor,
+                            styleConfig?.Description?.color ||
+                            themeConfig?.secondaryColor,
                           ...styleConfig?.listDescription,
                         }}
                       >
-                        Tell us how we can improve
+                        {RequestFeature?.description ||
+                          "Tell us how we can improve"}
                       </div>
                     </div>
                   </div>
@@ -968,7 +1029,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               )}
               {questIds[3] && (
                 <div
-                  onClick={() => handleOptionClick("Contact us", questIds[3])}
+                  onClick={() => handleOptionClick("ContactUs", questIds[3])}
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
                     setCardHovered([false, false, false, true])
@@ -991,11 +1052,14 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         : "#FBFBFB",
                     }}
                   >
-                    {contact(
+                    {ContactUs?.iconUrl ? <img className="q_feedback_icon_imgurl" src={ContactUs?.iconUrl} /> : contact(cardHovered[3]
+                      ? styleConfig.listHover?.iconColor || "#9035FF"
+                      : iconColor)}
+                    {/* {contact(
                       cardHovered[3]
                         ? styleConfig.listHover?.iconColor || "#9035FF"
                         : iconColor
-                    )}
+                    )} */}
                   </div>
                   <div>
                     <div>
@@ -1004,16 +1068,16 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         style={{
                           color: cardHovered[3]
                             ? styleConfig?.listHover?.Heading ||
-                              styleConfig.listHeading?.color ||
-                              styleConfig?.Heading?.color ||
-                              themeConfig?.primaryColor
+                            styleConfig.listHeading?.color ||
+                            styleConfig?.Heading?.color ||
+                            themeConfig?.primaryColor
                             : styleConfig.listHeading?.color ||
-                              styleConfig?.Heading?.color ||
-                              themeConfig?.primaryColor,
+                            styleConfig?.Heading?.color ||
+                            themeConfig?.primaryColor,
                           ...styleConfig?.listHeading,
                         }}
                       >
-                        Contact us
+                        {ContactUs?.heading || "Contact us"}
                       </div>
                     </div>
                     <div>
@@ -1021,17 +1085,17 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         style={{
                           color: cardHovered[3]
                             ? styleConfig?.listHover?.Description ||
-                              styleConfig?.listDescription?.color ||
-                              styleConfig?.Description?.color ||
-                              themeConfig?.secondaryColor
+                            styleConfig?.listDescription?.color ||
+                            styleConfig?.Description?.color ||
+                            themeConfig?.secondaryColor
                             : styleConfig?.listDescription?.color ||
-                              styleConfig?.Description?.color ||
-                              themeConfig?.secondaryColor,
+                            styleConfig?.Description?.color ||
+                            themeConfig?.secondaryColor,
                           ...styleConfig?.listDescription,
                         }}
                         className="q-fw-tab-description"
                       >
-                        Tell us how we can help
+                        {ContactUs?.description || "Tell us how we can help"}
                       </div>
                     </div>
                   </div>

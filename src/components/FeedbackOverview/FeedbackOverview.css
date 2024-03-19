@@ -231,6 +231,13 @@
   line-height: 20px; /* 142.857% */
 }
 
+.q_feedback_icon_imgurl{
+  width: 16px;
+  height: 16px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
 .q-fw-tab-description {
   overflow: hidden;
   color: #939393;
