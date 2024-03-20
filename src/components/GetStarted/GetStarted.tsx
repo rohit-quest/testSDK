@@ -193,9 +193,7 @@ function GetStarted({
               type: criteria?.data?.criteriaType,
               title: criteria?.data?.metadata?.linkActionName,
               url: criteria?.data?.metadata?.linkActionUrl,
-              description:
-                criteria?.data?.metadata?.description ||
-                "this is the description",
+              description: criteria?.data?.metadata?.description,
               btn1: criteria?.data?.metadata?.btn1,
               btn2: criteria?.data?.metadata?.btn2,
               btn1Link: criteria?.data?.metadata?.btn1Link,
@@ -366,7 +364,7 @@ function GetStarted({
                   <div className="gs_card_body_image">
                     <img
                       className="gs-card-icon"
-                      src={e.imageUrl || iconUrls[i] || questLogo}
+                      src={e.imageUrl || (!!iconUrls.length ? iconUrls[i] : "") || questLogo}
                       alt=""
                     />
                   </div>
@@ -459,7 +457,7 @@ function GetStarted({
                     <img
                       className="gs-card-icon"
                       width="24px"
-                      src={iconUrls[i] || questLogo}
+                      src={(!!iconUrls.length ? iconUrls[i] : "") || questLogo}
                       alt=""
                     />
                   </div>

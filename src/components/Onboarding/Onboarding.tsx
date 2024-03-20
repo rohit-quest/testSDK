@@ -541,7 +541,7 @@ function OnBoarding(props: QuestLoginProps) {
                     </div>
                 }
                 <Label htmlFor="normalInput" style={{color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label}}>
-                    {`${question} ${!!required && "*"}`}
+                    {`${question} ${!!required ? "*" : ""}`}
                 </Label>
                 <Input 
                     type={inputType} 
@@ -575,7 +575,7 @@ function OnBoarding(props: QuestLoginProps) {
                     </div>
                 }
                 <Label htmlFor="dateInput" style={{color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label}}>
-                    {`${question} ${!!required && "*"}`}
+                    {`${question} ${!!required ? "*" : ""}`}
                 </Label>
                 <Input 
                     type={"date"} 
@@ -608,7 +608,7 @@ function OnBoarding(props: QuestLoginProps) {
                     </div>
                 }
                 <Label htmlFor="textAreaInput" style={{color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label}}>
-                    {`${question} ${!!required && "*"}`}
+                    {`${question} ${!!required ? "*" : ""}`}
                 </Label>
                 <TextArea
                     onChange={(e) => handleUpdate(e, criteriaId, "")}
@@ -642,7 +642,7 @@ function OnBoarding(props: QuestLoginProps) {
                     </div>
                 }
                 <Label htmlFor="textAreaInput" style={{color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label}}>
-                    {`${question} ${!!required && "*"}`}
+                    {`${question} ${!!required ? "*" : ""}`}
                 </Label>
                 <SingleChoice
                     options={options}
@@ -693,7 +693,7 @@ function OnBoarding(props: QuestLoginProps) {
                     </div>
                 }
                 <Label htmlFor="textAreaInput" style={{color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label}}>
-                    {`${question} ${!!required && "*"}`}
+                    {`${question} ${!!required ? "*" : ""}`}
                 </Label>
                 <MultiChoice
                     options={options}
@@ -729,7 +729,7 @@ function OnBoarding(props: QuestLoginProps) {
                     </div>
                 }
                 <Label htmlFor="textAreaInput" style={{color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label}}>
-                    {`${question} ${!!required && "*"}`}
+                    {`${question} ${!!required ? "*" : ""}`}
                 </Label>
                 <MultiChoiceTwo
                     options={options}
