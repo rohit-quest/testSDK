@@ -2185,6 +2185,7 @@ personal-chat-messages-cont
   margin-left: auto;
   width: 70%;
   word-break: break-word;
+  color: #58209C;
 }
 
 .receiver {
