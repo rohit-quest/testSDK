@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import "./leaderboard.css";
 import QuestLabs from "../QuestLabs";
 import TopLeaderBoard from "./TopLeaderBoard";
 import { StyleConfig } from "./LeaderBoard";
+import QuestContext from '../QuestWrapper';
 
 interface LeaderProps {
   userId: string;
@@ -66,11 +67,12 @@ const LeaderBoardShow: React.FC<LeaderBoardShowProps> = ({
       setRest([]);
     }
   }, [leaderboardUserData]);
+  const { themeConfig } = useContext(QuestContext.Context);
 
   return (
-    <div  style={{ background: styleConfig?.Form?.background }} className="q_leaderboard_main_cont">
+    <div style={{ background: styleConfig?.Form?.background || themeConfig?.backgroundColor, color: styleConfig?.Form?.color || themeConfig?.primaryColor, fontFamily: styleConfig?.Form?.fontFamily || themeConfig?.fontFamily }} className="q_leaderboard_main_cont">
       <div
-        style={{ color: styleConfig?.MainHeading?.color }}
+        style={{ color: styleConfig?.MainHeading?.color || themeConfig?.primaryColor, ...styleConfig?.MainHeading, ...styleConfig?.MainHeading }}
         className="q_leaderboard_main_heading"
       >
         Leaderboard

@@ -124,14 +124,14 @@ const LeaderBoardCard: React.FC<LeaderBoardCardProps> = ({
 
   return (
     <div className="q_leaderboardcard_main_cont">
-      <div style={{color:styleConfig?.IndexColor?.color,background:styleConfig?.IndexBackground?.background}} className="q_count_base">{index + 4}</div>
+      <div style={{ color: styleConfig?.IndexColor?.color, background: styleConfig?.IndexBackground?.background }} className="q_count_base">{index + 4}</div>
 
       <img
         className="q_profile_cont"
         src={
           item.imageUrl
             ? item.imageUrl
-            :questLogo
+            : questLogo
         }
         alt="logo"
       />
@@ -146,7 +146,7 @@ const LeaderBoardCard: React.FC<LeaderBoardCardProps> = ({
           >
             {item.name ?? "Quest User"}
           </div>
-          {LeaderboardCupSvg(styleConfig?.IconStyle?.color||"#9035FF")}
+          {LeaderboardCupSvg(styleConfig?.IconStyle?.color || "#9035FF")}
           {/* <img className="q_trophy_cont" src=LeaderboardCupSvg alt="icon" /> */}
         </div>
 
