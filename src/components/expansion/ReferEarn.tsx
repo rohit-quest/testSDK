@@ -11,6 +11,7 @@ import { PrimaryButton } from "../Modules/PrimaryButton.tsx";
 import Label from "../Modules/Label.tsx";
 import axios from "axios";
 import config from "../../config.ts";
+import Cookies from "universal-cookie";
 
 export interface referProp {
   questId: string;
@@ -30,7 +31,9 @@ export interface referProp {
   showReferralCode?: boolean;
   showPoweredBy?: boolean;
   showFooter?: boolean;
-  gradientBackgroundColor?: string
+  gradientBackgroundColor?: string;
+  uniqueEmailId?: string,
+  uniqueUserId?: string,
   styleConfig?: {
     Form?: React.CSSProperties,
     Heading?: React.CSSProperties,
@@ -64,6 +67,8 @@ export const Referral = ({
   showReferralCode = true,
   showFooter = true,
   gradientBackgroundColor,
+  uniqueEmailId,
+  uniqueUserId,
   styleConfig
 }: referProp) => {
   const [shareCode, setCode] = useState("");
@@ -77,6 +82,9 @@ export const Referral = ({
     }, 3000);
     onCopy(!index ? shareCode : referralLink + shareCode);
   }
+
+  let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
+
   const response = async (
     questId = "",
     headers: {
@@ -87,11 +95,6 @@ export const Referral = ({
       apisecret: string;
     }
   ) => {
-
-
-    let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
-
-
     try {
       const request = `${BACKEND_URL}api/entities/${headers.entityId}/quests/${questId}/users/${headers.userid}/referralcode`;
       const { data }: { data: { success: boolean; referralCode?: string } } =
@@ -103,14 +106,61 @@ export const Referral = ({
   };
 
   useEffect(() => {
+    if (!!uniqueUserId || !!uniqueEmailId) {
+      let cookies = new Cookies();
+      let externalUserId = cookies.get("externalUserId");
+      let questUserId = cookies.get("questUserId");
+      let questUserToken = cookies.get("questUserToken");
+      
+      const headers = {
+        apiKey: apiKey,
+        apisecret: apiSecret,
+        userId: userId,
+        token: token,
+      };
 
-    response(questId, {
-      apiKey,
-      userid: userId,
-      entityId,
-      apisecret: apiSecret || "",
-      token,
-    }).then((r) => setCode(r.referralCode || ""));
+      const body = {
+        externalUserId: !!uniqueUserId && uniqueUserId,
+        entityId: entityId,
+        email: uniqueEmailId
+      }
+
+      if (questUserId && questUserToken) {
+        response(questId, {
+          apiKey,
+          userid: questUserId,
+          entityId,
+          apisecret: apiSecret || "",
+          token: questUserToken,
+        }).then((r) => setCode(r.referralCode || ""));
+      } else {
+        axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
+        .then((res) => {
+          let {userId, token} = res.data;
+          response(questId, {
+            apiKey,
+            userid: userId,
+            entityId,
+            apisecret: apiSecret || "",
+            token,
+          }).then((r) => setCode(r.referralCode || ""));
+          
+          const date = new Date();
+          date.setHours(date.getHours() + 12)
+          cookies.set("externalUserId", uniqueUserId, {path: "/", expires: date})
+          cookies.set("questUserId", userId, {path: "/", expires: date})
+          cookies.set("questUserToken", token, {path: "/", expires: date})
+        })
+      }
+    } else if (userId) {
+      response(questId, {
+        apiKey,
+        userid: userId,
+        entityId,
+        apisecret: apiSecret || "",
+        token,
+      }).then((r) => setCode(r.referralCode || ""));
+    }
   }, []);
 
   const jsx = (

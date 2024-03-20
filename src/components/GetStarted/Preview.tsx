@@ -91,6 +91,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
              showFooter={false}
              styleConfig={{
                 // Card:{backgroundColor:'red',borderBottom:'1px solid blue'}
+                Topbar:{border:'none'}
              }}
             />
         </QuestProvider>)
@@ -118,6 +119,9 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
             
         }}
         template={1}
+        styleConfig={{
+              Topbar:{border:'none'}
+        }}
       
         offlineData={state}
     />)

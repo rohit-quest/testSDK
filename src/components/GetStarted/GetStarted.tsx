@@ -46,7 +46,8 @@ type GetStartedProps = {
     SecondaryButton?: CSSProperties,
     Form?: CSSProperties,
     Footer?: CSSProperties,
-    Card?: CSSProperties
+    Card?: CSSProperties,
+    Topbar?:CSSProperties
   }
 };
 interface TutorialStep {
@@ -192,9 +193,7 @@ function GetStarted({
               type: criteria?.data?.criteriaType,
               title: criteria?.data?.metadata?.linkActionName,
               url: criteria?.data?.metadata?.linkActionUrl,
-              description:
-                criteria?.data?.metadata?.description ||
-                "this is the description",
+              description: criteria?.data?.metadata?.description,
               btn1: criteria?.data?.metadata?.btn1,
               btn2: criteria?.data?.metadata?.btn2,
               btn1Link: criteria?.data?.metadata?.btn1Link,
@@ -315,7 +314,7 @@ function GetStarted({
       {(autoHide === true
         ? !!formdata.length && !allCriteriaCompleted
         : true) && (
-          <div className="gs-heading-div">
+          <div className="gs-heading-div" style={{...styleConfig?.Topbar}}>
             <div>
               <div style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }} className="gs-heading">
                 {headingText || "Quickstart Guide"}
@@ -365,7 +364,7 @@ function GetStarted({
                   <div className="gs_card_body_image">
                     <img
                       className="gs-card-icon"
-                      src={e.imageUrl || iconUrls[i] || questLogo}
+                      src={e.imageUrl || (!!iconUrls.length ? iconUrls[i] : "") || questLogo}
                       alt=""
                     />
                   </div>
@@ -458,7 +457,7 @@ function GetStarted({
                     <img
                       className="gs-card-icon"
                       width="24px"
-                      src={iconUrls[i] || questLogo}
+                      src={(!!iconUrls.length ? iconUrls[i] : "") || questLogo}
                       alt=""
                     />
                   </div>
