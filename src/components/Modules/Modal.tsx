@@ -22,7 +22,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, style }) => {
   return (
     <>
       {isOpen && (
-        <div className="q_modal_overlay" onClick={(e) => closeModal(e)}>
+        <div className="q_modal_overlay" style={{zIndex: style?.zIndex || 1}} onClick={(e) => closeModal(e)}>
           <div className="q_modal" ref={ref} id='modal_box' style={style}>
             {children}
           </div>
