@@ -64,7 +64,7 @@ const HelpHub = (props: HelpHubProps) => {
     }, []);
 
     return (
-        <div style={{fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif"}}>
+        <div  style={{fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif"}}>
             <div className={"helphubIconUpperCont"}>
                 {/* help button  */}
                 <div
@@ -75,7 +75,7 @@ const HelpHub = (props: HelpHubProps) => {
                 </div>
 
                 {helpHub && (
-                    <div className={"helpHubMainCont animated"}>
+                    <div id="helpHub" className={"helpHubMainCont animated"}>
                         {selectedSection === "Home" ? (
                             <HelpHubHome
                                 questsData={chieldQuestCriteria}
