@@ -27,7 +27,7 @@ const HelpHub = (props: HelpHubProps) => {
     let BACKEND_URL =
         apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
     const [selectedSection, setSelectedSection] = useState("Home");
-    const [helpHub, setHelpHub] = useState(false);
+    const [helpHub, setHelpHub] = useState(true);
     const [parentQuest, setParentQuest] = useState<QuestTypes>();
     const [chieldQuestCriteria, setChieldQuestCriteria] = useState<
         QuestCriteriaWithStatusType[][]

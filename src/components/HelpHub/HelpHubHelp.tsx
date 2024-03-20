@@ -33,7 +33,7 @@ const HelpHubTasks = (props: HelpHubFaqTypes) => {
             <div className='q-helphub-help-upper-cont '>
                 <div className='q-helphub-help-upper-cont-text'>
                     <div>
-                        <div className='q-helphub-help-upper-cont-text-head' style={{color: themeConfig?.primaryColor, ...styleConfig?.Help?.Topbar?.Heading}}>{contentConfig?.heading || "Help Centre"}</div>
+                        <div className='q-helphub-help-upper-cont-text-head' style={{color: themeConfig?.primaryColor, ...styleConfig?.Help?.Topbar?.Heading}}>{contentConfig?.heading || "Help Center"}</div>
                         <div className='q-helphub-help-upper-cont-text-para' style={{color: themeConfig?.secondaryColor, ...styleConfig?.Help?.Topbar?.SubHeading}}>
                             {contentConfig?.subHeading || "Welcome back, Please talk to us to understand"}
                         </div>

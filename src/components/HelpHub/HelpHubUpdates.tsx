@@ -101,7 +101,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                                                 value?.data?.metadata?.linkActionName
                                             }
                                         </div>
-                                        <div className='btn'>
+                                        <div className='q-hh-btn'>
                                             <img src={OpenSectionButton} alt="" />
                                         </div>
                                     </div>
@@ -136,7 +136,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                                                 value?.data?.metadata?.linkActionName
                                             }
                                         </div>
-                                        <div className='btn'>
+                                        <div className='q-hh-btn'>
                                             <img src={OpenSectionButton} alt="" />
                                         </div>
                                     </div>

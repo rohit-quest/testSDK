@@ -103,9 +103,9 @@ function App() {
     // style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
     >
       <QuestProvider
-        apiKey={"k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be"}
+        apiKey={"k-fe5a805c-77ed-4cae-bd33-9591ebed2805"}
         apiSecret={apiSecret}
-        entityId={"e-0000000000"}
+        entityId={"e-9850377b-f88f-4426-a2ac-56206c74655a"}
         featureFlags={{}}
         apiType="STAGING"
         themeConfig={
@@ -155,7 +155,7 @@ function App() {
           <button onClick={onDifferentTwo}>warning</button> */}
         {/* <ModalPreview/> */}
 
-        <HelpHub />
+        <HelpHub token={'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMDkzMTE5NywiZXhwIjoxNzExNTM1OTk3fQ.by5N1ghhEo6TdonXLsNwHNmcpD_h40DC85hidc_XZb0'}  userId="u-8268f5e1-f5a1-440c-a333-0f5578a73847"/>
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
         <GamifiedQuizPreview online={true} />
 

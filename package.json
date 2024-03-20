@@ -31,6 +31,7 @@
     "@amplitude/analytics-browser": "^2.3.6",
     "@amplitude/analytics-node": "^1.3.4",
     "@sentry/react": "^7.109.0",
+    "@questlabs/react-sdk": "file:questlabs-react-sdk-1.4.2.tgz",
     "@stripe/react-stripe-js": "^2.4.0",
     "@stripe/stripe-js": "^2.2.2",
     "@types/react-select": "^5.0.1",

@@ -28,78 +28,78 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     const scrollRef = useRef<HTMLDivElement>(null);
 
     const [chat, setChats] = useState([
-        {
-            profile: "hi",
-            senderName: "Alexander Rodriguez...",
-            senderMessage:
-                " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-        },
-        {
-            profile: "hi",
-            senderName: "Alexander Rodriguez...",
-            senderMessage:
-                " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-        },
-        {
-            profile: "hi",
-            senderName: "Alexander Rodriguez...",
-            senderMessage:
-                " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-        },
-        {
-            profile: "hi",
-            senderName: "Alexander Rodriguez...",
-            senderMessage:
-                " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-        },
-        {
-            profile: "hi",
-            senderName: "Alexander Rodriguez...",
-            senderMessage:
-                " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-        },
-        {
-            profile: "hi",
-            senderName: "Alexander Rodriguez...",
-            senderMessage:
-                " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-        },
-        {
-            profile: "hi",
-            senderName: "Alexander Rodriguez...",
-            senderMessage:
-                " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-        },
-        {
-            profile: "hi",
-            senderName: "Alexander Rodriguez...",
-            senderMessage:
-                " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-        },
-        {
-            profile: "hi",
-            senderName: "Alexander Rodriguez...",
-            senderMessage:
-                " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-        },
-        {
-            profile: "hi",
-            senderName: "Alexander Rodriguez...",
-            senderMessage:
-                " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-        },
-        {
-            profile: "hi",
-            senderName: "Alexander Rodriguez...",
-            senderMessage:
-                " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-        },
-        {
-            profile: "hi",
-            senderName: "Alexander Rodriguez...",
-            senderMessage:
-                " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-        },
+        // {
+        //     profile: "hi",
+        //     senderName: "Alexander Rodriguez...",
+        //     senderMessage:
+        //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+        // },
+        // {
+        //     profile: "hi",
+        //     senderName: "Alexander Rodriguez...",
+        //     senderMessage:
+        //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+        // },
+        // {
+        //     profile: "hi",
+        //     senderName: "Alexander Rodriguez...",
+        //     senderMessage:
+        //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+        // },
+        // {
+        //     profile: "hi",
+        //     senderName: "Alexander Rodriguez...",
+        //     senderMessage:
+        //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+        // },
+        // {
+        //     profile: "hi",
+        //     senderName: "Alexander Rodriguez...",
+        //     senderMessage:
+        //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+        // },
+        // {
+        //     profile: "hi",
+        //     senderName: "Alexander Rodriguez...",
+        //     senderMessage:
+        //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+        // },
+        // {
+        //     profile: "hi",
+        //     senderName: "Alexander Rodriguez...",
+        //     senderMessage:
+        //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+        // },
+        // {
+        //     profile: "hi",
+        //     senderName: "Alexander Rodriguez...",
+        //     senderMessage:
+        //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+        // },
+        // {
+        //     profile: "hi",
+        //     senderName: "Alexander Rodriguez...",
+        //     senderMessage:
+        //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+        // },
+        // {
+        //     profile: "hi",
+        //     senderName: "Alexander Rodriguez...",
+        //     senderMessage:
+        //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+        // },
+        // {
+        //     profile: "hi",
+        //     senderName: "Alexander Rodriguez...",
+        //     senderMessage:
+        //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+        // },
+        // {
+        //     profile: "hi",
+        //     senderName: "Alexander Rodriguez...",
+        //     senderMessage:
+        //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+        // },
     ]);
 
     const handleSave = () => {
@@ -121,7 +121,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
         const headerElement = document.getElementById('helpHub');
         if (headerElement && scrollRef.current) {
             const headerHeight = headerElement.clientHeight;
-            scrollRef.current.style.height = headerHeight - 278 + 'px';
+            scrollRef.current.style.height = headerHeight - 228 + 'px';
         }
     };
 
@@ -209,7 +209,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                             <div className="q-helphub-chats-section">
                                 {/* only one chat */}
 
-                                {chat.map((value, index) => {
+                                {/* {chat.map((value, index) => {
                                     return (
                                         <div className="q-helphub-chat-detail">
                                             <div className="q-helphub-chat-sender-profile">
@@ -245,7 +245,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                                             </button>
                                         </div>
                                     );
-                                })}
+                                })} */}
                             </div>
                         </div>
 

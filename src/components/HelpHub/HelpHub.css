@@ -20,6 +20,7 @@
   border-radius: 50%;
   transition: transform 0.3s ease;
   cursor: pointer;
+  opacity: 0;
 }
 
 .helhubIconCont:hover {
@@ -58,7 +59,7 @@
   /* border: 1px solid red; */
   background: linear-gradient(
     28deg,
-    rgba(255, 255, 255, 0) 33.51%,
+    rgba(255, 255, 255, 1) 33.51%,
     #9035ff 62.67%,
     #0065ff 76.97%
   );
@@ -1744,7 +1745,7 @@ personal-chat-messages-cont
   /* 150% */
 }
 
-.update-question .btn {
+.update-question .q-hh-btn {
   transform: rotateZ(-90deg);
 }
 
