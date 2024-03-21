@@ -36,6 +36,7 @@ type GetStartedProps = {
   showLoadingIndicator?: boolean;
   showAnnouncement?: boolean;
   allowMultiClick?: boolean;
+  ButtonType?: "Arrow" | "Buttons";
   showFooter?: boolean;
   onLinkTrigger?: (url: string, index: number) => void;
   template?: 1 | 2;
@@ -82,6 +83,7 @@ function GetStarted({
   arrowColor,
   showLoadingIndicator = true,
   showAnnouncement = false,
+  ButtonType = "Arrow",
   allowMultiClick = false,
   onLinkTrigger = (url: string, index: number) => { window.location.href = url },
   showFooter = true,
@@ -194,9 +196,9 @@ function GetStarted({
               title: criteria?.data?.metadata?.linkActionName,
               url: criteria?.data?.metadata?.linkActionUrl,
               description: criteria?.data?.metadata?.description,
-              btn1: criteria?.data?.metadata?.btn1,
-              btn2: criteria?.data?.metadata?.btn2,
-              btn1Link: criteria?.data?.metadata?.btn1Link,
+              btn1: criteria?.data?.metadata?.demoText,
+              btn2: criteria?.data?.metadata?.buttonText,
+              btn1Link: criteria?.data?.metadata?.demoUrl,
               criteriaId: criteria?.data?.criteriaId,
               completed: criteria?.completed,
               longDescription:
@@ -294,6 +296,11 @@ function GetStarted({
     }
   }, [allCriteriaCompleted]);
 
+  const handleVisit = (event,url: string) => {
+    // window.open(url, "_blank");
+    event.stopPropagation();
+    console.log(url);
+  };
 
 
   if (featureFlags[config.FLAG_CONSTRAINTS.GetStartedFlag]?.isEnabled == false) {
@@ -476,24 +483,66 @@ function GetStarted({
                     </div>
                   </div>
                   {/* <div className="gs-card-btn-container"> */}
-                  <div
-                    className="gs-card-img-button"
-                  >
-                    {e.completed ? (
-
-                      <div className="q_gt_arrow-completed"><GetStartedSvgs type={'greenCheck'} color={'#098849'} /></div>
-                    ) : (
-                      <div className="q_gt_arrow">
-                        <GetStartedSvgs color={arrowColor} type={'arrowRight'} />
+                  {ButtonType === "Buttons" &&
+                    (!e.completed ? (
+                      <div className="gs_drop_btns">
+                        <SecondaryButton
+                          style={{
+                            flex: "inherit",
+                            width: "fit-content",
+                            border: "none",
+                            ...styleConfig?.SecondaryButton,
+                          }}
+                          onClick={(event) => { event.stopPropagation(); window.open(e.url); }}
+                          className="gs_visit_btn gs_tempalate1_btn"
+                          children={e.btn1 || "Visit Website"}
+                        />
+                        <PrimaryButton
+                          className={"gs_start_btn"}
+                          children={e.btn2 ||"Start Now"}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            !(!allowMultiClick && e.completed) &&
+                              handleCriteriaClick(e.criteriaId, e.url);
+                          }}
+                          disabled={!allowMultiClick && e.completed}
+                          style={{
+                            flex: "inherit",
+                            width: "fit-content",
+                            background:
+                              styleConfig?.PrimaryButton?.background ||
+                              themeConfig?.buttonColor,
+                            ...styleConfig?.PrimaryButton,
+                          }}
+                        />
                       </div>
-                      // <img
-                      //   className="q_gt_arrow"
-                      //   // src={arrowRight(arrowColor)}
-                      //   alt=""
-                      // />
+                    ) : (
+                      <div className="gs-card-img-button">
+                      <div className="q_gt_arrow-completed">
+                        <GetStartedSvgs type={"greenCheck"} color={"#098849"} />
+                      </div>
+                      </div>
 
-                    )}
-                  </div>
+                    ))}
+                  {ButtonType === "Arrow" && (
+                    <div className="gs-card-img-button">
+                      {e.completed ? (
+                        <div className="q_gt_arrow-completed">
+                          <GetStartedSvgs
+                            type={"greenCheck"}
+                            color={"#098849"}
+                          />
+                        </div>
+                      ) : (
+                        <div className="q_gt_arrow">
+                          <GetStartedSvgs
+                            type={"arrowRight"}
+                            color={arrowColor}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
               // </div>

@@ -168,9 +168,9 @@ function App() {
         {/* <OnBoardingPreview online={true} /> */}
 
 
-        {/* <GetStartedPreview
+        <GetStartedPreview
    online={true}
- />   */}
+ />  
 {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
 </Modal> */}
@@ -244,7 +244,7 @@ function App() {
                     // color="blue"
                     // isArticle={true}
             /> */}
-           <PreviewLeaderboard />
+           {/* <PreviewLeaderboard /> */}
                {/* <QuestLogin
                     // questId=""
                     textColor=""
