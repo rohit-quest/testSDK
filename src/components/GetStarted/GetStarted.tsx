@@ -190,7 +190,7 @@ function GetStarted({
         const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}`;
         axios.get(request, { headers: header }).then((res) => {
           let response = res.data;
-          console.log(response,'response');
+
           let criterias = response?.eligibilityData?.map((criteria: any) => {
             return {
               type: criteria?.data?.criteriaType,

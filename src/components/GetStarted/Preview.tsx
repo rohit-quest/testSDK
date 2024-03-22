@@ -36,6 +36,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
             "btn1Link": "https://join.slack.com/t/quest-ewq8314/shared_invite/zt-25wut50tj-YyIFs~H9d4LHjNYqJmlkow",
             "criteriaId": "ec-166aa74a-748d-4cf6-8329-b487efb49720",
             "completed": false,
+            'imageUrl': 'https://img.freepik.com/free-vector/colorful-letter-gradient-logo-design_474888-2309.jpg?size=338&ext=jpg&ga=GA1.1.735520172.1710576000&semt=ais',
             "longDescription": "Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users"
         },
         {
@@ -49,6 +50,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
             "btn1Link": "https://calendly.com/debparna/15-min",
             "criteriaId": "ec-3b238eb3-2a1f-48bb-a9ac-44e48edf880f",
             "completed": false,
+            'imageUrl': 'https://img.freepik.com/free-vector/colorful-letter-gradient-logo-design_474888-2309.jpg?size=338&ext=jpg&ga=GA1.1.735520172.1710576000&semt=ais',
             "longDescription": "Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users"
         }
     ])
