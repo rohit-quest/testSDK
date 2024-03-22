@@ -190,21 +190,22 @@ function GetStarted({
         const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}`;
         axios.get(request, { headers: header }).then((res) => {
           let response = res.data;
+          console.log(response,'response');
           let criterias = response?.eligibilityData?.map((criteria: any) => {
             return {
               type: criteria?.data?.criteriaType,
               title: criteria?.data?.metadata?.linkActionName,
               url: criteria?.data?.metadata?.linkActionUrl,
               description: criteria?.data?.metadata?.description,
-              btn1: criteria?.data?.metadata?.demoText,
-              btn2: criteria?.data?.metadata?.buttonText,
-              btn1Link: criteria?.data?.metadata?.demoUrl,
+              btn1: criteria?.data?.metadata?.btn1,
+              btn2: criteria?.data?.metadata?.btn2,
+              btn1Link: criteria?.data?.metadata?.btn1Link,
               criteriaId: criteria?.data?.criteriaId,
               completed: criteria?.completed,
               longDescription:
                 criteria?.longDescription ||
                 "Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users",
-              imageUrl: criteria?.imageUrl,
+              imageUrl: criteria?.data?.metadata?.imageUrl,
             };
           });
           const allCriteriasCompleted = criterias.every(
@@ -296,11 +297,6 @@ function GetStarted({
     }
   }, [allCriteriaCompleted]);
 
-  const handleVisit = (event,url: string) => {
-    // window.open(url, "_blank");
-    event.stopPropagation();
-    console.log(url);
-  };
 
 
   if (featureFlags[config.FLAG_CONSTRAINTS.GetStartedFlag]?.isEnabled == false) {
@@ -369,6 +365,7 @@ function GetStarted({
                   className="gs_card_body_dropDown"
                 >
                   <div className="gs_card_body_image">
+
                     <img
                       className="gs-card-icon"
                       src={e.imageUrl || (!!iconUrls.length ? iconUrls[i] : "") || questLogo}
@@ -416,7 +413,7 @@ function GetStarted({
                   <div className="gs_card_dropdown">
                     <div className="gs_drop_desc" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>{e.longDescription}</div>
                     <div className="gs_drop_btns">
-                      <PrimaryButton className={'gs_start_btn'} children={"Start Now"} onClick={(event) => {
+                      <PrimaryButton className={'gs_start_btn'} children={e.btn2 || "Start Now" } onClick={(event) => {
                         event.stopPropagation()
                         !(!allowMultiClick && e.completed) &&
                           handleCriteriaClick(e.criteriaId, e.url)
@@ -436,7 +433,7 @@ function GetStarted({
                           flex: 'inherit',
                           width: 'fit-content'
                         }}
-                        onClick={() => window.open(e.url)}
+                        onClick={() => window.open(e.btn1Link)}
                         className="gs_visit_btn"
                         children={e.btn1 || "Visit Website"} />
                     </div>
@@ -463,8 +460,7 @@ function GetStarted({
                   <div className="gs_card_body_image">
                     <img
                       className="gs-card-icon"
-                      width="24px"
-                      src={(!!iconUrls.length ? iconUrls[i] : "") || questLogo}
+                      src={e.imageUrl || (!!iconUrls.length ? iconUrls[i] : "") || questLogo}
                       alt=""
                     />
                   </div>
@@ -493,7 +489,7 @@ function GetStarted({
                             border: "none",
                             ...styleConfig?.SecondaryButton,
                           }}
-                          onClick={(event) => { event.stopPropagation(); window.open(e.url); }}
+                          onClick={(event) => { event.stopPropagation(); window.open(e.btn1Link); }}
                           className="gs_visit_btn gs_tempalate1_btn"
                           children={e.btn1 || "Visit Website"}
                         />

@@ -12,7 +12,7 @@ export const userId = 'u-8268f5e1-f5a1-440c-a333-0f5578a73847'
 export default function GetStartedPreview({ online = true }: { online?: boolean }) {
     let [state,setstate] = useState([
         {
-            id: 1,
+             id: 1,
             "type": "LINK_OPEN_READ",
             "title": "Create a Quest Campaign",
             "url": "https://www.youtube.com/",

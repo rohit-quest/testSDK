@@ -17,7 +17,8 @@ export default function ReferEarnPreview() {
         }}
         >
 
-            <ReferEarn questId={questId}
+            <ReferEarn 
+            questId={questId}
             token={token} userId={userId} 
             onCopy={(referralCode) => console.log(referralCode)}
              referralLink='https://questlabs.ai/'
@@ -36,6 +37,7 @@ export default function ReferEarnPreview() {
             // secondaryIconColor='red'
             // gradientBackground={true}
             showFooter={false}
+            showReferralCode={false}
               />
         </QuestProvider>
     )

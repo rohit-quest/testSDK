@@ -198,7 +198,7 @@ function OfflineGetStarted({
                   <div className="gs_card_body_image">
                     <img
                       className="gs-card-icon"
-                      src={e.imageUrl || iconUrls[i] || questLogo}
+                      src={e.imageUrl || (!!iconUrls.length ? iconUrls[i] : "") || questLogo}
                       alt=""
                     />
                   </div>
@@ -321,7 +321,7 @@ function OfflineGetStarted({
                     <img
                       className="gs-card-icon"
                       width="24px"
-                      src={iconUrls[i] || questLogo}
+                      src={e.imageUrl || (!!iconUrls.length ? iconUrls[i] : "") || questLogo}
                       alt=""
                     />
                   </div>
@@ -358,7 +358,7 @@ function OfflineGetStarted({
                             border: "none",
                             ...styleConfig?.SecondaryButton,
                           }}
-                          onClick={() => window.open(e.url)}
+                          onClick={(event) => { event.stopPropagation(); window.open(e.btn1Link); }}
                           className="gs_visit_btn gs_tempalate1_btn"
                           children={e.btn1 || "Visit Website"}
                         />
