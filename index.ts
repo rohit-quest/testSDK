@@ -23,6 +23,7 @@ import './src/components/Tour/walkThrough.css';
 import './src/components/Streak/DailyStrek.css'
 import "./src/components/Login/OtpVerification.css"
 import "./src/components/Leaderboard/leaderboard.css"
+import "./src/components/HelpHub/HelpHub.css"
 import QuestLogin from "./src/components/Login/Login";
 import OnBoarding from "./src/components/Onboarding/Onboarding";
 import { QuestProvider } from "./src/components/QuestWrapper";
@@ -63,6 +64,7 @@ import Survey from "./src/components/Feedback/Survey.tsx";
 import FeedbackWorkflowOffline from './src/components/FeedbackOverview/OfflineComponent';
 import LeaderBoard from "./src/components/Leaderboard/LeaderBoard.tsx";
 import Toast from './src/components/toast2/Toast';
+import HelpHub from "./src/components/HelpHub/HelpHub.tsx";
 export {
     QuestProvider,
     QuestLogin,
@@ -104,5 +106,6 @@ export {
     FeedbackWorkflowOffline,
     LeaderBoard,
     Toast,
-    Survey
+    Survey,
+    HelpHub
 };
