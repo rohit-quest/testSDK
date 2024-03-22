@@ -53,7 +53,7 @@ export const Challenges = ({ userId, token, questId, styleConfig }: Props) => {
             : config.BACKEND_URL;
 
         const response = await axios.get(
-          `${BACKEND_URL}api/entities/${entityId}/quests/${questId}`,
+          `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}`,
           {
             headers: {
               apiKey: apiKey,

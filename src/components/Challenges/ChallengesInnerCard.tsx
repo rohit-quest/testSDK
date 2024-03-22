@@ -42,9 +42,7 @@ const ChallengesInnerCard: React.FC<Props> = ({
           <div
             style={{
               width: `${progressbarPercent}%`,
-              background: isLocked
-                ? styleConfig?.ProgressBarColor?.background || "#9035FF"
-                : "#B9B9B9",
+              background:  styleConfig?.ProgressBarColor?.background || "#9035FF",
             }}
             className="q_challenges_inner_card_progressbar_inner"
           ></div>
