@@ -45,7 +45,7 @@ const ChallengesCard: React.FC<Props> = ({
           <ChallengesInnerCard
             key={item.criteriaId}
             title={item.criteriaTitle}
-            islockedIcon={item.isLocked ? challengesIcon1 : challengesLock}
+            islockedIcon={item.progressPercent ? challengesIcon1 : challengesLock}
             metricCount={item.metricCount}
             progressbarPercent={item.progressPercent}
             progressData={item.progressData}
