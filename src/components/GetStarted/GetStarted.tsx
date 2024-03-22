@@ -22,7 +22,7 @@ type GetStartedProps = {
   questId: string;
   cardBackground?: string;
   onCompleteAllStatus?: () => void;
-  iconUrls: Array<string>;
+  iconUrls?: Array<string> ;
   uniqueUserId?: string;
   uniqueEmailId?: string;
   cardBorderColor?: string;
@@ -71,7 +71,7 @@ function GetStarted({
   questId,
   // cardBackground = 'transparent',
   onCompleteAllStatus,
-  iconUrls,
+  iconUrls =[],
   uniqueUserId,
   // cardBorderColor = '#EFEFEF',
   headingText,
@@ -368,7 +368,7 @@ function GetStarted({
 
                     <img
                       className="gs-card-icon"
-                      src={e.imageUrl || (!!iconUrls.length ? iconUrls[i] : "") || questLogo}
+                      src={e.imageUrl || (!!iconUrls.length ? iconUrls?.[i] : "") || questLogo}
                       alt=""
                     />
                   </div>
@@ -460,7 +460,7 @@ function GetStarted({
                   <div className="gs_card_body_image">
                     <img
                       className="gs-card-icon"
-                      src={e.imageUrl || (!!iconUrls.length ? iconUrls[i] : "") || questLogo}
+                      src={e.imageUrl || (!!iconUrls.length ? iconUrls?.[i] : "") || questLogo}
                       alt=""
                     />
                   </div>

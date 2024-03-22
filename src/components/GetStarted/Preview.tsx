@@ -22,6 +22,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
             "btn1Link": "https://calendly.com/debparna/15-min",
             "criteriaId": "ec-868df9ea-b029-4ca9-9e83-0140f8b376d0",
             "completed": false,
+            'imageUrl': 'https://img.freepik.com/free-vector/colorful-letter-gradient-logo-design_474888-2309.jpg?size=338&ext=jpg&ga=GA1.1.735520172.1710576000&semt=ais',
             "longDescription": "Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users"
         },
         {
@@ -69,12 +70,12 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
                 // buttonColor="yellow"
                 cardBackground="yellowGreen"
                 cardBorderColor='red'
-                iconUrls={[
-                    "https://pin.questprotocol.xyz/ipfs/QmWSjM2BwmSW7pda3YmWxyFQ7sCJ9PVmVAwj1W9K7XAHhG",
-                    "https://pin.questprotocol.xyz/ipfs/QmRC5SwJpBup4wRB32DxjPV2fEnccpJkuMTBtzS9aiJg42",
-                    "https://pin.questprotocol.xyz/ipfs/QmcYB6T27vbqdaaeJdx1Cz3nz9oYMhTegpWjhSff7aX2Mi",
-                    "https://pin.questprotocol.xyz/ipfs/QmavuprWaHKvd5JZvkdgathYKLr5Zcshc1EPRzRzBJaPqw"
-                ]}
+                // iconUrls={[
+                //     "https://pin.questprotocol.xyz/ipfs/QmWSjM2BwmSW7pda3YmWxyFQ7sCJ9PVmVAwj1W9K7XAHhG",
+                //     "https://pin.questprotocol.xyz/ipfs/QmRC5SwJpBup4wRB32DxjPV2fEnccpJkuMTBtzS9aiJg42",
+                //     "https://pin.questprotocol.xyz/ipfs/QmcYB6T27vbqdaaeJdx1Cz3nz9oYMhTegpWjhSff7aX2Mi",
+                //     "https://pin.questprotocol.xyz/ipfs/QmavuprWaHKvd5JZvkdgathYKLr5Zcshc1EPRzRzBJaPqw"
+                // ]}
                 // anouncement
                 allowMultiClick={false}
                 autoHide={false}
@@ -117,9 +118,9 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
         onCompleteAllStatus={() => {
             // showToast.success({ text: "completed successfully" })
         }}
-        onLinkTrigger = {()=>{
+        // onLinkTrigger = {()=>{
             
-        }}
+        // }}
         
         template={1}
         styleConfig={{

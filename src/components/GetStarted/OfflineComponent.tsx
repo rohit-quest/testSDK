@@ -39,7 +39,7 @@ type offlineGetStartedProps = {
   cardBackground?: string;
   cardHeadingColor?: string;
   onCompleteAllStatus?: () => void;
-  iconUrls: Array<string>;
+  iconUrls?: Array<string>;
   uniqueUserId?: string;
   uniqueEmailId?: string;
   cardBorderColor?: string;
@@ -70,7 +70,7 @@ type offlineGetStartedProps = {
 };
 
 function OfflineGetStarted({
-  iconUrls,
+  iconUrls =[],
   headingText,
   descriptionText,
   autoHide,
@@ -83,9 +83,7 @@ function OfflineGetStarted({
   styleConfig,
   offlineData,
   ButtonType = "Arrow",
-  onLinkTrigger = (url: string, index: number) => {
-    window.location.href = url;
-  },
+  onLinkTrigger = (url: string, index: number) => { window.location.href = url },
 }: offlineGetStartedProps) {
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [allCriteriaCompleted, setAllCriteriaCompleted] =
@@ -198,7 +196,7 @@ function OfflineGetStarted({
                   <div className="gs_card_body_image">
                     <img
                       className="gs-card-icon"
-                      src={e.imageUrl || (!!iconUrls.length ? iconUrls[i] : "") || questLogo}
+                      src={e.imageUrl || (!!iconUrls.length ? iconUrls?.[i] : "") || questLogo}
                       alt=""
                     />
                   </div>
@@ -270,7 +268,7 @@ function OfflineGetStarted({
                     <div className="gs_drop_btns">
                       <PrimaryButton
                         className={"gs_start_btn"}
-                        children={"Start Now"}
+                        children={e.btn2||"Start Now"}
                         onClick={(event) => {
                           event.stopPropagation();
                           !(!allowMultiClick && e.completed) &&
@@ -321,7 +319,7 @@ function OfflineGetStarted({
                     <img
                       className="gs-card-icon"
                       width="24px"
-                      src={e.imageUrl || (!!iconUrls.length ? iconUrls[i] : "") || questLogo}
+                      src={e.imageUrl || (!!iconUrls.length ? iconUrls?.[i] : "") || questLogo}
                       alt=""
                     />
                   </div>
@@ -364,7 +362,7 @@ function OfflineGetStarted({
                         />
                         <PrimaryButton
                           className={"gs_start_btn"}
-                          children={"Start Now"}
+                          children={e.btn2 || "Start Now"}
                           onClick={(event) => {
                             event.stopPropagation();
                             !(!allowMultiClick && e.completed) &&

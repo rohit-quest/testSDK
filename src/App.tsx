@@ -167,10 +167,10 @@ function App() {
                 /> */}
         {/* <OnBoardingPreview online={true} /> */}
 
-{/* 
+
         <GetStartedPreview
    online={false}
- />   */}
+ />  
 {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
 </Modal> */}
@@ -229,7 +229,7 @@ function App() {
 
         {/* <FeedbackPreview /> */}
 
-        <ReferEarnPreview/>
+        {/* <ReferEarnPreview/> */}
 
         {/* <CrossSellingPreview/> */}
 
