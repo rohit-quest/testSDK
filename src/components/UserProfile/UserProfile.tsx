@@ -125,6 +125,7 @@ function UserProfile(props: QuestLoginProps) {
 
     // let { design =[] } = props;
     const [formdata, setFormdata] = useState<FormData[] | []>([]);
+    const [alreadyFilled, setAlreadyFilled] = useState<boolean>(false);
     const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(QuestContext.Context);
     const cookies = new Cookies()
 
@@ -132,9 +133,6 @@ function UserProfile(props: QuestLoginProps) {
 
     useEffect(() => {
         if (entityId) {
-            let externalUserId = cookies.get("externalUserId");
-            let questUserId = cookies.get("questUserId");
-            let questUserToken = cookies.get("questUserToken");
             // let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
             
             const headers = {
@@ -143,12 +141,6 @@ function UserProfile(props: QuestLoginProps) {
                 userId: userId,
                 token: token, // Replace with your actual token
             };
-
-            const body = {
-                externalUserId: !!uniqueUserId && uniqueUserId,
-                entityId: entityId,
-                email: uniqueEmailId
-            }
             
             getQuestData(userId, headers)
             
@@ -158,7 +150,6 @@ function UserProfile(props: QuestLoginProps) {
                 const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/summary?userId=${userId}&singleUserReport=true`;
                 await axios.get(request, { headers: headers }).then((res: any) => {
                     let response = res.data.summary;
-                    console.log(response)
                     let criterias = response?.quest?.eligibilityData?.map(
                         (criteria: {
                             criteriaType: string;
@@ -184,7 +175,6 @@ function UserProfile(props: QuestLoginProps) {
                     let userAnswers = !!response?.answers?.length ? response?.answers[0].answers : [];
                     const getAns = (criteriaId: string) => {
                         let ans = userAnswers.filter((ans: any) => ans.criteriaId == criteriaId )
-                        console.log(ans)
                         if (ans.length > 0) {
                             return ans[0].userAnswer;
                         } else {
@@ -204,6 +194,9 @@ function UserProfile(props: QuestLoginProps) {
                             return;
                         }
                     });
+                    if (userAnswers.length) {
+                        setAlreadyFilled(true);
+                    }
                     setAnswer({ ...answer, ...ansArray });
                 });
                 (loadingTracker && setLoading(false))
@@ -452,19 +445,19 @@ function UserProfile(props: QuestLoginProps) {
         }));
 
         
-        let questUserId = cookies.get("questUserId");
-        let questUserToken = cookies.get("questUserToken");
 
         let headers = {
             apikey: apiKey,
             apisecret: apiSecret,
-            userId: questUserId ? questUserId : userId,
-            token: questUserToken ? questUserToken : token
+            userId: userId,
+            token: token
         }
 
         getAnswers && getAnswers(crt);
         
-        axios.post(`${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`, {criterias, userId: headers.userId}, {headers})
+        (loadingTracker && setLoading(true))
+        axios.post(`${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}&editSubmissionCriteria=true`, {criterias, userId: headers.userId}, {headers})
+        .then(() => (loadingTracker && setLoading(false)))
     }
     
 
@@ -568,7 +561,7 @@ function UserProfile(props: QuestLoginProps) {
                                         ...styleConfig?.PrimaryButton
                                     }}
                                 >
-                                    {"Update Profile"}
+                                    {alreadyFilled ? "Update Profile" : "Submit"}
                                 </PrimaryButton>
                             </div>
                         )
