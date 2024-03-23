@@ -24,6 +24,7 @@ import './src/components/Streak/DailyStrek.css'
 import "./src/components/Login/OtpVerification.css"
 import "./src/components/Leaderboard/leaderboard.css"
 import "./src/components/UserProfile/userProfile.css"
+import "./src/components/Challenges/challenges.css"
 import QuestLogin from "./src/components/Login/Login";
 import OnBoarding from "./src/components/Onboarding/Onboarding";
 import { QuestProvider } from "./src/components/QuestWrapper";
@@ -65,6 +66,7 @@ import FeedbackWorkflowOffline from './src/components/FeedbackOverview/OfflineCo
 import LeaderBoard from "./src/components/Leaderboard/LeaderBoard.tsx";
 import UserProfile from "./src/components/UserProfile/UserProfile.tsx";
 import Toast from './src/components/toast2/Toast';
+import { Challenges } from './src/components/Challenges/Challenges';
 export {
     QuestProvider,
     QuestLogin,
@@ -108,4 +110,5 @@ export {
     Toast,
     Survey,
     UserProfile
+    Challenges
 };
