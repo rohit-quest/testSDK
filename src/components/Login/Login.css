@@ -22,7 +22,7 @@
   line-height: 16px;
 }
 .q-containerStyle {
-  width: 320px !important;
+  width: 100%; /* I make in 100% from 320px because I face the width issue in SAAS Template */
   display: flex;
   justify-content: space-between;
   margin-top: 4px;

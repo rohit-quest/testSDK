@@ -852,12 +852,13 @@ function OnBoarding(props: QuestLoginProps) {
         
         let questUserId = cookies.get("questUserId");
         let questUserToken = cookies.get("questUserToken");
+        let externalUserId = cookies.get("externalUserId");
 
         let headers = {
             apikey: apiKey,
             apisecret: apiSecret,
-            userId: questUserId ? questUserId : userId,
-            token: questUserToken ? questUserToken : token
+            userId: (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) ? questUserId : userId,
+            token: (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) ? questUserToken : token
         }
 
         getAnswers && getAnswers(crt);

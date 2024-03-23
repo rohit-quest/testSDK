@@ -20,9 +20,10 @@ import './src/components/Credit/credit.css';
 import './src/components/Share/sharearticle.css'
 import './src/components/Search/search.css';
 import './src/components/Tour/walkThrough.css';
-import './src/components/Streak/DailyStrek.css';
-import "./src/components/Login/OtpVerification.css";
-import "./src/components/Leaderboard/leaderboard.css";
+import './src/components/Streak/DailyStrek.css'
+import "./src/components/Login/OtpVerification.css"
+import "./src/components/Leaderboard/leaderboard.css"
+import "./src/components/UserProfile/userProfile.css"
 import "./src/components/Challenges/challenges.css"
 import QuestLogin from "./src/components/Login/Login";
 import OnBoarding from "./src/components/Onboarding/Onboarding";
@@ -63,6 +64,7 @@ import SurveyOffline from "./src/components/Feedback/OfflineComponent.tsx";
 import Survey from "./src/components/Feedback/Survey.tsx";
 import FeedbackWorkflowOffline from './src/components/FeedbackOverview/OfflineComponent';
 import LeaderBoard from "./src/components/Leaderboard/LeaderBoard.tsx";
+import UserProfile from "./src/components/UserProfile/UserProfile.tsx";
 import Toast from './src/components/toast2/Toast';
 import { Challenges } from './src/components/Challenges/Challenges';
 export {
@@ -107,5 +109,6 @@ export {
     LeaderBoard,
     Toast,
     Survey,
+    UserProfile
     Challenges
 };
