@@ -26,7 +26,7 @@ const ChallengesInnerCard: React.FC<Props> = ({
   return (
     <div className="q_challenges_inner_card_main_cont">
       <div
-        style={{ background: isLocked ? "#F4EBFF" : "#EFEFEF" }}
+        style={{ background: progressbarPercent ? "#F4EBFF" : "#EFEFEF" }}
         className="q_challenges_icon_main_cont"
       >
         <img className="q_challenges_icon_cont" src={islockedIcon} alt="" />
@@ -49,7 +49,7 @@ const ChallengesInnerCard: React.FC<Props> = ({
         </div>
         <div
           style={{
-            color: isLocked
+            color: progressbarPercent
               ? styleConfig?.PointsColor?.color || "#9035FF"
               : "#B9B9B9",
           }}
