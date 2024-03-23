@@ -109,6 +109,6 @@ export {
     LeaderBoard,
     Toast,
     Survey,
-    UserProfile
+    UserProfile,
     Challenges
 };
