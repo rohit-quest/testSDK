@@ -32,11 +32,17 @@ const ChallengesCard: React.FC<Props> = ({
       >
         Task List
       </div>
-      <div className="q_challenges_card_input_cont">
+      <div className="q_challenges_card_input_cont" style={{
+        background: styleConfig?.Search?.background ? styleConfig?.Search?.background : '',
+        color: styleConfig?.Search?.color ? styleConfig?.Search?.color : '',
+      }}>
         <input
           onChange={handleSearchChange}
           className="q_challenges_card_input"
           placeholder="Search for tasks..."
+          style={{
+            color: styleConfig?.Search?.color ? styleConfig?.Search?.color : '',
+          }}
         />
         <img src={searchIcon} alt={searchIcon} />
       </div>
@@ -45,7 +51,8 @@ const ChallengesCard: React.FC<Props> = ({
           <ChallengesInnerCard
             key={item.criteriaId}
             title={item.criteriaTitle}
-            islockedIcon={item.progressPercent ? challengesIcon1 : challengesLock}
+            // islockedIcon={item.progressPercent ? challengesIcon1 : challengesLock}
+            islockedIcon={item.progressPercent ? "challengesIcon1" : "challengesLock"}
             metricCount={item.metricCount}
             progressbarPercent={item.progressPercent}
             progressData={item.progressData}

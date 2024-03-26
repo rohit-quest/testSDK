@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { StyleConfig } from "./Challenges";
 import QuestContext from "../QuestWrapper";
+import { ChallengeIconFunctionSVG, ChallengesLockFunction } from "./TaskLogo";
 
 interface Props {
   title: string;
@@ -29,7 +30,8 @@ const ChallengesInnerCard: React.FC<Props> = ({
         style={{ background: progressbarPercent ? "#F4EBFF" : "#EFEFEF" }}
         className="q_challenges_icon_main_cont"
       >
-        <img className="q_challenges_icon_cont" src={islockedIcon} alt="" />
+        {/* <img className="q_challenges_icon_cont" src={islockedIcon} alt="" /> */}
+        {islockedIcon === "challengesIcon1" ? ChallengeIconFunctionSVG(styleConfig?.IconStyle?.color || "#9035FF") : ChallengesLockFunction('')}
       </div>
       <div className="q_challenges_inner_card_name_cont">
         <div
@@ -42,7 +44,7 @@ const ChallengesInnerCard: React.FC<Props> = ({
           <div
             style={{
               width: `${progressbarPercent}%`,
-              background:  styleConfig?.ProgressBarColor?.background || "#9035FF",
+              background: styleConfig?.ProgressBarColor?.background || "#9035FF",
             }}
             className="q_challenges_inner_card_progressbar_inner"
           ></div>
