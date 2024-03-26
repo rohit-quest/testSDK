@@ -15,6 +15,10 @@ export interface StyleConfig {
   IconStyle?: {
     color?: string;
   };
+  Search?: {
+    background?: string,
+    color?: string
+  }
   Footer?: CSSProperties;
 }
 

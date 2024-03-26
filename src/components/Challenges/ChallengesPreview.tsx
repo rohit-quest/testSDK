@@ -8,9 +8,9 @@ const ChallengesPreview = ({ online = true }) => {
     "s-b1b50609-4728-4702-8bd8-679f4b6560f08bfe2b25-2d65-4ae2-a652-c344bae62a24";
   const entityId = "e-9850377b-f88f-4426-a2ac-56206c74655a";
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMDgzMjg0NSwiZXhwIjoxNzExNDM3NjQ1fQ.y5GASBV304K4Vr_AxRa66mnJyMM2e0xEV0c4dDXYj2o";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMTQyOTA0NiwiZXhwIjoxNzEyMDMzODQ2fQ.0drpb6_vUXm6EuTuCq5DhCa1PkrL6ZKI8J_rPksWWgs";
   const userId = "u-8268f5e1-f5a1-440c-a333-0f5578a73847";
-  const questId = "q-a3c879ba-522a-4b7a-af57-90418f9def77";
+  const questId = "q-36693271-ba1e-41e6-a785-5277878a1406";
 
   return (
     <QuestProvider
@@ -30,6 +30,54 @@ const ChallengesPreview = ({ online = true }) => {
           token={token}
           userId={userId}
           questId={questId}
+
+          styleConfig={{
+            Form: {
+              // background: "red"
+            },
+            MainHeading: {
+              // background: "red",
+              // color: "yellow"
+            },
+            Heading: {
+              // background: "yellow",
+              // color: "red"
+            },
+
+            Search: {
+              // background: "red",
+              // color: "white"
+            },
+            // nw 
+            Description: {
+              // background: "red",
+              // color: "yellow"
+            },
+
+            PointsColor: {
+              // background: 'red',
+              // color: "yellow"
+            },
+            ProgressBarColor: {
+              // background: "yellow",
+              // color: 'red'
+            },
+            InnerBackground: {
+              // background: "yellow",
+              // color: "red"
+            },
+            IconStyle: {
+              // color: "red"
+            },
+
+            Footer: {
+              // background: "yellow"
+            },
+
+
+
+
+          }}
         // styleConfig={{
         //   Form: { backgroundColor: "#000000" },
         //   MainHeading: { color: "#551717" },
