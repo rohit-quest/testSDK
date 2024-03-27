@@ -31,6 +31,7 @@ export interface referProp {
   showReferralCode?: boolean;
   showPoweredBy?: boolean;
   showFooter?: boolean;
+  showRefferalLogo?: boolean;
   gradientBackgroundColor?: string;
   uniqueEmailId?: string,
   uniqueUserId?: string,
@@ -69,7 +70,9 @@ export const Referral = ({
   gradientBackgroundColor,
   uniqueEmailId,
   uniqueUserId,
-  styleConfig
+  styleConfig,
+  showRefferalLogo = true,
+
 }: referProp) => {
   const [shareCode, setCode] = useState("");
   const [copy, setCopy] = useState([false, false]);
@@ -111,7 +114,7 @@ export const Referral = ({
       let externalUserId = cookies.get("externalUserId");
       let questUserId = cookies.get("questUserId");
       let questUserToken = cookies.get("questUserToken");
-      
+
       const headers = {
         apiKey: apiKey,
         apisecret: apiSecret,
@@ -134,23 +137,23 @@ export const Referral = ({
           token: questUserToken,
         }).then((r) => setCode(r.referralCode || ""));
       } else {
-        axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
-        .then((res) => {
-          let {userId, token} = res.data;
-          response(questId, {
-            apiKey,
-            userid: userId,
-            entityId,
-            apisecret: apiSecret || "",
-            token,
-          }).then((r) => setCode(r.referralCode || ""));
-          
-          const date = new Date();
-          date.setHours(date.getHours() + 12)
-          cookies.set("externalUserId", uniqueUserId, {path: "/", expires: date})
-          cookies.set("questUserId", userId, {path: "/", expires: date})
-          cookies.set("questUserToken", token, {path: "/", expires: date})
-        })
+        axios.post(`${BACKEND_URL}api/users/external/login`, body, { headers })
+          .then((res) => {
+            let { userId, token } = res.data;
+            response(questId, {
+              apiKey,
+              userid: userId,
+              entityId,
+              apisecret: apiSecret || "",
+              token,
+            }).then((r) => setCode(r.referralCode || ""));
+
+            const date = new Date();
+            date.setHours(date.getHours() + 12)
+            cookies.set("externalUserId", uniqueUserId, { path: "/", expires: date })
+            cookies.set("questUserId", userId, { path: "/", expires: date })
+            cookies.set("questUserToken", token, { path: "/", expires: date })
+          })
       }
     } else if (userId) {
       response(questId, {
@@ -165,12 +168,14 @@ export const Referral = ({
 
   const jsx = (
     <div className="q_refer_and_earn" style={{
-      // background: themeConfig.backgroundColor || "#FFF",color: themeConfig.primaryColor,...styleConfig?.Form
       background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
     }}>
-      <div className="q_refer_head" >
-        <img src={referIcon} className="refer_head_img" alt="" />
-      </div>
+
+      {showRefferalLogo &&
+        <div className="q_refer_head" >
+          <img src={referIcon} className="refer_head_img" alt="" />
+        </div>
+      }
       <div className="q_refer_content" >
         <div className="refer_content_box" >
           <div className="q_refer_heading" style={styleConfig?.Heading}>{heading}</div>

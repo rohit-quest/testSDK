@@ -31,7 +31,6 @@
 }
 
 .q_refer_heading {
-    display: -webkit-box;
     color: #2C2C2C;
     /* font-family: Figtree; */
     font-size: 20px;
@@ -55,7 +54,7 @@
 .refer_content_box {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
 }
 
 .q_refer_code_content {
