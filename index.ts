@@ -68,6 +68,7 @@ import LeaderBoard from "./src/components/Leaderboard/LeaderBoard.tsx";
 import Toast from './src/components/toast2/Toast';
 import HelpHub from "./src/components/HelpHub/HelpHub.tsx";
 import { Challenges } from './src/components/Challenges/Challenges';
+import UserProfile from "./src/components/UserProfile/UserProfile.tsx";
 export {
     QuestProvider,
     QuestLogin,
@@ -111,5 +112,6 @@ export {
     Toast,
     Survey,
     HelpHub,
-    Challenges
+    Challenges,
+    UserProfile
 };
