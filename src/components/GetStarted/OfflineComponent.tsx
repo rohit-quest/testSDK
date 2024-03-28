@@ -1,14 +1,25 @@
-import React, { CSSProperties, Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
-import './GetStarted.css';
+import React, {
+  CSSProperties,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import "./GetStarted.css";
 // import config from '../../config';
-import QuestContext from '../QuestWrapper';
-import Loader from '../Login/Loader';
-import { greenCheck, gsTick, helpCenter1, questLogo } from '../../assets/images';
-import QuestLabs from '../QuestLabs';
-import { SecondaryButton } from '../Modules/SecondaryButton';
-import { PrimaryButton } from '../Modules/PrimaryButton';
-import GetStartedSvgs from './Svgs';
-
+import QuestContext from "../QuestWrapper";
+import Loader from "../Login/Loader";
+import {
+  greenCheck,
+  gsTick,
+  helpCenter1,
+  questLogo,
+} from "../../assets/images";
+import QuestLabs from "../QuestLabs";
+import { SecondaryButton } from "../Modules/SecondaryButton";
+import { PrimaryButton } from "../Modules/PrimaryButton";
+import GetStartedSvgs from "./Svgs";
 
 interface offlineData {
   id: number;
@@ -28,7 +39,7 @@ type offlineGetStartedProps = {
   cardBackground?: string;
   cardHeadingColor?: string;
   onCompleteAllStatus?: () => void;
-  iconUrls: Array<string>;
+  iconUrls?: Array<string>;
   uniqueUserId?: string;
   uniqueEmailId?: string;
   cardBorderColor?: string;
@@ -42,27 +53,24 @@ type offlineGetStartedProps = {
   showLoadingIndicator?: boolean;
   allowMultiClick?: boolean;
   showFooter?: boolean;
+  ButtonType?: "Arrow" | "Buttons";
   onLinkTrigger?: (url: string, index: number) => void;
   template?: 1 | 2;
   styleConfig?: {
-    Heading?: CSSProperties,
-    Description?: CSSProperties,
-    PrimaryButton?: CSSProperties,
-    SecondaryButton?: CSSProperties,
-    Form?: CSSProperties,
-    Footer?: CSSProperties,
-    Card?: CSSProperties,
-    Topbar?:CSSProperties
+    Heading?: CSSProperties;
+    Description?: CSSProperties;
+    PrimaryButton?: CSSProperties;
+    SecondaryButton?: CSSProperties;
+    Form?: CSSProperties;
+    Footer?: CSSProperties;
+    Card?: CSSProperties;
+    Topbar?: CSSProperties;
   };
-  offlineData: offlineData[]
+  offlineData: offlineData[];
 };
 
-
-
 function OfflineGetStarted({
-  cardBackground = 'transparent',
-  iconUrls,
-  cardBorderColor = '#EFEFEF',
+  iconUrls =[],
   headingText,
   descriptionText,
   autoHide,
@@ -74,60 +82,79 @@ function OfflineGetStarted({
   showFooter = true,
   styleConfig,
   offlineData,
-  onLinkTrigger = (url: string, index: number) => { window.location.href = url }
+  ButtonType = "Arrow",
+  onLinkTrigger = (url: string, index: number) => { window.location.href = url },
 }: offlineGetStartedProps) {
-
   const [showLoader, setShowLoader] = useState<boolean>(false);
-  const [allCriteriaCompleted, setAllCriteriaCompleted] = useState<boolean>(false);
+  const [allCriteriaCompleted, setAllCriteriaCompleted] =
+    useState<boolean>(false);
   // const [criteriaSubmit, setCriteriaSubmit] = useState<string[]>([])
-  const { themeConfig } = useContext(
-    QuestContext.Context
-  );
+  const { themeConfig } = useContext(QuestContext.Context);
   const [dropdowns, setDropdown] = useState<Array<boolean>>([]);
-  const [data, setData] = useState(offlineData)
+  const [data, setData] = useState(offlineData);
 
-  const completedPercentage = data?.length ? (data?.reduce((a, b) => a + (b.completed ? 1 : 0), 0)) * 100 / data?.length : 0;
-  useEffect(() => { offlineData?.length && setData(offlineData) }, [offlineData])
+  const completedPercentage = data?.length
+    ? (data?.reduce((a, b) => a + (b.completed ? 1 : 0), 0) * 100) /
+      data?.length
+    : 0;
+  useEffect(() => {
+    offlineData?.length && setData(offlineData);
+  }, [offlineData]);
 
   const handleCriteriaClick = (criteriaId: string | undefined, url: string) => {
     const update = data.map((item, index) => {
       if (item?.criteriaId == criteriaId) {
-        item.completed = true
-        onLinkTrigger(url, index)
+        item.completed = true;
+        onLinkTrigger(url, index);
       }
-      return item
-    })
-    setData(update)
+      return item;
+    });
+    setData(update);
   };
 
   useEffect(() => {
-    setDropdown(new Array(offlineData.length).fill(false))
-  }, [])
-
+    setDropdown(new Array(offlineData.length).fill(false));
+  }, []);
 
   return (
     <div
       style={{
-        background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
+        background:
+          styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor,
+        height: styleConfig?.Form?.height || "auto",
+        fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+        ...styleConfig?.Form,
       }}
       className="get_started_box"
     >
       {showLoadingIndicator && showLoader && <Loader />}
-      {(autoHide === true
-        ? !!data.length && !allCriteriaCompleted
-        : true) && (
-          <div className="gs-heading-div" style={{...styleConfig?.Topbar}}>
-            <div>
-              <div style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }} className="gs-heading">
-                {headingText || "Quickstart Guide"}
-              </div>
-              <div style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description }} className="gs-subheading">
-                {descriptionText ||
-                  "Get started with Quest and explore how Quest can take your customer engagement to the next level"}
-              </div>
+      {(autoHide === true ? !!data.length && !allCriteriaCompleted : true) && (
+        <div className="gs-heading-div" style={{ ...styleConfig?.Topbar }}>
+          <div>
+            <div
+              style={{
+                color: styleConfig?.Heading?.color || themeConfig?.primaryColor,
+                ...styleConfig?.Heading,
+              }}
+              className="gs-heading"
+            >
+              {headingText || "Quickstart Guide"}
+            </div>
+            <div
+              style={{
+                color:
+                  styleConfig?.Description?.color ||
+                  themeConfig?.secondaryColor,
+                ...styleConfig?.Description,
+              }}
+              className="gs-subheading"
+            >
+              {descriptionText ||
+                "Get started with Quest and explore how Quest can take your customer engagement to the next level"}
             </div>
           </div>
-        )}
+        </div>
+      )}
       {(autoHide === true ? !!data.length && !allCriteriaCompleted : true) &&
         showProgressBar && (
           <div className="q_gt_progress">
@@ -142,16 +169,21 @@ function OfflineGetStarted({
             </div>
           </div>
         )}
-      <div className="gs-cards-container" style={{ padding: showProgressBar ? '0px 20px 20px 20px' : '20px', gap: template == 2 ? '0px' : '16px' }}>
+      <div
+        className="gs-cards-container"
+        style={{
+          padding: showProgressBar ? "0px 20px 20px 20px" : "20px",
+          gap: template == 2 ? "0px" : "16px",
+        }}
+      >
         {(autoHide === true ? !allCriteriaCompleted : true) &&
-          data?.length && data.map((e, i) =>
+          data?.length &&
+          data.map((e, i) =>
             template == 2 ? (
               <div
                 key={i}
                 style={{
-                  // background: cardBackground,
-                  // borderBottom: `1px solid ${cardBorderColor}`,
-                  ...styleConfig?.Card
+                  ...styleConfig?.Card,
                 }}
                 onClick={() =>
                   setDropdown((prev) =>
@@ -160,25 +192,31 @@ function OfflineGetStarted({
                 }
                 className="gs-single-card-dropDown"
               >
-                <div
-                  className="gs_card_body_dropDown"
-                >
+                <div className="gs_card_body_dropDown">
                   <div className="gs_card_body_image">
                     <img
                       className="gs-card-icon"
-                      src={e.imageUrl || iconUrls[i] || questLogo}
+                      src={e.imageUrl || (!!iconUrls.length ? iconUrls?.[i] : "") || questLogo}
                       alt=""
                     />
                   </div>
                   <div className="gs-card-text">
                     <div
-                      style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
+                      style={{
+                        color:
+                          styleConfig?.Heading?.color ||
+                          themeConfig?.primaryColor,
+                      }}
                       className="gs-card-head"
                     >
                       {e.title}
                     </div>
                     <div
-                      style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
+                      style={{
+                        color:
+                          styleConfig?.Description?.color ||
+                          themeConfig?.secondaryColor,
+                      }}
                       className="gs-card-desc"
                     >
                       {e.description}
@@ -188,20 +226,28 @@ function OfflineGetStarted({
                     {
                       <div className="gs-card-img-button">
                         {e.completed ? (
-                          <div className="q_gt_arrow-completed"><GetStartedSvgs type={'greenCheck'} color={'#098849'} /></div>
+                          <div className="q_gt_arrow-completed">
+                            <GetStartedSvgs
+                              type={"greenCheck"}
+                              color={"#098849"}
+                            />
+                          </div>
                         ) : (
                           <div className="q_gt_arrow">
                             {dropdowns[i] ? (
-                              <GetStartedSvgs type={'upArrow'} color={arrowColor} />
+                              <GetStartedSvgs
+                                type={"upArrow"}
+                                color={arrowColor}
+                              />
+                            ) : e.completed ? (
+                              <img src={gsTick} alt="" className="q_gt_arrow" />
                             ) : (
-                              e.completed ? (
-                                <img src={gsTick} alt="" className="q_gt_arrow" />
-                              ) : (
-                                <GetStartedSvgs type={'downArrowIcon'} color={arrowColor} />
-                              )
+                              <GetStartedSvgs
+                                type={"downArrowIcon"}
+                                color={arrowColor}
+                              />
                             )}
                           </div>
-
                         )}
                       </div>
                     }
@@ -209,27 +255,45 @@ function OfflineGetStarted({
                 </div>
                 {dropdowns[i] && (
                   <div className="gs_card_dropdown">
-                    <div className="gs_drop_desc" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>{e.longDescription}</div>
+                    <div
+                      className="gs_drop_desc"
+                      style={{
+                        color:
+                          styleConfig?.Description?.color ||
+                          themeConfig?.secondaryColor,
+                      }}
+                    >
+                      {e.longDescription}
+                    </div>
                     <div className="gs_drop_btns">
-                      <PrimaryButton className={'gs_start_btn'} children={"Start Now"} onClick={(event) => {
-                        event.stopPropagation()
-                        !(!allowMultiClick && e.completed) &&
-                          handleCriteriaClick(e.criteriaId, e.url)
-                      }
-                      }
-                        disabled={(!allowMultiClick && e.completed)}
+                      <PrimaryButton
+                        className={"gs_start_btn"}
+                        children={e.btn2||"Start Now"}
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          !(!allowMultiClick && e.completed) &&
+                            handleCriteriaClick(e.criteriaId, e.url);
+                        }}
+                        disabled={!allowMultiClick && e.completed}
                         style={{
-                          flex: 'inherit',
-                          width: 'fit-content',
-                          background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
-                          ...styleConfig?.PrimaryButton
+                          flex: "inherit",
+                          width: "fit-content",
+                          background:
+                            styleConfig?.PrimaryButton?.background ||
+                            themeConfig?.buttonColor,
+                          ...styleConfig?.PrimaryButton,
                         }}
                       />
                       <SecondaryButton
-                        style={{ ...styleConfig?.SecondaryButton, flex: 'inherit', width: 'fit-content' }}
+                        style={{
+                          ...styleConfig?.SecondaryButton,
+                          flex: "inherit",
+                          width: "fit-content",
+                        }}
                         onClick={() => window.open(e.url)}
                         className="gs_visit_btn"
-                        children={e.btn1 || "Visit Website"} />
+                        children={e.btn1 || "Visit Website"}
+                      />
                     </div>
                   </div>
                 )}
@@ -240,74 +304,122 @@ function OfflineGetStarted({
                 className="gs-single-card"
                 onClick={() => {
                   !(!allowMultiClick && e.completed) &&
-                    handleCriteriaClick(e.criteriaId, e.url)
-                }
-                }
+                    handleCriteriaClick(e.criteriaId, e.url);
+                }}
               >
                 <div
                   className="gs_card_body"
-                  style={{ 
+                  style={{
                     // background: cardBackground,
                     // border: `1px solid ${cardBorderColor}`,
-                    ...styleConfig?.Card
+                    ...styleConfig?.Card,
                   }}
                 >
                   <div className="gs_card_body_image">
                     <img
                       className="gs-card-icon"
                       width="24px"
-                      src={iconUrls[i] || questLogo}
+                      src={e.imageUrl || (!!iconUrls.length ? iconUrls?.[i] : "") || questLogo}
                       alt=""
                     />
                   </div>
                   <div className="gs-card-text">
                     <div
-                      style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
+                      style={{
+                        color:
+                          styleConfig?.Heading?.color ||
+                          themeConfig?.primaryColor,
+                      }}
                       className="gs-card-head"
                     >
                       {e.title}
                     </div>
                     <div
-                      style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
+                      style={{
+                        color:
+                          styleConfig?.Description?.color ||
+                          themeConfig?.secondaryColor,
+                      }}
                       className="gs-card-desc"
                     >
                       {e.description}
                     </div>
                   </div>
-                  {/* <div className="gs-card-btn-container"> */}
-                  <div
-                    className="gs-card-img-button"
-                  >
-                    {e.completed ? (
-                      <div className="q_gt_arrow-completed"><GetStartedSvgs type={'greenCheck'} color={'#098849'} /></div>
+
+                  {ButtonType === "Buttons" &&
+                    (!e.completed ? (
+                      <div className="gs_drop_btns">
+                        <SecondaryButton
+                          style={{
+                            flex: "inherit",
+                            width: "fit-content",
+                            border: "none",
+                            ...styleConfig?.SecondaryButton,
+                          }}
+                          onClick={(event) => { event.stopPropagation(); window.open(e.btn1Link); }}
+                          className="gs_visit_btn gs_tempalate1_btn"
+                          children={e.btn1 || "Visit Website"}
+                        />
+                        <PrimaryButton
+                          className={"gs_start_btn"}
+                          children={e.btn2 || "Start Now"}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            !(!allowMultiClick && e.completed) &&
+                              handleCriteriaClick(e.criteriaId, e.url);
+                          }}
+                          disabled={!allowMultiClick && e.completed}
+                          style={{
+                            flex: "inherit",
+                            width: "fit-content",
+                            background:
+                              styleConfig?.PrimaryButton?.background ||
+                              themeConfig?.buttonColor,
+                            ...styleConfig?.PrimaryButton,
+                          }}
+                        />
+                      </div>
                     ) : (
-                      // <img
-                      //   className="q_gt_arrow"
-                      //   src={arrowRight(arrowColor)}
-                      //   alt=""
-                      // />
-                      <div className="q_gt_arrow">
-                        <GetStartedSvgs type={'arrowRight'} color={arrowColor} />
+                      <div className="gs-card-img-button">
+                      <div className="q_gt_arrow-completed">
+                        <GetStartedSvgs type={"greenCheck"} color={"#098849"} />
+                      </div>
                       </div>
 
-                    )}
-                  </div>
+                    ))}
+                  {ButtonType === "Arrow" && (
+                    <div className="gs-card-img-button">
+                      {e.completed ? (
+                        <div className="q_gt_arrow-completed">
+                          <GetStartedSvgs
+                            type={"greenCheck"}
+                            color={"#098849"}
+                          />
+                        </div>
+                      ) : (
+                        <div className="q_gt_arrow">
+                          <GetStartedSvgs
+                            type={"arrowRight"}
+                            color={arrowColor}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
               // </div>
             )
           )}
       </div>
-      {(showFooter && (autoHide === true
-        ? !!data.length && !allCriteriaCompleted
-        : true)) &&
-        <div>
-          <QuestLabs style={styleConfig?.Footer} />
-        </div>
-      }
+      {showFooter &&
+        (autoHide === true ? !!data.length && !allCriteriaCompleted : true) && (
+          <div>
+            <QuestLabs style={styleConfig?.Footer} />
+          </div>
+        )}
     </div>
   );
-
 }
 
 export default OfflineGetStarted;
