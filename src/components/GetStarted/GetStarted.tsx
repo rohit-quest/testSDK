@@ -48,7 +48,11 @@ type GetStartedProps = {
     Form?: CSSProperties,
     Footer?: CSSProperties,
     Card?: CSSProperties,
-    Topbar?:CSSProperties
+    Topbar?:CSSProperties,
+    ProgressBar?: {
+      barColor?: string,
+      ProgressText?: CSSProperties
+    }
   }
 };
 interface TutorialStep {
@@ -332,13 +336,13 @@ function GetStarted({
       {(autoHide === true ? !!formdata.length && !allCriteriaCompleted : true) &&
         showProgressBar && (
           <div className="q_gt_progress">
-            <div className="q_progress_percentage">
+            <div className="q_progress_percentage" style={{color: styleConfig?.ProgressBar?.ProgressText?.color || "#9035ff"}}>
               {Math.floor(completedPercentage) || 0}% Completed
             </div>
             <div className="q_gt_progress_bar">
               <div
                 className="q_progress_bar_completed"
-                style={{ width: `${completedPercentage}%` }}
+                style={{ width: `${completedPercentage}%`, background: styleConfig?.ProgressBar?.barColor || "#9035ff" }}
               ></div>
             </div>
           </div>

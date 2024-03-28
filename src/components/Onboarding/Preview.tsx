@@ -5,12 +5,13 @@ import { QuestProvider } from '../QuestWrapper';
 import { answer } from '../QuestForm/response';
 import showToast from '../toast/toastService';
 import Toast from '../toast2/Toast';
-export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
-export const apiKey = 'k-68a0c6b8-b27f-49c6-a315-b0c9cba15bf4'
+import UserProfile from '../UserProfile/UserProfile';
+export const questId = 'q-d5286071-fdb3-441a-b39d-df8c3e90977f';
+export const apiKey = 'k-a375a494-6700-47e0-a37e-ba3721261005'
 export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
-export const entityId = 'e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5'
-export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
-export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
+export const entityId = 'e-91486d88-7b65-4984-9ea6-56340c6bcad0'
+export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTRjYzUxMGE0LWU2NzAtNGVkMy1hYmUzLWMzNTFjMTliYjk5MiIsImlhdCI6MTcxMTAyMDY4MSwiZXhwIjoxNzExNjI1NDgxfQ.xX8cpCXzaN5FS6UhOtiVxw-_w_MQHOonFQmL2lFlECQ'
+export const userId = 'u-4cc510a4-e670-4ed3-abe3-c351c19bb992'
 
 export default function OnBoardingPreview({ online = true }: {online?: boolean}) {
 
@@ -119,7 +120,7 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
           // fontFamily: "cursive"
         }}
       >
-        <OnBoarding
+        <UserProfile
           userId={userId}
           questId={questId}
           answer={answer}
@@ -127,14 +128,14 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
           token={token}
           // answerFontSize="14px"
           // template={''}
-          progress={["Personal sdrerwtr", "Professional", "Additional",]}
+          // progress={["Personal sdrerwtr", "Professional", "Additional",]}
           
           // text="Go Back"
           // text="Submit and Continue"
           // color=""
           // bgColor="#fff"
-          showFooter={false}
-          controlBtnType="Arrow"
+          // showFooter={false}
+          // controlBtnType="Arrow"
           // headingSize="24px"
           // descSize="18px"
           // inputFieldType={{

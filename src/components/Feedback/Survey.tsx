@@ -703,7 +703,7 @@ const singleChoiceOne = (
           ) : null
         ) : (
           <div className="">
-            <div className="q-center">Form data is empty</div>
+            {/* <div className="q-center">Form data is empty</div> */}
           </div>
         )}
       </div>

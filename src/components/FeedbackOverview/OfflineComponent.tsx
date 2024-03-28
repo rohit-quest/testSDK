@@ -617,6 +617,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           value={answer[criteriaId]}
           placeholder={placeholder}
+          style={{borderColor: themeConfig.borderColor,color:styleConfig?.TextArea?.color || styleConfig?.Heading?.color || themeConfig.primaryColor  , ...styleConfig.TextArea}}
         />
       </div>
     );

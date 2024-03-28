@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { useContext } from 'react';
 import QuestContext from '../QuestWrapper';
 import { SecondaryButton } from '../Modules/SecondaryButton';
+import Toast from '../toast2/Toast';
 
 interface GoogleLoginProps {
   btnTextColor?: string;
@@ -118,13 +119,22 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
       });
   }
 
+  function handleGoogleLoginClick() {
+    if (!googleClientId) {
+      Toast.error({ text: "Google Client ID not set for this community, please try email OTP login" });
+      return 
+    }
+    window.location.href = `https://accounts.google.com/o/oauth2/auth?client_id=${googleClientId}&redirect_uri=${redirectUri}&scope=profile%20email&response_type=code`
+  }
+
+
   return (
     <div className="q-google-login-btn" style={{ width: '100%' }}>
       <div style={{ position: "relative" }}>
         {showLoader && <Loader />}
         <a
           style={{ textDecoration: 'none', color: 'black' }}
-          href={`https://accounts.google.com/o/oauth2/auth?client_id=${googleClientId}&redirect_uri=${redirectUri}&scope=profile%20email&response_type=code`}
+          onClick={handleGoogleLoginClick}
         >
           <SecondaryButton
             style={{
