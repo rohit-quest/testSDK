@@ -65,7 +65,6 @@ import SurveyOffline from "./src/components/Feedback/OfflineComponent.tsx";
 import Survey from "./src/components/Feedback/Survey.tsx";
 import FeedbackWorkflowOffline from './src/components/FeedbackOverview/OfflineComponent';
 import LeaderBoard from "./src/components/Leaderboard/LeaderBoard.tsx";
-import UserProfile from "./src/components/UserProfile/UserProfile.tsx";
 import Toast from './src/components/toast2/Toast';
 import HelpHub from "./src/components/HelpHub/HelpHub.tsx";
 import { Challenges } from './src/components/Challenges/Challenges';
@@ -111,7 +110,6 @@ export {
     LeaderBoard,
     Toast,
     Survey,
-    HelpHub
-    UserProfile,
+    HelpHub,
     Challenges
 };
