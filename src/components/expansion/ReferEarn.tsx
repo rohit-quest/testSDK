@@ -178,20 +178,20 @@ export const Referral = ({
       }
       <div className="q_refer_content" >
         <div className="refer_content_box" >
-          <div className="q_refer_heading" style={styleConfig?.Heading}>{heading}</div>
-          <div className="q_refer_desc" style={styleConfig?.Description}>{description}</div>
+          <div className="q_refer_heading" style={{color : styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading}}>{heading}</div>
+          <div className="q_refer_desc" style={{color : styleConfig?.Description?.color || themeConfig?.secondaryColor,...styleConfig?.Description}}>{description}</div>
         </div>
         {showReferralCode && <div className="q_refer_code_content">
           <Label children={'Referal Code'} style={styleConfig?.Label} />
-          <div className="q_refer_code_box">
-            <div className="q_refer_code">{shareCode}</div>
+          <div className="q_refer_code_box" style={{borderColor : themeConfig?.borderColor, ...styleConfig?.Input}}>
+            <div className="q_refer_code" style={{color: styleConfig?.Input?.color || styleConfig?.Description?.color ||  themeConfig?.secondaryColor,...styleConfig?.Input}}>{shareCode}</div>
             <img className="q_refer_copy_icon" src={copy[0] ? tickIcon(styleConfig?.Icon?.color) : copyIcon(secondaryIconColor)} onClick={() => handleCopy(0)} alt="" />
           </div>
         </div>}
         {referralLink && <div className="q_refer_code_content">
           <Label children={'Invitation Link'} style={styleConfig?.Label} />
-          <div className="q_refer_code_box">
-            <div className="q_refer_code">{referralLink}{shareCode}</div>
+          <div className="q_refer_code_box" style={{borderColor : themeConfig?.borderColor, ...styleConfig?.Input}}>
+            <div className="q_refer_code" style={{color: styleConfig?.Description?.color || styleConfig?.Input?.color || themeConfig?.secondaryColor,...styleConfig?.Input}}>{referralLink}{shareCode}</div>
             <img className="q_refer_copy_icon" src={copy[1] ? tickIcon(styleConfig?.Icon?.color) : copyIcon(secondaryIconColor)} onClick={() => handleCopy(1)} alt="" />
           </div>
         </div>}
