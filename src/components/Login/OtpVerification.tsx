@@ -126,7 +126,7 @@ function OtpVerification({
       setShowLoader(true);
       const response = await axios.post(
         `${BACKEND_URL}api/users/email-login/verify-otp`,
-        { email: email, otp: OTP },
+        { email: email, otp: OTP , entityId: entityId},
         {
           headers: {
             apiKey: apiKey,

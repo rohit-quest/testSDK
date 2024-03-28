@@ -92,7 +92,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
     axios
       .post(
         `${BACKEND_URL}api/users/email-login/send-otp?entityId=${entityId}`,
-        { email: email },
+        { email: email, entityId: entityId},
         {
           headers: {
             apiKey: apiKey,
