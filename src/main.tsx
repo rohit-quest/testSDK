@@ -1,12 +1,16 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import "./index.css";
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './App';
+import './index.css';
 
-const rootElement = document.getElementById("root");
-
-if (rootElement !== null) {
-  ReactDOM.render(<App />, rootElement);
+if (typeof document !== 'undefined') {
+  const rootElement = document.getElementById('root');
+  if (rootElement) {
+    const root = createRoot(rootElement);
+    root.render(<App />);
+  } else {
+    console.error('Root element with id "root" not found. Cannot render React app.');
+  }
 } else {
-  throw new Error("Root element not found in the document");
+  console.error('The document object is not available. Cannot render React app.');
 }

@@ -77,10 +77,11 @@ const ToastService: React.FC<ToastProps> = ({
 };
 
 let toastCounter = 0;
-const toastRoot = document.getElementById("root");
-
+let toastRoot: HTMLElement | null;
+if (typeof document !== 'undefined') {
+  toastRoot = document.getElementById("root");
+}
 const toastQueue: Array<() => void> = [];
-
 const processQueue = () => {
   if (toastQueue.length > 0) {
     const remove = toastQueue.pop()!;
@@ -88,7 +89,6 @@ const processQueue = () => {
     setTimeout(processQueue, 300);
   }
 };
-
 
 export const showToast = (message: ReactNode, duration?: number, position = 'center'): void => {
   const toastElement = document.createElement("div");
