@@ -233,6 +233,10 @@ interface feedbackCompProps {
     Description?: React.CSSProperties;
     Input?: React.CSSProperties;
     Label?: React.CSSProperties;
+    EmailError?: {
+      text?: string,
+      errorStyle?: React.CSSProperties
+    },
     TextArea?: React.CSSProperties;
     PrimaryButton?: React.CSSProperties;
     SecondaryButton?: React.CSSProperties;
@@ -619,10 +623,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           placeholder={placeholder}
           value={answer[criteriaId]}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
+          emailtext={styleConfig?.EmailError?.text == undefined ? "This is not a valid email" : styleConfig?.EmailError?.text}
+          emailErrorStyle={styleConfig?.EmailError?.errorStyle}
         />
-        {isValidEmail(answer[criteriaId]) && (
+        {/* {isValidEmail(answer[criteriaId]) && (
           <div className="q-input-email-checks">This is not a valid email</div>
-        )}
+        )} */}
       </div>
     );
   };
@@ -643,7 +649,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           value={answer[criteriaId]}
           placeholder={placeholder}
-          style={{borderColor: themeConfig.borderColor,color:styleConfig?.TextArea?.color || styleConfig?.Heading?.color || themeConfig.primaryColor  , ...styleConfig.TextArea}}
+          style={{ borderColor: themeConfig.borderColor, color: styleConfig?.TextArea?.color || styleConfig?.Heading?.color || themeConfig.primaryColor, ...styleConfig.TextArea }}
         />
       </div>
     );

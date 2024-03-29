@@ -147,7 +147,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                     "required": true,
                 },
                 {
-                    "type": "USER_INPUT_TEXT",
+                    "type": "USER_INPUT_EMAIL",
                     "question": "Enter your Email",
                     "options": [""],
                     "criteriaId": "ec-84192fef-c917-410f-4ace713aae",
@@ -170,7 +170,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                         placeholder: ""
                     },
                     {
-                        "type": "USER_INPUT_TEXT",
+                        "type": "USER_INPUT_EMAIL",
                         "question": "Email",
                         "options": [""],
                         "criteriaId": "ec-84192fef-c917-410f-9ace713aef",
@@ -196,7 +196,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                         placeholder: ""
                     },
                     {
-                        "type": "USER_INPUT_TEXT",
+                        "type": "USER_INPUT_EMAIL",
                         "question": "Your email address",
                         "options": [""],
                         "criteriaId": "ec-84192fef-c917-4101jioaaei",

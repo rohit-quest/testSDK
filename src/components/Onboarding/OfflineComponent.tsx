@@ -108,6 +108,10 @@ interface QuestLoginProps {
         Heading?: CSSProperties,
         Description?: CSSProperties,
         Input?: CSSProperties,
+        EmailError?:{
+            text?:string,
+            errorStyle?:CSSProperties
+        }
         Label?: CSSProperties,
         TextArea?: CSSProperties,
         PrimaryButton?: CSSProperties,
@@ -555,6 +559,8 @@ function OnBoardingOffline(props: QuestLoginProps) {
                         color: styleConfig?.Input?.color || themeConfig?.primaryColor,
                         ...styleConfig?.Input
                     }}
+                    emailtext={styleConfig?.EmailError?.text == undefined ? "Invalid email format" : styleConfig?.EmailError?.text}
+                    emailErrorStyle={styleConfig?.EmailError?.errorStyle}
                 />
             </div>
         );
