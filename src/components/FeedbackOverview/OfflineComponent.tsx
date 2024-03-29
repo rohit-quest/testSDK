@@ -210,7 +210,7 @@ interface feedbackCompProps {
   ReportBug?: {
     heading?: string;
     description?: string;
-    formHeading?: string; 
+    formHeading?: string;
     formDescription?: string;
     iconUrl?: string;
   };
@@ -233,6 +233,10 @@ interface feedbackCompProps {
     Input?: React.CSSProperties;
     Label?: React.CSSProperties;
     TextArea?: React.CSSProperties;
+    EmailError?: {
+      text?: string,
+      errorStyle?: React.CSSProperties
+    },
     PrimaryButton?: React.CSSProperties;
     SecondaryButton?: React.CSSProperties;
     Modal?: React.CSSProperties;
@@ -593,10 +597,13 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           placeholder={placeholder}
           value={answer[criteriaId]}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
+          emailtext={styleConfig?.EmailError?.text == undefined ? "This is not a valid email" : styleConfig?.EmailError?.text}
+          emailErrorStyle={styleConfig?.EmailError?.errorStyle}
         />
-        {isValidEmail(answer[criteriaId]) && (
+
+        {/* {isValidEmail(answer[criteriaId]) && (
           <div className="q-input-email-checks">This is not a valid email</div>
-        )}
+        )} */}
       </div>
     );
   };
@@ -617,7 +624,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           value={answer[criteriaId]}
           placeholder={placeholder}
-          style={{borderColor: themeConfig.borderColor,color:styleConfig?.TextArea?.color || styleConfig?.Heading?.color || themeConfig.primaryColor  , ...styleConfig.TextArea}}
+          style={{ borderColor: themeConfig.borderColor, color: styleConfig?.TextArea?.color || styleConfig?.Heading?.color || themeConfig.primaryColor, ...styleConfig.TextArea }}
         />
       </div>
     );
@@ -918,8 +925,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                           ...styleConfig?.listDescription,
                         }}
                       >
-                       {ReportBug?.description || "Let us know what's broken"}
-                         
+                        {ReportBug?.description || "Let us know what's broken"}
+
                       </div>
                     </div>
                   </div>
@@ -975,7 +982,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                           ...styleConfig?.listHeading,
                         }}
                       >
-                      {RequestFeature?.heading || "Request a Feature"}
+                        {RequestFeature?.heading || "Request a Feature"}
                       </div>
                     </div>
                     <div>
@@ -993,7 +1000,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                           ...styleConfig?.listDescription,
                         }}
                       >
-                      {RequestFeature?.description || "Tell us how we can improve"}
+                        {RequestFeature?.description || "Tell us how we can improve"}
                       </div>
                     </div>
                   </div>
@@ -1049,7 +1056,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                           ...styleConfig?.listHeading,
                         }}
                       >
-                      {ContactUs?.heading || "Contact us"}
+                        {ContactUs?.heading || "Contact us"}
                       </div>
                     </div>
                     <div>
@@ -1067,7 +1074,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                           ...styleConfig?.listDescription,
                         }}
                       >
-                      {ContactUs?.description || "Tell us how we can help"}
+                        {ContactUs?.description || "Tell us how we can help"}
                       </div>
                     </div>
                   </div>

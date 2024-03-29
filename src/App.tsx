@@ -166,12 +166,12 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-        {/* <OnBoardingPreview online={true} /> */}
+        {/* <OnBoardingPreview online={false} /> */}
 
-
+{/* 
         <GetStartedPreview
    online={false}
- />  
+ />   */}
 {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
 </Modal> */}
@@ -227,8 +227,8 @@ function App() {
  */}
 
 
-        {/* <FeedbackWorkflowPreview online={true} /> */}
-        <ChallengesPreview online={true} />
+        <FeedbackWorkflowPreview online={true} />
+        {/* <ChallengesPreview online={true} /> */}
 
         {/* <FeedbackPreview /> */}
 

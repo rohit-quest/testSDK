@@ -41,7 +41,7 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
         placeholder: "",
       },
       {
-        "type": "USER_INPUT_TEXT",
+        "type": "USER_INPUT_EMAIL",
         "question": "Last name",
         "options": [""],
         "criteriaId": "ec-77026e10-1bdf-45fd-8523-29733212a359",
@@ -198,7 +198,16 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
       // progressBarType="modal1"
       offlineFormData={state.offlineFormData}
       styleConfig={{
-        
+        Form:{
+          
+        },
+        EmailError:{
+          text:"Invalid email forma jaskwkewejt",
+          errorStyle:{
+            color:'skyblue',
+            fontSize:'22px'
+          }
+        }
       }}
     />
   )
