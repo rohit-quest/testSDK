@@ -227,8 +227,11 @@ function App() {
  */}
 
 
-        <FeedbackWorkflowPreview online={true} />
-        {/* <ChallengesPreview online={true} /> */}
+
+        {/* <FeedbackWorkflowPreview online={true} /> */}
+        <ChallengesPreview online={true} />
+        
+
 
         {/* <FeedbackPreview /> */}
 
