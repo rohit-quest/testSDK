@@ -79,6 +79,16 @@ interface FeedbackProps {
     SecondaryButton?: React.CSSProperties,
     Modal?: React.CSSProperties,
     Footer?: React.CSSProperties,
+    Rating?: {
+      RatingContainer?: React.CSSProperties;
+      SingleRating?: React.CSSProperties;
+      RatingText?: React.CSSProperties;
+      Hover?: React.CSSProperties;
+    },
+    EmailError?: {
+      text?: string,
+      errorStyle?: React.CSSProperties
+    },
   }
   showFooter?: boolean
 }
@@ -189,6 +199,8 @@ const Survey: React.FC<FeedbackProps> = ({
     });
   };
 
+
+
   const handleComments = (id: string, msg: string) => {
     if (msg.length > 0) {
       setAnswer({
@@ -227,7 +239,6 @@ const Survey: React.FC<FeedbackProps> = ({
 
       axios.get(request, { headers: headers }).then((res) => {
         let response = res.data;
-        console.log(response.eligibilityData, 'response');
         setSession(response.session);
         let criterias = response?.eligibilityData?.map((criteria: any) => {
           return {
@@ -240,7 +251,6 @@ const Survey: React.FC<FeedbackProps> = ({
           };
         });
         criterias = Array.isArray(criterias) ? criterias : [];
-        console.log(criterias, 'criterias');
         setFormdata([...criterias]);
         setData([...criterias]);
       });
@@ -285,11 +295,6 @@ const Survey: React.FC<FeedbackProps> = ({
     }
   };
 
-  const handlePrevious = () => {
-    setPage(prevPage => Math.max(prevPage - 1, 0));
-  };
-
-  console.log(page)
 
   function returnAnswers() {
     const headers = {
@@ -363,11 +368,6 @@ const Survey: React.FC<FeedbackProps> = ({
     </svg>
   );
 
-  function isValidEmail(email: string) {
-    if (!email) return false;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return !emailRegex.test(email);
-  }
 
   const normalInput = (question: string, criteriaId: string, placeholder?: string) => {
     return (
@@ -401,11 +401,10 @@ const Survey: React.FC<FeedbackProps> = ({
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           value={answer[criteriaId]}
           placeholder={placeholder}
+          emailtext={styleConfig?.EmailError?.text == undefined ? "This is not a valid email" : styleConfig?.EmailError?.text}
+          emailErrorStyle={styleConfig?.EmailError?.errorStyle}
         />
-        {
-          isValidEmail(answer[criteriaId]) &&
-          <div className='q-input-email-checks'>This is not a valid email</div>
-        }
+
       </div>
     );
   };
@@ -498,14 +497,15 @@ const Survey: React.FC<FeedbackProps> = ({
     required: boolean,
     criteriaId: string,
   ) => {
-    options = ["sdas", "sdas", "dasd"]
+    // options = ["sdas", "sdas", "dasd"]
     return (
       <div key={criteriaId}>
-        <div
+        <Label
           className="q-onb-singleChoiceOne-lebel"
-        >
-          {question} {required && "*"}
-        </div>
+          children={question + (required ? '*' : '')}
+          style={styleConfig?.Label}
+        />
+
         <div className="q-onb-singleChoiceOne-optDiv">
           {options.map((option: string, id: number) => (
             <div className="q_onb_singlehoiceOne_lebel" key={id}>
@@ -546,176 +546,180 @@ const Survey: React.FC<FeedbackProps> = ({
       className="q-feedback-cont"
     >
       {formdata.length > 0 ? (
-          formdata[0].type !== 'LIKE_DISLIKE'
-           ? (
-          <>
-            {!thanksPopup && (
-              <div>
-                <TopBar
-                  heading={heading || ''}
-                  description={subHeading || ''}
-                  style={{
-                    headingStyle: styleConfig?.Heading,
-                    descriptionStyle: styleConfig?.Description,
-                    iconStyle: { display: "none" },
-                  }} />
-                <form onSubmit={e => {
-                  e.preventDefault();
-                  ((data.length / itemsPerPage) <= page + 1) ? returnAnswers() : handleNext()
-                }} style={{ padding: "20px", boxSizing: "content-box", display: "flex", flexDirection: "column", gap: "16px" }}>
-                  {formdata.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map((data: any) => {
-                    if (data.type === 'USER_INPUT_TEXT') {
-                      return normalInput(
-                        data.question || '',
-                        data.criteriaId || '',
-                        data.placeholder || undefined,
-                      );
-                    } else if (data.type === 'USER_INPUT_EMAIL') {
-                      return emailInput(
-                        data.question || '',
-                        data.criteriaId || '',
-                        data.placeholder || undefined,
-                      );
-                    } else if (data.type === 'USER_INPUT_SINGLE_CHOICE') {
-                      return singleChoiceOne(
-                        data.options || [],
-                        data?.question || "",
-                        data?.required || false,
-                        data.criteriaId || "",
-                      )
-                    } else if (data.type === 'USER_INPUT_TEXTAREA') {
-                      return normalInput2(
-                        data.question || '',
-                        data.criteriaId || '',
-                        data.placeholder || undefined,
-                      );
-                    } else if (data.type === 'RATING') {
-                      return (
-                        <div className="mb-4">
-                          <label
-                            className='q-fd-lebels'
-                          >
-                            {data.question || 'Rating Scale'}
-                          </label>
-                          <div
-                            style={{
-                              display: 'flex',
-                              marginTop: '6px',
-                            }}
-                          >
-                            <Rating
-                              count={5}
-                              getCurrentRating={(item) =>
-                                handleRatingChange(data.criteriaId, item)
-                              }
-                              //  defaultRating={Number(answer[0])}
-                              type={ratingType}
-                            />
+        formdata[0].type !== 'LIKE_DISLIKE'
+          ? (
+            <>
+              {!thanksPopup && (
+                <div>
+                  <TopBar
+                    heading={heading || ''}
+                    description={subHeading || ''}
+                    style={{
+                      headingStyle: styleConfig?.Heading,
+                      descriptionStyle: styleConfig?.Description,
+                      iconStyle: { display: "none" },
+                    }} />
+                  <form onSubmit={e => {
+                    e.preventDefault();
+                    ((data.length / itemsPerPage) <= page + 1) ? returnAnswers() : handleNext()
+                  }} style={{ padding: "20px", boxSizing: "content-box", display: "flex", flexDirection: "column", gap: "16px" }}>
+                    {formdata.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map((data: any) => {
+                      if (data.type === 'USER_INPUT_TEXT') {
+                        return normalInput(
+                          data.question || '',
+                          data.criteriaId || '',
+                          data.placeholder || undefined,
+                        );
+                      } else if (data.type === 'USER_INPUT_EMAIL') {
+                        return emailInput(
+                          data.question || '',
+                          data.criteriaId || '',
+                          data.placeholder || undefined,
+                        );
+                      } else if (data.type === 'USER_INPUT_SINGLE_CHOICE') {
+                        return singleChoiceOne(
+                          data.options || [],
+                          data?.question || "",
+                          data?.required || false,
+                          data.criteriaId || "",
+                        )
+                      } else if (data.type === 'USER_INPUT_TEXTAREA') {
+                        return normalInput2(
+                          data.question || '',
+                          data.criteriaId || '',
+                          data.placeholder || undefined,
+                        );
+                      } else if (data.type === 'RATING') {
+                        return (
+                          <div className="mb-4">
+                            <Label
+                              className='q-fd-lebels'
+                              style={styleConfig?.Label}
+                            >
+                              {data.question || 'Rating Scale'}
+                            </Label>
+                            <div
+                              style={{
+                                display: 'flex',
+                                marginTop: '6px',
+                              }}
+                            >
+                              <Rating
+                                count={5}
+                                getCurrentRating={(item) =>
+                                  handleRatingChange(data.criteriaId, item)
+                                }
+                                //  defaultRating={Number(answer[0])}
+                                RatingStyle={styleConfig?.Rating}
+                                type={ratingType}
+                              />
+                            </div>
                           </div>
-                        </div>
-                      );
-                    }
-                  })}
-                  <div className='q_feedback_buttons'>
-                    <SecondaryButton
-                      children={(0 == page) ? 'Cancel' : 'Previous'}
-                      onClick={() => {
-                        if (page === 0) {
-                          onCancel();
-                        } else {
-                          setPage(page - 1);
-                        }
-                      }}
-                      style={styleConfig?.SecondaryButton}
-                    />
-                    <PrimaryButton
-                      style={{
-                        border: styleConfig?.PrimaryButton?.border || '1.5px solid #afafaf',
-                        ...styleConfig?.PrimaryButton
-                      }}
-                      children={((data.length / itemsPerPage) <= page + 1) ? 'Submit' : 'Next'}
-                      type='submit'
-                    />
-                  </div>
-                </form>
-                {showFooter && <QuestLabs style={styleConfig?.Footer} />}
-              </div>
-            )}
-            {thanksPopup && (
-              <div>
-                <div
-                  className='q_submit_cross_icon'
-                  onClick={handleThanks}
-                >
-                  {cross(iconColor)}
-                </div>
-                <div className="q-fw-thanks">
-                  <div>
-                    <div className='q-svg-thanks'>
-                      {thanks}
+                        );
+                      }
+                    })}
+                    <div className='q_feedback_buttons'>
+                      <SecondaryButton
+                        children={(0 == page) ? 'Cancel' : 'Previous'}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          if (page === 0) {
+                            onCancel();
+                          } else {
+                            setPage(page - 1);
+                          }
+                        }}
+                        style={styleConfig?.SecondaryButton}
+                      />
+                      <PrimaryButton
+                        style={{
+                          border: styleConfig?.PrimaryButton?.border || '1.5px solid #afafaf',
+                          ...styleConfig?.PrimaryButton
+                        }}
+                        children={((data.length / itemsPerPage) <= page + 1) ? 'Submit' : 'Next'}
+                        type='submit'
+                      />
                     </div>
-                    <div className='q_fw_submit_box'>
-                      <div className='q_feedback_text_submitted'>
-                        <div className='q_feedback_text_cont' style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}>
-                          Feedback Submitted
-                        </div>
-                        <div className='q_fw_submit_desc'
-                          style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
-                        >Thanks for submitting your feedback with us. We appreciate your review and will assure you to surely consider them</div>
-                      </div>
-                      <div onClick={() => setThanksPopup(false)} className='q_fw_submit_back'>Go to home!</div>
-                    </div>
-                  </div>
+                  </form>
+                  {showFooter && <QuestLabs style={styleConfig?.Footer} />}
                 </div>
-                {showFooter && <QuestLabs style={styleConfig?.Footer} />}
-              </div>
-            )}
-          </>
-        ) : formdata[0].type === 'LIKE_DISLIKE' ? (
-          <div className="">
-            {!likePopup && (
-              <div
-                className='q-fd-like-dislike'
-              >
-                <div className='q-fd-like-dislike-txt'>
-                  <div>
-                    Are these results helpful?
-                  </div>
-                  <div>
-                    Your feedback helps us improve search results
-                  </div>
-                </div>
-                <div className="like-dislike-cont">
-                  <div style={{ display: "inline" }} onClick={() => setLikePopup(true)}>{dislike}</div>
-                  <div style={{ display: "inline" }} onClick={() => setLikePopup(true)}>{like}</div>
-                </div>
-              </div>
-            )}
-            {likePopup && likePopupContent(formdata[0].criteriaId, comment)}
-          </div>
-        ) : isInline && formdata[0].type === 'RATING' ? (
-          <div className="">
-            <div className="mb-4">
-              <label
-                className='q-fd-lebels'
-              >
-                Rating Scale
-              </label>
-              <div style={{ display: 'flex', padding: '2% 0% 2%' }}>
-                {[1, 2, 3, 4, 5].map((star) => (
+              )}
+              {thanksPopup && (
+                <div>
                   <div
-                    className="q-star-div"
-                    key={star}
-                    onClick={() => handleRatingChange2(star)}
+                    className='q_submit_cross_icon'
+                    onClick={handleThanks}
                   >
-                    {star <= rating ? blackStar : whiteStar}
+                    {cross(iconColor)}
                   </div>
-                ))}
-              </div>
+                  <div className="q-fw-thanks">
+                    <div>
+                      <div className='q-svg-thanks'>
+                        {thanks}
+                      </div>
+                      <div className='q_fw_submit_box'>
+                        <div className='q_feedback_text_submitted'>
+                          <div className='q_feedback_text_cont' style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}>
+                            Feedback Submitted
+                          </div>
+                          <div className='q_fw_submit_desc'
+                            style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
+                          >Thanks for submitting your feedback with us. We appreciate your review and will assure you to surely consider them</div>
+                        </div>
+                        <div onClick={() => setThanksPopup(false)} className='q_fw_submit_back'>Go to home!</div>
+                      </div>
+                    </div>
+                  </div>
+                  {showFooter && <QuestLabs style={styleConfig?.Footer} />}
+                </div>
+              )}
+            </>
+          ) : formdata[0].type === 'LIKE_DISLIKE' ? (
+            <div className="">
+              {!likePopup && (
+                <div
+                  className='q-fd-like-dislike'
+                >
+                  <div className='q-fd-like-dislike-txt'>
+                    <div>
+                      Are these results helpful?
+                    </div>
+                    <div>
+                      Your feedback helps us improve search results
+                    </div>
+                  </div>
+                  <div className="like-dislike-cont">
+                    <div style={{ display: "inline" }} onClick={() => setLikePopup(true)}>{dislike}</div>
+                    <div style={{ display: "inline" }} onClick={() => setLikePopup(true)}>{like}</div>
+                  </div>
+                </div>
+              )}
+              {likePopup && likePopupContent(formdata[0].criteriaId, comment)}
             </div>
-            {likePopup && likePopupContent(formdata[0].criteriaId, comment)}
-          </div>
-        ) : null
+          ) : isInline && formdata[0].type === 'RATING' ? (
+            <div className="">
+              <div className="mb-4">
+                <label
+                  className='q-fd-lebels'
+                >
+                  Rating Scale
+                </label>
+                <div style={{ display: 'flex', padding: '2% 0% 2%' }}>
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <div
+                      className="q-star-div"
+                      key={star}
+                      onClick={() => handleRatingChange2(star)}
+                    >
+                      {star <= rating ? blackStar : whiteStar}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {likePopup && likePopupContent(formdata[0].criteriaId, comment)}
+            </div>
+          ) : null
       ) : (
         <div className="">
           {/* <div className="q-center">Form data is empty</div> */}

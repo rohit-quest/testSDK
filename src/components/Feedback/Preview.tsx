@@ -12,7 +12,7 @@ export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyN
 export const userId = 'u-8268f5e1-f5a1-440c-a333-0f5578a73847'
 
 export default function FeedbackPreview({ online = true }) {
-    const [state,setState] = useState([
+    const [state, setState] = useState([
         {
             "type": "USER_INPUT_TEXTAREA",
             "question": "Message",
@@ -22,7 +22,7 @@ export default function FeedbackPreview({ online = true }) {
             "placeholder": "Enter your Message"
         },
         {
-            "type": "USER_INPUT_TEXT",
+            "type": "USER_INPUT_EMAIL",
             "question": "Email",
             "options": [],
             "criteriaId": "ec-8ce32ce1-17f4-4fd8-ba4e-51d0b5512e2d",
@@ -44,7 +44,7 @@ export default function FeedbackPreview({ online = true }) {
             "required": true,
             "placeholder": "Enter your Name"
         },
-        
+
     ])
     // setIntervals(() => {
     //     state.pop();
@@ -59,7 +59,8 @@ export default function FeedbackPreview({ online = true }) {
                 apiSecret={apiSecret}
                 entityId={entityId}
                 themeConfig={{
-                    fontFamily:'cursive'
+                    fontFamily: 'cursive',
+                    // primaryColor: 'blue'
                 }}
                 apiType='STAGING'
             >
@@ -67,26 +68,48 @@ export default function FeedbackPreview({ online = true }) {
                     // userId={userId}
                     // token={token}
                     // questId={"q-1a12c0e1-35a8-48a3-8cde-a8616f341b88"}
-                    // heading={"Share Your FeedBack"}
-                    // subHeading={"How was your experience?"}
-                    // styleConfig={{
-                    //     Form: {
-                    //         font: "sans",
-                    //         color: "red",
-                    //         // backgroundColor: "gray"
-                    //     }
-                    // }}
+                    heading={"Share Your FeedBack"}
+                    subHeading={"How was your experience?"}
+                    styleConfig={{
+                        Form: {
+                            // font: "sans",
+                            // color: "red",
+                            backgroundColor: "gray"
+                        },
+                        Heading: {
+                            color: "red"
+                        },
+                        Label: {
+                            color: "green"
+                        },
+                        // Rating: {
+                        //     RatingContainer: {
+                        //         color: "red",
+
+                        //     },
+                        //     SingleRating: {
+                        //         color: "red"
+                        //     },
+                        //     RatingText: {
+                        //         color: "green"
+                        //     },
+                        //     Hover: {
+                        //         color: "grey",
+                        //         background: "yellow"
+                        //     }
+                        // }
+                    }}
                     // showFooter={false}
                     // supportUrl={"supportUrl"}
                     // delay={5000}
                     // isInline={true}
                     questId={questId}
-                    showFooter={false}
+                    showFooter={true}
                     // heading="How much did you learn from this section?"
                     // ratingType="number"
                     userId={userId}
                     token={token}
-                    itemsPerPage={2}
+                    itemsPerPage={1}
                 />
             </QuestProvider>
         )
@@ -96,6 +119,28 @@ export default function FeedbackPreview({ online = true }) {
         itemsPerPage={2}
         offlineFormData={state}
         showFooter={false}
+        styleConfig={{
+            Form: {
+                font: "sans",
+                // color: "red",
+                // backgroundColor: "gray"
+            },
+            Rating: {
+                RatingContainer: {
+                    color: "red",
 
+                },
+                SingleRating: {
+                    color: "red"
+                },
+                RatingText: {
+                    color: "green"
+                },
+                Hover: {
+                    color: "grey",
+                    background: "yellow",
+                }
+            }
+        }}
     />)
 }

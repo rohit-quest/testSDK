@@ -82,9 +82,11 @@ const EmojiRating = (props: RatingProps) => {
           props.type == "emoji"
             ? "emojiRatingContainer"
             : props.type == "star"
-            ? "starContainer"
-            : "ratingContainer"
+              ? "starContainer"
+              : "ratingContainer"
         }
+        style={{ ...props.RatingStyle?.RatingContainer }}
+
       >
         {Array(props.type === "colored" ? 7 : props.count)
           .fill(0)
@@ -98,7 +100,7 @@ const EmojiRating = (props: RatingProps) => {
                 ? `coloredButtons coloredBackground-${index}`
                 : "",
               props.type === "number" ? "numberButtons" : "",
-              isActive ? `${props.type}Active` : "",
+              isActive ? `${props.type}Active`  : "",
             ]
               .filter(Boolean)
               .join(" ");
@@ -110,13 +112,13 @@ const EmojiRating = (props: RatingProps) => {
                 style={{
                   background:
                     props.type == "colored" ? colouredButtons[index] : "",
+                    ...props?.RatingStyle?.SingleRating,
+                    ...(isActive ? props?.RatingStyle?.Hover : {})
                 }}
                 key={index}
               >
                 {props.type === "emoji" ? (
-                  <div
-                    className="singleEmojiCont"
-                  >
+                  <div className="singleEmojiCont">
                     <img
                       src={emojiComponents[index]}
                       alt={`Emoji ${index}`}
@@ -124,7 +126,7 @@ const EmojiRating = (props: RatingProps) => {
                     />
                   </div>
                 ) : props.type === "star" ? (
-                  <div>{index < currentRating ? blackStar : whiteStar}</div>
+                  <div >{index < currentRating ? blackStar : whiteStar}</div>
                 ) : (
                   <div
                     className={
@@ -132,6 +134,7 @@ const EmojiRating = (props: RatingProps) => {
                         ? "singleColoredCont"
                         : "singleNumberCont"
                     }
+                  
                   >
                     {index + 1}
                   </div>
@@ -140,19 +143,19 @@ const EmojiRating = (props: RatingProps) => {
             );
           })}
       </div>
-      {(props.type === "number" || props.type === "colored") && (
+      {(props.type === "number" || props.type === "colored" || props.type === "emoji") && (
         <div className={"ratingTextView"}>
-          <div className={"ratingText"}>
-            {props.type === "number" ? "Not likely" : "Strongly Disagree"}
+          <div className={"ratingText"} style={{ ...props.RatingStyle?.RatingText }}>
+            {props.type === "number" ? "Not likely" : "Perfect"}
           </div>
-          <div className={"ratingText"}>
+          <div className={"ratingText"} style={{ ...props.RatingStyle?.RatingText }}>
             {props.type === "number" ? "Perfect" : "Very Likely"}
           </div>
         </div>
       )}
 
       {props.type == "star" && (
-        <div className="q-star-text-Cont">Click to Rate</div>
+        <div style={{ ...props.RatingStyle?.RatingText }} className="q-star-text-Cont">Click to Rate</div>
       )}
     </div>
   );
