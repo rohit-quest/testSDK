@@ -68,14 +68,6 @@ interface FeedbackProps {
   ratingType?: string;
   uniqueEmailId?: string;
   uniqueUserId?: string;
-  sections?: {
-    heading?: string,
-    subHeading?: string,
-    button1Text?: string,
-    button2Text?: string,
-    placeholder?: string,
-    showWordCount?: boolean,
-  }[];
   styleConfig?: {
     Form?: React.CSSProperties,
     Heading?: React.CSSProperties,
@@ -121,7 +113,6 @@ const Survey: React.FC<FeedbackProps> = ({
   showFooter = true,
   styleConfig = {},
   isInline = false,
-  sections,
 }) => {
   interface FormDataItem {
     type?: string;
@@ -432,21 +423,8 @@ const Survey: React.FC<FeedbackProps> = ({
           style={styleConfig?.TextArea}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           value={answer[criteriaId]}
-          placeholder={sections && sections[page].placeholder || placeholder}
-          maxLength={sections && sections[page].showWordCount ? 120 : undefined}
+          placeholder={placeholder}
         />
-        {
-          sections && sections[page].showWordCount && <p
-            style={{
-              color: "var(--Neutral-White-500, #B9B9B9)",
-              fontFamily: "Figtree",
-              fontSize: "12px",
-              fontStyle: "normal",
-              fontWeight: "400",
-              lineHeight: "16px",
-            }}
-          >{answer[criteriaId]?.length || 0}/120 characters</p>
-        }
       </div>
     );
   };
@@ -576,8 +554,8 @@ const Survey: React.FC<FeedbackProps> = ({
               {!thanksPopup && (
                 <div>
                   <TopBar
-                    heading={(sections && sections[page].heading) || heading || ''}
-                    description={(sections && sections[page].subHeading) ||subHeading || ''}
+                    heading={heading || ''}
+                    description={subHeading || ''}
                     style={{
                       headingStyle: styleConfig?.Heading,
                       descriptionStyle: styleConfig?.Description,
@@ -644,7 +622,7 @@ const Survey: React.FC<FeedbackProps> = ({
                     })}
                     <div className='q_feedback_buttons'>
                       <SecondaryButton
-                        children={sections && sections[page]?.button1Text ? sections[page].button1Text : (0 == page) ? 'Cancel' : 'Previous'}
+                        children={(0 == page) ? 'Cancel' : 'Previous'}
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
@@ -661,7 +639,7 @@ const Survey: React.FC<FeedbackProps> = ({
                           border: styleConfig?.PrimaryButton?.border || '1.5px solid #afafaf',
                           ...styleConfig?.PrimaryButton
                         }}
-                        children={sections && sections[page]?.button2Text ? sections[page].button2Text : ((data.length / itemsPerPage) <= page + 1) ? 'Submit' : 'Next'}
+                        children={((data.length / itemsPerPage) <= page + 1) ? 'Submit' : 'Next'}
                         type='submit'
                       />
                     </div>

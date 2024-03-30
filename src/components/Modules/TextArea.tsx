@@ -5,11 +5,10 @@ interface TextAreaProps {
   value?: string;
   style?: CSSProperties | undefined;
   onChange?: ChangeEventHandler<HTMLTextAreaElement> | undefined;
-  placeholder?:string;
-  maxLength?:number
+  placeholder?:string
 }
 
-const TextArea = ({ value, onChange, style, placeholder, maxLength }: TextAreaProps) => {
+const TextArea = ({ value, onChange, style, placeholder }: TextAreaProps) => {
   const { themeConfig } = useContext(QuestContext.Context);
   return (
     <textarea
@@ -18,7 +17,6 @@ const TextArea = ({ value, onChange, style, placeholder, maxLength }: TextAreaPr
       onChange={onChange}
       style={{...style,fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif"}}
       placeholder={placeholder}
-      maxLength={maxLength}
     />
   );
 }
