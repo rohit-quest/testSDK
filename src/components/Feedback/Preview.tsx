@@ -116,7 +116,7 @@ export default function FeedbackPreview({ online = true }) {
     return (<SurveyOffline
         heading={"Share Your Feedback"}
         subHeading={"How was your experience?"}
-        itemsPerPage={2}
+        itemsPerPage={1}
         offlineFormData={state}
         showFooter={false}
         styleConfig={{

@@ -131,7 +131,10 @@ const SurveyOffline = ({
 
 
   const handleNext = () => {
-    setPage(prevPage => Math.min(prevPage + 1, Math.ceil(offlineFormData.length / 2) - 1));
+    const totalPages = Math.ceil(offlineFormData.length / itemsPerPage);
+    if(page < totalPages - 1){
+      setPage(prevPage => prevPage + 1);
+    }
   };
 
 
@@ -316,7 +319,6 @@ const SurveyOffline = ({
     //     .post(request, requestData, { headers: headers })
     //     .then((response) => {
     //       if (response.data.success) {
-    showToast.success('Thank you for your feedback');
     setThanksPopup(true);
     onSubmit && onSubmit();
     //       } else {
