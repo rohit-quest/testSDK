@@ -461,7 +461,6 @@ function isValidEmail(email: string) {
   };
 
 
-
 const singleChoiceOne = (
     options: string[],
     question: string,

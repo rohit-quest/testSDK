@@ -4,12 +4,12 @@ import Feedback from './Feedback';
 import { QuestProvider } from '../QuestWrapper';
 import Survey from './Survey';
 import SurveyOffline from './OfflineComponent';
-export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
-export const apiKey = 'k-68a0c6b8-b27f-49c6-a315-b0c9cba15bf4'
+export const questId = 'q-f9438032-3fc5-4f07-8ba2-c4575cc62ef4';
+export const apiKey = 'k-4262ffa5-e6df-4303-b97a-30a6a59db6df'
 export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
-export const entityId = 'e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5'
-export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
-export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
+export const entityId = 'e-6294feab-376d-4d20-aa7e-afdfb3254323'
+export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMTc4MTgzOCwiZXhwIjoxNzEyMzg2NjM4fQ.fFLnfzMmLAnLcIzi3X_WgoCu8XHPYLF5n6mkoCmT82c'
+export const userId = 'u-8268f5e1-f5a1-440c-a333-0f5578a73847'
 
 export default function FeedbackPreview({ online = true }) {
     const [state,setState] = useState([
@@ -61,29 +61,32 @@ export default function FeedbackPreview({ online = true }) {
                 themeConfig={{
                     fontFamily:'cursive'
                 }}
+                apiType='STAGING'
             >
                 <Survey
+                    // userId={userId}
+                    // token={token}
+                    // questId={"q-1a12c0e1-35a8-48a3-8cde-a8616f341b88"}
+                    // heading={"Share Your FeedBack"}
+                    // subHeading={"How was your experience?"}
+                    // styleConfig={{
+                    //     Form: {
+                    //         font: "sans",
+                    //         color: "red",
+                    //         // backgroundColor: "gray"
+                    //     }
+                    // }}
+                    // showFooter={false}
+                    // supportUrl={"supportUrl"}
+                    // delay={5000}
+                    // isInline={true}
+                    questId={questId}
+                    showFooter={false}
+                    // heading="How much did you learn from this section?"
+                    // ratingType="number"
                     userId={userId}
                     token={token}
-                    questId={"q-1a12c0e1-35a8-48a3-8cde-a8616f341b88"}
-                    // bgColor={"gray"}
-                    // font={"sans"}
-                    // textColor={"red"}
-                    // btnColor={"blue"}
-                    // btnTextColor={"yellow"}
-                    heading={"Share Your FeedBack"}
-                    subHeading={"How was your experience?"}
-                    styleConfig={{
-                        Form: {
-                            font: "sans",
-                            color: "red",
-                            // backgroundColor: "gray"
-                        }
-                    }}
-                    showFooter={false}
-                    supportUrl={"supportUrl"}
-                    delay={5000}
-                    isInline={true}
+                    itemsPerPage={2}
                 />
             </QuestProvider>
         )

@@ -22,29 +22,29 @@ import { SecondaryButton } from '../Modules/SecondaryButton';
 import TopBar from '../Modules/TopBar';
 
 
-  const thanks = (
-    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+const thanks = (
+  <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g clipRule="url(#clip0_4046_146)">
-    <path d="M40 80C62.0914 80 80 62.0914 80 40C80 17.9086 62.0914 0 40 0C17.9086 0 0 17.9086 0 40C0 62.0914 17.9086 80 40 80Z" fill="url(#paint0_linear_4046_146)"/>
-    <path d="M48.4167 79.0566C49.1837 78.9078 49.9463 78.7367 50.7033 78.5432C51.987 78.1844 53.2519 77.7617 54.4933 77.2766C55.7363 76.7955 56.9545 76.2526 58.1433 75.6499C59.3325 75.0449 60.4906 74.3807 61.6133 73.6599C62.7348 72.939 63.8195 72.1625 64.8633 71.3332C65.9091 70.5029 66.9125 69.6207 67.87 68.6899C68.8259 67.7614 69.7348 66.7858 70.5933 65.7666C71.4526 64.7465 72.2603 63.684 73.0133 62.5832C73.7662 61.4843 74.4638 60.3484 75.1033 59.1799C75.743 58.0097 76.3237 56.8082 76.8433 55.5799C77.3635 54.3514 77.8218 53.0976 78.2167 51.8232C78.5548 50.7075 78.8439 49.5776 79.0833 48.4366L55.3167 24.6732C53.3096 22.6573 50.9236 21.0581 48.2961 19.9677C45.6686 18.8774 42.8514 18.3174 40.0067 18.3199C37.1594 18.3168 34.3395 18.8765 31.7092 19.9668C29.0789 21.0572 26.6901 22.6566 24.68 24.6732C22.6649 26.6839 21.0661 29.0724 19.9753 31.7018C18.8845 34.3312 18.323 37.1499 18.323 39.9966C18.323 42.8433 18.8845 45.662 19.9753 48.2914C21.0661 50.9208 22.6649 53.3092 24.68 55.3199L48.4167 79.0566Z" fill="url(#paint1_linear_4046_146)"/>
-    <path d="M40.0033 18.3232C45.5433 18.3232 51.0833 20.4398 55.3233 24.6765C57.3384 26.6872 58.9372 29.0756 60.028 31.705C61.1188 34.3344 61.6803 37.1532 61.6803 39.9998C61.6803 42.8465 61.1188 45.6653 60.028 48.2947C58.9372 50.9241 57.3384 53.3125 55.3233 55.3232C53.3126 57.3383 50.9242 58.937 48.2948 60.0279C45.6654 61.1187 42.8467 61.6802 40 61.6802C37.1533 61.6802 34.3346 61.1187 31.7052 60.0279C29.0758 58.937 26.6873 57.3383 24.6767 55.3232C22.6615 53.3125 21.0628 50.9241 19.972 48.2947C18.8811 45.6653 18.3196 42.8465 18.3196 39.9998C18.3196 37.1532 18.8811 34.3344 19.972 31.705C21.0628 29.0756 22.6615 26.6872 24.6767 24.6765C26.6867 22.6599 29.0756 21.0604 31.7059 19.9701C34.3361 18.8798 37.156 18.3201 40.0033 18.3232ZM49.87 33.3298C49.5544 33.3601 49.2539 33.4791 49.0033 33.6732L36.8233 42.8065L31.18 37.1665C29.9566 35.8932 27.5467 38.2998 28.8233 39.5232L35.49 46.1898C35.779 46.4631 36.1536 46.6281 36.5504 46.6566C36.9471 46.6852 37.3415 46.5756 37.6667 46.3465L51 36.3465C52.12 35.5298 51.43 33.3532 50.0433 33.3332C49.9867 33.3303 49.9299 33.3303 49.8733 33.3332L49.87 33.3298Z" fill="white"/>
+      <path d="M40 80C62.0914 80 80 62.0914 80 40C80 17.9086 62.0914 0 40 0C17.9086 0 0 17.9086 0 40C0 62.0914 17.9086 80 40 80Z" fill="url(#paint0_linear_4046_146)" />
+      <path d="M48.4167 79.0566C49.1837 78.9078 49.9463 78.7367 50.7033 78.5432C51.987 78.1844 53.2519 77.7617 54.4933 77.2766C55.7363 76.7955 56.9545 76.2526 58.1433 75.6499C59.3325 75.0449 60.4906 74.3807 61.6133 73.6599C62.7348 72.939 63.8195 72.1625 64.8633 71.3332C65.9091 70.5029 66.9125 69.6207 67.87 68.6899C68.8259 67.7614 69.7348 66.7858 70.5933 65.7666C71.4526 64.7465 72.2603 63.684 73.0133 62.5832C73.7662 61.4843 74.4638 60.3484 75.1033 59.1799C75.743 58.0097 76.3237 56.8082 76.8433 55.5799C77.3635 54.3514 77.8218 53.0976 78.2167 51.8232C78.5548 50.7075 78.8439 49.5776 79.0833 48.4366L55.3167 24.6732C53.3096 22.6573 50.9236 21.0581 48.2961 19.9677C45.6686 18.8774 42.8514 18.3174 40.0067 18.3199C37.1594 18.3168 34.3395 18.8765 31.7092 19.9668C29.0789 21.0572 26.6901 22.6566 24.68 24.6732C22.6649 26.6839 21.0661 29.0724 19.9753 31.7018C18.8845 34.3312 18.323 37.1499 18.323 39.9966C18.323 42.8433 18.8845 45.662 19.9753 48.2914C21.0661 50.9208 22.6649 53.3092 24.68 55.3199L48.4167 79.0566Z" fill="url(#paint1_linear_4046_146)" />
+      <path d="M40.0033 18.3232C45.5433 18.3232 51.0833 20.4398 55.3233 24.6765C57.3384 26.6872 58.9372 29.0756 60.028 31.705C61.1188 34.3344 61.6803 37.1532 61.6803 39.9998C61.6803 42.8465 61.1188 45.6653 60.028 48.2947C58.9372 50.9241 57.3384 53.3125 55.3233 55.3232C53.3126 57.3383 50.9242 58.937 48.2948 60.0279C45.6654 61.1187 42.8467 61.6802 40 61.6802C37.1533 61.6802 34.3346 61.1187 31.7052 60.0279C29.0758 58.937 26.6873 57.3383 24.6767 55.3232C22.6615 53.3125 21.0628 50.9241 19.972 48.2947C18.8811 45.6653 18.3196 42.8465 18.3196 39.9998C18.3196 37.1532 18.8811 34.3344 19.972 31.705C21.0628 29.0756 22.6615 26.6872 24.6767 24.6765C26.6867 22.6599 29.0756 21.0604 31.7059 19.9701C34.3361 18.8798 37.156 18.3201 40.0033 18.3232ZM49.87 33.3298C49.5544 33.3601 49.2539 33.4791 49.0033 33.6732L36.8233 42.8065L31.18 37.1665C29.9566 35.8932 27.5467 38.2998 28.8233 39.5232L35.49 46.1898C35.779 46.4631 36.1536 46.6281 36.5504 46.6566C36.9471 46.6852 37.3415 46.5756 37.6667 46.3465L51 36.3465C52.12 35.5298 51.43 33.3532 50.0433 33.3332C49.9867 33.3303 49.9299 33.3303 49.8733 33.3332L49.87 33.3298Z" fill="white" />
     </g>
     <defs>
-    <linearGradient id="paint0_linear_4046_146" x1="0.320001" y1="80" x2="87.5968" y2="71.0629" gradientUnits="userSpaceOnUse">
-    <stop stop-color="#9035FF"/>
-    <stop offset="1" stop-color="#0065FF"/>
-    </linearGradient>
-    <linearGradient id="paint1_linear_4046_146" x1="18.566" y1="79.0566" x2="84.8526" y2="72.2662" gradientUnits="userSpaceOnUse">
-    <stop stop-color="#9035FF"/>
-    <stop offset="1" stop-color="#0065FF"/>
-    </linearGradient>
-    <clipPath id="clip0_4046_146">
-    <rect width="80" height="80" fill="white"/>
-    </clipPath>
+      <linearGradient id="paint0_linear_4046_146" x1="0.320001" y1="80" x2="87.5968" y2="71.0629" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#9035FF" />
+        <stop offset="1" stop-color="#0065FF" />
+      </linearGradient>
+      <linearGradient id="paint1_linear_4046_146" x1="18.566" y1="79.0566" x2="84.8526" y2="72.2662" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#9035FF" />
+        <stop offset="1" stop-color="#0065FF" />
+      </linearGradient>
+      <clipPath id="clip0_4046_146">
+        <rect width="80" height="80" fill="white" />
+      </clipPath>
     </defs>
-    </svg>
-    
-    );
+  </svg>
+
+);
 
 interface FeedbackProps {
   heading?: string;
@@ -65,7 +65,7 @@ interface FeedbackProps {
   onCancel?: Function;
   itemsPerPage?: number;
   iconColor?: string;
-  ratingType? : string;
+  ratingType?: string;
   uniqueEmailId?: string;
   uniqueUserId?: string;
   styleConfig?: {
@@ -80,7 +80,7 @@ interface FeedbackProps {
     Modal?: React.CSSProperties,
     Footer?: React.CSSProperties,
   }
-  showFooter?:boolean
+  showFooter?: boolean
 }
 
 const Survey: React.FC<FeedbackProps> = ({
@@ -94,14 +94,15 @@ const Survey: React.FC<FeedbackProps> = ({
   bgColor,
   supportUrl,
   onSubmit,
-  ratingType = 'number' ,
-  onCancel = ()=>{},
-  itemsPerPage=5,
+  ratingType = 'number',
+  onCancel = () => { },
+  itemsPerPage = 5,
   iconColor = '#939393',
   uniqueEmailId,
   uniqueUserId,
   showFooter = true,
   styleConfig = {},
+  isInline = false,
 }) => {
   interface FormDataItem {
     type?: string;
@@ -117,13 +118,13 @@ const Survey: React.FC<FeedbackProps> = ({
   const [thanksPopup, setThanksPopup] = useState<boolean>(false);
   const [formdata, setFormdata] = useState<FormDataItem[]>([]);
   const [gradient, setGradient] = useState<boolean>(false);
-  const { apiKey, apiSecret, entityId ,apiType, themeConfig} = useContext(QuestContext.Context);
+  const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(QuestContext.Context);
   const [answer, setAnswer] = useState<any>({});
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [session, setSession] = useState<string>('');
   const [isVisible, setIsVisible] = useState(true);
-  const [page,setPage] = useState(0);
-  const [data,setData] = useState<FormDataItem[]>([]);
+  const [page, setPage] = useState(0);
+  const [data, setData] = useState<FormDataItem[]>([]);
   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
   const handleNext = () => {
@@ -161,9 +162,9 @@ const Survey: React.FC<FeedbackProps> = ({
 
   const cross = (color = "#AFAFAF") => (
     <div style={{
-      cursor: "pointer",  padding:'4px',
+      cursor: "pointer", padding: '4px',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
-      borderRadius :'4px'
+      borderRadius: '4px'
     }}>
       <svg
         width="16"
@@ -226,6 +227,7 @@ const Survey: React.FC<FeedbackProps> = ({
 
       axios.get(request, { headers: headers }).then((res) => {
         let response = res.data;
+        console.log(response.eligibilityData, 'response');
         setSession(response.session);
         let criterias = response?.eligibilityData?.map((criteria: any) => {
           return {
@@ -238,12 +240,13 @@ const Survey: React.FC<FeedbackProps> = ({
           };
         });
         criterias = Array.isArray(criterias) ? criterias : [];
+        console.log(criterias, 'criterias');
         setFormdata([...criterias]);
         setData([...criterias]);
       });
     }
-    
-    if(entityId && uniqueUserId){
+
+    if (entityId && uniqueUserId) {
       const functions = new General('')
       functions.getExternalLogin({ apiType, uniqueUserId, entityId, userId, apiKey, apiSecret, token, uniqueEmailId })
     }
@@ -282,6 +285,12 @@ const Survey: React.FC<FeedbackProps> = ({
     }
   };
 
+  const handlePrevious = () => {
+    setPage(prevPage => Math.max(prevPage - 1, 0));
+  };
+
+  console.log(page)
+
   function returnAnswers() {
     const headers = {
       apiKey: apiKey,
@@ -290,10 +299,10 @@ const Survey: React.FC<FeedbackProps> = ({
       token: token,
     };
     const arr = Object.values(answer);
-    if(!answer || !arr?.length || arr.length<FormData?.length) return showToast.error("Please fill of the details")
-    for(let e of arr)
-        if(!e || (Array.isArray(e) && !e.length)) return showToast.error("Please fill Some of the details");
-    if(arr.length<(data?.length)) return ;
+    if (!answer || !arr?.length || arr.length < FormData?.length) return showToast.error("Please fill of the details")
+    for (let e of arr)
+      if (!e || (Array.isArray(e) && !e.length)) return showToast.error("Please fill Some of the details");
+    if (arr.length < (data?.length)) return;
     if (answer) {
       const ansArr = formdata.map((ans: any) => ({
         question: ans?.question || '',
@@ -313,7 +322,7 @@ const Survey: React.FC<FeedbackProps> = ({
           if (response.data.success) {
             showToast.success('Thank you for your feedback');
             setThanksPopup(true);
-              onSubmit && onSubmit();
+            onSubmit && onSubmit();
           } else {
             toast.error(response.data.error);
           }
@@ -332,38 +341,38 @@ const Survey: React.FC<FeedbackProps> = ({
   const whiteStar = (
     <svg width="32" height="32" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_415_158)">
-        <path d="M15.455 13.7626L3.4925 15.497L3.28063 15.5401C2.95989 15.6252 2.66749 15.794 2.4333 16.0291C2.19911 16.2642 2.03151 16.5573 1.94762 16.8783C1.86373 17.1994 1.86655 17.537 1.9558 17.8566C2.04506 18.1762 2.21753 18.4664 2.45563 18.6976L11.1219 27.1332L9.07813 39.0489L9.05375 39.2551C9.03412 39.5868 9.103 39.9178 9.25335 40.2142C9.40369 40.5105 9.6301 40.7616 9.90938 40.9417C10.1887 41.1218 10.5108 41.2244 10.8428 41.2391C11.1748 41.2537 11.5047 41.1799 11.7988 41.0251L22.4975 35.4001L33.1719 41.0251L33.3594 41.1114C33.6689 41.2333 34.0052 41.2706 34.3339 41.2196C34.6626 41.1687 34.9718 41.0312 35.2299 40.8212C35.4879 40.6113 35.6854 40.3365 35.8022 40.025C35.919 39.7136 35.9508 39.3767 35.8944 39.0489L33.8488 27.1332L42.5188 18.6957L42.665 18.5364C42.8739 18.279 43.0109 17.9709 43.062 17.6435C43.1131 17.316 43.0764 16.9808 42.9558 16.6721C42.8352 16.3634 42.6349 16.0922 42.3753 15.8861C42.1157 15.68 41.8062 15.5464 41.4781 15.4988L29.5156 13.7626L24.1681 2.9251C24.0134 2.6111 23.7738 2.34669 23.4766 2.16179C23.1794 1.9769 22.8363 1.87891 22.4863 1.87891C22.1362 1.87891 21.7931 1.9769 21.4959 2.16179C21.1987 2.34669 20.9591 2.6111 20.8044 2.9251L15.455 13.7626Z" fill="#E2E2E2"/>
+        <path d="M15.455 13.7626L3.4925 15.497L3.28063 15.5401C2.95989 15.6252 2.66749 15.794 2.4333 16.0291C2.19911 16.2642 2.03151 16.5573 1.94762 16.8783C1.86373 17.1994 1.86655 17.537 1.9558 17.8566C2.04506 18.1762 2.21753 18.4664 2.45563 18.6976L11.1219 27.1332L9.07813 39.0489L9.05375 39.2551C9.03412 39.5868 9.103 39.9178 9.25335 40.2142C9.40369 40.5105 9.6301 40.7616 9.90938 40.9417C10.1887 41.1218 10.5108 41.2244 10.8428 41.2391C11.1748 41.2537 11.5047 41.1799 11.7988 41.0251L22.4975 35.4001L33.1719 41.0251L33.3594 41.1114C33.6689 41.2333 34.0052 41.2706 34.3339 41.2196C34.6626 41.1687 34.9718 41.0312 35.2299 40.8212C35.4879 40.6113 35.6854 40.3365 35.8022 40.025C35.919 39.7136 35.9508 39.3767 35.8944 39.0489L33.8488 27.1332L42.5188 18.6957L42.665 18.5364C42.8739 18.279 43.0109 17.9709 43.062 17.6435C43.1131 17.316 43.0764 16.9808 42.9558 16.6721C42.8352 16.3634 42.6349 16.0922 42.3753 15.8861C42.1157 15.68 41.8062 15.5464 41.4781 15.4988L29.5156 13.7626L24.1681 2.9251C24.0134 2.6111 23.7738 2.34669 23.4766 2.16179C23.1794 1.9769 22.8363 1.87891 22.4863 1.87891C22.1362 1.87891 21.7931 1.9769 21.4959 2.16179C21.1987 2.34669 20.9591 2.6111 20.8044 2.9251L15.455 13.7626Z" fill="#E2E2E2" />
       </g>
       <defs>
         <clipPath id="clip0_415_158">
-          <rect width="45" height="45" fill="white"/>
+          <rect width="45" height="45" fill="white" />
         </clipPath>
       </defs>
     </svg>
-);
-const blackStar = (
+  );
+  const blackStar = (
     <svg width="32" height="32" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_415_239)">
-        <path d="M15.455 13.7626L3.4925 15.497L3.28063 15.5401C2.95989 15.6252 2.66749 15.794 2.4333 16.0291C2.19911 16.2642 2.03151 16.5573 1.94762 16.8783C1.86373 17.1994 1.86655 17.537 1.9558 17.8566C2.04506 18.1762 2.21753 18.4664 2.45563 18.6976L11.1219 27.1332L9.07813 39.0489L9.05375 39.2551C9.03412 39.5868 9.103 39.9178 9.25335 40.2142C9.40369 40.5105 9.6301 40.7616 9.90938 40.9417C10.1887 41.1218 10.5108 41.2244 10.8428 41.2391C11.1748 41.2537 11.5047 41.1799 11.7988 41.0251L22.4975 35.4001L33.1719 41.0251L33.3594 41.1114C33.6689 41.2333 34.0052 41.2706 34.3339 41.2196C34.6626 41.1687 34.9718 41.0312 35.2299 40.8212C35.4879 40.6113 35.6854 40.3365 35.8022 40.025C35.919 39.7136 35.9508 39.3767 35.8944 39.0489L33.8488 27.1332L42.5188 18.6957L42.665 18.5364C42.8739 18.279 43.0109 17.9709 43.062 17.6435C43.1131 17.316 43.0764 16.9808 42.9558 16.6721C42.8352 16.3634 42.6349 16.0922 42.3753 15.8861C42.1157 15.68 41.8062 15.5464 41.4781 15.4988L29.5156 13.7626L24.1681 2.9251C24.0134 2.6111 23.7738 2.34669 23.4766 2.16179C23.1794 1.9769 22.8363 1.87891 22.4863 1.87891C22.1362 1.87891 21.7931 1.9769 21.4959 2.16179C21.1987 2.34669 20.9591 2.6111 20.8044 2.9251L15.455 13.7626Z" fill="#F9C23C"/>
+        <path d="M15.455 13.7626L3.4925 15.497L3.28063 15.5401C2.95989 15.6252 2.66749 15.794 2.4333 16.0291C2.19911 16.2642 2.03151 16.5573 1.94762 16.8783C1.86373 17.1994 1.86655 17.537 1.9558 17.8566C2.04506 18.1762 2.21753 18.4664 2.45563 18.6976L11.1219 27.1332L9.07813 39.0489L9.05375 39.2551C9.03412 39.5868 9.103 39.9178 9.25335 40.2142C9.40369 40.5105 9.6301 40.7616 9.90938 40.9417C10.1887 41.1218 10.5108 41.2244 10.8428 41.2391C11.1748 41.2537 11.5047 41.1799 11.7988 41.0251L22.4975 35.4001L33.1719 41.0251L33.3594 41.1114C33.6689 41.2333 34.0052 41.2706 34.3339 41.2196C34.6626 41.1687 34.9718 41.0312 35.2299 40.8212C35.4879 40.6113 35.6854 40.3365 35.8022 40.025C35.919 39.7136 35.9508 39.3767 35.8944 39.0489L33.8488 27.1332L42.5188 18.6957L42.665 18.5364C42.8739 18.279 43.0109 17.9709 43.062 17.6435C43.1131 17.316 43.0764 16.9808 42.9558 16.6721C42.8352 16.3634 42.6349 16.0922 42.3753 15.8861C42.1157 15.68 41.8062 15.5464 41.4781 15.4988L29.5156 13.7626L24.1681 2.9251C24.0134 2.6111 23.7738 2.34669 23.4766 2.16179C23.1794 1.9769 22.8363 1.87891 22.4863 1.87891C22.1362 1.87891 21.7931 1.9769 21.4959 2.16179C21.1987 2.34669 20.9591 2.6111 20.8044 2.9251L15.455 13.7626Z" fill="#F9C23C" />
       </g>
       <defs>
         <clipPath id="clip0_415_239">
-          <rect width="45" height="45" fill="white"/>
+          <rect width="45" height="45" fill="white" />
         </clipPath>
       </defs>
     </svg>
-);
+  );
 
-function isValidEmail(email: string) {
-  if (!email) return false;
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return !emailRegex.test(email);
-}
+  function isValidEmail(email: string) {
+    if (!email) return false;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return !emailRegex.test(email);
+  }
 
-  const normalInput = (question: string, criteriaId: string, placeholder?:string) => {
+  const normalInput = (question: string, criteriaId: string, placeholder?: string) => {
     return (
       <div className="" key={criteriaId}>
-        <Label 
+        <Label
           htmlFor="normalInput"
           children={question}
           style={styleConfig?.Label}
@@ -378,10 +387,10 @@ function isValidEmail(email: string) {
       </div>
     );
   };
-  const emailInput = (question: string, criteriaId: string, placeholder?:string) => {
+  const emailInput = (question: string, criteriaId: string, placeholder?: string) => {
     return (
       <div className="" key={criteriaId}>
-        <Label 
+        <Label
           htmlFor="normalInput"
           children={question}
           style={styleConfig?.Label}
@@ -401,10 +410,10 @@ function isValidEmail(email: string) {
     );
   };
 
-  const normalInput2 = (question: string, criteriaId: string, placeholder?:string) => {
+  const normalInput2 = (question: string, criteriaId: string, placeholder?: string) => {
     return (
       <div className="" key={criteriaId}>
-        <Label 
+        <Label
           htmlFor="normalInput"
           children={question}
           style={styleConfig?.Label}
@@ -472,7 +481,7 @@ function isValidEmail(email: string) {
               onClick={() => handleComments(criteriaId, comment)}
               style={styleConfig?.SecondaryButton}
             />
-            <PrimaryButton 
+            <PrimaryButton
               children='Submit'
               onClick={() => handleComments(criteriaId, comment)}
               style={styleConfig?.PrimaryButton}
@@ -483,230 +492,236 @@ function isValidEmail(email: string) {
     );
   };
 
-const singleChoiceOne = (
+  const singleChoiceOne = (
     options: string[],
     question: string,
     required: boolean,
     criteriaId: string,
-) => {
-  options=["sdas","sdas","dasd"]
+  ) => {
+    options = ["sdas", "sdas", "dasd"]
     return (
-        <div key={criteriaId}>
-            <div
-                className="q-onb-singleChoiceOne-lebel"
-            >
-                {question} {required && "*"}
-            </div>
-            <div className="q-onb-singleChoiceOne-optDiv">
-                {options.map((option: string, id: number) => (
-                    <div className="q_onb_singlehoiceOne_lebel" key={id}>
-                        <input
-                            id={`sct${criteriaId + id}`}
-                            type="radio"
-                            value={option}
-                            checked={answer[criteriaId] == option}
-                            onChange={(e) =>
-                                handleUpdate(e, criteriaId, "radio")
-                            }
-                            name={`default-radio${criteriaId}`}
-                            className="q-onb-singleChoiceOne-inp"
-                        />
-                        <label
-                            htmlFor={`sct${criteriaId + id}`}
-                            className="q-onb-singleChoiceOne-lebel3"
-                        >
-                            {option}
-                        </label>
-                    </div>
-                ))}
-            </div>
+      <div key={criteriaId}>
+        <div
+          className="q-onb-singleChoiceOne-lebel"
+        >
+          {question} {required && "*"}
         </div>
+        <div className="q-onb-singleChoiceOne-optDiv">
+          {options.map((option: string, id: number) => (
+            <div className="q_onb_singlehoiceOne_lebel" key={id}>
+              <input
+                id={`sct${criteriaId + id}`}
+                type="radio"
+                value={option}
+                checked={answer[criteriaId] == option}
+                onChange={(e) =>
+                  handleUpdate(e, criteriaId, "radio")
+                }
+                name={`default-radio${criteriaId}`}
+                className="q-onb-singleChoiceOne-inp"
+              />
+              <label
+                htmlFor={`sct${criteriaId + id}`}
+                className="q-onb-singleChoiceOne-lebel3"
+              >
+                {option}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
     );
-};
- const handleThanks = () => {
-  setThanksPopup(false);
-  // setSelectedOption(null);
-};
+  };
+  const handleThanks = () => {
+    setThanksPopup(false);
+    // setSelectedOption(null);
+  };
 
   return (
-      <div
-        style={{
-          // color: themeConfig.primaryColor,background: themeConfig.backgroundColor,...styleConfig?.Form
-          background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
-        }}
-        className="q-feedback-cont"
-      >
-        {formdata.length > 0 ? (
-          formdata[0].type !== 'LIKE_DISLIKE' &&
-            formdata[0].type !== 'RATING' ? (
-            <>
-              {!thanksPopup && (
-                <div>
-                  <TopBar
-                    heading={heading || ''}
-                    description={subHeading || ''}
-                    style={{
-                      headingStyle: styleConfig?.Heading,
-                      descriptionStyle: styleConfig?.Description,
-                      iconStyle: { display: "none" },
-                    }} />
-                  <form onSubmit={e=>{
-                    e.preventDefault();
-                    ((data.length/itemsPerPage)<=page+1)?returnAnswers():handleNext()
-                  }} style={{ padding: "20px", boxSizing: "content-box", display: "flex", flexDirection: "column", gap: "16px" }}>
-                    {formdata.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map((data: any) => {
-                      if (data.type === 'USER_INPUT_TEXT') {
-                        return normalInput(
-                          data.question || '',
-                          data.criteriaId || '',
-                          data.placeholder || undefined,
-                        );
-                      } else if (data.type === 'USER_INPUT_EMAIL') {
-                        return emailInput(
-                          data.question || '',
-                          data.criteriaId || '',
-                          data.placeholder || undefined,
-                        );
-                      } else if (data.type === 'USER_INPUT_SINGLE_CHOICE') {
-                        return singleChoiceOne(
-                          data.options || [],
-                          data?.question || "",
-                          data?.required || false,
-                          data.criteriaId || "",
+    <div
+      style={{
+        // color: themeConfig.primaryColor,background: themeConfig.backgroundColor,...styleConfig?.Form
+        background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
+      }}
+      className="q-feedback-cont"
+    >
+      {formdata.length > 0 ? (
+          formdata[0].type !== 'LIKE_DISLIKE'
+           ? (
+          <>
+            {!thanksPopup && (
+              <div>
+                <TopBar
+                  heading={heading || ''}
+                  description={subHeading || ''}
+                  style={{
+                    headingStyle: styleConfig?.Heading,
+                    descriptionStyle: styleConfig?.Description,
+                    iconStyle: { display: "none" },
+                  }} />
+                <form onSubmit={e => {
+                  e.preventDefault();
+                  ((data.length / itemsPerPage) <= page + 1) ? returnAnswers() : handleNext()
+                }} style={{ padding: "20px", boxSizing: "content-box", display: "flex", flexDirection: "column", gap: "16px" }}>
+                  {formdata.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map((data: any) => {
+                    if (data.type === 'USER_INPUT_TEXT') {
+                      return normalInput(
+                        data.question || '',
+                        data.criteriaId || '',
+                        data.placeholder || undefined,
+                      );
+                    } else if (data.type === 'USER_INPUT_EMAIL') {
+                      return emailInput(
+                        data.question || '',
+                        data.criteriaId || '',
+                        data.placeholder || undefined,
+                      );
+                    } else if (data.type === 'USER_INPUT_SINGLE_CHOICE') {
+                      return singleChoiceOne(
+                        data.options || [],
+                        data?.question || "",
+                        data?.required || false,
+                        data.criteriaId || "",
                       )
-                      } else if (data.type === 'USER_INPUT_TEXTAREA') {
-                        return normalInput2(
-                          data.question || '',
-                          data.criteriaId || '',
-                          data.placeholder || undefined,
-                        );
-                      } else if (data.type === 'RATING') {
-                        return (
-                          <div className="mb-4">
-                            <label
-                              className='q-fd-lebels'
-                            >
-                              {data.question || 'Rating Scale'}
-                            </label>
-                            <div
-                              style={{
-                                display: 'flex',
-                                marginTop: '6px',
-                              }}
-                            >
-                              <Rating 
-                               count={5}
-                               getCurrentRating={(item) =>
+                    } else if (data.type === 'USER_INPUT_TEXTAREA') {
+                      return normalInput2(
+                        data.question || '',
+                        data.criteriaId || '',
+                        data.placeholder || undefined,
+                      );
+                    } else if (data.type === 'RATING') {
+                      return (
+                        <div className="mb-4">
+                          <label
+                            className='q-fd-lebels'
+                          >
+                            {data.question || 'Rating Scale'}
+                          </label>
+                          <div
+                            style={{
+                              display: 'flex',
+                              marginTop: '6px',
+                            }}
+                          >
+                            <Rating
+                              count={5}
+                              getCurrentRating={(item) =>
                                 handleRatingChange(data.criteriaId, item)
-                               }
+                              }
                               //  defaultRating={Number(answer[0])}
-                               type={ratingType}
-                              />
-                            </div>
+                              type={ratingType}
+                            />
                           </div>
-                        );
-                      }
-                    })}
-                      <div className='q_feedback_buttons'>
-                        <SecondaryButton
-                          children={(0==page)?'Cancel':'Previous'}
-                          onClick={()=>(0==page)?onCancel():setPage(c=>c-1)}
-                          style={styleConfig?.SecondaryButton}
-                        />
-                        <PrimaryButton
-                          style={{
-                            border : styleConfig?.PrimaryButton?.border || '1.5px solid #afafaf',
-                            ...styleConfig?.PrimaryButton
-                          }}
-                          children={((data.length/itemsPerPage)<=page+1)?'Submit':'Next'}
-                          type='submit'
-                        />
-                      </div>
-                  </form>
-                  {showFooter &&  <QuestLabs style={styleConfig?.Footer} /> }
-                </div>
-              )}
-              {thanksPopup && (
-               <div>
-               <div
-                 className='q_submit_cross_icon'
-                 onClick={handleThanks}
-               >
-                 {cross(iconColor)}
-               </div>
-               <div className="q-fw-thanks">
-                 <div>
-                   <div className='q-svg-thanks'>
-                     {thanks}
-                   </div>
-                   <div className='q_fw_submit_box'>
-                     <div className='q_feedback_text_submitted'>
-                       <div className='q_feedback_text_cont' style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}>
-                         Feedback Submitted
-                       </div>
-                       <div className='q_fw_submit_desc'
-                         style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
-                       >Thanks for submitting your feedback with us. We appreciate your review and will assure you to surely consider them</div>
-                     </div>
-                     <div onClick={()=>setThanksPopup(false)} className='q_fw_submit_back'>Go to home!</div>
-                   </div>
-                 </div>
-               </div>
-               {showFooter &&  <QuestLabs style={styleConfig?.Footer} /> }
-             </div>
-              )}
-            </>
-          ) : formdata[0].type === 'LIKE_DISLIKE' ? (
-            <div className="">
-              {!likePopup && (
+                        </div>
+                      );
+                    }
+                  })}
+                  <div className='q_feedback_buttons'>
+                    <SecondaryButton
+                      children={(0 == page) ? 'Cancel' : 'Previous'}
+                      onClick={() => {
+                        if (page === 0) {
+                          onCancel();
+                        } else {
+                          setPage(page - 1);
+                        }
+                      }}
+                      style={styleConfig?.SecondaryButton}
+                    />
+                    <PrimaryButton
+                      style={{
+                        border: styleConfig?.PrimaryButton?.border || '1.5px solid #afafaf',
+                        ...styleConfig?.PrimaryButton
+                      }}
+                      children={((data.length / itemsPerPage) <= page + 1) ? 'Submit' : 'Next'}
+                      type='submit'
+                    />
+                  </div>
+                </form>
+                {showFooter && <QuestLabs style={styleConfig?.Footer} />}
+              </div>
+            )}
+            {thanksPopup && (
+              <div>
                 <div
-                  className='q-fd-like-dislike'
+                  className='q_submit_cross_icon'
+                  onClick={handleThanks}
                 >
-                  <div className='q-fd-like-dislike-txt'>
-                    <div>
-                      Are these results helpful?
+                  {cross(iconColor)}
+                </div>
+                <div className="q-fw-thanks">
+                  <div>
+                    <div className='q-svg-thanks'>
+                      {thanks}
                     </div>
-                    <div>
-                      Your feedback helps us improve search results
+                    <div className='q_fw_submit_box'>
+                      <div className='q_feedback_text_submitted'>
+                        <div className='q_feedback_text_cont' style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}>
+                          Feedback Submitted
+                        </div>
+                        <div className='q_fw_submit_desc'
+                          style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
+                        >Thanks for submitting your feedback with us. We appreciate your review and will assure you to surely consider them</div>
+                      </div>
+                      <div onClick={() => setThanksPopup(false)} className='q_fw_submit_back'>Go to home!</div>
                     </div>
-                  </div>
-                  <div className="like-dislike-cont">
-                    <div style={{ display: "inline" }} onClick={() => setLikePopup(true)}>{dislike}</div>
-                    <div style={{ display: "inline" }} onClick={() => setLikePopup(true)}>{like}</div>
                   </div>
                 </div>
-              )}
-              {likePopup && likePopupContent(formdata[0].criteriaId, comment)}
-            </div>
-          ) : formdata[0].type === 'RATING' ? (
-            <div className="">
-              <div className="mb-4">
-                <label
-                  className='q-fd-lebels'
-                >
-                  Rating Scale
-                </label>
-                <div style={{ display: 'flex', padding: '2% 0% 2%' }}>
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <div
-                      className="q-star-div"
-                      key={star}
-                      onClick={() => handleRatingChange2(star)}
-                    >
-                      {star <= rating ? blackStar : whiteStar}
-                    </div>
-                  ))}
+                {showFooter && <QuestLabs style={styleConfig?.Footer} />}
+              </div>
+            )}
+          </>
+        ) : formdata[0].type === 'LIKE_DISLIKE' ? (
+          <div className="">
+            {!likePopup && (
+              <div
+                className='q-fd-like-dislike'
+              >
+                <div className='q-fd-like-dislike-txt'>
+                  <div>
+                    Are these results helpful?
+                  </div>
+                  <div>
+                    Your feedback helps us improve search results
+                  </div>
+                </div>
+                <div className="like-dislike-cont">
+                  <div style={{ display: "inline" }} onClick={() => setLikePopup(true)}>{dislike}</div>
+                  <div style={{ display: "inline" }} onClick={() => setLikePopup(true)}>{like}</div>
                 </div>
               </div>
-              {likePopup && likePopupContent(formdata[0].criteriaId, comment)}
-            </div>
-          ) : null
-        ) : (
-          <div className="">
-            {/* <div className="q-center">Form data is empty</div> */}
+            )}
+            {likePopup && likePopupContent(formdata[0].criteriaId, comment)}
           </div>
-        )}
-      </div>
+        ) : isInline && formdata[0].type === 'RATING' ? (
+          <div className="">
+            <div className="mb-4">
+              <label
+                className='q-fd-lebels'
+              >
+                Rating Scale
+              </label>
+              <div style={{ display: 'flex', padding: '2% 0% 2%' }}>
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <div
+                    className="q-star-div"
+                    key={star}
+                    onClick={() => handleRatingChange2(star)}
+                  >
+                    {star <= rating ? blackStar : whiteStar}
+                  </div>
+                ))}
+              </div>
+            </div>
+            {likePopup && likePopupContent(formdata[0].criteriaId, comment)}
+          </div>
+        ) : null
+      ) : (
+        <div className="">
+          {/* <div className="q-center">Form data is empty</div> */}
+        </div>
+      )}
+    </div>
   );
 };
 
