@@ -138,7 +138,10 @@ const Survey: React.FC<FeedbackProps> = ({
   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
   const handleNext = () => {
-    setPage(prevPage => Math.min(prevPage + 1, Math.ceil(formdata.length / 2) - 1));
+    const totalPages = Math.ceil(data.length / itemsPerPage);
+    if(page < totalPages - 1){
+      setPage(prevPage => prevPage + 1);
+    }
   };
 
   const dislike = (
@@ -325,7 +328,6 @@ const Survey: React.FC<FeedbackProps> = ({
         .post(request, requestData, { headers: headers })
         .then((response) => {
           if (response.data.success) {
-            showToast.success('Thank you for your feedback');
             setThanksPopup(true);
             onSubmit && onSubmit();
           } else {
