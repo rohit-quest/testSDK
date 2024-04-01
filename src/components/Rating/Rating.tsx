@@ -146,16 +146,16 @@ const EmojiRating = (props: RatingProps) => {
       {(props.type === "number" || props.type === "colored" || props.type === "emoji") && (
         <div className={"ratingTextView"}>
           <div className={"ratingText"} style={{ ...props.RatingStyle?.RatingText }}>
-            {props.type === "number" ? "Not likely" : "Perfect"}
+            {props.RatingStyle?.LeftRatingText || "Not likely"}
           </div>
           <div className={"ratingText"} style={{ ...props.RatingStyle?.RatingText }}>
-            {props.type === "number" ? "Perfect" : "Very Likely"}
+            {props.RatingStyle?.RightRatingText || "Very Likely"}
           </div>
         </div>
       )}
 
       {props.type == "star" && (
-        <div style={{ ...props.RatingStyle?.RatingText }} className="q-star-text-Cont">Click to Rate</div>
+        <div style={{ ...props.RatingStyle?.RatingText }} className="q-star-text-Cont">{props.RatingStyle?.RightRatingText || props.RatingStyle?.LeftRatingText || 'Click to Rate'}</div>
       )}
     </div>
   );

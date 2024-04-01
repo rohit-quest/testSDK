@@ -59,7 +59,7 @@ export default function FeedbackPreview({ online = true }) {
                 apiSecret={apiSecret}
                 entityId={entityId}
                 themeConfig={{
-                    fontFamily: 'cursive',
+                    // fontFamily: 'cursive',
                     // primaryColor: 'blue'
                 }}
                 apiType='STAGING'
@@ -74,30 +74,39 @@ export default function FeedbackPreview({ online = true }) {
                         Form: {
                             // font: "sans",
                             // color: "red",
-                            backgroundColor: "gray"
+                            // backgroundColor: "gray"
                         },
                         Heading: {
-                            color: "red"
+                            color: "red",
+                            fontSize:'10px'
                         },
                         Label: {
-                            color: "green"
+                            // color: "green"
                         },
-                        // Rating: {
-                        //     RatingContainer: {
-                        //         color: "red",
+                        TopBar: {
+                            // display: "none"
+                        },
+                        Rating: {
+                            RatingContainer: {
+                                color: "red",
 
-                        //     },
-                        //     SingleRating: {
-                        //         color: "red"
-                        //     },
-                        //     RatingText: {
-                        //         color: "green"
-                        //     },
-                        //     Hover: {
-                        //         color: "grey",
-                        //         background: "yellow"
-                        //     }
-                        // }
+
+                            },
+                            SingleRating: {
+                                color: "red",
+                                background: "yellow"
+
+                            },
+                            RatingText: {
+                                color: "green"
+                            },
+                            Hover: {
+                                color: "grey",
+                                background: "yellow"
+                            },
+                            // LeftRatingText:'Not',
+                            // RightRatingText:'Perfect'
+                        }
                     }}
                     // showFooter={false}
                     // supportUrl={"supportUrl"}
@@ -110,6 +119,54 @@ export default function FeedbackPreview({ online = true }) {
                     userId={userId}
                     token={token}
                     itemsPerPage={1}
+
+                    sections={[
+                        {
+                            heading: "General Feedback",
+                            subHeading: "Please share your feedback",
+                            button1Text: "cont",
+                            button2Text: "Next",
+                            placeholder: "Enter your Message",
+                            showWordCount: true,
+                            // showTopBar: false
+                        },
+                        {
+                            heading: "Report a Bug",
+                            subHeading: "Please describe your issue",
+                            button1Text: "Cancel",
+                            button2Text: "Next",
+                            placeholder: "Enter your email",
+                            showWordCount: true,
+                            showTopBar: true
+                        },
+                        {
+                            heading: "Request ",
+                            subHeading: "Please describe your feature",
+                            button1Text: "Cancel",
+                            button2Text: "Submit",
+                            placeholder: "write",
+                            showWordCount: true,
+                            // showTopBar: false
+                        },
+                        {
+                            heading: "Contact us",
+                            subHeading: "Please describe your issue",
+                            button1Text: "Cancel",
+                            button2Text: "Submit",
+                            placeholder: "write",
+                            showWordCount: true,
+                            // showTopBar: false
+                        },
+                        {
+                            heading: "Contact us",
+                            subHeading: "Please describe your issue",
+                            button1Text: "Cancel",
+                            button2Text: "Submit",
+                            placeholder: "write",
+                            showWordCount: true,
+                            // showTopBar: false
+                        },
+                    ]}
                 />
             </QuestProvider>
         )

@@ -1,35 +1,42 @@
-import React, { useContext } from 'react'
-import './css/topBar.css'
-import QuestContext from '../QuestWrapper';
+import React, { useContext } from "react";
+import "./css/topBar.css";
+import QuestContext from "../QuestWrapper";
 
 interface PropType {
-    heading: string,
-    description: string,
-    iconColor?: string,
-    onClose?: () => void,
-    style?: React.CSSProperties & {
-        headingStyle?: React.CSSProperties,
-        descriptionStyle?: React.CSSProperties,
-        iconStyle?: React.CSSProperties,
-        topbarStyle?: React.CSSProperties,
-    }
+  heading: string;
+  description: string;
+  iconColor?: string;
+  onClose?: () => void;
+  style?: React.CSSProperties & {
+    headingStyle?: React.CSSProperties;
+    descriptionStyle?: React.CSSProperties;
+    iconStyle?: React.CSSProperties;
+    topbarStyle?: React.CSSProperties;
+  };
 }
 
-const createUrl = (string="") => `data:image/svg+xml,${encodeURIComponent(string)}`
+const createUrl = (string = "") =>
+  `data:image/svg+xml,${encodeURIComponent(string)}`;
 
 export default function TopBar({
-    heading,
-    description,
-    iconColor,
-    onClose,
-    style,
-}:PropType) {
+  heading,
+  description,
+  iconColor,
+  onClose,
+  style,
+}: PropType) {
+  const { themeConfig } = useContext(QuestContext.Context);
 
-    const {themeConfig} = useContext(QuestContext.Context);
-
-    const cross = (color = "#AFAFAF", onClick?: () => void) => (
-        <img onClick={() => onClick?.()} style={{ cursor: "pointer", ...style?.iconStyle, background: "inherit", backgroundColor: "inherit" }}
-        src={createUrl(`
+  const cross = (color = "#AFAFAF", onClick?: () => void) => (
+    <img
+      onClick={() => onClick?.()}
+      style={{
+        cursor: "pointer",
+        ...style?.iconStyle,
+        background: "inherit",
+        backgroundColor: "inherit",
+      }}
+      src={createUrl(`
         <svg
             width="20"
             height="20"
@@ -43,18 +50,32 @@ export default function TopBar({
             />
           </svg>
         `)}
-        />
-      );
+    />
+  );
 
-    return (
-        <div className="q_top_bar" style={{background: themeConfig.backgroundColor, ...style?.topbarStyle}}>
-            <div className='q_top_bar_heading'>
-                <div>
-                    <div style={{color: themeConfig.primaryColor,...style?.headingStyle}}>{heading}</div>
-                    <div style={{color: themeConfig.secondaryColor,...style?.descriptionStyle}} className='q_top_bar_desc'>{description}</div>
-                </div>
-            </div>
-            {cross(iconColor, onClose)}
+  return (
+    <div
+      className="q_top_bar"
+      style={{ background: themeConfig.backgroundColor, ...style?.topbarStyle }}
+    >
+      <div className="q_top_bar_cont">
+        <div
+          className="q_top_bar_heading"
+          style={{ color: themeConfig.primaryColor, ...style?.headingStyle }}
+        >
+          {heading}
         </div>
-    )
+        <div
+          style={{
+            color: themeConfig.secondaryColor,
+            ...style?.descriptionStyle,
+          }}
+          className="q_top_bar_desc"
+        >
+          {description}
+        </div>
+      </div>
+      {cross(iconColor, onClose)}
+    </div>
+  );
 }
