@@ -1,12 +1,12 @@
 import { QuestProvider } from '../QuestWrapper';
 import SearchOffline from './OfflineComponent';
 import Search from './Search';
-export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
-export const apiKey = 'k-68a0c6b8-b27f-49c6-a315-b0c9cba15bf4'
+export const questId = 'q-c7ac6e57-21b7-41a8-b33a-9a625b635890';
+export const apiKey = 'k-fe5a805c-77ed-4cae-bd33-9591ebed2805'
 export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
-export const entityId = 'e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5'
-export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
-export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
+export const entityId = 'e-9850377b-f88f-4426-a2ac-56206c74655a'
+export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMTk0NjczMSwiZXhwIjoxNzEyNTUxNTMxfQ.UN8slj2eRRDbbczjEcQxqYKJn_DLT80DC0Bv84nRtlU'
+export const userId = 'u-8268f5e1-f5a1-440c-a333-0f5578a73847'
 const criteriaId = () => `ec-e32b88d7-0e43-4254-${Date.now() + Math.floor(Math.random() * 10)}`
 
 export default function SearchPreview({ online = false }) {
@@ -23,7 +23,7 @@ export default function SearchPreview({ online = false }) {
                 // color='red'
                 iconColor='red'
                 // backgroundColor='black'
-                questId="q-7d780bbd-c41c-48dd-a29d-415309a23cc2"
+                questId={questId}
                 userId={userId}
                 // sections
                 // searchDetails
@@ -38,6 +38,7 @@ export default function SearchPreview({ online = false }) {
         return (
             <SearchOffline
             open={true}
+            // iconColor='red'
             styleConfig={{
                 // Body: {
                 //     backgroundColor: "black",
@@ -61,6 +62,15 @@ export default function SearchPreview({ online = false }) {
                     Description:'pink',
                     iconBackground:'yellow',
                     // Description:'pink'
+                },
+                CommandButton:{
+                    // backgroundColor:'red',
+                    color:'blue'
+                },
+                Input:{
+                    color:'blue',
+                    borderColor:'blue',
+                    // fontSize:'20px'
                 }
             }}
             
