@@ -18,6 +18,7 @@ interface SpinTheWheelProps {
     primary: string;
     secondary: string;
   };
+  isAccumulateXP?: boolean;
   wheelImage?: string;
   winningIndex?: number;
   onSpinComplete?: () => void;
@@ -35,7 +36,8 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
   questId,
   criteriaId,
   onSpinComplete,
-  successCall
+  successCall,
+  isAccumulateXP = false
 }) => {
   const { apiKey, apiSecret, entityId ,apiType} = useContext(QuestContext.Context);
   const [spinCount, setSpinCount] = useState<number>(0);
@@ -129,6 +131,7 @@ const SpinTheWheel: React.FC<SpinTheWheelProps> = ({
 
       const json = {
         criteriaId: criteriaId,
+        isAccumulateXP: isAccumulateXP,
       };
       const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
 

@@ -9,5 +9,7 @@ export interface RatingProps {
     SingleRating?: React.CSSProperties;
     RatingText?: React.CSSProperties;
     Hover?: React.CSSProperties;
+    LeftRatingText?:string;
+    RightRatingText?:string;
   };
 }
