@@ -110,6 +110,32 @@ export default function FeedbackPreview({ online = true }) {
                     userId={userId}
                     token={token}
                     itemsPerPage={1}
+                    sections={[
+                        {
+                            heading: "General Feedback",
+                            subHeading: "Please share your feedback",
+                            button1Text: "Cancel",
+                            button2Text: "Next",
+                            placeholder: "Enter your Message",
+                            showWordCount: true
+                        },
+                        {
+                            heading: "Report a Bug",
+                            subHeading: "Please describe your issue",
+                            button1Text: "Cancel",
+                            button2Text: "Next",
+                            placeholder: "Enter your Message",
+                            showWordCount: true
+                        },
+                        {
+                            heading: "Request a Feature",
+                            subHeading: "Please describe your feature",
+                            button1Text: "Cancel",
+                            button2Text: "Next",
+                            placeholder: "Enter your Message",
+                            showWordCount: true
+                        },
+                    ]}
                 />
             </QuestProvider>
         )

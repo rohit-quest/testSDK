@@ -28,3 +28,9 @@
     line-height: 30px;
     letter-spacing: -0.4px;
 }
+
+.q_top_bar_cont {
+    display: flex;
+    gap:4px;
+    flex-direction: column;
+}
