@@ -30,7 +30,6 @@
   position: relative;
   padding: 10px 20px;
   border-bottom: 1px solid #efefef;
-  /* justify-content: space-between; */
   gap: 12px;
 }
 .q_searchBox_input_cont {
@@ -225,4 +224,22 @@
   width: 16px;
   border-radius: 50%;
   box-sizing: content-box;
+}
+
+.q_input_main_cont {
+  flex: 1;
+  border: none;
+  color: #2C2C2C;
+  /* font-family: Figtree; */
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  height: 100%;
+  background-color: transparent;
+}
+
+.q_input_main_cont:focus {
+  outline: none;
+  border: none;
+  background-color: transparent;
 }
