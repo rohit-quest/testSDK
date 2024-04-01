@@ -52,6 +52,7 @@ interface propType {
       Heading?: string;
       Description?: string;
     };
+    Topbar?: CSSProperties;
     CommandButton?: CSSProperties;
   };
   showFooter?: boolean;
@@ -166,7 +167,7 @@ export default function Search(prop: propType): JSX.Element {
         ...styleConfig?.Form,
       }}
     >
-      <div className="q_search_box">
+      <div className="q_search_box" style={{...styleConfig?.Topbar}}>
         <img
           className="q_search_bar_icon"
           src={searchIcon(prop.iconColor)}
@@ -316,7 +317,7 @@ export default function Search(prop: propType): JSX.Element {
 
   const sectionsJsx = (
     <div className="q_search_bar">
-      <div className="q_search_box">
+      <div className="q_search_box" style={{...styleConfig?.Topbar}}>
         <img
           className="q_search_bar_icon"
           src={searchIcon(themeConfig.secondaryColor)}

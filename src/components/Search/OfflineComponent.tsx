@@ -293,7 +293,7 @@ export default function SearchOffline(prop: propType): JSX.Element {
 
   const sectionsJsx = (
     <div className="q_search_bar">
-      <div className="q_search_box">
+      <div className="q_search_box" style={{...styleConfig?.Topbar}}>
         <img
           className="q_search_bar_icon"
           src={searchIcon(themeConfig.secondaryColor)}
