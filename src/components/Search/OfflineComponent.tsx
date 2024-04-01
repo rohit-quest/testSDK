@@ -6,6 +6,7 @@ import { CSSProperties, useContext, useEffect, useRef, useState } from "react";
 import QuestContext from "../QuestWrapper.tsx";
 import QuestLabs from "../QuestLabs.tsx";
 import { Input } from "../Modules/Input.tsx";
+
 // import config from "../../config.ts";
 
 type data = {
@@ -49,6 +50,8 @@ interface propType {
       Heading?: string;
       Description?: string;
     };
+    Topbar?: CSSProperties;
+    CommandButton?:CSSProperties
   };
   showFooter?: boolean;
 }
@@ -58,13 +61,14 @@ export default function SearchOffline(prop: propType): JSX.Element {
     wholerScreen = true,
     defaultResult = [],
     defulatResultLength = 10,
-    onSearch = (str: string) => { },
+    onSearch = (str: string) => {},
     questId = "",
     token = "",
     userId = "",
     onResultClick = (link: string) => window.open(link, "_blank"),
     styleConfig,
     showFooter = true,
+    iconColor,
     offlineFormatData = [],
   } = prop;
   const inputElement = useRef<HTMLInputElement>(null);
@@ -128,7 +132,6 @@ export default function SearchOffline(prop: propType): JSX.Element {
     setResults(filtered);
   };
 
-
   const jsx = (
     <div
       className="q_search_bar"
@@ -140,35 +143,42 @@ export default function SearchOffline(prop: propType): JSX.Element {
         ...styleConfig?.Form,
       }}
     >
-      <div className="q_search_box">
+      <div className="q_search_box" style={{...styleConfig?.Topbar}}>
         <img
           className="q_search_bar_icon"
           src={searchIcon(prop.iconColor)}
           alt=""
         />
-        {/* <input type="text" placeholder={prop.placeholder} ref={inputElement} onKeyDown={handleKeyDown} style={{ backgroundColor, color: prop.inputColor }}
-          onChange={e => { onSearch(e.target.value); handleSearch(e.target.value) }} className='q_sdk_input q_search_input' /> */}
+
         <div className="q_searchBox_input_cont">
-          <Input
+        <div
+            className="q_input_cont"
             style={{
-              borderColor:
-                styleConfig?.Input?.borderColor || themeConfig?.borderColor,
-              color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+              borderColor:styleConfig?.Input?.borderColor || themeConfig?.borderColor,
               padding: "0px",
-              ...styleConfig?.Input,
             }}
-            type="text"
-            placeholder={prop.placeholder}
-            ref={inputElement}
-            onKeyDown={handleKeyDown}
-            onChange={(e) => {
-              onSearch(e.target.value);
-              handleSearch(e.target.value);
-            }}
-          />
+          >
+            <input
+              type="text"
+              placeholder={prop.placeholder}
+              ref={inputElement}
+              onKeyDown={handleKeyDown}
+              onChange={(e) => {
+                onSearch(e.target.value);
+                handleSearch(e.target.value);
+              }}
+              style={{
+                fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+                color:styleConfig?.Input?.color || themeConfig.primaryColor,
+                ...styleConfig?.Input
+              }}
+              className="q_input_main_cont"
+            />
+
+          </div>
         </div>
-        <div className="q_search_command_key">
-          <img src={commandkeyIcon(prop.iconColor)} alt="" />
+        <div className="q_search_command_key" style={{...styleConfig?.CommandButton}}>
+          <img src={commandkeyIcon(styleConfig?.CommandButton?.color || iconColor)} alt="" />
         </div>
       </div>
       <div className="q_flex_box">
@@ -216,10 +226,10 @@ export default function SearchOffline(prop: propType): JSX.Element {
                     color:
                       i === selectedResultIndex
                         ? styleConfig?.listHover?.Heading ||
-                        themeConfig?.primaryColor ||
-                        styleConfig?.Heading?.color
+                          themeConfig?.primaryColor ||
+                          styleConfig?.Heading?.color
                         : styleConfig?.Heading?.color ||
-                        themeConfig?.primaryColor,
+                          themeConfig?.primaryColor,
                     ...styleConfig?.Heading,
                   }}
                   className="q_search_result_head"
@@ -231,10 +241,10 @@ export default function SearchOffline(prop: propType): JSX.Element {
                     color:
                       i === selectedResultIndex
                         ? styleConfig?.listHover?.Description ||
-                        styleConfig?.Description?.color ||
-                        themeConfig?.secondaryColor
+                          styleConfig?.Description?.color ||
+                          themeConfig?.secondaryColor
                         : styleConfig?.Description?.color ||
-                        themeConfig?.secondaryColor,
+                          themeConfig?.secondaryColor,
                     ...styleConfig?.Description,
                   }}
                   className="q_search_result_desc"
@@ -289,20 +299,35 @@ export default function SearchOffline(prop: propType): JSX.Element {
           src={searchIcon(themeConfig.secondaryColor)}
           alt=""
         />
-        <input
-          type="text"
-          placeholder={prop.placeholder}
-          ref={inputElement}
-          onKeyDown={handleKeyDown}
-          style={{ color: themeConfig.primaryColor, ...styleConfig?.Input }}
-          onChange={(e) => {
-            onSearch(e.target.value);
-            handleSearch(e.target.value);
-          }}
-          className="q_sdk_input q_search_input"
-        />
-        <div className="q_search_command_key">
-          <img src={commandkeyIcon(prop.iconColor)} alt="" />
+      <div className="q_searchBox_input_cont">
+        <div
+            className="q_input_cont"
+            style={{
+              borderColor:styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+              padding: "0px",
+            }}
+          >
+            <input
+              type="text"
+              placeholder={prop.placeholder}
+              ref={inputElement}
+              onKeyDown={handleKeyDown}
+              onChange={(e) => {
+                onSearch(e.target.value);
+                handleSearch(e.target.value);
+              }}
+              style={{
+                fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+                color:styleConfig?.Input?.color || themeConfig.primaryColor,
+                ...styleConfig?.Input
+              }}
+              className="q_input_main_cont"
+            />
+
+          </div>
+        </div>
+        <div className="q_search_command_key" style={{...styleConfig?.CommandButton}}>
+          <img src={commandkeyIcon(styleConfig?.CommandButton?.color || iconColor)} alt="" />
         </div>
       </div>
       <div className="q_flex_box">
@@ -347,10 +372,10 @@ export default function SearchOffline(prop: propType): JSX.Element {
                           color:
                             i === selectedResultIndex
                               ? styleConfig?.listHover?.Heading ||
-                              styleConfig?.Heading?.color ||
-                              themeConfig?.primaryColor
+                                styleConfig?.Heading?.color ||
+                                themeConfig?.primaryColor
                               : styleConfig?.Heading?.color ||
-                              themeConfig?.primaryColor,
+                                themeConfig?.primaryColor,
                           ...styleConfig?.Heading,
                         }}
                         className="q_search_result_head"
@@ -362,10 +387,10 @@ export default function SearchOffline(prop: propType): JSX.Element {
                           color:
                             i === selectedResultIndex
                               ? styleConfig?.listHover?.Description ||
-                              styleConfig?.Description?.color ||
-                              themeConfig?.secondaryColor
+                                styleConfig?.Description?.color ||
+                                themeConfig?.secondaryColor
                               : styleConfig?.Description?.color ||
-                              themeConfig?.secondaryColor,
+                                themeConfig?.secondaryColor,
                           ...styleConfig?.Description,
                         }}
                         // style={{ color: themeConfig.secondaryColor, ...styleConfig?.Description }}
@@ -416,10 +441,10 @@ export default function SearchOffline(prop: propType): JSX.Element {
                           color:
                             i === selectedResultIndex
                               ? styleConfig?.listHover?.Heading ||
-                              styleConfig?.Heading?.color ||
-                              themeConfig?.primaryColor
+                                styleConfig?.Heading?.color ||
+                                themeConfig?.primaryColor
                               : styleConfig?.Heading?.color ||
-                              themeConfig?.primaryColor,
+                                themeConfig?.primaryColor,
                           ...styleConfig?.Heading,
                         }}
                         className="q_search_result_head"
@@ -431,10 +456,10 @@ export default function SearchOffline(prop: propType): JSX.Element {
                           color:
                             i === selectedResultIndex
                               ? styleConfig?.listHover?.Description ||
-                              styleConfig?.Description?.color ||
-                              themeConfig?.primaryColor
+                                styleConfig?.Description?.color ||
+                                themeConfig?.primaryColor
                               : styleConfig?.Description?.color ||
-                              themeConfig?.primaryColor,
+                                themeConfig?.primaryColor,
                           ...styleConfig?.Description,
                         }}
                         className="q_search_result_desc"
