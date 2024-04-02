@@ -233,7 +233,7 @@ function App() {
         
 
 
-        <FeedbackPreview online={true} />
+        {/* <FeedbackPreview online={true} /> */}
 
         {/* <ReferEarnPreview/> */}
 
@@ -250,7 +250,7 @@ function App() {
                     // color="blue"
                     // isArticle={true}
             /> */}
-           {/* <PreviewLeaderboard /> */}
+           <PreviewLeaderboard online={false}/>
                {/* <QuestLogin
                     // questId=""
                     textColor=""
