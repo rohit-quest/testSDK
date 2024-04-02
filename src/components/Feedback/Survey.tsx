@@ -669,6 +669,77 @@ const Survey: React.FC<FeedbackProps> = ({
     // setSelectedOption(null);
   };
 
+  const multiChoiceTwo = (
+    options: string[] | [],
+    question: string,
+    required: boolean,
+    criteriaId: string,
+    index?: number
+  ) => {
+    return (
+      <div key={criteriaId}>
+        {/* {
+          (customComponentPositions == index + 1) &&
+          <div style={{ paddingBottom: "12px" }}>
+            {customComponents}
+          </div>
+        } */}
+        <Label htmlFor="textAreaInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
+          {`${question} ${!!required ? "*" : ""}`}
+        </Label>
+        <MultiChoiceTwo
+
+          options={options}
+          checked={!!answer[criteriaId] && answer[criteriaId]}
+          onChange={(e) => handleUpdate(e, criteriaId, "check")}
+          style={{
+            borderColor: styleConfig?.MultiChoice?.style?.borderColor || themeConfig?.borderColor, ...styleConfig?.MultiChoice?.style,
+            color: styleConfig?.MultiChoice?.style?.color || themeConfig?.primaryColor,
+            ...styleConfig?.MultiChoice?.style
+          }}
+          selectedStyle={{
+            color: styleConfig?.MultiChoice?.selectedStyle?.color || themeConfig?.primaryColor,
+            ...styleConfig?.MultiChoice?.selectedStyle
+          }}
+        />
+      </div>
+    );
+  };
+
+  const dateInput = (
+    question: string,
+    required: boolean,
+    criteriaId: string,
+    placeholder: string,
+    index?: number,
+
+  ) => {
+    return (
+      <div key={criteriaId}>
+        {/* {
+          (customComponentPositions == index + 1) &&
+          <div style={{ paddingBottom: "12px" }}>
+            {customComponents}
+          </div>
+        } */}
+        <Label htmlFor="dateInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
+          {`${question} ${!!required ? "*" : ""}`}
+        </Label>
+        <Input
+          type={"date"}
+          placeholder={placeholder}
+          value={answer[criteriaId]}
+          onChange={(e) => handleUpdate(e, criteriaId, "")}
+          style={{
+            borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+            color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+            ...styleConfig?.Input
+          }}
+        />
+      </div>
+    );
+  };
+console.log(formdata)
   return (
     <div
       style={{

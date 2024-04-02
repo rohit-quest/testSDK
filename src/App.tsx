@@ -233,7 +233,7 @@ function App() {
         
 
 
-        <FeedbackPreview online={true} />
+        <FeedbackPreview online={false} />
 
         {/* <ReferEarnPreview/> */}
 

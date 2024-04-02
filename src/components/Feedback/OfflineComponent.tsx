@@ -17,6 +17,7 @@ import { Input } from '../Modules/Input';
 import Label from '../Modules/Label';
 import TextArea from '../Modules/TextArea';
 import TopBar from '../Modules/TopBar';
+import { MultiChoiceTwo } from '../Modules/MultiChoice';
 
 const thanks = (
   <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -83,6 +84,10 @@ interface FeedbackProps {
       SingleRating?: React.CSSProperties;
       RatingText?: React.CSSProperties;
       Hover?: React.CSSProperties;
+    },
+    MultiChoice?: {
+      style?: React.CSSProperties,
+      selectedStyle?: React.CSSProperties
     },
   }
   showFooter?: boolean
@@ -343,7 +348,9 @@ const SurveyOffline = ({
     return !emailRegex.test(email);
   }
 
-  const normalInput = (question: string, criteriaId: string, placeholder?: string) => {
+  const normalInput = (question: string, criteriaId: string, 
+    inputType: string,
+    placeholder?: string) => {
     return (
       <div className="" key={criteriaId}>
         <Label
@@ -511,6 +518,75 @@ const SurveyOffline = ({
       </div>
     );
   };
+  const multiChoiceTwo = (
+    options: string[] | [],
+    question: string,
+    required: boolean,
+    criteriaId: string,
+    index?: number
+  ) => {
+    return (
+      <div key={criteriaId}>
+        {/* {
+          (customComponentPositions == index + 1) &&
+          <div style={{ paddingBottom: "12px" }}>
+            {customComponents}
+          </div>
+        } */}
+        <Label htmlFor="textAreaInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
+          {`${question} ${!!required ? "*" : ""}`}
+        </Label>
+        <MultiChoiceTwo
+
+          options={options}
+          checked={!!answer[criteriaId] && answer[criteriaId]}
+          onChange={(e) => handleUpdate(e, criteriaId, "check")}
+          style={{
+            borderColor: styleConfig?.MultiChoice?.style?.borderColor || themeConfig?.borderColor, ...styleConfig?.MultiChoice?.style,
+            color: styleConfig?.MultiChoice?.style?.color || themeConfig?.primaryColor,
+            ...styleConfig?.MultiChoice?.style
+          }}
+          selectedStyle={{
+            color: styleConfig?.MultiChoice?.selectedStyle?.color || themeConfig?.primaryColor,
+            ...styleConfig?.MultiChoice?.selectedStyle
+          }}
+        />
+      </div>
+    );
+  };
+  const dateInput = (
+    question: string,
+    required: boolean,
+    criteriaId: string,
+    placeholder: string,
+    index?: number,
+
+  ) => {
+    return (
+      <div key={criteriaId}>
+        {/* {
+          (customComponentPositions == index + 1) &&
+          <div style={{ paddingBottom: "12px" }}>
+            {customComponents}
+          </div>
+        } */}
+        <Label htmlFor="dateInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
+          {`${question} ${!!required ? "*" : ""}`}
+        </Label>
+        <Input
+          type={"date"}
+          placeholder={placeholder}
+          value={answer[criteriaId]}
+          onChange={(e) => handleUpdate(e, criteriaId, "")}
+          style={{
+            borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+            color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+            ...styleConfig?.Input
+          }}
+        />
+      </div>
+    );
+  };
 
   const handleThanks = () => {
     setThanksPopup(false);
@@ -606,6 +682,30 @@ const SurveyOffline = ({
                             </div>
                           </div>
                         );
+                      } else if (data.type === 'USER_INPUT_MULTI_CHOICE') {
+                        // console.log(data.options)
+                        return multiChoiceTwo(
+                          data.options || [],
+                          data.question || "",
+                          data.required || false,
+                          data.criteriaId || "",
+                        )
+                      }else if (data.type === 'USER_INPUT_DATE') {
+                        // console.log(data)
+                        return dateInput(data.question || '',
+                          data.required || false,
+                          data.criteriaId || '',
+                          data.placeholder || "Choose Date",
+                        )
+                      }else if (data.type === 'USER_INPUT_PHONE') {
+                        // console.log(data)
+                        return normalInput(
+                          data.question || '',
+                          data.criteriaId || '',
+                          'number',
+                          data.placeholder || undefined,
+                          
+                        )
                       }
                     })}
                     <div className='q_feedback_buttons'>
