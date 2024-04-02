@@ -47,7 +47,7 @@ export const MultiChoice = ({
   }
 
   const [checkedState, setCheckedState] = useState(checked || []);
-    console.log(selectedStyle , '50')
+
   return (
     <div className="q_multi_choice_box">
       {options.map((option: string, id: number) => (

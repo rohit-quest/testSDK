@@ -1,7 +1,7 @@
-import React, { ChangeEventHandler, CSSProperties } from "react";
+import React, { ChangeEventHandler, CSSProperties, useContext } from "react";
 import './css/singlechoice.css';
 import Select, { StylesConfig } from "react-select";
-
+import QuestContext from "../QuestWrapper";
 
 type SelectedStyle = {
   accentColor?: string,
@@ -26,32 +26,46 @@ const SingleChoice: React.FC<SingleChoiceProps> = ({
   selectedStyle = {accentColor: "#6525B3"},
   type,
 }) => {
+
+  const { themeConfig } = useContext(QuestContext.Context);
+
+
   const containerStyle: CSSProperties = {
     ...style,
     flexDirection: type === 'modal2' ? 'column' : 'row',
     gap: type === 'modal2' ? '12px' : '8px'
   };
 
+  console.log(containerStyle,themeConfig)
   const customStyles: StylesConfig<any, false, any> = {
     control: (base) => ({
       ...base,
       background: containerStyle?.background || containerStyle?.backgroundColor || "transparent",
       fontSize: containerStyle?.fontSize || "14px",
-      border: `${containerStyle?.borderWidth || "1px"} solid ${containerStyle?.borderColor || "var(--neutral-grey-100, #ECECEC)"}`,
+      border: `${containerStyle?.borderWidth || "1px"} solid ${containerStyle?.borderColor || themeConfig?.borderColor || "var(--neutral-grey-100, #ECECEC)"}`,
       borderRadius: "10px",
-      color: containerStyle?.color || "black",
+      color: containerStyle?.color || themeConfig?.primaryColor || "black",
+      fontFamily: containerStyle?.fontFamily || themeConfig?.fontFamily || "'Figtree', sans-serif",
       ...containerStyle
     }),
     option: (styles, { isFocused }) => ({
       ...styles,
       backgroundColor: isFocused ? "#ADD8E6" : (containerStyle?.background || containerStyle?.backgroundColor || "#f9fafb") as string,
       color: containerStyle?.color || "black",
-      fontSize: containerStyle?.fontSize || "14px"
+      fontSize: containerStyle?.fontSize || "14px",
+      fontFamily: containerStyle?.fontFamily || themeConfig?.fontFamily || "'Figtree', sans-serif",
     }),
     menu: (provided) => ({
       ...provided,
       backgroundColor: (containerStyle?.background || containerStyle?.backgroundColor || "#f9fafb") as string,
-    })
+    }),
+
+    singleValue: (provided) => ({
+      ...provided,
+      color: containerStyle?.color || themeConfig?.primaryColor || "black",
+      fontSize: containerStyle?.fontSize || "14px",
+      fontFamily: containerStyle?.fontFamily || themeConfig?.fontFamily || "'Figtree', sans-serif",
+    }),
   };
   return (
     (type === "modal3") ?

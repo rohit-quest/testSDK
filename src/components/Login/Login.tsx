@@ -25,6 +25,7 @@ export interface QuestLoginProps {
   googleButtonText?: string;
   IconColor?: string;
   onSubmit?: ({ userId, token }: { userId: string; token: string }) => void;
+  onError?: ({ email, error }: { email?: string, error?: string }) => void;
   styleConfig?: {
     Heading?: CSSProperties;
     Description?: CSSProperties;
@@ -42,6 +43,7 @@ export interface QuestLoginProps {
     }
     OtpInput?: CSSProperties
   };
+
   showFooter?: boolean;
 }
 
@@ -61,7 +63,8 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   headingText,
   descriptionText,
   googleButtonText,
-  showFooter = true
+  showFooter = true,
+  onError
 }) => {
   const [isEmail, setIsEmail] = useState<boolean>(false);
   const [isGoogle, setIsGoogle] = useState<boolean>(false);
@@ -153,7 +156,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   ...styleConfig?.Heading,
                 }}
               >
-                { headingText || 'Log in or sign up'}
+                {headingText || 'Log in or sign up'}
               </div>
               <div
                 className="q-login-h4"
@@ -188,7 +191,8 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                   otpScreen,
                   setOtpScreen,
                   styleConfig,
-                  IconColor
+                  IconColor,
+                  onError
                 }}
               />
               {!otpScreen && isGoogle && (

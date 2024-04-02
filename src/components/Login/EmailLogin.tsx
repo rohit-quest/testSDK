@@ -24,6 +24,7 @@ interface EmailLoginProps {
   apiKey: string;
   apiSecret: string;
   IconColor?:string;
+  onError?: ({email,error}:{email?:string,error?:string}) => void;
   onSubmit?: ({ userId, token }: { userId: string; token: string }) => void;
   styleConfig?: {
     Heading?: CSSProperties;
@@ -58,7 +59,8 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   btnTextColor,
   onSubmit,
   styleConfig,
-  IconColor 
+  IconColor ,
+  onError
 }) => {
   const [sendOTP, setSendOTP] = useState(false);
   const [email, setEmail] = useState("");
@@ -219,6 +221,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
           btnTextColor={btnTextColor}
           onSubmit={onSubmit}
           styleConfig={styleConfig}
+          onError={onError}
         />
       )}
     </div>
