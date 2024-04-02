@@ -21,6 +21,8 @@ import TextArea from "../Modules/TextArea";
 import { PrimaryButton } from "../Modules/PrimaryButton";
 import { SecondaryButton } from "../Modules/SecondaryButton";
 import TopBar from "../Modules/TopBar";
+import { MultiChoiceTwo } from "../Modules/MultiChoice";
+import Toast from "../toast2/Toast";
 
 const thanks = (
   <svg
@@ -129,6 +131,10 @@ interface FeedbackProps {
       text?: string;
       errorStyle?: React.CSSProperties;
     };
+    MultiChoice?: {
+      style?: React.CSSProperties,
+      selectedStyle?: React.CSSProperties
+    },
   };
   showFooter?: boolean;
 }
@@ -159,10 +165,11 @@ const Survey: React.FC<FeedbackProps> = ({
     type?: string;
     question?: string;
     options?: [string];
-    criteriaId?: string;
+    criteriaId?: any;
     required?: boolean;
     placeholder?: string;
   }
+
   const [rating, setRating] = useState<number>(0);
   const [comment, setComment] = useState<string>("");
   const [likePopup, setLikePopup] = useState<boolean>(false);
@@ -187,6 +194,7 @@ const Survey: React.FC<FeedbackProps> = ({
       setPage((prevPage) => prevPage + 1);
     }
   };
+
 
   const dislike = (
     <svg
@@ -325,7 +333,7 @@ const Survey: React.FC<FeedbackProps> = ({
             question: criteria?.data?.metadata?.title,
             options: criteria?.data?.metadata?.options || [],
             criteriaId: criteria?.data?.criteriaId,
-            required: !criteria?.data?.metadata?.isOptional,
+            required: criteria?.data?.metadata?.isRequired,
             placeholder: criteria?.data?.metadata?.placeholder,
           };
         });
@@ -383,20 +391,42 @@ const Survey: React.FC<FeedbackProps> = ({
   };
 
   function returnAnswers() {
+    let callApi=false;
+   
+    for(let i=0;i<formdata.length;i++){
+
+      if(!formdata[i].required){}
+      else if((formdata[i].required && answer[formdata[i]?.criteriaId]?.length>0)  || (formdata[i].required && answer[formdata[i]?.criteriaId]>0)){
+        callApi=true;
+      }
+      else{
+        callApi=false;
+        return Toast.error({text:"Please fill some of the details"});
+      }
+    }
+  
     const headers = {
       apiKey: apiKey,
       apisecret: apiSecret,
       userId: userId,
       token: token,
     };
-    const arr = Object.values(answer);
-    if (!answer || !arr?.length || arr.length < FormData?.length)
-      return showToast.error("Please fill of the details");
-    for (let e of arr)
-      if (!e || (Array.isArray(e) && !e.length))
-        return showToast.error("Please fill Some of the details");
-    if (arr.length < data?.length) return;
-    if (answer) {
+    // const arr = Object.values(answer);
+    // if (!answer || !arr?.length || arr.length < FormData?.length){
+    //     return showToast.error("Please fill some of the details");
+    // }
+
+    // for (let e of arr){
+    //   if (!e || (Array.isArray(e) && !e.length)){
+    //     return showToast.error("Please fill Some of the details");
+    //   }
+    // }
+    // if (arr.length < data?.length) {
+    //   showToast.error("Please fill Some of the details");
+    //   return
+    // };
+    
+    if (callApi) {
       const ansArr = formdata.map((ans: any) => ({
         question: ans?.question || "",
         answer: [answer[ans?.criteriaId] || ""],
@@ -476,17 +506,19 @@ const Survey: React.FC<FeedbackProps> = ({
   const normalInput = (
     question: string,
     criteriaId: string,
+    type:"number" | "text",
+    required:boolean,
     placeholder?: string
   ) => {
     return (
       <div className="" key={criteriaId}>
         <Label
           htmlFor="normalInput"
-          children={question}
+          children={`${question}${required===true?"*":""}`}
           style={styleConfig?.Label}
         />
         <Input
-          type="text"
+          type={type}
           style={styleConfig?.Input}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           value={answer[criteriaId]}
@@ -498,13 +530,14 @@ const Survey: React.FC<FeedbackProps> = ({
   const emailInput = (
     question: string,
     criteriaId: string,
+    required:boolean,
     placeholder?: string
   ) => {
     return (
       <div className="" key={criteriaId}>
         <Label
           htmlFor="normalInput"
-          children={question}
+          children={`${question}${required===true?"*":""}`}
           style={styleConfig?.Label}
         />
         <Input
@@ -527,13 +560,14 @@ const Survey: React.FC<FeedbackProps> = ({
   const normalInput2 = (
     question: string,
     criteriaId: string,
+    required:boolean,
     placeholder?: string
   ) => {
     return (
       <div className="" key={criteriaId}>
         <Label
           htmlFor="normalInput"
-          children={question}
+          children={`${question}${required===true?"*":""}`}
           style={styleConfig?.Label}
         />
         <TextArea
@@ -636,7 +670,7 @@ const Survey: React.FC<FeedbackProps> = ({
       <div key={criteriaId}>
         <Label
           className="q-onb-singleChoiceOne-lebel"
-          children={question + (required ? "*" : "")}
+          children={`${question}${required===true?"*":""}`}
           style={styleConfig?.Label}
         />
 
@@ -669,6 +703,77 @@ const Survey: React.FC<FeedbackProps> = ({
     // setSelectedOption(null);
   };
 
+  const multiChoiceTwo = (
+    options: string[] | [],
+    question: string,
+    required: boolean,
+    criteriaId: string,
+    index?: number
+  ) => {
+    return (
+      <div key={criteriaId}>
+        {/* {
+          (customComponentPositions == index + 1) &&
+          <div style={{ paddingBottom: "12px" }}>
+            {customComponents}
+          </div>
+        } */}
+        <Label htmlFor="textAreaInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
+          {`${question}${required===true?"*":""}`}
+        </Label>
+        <MultiChoiceTwo
+
+          options={options}
+          checked={!!answer[criteriaId] && answer[criteriaId]}
+          onChange={(e) => handleUpdate(e, criteriaId, "check")}
+          style={{
+            borderColor: styleConfig?.MultiChoice?.style?.borderColor || themeConfig?.borderColor, ...styleConfig?.MultiChoice?.style,
+            color: styleConfig?.MultiChoice?.style?.color || themeConfig?.primaryColor,
+            ...styleConfig?.MultiChoice?.style
+          }}
+          selectedStyle={{
+            color: styleConfig?.MultiChoice?.selectedStyle?.color || themeConfig?.primaryColor,
+            ...styleConfig?.MultiChoice?.selectedStyle
+          }}
+        />
+      </div>
+    );
+  };
+
+  const dateInput = (
+    question: string,
+    required: boolean,
+    criteriaId: string,
+    placeholder: string,
+    index?: number,
+
+  ) => {
+    return (
+      <div key={criteriaId}>
+        {/* {
+          (customComponentPositions == index + 1) &&
+          <div style={{ paddingBottom: "12px" }}>
+            {customComponents}
+          </div>
+        } */}
+        <Label htmlFor="dateInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
+          {`${question} ${!!required ? "*" : ""}`}
+        </Label>
+        <Input
+          type={"date"}
+          placeholder={placeholder}
+          value={answer[criteriaId]}
+          onChange={(e) => handleUpdate(e, criteriaId, "")}
+          style={{
+            borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+            color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+            ...styleConfig?.Input
+          }}
+        />
+      </div>
+    );
+  };
+  
   return (
     <div
       style={{
@@ -727,12 +832,15 @@ const Survey: React.FC<FeedbackProps> = ({
                         return normalInput(
                           data.question || "",
                           data.criteriaId || "",
+                          'text',
+                          data.required || false,
                           data.placeholder || sections?.[page]?.placeholder || ""
                         );
                       } else if (data.type === "USER_INPUT_EMAIL") {
                         return emailInput(
                           data.question || "",
                           data.criteriaId || "",
+                          data.required || false,
                           data.placeholder || sections?.[page]?.placeholder || ""
                         );
                       } else if (data.type === "USER_INPUT_SINGLE_CHOICE") {
@@ -746,6 +854,7 @@ const Survey: React.FC<FeedbackProps> = ({
                         return normalInput2(
                           data.question || "",
                           data.criteriaId || "",
+                          data.required || false,
                           data.placeholder || sections?.[page]?.placeholder || ""
                         );
                       } else if (data.type === "RATING") {
@@ -755,7 +864,7 @@ const Survey: React.FC<FeedbackProps> = ({
                               className="q-fd-lebels"
                               style={styleConfig?.Label}
                             >
-                              {data.question || "Rating Scale"}
+                              {`${data.question?data.question:"Rating Scale"}${data.required===true?"*":""} `}
                             </Label>
                             <div
                               style={{
@@ -775,6 +884,29 @@ const Survey: React.FC<FeedbackProps> = ({
                             </div>
                           </div>
                         );
+                      }else if (data.type === 'USER_INPUT_MULTI_CHOICE') {
+                        // console.log(data.options)
+                        return multiChoiceTwo(
+                          data.options || [],
+                          data.question || "",
+                          data.required || false,
+                          data.criteriaId || "",
+                        )
+                      }else if (data.type === 'USER_INPUT_DATE') {
+
+                        return dateInput(data.question || '',
+                          data.required || false,
+                          data.criteriaId || '',
+                          data.placeholder || "Choose Date",
+                        )
+                      }else if (data.type === 'USER_INPUT_PHONE') {
+                        return normalInput(
+                          data.question || '',
+                          data.criteriaId || '',
+                          'number',
+                          data.required || false,
+                          data.placeholder || undefined,
+                        )
                       }
                     })}
                   <div className="q_feedback_buttons">
