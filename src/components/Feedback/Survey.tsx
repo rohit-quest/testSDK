@@ -21,6 +21,7 @@ import TextArea from "../Modules/TextArea";
 import { PrimaryButton } from "../Modules/PrimaryButton";
 import { SecondaryButton } from "../Modules/SecondaryButton";
 import TopBar from "../Modules/TopBar";
+import { MultiChoiceTwo } from "../Modules/MultiChoice";
 
 const thanks = (
   <svg
@@ -129,6 +130,10 @@ interface FeedbackProps {
       text?: string;
       errorStyle?: React.CSSProperties;
     };
+    MultiChoice?: {
+      style?: React.CSSProperties,
+      selectedStyle?: React.CSSProperties
+    },
   };
   showFooter?: boolean;
 }
@@ -476,6 +481,7 @@ const Survey: React.FC<FeedbackProps> = ({
   const normalInput = (
     question: string,
     criteriaId: string,
+    type:"number" | "text",
     placeholder?: string
   ) => {
     return (
@@ -486,7 +492,7 @@ const Survey: React.FC<FeedbackProps> = ({
           style={styleConfig?.Label}
         />
         <Input
-          type="text"
+          type={type}
           style={styleConfig?.Input}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           value={answer[criteriaId]}
@@ -798,6 +804,7 @@ console.log(formdata)
                         return normalInput(
                           data.question || "",
                           data.criteriaId || "",
+                          'text',
                           data.placeholder || sections?.[page]?.placeholder || ""
                         );
                       } else if (data.type === "USER_INPUT_EMAIL") {
@@ -846,6 +853,29 @@ console.log(formdata)
                             </div>
                           </div>
                         );
+                      }else if (data.type === 'USER_INPUT_MULTI_CHOICE') {
+                        // console.log(data.options)
+                        return multiChoiceTwo(
+                          data.options || [],
+                          data.question || "",
+                          data.required || false,
+                          data.criteriaId || "",
+                        )
+                      }else if (data.type === 'USER_INPUT_DATE') {
+                        // console.log(data)
+                        return dateInput(data.question || '',
+                          data.required || false,
+                          data.criteriaId || '',
+                          data.placeholder || "Choose Date",
+                        )
+                      }else if (data.type === 'USER_INPUT_PHONE') {
+                        // console.log(data)
+                        return normalInput(
+                          data.question || '',
+                          data.criteriaId || '',
+                          'number',
+                          data.placeholder || undefined,
+                        )
                       }
                     })}
                   <div className="q_feedback_buttons">
