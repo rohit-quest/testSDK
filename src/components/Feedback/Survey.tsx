@@ -22,6 +22,7 @@ import { PrimaryButton } from "../Modules/PrimaryButton";
 import { SecondaryButton } from "../Modules/SecondaryButton";
 import TopBar from "../Modules/TopBar";
 import { MultiChoiceTwo } from "../Modules/MultiChoice";
+import Toast from "../toast2/Toast";
 
 const thanks = (
   <svg
@@ -164,10 +165,11 @@ const Survey: React.FC<FeedbackProps> = ({
     type?: string;
     question?: string;
     options?: [string];
-    criteriaId?: string;
+    criteriaId?: any;
     required?: boolean;
     placeholder?: string;
   }
+
   const [rating, setRating] = useState<number>(0);
   const [comment, setComment] = useState<string>("");
   const [likePopup, setLikePopup] = useState<boolean>(false);
@@ -192,6 +194,7 @@ const Survey: React.FC<FeedbackProps> = ({
       setPage((prevPage) => prevPage + 1);
     }
   };
+
 
   const dislike = (
     <svg
@@ -389,14 +392,16 @@ const Survey: React.FC<FeedbackProps> = ({
 
   function returnAnswers() {
     let callApi=false;
+   
     for(let i=0;i<formdata.length;i++){
+
       if(!formdata[i].required){}
       else if((formdata[i].required && answer[formdata[i]?.criteriaId]?.length>0)  || (formdata[i].required && answer[formdata[i]?.criteriaId]>0)){
         callApi=true;
       }
       else{
         callApi=false;
-        return showToast.error("Please fill some of the details");
+        return Toast.error({text:"Please fill some of the details"});
       }
     }
   
@@ -888,14 +893,13 @@ const Survey: React.FC<FeedbackProps> = ({
                           data.criteriaId || "",
                         )
                       }else if (data.type === 'USER_INPUT_DATE') {
-                        // console.log(data)
+
                         return dateInput(data.question || '',
                           data.required || false,
                           data.criteriaId || '',
                           data.placeholder || "Choose Date",
                         )
                       }else if (data.type === 'USER_INPUT_PHONE') {
-                        // console.log(data)
                         return normalInput(
                           data.question || '',
                           data.criteriaId || '',
