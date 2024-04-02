@@ -388,6 +388,17 @@ const Survey: React.FC<FeedbackProps> = ({
   };
 
   function returnAnswers() {
+    let callApi=false;
+    for(let i=0;i<formdata.length;i++){
+      if((formdata[i].required && answer[formdata[i]?.criteriaId]?.length>0) || (!formdata[i].required && answer[formdata[i]?.criteriaId]?.length>0) || (formdata[i].required && answer[formdata[i]?.criteriaId]>0)){
+        callApi=true;
+      }
+      else{
+        callApi=false;
+        break;
+      }
+    }
+  
     const headers = {
       apiKey: apiKey,
       apisecret: apiSecret,
@@ -395,18 +406,27 @@ const Survey: React.FC<FeedbackProps> = ({
       token: token,
     };
     const arr = Object.values(answer);
-    if (!answer || !arr?.length || arr.length < FormData?.length)
-      return showToast.error("Please fill of the details");
-    for (let e of arr)
-      if (!e || (Array.isArray(e) && !e.length))
+    if (!answer || !arr?.length || arr.length < FormData?.length){
+        return showToast.error("Please fill some of the details");
+    }
+
+    for (let e of arr){
+      if (!e || (Array.isArray(e) && !e.length)){
         return showToast.error("Please fill Some of the details");
-    if (arr.length < data?.length) return;
-    if (answer) {
+      }
+    }
+    if (arr.length < data?.length) {
+      showToast.error("Please fill Some of the details");
+      return
+    };
+    
+    if (callApi) {
       const ansArr = formdata.map((ans: any) => ({
         question: ans?.question || "",
         answer: [answer[ans?.criteriaId] || ""],
         criteriaId: ans?.criteriaId || "",
       }));
+      // console.log(ansArr)
       const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${userId}`;
       const requestData = {
         criterias: ansArr,
@@ -482,13 +502,14 @@ const Survey: React.FC<FeedbackProps> = ({
     question: string,
     criteriaId: string,
     type:"number" | "text",
+    required:boolean,
     placeholder?: string
   ) => {
     return (
       <div className="" key={criteriaId}>
         <Label
           htmlFor="normalInput"
-          children={question}
+          children={`${question}${required===true?"*":""}`}
           style={styleConfig?.Label}
         />
         <Input
@@ -504,13 +525,14 @@ const Survey: React.FC<FeedbackProps> = ({
   const emailInput = (
     question: string,
     criteriaId: string,
+    required:boolean,
     placeholder?: string
   ) => {
     return (
       <div className="" key={criteriaId}>
         <Label
           htmlFor="normalInput"
-          children={question}
+          children={`${question}${required===true?"*":""}`}
           style={styleConfig?.Label}
         />
         <Input
@@ -533,13 +555,14 @@ const Survey: React.FC<FeedbackProps> = ({
   const normalInput2 = (
     question: string,
     criteriaId: string,
+    required:boolean,
     placeholder?: string
   ) => {
     return (
       <div className="" key={criteriaId}>
         <Label
           htmlFor="normalInput"
-          children={question}
+          children={`${question}${required===true?"*":""}`}
           style={styleConfig?.Label}
         />
         <TextArea
@@ -642,7 +665,7 @@ const Survey: React.FC<FeedbackProps> = ({
       <div key={criteriaId}>
         <Label
           className="q-onb-singleChoiceOne-lebel"
-          children={question + (required ? "*" : "")}
+          children={`${question}${required===true?"*":""}`}
           style={styleConfig?.Label}
         />
 
@@ -691,7 +714,7 @@ const Survey: React.FC<FeedbackProps> = ({
           </div>
         } */}
         <Label htmlFor="textAreaInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
-          {`${question} ${!!required ? "*" : ""}`}
+          {`${question}${required===true?"*":""}`}
         </Label>
         <MultiChoiceTwo
 
@@ -745,7 +768,7 @@ const Survey: React.FC<FeedbackProps> = ({
       </div>
     );
   };
-console.log(formdata)
+  
   return (
     <div
       style={{
@@ -805,12 +828,14 @@ console.log(formdata)
                           data.question || "",
                           data.criteriaId || "",
                           'text',
+                          data.required || false,
                           data.placeholder || sections?.[page]?.placeholder || ""
                         );
                       } else if (data.type === "USER_INPUT_EMAIL") {
                         return emailInput(
                           data.question || "",
                           data.criteriaId || "",
+                          data.required || false,
                           data.placeholder || sections?.[page]?.placeholder || ""
                         );
                       } else if (data.type === "USER_INPUT_SINGLE_CHOICE") {
@@ -824,6 +849,7 @@ console.log(formdata)
                         return normalInput2(
                           data.question || "",
                           data.criteriaId || "",
+                          data.required || false,
                           data.placeholder || sections?.[page]?.placeholder || ""
                         );
                       } else if (data.type === "RATING") {
@@ -833,7 +859,7 @@ console.log(formdata)
                               className="q-fd-lebels"
                               style={styleConfig?.Label}
                             >
-                              {data.question || "Rating Scale"}
+                              {`${data.question?data.question:"Rating Scale"}${data.required===true?"*":""} `}
                             </Label>
                             <div
                               style={{
@@ -874,6 +900,7 @@ console.log(formdata)
                           data.question || '',
                           data.criteriaId || '',
                           'number',
+                          data.required || false,
                           data.placeholder || undefined,
                         )
                       }

@@ -110,7 +110,7 @@ export default function FeedbackPreview({ online = true }) {
                         },
                         Heading: {
                             color: "red",
-                            fontSize:'10px'
+                            // fontSize:'10px'
                         },
                         Label: {
                             // color: "green"
@@ -175,7 +175,7 @@ export default function FeedbackPreview({ online = true }) {
                             heading: "Request ",
                             subHeading: "Please describe your feature",
                             button1Text: "Cancel",
-                            button2Text: "Submit",
+                            button2Text: "Next",
                             placeholder: "write",
                             showWordCount: true,
                             // showTopBar: false
@@ -184,7 +184,7 @@ export default function FeedbackPreview({ online = true }) {
                             heading: "Contact us",
                             subHeading: "Please describe your issue",
                             button1Text: "Cancel",
-                            button2Text: "Submit",
+                            button2Text: "NExt",
                             placeholder: "write",
                             showWordCount: true,
                             // showTopBar: false
@@ -193,7 +193,7 @@ export default function FeedbackPreview({ online = true }) {
                             heading: "Contact us",
                             subHeading: "Please describe your issue",
                             button1Text: "Cancel",
-                            button2Text: "Submit",
+                            button2Text: "Next",
                             placeholder: "write",
                             showWordCount: true,
                             // showTopBar: false
