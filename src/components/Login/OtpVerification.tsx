@@ -26,6 +26,7 @@ interface OtpVerificationProps {
   apiKey: string;
   apiSecret: string;
   btnTextColor?: string;
+  onError?: ({email,error}:{email:string,error:string}) => void;
   onSubmit?: ({
     userId,
     token,
@@ -70,6 +71,7 @@ function OtpVerification({
   btnTextColor,
   onSubmit,
   styleConfig,
+  onError
 }: OtpVerificationProps): JSX.Element {
   const [OTP, setOTP] = useState<string>("");
   const [sec, setsec] = useState<number>(300);
@@ -156,6 +158,7 @@ function OtpVerification({
         }
       } else {
         // toast.error("Login failed" + "\n" + response.data.error);
+        onError && onError({email:email,error:response.data.error});
       }
     } catch (error) {
       console.error(error);

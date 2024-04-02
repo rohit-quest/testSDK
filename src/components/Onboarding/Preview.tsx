@@ -113,7 +113,7 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
         apiType="PRODUCTION"
         themeConfig={{
           // backgroundColor: "blue",
-          // borderColor: "red",
+          borderColor: "red",
           // buttonColor: "green",
           // primaryColor: "pink",
           // secondaryColor: "gray",
@@ -185,7 +185,7 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
       // btnSize="200px"
       // inputBgColor=""
       // inputBorder="1px solid #6525B3"
-      singleChoose="modal1"
+      singleChoose="modal3"
       multiChoice="modal1"
       design={[[1, 2], [3, 4], [5, 6 , 7]]}
 

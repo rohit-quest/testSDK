@@ -21,6 +21,7 @@ interface GoogleLoginProps {
   apiSecret: string;
   apiKey: string;
   googleButtonText?: string;
+  onError?: ({email,error}:{email?:string,error?:string}) => void;
   onSubmit?: ({ userId, token, userCredentials, refreshToken }: { userId: string, token: string, userCredentials: object, refreshToken: string }) => void;
   styleConfig?: {
     Heading?: CSSProperties;
