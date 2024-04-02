@@ -62,13 +62,12 @@ const PreviewLeaderboard = ({online}:{
     )
   }
 
-console.log("offline")
   return (
     <QuestProvider apiKey={apiKey} apiSecret={apiSecret} entityId={entityId} apiType="STAGING" themeConfig={{}}>
       <LeaderBoardOffline
       token={token}
       userId={userId}
-      leaderBoardOfflineData={leaderBoardOfflineData}
+      offlineFormData={leaderBoardOfflineData}
       />
     </QuestProvider>
   )

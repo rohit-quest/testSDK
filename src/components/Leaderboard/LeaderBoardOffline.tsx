@@ -54,53 +54,21 @@ interface LeaderBoardProps {
   userId: string;
   token: string;
   styleConfig?: StyleConfig;
-  leaderBoardOfflineData:LeaderboardResponse
+  offlineFormData:LeaderboardResponse
 }
 
 const LeaderBoardOffline: React.FC<LeaderBoardProps> = ({
   userId,
   token,
   styleConfig,
-  leaderBoardOfflineData
+  offlineFormData
 }) => {
   const [leaderboardData, setLeaderboardData] =
     useState<LeaderboardResponse | null>(null);
 
-  const { apiKey, apiSecret, entityId, apiType } = useContext(
-    QuestContext.Context
-  );
+
   useEffect(() => {
-    setLeaderboardData(leaderBoardOfflineData)
-    // const getLeaderBoard = async () => {
-    //   try {
-    //     const BACKEND_URL =
-    //       apiType === "STAGING"
-    //         ? config.BACKEND_URL_STAGING
-    //         : config.BACKEND_URL;
-
-    //     const response = await axios.get<LeaderboardResponse>(
-    //       `${BACKEND_URL}api/entities/${entityId}/xp-leaderboard?streak=default_metric`,
-    //       {
-    //         headers: {
-    //           apiKey: apiKey,
-    //           apiSecret: apiSecret,
-    //           userId: userId,
-    //           token: token,
-    //         },
-    //       }
-    //     );
-    //     console.log(response.data)
-
-    //     if (response.status === 200) {
-    //       setLeaderboardData(response.data);
-    //     } else {
-    //       console.error("Unexpected status code:", response.status);
-    //     }
-    //   } catch (error) {
-    //     console.error("Error fetching leaderboard data:", error);
-    //   }
-    // };
-    // getLeaderBoard();
+    setLeaderboardData(offlineFormData)
   }, []);
   return (
     <div>
