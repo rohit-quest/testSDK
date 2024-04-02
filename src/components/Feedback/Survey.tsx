@@ -330,7 +330,7 @@ const Survey: React.FC<FeedbackProps> = ({
             question: criteria?.data?.metadata?.title,
             options: criteria?.data?.metadata?.options || [],
             criteriaId: criteria?.data?.criteriaId,
-            required: !criteria?.data?.metadata?.isOptional,
+            required: criteria?.data?.metadata?.isRequired,
             placeholder: criteria?.data?.metadata?.placeholder,
           };
         });
@@ -390,12 +390,13 @@ const Survey: React.FC<FeedbackProps> = ({
   function returnAnswers() {
     let callApi=false;
     for(let i=0;i<formdata.length;i++){
-      if((formdata[i].required && answer[formdata[i]?.criteriaId]?.length>0) || (!formdata[i].required && answer[formdata[i]?.criteriaId]?.length>0) || (formdata[i].required && answer[formdata[i]?.criteriaId]>0)){
+      if(!formdata[i].required){}
+      else if((formdata[i].required && answer[formdata[i]?.criteriaId]?.length>0)  || (formdata[i].required && answer[formdata[i]?.criteriaId]>0)){
         callApi=true;
       }
       else{
         callApi=false;
-        break;
+        return showToast.error("Please fill some of the details");
       }
     }
   
@@ -405,20 +406,20 @@ const Survey: React.FC<FeedbackProps> = ({
       userId: userId,
       token: token,
     };
-    const arr = Object.values(answer);
-    if (!answer || !arr?.length || arr.length < FormData?.length){
-        return showToast.error("Please fill some of the details");
-    }
+    // const arr = Object.values(answer);
+    // if (!answer || !arr?.length || arr.length < FormData?.length){
+    //     return showToast.error("Please fill some of the details");
+    // }
 
-    for (let e of arr){
-      if (!e || (Array.isArray(e) && !e.length)){
-        return showToast.error("Please fill Some of the details");
-      }
-    }
-    if (arr.length < data?.length) {
-      showToast.error("Please fill Some of the details");
-      return
-    };
+    // for (let e of arr){
+    //   if (!e || (Array.isArray(e) && !e.length)){
+    //     return showToast.error("Please fill Some of the details");
+    //   }
+    // }
+    // if (arr.length < data?.length) {
+    //   showToast.error("Please fill Some of the details");
+    //   return
+    // };
     
     if (callApi) {
       const ansArr = formdata.map((ans: any) => ({
@@ -426,7 +427,6 @@ const Survey: React.FC<FeedbackProps> = ({
         answer: [answer[ans?.criteriaId] || ""],
         criteriaId: ans?.criteriaId || "",
       }));
-      // console.log(ansArr)
       const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${userId}`;
       const requestData = {
         criterias: ansArr,
