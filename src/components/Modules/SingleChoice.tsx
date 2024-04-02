@@ -63,6 +63,8 @@ const SingleChoice: React.FC<SingleChoiceProps> = ({
     singleValue: (provided) => ({
       ...provided,
       color: containerStyle?.color || themeConfig?.primaryColor || "black",
+      fontSize: containerStyle?.fontSize || "14px",
+      fontFamily: containerStyle?.fontFamily || themeConfig?.fontFamily || "'Figtree', sans-serif",
     }),
   };
   return (
