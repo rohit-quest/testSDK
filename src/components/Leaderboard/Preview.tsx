@@ -4,8 +4,8 @@ import { QuestProvider } from '../QuestWrapper'
 import LeaderBoard from './LeaderBoard'
 import LeaderBoardOffline from './LeaderBoardOffline'
 
-const PreviewLeaderboard = ({online}:{
-  online:boolean
+const PreviewLeaderboard = ({ online }: {
+  online: boolean
 }) => {
   // const questId = 
   // const apiKey = "k-2aea7cd1-1009-49cd-b261-10ae0795df00"
@@ -22,38 +22,36 @@ const PreviewLeaderboard = ({online}:{
 
 
 
-  const [leaderBoardOfflineData,setLeaderBoardOfflineData]=useState({
-    data:[
+  const [leaderBoardOfflineData, setLeaderBoardOfflineData] = useState([
       {
-        counter:null,
-        imageUrl:"https://quest-media-storage-bucket.s3.us-east-2.amazonaws.com/1710391805028-user-3.png",
-        name:"Rohit Prajapati",
-        runningXP:2020,
-        userId:"u-88350caa-4080-4505-a169-09f3f15e83b7",
+        counter: null,
+        imageUrl: "https://quest-media-storage-bucket.s3.us-east-2.amazonaws.com/1710391805028-user-3.png",
+        name: "Rohit Prajapati",
+        runningXP: 2020,
+        userId: "u-88350caa-4080-4505-a169-09f3f15e83b7",
       },
       {
-        counter:null,
-        runningXP:130,
-        userId:"u-1b0e7b83-25b5-4477-a4c0-5c622cfdd240",
+        counter: null,
+        runningXP: 130,
+        userId: "u-1b0e7b83-25b5-4477-a4c0-5c622cfdd240",
       },
       {
-        counter:1,
-        imageUrl:"QmSteN1xN7fLwqwVJRB3xMpZ8j69iUAj5niCWMyByZsF3X",
-        name:"Pankaj Vashisht",
-        runningXP:80,
-        userId:"u-8268f5e1-f5a1-440c-a333-0f5578a73847",
+        counter: 1,
+        imageUrl: "QmSteN1xN7fLwqwVJRB3xMpZ8j69iUAj5niCWMyByZsF3X",
+        name: "Pankaj Vashisht",
+        runningXP: 80,
+        userId: "u-8268f5e1-f5a1-440c-a333-0f5578a73847",
       },
       {
-        counter:null,
-        runningXP:40,
-        userId:"u-8268f5e1-f5a1-440c-a333-0f5578a73847",
+        counter: null,
+        runningXP: 40,
+        userId: "u-8268f5e1-f5a1-440c-a333-0f5578a73847",
       },
-    ],
-    membershipsTiers:[]
-  });
+
+  ]);
 
 
-  if(online){
+  if (online) {
     console.log("online")
     return (
       <QuestProvider apiKey={apiKey} apiSecret={apiSecret} entityId={entityId} apiType="STAGING" themeConfig={{}}>
@@ -65,9 +63,9 @@ const PreviewLeaderboard = ({online}:{
   return (
     <QuestProvider apiKey={apiKey} apiSecret={apiSecret} entityId={entityId} apiType="STAGING" themeConfig={{}}>
       <LeaderBoardOffline
-      token={token}
-      userId={userId}
-      offlineFormData={leaderBoardOfflineData}
+        token={token}
+        userId={userId}
+       offlineFormData={leaderBoardOfflineData}
       />
     </QuestProvider>
   )

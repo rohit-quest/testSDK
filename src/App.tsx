@@ -152,7 +152,7 @@ function App() {
 
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
-        <GamifiedQuizPreview online={false} />
+        {/* <GamifiedQuizPreview online={false} /> */}
 
         {/* 
                 <HelpCenter
@@ -234,7 +234,7 @@ function App() {
         
 
 
-        <FeedbackPreview online={true} />
+        {/* <FeedbackPreview online={true} /> */}
 
         {/* <ReferEarnPreview/> */}
 
@@ -251,7 +251,7 @@ function App() {
                     // color="blue"
                     // isArticle={true}
             /> */}
-           {/* <PreviewLeaderboard online={false}/> */}
+           <PreviewLeaderboard online={false}/>
                {/* <QuestLogin
                     // questId=""
                     textColor=""
