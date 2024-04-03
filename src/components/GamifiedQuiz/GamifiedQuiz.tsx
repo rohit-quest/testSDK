@@ -45,7 +45,6 @@ interface GamifiedQuizProps {
         ThanksPopupDescription?: React.CSSProperties,
         ThanksPopUpFooter?: React.CSSProperties,
         ThanksPopUpGotoHome?: React.CSSProperties,
-
         OptionsSelectedColor?: React.CSSProperties
     }
 }
@@ -134,15 +133,16 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                 const { data } = await axios.get(url, { headers: headers });
                 let criterias = data.data.eligibilityData.map((criteria: {
                     criteriaType: string;
-                    metadata: { title: string; options: string[], isOptional: string, placeholder: string, linkActionName: string, linkActionUrl: string, manualInput: string };
+                    metadata: { title: string; options: string[], isRequired: string, placeholder: string, linkActionName: string, linkActionUrl: string, manualInput: string };
                     criteriaId: string;
                 }) => {
+                    // console.log(criteria?.metadata?.isRequired)
                     return {
                         type: criteria?.criteriaType,
                         question: criteria?.metadata?.title,
                         options: criteria?.metadata?.options || [],
                         criteriaId: criteria?.criteriaId,
-                        required: !criteria?.metadata?.isOptional,
+                        required: criteria?.metadata?.isRequired,
                         placeholder: criteria?.metadata?.placeholder,
                         // linkTitle: criteria?.metadata?.linkActionName || "",
                         // linkUrl: criteria?.metadata?.linkActionUrl || "",
@@ -211,9 +211,13 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
 
     const [goToNextSection, setGoToNextSection] = useState(false);
 
-    useEffect(() => {
+    useEffect(()=>{
+
         for (let i = 0; i < questionSections[sectionNo].length; i++) {
-            if (answer[formdata[questionSections[sectionNo][i] - 1]?.criteriaId]?.length > 0 && formdata[i]?.required) {
+           
+            if(!formdata[questionSections[sectionNo][i] - 1]?.required){
+            }
+            else if (answer[formdata[questionSections[sectionNo][i] - 1]?.criteriaId]?.length > 0 && formdata[questionSections[sectionNo][i] - 1]?.required) {
                 setGoToNextSection(true);
             }
             else {
@@ -221,11 +225,10 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                 break;
             }
         }
-    }, [answer, sectionNo]);
-
-    useEffect(() => {
+        
         for (let i = 0; i < questionSections[sectionNo].length; i++) {
-            if (answer[formdata[questionSections[sectionNo][i] - 1]?.criteriaId]?.length > 0 && formdata[questionSections[sectionNo][i] - 1]?.required) {
+            if(!formdata[questionSections[sectionNo][i] - 1]?.required){}
+            else if (answer[formdata[questionSections[sectionNo][i] - 1]?.criteriaId]?.length > 0 && formdata[questionSections[sectionNo][i] - 1]?.required) {
                 setGoToNextSection(true);
             }
             else {
@@ -233,13 +236,12 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                 break;
             }
         }
-    }, [change, sectionNo]);
-
-    useEffect(() => {
+        
         for (let i = 0; i < questionSections[sectionNo].length; i++) {
             if (formdata[questionSections[sectionNo][i] - 1]?.type === 'USER_INPUT_MULTI_CHOICE') {
                 const ansOptions = selectedOptions[formdata[questionSections[sectionNo][i] - 1]?.criteriaId];
-                if (ansOptions?.length > 0 && formdata[questionSections[sectionNo][i] - 1]?.required) {
+                if(!formdata[questionSections[sectionNo][i] - 1]?.required){}
+                else if (ansOptions?.length > 0 && formdata[questionSections[sectionNo][i] - 1]?.required) {
                     setGoToNextSection(true);
                 }
                 else {
@@ -249,7 +251,8 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
             }
         }
 
-    }, [checkChange, sectionNo])
+    },[answer, sectionNo,change, sectionNo,checkChange, sectionNo])
+
 
     const MultiChoice = ({ value }: { value: FormData }) => {
         return (
@@ -374,9 +377,10 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                         {customComponents}
                     </div>
                 } */}
-                <Label htmlFor="normalInput" style={{}}>
-                    {`${question}`}
-                </Label>
+                <p className="label-inputs">
+                {`${question}${required?"*":""}`}
+                </p>
+                
                 <Input
                     type={inputType}
                     placeholder={placeholder}
@@ -411,9 +415,9 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                 {/* <Label htmlFor="dateInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
                     {`${question} ${!!required && "*"}`}
                 </Label> */}
-                <Label htmlFor="normalInput" style={{}}>
-                    {`${question}`}
-                </Label>
+                <p className="label-inputs">
+                {`${question}${required?"*":""}`}
+                </p>
                 <Input
                     type={"date"}
                     placeholder={placeholder}
@@ -447,9 +451,9 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                 {/* <Label htmlFor="textAreaInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
                     {`${question} ${!!required && "*"}`}
                 </Label> */}
-                <Label htmlFor="normalInput" style={{}}>
-                    {`${question}`}
-                </Label>
+                <p className="label-inputs">
+                {`${question}${required?"*":""}`}
+                </p>
                 <TextArea
                     onChange={(e) => handleUpdate(e, criteriaId, "")}
                     placeholder={placeholder}
@@ -463,7 +467,6 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
             </div>
         );
     };
-
     return (
         <>
             {
@@ -535,7 +538,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                                         width: "100%",
                                         display: 'flex',
                                         flexDirection: 'column',
-                                        gap: "20px"
+                                        // gap: "20px"
                                     }}>
                                         <div className="heading-subheading-container">
                                             <div className="quest-title">
@@ -543,12 +546,18 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                                                     sectionSubHeading[sectionNo]
                                                 }
                                             </div>
-
-                                            <div className="question" style={styleConfig?.Question}>
+                                            {
+                                                sectionHeading[sectionNo]?<div className="question" style={styleConfig?.Question}>
+                                                 {
+                                                     sectionHeading[sectionNo]
+                                                 }
+                                             </div>:null
+                                            }
+                                            {/* <div className="question" style={styleConfig?.Question}>
                                                 {
                                                     sectionHeading[sectionNo]
                                                 }
-                                            </div>
+                                            </div> */}
                                         </div>
 
                                         {
@@ -567,7 +576,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                                                                     <div className="question" style={styleConfig?.Question}>
                                                                         {
                                                                             formdata[question]?.question
-                                                                        }
+                                                                        }{`${formdata[question]?.required?"*":""}`}
                                                                     </div> : null
                                                             }
 
@@ -673,209 +682,6 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
 
         </>
     );
-
-    // return (
-    //     <>
-    //         {
-    //             thanksPopup ?
-    //                 <div className="thanks-popup-upper-div">
-    //                     <div className="gamified-thanks-pop-up" style={styleConfig?.ThanksPopup}>
-    //                         <div className="gamified-pop-up-cancel-btn-cont">
-    //                             <div>
-    //                                 <div onClick={() => setThanksPopup((prev) => !prev)}>
-    //                                     <img src={CancelButton} alt="" />
-    //                                 </div>
-    //                             </div>
-    //                         </div>
-
-    //                         <div className="gamified-pop-up-image-cont">
-    //                             <img src={SubmitConfirmButton} alt="" />
-    //                         </div>
-
-    //                         <div className="gamified-pop-up-message-cont">
-    //                             <div className="pop-up-message">
-    //                                 <div className="pop-up-message-heading" style={{
-    //                                     color: styleConfig?.ThanksPopupHeading?.color || 'var(--Neutral-Black-400, #2C2C2C)'
-    //                                 }}>
-    //                                     {popUpHead}
-    //                                 </div>
-    //                                 <div className="pop-up-message-para" style={{
-    //                                     color: styleConfig?.ThanksPopupDescription?.color || 'var(--Neutral-Black-100, #939393)'
-    //                                 }}>
-    //                                     {popUpMessage}
-    //                                 </div>
-    //                             </div>
-    //                             <div className="goto-home" style={styleConfig?.ThanksPopUpGotoHome} onClick={() => setThanksPopup((prev) => !prev)} >
-    //                                 Go to home!
-    //                             </div>
-    //                         </div>
-
-    //                         {
-    //                             thanksPopUpFooter ? <div className="gamified-quiz-footer-section" style={styleConfig?.ThanksPopUpFooter}>
-    //                                 Powered by Quest Labs
-    //                             </div> : ""
-    //                         }
-    //                     </div>
-    //                 </div>
-    //                 :
-    //                 null
-    //         }
-    //         {
-    //             gamifiedQuiz ? <div className="upper-div">
-    //                 <div className="gamified-quiz">
-
-    //                     <div className="gamified-quiz-header-section" style={styleConfig?.ComponentTheme}>
-
-    //                         <div className="gamified-quiz-title-section">
-    //                             <div className="gamified-quiz-title-head" style={styleConfig?.Heading}>
-    //                                 {
-    //                                     heading ? heading : "Choose an option"
-    //                                 }
-    //                             </div>
-    //                         </div>
-
-    //                         <div className="div">
-
-    //                             <div className="gamified-quiz-header-task-logo-cont">
-    //                                 <img src={GamifiedQuizTaskLogo} alt="" />
-    //                             </div>
-
-    //                             <form className="gamified-quiz-header-form" style={styleConfig?.FormContainer}>
-    //                                 <div className="heading-subheading-container">
-    //                                     <div className="quest-title">
-    //                                         {
-    //                                             sectionSubHeading[sectionNo]
-    //                                         }
-    //                                     </div>
-
-    //                                     <div className="question" style={styleConfig?.Question}>
-    //                                         {
-    //                                             sectionHeading[sectionNo]
-    //                                         }
-    //                                     </div>
-    //                                 </div>
-
-    //                                 {
-    //                                     questionSections[sectionNo].map(question => {
-    //                                         question = question - 1;
-    //                                         const value: FormData = formdata[question];
-    //                                         const index: number = question;
-
-    //                                         return <div className="gamified-quiz-criteria-div" key={index}>
-
-    //                                             <div className="gamified-quiz-header-ques-title-cont" >
-
-    //                                                 <div className="question-input-cont">
-    //                                                     {
-    //                                                         (formdata[question]?.type === "USER_INPUT_SINGLE_CHOICE") || (formdata[question]?.type === "USER_INPUT_MULTI_CHOICE") ?
-    //                                                             <div className="question" style={styleConfig?.Question}>
-    //                                                                 {
-    //                                                                     formdata[question]?.question
-    //                                                                 }
-    //                                                             </div> : null
-    //                                                     }
-
-    //                                                     {
-    //                                                         formdata[question]?.type === 'USER_INPUT_TEXT' ?
-    //                                                             normalInput(value.question, value.required || false, value.criteriaId, index, value.placeholder || value.question, 'text')
-    //                                                             : formdata[question]?.type === 'USER_INPUT_EMAIL' ? normalInput(value.question, value.required || false, value.criteriaId, index, value.placeholder || value.question, 'email')
-    //                                                                 : formdata[question]?.type === 'USER_INPUT_PHONE' ?
-    //                                                                     normalInput(value.question, value.required || false, value.criteriaId, index, value.placeholder || value.question, 'number')
-    //                                                                     : formdata[question]?.type === 'USER_INPUT_DATE' ?
-    //                                                                         dateInput(value.question, value.required || false, value.criteriaId, index, value.placeholder || value.question)
-    //                                                                         :
-    //                                                                         formdata[question]?.type === 'USER_INPUT_TEXTAREA' ? textAreaInput(value.question, value.required || false, value.criteriaId, index, value.placeholder || value.question)
-    //                                                                             : formdata[question]?.type === 'USER_INPUT_MULTI_CHOICE' ?
-
-    //                                                                                 <MultiChoice value={value} />
-
-    //                                                                                 : formdata[question]?.type === 'USER_INPUT_SINGLE_CHOICE' ?
-
-    //                                                                                     <SingleChoice value={value} />
-    //                                                                                     : ""
-    //                                                     }
-    //                                                 </div>
-    //                                             </div>
-    //                                         </div>
-    //                                     })
-    //                                 }
-
-
-    //                                 <div className="gamified-quiz-header-ques-cancel-next">
-
-    //                                     <button
-    //                                         onClick={() => {
-    //                                             if (sectionNo > 0) {
-    //                                                 setSectionNo(sectionNo - 1);
-    //                                             }
-    //                                         }}
-    //                                         type="button"
-    //                                         className="cancel-btn"
-    //                                         style={{
-    //                                             background: styleConfig?.SecondaryButton?.background || 'var(--Neutral-White-100, #FFF)',
-    //                                             color: styleConfig?.SecondaryButton?.color || 'var(--Neutral-Black-400, #2C2C2C)'
-    //                                         }}
-    //                                     >
-    //                                         {
-    //                                             sectionNo > 0 ? "Previous" : "Cancel"
-    //                                         }
-    //                                     </button>
-
-    //                                     <PrimaryButton
-    //                                         type={"button"}
-    //                                         onClick={() => {
-    //                                             const totalSections = Object.keys(questionSections);
-
-    //                                             if (sectionNo < totalSections.length - 1) {
-    //                                                 setSectionNo(sectionNo + 1);
-    //                                             }
-    //                                             else if (sectionNo >= totalSections.length - 1) {
-    //                                                 formSubmitHandler();
-    //                                             }
-    //                                         }
-    //                                         }
-    //                                         disabled={!goToNextSection}
-    //                                         className="q-onb-main-btn2"
-    //                                         style={{
-    //                                             font: '',
-    //                                             fontFamily: "Figtree",
-    //                                             background: styleConfig?.PrimaryButton?.background || 'linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%)',
-    //                                             color: styleConfig?.PrimaryButton?.color || 'var(--Neutral-White-100, #FFF)',
-
-    //                                             border: '1.5px solid #D1ACFF',
-    //                                             fontStyle: "normal",
-    //                                             fontWeight: "600",
-
-    //                                             lineHeight: '20px'
-    //                                         }}
-    //                                     >
-    //                                         {
-    //                                             sectionNo >= questionSections.length - 1 ? "Submit" : "Next"
-    //                                         }
-    //                                     </PrimaryButton>
-
-    //                                 </div>
-
-    //                             </form>
-
-    //                         </div>
-
-    //                     </div >
-    //                     {
-    //                         showFooter ?
-    //                             < div className="gamified-quiz-footer-section" style={styleConfig?.Footer}>
-    //                                 <div className="footer-content" style={styleConfig?.FooterText}>
-    //                                     Powered by Quest Labs
-    //                                 </div>
-    //                             </ div> : null
-    //                     }
-    //                 </div >
-    //             </div> : null
-    //         }
-
-    //     </>
-    // );
-
 
 };
 

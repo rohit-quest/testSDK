@@ -105,7 +105,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    /* gap: 20px; */
 }
 
 .gamified-quiz-header-form {
@@ -124,19 +124,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    /* gap: 20px; */
 }
 
 .gamified-quiz-header-form>div>.heading-subheading-container {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 50px;
     gap: 4px;
 }
 
 .gamified-quiz-criteria-div {
     width: 100%;
+    margin-bottom: 20px;
 }
 
 .gamified-quiz-header-ques-title-cont {
@@ -172,7 +172,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 20px;
+    /* gap: 20px; */
 }
 
 .question-input-cont>.input-text,
@@ -225,6 +225,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-bottom: 20px;
 }
 
 .gamified-quiz-header-ques-title-cont .question-input-cont>input {
@@ -568,4 +569,17 @@
     font-style: normal;
     font-weight: 500;
     line-height: 20px;
+}
+
+.label-inputs{
+    align-self: stretch;
+    color: var(--Neutral-Black-300, #4C4C4C);
+
+/* Body sm/500 */
+font-family: Figtree;
+font-size: 12px;
+font-style: normal;
+font-weight: 500;
+line-height: 16px; /* 133.333% */
+margin: 0 0 6px 0;
 }

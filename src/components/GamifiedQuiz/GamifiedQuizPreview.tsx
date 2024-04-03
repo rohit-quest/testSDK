@@ -9,11 +9,11 @@ import showToast from '../toast/toastService';
 import GamifiedQuiz from './GamifiedQuiz';
 // import GamifiedQuizOfflineNew from './GamifiedQuizOfflineNew';
 import GamifiedQuizOffline from './GamifiedQuizOffline';
-export const questId = 'q-c38be88a-e8e1-496c-8984-a22180abf7ca';
+export const questId = 'q-d00f89ad-b89f-46bb-82a9-80a1cd7c5717';
 export const apiKey = 'k-e6ec8094-6eef-4e80-a804-112a63607bf5'
 export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
 export const entityId = 'e-5768fd26-d226-4ac1-81e6-3c99427f3fb3'
-export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxMDkwODM1NSwiZXhwIjoxNzExNTEzMTU1fQ.l-NNsbyLxNRUSglW5cqGqhEaTyApuGsaDB5cDxkEujc'
+export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxMjExNTM1OSwiZXhwIjoxNzEyNzIwMTU5fQ.A0u4nEwrpsSJFk2c-EW8c7XoI1-nxMteic68YqLCFRc'
 export const userId = 'u-88350caa-4080-4505-a169-09f3f15e83b7'
 
 export default function GamifiedQuizPreviewNew({ online = false }: { online?: boolean }) {
@@ -22,7 +22,6 @@ export default function GamifiedQuizPreviewNew({ online = false }: { online?: bo
         {
             criteriaId: "ec-3a814772-4d3b-46a4-89ee-32d8de00f4b2",
             options: [],
-
             question: "First Name",
             required: true,
             type: "USER_INPUT_TEXT",
@@ -36,7 +35,7 @@ export default function GamifiedQuizPreviewNew({ online = false }: { online?: bo
             options: [],
             // placeholder: undefined,
             question: "Last Name",
-            required: true,
+            required: false,
             type: "USER_INPUT_TEXT",
             placeholder: "",
             linkTitle: "",
@@ -48,7 +47,7 @@ export default function GamifiedQuizPreviewNew({ online = false }: { online?: bo
             options: ['One', 'Two', 'Three', 'Four'],
             placeholder: "",
             question: "Choose One",
-            required: true,
+            required: false,
             type: "USER_INPUT_SINGLE_CHOICE",
 
             linkTitle: "",
@@ -127,7 +126,7 @@ export default function GamifiedQuizPreviewNew({ online = false }: { online?: bo
             options: [],
             placeholder: "",
             question: "Phone",
-            required: true,
+            required: false,
             type: "USER_INPUT_PHONE",
             linkTitle: "",
             linkUrl: "",
@@ -138,7 +137,7 @@ export default function GamifiedQuizPreviewNew({ online = false }: { online?: bo
     //   state.offlineFormData.pop();
     //   setState(c=>({...c}))
     // }, 2000);
-    console.log(offlineAnswer)
+    // console.log(offlineAnswer)
     if (online) {
         return (
             <QuestProvider
@@ -157,10 +156,11 @@ export default function GamifiedQuizPreviewNew({ online = false }: { online?: bo
                     heading='Heading Online'
 
                     // questionSections={[[1, 2, 3, 4], [5, 6], [7, 8], [9, 10]]}
-                    questionSections={[[1, 2, 3, 4], [5, 6], [7, 8], [9, 10]]}
+                    questionSections={[[1, 2, 3, 4], [5, 6], [7, 8], [9, 10],[11]]}
                     // questionSections={[[1], [5, 6], [7, 8], [9, 10]]}
                     sectionSubHeading={["Section 1", "Srction 2", "section 3", "Section 4"]}
-                    sectionHeading={["Section Head 1", "", "section Head 3", "Section Head 4"]}
+                    // sectionSubHeading={["", "", "", ""]}
+                    sectionHeading={["Section Head 1", "", "", "Section Head 4"]}
 
                     showFooter={true}
                     thanksPopUpFooter={true}
@@ -252,7 +252,6 @@ export default function GamifiedQuizPreviewNew({ online = false }: { online?: bo
                 // setAnswer={setAnswer}
                 token={token}
                 heading='Heading Offline'
-                inputTextHeading='Input Data'
                 questionSections={[[1, 2, 3, 4], [5, 6], [7, 8], [9, 10]]}
                 // questionSections={[[1], [5, 6], [7, 8], [9, 10]]}
                 sectionSubHeading={["Section 1", "Srction 2", "section 3", "Section 4"]}

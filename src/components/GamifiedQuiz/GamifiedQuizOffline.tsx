@@ -224,9 +224,13 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
 
     const [goToNextSection, setGoToNextSection] = useState(false);
 
-    useEffect(() => {
+    useEffect(()=>{
+
         for (let i = 0; i < questionSections[sectionNo].length; i++) {
-            if (answer[formdata[questionSections[sectionNo][i] - 1]?.criteriaId]?.length > 0 && formdata[i]?.required) {
+           
+            if(!formdata[questionSections[sectionNo][i] - 1]?.required){
+            }
+            else if (answer[formdata[questionSections[sectionNo][i] - 1]?.criteriaId]?.length > 0 && formdata[questionSections[sectionNo][i] - 1]?.required) {
                 setGoToNextSection(true);
             }
             else {
@@ -234,11 +238,10 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                 break;
             }
         }
-    }, [answer, sectionNo]);
-
-    useEffect(() => {
+        
         for (let i = 0; i < questionSections[sectionNo].length; i++) {
-            if (answer[formdata[questionSections[sectionNo][i] - 1]?.criteriaId]?.length > 0 && formdata[questionSections[sectionNo][i] - 1]?.required) {
+            if(!formdata[questionSections[sectionNo][i] - 1]?.required){}
+            else if (answer[formdata[questionSections[sectionNo][i] - 1]?.criteriaId]?.length > 0 && formdata[questionSections[sectionNo][i] - 1]?.required) {
                 setGoToNextSection(true);
             }
             else {
@@ -246,13 +249,12 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                 break;
             }
         }
-    }, [change, sectionNo]);
-
-    useEffect(() => {
+        
         for (let i = 0; i < questionSections[sectionNo].length; i++) {
             if (formdata[questionSections[sectionNo][i] - 1]?.type === 'USER_INPUT_MULTI_CHOICE') {
                 const ansOptions = selectedOptions[formdata[questionSections[sectionNo][i] - 1]?.criteriaId];
-                if (ansOptions?.length > 0 && formdata[questionSections[sectionNo][i] - 1]?.required) {
+                if(!formdata[questionSections[sectionNo][i] - 1]?.required){}
+                else if (ansOptions?.length > 0 && formdata[questionSections[sectionNo][i] - 1]?.required) {
                     setGoToNextSection(true);
                 }
                 else {
@@ -262,7 +264,8 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
             }
         }
 
-    }, [checkChange, sectionNo])
+    },[answer, sectionNo,change, sectionNo,checkChange, sectionNo])
+
 
     const MultiChoice = ({ value }: { value: FormData }) => {
         return (
@@ -390,9 +393,12 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                         {customComponents}
                     </div>
                 } */}
-                <Label htmlFor="normalInput" style={{}}>
-                    {`${question}`}
-                </Label>
+                {/* <Label htmlFor="normalInput">
+                    {`${question}${required?"*":""}`}
+                </Label> */}
+                <p className="label-inputs">
+                {`${question}${required?"*":""}`}
+                </p>
                 <Input
                     type={inputType}
                     placeholder={placeholder}
@@ -427,9 +433,9 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                 {/* <Label htmlFor="dateInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
                     {`${question} ${!!required && "*"}`}
                 </Label> */}
-                <Label htmlFor="normalInput" style={{}}>
-                    {`${question}`}
-                </Label>
+               <p className="label-inputs">
+                {`${question}${required?"*":""}`}
+                </p>
                 <Input
                     type={"date"}
                     placeholder={placeholder}
@@ -463,9 +469,9 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                 {/* <Label htmlFor="textAreaInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
                     {`${question} ${!!required && "*"}`}
                 </Label> */}
-                <Label htmlFor="normalInput" style={{}}>
-                    {`${question}`}
-                </Label>
+               <p className="label-inputs">
+                {`${question}${required?"*":""}`}
+                </p>
                 <TextArea
                     onChange={(e) => handleUpdate(e, criteriaId, "")}
                     placeholder={placeholder}
@@ -479,6 +485,7 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
             </div>
         );
     };
+
 
     return (
         <>
@@ -551,7 +558,7 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                                         width: "100%",
                                         display: 'flex',
                                         flexDirection: 'column',
-                                        gap: "20px"
+                                        // gap: "20px"
                                     }}>
                                         <div className="heading-subheading-container">
                                             <div className="quest-title">
@@ -559,12 +566,13 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                                                     sectionSubHeading[sectionNo]
                                                 }
                                             </div>
-
-                                            <div className="question" style={styleConfig?.Question}>
-                                                {
-                                                    sectionHeading[sectionNo]
-                                                }
-                                            </div>
+                                            {
+                                                sectionHeading[sectionNo]?<div className="question" style={styleConfig?.Question}>
+                                                    {
+                                                        sectionHeading[sectionNo]
+                                                    }
+                                                </div>:null
+                                            }
                                         </div>
 
                                         {
@@ -583,7 +591,7 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                                                                     <div className="question" style={styleConfig?.Question}>
                                                                         {
                                                                             formdata[question]?.question
-                                                                        }
+                                                                        }{formdata[question]?.required?"*":""}
                                                                     </div> : null
                                                             }
 
