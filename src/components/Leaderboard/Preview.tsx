@@ -1,4 +1,3 @@
-
 import { useState } from 'react'
 import { QuestProvider } from '../QuestWrapper'
 import LeaderBoard from './LeaderBoard'
@@ -18,9 +17,6 @@ const PreviewLeaderboard = ({ online }: {
   const entityId = "e-5768fd26-d226-4ac1-81e6-3c99427f3fb3"
   const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxMTk1OTQxMSwiZXhwIjoxNzEyNTY0MjExfQ.kqGcAhd7c5uc4Dr398vjh9uR61_siszOGe1LrS90KpQ"
   const userId = "u-88350caa-4080-4505-a169-09f3f15e83b7"
-
-
-
 
   const [leaderBoardOfflineData, setLeaderBoardOfflineData] = useState([
       {
@@ -47,12 +43,9 @@ const PreviewLeaderboard = ({ online }: {
         runningXP: 40,
         userId: "u-8268f5e1-f5a1-440c-a333-0f5578a73847",
       },
-
   ]);
 
-
   if (online) {
-    console.log("online")
     return (
       <QuestProvider apiKey={apiKey} apiSecret={apiSecret} entityId={entityId} apiType="STAGING" themeConfig={{}}>
         <LeaderBoard token={token} userId={userId} />
@@ -66,6 +59,7 @@ const PreviewLeaderboard = ({ online }: {
         token={token}
         userId={userId}
        offlineFormData={leaderBoardOfflineData}
+       styleConfig={{}}
       />
     </QuestProvider>
   )

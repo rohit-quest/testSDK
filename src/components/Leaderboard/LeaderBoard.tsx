@@ -86,7 +86,6 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({
             },
           }
         );
-        console.log(response.data)
 
         if (response.status === 200) {
           setLeaderboardData(response.data);

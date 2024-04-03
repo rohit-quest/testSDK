@@ -28,8 +28,6 @@ interface MembershipTier {
   imageUrl?: string;
 }
 
-
-
 export interface StyleConfig {
   Form?:CSSProperties;
   MainHeading?: CSSProperties;
@@ -64,14 +62,12 @@ const LeaderBoardOffline: React.FC<LeaderBoardProps> = ({
     data:offlineFormData
   });
 
-
-
   useEffect(() => {
     setLeaderboardData({
       data:offlineFormData
     })
   }, []);
-  console.log(leaderboardData)
+
   return (
     <div>
       {leaderboardData && 

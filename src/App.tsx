@@ -251,7 +251,7 @@ function App() {
                     // color="blue"
                     // isArticle={true}
             /> */}
-           <PreviewLeaderboard online={false}/>
+           <PreviewLeaderboard online={true}/>
                {/* <QuestLogin
                     // questId=""
                     textColor=""
