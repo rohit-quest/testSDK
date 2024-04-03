@@ -6,12 +6,12 @@ import { answer } from '../QuestForm/response';
 import showToast from '../toast/toastService';
 import Toast from '../toast2/Toast';
 import UserProfile from '../UserProfile/UserProfile';
-export const questId = 'q-d5286071-fdb3-441a-b39d-df8c3e90977f';
-export const apiKey = 'k-a375a494-6700-47e0-a37e-ba3721261005'
+export const questId = 'q-d31777ad-bf45-4d22-856b-f61716325093';
+export const apiKey = 'k-fe5a805c-77ed-4cae-bd33-9591ebed2805'
 export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
-export const entityId = 'e-91486d88-7b65-4984-9ea6-56340c6bcad0'
-export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTRjYzUxMGE0LWU2NzAtNGVkMy1hYmUzLWMzNTFjMTliYjk5MiIsImlhdCI6MTcxMTAyMDY4MSwiZXhwIjoxNzExNjI1NDgxfQ.xX8cpCXzaN5FS6UhOtiVxw-_w_MQHOonFQmL2lFlECQ'
-export const userId = 'u-4cc510a4-e670-4ed3-abe3-c351c19bb992'
+export const entityId = 'e-9850377b-f88f-4426-a2ac-56206c74655a'
+export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMjEyNjM4NywiZXhwIjoxNzEyNzMxMTg3fQ.jSVLBFWdtsICq8u-r5gOcyhcobR46jSWDRy8IwDzgts'
+export const userId = 'u-8268f5e1-f5a1-440c-a333-0f5578a73847'
 
 export default function OnBoardingPreview({ online = true }: {online?: boolean}) {
 
@@ -110,7 +110,7 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
         apiSecret={apiSecret}
         entityId={entityId}
         featureFlags={{}}
-        apiType="PRODUCTION"
+        apiType="STAGING"
         themeConfig={{
           // backgroundColor: "blue",
           borderColor: "red",
@@ -120,12 +120,14 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
           // fontFamily: "cursive"
         }}
       >
-        <UserProfile
+        <OnBoarding
           userId={userId}
           questId={questId}
           answer={answer}
           setAnswer={setAnswer}
           token={token}
+          // uniqueUserId={Date.now().toString()}
+          // uniqueEmailId={Date.now().toString()}
           // answerFontSize="14px"
           // template={''}
           // progress={["Personal sdrerwtr", "Professional", "Additional",]}

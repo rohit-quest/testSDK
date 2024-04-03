@@ -103,6 +103,8 @@ export default function FeedbackPreview({ online = true }) {
                     // questId={"q-1a12c0e1-35a8-48a3-8cde-a8616f341b88"}
                     heading={"Share Your FeedBack"}
                     subHeading={"How was your experience?"}
+                    uniqueUserId={Date.now().toString()}
+                    // uniqueEmailId='soumitra.petbindhi+25@gmail.com'
                     styleConfig={{
                         Form: {
                             // font: "sans",
@@ -149,10 +151,10 @@ export default function FeedbackPreview({ online = true }) {
                     showFooter={true}
                     // heading="How much did you learn from this section?"
                     // ratingType="number"
+
                     userId={userId}
                     token={token}
                     itemsPerPage={1}
-
                     sections={[
                         {
                             heading: "General Feedback",
