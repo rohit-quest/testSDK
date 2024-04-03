@@ -23,6 +23,7 @@ import { SecondaryButton } from "../Modules/SecondaryButton";
 import TopBar from "../Modules/TopBar";
 import { MultiChoiceTwo } from "../Modules/MultiChoice";
 import Toast from "../toast2/Toast";
+import Cookies from "universal-cookie";
 
 const thanks = (
   <svg
@@ -185,6 +186,7 @@ const Survey: React.FC<FeedbackProps> = ({
   const [isVisible, setIsVisible] = useState(true);
   const [page, setPage] = useState(0);
   const [data, setData] = useState<FormDataItem[]>([]);
+  const cookies = new Cookies()
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
@@ -343,7 +345,7 @@ const Survey: React.FC<FeedbackProps> = ({
       });
     }
 
-    if (entityId && uniqueUserId) {
+    if (entityId && (uniqueUserId )) {
       const functions = new General("");
       functions.getExternalLogin({
         apiType,
@@ -405,12 +407,16 @@ const Survey: React.FC<FeedbackProps> = ({
       }
     }
   
-    const headers = {
-      apiKey: apiKey,
-      apisecret: apiSecret,
-      userId: userId,
-      token: token,
-    };
+    let questUserId = cookies.get("questUserId");
+    let questUserToken = cookies.get("questUserToken");
+    let externalUserId = cookies.get("externalUserId");
+
+    let headers = {
+        apikey: apiKey,
+        apisecret: apiSecret,
+        userId: (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) ? questUserId : userId,
+        token: (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) ? questUserToken : token
+    }
     // const arr = Object.values(answer);
     // if (!answer || !arr?.length || arr.length < FormData?.length){
     //     return showToast.error("Please fill some of the details");
@@ -432,10 +438,10 @@ const Survey: React.FC<FeedbackProps> = ({
         answer: [answer[ans?.criteriaId] || ""],
         criteriaId: ans?.criteriaId || "",
       }));
-      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${userId}`;
+      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`;
       const requestData = {
         criterias: ansArr,
-        userId,
+        userId: headers.userId,
         session,
       };
       setShowLoader(true);
