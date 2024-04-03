@@ -172,7 +172,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /* gap: 20px; */
 }
 
 .question-input-cont>.input-text,
