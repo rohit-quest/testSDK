@@ -20,6 +20,7 @@ import TextArea from "../Modules/TextArea.tsx";
 import { SecondaryButton } from "../Modules/SecondaryButton.tsx";
 import { PrimaryButton } from "../Modules/PrimaryButton.tsx";
 import QuestLabs from "../QuestLabs.tsx";
+import General from "../../general.ts";
 
 const Tick = ({ fillColor = "#6525B3", isActive = false, borderColor = "#B9B9B9" }) => isActive ? (<svg
     width="16"
@@ -211,6 +212,8 @@ function OnBoardingOffline(props: QuestLoginProps) {
 
     let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
+    let GeneralFunctions = new General('mixpanel', apiType);
+
     const templateDesign = () => {
         switch (template) {
             case "multi-question":
@@ -232,6 +235,12 @@ function OnBoardingOffline(props: QuestLoginProps) {
     }
 
     useEffect(() => {
+        const eventFire = async () => {
+            const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_loaded", "onboarding_offline");
+            // console.log(data);
+        }
+        eventFire();
+
         if (entityId) {
             // let externalUserId = cookies.get("externalUserId");
             // let questUserId = cookies.get("questUserId");
@@ -827,6 +836,11 @@ function OnBoardingOffline(props: QuestLoginProps) {
     }
 
     function returnAnswers() {
+        const returnAns = async () => {
+            const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_answers_returned", "onboarding_offline");
+            // console.log(data);
+        }
+        returnAns();
 
         let crt: any = { ...answer };
         for (let i of Object.keys(crt)) {
@@ -1083,9 +1097,15 @@ getAnswers && getAnswers(crt);
                                                     ...styleConfig?.SecondaryButton
                                                 }}
                                                 className="q-onb-main-btn"
-                                                onClick={() =>
+                                                onClick={() =>{
+                                                    const secBtn = async () => {
+                                                        const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_secondary_btn_clicked", "onboarding_offline");
+                                                        // console.log(data);
+                                                    }
+                                                    secBtn();
                                                     currentPage > 0 &&
-                                                    setCurrentPage(currentPage - 1)
+                                                    setCurrentPage(currentPage - 1);
+                                                }
                                                 }
                                             >
                                                 Previous
@@ -1094,11 +1114,17 @@ getAnswers && getAnswers(crt);
                                         }
 
                                         <PrimaryButton
-                                            onClick={() =>
+                                            onClick={() =>{
+                                                const priBtn = async () => {
+                                                    const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_primary_btn_clicked", "onboarding_offline");
+                                                    // console.log(data);
+                                                }
+                                                priBtn();
+
                                                 currentPage !=
                                                     designState.length - 1
                                                     ? setCurrentPage(currentPage + 1)
-                                                    : returnAnswers()
+                                                    : returnAnswers()}
                                             }
                                             disabled={!btnFlag}
                                             className="q-onb-main-btn2"
@@ -1116,9 +1142,15 @@ getAnswers && getAnswers(crt);
                                     <div className="q-onb-main-arrow-div">
                                         <SecondaryButton
                                             className="q-onb-main-arrow"
-                                            onClick={() =>
+                                            onClick={() =>{
+                                                const secBtn = async () => {
+                                                    const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_secondary_btn_clicked", "onboarding_offline");
+                                                    // console.log(data);
+                                                }
+                                                secBtn();
                                                 currentPage > 0 &&
                                                 setCurrentPage(currentPage - 1)
+                                            }
                                             }
                                             style={{
                                                 height: styleConfig?.SecondaryButton?.width || '44px',
@@ -1141,11 +1173,17 @@ getAnswers && getAnswers(crt);
                                         </SecondaryButton>
                                         <PrimaryButton
                                             className="q-onb-main-arrow2"
-                                            onClick={() =>
+                                            onClick={() =>{
+                                                const priBtn = async () => {
+                                                    const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_primary_btn_clicked", "onboarding_offline");
+                                                    // console.log(data);
+                                                }
+                                                priBtn();
                                                 currentPage !=
                                                     designState.length - 1
                                                     ? setCurrentPage(currentPage + 1)
                                                     : returnAnswers()
+                                                }
                                             }
                                             disabled={!btnFlag}
                                             style={{
@@ -1165,7 +1203,15 @@ getAnswers && getAnswers(crt);
                                 <div>
                                     <PrimaryButton
                                         className="q-onb-main-btn3"
-                                        onClick={returnAnswers}
+                                        onClick={() => {
+                                            const subBtn = async () => {
+                                                const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_single_page_submit_button_clicked", "onboarding_offline");
+                                                // console.log(data);
+                                            }
+                                            subBtn();
+                                            returnAnswers()
+                                        }
+                                        }
                                         disabled={!btnFlag}
                                         style={{
                                             border: styleConfig?.SecondaryButton?.border || '1.5px solid #afafaf',
