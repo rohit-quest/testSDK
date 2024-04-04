@@ -65,12 +65,24 @@ type offlineGetStartedProps = {
     Footer?: CSSProperties;
     Card?: CSSProperties;
     Topbar?: CSSProperties;
+    ProgressBar?: {
+      barColor?: string,
+      ProgressText?: CSSProperties
+    }
+    Icon?: CSSProperties
+    Arrow?: {
+      Background?: string,
+      IconColor?: string,
+      CompletedBackground?: string,
+      CompletedIconColor?: string
+    }
+
   };
   offlineData: offlineData[];
 };
 
 function OfflineGetStarted({
-  iconUrls =[],
+  iconUrls = [],
   headingText,
   descriptionText,
   autoHide,
@@ -95,7 +107,7 @@ function OfflineGetStarted({
 
   const completedPercentage = data?.length
     ? (data?.reduce((a, b) => a + (b.completed ? 1 : 0), 0) * 100) /
-      data?.length
+    data?.length
     : 0;
   useEffect(() => {
     offlineData?.length && setData(offlineData);
@@ -193,7 +205,7 @@ function OfflineGetStarted({
                 className="gs-single-card-dropDown"
               >
                 <div className="gs_card_body_dropDown">
-                  <div className="gs_card_body_image">
+                  <div className="gs_card_body_image" style={{ ...styleConfig?.Icon }}>
                     <img
                       className="gs-card-icon"
                       src={e.imageUrl || (!!iconUrls.length ? iconUrls?.[i] : "") || questLogo}
@@ -226,25 +238,25 @@ function OfflineGetStarted({
                     {
                       <div className="gs-card-img-button">
                         {e.completed ? (
-                          <div className="q_gt_arrow-completed">
+                          <div className="q_gt_arrow-completed" style={{ background: styleConfig?.Arrow?.CompletedBackground }}>
                             <GetStartedSvgs
                               type={"greenCheck"}
-                              color={"#098849"}
+                              color={styleConfig?.Arrow?.CompletedIconColor || "#098849"}
                             />
                           </div>
                         ) : (
-                          <div className="q_gt_arrow">
+                          <div className="q_gt_arrow" style={{ background: styleConfig?.Arrow?.Background }}>
                             {dropdowns[i] ? (
                               <GetStartedSvgs
                                 type={"upArrow"}
-                                color={arrowColor}
+                                color={styleConfig?.Arrow?.IconColor || arrowColor}
                               />
                             ) : e.completed ? (
-                              <img src={gsTick} alt="" className="q_gt_arrow" />
+                              <GetStartedSvgs type={"greenCheck"} color={styleConfig?.Arrow?.CompletedIconColor || "#098849"} />
                             ) : (
                               <GetStartedSvgs
                                 type={"downArrowIcon"}
-                                color={arrowColor}
+                                color={styleConfig?.Arrow?.IconColor || arrowColor}
                               />
                             )}
                           </div>
@@ -268,7 +280,7 @@ function OfflineGetStarted({
                     <div className="gs_drop_btns">
                       <PrimaryButton
                         className={"gs_start_btn"}
-                        children={e.btn2||"Start Now"}
+                        children={e.btn2 || "Start Now"}
                         onClick={(event) => {
                           event.stopPropagation();
                           !(!allowMultiClick && e.completed) &&
@@ -315,7 +327,7 @@ function OfflineGetStarted({
                     ...styleConfig?.Card,
                   }}
                 >
-                  <div className="gs_card_body_image">
+                  <div className="gs_card_body_image" style={{ ...styleConfig?.Icon }}>
                     <img
                       className="gs-card-icon"
                       width="24px"
@@ -381,26 +393,26 @@ function OfflineGetStarted({
                       </div>
                     ) : (
                       <div className="gs-card-img-button">
-                      <div className="q_gt_arrow-completed">
-                        <GetStartedSvgs type={"greenCheck"} color={"#098849"} />
-                      </div>
+                        <div className="q_gt_arrow-completed" style={{ background: styleConfig?.Arrow?.CompletedBackground }}>
+                          <GetStartedSvgs type={"greenCheck"}  color={styleConfig?.Arrow?.CompletedIconColor || "#098849"} />
+                        </div>
                       </div>
 
                     ))}
                   {ButtonType === "Arrow" && (
                     <div className="gs-card-img-button">
                       {e.completed ? (
-                        <div className="q_gt_arrow-completed">
+                        <div className="q_gt_arrow-completed" style={{ background: styleConfig?.Arrow?.CompletedBackground }}>
                           <GetStartedSvgs
                             type={"greenCheck"}
-                            color={"#098849"}
+                            color={styleConfig?.Arrow?.CompletedIconColor || "#098849"}
                           />
                         </div>
                       ) : (
-                        <div className="q_gt_arrow">
+                        <div className="q_gt_arrow" style={{ background: styleConfig?.Arrow?.Background }}>
                           <GetStartedSvgs
                             type={"arrowRight"}
-                            color={arrowColor}
+                            color={ styleConfig?.Arrow?.IconColor || arrowColor }
                           />
                         </div>
                       )}

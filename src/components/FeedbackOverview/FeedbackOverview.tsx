@@ -797,7 +797,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       your review and will assure you to surely consider them
                     </div>
                   </div>
-                  <div className="q_fw_submit_back">Go to home!</div>
+                  <div className="q_fw_submit_back" style={{...styleConfig?.SecondaryButton}}>Go to home!</div>
                 </div>
               </div>
             </div>

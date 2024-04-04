@@ -152,7 +152,7 @@ function App() {
 
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
-        <GamifiedQuizPreview online={false} />
+        {/* <GamifiedQuizPreview online={false} /> */}
 
         {/* 
                 <HelpCenter
@@ -169,10 +169,10 @@ function App() {
                 /> */}
         {/* <OnBoardingPreview online={false} /> */}
 
-{/* 
-        <GetStartedPreview
-   online={false}
- />   */}
+
+        <GetStartedPreview  online={true} />  
+        
+
 {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
 </Modal> */}
@@ -234,7 +234,7 @@ function App() {
         
 
 
-        <FeedbackPreview online={true} />
+        {/* <FeedbackPreview online={true} /> */}
 
         {/* <ReferEarnPreview/> */}
 
