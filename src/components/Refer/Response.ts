@@ -1,5 +1,6 @@
 import axios from "axios";
 import config from "../../config";
+import General from "../../general";
 
 export interface referProp {
     isOpen?: boolean; questId: string;
@@ -39,13 +40,16 @@ export const response = async (questId = "", headers: {
     apisecret: string,
     userid: string,
     entityId: string,
-    token: string
+    token: string,
+    apiType: string
 }) => {
+    let GeneralFunctions = new General('mixpanel', headers.apiType);
     try {
         const request = `${config.BACKEND_URL}api/entities/${headers.entityId}/quests/${questId}/users/${headers.userid}/referralcode`;
         const { data }: { data: { success: boolean, referralCode?: string } } = await axios.get(request, { headers })
         return data;
-    } catch (e) {
+    } catch (error) {
+        GeneralFunctions.captureSentryException(error);
         return { success: false };
     }
 }

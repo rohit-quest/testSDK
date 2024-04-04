@@ -3,6 +3,7 @@ import QuestContext from "../QuestWrapper";
 import axios from "axios";
 import config from "../../config";
 import ChallengesShow from "./ChallengesShow";
+import General from "../../general";
 
 export interface StyleConfig {
   Form?: CSSProperties;
@@ -43,12 +44,17 @@ export const Challenges = ({ userId, token, questId, styleConfig }: Props) => {
   const { apiKey, apiSecret, entityId, apiType } = useContext(
     QuestContext.Context
   );
-
+  let GeneralFunctions = new General('mixpanel', apiType);
   const [criterias, setCriterias] = useState<ICriteria[]>([]);
   const [suggestions, setSuggestions] = useState<ICriteria[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
+    const eventFire = async () => {
+      const data = await GeneralFunctions.fireTrackingEvent("quest_challenges_loaded", "challenges");
+      console.log(data);
+    }
+    eventFire();
     const getChallenges = async () => {
       try {
         const BACKEND_URL =
@@ -91,6 +97,7 @@ export const Challenges = ({ userId, token, questId, styleConfig }: Props) => {
         }
       } catch (error) {
         console.error("Error fetching challenges data:", error);
+        GeneralFunctions.captureSentryException(error);
       }
     };
     getChallenges();

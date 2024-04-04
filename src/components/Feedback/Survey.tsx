@@ -190,6 +190,8 @@ const Survey: React.FC<FeedbackProps> = ({
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
+    let GeneralFunctions = new General('mixpanel', apiType);
+
   const handleNext = () => {
     const totalPages = Math.ceil(data.length / itemsPerPage);
     if (page < totalPages - 1) {
@@ -311,6 +313,10 @@ const Survey: React.FC<FeedbackProps> = ({
   };
 
   useEffect(() => {
+    const eventFire = async () => {
+      const data = await GeneralFunctions.fireTrackingEvent("quest_survey_loaded", "survey");
+    }
+    eventFire();
     if (bgColor) {
       setGradient(
         bgColor?.includes("linear-gradient") ||
@@ -342,7 +348,10 @@ const Survey: React.FC<FeedbackProps> = ({
         criterias = Array.isArray(criterias) ? criterias : [];
         setFormdata([...criterias]);
         setData([...criterias]);
-      });
+      }).catch((error) => {
+        console.error("Error:", error);
+        GeneralFunctions.captureSentryException(error);
+      });;
     }
 
     if (entityId && (uniqueUserId )) {
@@ -393,6 +402,10 @@ const Survey: React.FC<FeedbackProps> = ({
   };
 
   function returnAnswers() {
+    const priBtn = async () => {
+      const data = await GeneralFunctions.fireTrackingEvent("quest_survey_form_submitted", "survey");
+    }
+    priBtn();
     let callApi=false;
    
     for(let i=0;i<formdata.length;i++){
@@ -457,6 +470,7 @@ const Survey: React.FC<FeedbackProps> = ({
         })
         .catch((error) => {
           console.error("Error:", error);
+          GeneralFunctions.captureSentryException(error);
         })
         .finally(() => {
           setShowLoader(false);
@@ -891,7 +905,6 @@ const Survey: React.FC<FeedbackProps> = ({
                           </div>
                         );
                       }else if (data.type === 'USER_INPUT_MULTI_CHOICE') {
-                        // console.log(data.options)
                         return multiChoiceTwo(
                           data.options || [],
                           data.question || "",
@@ -925,6 +938,10 @@ const Survey: React.FC<FeedbackProps> = ({
                           : "Previous"
                       }
                       onClick={(e) => {
+                        const priBtn = async () => {
+                          const data = await GeneralFunctions.fireTrackingEvent("quest_survey_secondary_button_clicked", "survey");
+                        }
+                        priBtn();
                         e.preventDefault();
                         e.stopPropagation();
                         if (page === 0) {
@@ -941,6 +958,12 @@ const Survey: React.FC<FeedbackProps> = ({
                           styleConfig?.PrimaryButton?.border ||
                           "1.5px solid #afafaf",
                         ...styleConfig?.PrimaryButton,
+                      }}
+                      onClick={() => {
+                        const priBtn = async () => {
+                          const data = await GeneralFunctions.fireTrackingEvent("quest_survey_primary_button_clicked", "survey");
+                        }
+                        priBtn();
                       }}
                       children={
                         sections && sections[page]?.button2Text

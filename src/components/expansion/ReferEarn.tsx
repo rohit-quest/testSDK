@@ -12,6 +12,7 @@ import Label from "../Modules/Label.tsx";
 import axios from "axios";
 import config from "../../config.ts";
 import Cookies from "universal-cookie";
+import General from "../../general.ts";
 
 export interface referProp {
   questId: string;
@@ -77,6 +78,9 @@ export const Referral = ({
   const [shareCode, setCode] = useState("");
   const [copy, setCopy] = useState([false, false]);
   const { apiKey, apiSecret, entityId, themeConfig, apiType } = useContext(QuestContext.Context);
+
+  let GeneralFunctions = new General('mixpanel', apiType);
+
   const handleCopy = (index: number) => {
     navigator?.clipboard.writeText(!index ? shareCode : referralLink + shareCode);
     setCopy(prev => prev.map((e, i) => i == index ? true : e));
@@ -103,12 +107,17 @@ export const Referral = ({
       const { data }: { data: { success: boolean; referralCode?: string } } =
         await axios.get(request, { headers });
       return data;
-    } catch (e) {
+    } catch (error) {
+      GeneralFunctions.captureSentryException(error);
       return { success: false };
     }
   };
 
   useEffect(() => {
+    const eventFire = async () => {
+      const data = await GeneralFunctions.fireTrackingEvent("quest_referral_loaded", "referral");
+    }
+    eventFire();
     if (!!uniqueUserId || !!uniqueEmailId) {
       let cookies = new Cookies();
       let externalUserId = cookies.get("externalUserId");
@@ -153,6 +162,9 @@ export const Referral = ({
             cookies.set("externalUserId", uniqueUserId, { path: "/", expires: date })
             cookies.set("questUserId", userId, { path: "/", expires: date })
             cookies.set("questUserToken", token, { path: "/", expires: date })
+          }).catch((error) => {
+            console.error("Error:", error);
+            GeneralFunctions.captureSentryException(error);
           })
       }
     } else if (userId) {
@@ -185,28 +197,65 @@ export const Referral = ({
           <Label children={'Referal Code'} style={styleConfig?.Label} />
           <div className="q_refer_code_box" style={{borderColor : themeConfig?.borderColor, ...styleConfig?.Input}}>
             <div className="q_refer_code" style={{color: styleConfig?.Input?.color || styleConfig?.Description?.color ||  themeConfig?.secondaryColor,...styleConfig?.Input}}>{shareCode}</div>
-            <img className="q_refer_copy_icon" src={copy[0] ? tickIcon(styleConfig?.Icon?.color) : copyIcon(secondaryIconColor)} onClick={() => handleCopy(0)} alt="" />
+            <img className="q_refer_copy_icon" src={copy[0] ? tickIcon(styleConfig?.Icon?.color) : copyIcon(secondaryIconColor)} onClick={() => {
+              const referCode = async () => {
+                const data = await GeneralFunctions.fireTrackingEvent("quest_referral_refer_code_copy_btn_clicked", "referral");
+              }
+              referCode();
+
+              handleCopy(0)
+            }} alt="" />
           </div>
         </div>}
         {referralLink && <div className="q_refer_code_content">
           <Label children={'Invitation Link'} style={styleConfig?.Label} />
           <div className="q_refer_code_box" style={{borderColor : themeConfig?.borderColor, ...styleConfig?.Input}}>
             <div className="q_refer_code" style={{color: styleConfig?.Description?.color || styleConfig?.Input?.color || themeConfig?.secondaryColor,...styleConfig?.Input}}>{referralLink}{shareCode}</div>
-            <img className="q_refer_copy_icon" src={copy[1] ? tickIcon(styleConfig?.Icon?.color) : copyIcon(secondaryIconColor)} onClick={() => handleCopy(1)} alt="" />
+            <img className="q_refer_copy_icon" src={copy[1] ? tickIcon(styleConfig?.Icon?.color) : copyIcon(secondaryIconColor)} onClick={() => {
+              const invitationLink = async () => {
+                const data = await GeneralFunctions.fireTrackingEvent("quest_referral_invitation_link_btn_clicked", "referral");
+              }
+              invitationLink();
+              handleCopy(1)
+            }} alt="" />
           </div>
         </div>}
 
         <PrimaryButton
           children={shareButtonText}
           style={{ border: styleConfig?.PrimaryButton?.border || '1.5px solid #D1ACFF', ...styleConfig?.PrimaryButton }}
-          onClick={() => { navigator.clipboard.writeText(referralLink + shareCode); onCopy(shareCode) }}
+          onClick={() => {
+            const copyReferralLinkPrimary = async () => {
+              const data = await GeneralFunctions.fireTrackingEvent("quest_referral_copy_referral_primary_btn_clicked", "referral");
+            }
+            copyReferralLinkPrimary();
+            navigator.clipboard.writeText(referralLink + shareCode); onCopy(shareCode)
+          }}
           type="button"
         />
 
         <div className="q_social_links">
-          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(referralLink + shareCode, "linkedin")} src={linkedInIcon(styleConfig?.Icon?.color)} alt="" />
-          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(referralLink + shareCode, "facebook")} src={faceBookIcon(styleConfig?.Icon?.color)} alt="" />
-          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => shareOnPlatform(referralLink + shareCode, "twitter")} src={twitterIcon(styleConfig?.Icon?.color)} alt="" />
+          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => {
+            const linkdin = async () => {
+              const data = await GeneralFunctions.fireTrackingEvent("quest_referral_linkedin_btn_clicked", "referral");
+            }
+            linkdin();
+            shareOnPlatform(referralLink + shareCode, "linkedin")
+          }} src={linkedInIcon(styleConfig?.Icon?.color)} alt="" />
+          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => {
+            const facebook = async () => {
+              const data = await GeneralFunctions.fireTrackingEvent("quest_referral_facebook_btn_clicked", "referral");
+            }
+            facebook();
+            shareOnPlatform(referralLink + shareCode, "facebook")
+          }} src={faceBookIcon(styleConfig?.Icon?.color)} alt="" />
+          <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => {
+            const twitter = async () => {
+              const data = await GeneralFunctions.fireTrackingEvent("quest_referral_twitter_btn_clicked", "referral");
+            }
+            twitter();
+            shareOnPlatform(referralLink + shareCode, "twitter")
+          }} src={twitterIcon(styleConfig?.Icon?.color)} alt="" />
         </div>
       </div>
       {(!gradientBackground && showFooter) && <QuestLabs style={styleConfig?.Footer} />

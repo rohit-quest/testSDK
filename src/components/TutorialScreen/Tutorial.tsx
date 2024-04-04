@@ -77,7 +77,15 @@ const TutorialScreen: React.FC<TutorialProps> = ({
 
   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
+  let GeneralFunctions = new General('mixpanel', apiType);
+
   const handleNextStep = (id: any, url: string) => {
+    const eventFireClick = async () => {
+      const data = await GeneralFunctions.fireTrackingEvent("quest_tutorial_step_link_clicked", "tutorial");
+      console.log(data);
+    }
+    eventFireClick();
+
     const headers = {
       apiKey: apiKey,
       apisecret: apiSecret,
@@ -111,6 +119,7 @@ const TutorialScreen: React.FC<TutorialProps> = ({
       })
       .catch((error) => {
         console.error('Error:', error);
+        GeneralFunctions.captureSentryException(error);
       })
       .finally(() => {
         setShowLoader(false);
@@ -119,6 +128,11 @@ const TutorialScreen: React.FC<TutorialProps> = ({
 
 
   useEffect(() => {
+    const eventFire = async () => {
+      const data = await GeneralFunctions.fireTrackingEvent("quest_tutorial_loaded", "tutorial");
+      console.log(data);
+    }
+    eventFire();
     if (entityId) {
       const headers = {
         apiKey: apiKey,
@@ -147,6 +161,9 @@ const TutorialScreen: React.FC<TutorialProps> = ({
           cookies.set("externalUserId", uniqueUserId, {path: "/", expires: date})
           cookies.set("questUserId", userId, {path: "/", expires: date})
           cookies.set("questUserToken", token, {path: "/", expires: date})
+        }).catch((error) => {
+          console.error("Error:", error);
+          GeneralFunctions.captureSentryException(error);
         })
       } else {
         fetchData(headers)
@@ -168,6 +185,9 @@ const TutorialScreen: React.FC<TutorialProps> = ({
             };
           });
           setFormdata(criterias);
+        }).catch((error) => {
+          console.error("Error:", error);
+          GeneralFunctions.captureSentryException(error);
         });
 
       }

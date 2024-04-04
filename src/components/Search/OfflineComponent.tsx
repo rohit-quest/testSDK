@@ -6,6 +6,7 @@ import { CSSProperties, useContext, useEffect, useRef, useState } from "react";
 import QuestContext from "../QuestWrapper.tsx";
 import QuestLabs from "../QuestLabs.tsx";
 import { Input } from "../Modules/Input.tsx";
+import General from "../../general.ts";
 
 // import config from "../../config.ts";
 
@@ -75,8 +76,10 @@ export default function SearchOffline(prop: propType): JSX.Element {
   const [searchResults, setResults] = useState<data>(defaultResult);
   const [isOpen, setOpen] = useState(false);
   const [selectedResultIndex, setSelectedResultIndex] = useState<number>(0);
-  const { themeConfig } = useContext(QuestContext.Context);
+  const { themeConfig,apiType } = useContext(QuestContext.Context);
   const [data, setData] = useState<data>([]);
+
+  let GeneralFunctions = new General('mixpanel', apiType);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (isOpen && searchResults.length > 0) {
@@ -99,6 +102,10 @@ export default function SearchOffline(prop: propType): JSX.Element {
   const handleKeyPress = (event: KeyboardEvent) => {
     const isCtrlPressed = (event.ctrlKey || event.metaKey) && !event.altKey;
     if (isCtrlPressed && event.key === "k") {
+      const eventFireCtrK = async () => {
+        const data = await GeneralFunctions.fireTrackingEvent("quest_spotlight_search_offline_ctrl_k_pressed", "spotlight_search_offline");
+      }
+      eventFireCtrK();
       event.preventDefault();
       setOpen((prev) => !prev);
     } else if (event.key == "Escape") setOpen(false);
@@ -131,6 +138,13 @@ export default function SearchOffline(prop: propType): JSX.Element {
     );
     setResults(filtered);
   };
+
+  useEffect(() => {
+    const eventFire = async () => {
+      const data = await GeneralFunctions.fireTrackingEvent("quest_spotlight_search_offline_loaded", "spotlight_search_offline");
+    }
+    eventFire();
+  }, [])
 
   const jsx = (
     <div
@@ -197,6 +211,11 @@ export default function SearchOffline(prop: propType): JSX.Element {
                     : "transparent",
               }}
               onClick={() => {
+                const eventFire = async () => {
+                  const data = await GeneralFunctions.fireTrackingEvent("quest_spotlight_search_offline_link_clicked", "spotlight_search_offline");
+                }
+                eventFire();
+
                 onResultClick(link);
               }}
               onMouseEnter={() => setSelectedResultIndex(i)}

@@ -9,6 +9,7 @@ import GoogleLogin from "./GoogleLogin";
 import { ToastContainer } from "react-toastify";
 import "./Login.css";
 import QuestLabs from "../QuestLabs";
+import General from "../../general";
 export interface QuestLoginProps {
   googleClientId: string;
   redirectUri: string;
@@ -79,7 +80,12 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   const handleOtp = (val: boolean) => {
     setOtpScreen(val);
   };
+  let GeneralFunctions = new General('mixpanel', apiType);
   useEffect(() => {
+    const questLogin = async () => {
+      const data = await GeneralFunctions.fireTrackingEvent("quest_Login_loaded", "quest_login");
+    }
+    questLogin();
     // if (entityId) {
     //   const request = `${BACKEND_URL}api/entities/${entityId}/get-theme`;
     //   axios

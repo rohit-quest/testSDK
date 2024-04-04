@@ -18,6 +18,7 @@ import Label from '../Modules/Label';
 import TextArea from '../Modules/TextArea';
 import TopBar from '../Modules/TopBar';
 import { MultiChoiceTwo } from '../Modules/MultiChoice';
+import General from '../../general';
 
 const thanks = (
   <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -130,11 +131,11 @@ const SurveyOffline = ({
   const [likePopup, setLikePopup] = useState<boolean>(false);
   const [thanksPopup, setThanksPopup] = useState<boolean>(false);
   const [gradient, setGradient] = useState<boolean>(false);
-  const { themeConfig } = useContext(QuestContext.Context);
+  const { themeConfig,apiType } = useContext(QuestContext.Context);
   const [answer, setAnswer] = useState<any>({});
   const [page, setPage] = useState(0);
 
-
+  let GeneralFunctions = new General('mixpanel', apiType);
   const handleNext = () => {
     const totalPages = Math.ceil(offlineFormData.length / itemsPerPage);
     if(page < totalPages - 1){
@@ -222,6 +223,10 @@ const SurveyOffline = ({
   };
 
   useEffect(() => {
+    const eventFire = async () => {
+      const data = await GeneralFunctions.fireTrackingEvent("quest_survey_offline_loaded", "survey_offline");
+    }
+    eventFire();
     if (bgColor) {
       setGradient(
         bgColor?.includes('linear-gradient') ||
@@ -296,6 +301,10 @@ const SurveyOffline = ({
 
 
   function returnAnswers() {
+    const priBtn = async () => {
+      const data = await GeneralFunctions.fireTrackingEvent("quest_survey_offline_form_submitted", "survey_offline");
+    }
+    priBtn();
     // const headers = {
     //   apiKey: apiKey,
     //   apisecret: apiSecret,
@@ -683,7 +692,6 @@ const SurveyOffline = ({
                           </div>
                         );
                       } else if (data.type === 'USER_INPUT_MULTI_CHOICE') {
-                        // console.log(data.options)
                         return multiChoiceTwo(
                           data.options || [],
                           data.question || "",
@@ -691,14 +699,12 @@ const SurveyOffline = ({
                           data.criteriaId || "",
                         )
                       }else if (data.type === 'USER_INPUT_DATE') {
-                        // console.log(data)
                         return dateInput(data.question || '',
                           data.required || false,
                           data.criteriaId || '',
                           data.placeholder || "Choose Date",
                         )
                       }else if (data.type === 'USER_INPUT_PHONE') {
-                        // console.log(data)
                         return normalInput(
                           data.question || '',
                           data.criteriaId || '',
@@ -710,7 +716,13 @@ const SurveyOffline = ({
                     })}
                     <div className='q_feedback_buttons'>
                       <div onClick={
-                        () => (0 == page) ? onCancel() : setPage(c => c - 1)
+                        () => {
+                          const priBtn = async () => {
+                            const data = await GeneralFunctions.fireTrackingEvent("quest_survey_offline_secondary_button_clicked", "survey_offline");
+                          }
+                          priBtn();
+                          (0 == page) ? onCancel() : setPage(c => c - 1)
+                        }
                       }
                         className="q-fdov-btn-cancel"
                       >
@@ -727,6 +739,12 @@ const SurveyOffline = ({
                           ...styleConfig?.PrimaryButton
                         }}
                         className="q-fdov-btn-next"
+                        onClick={() => {
+                          const priBtn = async () => {
+                            const data = await GeneralFunctions.fireTrackingEvent("quest_survey_offline_primary_button_clicked", "survey_offline");
+                          }
+                          priBtn();
+                        }}
                       >
                         {((offlineFormData.length / itemsPerPage) <= page + 1) ? 'Submit' : 'Next'}
                       </button>

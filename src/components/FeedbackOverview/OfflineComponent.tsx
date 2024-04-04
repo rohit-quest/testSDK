@@ -15,6 +15,7 @@ import Label from "../Modules/Label";
 import TextArea from "../Modules/TextArea";
 import Modal from "../Modules/Modal";
 import TopBar from "../Modules/TopBar";
+import General from "../../general";
 
 const feedback = (color: string = "#939393") => (
   <svg
@@ -354,6 +355,16 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     </svg>
   );
 
+  
+  let GeneralFunctions = new General('mixpanel', apiType);
+  useEffect(() => {
+
+    const eventFire = async () => {
+      const data = await GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_offline_loaded", "feedback_workflow_offline");
+    }
+    eventFire();
+  }, []);
+
   const handleOptionClick = (option: optionType) => {
     let cookies = new Cookies();
     let externalUserId = cookies.get("externalUserId");
@@ -407,6 +418,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     }
   };
   function returnAnswers(index: number) {
+    const eventFire = async () => {
+      const data = await GeneralFunctions.fireTrackingEvent(`quest_feedback_workflow_offline${selectedOption}_form_submitted`, `feedback_workflow_offline${selectedOption}_form`);
+    }
+    eventFire();
     // const headers = {
     //   apiKey: apiKey,
     //   apisecret: apiSecret,
@@ -470,6 +485,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   }
 
   const handleBackClick = () => {
+    const eventFire = async () => {
+      const data = await GeneralFunctions.fireTrackingEvent(`quest_feedback_workflow_offline_${selectedOption}_form_closed`, `feedback_workflow_${selectedOption}_form`);
+    }
+    eventFire();
     setSelectedOption(null);
   };
   // function isDefaultQuestId(questId: string): boolean {
@@ -789,7 +808,13 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             <div className="q-fw-content-box">
               {
                 <div
-                  onClick={() => handleOptionClick("GeneralFeedback")}
+                onClick={() => {
+                  const eventFire = async () => {
+                    const data = await GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_offline_general_feedback_clicked", "feedback_workflow_general_feedback");
+                  }
+                  eventFire();
+                  handleOptionClick("GeneralFeedback")
+                }}
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
                     setCardHovered([true, false, false, false])
@@ -861,7 +886,13 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               }
               {
                 <div
-                  onClick={() => handleOptionClick("ReportBug")}
+                onClick={() => {
+                  const eventFire = async () => {
+                    const data = await GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_offline_report_bug_clicked", "feedback_workflow_report_bug");
+                  }
+                  eventFire();
+                  handleOptionClick("ReportBug")
+                }}
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
                     setCardHovered([false, true, false, false])
@@ -936,7 +967,13 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               }
               {
                 <div
-                  onClick={() => handleOptionClick("RequestFeature")}
+                onClick={() => {
+                  const eventFire = async () => {
+                    const data = await GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_offline_request_feature_clicked", "feedback_workflow_request_feature");
+                  }
+                  eventFire();
+                  handleOptionClick("RequestFeature")
+                }}
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
                     setCardHovered([false, false, true, false])
@@ -1010,7 +1047,13 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               }
               {
                 <div
-                  onClick={() => handleOptionClick("ContactUs")}
+                onClick={() => {
+                  const eventFire = async () => {
+                    const data = await GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_offline_contactus_clicked", "feedback_workflow_contactus");
+                  }
+                  eventFire();
+                  handleOptionClick("ContactUs")
+                }}
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
                     setCardHovered([false, false, false, true])

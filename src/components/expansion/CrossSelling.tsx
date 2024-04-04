@@ -92,8 +92,13 @@ export const CrossSelling = ({
         
         requestAnimationFrame(animate);
     };
-    
+    let GeneralFunctions = new General('mixpanel', apiType);
     useEffect(() => {
+        const eventFire = async () => {
+            const data = await GeneralFunctions.fireTrackingEvent("quest_cross_selling_loaded", "cross_selling");
+            console.log(data);
+        }
+        eventFire();
         let isMounted = true; 
         getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL)
             .then((r) => {
@@ -105,7 +110,8 @@ export const CrossSelling = ({
                     animate();
                 }
             })
-            .catch(() => {
+            .catch((error) => {
+                GeneralFunctions.captureSentryException(error);
                 console.log('Error fetching expiryDate:', expiryDate);
                 requestRef.current = expiryDate;
             });
@@ -158,7 +164,14 @@ export const CrossSelling = ({
                         background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
                         ...styleConfig?.PrimaryButton
                     }} 
-                    onClick={()=>claimRewardHandler()} 
+                    onClick={() => {
+                        const priBtn = async () => {
+                            const data = await GeneralFunctions.fireTrackingEvent("quest_challenges_primary_btn_clicked", "challenges");
+                            console.log(data);
+                        }
+                        priBtn();
+                        claimRewardHandler()
+                    }}
                     className="q_share_link_button"
                 >
                     {shareButtonText}
@@ -170,7 +183,14 @@ export const CrossSelling = ({
                         color: styleConfig?.SecondaryButton?.color || themeConfig?.primaryColor,
                         ...styleConfig?.SecondaryButton
                     }}
-                    onClick={()=>backButtonTrigger()} 
+                    onClick={() => {
+                        const secBtn = async () => {
+                            const data = await GeneralFunctions.fireTrackingEvent("quest_challenges_secondaryy_btn_clicked", "challenges");
+                            console.log(data);
+                        }
+                        secBtn();
+                        backButtonTrigger()
+                    }}
                     className="q_share_link_button_2"
                 >
                     Go to home

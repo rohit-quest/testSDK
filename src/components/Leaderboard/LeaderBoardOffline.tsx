@@ -3,6 +3,7 @@ import LeaderBoardShow from "./LeaderBoardShow";
 import QuestContext from "../QuestWrapper";
 import axios from "axios";
 import config from "../../config";
+import General from "../../general";
 
 interface LeaderboardData {
   userId: string;

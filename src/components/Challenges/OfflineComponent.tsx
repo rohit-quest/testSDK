@@ -3,6 +3,7 @@ import QuestContext from "../QuestWrapper";
 import axios from "axios";
 import config from "../../config";
 import ChallengesShow from "./ChallengesShow";
+import General from "../../general";
 
 export interface StyleConfig {
   Form?: CSSProperties;
@@ -43,8 +44,13 @@ export const ChallengesOffline = ({ userId, token, questId, styleConfig }: Props
   const [criterias, setCriterias] = useState<ICriteria[]>([]);
   const [suggestions, setSuggestions] = useState<ICriteria[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
-
+  let GeneralFunctions = new General('mixpanel', apiType);
   useEffect(() => {
+    const eventFire = async () => {
+      const data = await GeneralFunctions.fireTrackingEvent("quest_challenges_offline_loaded", "challenges_offline");
+      console.log(data);
+    }
+    eventFire();
     const getChallenges = async () => {
       try {
         const BACKEND_URL =

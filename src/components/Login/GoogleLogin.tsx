@@ -9,6 +9,7 @@ import { useContext } from 'react';
 import QuestContext from '../QuestWrapper';
 import { SecondaryButton } from '../Modules/SecondaryButton';
 import Toast from '../toast2/Toast';
+import General from '../../general';
 
 interface GoogleLoginProps {
   btnTextColor?: string;
@@ -65,7 +66,7 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
   const { setUser, apiType, themeConfig } = useContext(QuestContext.Context);
 
   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
-
+  let GeneralFunctions = new General('mixpanel', apiType)
   useEffect(() => {
     if (googleCode) {
       googleLogin(googleCode);
@@ -112,9 +113,10 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
           // toast.error('Unable to login' + '\n' + `${res.data.error}`);
         }
       })
-      .catch((err) => {
-        console.error(err);
+      .catch((error) => {
+        console.error(error);
         // toast.error(err.message);
+        GeneralFunctions.captureSentryException(error);
       })
       .finally(() => {
         setShowLoader(false);
@@ -122,6 +124,11 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
   }
 
   function handleGoogleLoginClick() {
+    const loginBtn = async () => {
+      const data = await GeneralFunctions.fireTrackingEvent("quest_login_google_btn_clicked", "quest_login");
+    }
+    loginBtn();
+
     if (!googleClientId) {
       onError && onError({ email: undefined, error:"This is preview of the saas app that we generated it for you. Google login will work once you add your Google Client ID in the code."});
       return 

@@ -10,6 +10,7 @@ import axios from 'axios';
 import config from '../../config';
 import QuestContext from "../QuestWrapper.tsx";
 import { QuestArray, Metadata } from '../HelpCenter/Svg.tsx';
+import General from '../../general.ts';
 
 export interface articleProps {
   heading?: string;
@@ -29,18 +30,18 @@ type CustomHeaders = {
   token: string;
 }
 
-async function getResponse(headers: CustomHeaders, entityId: string, questId: string): Promise<{ metadata: Metadata }> {
+async function getResponse(headers: CustomHeaders, entityId: string, questId: string, apiType: string): Promise<{ metadata: Metadata }> {
   const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${headers.userId}`;
+  let GeneralFunctions = new General('mixpanel', apiType);
   try {
     const res = await axios.get(request, { headers })
     const response = res.data.eligibilityData as QuestArray;
     return { metadata: response[0].data.metadata };
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.log(error);
+    GeneralFunctions.captureSentryException(error);
     return { metadata: {} as Metadata };
   }
-
-
 }
 
 
@@ -56,10 +57,15 @@ const ShareArticle: React.FC<articleProps> = ({
 }: articleProps) => {
 
   const [shareLink, setLink] = useState("https://www.questlabs.ai/")
-  const { apiKey, apiSecret, entityId } = useContext(QuestContext.Context);
-
+  const { apiKey, apiSecret, entityId ,apiType} = useContext(QuestContext.Context);
+  let GeneralFunctions = new General('mixpanel', apiType);
   useEffect(() => {
-    getResponse({ apiKey, apisecret: apiSecret, token, userId }, entityId, questId)
+    const shareArticle = async () => {
+      const data = await GeneralFunctions.fireTrackingEvent("quest_share_article_loaded", "share_article");
+    }
+    shareArticle();
+
+    getResponse({ apiKey, apisecret: apiSecret, token, userId }, entityId, questId,apiType)
       .then((response) => {
         setLink(response.metadata.linkActionUrl)
       })
@@ -77,19 +83,37 @@ const ShareArticle: React.FC<articleProps> = ({
           <div className='q_article_img'>
             <img
               className="q-referShare-content-social-img"
-              onClick={() => shareOnPlatform(shareLink, "twitter")}
+              onClick={() => {
+                const twitter = async () => {
+                  const data = await GeneralFunctions.fireTrackingEvent("quest_share_article_twitter_clicked", "share_article");
+                }
+                twitter();
+                shareOnPlatform(shareLink, "twitter")
+              }}
               src={twitterSvg}
               alt="Twitter"
             />
             <img
               className="q-referShare-content-social-img"
               src={whatsappSvg}
-              onClick={() => shareOnPlatform(shareLink, "whatsapp")}
+              onClick={() => {
+                const whatsapp = async () => {
+                  const data = await GeneralFunctions.fireTrackingEvent("quest_share_article_whatsapp_clicked", "share_article");
+                }
+                whatsapp();
+                shareOnPlatform(shareLink, "whatsapp")
+              }}
               alt="Whatsapp"
             />
             <img
               className="q-referShare-content-social-img"
-              onClick={() => shareOnPlatform(shareLink, "telegram")}
+              onClick={() => {
+                const telegram = async () => {
+                  const data = await GeneralFunctions.fireTrackingEvent("quest_share_article_telegram_clicked", "share_article");
+                }
+                telegram();
+                shareOnPlatform(shareLink, "telegram")
+              }}
               src={telegramPng} width="24px"
               alt="telegramPng"
             />

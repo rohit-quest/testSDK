@@ -15,6 +15,7 @@ import GetStartedSvgs from "./Svgs";
 import QuestLabs from "../QuestLabs";
 import { PrimaryButton } from "../Modules/PrimaryButton";
 import { SecondaryButton } from "../Modules/SecondaryButton";
+import General from "../../general";
 
 type GetStartedProps = {
   userId: string;
@@ -116,6 +117,8 @@ function GetStarted({
   let questUserId = cookies.get("questUserId");
   let questUserToken = cookies.get("questUserToken");
 
+  let GeneralFunctions = new General('mixpanel', apiType);
+
   const handleCriteriaClick = (id: any, url: string) => {
     if (showLoader) return;
     const headers = {
@@ -130,6 +133,13 @@ function GetStarted({
     const json = {
       criteriaId: id,
     };
+
+    // const eventFire = async () => {
+    //   const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_primary_button_api_called", "get_started");
+    //   console.log(data);
+    // }
+    // eventFire();
+
     const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${headers.userId}`;
     setShowLoader(true);
     axios
@@ -144,6 +154,7 @@ function GetStarted({
       })
       .catch((error) => {
         console.error("Error:", error);
+        GeneralFunctions.captureSentryException(error);
       })
       .finally(() => {
         setShowLoader(false);
@@ -152,6 +163,11 @@ function GetStarted({
 
 
   useEffect(() => {
+    const eventFire = async () => {
+      const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_loaded", "get_started");
+    }
+    eventFire();
+
     if (entityId) {
       const headers = {
         apiKey: apiKey,
@@ -177,7 +193,7 @@ function GetStarted({
           ...{ userId: questUserId, token: questUserToken },
         };
         fetchData(header);
-      } else if (!!uniqueUserId) {
+
         axios
           .post(`${BACKEND_URL}api/users/external/login`, body, { headers })
           .then((res) => {
@@ -192,11 +208,13 @@ function GetStarted({
             });
             cookies.set("questUserId", userId, { path: "/", expires: date });
             cookies.set("questUserToken", token, { path: "/", expires: date });
-          });
+          }).catch((error) => {
+            GeneralFunctions.captureSentryException(error);
+          });;
       } else {
         fetchData(headers);
       }
-
+      
       function fetchData(header: any) {
         const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}`;
         axios.get(request, { headers: header }).then((res) => {
@@ -229,6 +247,8 @@ function GetStarted({
           if (!dropdowns.length)
             setDropdown(new Array(criterias.length).fill(false));
           setFormdata([...criterias]);
+        }).catch((error) => {
+          GeneralFunctions.captureSentryException(error);
         });
       }
     }
@@ -275,6 +295,8 @@ function GetStarted({
             });
             cookies.set("questUserId", userId, { path: "/", expires: date });
             cookies.set("questUserToken", token, { path: "/", expires: date });
+          }).catch((error) => {
+            GeneralFunctions.captureSentryException(error);
           });
       } else {
         fetchData(headers);
@@ -300,6 +322,7 @@ function GetStarted({
           })
           .catch((error) => {
             console.error("Error:", error);
+            GeneralFunctions.captureSentryException(error);
           })
           .finally(() => {
             setShowLoader(false);
@@ -365,10 +388,16 @@ function GetStarted({
                   // borderBottom: `1px solid ${cardBorderColor}`,
                   ...styleConfig?.Card
                 }}
-                onClick={() =>
+                onClick={(e) => {
+                  const linkClick = async () => {
+                    const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_link_clicked", "get_started");
+                  }
+                  linkClick();
+
                   setDropdown((prev) =>
                     prev.map((e, index) => (i === index ? !e : e))
                   )
+                }
                 }
                 className="gs-single-card-dropDown"
               >
@@ -425,6 +454,10 @@ function GetStarted({
                     <div className="gs_drop_desc" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>{e.longDescription}</div>
                     <div className="gs_drop_btns">
                       <PrimaryButton className={'gs_start_btn'} children={e.btn2 || "Start Now" } onClick={(event) => {
+                        const eventFire = async () => {
+                          const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_primary_button_clicked", "get_started");
+                        }
+                        eventFire();
                         event.stopPropagation()
                         !(!allowMultiClick && e.completed) &&
                           handleCriteriaClick(e.criteriaId, e.url)
@@ -444,7 +477,13 @@ function GetStarted({
                           flex: 'inherit',
                           width: 'fit-content'
                         }}
-                        onClick={() => window.open(e.btn1Link)}
+                        onClick={() => {
+                          const eventFire = async () => {
+                            const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_secondary_button_clicked", "get_started");
+                          }
+                          eventFire();
+                          window.open(e.url)
+                        }}
                         className="gs_visit_btn"
                         children={e.btn1 || "Visit Website"} />
                     </div>
@@ -500,7 +539,13 @@ function GetStarted({
                             border: "none",
                             ...styleConfig?.SecondaryButton,
                           }}
-                          onClick={(event) => { event.stopPropagation(); window.open(e.btn1Link); }}
+                          onClick={(event) => { 
+                            const eventFire = async () => {
+                              const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_secondary_button_clicked", "get_started");
+                            }
+                            eventFire();
+                            event.stopPropagation();
+                            window.open(e.btn1Link); }}
                           className="gs_visit_btn gs_tempalate1_btn"
                           children={e.btn1 || "Visit Website"}
                         />
@@ -508,6 +553,10 @@ function GetStarted({
                           className={"gs_start_btn"}
                           children={e.btn2 ||"Start Now"}
                           onClick={(event) => {
+                            const eventFire = async () => {
+                              const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_primary_button_clicked", "get_started");
+                            }
+                            eventFire();
                             event.stopPropagation();
                             !(!allowMultiClick && e.completed) &&
                               handleCriteriaClick(e.criteriaId, e.url);

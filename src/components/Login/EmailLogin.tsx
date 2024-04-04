@@ -9,6 +9,7 @@ import QuestContext from "../QuestWrapper";
 import { Input } from "../Modules/Input";
 import { PrimaryButton } from "../Modules/PrimaryButton";
 import Label from "../Modules/Label";
+import General from "../../general";
 
 interface EmailLoginProps {
   otpScreen: boolean;
@@ -70,7 +71,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   const { apiType, themeConfig } = useContext(QuestContext.Context);
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
-
+    let GeneralFunctions = new General('mixpanel', apiType)
   const handlesubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && e.currentTarget.value !== "") {
       setMainValidEmail(isValidEmail);
@@ -83,6 +84,11 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   };
 
   const sendOTPfunction = () => {
+    const loginBtn = async () => {
+      const data = await GeneralFunctions.fireTrackingEvent("quest_login_continue_btn_clicked", "quest_login");
+    }
+    loginBtn();
+
     setMainValidEmail(isValidEmail);
     if (!isValidEmail || email.length === 0) {
       // showToast.error(
@@ -108,8 +114,9 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
           handleOtp(true);
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        GeneralFunctions.captureSentryException(error);
+        console.log(error);
       })
       .finally(() => {
         setShowLoader(false);
