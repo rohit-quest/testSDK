@@ -235,7 +235,8 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                     onSubmit,
                     styleConfig,
                     IconColor,
-                    googleButtonText
+                    googleButtonText,
+                    onError
                   }}
                 />
               )}
@@ -256,7 +257,8 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
                 onSubmit,
                 styleConfig,
                 IconColor,
-                googleButtonText
+                googleButtonText,
+                onError
               }}
             />
           )}
