@@ -26,6 +26,7 @@ import "./src/components/Leaderboard/leaderboard.css"
 import "./src/components/HelpHub/HelpHub.css"
 import "./src/components/UserProfile/userProfile.css"
 import "./src/components/Challenges/challenges.css"
+import "./src/components/GamifiedQuiz/gamifiedQuiz.css"
 import QuestLogin from "./src/components/Login/Login";
 import OnBoarding from "./src/components/Onboarding/Onboarding";
 import { QuestProvider } from "./src/components/QuestWrapper";
@@ -70,6 +71,8 @@ import Toast from './src/components/toast2/Toast';
 import HelpHub from "./src/components/HelpHub/HelpHub.tsx";
 import { Challenges } from './src/components/Challenges/Challenges';
 import UserProfile from "./src/components/UserProfile/UserProfile.tsx";
+import GamifiedQuiz from "./src/components/GamifiedQuiz/GamifiedQuiz.tsx";
+import GamifiedQuizOffline from "./src/components/GamifiedQuiz/GamifiedQuizOffline.tsx";
 export {
     QuestProvider,
     QuestLogin,
@@ -115,5 +118,7 @@ export {
     Survey,
     HelpHub,
     Challenges,
-    UserProfile
+    UserProfile,
+    GamifiedQuiz,
+    GamifiedQuizOffline
 };
