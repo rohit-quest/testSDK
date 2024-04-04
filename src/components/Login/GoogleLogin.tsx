@@ -21,7 +21,7 @@ interface GoogleLoginProps {
   apiSecret: string;
   apiKey: string;
   googleButtonText?: string;
-  onError?: ({email,error}:{email?:string,error?:string}) => void;
+  onError?: ({email,error}:{email?:string,error?:string,isGoogle?:boolean}) => void;
   onSubmit?: ({ userId, token, userCredentials, refreshToken }: { userId: string, token: string, userCredentials: object, refreshToken: string }) => void;
   styleConfig?: {
     Heading?: CSSProperties;
@@ -55,7 +55,8 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
     apiKey,
     onSubmit,
     googleButtonText,
-    styleConfig
+    styleConfig,
+    onError
   } = props;
 
   const [showLoader, setShowLoader] = useState<boolean>(false);
@@ -122,7 +123,7 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
 
   function handleGoogleLoginClick() {
     if (!googleClientId) {
-      Toast.error({ text: "Google Client ID not set for this community, please try email OTP login" });
+      onError && onError({ email: undefined, error:"This is preview of the saas app that we generated it for you. Google login will work once you add your Google Client ID in the code."});
       return 
     }
     window.location.href = `https://accounts.google.com/o/oauth2/auth?client_id=${googleClientId}&redirect_uri=${redirectUri}&scope=profile%20email&response_type=code`
