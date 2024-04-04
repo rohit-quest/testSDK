@@ -28,11 +28,6 @@ interface MembershipTier {
   imageUrl?: string;
 }
 
-interface LeaderboardResponse {
-  data: LeaderboardData[];
-  membershipsTiers: MembershipTier[];
-}
-
 export interface StyleConfig {
   Form?:CSSProperties;
   MainHeading?: CSSProperties;
@@ -54,28 +49,31 @@ interface LeaderBoardProps {
   userId: string;
   token: string;
   styleConfig?: StyleConfig;
-  offlineFormData:LeaderboardResponse
+  offlineFormData?:LeaderboardData[]
 }
 
 const LeaderBoardOffline: React.FC<LeaderBoardProps> = ({
   userId,
   token,
   styleConfig,
-  offlineFormData
+  offlineFormData =[]
 }) => {
-  const [leaderboardData, setLeaderboardData] =
-    useState<LeaderboardResponse | null>(null);
-
+  const [leaderboardData, setLeaderboardData] = useState({
+    data:offlineFormData
+  });
 
   useEffect(() => {
-    setLeaderboardData(offlineFormData)
+    setLeaderboardData({
+      data:offlineFormData
+    })
   }, []);
+
   return (
     <div>
       {leaderboardData && 
         <LeaderBoardShow
           leaderboardUserData={leaderboardData}
-          memberShip={leaderboardData.membershipsTiers}
+          memberShip={[]}
           styleConfig={styleConfig}
         />}
      
