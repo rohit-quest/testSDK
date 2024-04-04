@@ -60,10 +60,7 @@ const ShareArticle: React.FC<articleProps> = ({
   const { apiKey, apiSecret, entityId ,apiType} = useContext(QuestContext.Context);
   let GeneralFunctions = new General('mixpanel', apiType);
   useEffect(() => {
-    const shareArticle = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_share_article_loaded", "share_article");
-    }
-    shareArticle();
+    GeneralFunctions.fireTrackingEvent("quest_share_article_loaded", "share_article");
 
     getResponse({ apiKey, apisecret: apiSecret, token, userId }, entityId, questId,apiType)
       .then((response) => {
@@ -84,10 +81,7 @@ const ShareArticle: React.FC<articleProps> = ({
             <img
               className="q-referShare-content-social-img"
               onClick={() => {
-                const twitter = async () => {
-                  const data = await GeneralFunctions.fireTrackingEvent("quest_share_article_twitter_clicked", "share_article");
-                }
-                twitter();
+                GeneralFunctions.fireTrackingEvent("quest_share_article_twitter_clicked", "share_article");
                 shareOnPlatform(shareLink, "twitter")
               }}
               src={twitterSvg}
@@ -97,10 +91,7 @@ const ShareArticle: React.FC<articleProps> = ({
               className="q-referShare-content-social-img"
               src={whatsappSvg}
               onClick={() => {
-                const whatsapp = async () => {
-                  const data = await GeneralFunctions.fireTrackingEvent("quest_share_article_whatsapp_clicked", "share_article");
-                }
-                whatsapp();
+                GeneralFunctions.fireTrackingEvent("quest_share_article_whatsapp_clicked", "share_article");
                 shareOnPlatform(shareLink, "whatsapp")
               }}
               alt="Whatsapp"
@@ -108,10 +99,7 @@ const ShareArticle: React.FC<articleProps> = ({
             <img
               className="q-referShare-content-social-img"
               onClick={() => {
-                const telegram = async () => {
-                  const data = await GeneralFunctions.fireTrackingEvent("quest_share_article_telegram_clicked", "share_article");
-                }
-                telegram();
+                GeneralFunctions.fireTrackingEvent("quest_share_article_telegram_clicked", "share_article");
                 shareOnPlatform(shareLink, "telegram")
               }}
               src={telegramPng} width="24px"

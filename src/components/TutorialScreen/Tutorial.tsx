@@ -80,11 +80,7 @@ const TutorialScreen: React.FC<TutorialProps> = ({
   let GeneralFunctions = new General('mixpanel', apiType);
 
   const handleNextStep = (id: any, url: string) => {
-    const eventFireClick = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_tutorial_step_link_clicked", "tutorial");
-      console.log(data);
-    }
-    eventFireClick();
+    GeneralFunctions.fireTrackingEvent("quest_tutorial_step_link_clicked", "tutorial");
 
     const headers = {
       apiKey: apiKey,
@@ -128,11 +124,7 @@ const TutorialScreen: React.FC<TutorialProps> = ({
 
 
   useEffect(() => {
-    const eventFire = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_tutorial_loaded", "tutorial");
-      console.log(data);
-    }
-    eventFire();
+    GeneralFunctions.fireTrackingEvent("quest_tutorial_loaded", "tutorial");
     if (entityId) {
       const headers = {
         apiKey: apiKey,

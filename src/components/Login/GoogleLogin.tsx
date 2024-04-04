@@ -124,10 +124,7 @@ function GoogleLogin(props: GoogleLoginProps): JSX.Element {
   }
 
   function handleGoogleLoginClick() {
-    const loginBtn = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_login_google_btn_clicked", "quest_login");
-    }
-    loginBtn();
+    GeneralFunctions.fireTrackingEvent("quest_login_google_btn_clicked", "quest_login");
 
     if (!googleClientId) {
       onError && onError({ email: undefined, error:"This is preview of the saas app that we generated it for you. Google login will work once you add your Google Client ID in the code."});

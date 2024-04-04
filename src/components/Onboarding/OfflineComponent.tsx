@@ -235,11 +235,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
     }
 
     useEffect(() => {
-        const eventFire = async () => {
-            const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_loaded", "onboarding_offline");
-            // console.log(data);
-        }
-        eventFire();
+        GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_loaded", "onboarding_offline");
 
         if (entityId) {
             // let externalUserId = cookies.get("externalUserId");
@@ -836,11 +832,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
     }
 
     function returnAnswers() {
-        const returnAns = async () => {
-            const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_answers_returned", "onboarding_offline");
-            // console.log(data);
-        }
-        returnAns();
+        GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_answers_returned", "onboarding_offline");
 
         let crt: any = { ...answer };
         for (let i of Object.keys(crt)) {
@@ -1098,11 +1090,7 @@ getAnswers && getAnswers(crt);
                                                 }}
                                                 className="q-onb-main-btn"
                                                 onClick={() =>{
-                                                    const secBtn = async () => {
-                                                        const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_secondary_btn_clicked", "onboarding_offline");
-                                                        // console.log(data);
-                                                    }
-                                                    secBtn();
+                                                    GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_secondary_btn_clicked", "onboarding_offline");
                                                     currentPage > 0 &&
                                                     setCurrentPage(currentPage - 1);
                                                 }
@@ -1115,11 +1103,7 @@ getAnswers && getAnswers(crt);
 
                                         <PrimaryButton
                                             onClick={() =>{
-                                                const priBtn = async () => {
-                                                    const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_primary_btn_clicked", "onboarding_offline");
-                                                    // console.log(data);
-                                                }
-                                                priBtn();
+                                                GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_primary_btn_clicked", "onboarding_offline");
 
                                                 currentPage !=
                                                     designState.length - 1
@@ -1143,11 +1127,7 @@ getAnswers && getAnswers(crt);
                                         <SecondaryButton
                                             className="q-onb-main-arrow"
                                             onClick={() =>{
-                                                const secBtn = async () => {
-                                                    const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_secondary_btn_clicked", "onboarding_offline");
-                                                    // console.log(data);
-                                                }
-                                                secBtn();
+                                                GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_secondary_btn_clicked", "onboarding_offline");
                                                 currentPage > 0 &&
                                                 setCurrentPage(currentPage - 1)
                                             }
@@ -1174,11 +1154,7 @@ getAnswers && getAnswers(crt);
                                         <PrimaryButton
                                             className="q-onb-main-arrow2"
                                             onClick={() =>{
-                                                const priBtn = async () => {
-                                                    const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_primary_btn_clicked", "onboarding_offline");
-                                                    // console.log(data);
-                                                }
-                                                priBtn();
+                                                GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_primary_btn_clicked", "onboarding_offline");
                                                 currentPage !=
                                                     designState.length - 1
                                                     ? setCurrentPage(currentPage + 1)
@@ -1204,11 +1180,7 @@ getAnswers && getAnswers(crt);
                                     <PrimaryButton
                                         className="q-onb-main-btn3"
                                         onClick={() => {
-                                            const subBtn = async () => {
-                                                const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_single_page_submit_button_clicked", "onboarding_offline");
-                                                // console.log(data);
-                                            }
-                                            subBtn();
+                                            GeneralFunctions.fireTrackingEvent("quest_onboarding_offline_single_page_submit_button_clicked", "onboarding_offline");
                                             returnAnswers()
                                         }
                                         }

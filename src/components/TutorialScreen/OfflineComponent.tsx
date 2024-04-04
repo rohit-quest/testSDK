@@ -84,10 +84,7 @@ const OfflineComponent: React.FC<TutorialProps> = ({
   // let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
   let GeneralFunctions = new General('mixpanel', apiType);
   const handleNextStep = (id: any, url: string) => {
-    const eventFire = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_tutorial_offline_step_link_clicked", "tutorial_offline");
-    }
-    eventFire();
+    GeneralFunctions.fireTrackingEvent("quest_tutorial_offline_step_link_clicked", "tutorial_offline");
     // const headers = {
     //   apiKey: apiKey,
     //   apisecret: apiSecret,
@@ -129,10 +126,7 @@ const OfflineComponent: React.FC<TutorialProps> = ({
 
 
   useEffect(() => {
-    const eventFire = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_tutorial_offline_loaded", "tutorial_offline");
-    }
-    eventFire();
+    GeneralFunctions.fireTrackingEvent("quest_tutorial_offline_loaded", "tutorial_offline");
     // if (entityId) {
     //   const headers = {
     //     apiKey: apiKey,

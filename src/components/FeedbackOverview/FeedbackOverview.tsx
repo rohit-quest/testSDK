@@ -357,10 +357,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   let GeneralFunctions = new General('mixpanel', apiType);
 
   useEffect(() => {
-    const eventFire = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_loaded", "feedback_workflow");
-    }
-    eventFire();
+    GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_loaded", "feedback_workflow");
   }, []);
 
   const handleOptionClick = (option: optionType, quest: string) => {
@@ -441,10 +438,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     }
   };
   function returnAnswers(index: number) {
-    const eventFire = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent(`quest_feedback_workflow_${selectedOption}_form_submitted`, `feedback_workflow_${selectedOption}_form`);
-    }
-    eventFire();
+    GeneralFunctions.fireTrackingEvent(`quest_feedback_workflow_${selectedOption}_form_submitted`, `feedback_workflow_${selectedOption}_form`);
     const headers = {
       apiKey: apiKey,
       apisecret: apiSecret,
@@ -517,10 +511,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   }
 
   const handleBackClick = () => {
-    const eventFire = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent(`quest_feedback_workflow_${selectedOption}_form_closed`, `feedback_workflow_${selectedOption}_form`);
-    }
-    eventFire();
+    GeneralFunctions.fireTrackingEvent(`quest_feedback_workflow_${selectedOption}_form_closed`, `feedback_workflow_${selectedOption}_form`);
     setSelectedOption(null);
   };
   function isDefaultQuestId(questId: string): boolean {
@@ -845,10 +836,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               {questIds[0] && (
                 <div
                 onClick={() => {
-                  const eventFire = async () => {
-                    const data = await GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_general_feedback_clicked", "feedback_workflow_general_feedback");
-                  }
-                  eventFire();
+                  GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_general_feedback_clicked", "feedback_workflow_general_feedback");
                   handleOptionClick("GeneralFeedback", questIds[0])
                 }
                 }
@@ -924,10 +912,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               {questIds[1] && (
                 <div
                 onClick={() => {
-                  const eventFire = async () => {
-                    const data = await GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_report_bug_clicked", "feedback_workflow_report_bug");
-                  }
-                  eventFire();
+                  GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_report_bug_clicked", "feedback_workflow_report_bug");
                   handleOptionClick("ReportBug", questIds[1])
                 }}
                   className="q-hover q-fw-cards"
@@ -1004,10 +989,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               {questIds[2] && (
                 <div
                 onClick={() => {
-                  const eventFire = async () => {
-                    const data = await GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_request_feature_clicked", "feedback_workflow_request_feature");
-                  }
-                  eventFire();
+                  GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_request_feature_clicked", "feedback_workflow_request_feature");
                   handleOptionClick("RequestFeature", questIds[2])
                 }
                 }
@@ -1086,11 +1068,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               {questIds[3] && (
                 <div
                 onClick={() => {
-
-                  const eventFire = async () => {
-                    const data = await GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_contactus_clicked", "feedback_workflow_contactus");
-                  }
-                  eventFire();
+                  GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_contactus_clicked", "feedback_workflow_contactus");
                   handleOptionClick("ContactUs", questIds[3])
                 }}
                   className="q-hover q-fw-cards"

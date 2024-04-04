@@ -102,10 +102,7 @@ export default function SearchOffline(prop: propType): JSX.Element {
   const handleKeyPress = (event: KeyboardEvent) => {
     const isCtrlPressed = (event.ctrlKey || event.metaKey) && !event.altKey;
     if (isCtrlPressed && event.key === "k") {
-      const eventFireCtrK = async () => {
-        const data = await GeneralFunctions.fireTrackingEvent("quest_spotlight_search_offline_ctrl_k_pressed", "spotlight_search_offline");
-      }
-      eventFireCtrK();
+      GeneralFunctions.fireTrackingEvent("quest_spotlight_search_offline_ctrl_k_pressed", "spotlight_search_offline");
       event.preventDefault();
       setOpen((prev) => !prev);
     } else if (event.key == "Escape") setOpen(false);
@@ -140,10 +137,7 @@ export default function SearchOffline(prop: propType): JSX.Element {
   };
 
   useEffect(() => {
-    const eventFire = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_spotlight_search_offline_loaded", "spotlight_search_offline");
-    }
-    eventFire();
+    GeneralFunctions.fireTrackingEvent("quest_spotlight_search_offline_loaded", "spotlight_search_offline");
   }, [])
 
   const jsx = (
@@ -211,11 +205,7 @@ export default function SearchOffline(prop: propType): JSX.Element {
                     : "transparent",
               }}
               onClick={() => {
-                const eventFire = async () => {
-                  const data = await GeneralFunctions.fireTrackingEvent("quest_spotlight_search_offline_link_clicked", "spotlight_search_offline");
-                }
-                eventFire();
-
+                GeneralFunctions.fireTrackingEvent("quest_spotlight_search_offline_link_clicked", "spotlight_search_offline");
                 onResultClick(link);
               }}
               onMouseEnter={() => setSelectedResultIndex(i)}

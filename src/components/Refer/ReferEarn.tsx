@@ -35,11 +35,7 @@ export const ReferShare = ({
   const style = !!color && !!bgColor ? { color, backgroundColor: bgColor } : {};
   let GeneralFunctions = new General('mixpanel', apiType);
   useEffect(() => {
-    const eventFire = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_refer_share_loaded", "refer_share");
-    }
-    eventFire();
-
+    GeneralFunctions.fireTrackingEvent("quest_refer_share_loaded", "refer_share");
     response(questId, {
       apiKey,
       userid: userId,
@@ -88,10 +84,7 @@ export const ReferShare = ({
               <img
                 className="q-referEarn-copy-img"
                 onClick={() => {
-                  const copy = async () => {
-                    const data = await GeneralFunctions.fireTrackingEvent("quest_refer_share_referral_code_copy_button_clicked", "refer_share");
-                  }
-                  copy();
+                  GeneralFunctions.fireTrackingEvent("quest_refer_share_referral_code_copy_button_clicked", "refer_share");
                   navigator.clipboard
                     .writeText(shareCode)
                     .then(() => setCopy(true));
@@ -111,10 +104,7 @@ export const ReferShare = ({
             <img
               className="q-referShare-content-social-img"
               onClick={() => {
-                const twitter = async () => {
-                  const data = await GeneralFunctions.fireTrackingEvent("quest_refer_share_twitter_button_clicked", "refer_share");
-                }
-                twitter();
+                GeneralFunctions.fireTrackingEvent("quest_refer_share_twitter_button_clicked", "refer_share");
                 shareOnPlatform(shareCode, "twitter")
               }}
               src={twitterSvg}
@@ -126,10 +116,7 @@ export const ReferShare = ({
               className="q-referShare-content-social-img"
               src={whatsappSvg}
               onClick={() => {
-                const whatsapp = async () => {
-                  const data = await GeneralFunctions.fireTrackingEvent("quest_refer_share_whatsapp_button_clicked", "refer_share");
-                }
-                whatsapp();
+                GeneralFunctions.fireTrackingEvent("quest_refer_share_whatsapp_button_clicked", "refer_share");
                 shareOnPlatform(shareCode, "whatsapp")
               }}
               alt="Whatsapp"
@@ -137,10 +124,7 @@ export const ReferShare = ({
             <img
               className="q-referShare-content-social-img"
               onClick={() => {
-                const telegram = async () => {
-                  const data = await GeneralFunctions.fireTrackingEvent("quest_refer_share_telegram_button_clicked", "refer_share");
-                }
-                telegram();
+                GeneralFunctions.fireTrackingEvent("quest_refer_share_telegram_button_clicked", "refer_share");
                 shareOnPlatform(shareCode, "telegram")
               }}
               src={telegramPng}

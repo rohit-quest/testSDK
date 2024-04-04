@@ -84,10 +84,7 @@ const EmailLogin: React.FC<EmailLoginProps> = ({
   };
 
   const sendOTPfunction = () => {
-    const loginBtn = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_login_continue_btn_clicked", "quest_login");
-    }
-    loginBtn();
+    GeneralFunctions.fireTrackingEvent("quest_login_continue_btn_clicked", "quest_login");
 
     setMainValidEmail(isValidEmail);
     if (!isValidEmail || email.length === 0) {

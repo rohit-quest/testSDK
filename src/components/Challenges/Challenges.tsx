@@ -50,11 +50,7 @@ export const Challenges = ({ userId, token, questId, styleConfig }: Props) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   useEffect(() => {
-    const eventFire = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_challenges_loaded", "challenges");
-      console.log(data);
-    }
-    eventFire();
+    GeneralFunctions.fireTrackingEvent("quest_challenges_loaded", "challenges");
     const getChallenges = async () => {
       try {
         const BACKEND_URL =

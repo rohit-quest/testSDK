@@ -82,10 +82,7 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
   };
   let GeneralFunctions = new General('mixpanel', apiType);
   useEffect(() => {
-    const questLogin = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_Login_loaded", "quest_login");
-    }
-    questLogin();
+    GeneralFunctions.fireTrackingEvent("quest_Login_loaded", "quest_login");
     // if (entityId) {
     //   const request = `${BACKEND_URL}api/entities/${entityId}/get-theme`;
     //   axios

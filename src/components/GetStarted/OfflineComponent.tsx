@@ -128,10 +128,7 @@ function OfflineGetStarted({
   };
 
   useEffect(() => {
-    const eventFire = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_offline_loaded", "get_started_offline");
-    }
-    eventFire();
+    GeneralFunctions.fireTrackingEvent("quest_get_started_offline_loaded", "get_started_offline");
     setDropdown(new Array(offlineData.length).fill(false));
   }, []);
 
@@ -205,10 +202,7 @@ function OfflineGetStarted({
                   ...styleConfig?.Card,
                 }}
                 onClick={() => {
-                  const linkClick = async () => {
-                    const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_offline_link_clicked", "get_started_offline");
-                  }
-                  linkClick();
+                  GeneralFunctions.fireTrackingEvent("quest_get_started_offline_link_clicked", "get_started_offline");
                   setDropdown((prev) =>
                     prev.map((e, index) => (i === index ? !e : e))
                   )
@@ -294,10 +288,7 @@ function OfflineGetStarted({
                         className={"gs_start_btn"}
                         children={e.btn2 || "Start Now"}
                         onClick={(event) => {
-                          const eventFire = async () => {
-                            const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_offline_primary_button_clicked", "get_started_offline");
-                          }
-                          eventFire();
+                          GeneralFunctions.fireTrackingEvent("quest_get_started_offline_primary_button_clicked", "get_started_offline");
                           event.stopPropagation()
                           !(!allowMultiClick && e.completed) &&
                             handleCriteriaClick(e.criteriaId, e.url)
@@ -320,10 +311,7 @@ function OfflineGetStarted({
                           width: "fit-content",
                         }}
                         onClick={() => {
-                          const eventFire = async () => {
-                            const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_offline_secondary_button_clicked", "get_started_offline");
-                          }
-                          eventFire();
+                          GeneralFunctions.fireTrackingEvent("quest_get_started_offline_secondary_button_clicked", "get_started_offline");
                           window.open(e.url)
                         }}
                         className="gs_visit_btn"
@@ -338,10 +326,7 @@ function OfflineGetStarted({
                 key={i}
                 className="gs-single-card"
                 onClick={() => {
-                  const eventFire = async () => {
-                    const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_offline_link_clicked", "get_started_offline");
-                  }
-                  eventFire();
+                  GeneralFunctions.fireTrackingEvent("quest_get_started_offline_link_clicked", "get_started_offline");
                   !(!allowMultiClick && e.completed) &&
                     handleCriteriaClick(e.criteriaId, e.url)
                 }
@@ -397,10 +382,7 @@ function OfflineGetStarted({
                             ...styleConfig?.SecondaryButton,
                           }}
                           onClick={(event) => {
-                            const eventFire = async () => {
-                              const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_offline_secondary_button_clicked", "get_started_offline");
-                            }
-                            eventFire();
+                            GeneralFunctions.fireTrackingEvent("quest_get_started_offline_secondary_button_clicked", "get_started_offline");
                             event.stopPropagation(); window.open(e.btn1Link); }}
                           className="gs_visit_btn gs_tempalate1_btn"
                           children={e.btn1 || "Visit Website"}
@@ -409,10 +391,7 @@ function OfflineGetStarted({
                           className={"gs_start_btn"}
                           children={e.btn2 || "Start Now"}
                           onClick={(event) => {
-                            const eventFire = async () => {
-                              const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_offline_primary_button_clicked", "get_started_offline");
-                            }
-                            eventFire();
+                            GeneralFunctions.fireTrackingEvent("quest_get_started_offline_primary_button_clicked", "get_started_offline");
                             event.stopPropagation();
                             !(!allowMultiClick && e.completed) &&
                               handleCriteriaClick(e.criteriaId, e.url);

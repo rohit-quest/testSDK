@@ -107,10 +107,7 @@ export default function Search(prop: propType): JSX.Element {
   };
 
   useEffect(() => {
-    const eventFire = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_spotlight_search_loaded", "spotlight_search");
-    }
-    eventFire();
+    GeneralFunctions.fireTrackingEvent("quest_spotlight_search_loaded", "spotlight_search");
 
     if (entityId && uniqueUserId) {
       const functions = new General("");
@@ -130,10 +127,7 @@ export default function Search(prop: propType): JSX.Element {
   const handleKeyPress = (event: KeyboardEvent) => {
     const isCtrlPressed = (event.ctrlKey || event.metaKey) && !event.altKey;
     if (isCtrlPressed && event.key === "k") {
-      const eventFireCtrK = async () => {
-        const data = await GeneralFunctions.fireTrackingEvent("quest_spotlight_search_ctrl_k_pressed", "spotlight_search");
-      }
-      eventFireCtrK();
+      GeneralFunctions.fireTrackingEvent("quest_spotlight_search_ctrl_k_pressed", "spotlight_search");
       event.preventDefault();
       setOpen((prev) => !prev);
     } else if (event.key == "Escape") setOpen(false);
@@ -227,11 +221,7 @@ export default function Search(prop: propType): JSX.Element {
                 (i === selectedResultIndex && "q_heilight_search")
               }
               onClick={() => {
-                const eventFire = async () => {
-                  const data = await GeneralFunctions.fireTrackingEvent("quest_spotlight_search_link_clicked", "spotlight_search");
-                }
-                eventFire();
-
+                GeneralFunctions.fireTrackingEvent("quest_spotlight_search_link_clicked", "spotlight_search");
                 onResultClick(link);
               }}
               onMouseEnter={() => setSelectedResultIndex(i)}

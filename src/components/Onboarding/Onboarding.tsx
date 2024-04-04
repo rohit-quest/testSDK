@@ -234,11 +234,7 @@ function OnBoarding(props: QuestLoginProps) {
         }
     }
     useEffect(() => {
-        const eventFire = async () => {
-            const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_loaded", "onboarding");
-            // console.log(data);
-        }
-        eventFire();
+        GeneralFunctions.fireTrackingEvent("quest_onboarding_loaded", "onboarding");
 
         if (entityId) {
             let externalUserId = cookies.get("externalUserId");
@@ -265,11 +261,6 @@ function OnBoarding(props: QuestLoginProps) {
                 let header = {...headers, ...{questUserId, questUserToken}}
                 axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers: header})
             } else if (!!uniqueUserId) {
-                const externalLogin = async () => {
-                    const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_external_login_api_called", "onboarding");
-                    // console.log(data);
-                }
-                externalLogin();
 
                 axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
                 .then((res) => {
@@ -291,12 +282,6 @@ function OnBoarding(props: QuestLoginProps) {
                     GeneralFunctions.captureSentryException(error);
                 })
             }
-
-            const criteriasApi = async () => {
-                const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_criterias_api_called", "onboarding");
-                // console.log(data);
-            }
-            criteriasApi();
 
             async function getQuestData(userId: string, headers: object) {
                 (loadingTracker && setLoading(true));
@@ -861,11 +846,7 @@ function OnBoarding(props: QuestLoginProps) {
     }
 
     function returnAnswers() {
-        const submitBtn = async () => {
-            const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_submit_btn_clicked", "onboarding");
-            // console.log(data);
-        }
-        submitBtn();
+        GeneralFunctions.fireTrackingEvent("quest_onboarding_submit_btn_clicked", "onboarding");
 
         let crt: any = {...answer};
         for (let i of Object.keys(crt)) {
@@ -906,12 +887,6 @@ function OnBoarding(props: QuestLoginProps) {
         }
 
         getAnswers && getAnswers(crt);
-        
-        const verifyAll = async () => {
-            const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_verify_all_api_called", "onboarding");
-            // console.log(data);
-        }
-        verifyAll();
 
         try {
             axios.post(`${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`, {criterias, userId: headers.userId}, {headers})
@@ -1138,12 +1113,7 @@ function OnBoarding(props: QuestLoginProps) {
                                      }}
                                      className="q-onb-main-btn"
                                      onClick={() =>{
-                                        const secBtn = async () => {
-                                            const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_secondary_btn_clicked", "onboarding");
-                                            // console.log(data);
-                                        }
-                                        secBtn();
-
+                                        GeneralFunctions.fireTrackingEvent("quest_onboarding_secondary_btn_clicked", "onboarding");
                                         currentPage > 0 &&
                                          setCurrentPage(currentPage - 1)
                                         }
@@ -1156,12 +1126,7 @@ function OnBoarding(props: QuestLoginProps) {
                                    
                                     <PrimaryButton
                                         onClick={() =>{
-                                            const priBtn = async () => {
-                                                const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_primary_btn_clicked", "onboarding");
-                                                // console.log(data);
-                                            }
-                                            priBtn();
-
+                                            GeneralFunctions.fireTrackingEvent("quest_onboarding_primary_btn_clicked", "onboarding");
                                             currentPage !=
                                             designState.length - 1
                                                 ? setCurrentPage(currentPage + 1)
@@ -1185,11 +1150,7 @@ function OnBoarding(props: QuestLoginProps) {
                                     <SecondaryButton
                                         className="q-onb-main-arrow"
                                         onClick={() =>{
-                                            const secBtn = async () => {
-                                                const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_secondary_btn_clicked", "onboarding");
-                                                // console.log(data);
-                                            }
-                                            secBtn();
+                                            GeneralFunctions.fireTrackingEvent("quest_onboarding_secondary_btn_clicked", "onboarding");
 
                                             currentPage > 0 &&
                                             setCurrentPage(currentPage - 1)
@@ -1217,11 +1178,7 @@ function OnBoarding(props: QuestLoginProps) {
                                     <PrimaryButton
                                         className="q-onb-main-arrow2"
                                         onClick={() =>{
-                                            const priBtn = async () => {
-                                                const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_primary_btn_clicked", "onboarding");
-                                                // console.log(data);
-                                            }
-                                            priBtn();
+                                            GeneralFunctions.fireTrackingEvent("quest_onboarding_primary_btn_clicked", "onboarding");
 
                                             currentPage !=
                                             designState.length - 1
@@ -1248,11 +1205,7 @@ function OnBoarding(props: QuestLoginProps) {
                                 <PrimaryButton
                                     className="q-onb-main-btn3"
                                     onClick={() => {
-                                        const subBtn = async () => {
-                                            const data = await GeneralFunctions.fireTrackingEvent("quest_onboarding_single_page_submit_button_clicked", "onboarding");
-                                            // console.log(data);
-                                        }
-                                        subBtn();
+                                        GeneralFunctions.fireTrackingEvent("quest_onboarding_single_page_submit_button_clicked", "onboarding");
                                         returnAnswers();
                                     }}
                                     disabled={!btnFlag}

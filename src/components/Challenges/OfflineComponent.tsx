@@ -46,11 +46,7 @@ export const ChallengesOffline = ({ userId, token, questId, styleConfig }: Props
   const [searchTerm, setSearchTerm] = useState<string>("");
   let GeneralFunctions = new General('mixpanel', apiType);
   useEffect(() => {
-    const eventFire = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_challenges_offline_loaded", "challenges_offline");
-      console.log(data);
-    }
-    eventFire();
+    GeneralFunctions.fireTrackingEvent("quest_challenges_offline_loaded", "challenges_offline");
     const getChallenges = async () => {
       try {
         const BACKEND_URL =

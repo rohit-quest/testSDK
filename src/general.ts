@@ -114,9 +114,9 @@ class General {
     //     }
     // }
 
-    async fireTrackingEvent(eventName: string, componentName: string, metadata?: { eventProperties?: any; userid?: string }) {
-        console.log("Event Name", eventName)
-        console.log("Component Name", componentName)
+    fireTrackingEvent(eventName: string, componentName: string, metadata?: { eventProperties?: any; userid?: string }) {
+        // console.log("Event Name", eventName)
+        // console.log("Component Name", componentName)
         // if (this.serviceType === 'amplitude') {
         //     console.log("Amplitude")
         //     const { eventProperties, userid } = metadata || {};
@@ -127,88 +127,16 @@ class General {
         //     return { success: true };
         // } else
 
-        // console.log("mixpanel")
         if (this.apiType === 'STAGING') {
-            console.log("staging")
-            // mixpanel.track(eventName);  // Main line
+            // console.log("staging")
+            // mixpanel.track(eventName);
             return { success: true };
         }
         else {
-            console.log("production")
-            // mixpanel.track(eventName);  // Main line
+            // console.log("production")
+            mixpanel.track(eventName);
             return { success: true };
         }
-
-        if (componentName) {
-            // console.log("comp name")
-            // mixpanel.track(componentName + "_" + eventName);
-        } else {
-            // mixpanel.track(eventName);
-        }
-        // mixpanel.track(eventName);  // Main line
-        // return { success: true };
-        if (this.serviceType === 'mixpanel') {
-            // if (metadata) {
-            //     mixpanel.track(eventName, metadata);
-            //     return { success: true };
-            // } else {
-            //     mixpanel.track(eventName);
-            //     return { success: true };
-            // }
-
-            // if (config.ENVIRONMENT == "PRODUCTION") {
-            //     if (pageName) {
-            //         mixpanel.track_pageview();   // specifically track page view
-
-            //         mixpanel.track(pageName + "_" + eventName);
-            //     } else {
-            //         mixpanel.track(eventName);
-            //     }
-            //     gtag('event', eventName);
-            // }
-
-
-            // if (metadata) {
-            //     console.log("mtdt")
-            //     mixpanel.track(eventName, metadata);
-            //     return { success: true };
-            // } else {
-            //     mixpanel.track(eventName);
-            //     return { success: true };
-            // }
-            // gtag('event', eventName);
-        }
-        //  else if (this.serviceType === 'ga4') {
-        //     console.log("ga4")
-        //     const { userid } = metadata || {};
-        //     const ga4EventPayload: GA4EventPayload = {
-        //         client_id: userid,
-        //         events: [
-        //             {
-        //                 name: eventName,
-        //             },
-        //         ],
-        //     };
-
-        //     try {
-        //         const response: AxiosResponse = await axios.post(
-        //             `https://www.google-analytics.com/mp/collect?measurement_id=${this.ga4MeasurementId}&api_secret=${this.ga4ApiSecret}`,
-        //             ga4EventPayload,
-        //             {
-        //                 headers: {
-        //                     'Content-Type': 'application/json',
-        //                 },
-        //             }
-        //         );
-        //         if (response.status >= 200 && response.status < 300) {
-        //             console.log('Google Analytics 4 Event tracked successfully:', eventName, 'User ID:', userid);
-        //             return { success: true };
-        //         }
-        //     } catch (error) {
-        //         console.error('Error tracking GA4 event:', error);
-        //         return { success: false, error: 'Internal Server Error. Please contact Help Center in Discord.' };
-        //     }
-        // }
     }
 
     // this needs to be updated
@@ -257,12 +185,12 @@ class General {
         console.log(this.apiType)
         console.log("hi")
         if (this.apiType === 'PRODUCTION') {
-            console.log("Calling for Production");
+            // console.log("Calling for Production");
             Sentry.captureException(error);
         }
         else {
             // Sentry.captureException(error);
-            console.log("No calling for staging")
+            // console.log("No calling for staging")
         }
     }
 }

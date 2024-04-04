@@ -120,6 +120,7 @@ function GetStarted({
   let GeneralFunctions = new General('mixpanel', apiType);
 
   const handleCriteriaClick = (id: any, url: string) => {
+    // clg
     if (showLoader) return;
     const headers = {
       apiKey: apiKey,
@@ -163,10 +164,7 @@ function GetStarted({
 
 
   useEffect(() => {
-    const eventFire = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_loaded", "get_started");
-    }
-    eventFire();
+    GeneralFunctions.fireTrackingEvent("quest_get_started_loaded", "get_started");
 
     if (entityId) {
       const headers = {
@@ -253,7 +251,7 @@ function GetStarted({
       }
     }
   }, [criteriaSubmit]);
-
+  
   useEffect(() => {
     if (allCriteriaCompleted) {
       const headers = {
@@ -389,10 +387,7 @@ function GetStarted({
                   ...styleConfig?.Card
                 }}
                 onClick={(e) => {
-                  const linkClick = async () => {
-                    const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_link_clicked", "get_started");
-                  }
-                  linkClick();
+                  GeneralFunctions.fireTrackingEvent("quest_get_started_link_clicked", "get_started");
 
                   setDropdown((prev) =>
                     prev.map((e, index) => (i === index ? !e : e))
@@ -454,10 +449,7 @@ function GetStarted({
                     <div className="gs_drop_desc" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>{e.longDescription}</div>
                     <div className="gs_drop_btns">
                       <PrimaryButton className={'gs_start_btn'} children={e.btn2 || "Start Now" } onClick={(event) => {
-                        const eventFire = async () => {
-                          const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_primary_button_clicked", "get_started");
-                        }
-                        eventFire();
+                        GeneralFunctions.fireTrackingEvent("quest_get_started_primary_button_clicked", "get_started");
                         event.stopPropagation()
                         !(!allowMultiClick && e.completed) &&
                           handleCriteriaClick(e.criteriaId, e.url)
@@ -478,10 +470,7 @@ function GetStarted({
                           width: 'fit-content'
                         }}
                         onClick={() => {
-                          const eventFire = async () => {
-                            const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_secondary_button_clicked", "get_started");
-                          }
-                          eventFire();
+                          GeneralFunctions.fireTrackingEvent("quest_get_started_secondary_button_clicked", "get_started");
                           window.open(e.url)
                         }}
                         className="gs_visit_btn"
@@ -540,10 +529,7 @@ function GetStarted({
                             ...styleConfig?.SecondaryButton,
                           }}
                           onClick={(event) => { 
-                            const eventFire = async () => {
-                              const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_secondary_button_clicked", "get_started");
-                            }
-                            eventFire();
+                            GeneralFunctions.fireTrackingEvent("quest_get_started_secondary_button_clicked", "get_started");
                             event.stopPropagation();
                             window.open(e.btn1Link); }}
                           className="gs_visit_btn gs_tempalate1_btn"
@@ -553,10 +539,7 @@ function GetStarted({
                           className={"gs_start_btn"}
                           children={e.btn2 ||"Start Now"}
                           onClick={(event) => {
-                            const eventFire = async () => {
-                              const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_primary_button_clicked", "get_started");
-                            }
-                            eventFire();
+                            GeneralFunctions.fireTrackingEvent("quest_get_started_primary_button_clicked", "get_started");
                             event.stopPropagation();
                             !(!allowMultiClick && e.completed) &&
                               handleCriteriaClick(e.criteriaId, e.url);

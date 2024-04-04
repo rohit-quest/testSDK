@@ -58,10 +58,7 @@ export default function DailyStreak({
     let GeneralFunctions = new General('mixpanel', apiType);
 
   useEffect(() => {
-    const eventFireLoaded = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_daily_streak_loaded", "daily_streak");
-    }
-    eventFireLoaded();
+    GeneralFunctions.fireTrackingEvent("quest_daily_streak_loaded", "daily_streak");
 
     getResponse({ apiKey, token, userId }, entityId, metric, BACKEND_URL).then(
       (count) => {

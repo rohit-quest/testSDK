@@ -36,7 +36,6 @@ const SingleChoice: React.FC<SingleChoiceProps> = ({
     gap: type === 'modal2' ? '12px' : '8px'
   };
 
-  console.log(containerStyle,themeConfig)
   const customStyles: StylesConfig<any, false, any> = {
     control: (base) => ({
       ...base,
