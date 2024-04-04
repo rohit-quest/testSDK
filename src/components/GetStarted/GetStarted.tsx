@@ -53,6 +53,13 @@ type GetStartedProps = {
       barColor?: string,
       ProgressText?: CSSProperties
     }
+    Icon?: CSSProperties
+    Arrow?: {
+      Background?: string,
+      IconColor?: string,
+      CompletedBackground?: string,
+      CompletedIconColor?: string
+    }
   }
 };
 interface TutorialStep {
@@ -368,8 +375,7 @@ function GetStarted({
                 <div
                   className="gs_card_body_dropDown"
                 >
-                  <div className="gs_card_body_image">
-
+                  <div className="gs_card_body_image" style={{ ...styleConfig?.Icon }}>
                     <img
                       className="gs-card-icon"
                       src={e.imageUrl || (!!iconUrls.length ? iconUrls?.[i] : "") || questLogo}
@@ -394,16 +400,17 @@ function GetStarted({
                     {
                       <div className="gs-card-img-button">
                         {e.completed ? (
-                          <div className="q_gt_arrow-completed"><GetStartedSvgs type={'greenCheck'} color={'#098849'} /></div>
+                          <div className="q_gt_arrow-completed" style={{ background: styleConfig?.Arrow?.CompletedBackground }}>
+                            <GetStartedSvgs type={'greenCheck'} color={styleConfig?.Arrow?.CompletedIconColor || '#098849'} /></div>
                         ) : (
-                          <div className="q_gt_arrow">
+                          <div className="q_gt_arrow" style={{ background: styleConfig?.Arrow?.Background }}>
                             {dropdowns[i] ? (
-                              <GetStartedSvgs type={'upArrow'} color={arrowColor} />
+                              <GetStartedSvgs  type={'upArrow'} color={styleConfig?.Arrow?.IconColor || arrowColor} />
                             ) : (
                               e.completed ? (
-                                <img src={gsTick} alt="" className="q_gt_arrow" />
+                                <GetStartedSvgs type={'greenCheck'} color={styleConfig?.Arrow?.CompletedIconColor || '#098849'} />
                               ) : (
-                                <GetStartedSvgs type={'downArrowIcon'} color={arrowColor} />
+                                <GetStartedSvgs type={'downArrowIcon'} color={ styleConfig?.Arrow?.IconColor || arrowColor} />
                               )
                             )}
                           </div>
@@ -461,7 +468,7 @@ function GetStarted({
                     ...styleConfig?.Card
                   }}
                 >
-                  <div className="gs_card_body_image">
+                  <div className="gs_card_body_image" style={{ ...styleConfig?.Icon }}>
                     <img
                       className="gs-card-icon"
                       src={e.imageUrl || (!!iconUrls.length ? iconUrls?.[i] : "") || questLogo}
@@ -518,8 +525,8 @@ function GetStarted({
                       </div>
                     ) : (
                       <div className="gs-card-img-button">
-                      <div className="q_gt_arrow-completed">
-                        <GetStartedSvgs type={"greenCheck"} color={"#098849"} />
+                      <div className="q_gt_arrow-completed" style={{ background: styleConfig?.Arrow?.CompletedBackground }}>
+                        <GetStartedSvgs type={"greenCheck"} color={ styleConfig?.Arrow?.CompletedIconColor || "#098849"} />
                       </div>
                       </div>
 
@@ -527,17 +534,17 @@ function GetStarted({
                   {ButtonType === "Arrow" && (
                     <div className="gs-card-img-button">
                       {e.completed ? (
-                        <div className="q_gt_arrow-completed">
+                        <div className="q_gt_arrow-completed" style={{ background: styleConfig?.Arrow?.CompletedBackground }}>
                           <GetStartedSvgs
                             type={"greenCheck"}
-                            color={"#098849"}
+                            color={styleConfig?.Arrow?.CompletedIconColor || "#098849"}
                           />
                         </div>
                       ) : (
-                        <div className="q_gt_arrow">
+                        <div className="q_gt_arrow" style={{ background: styleConfig?.Arrow?.Background }}>
                           <GetStartedSvgs
                             type={"arrowRight"}
-                            color={arrowColor}
+                            color={styleConfig?.Arrow?.IconColor || arrowColor}
                           />
                         </div>
                       )}

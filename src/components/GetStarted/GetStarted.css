@@ -338,7 +338,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #ebfff7;
+  /* background: #ebfff7; */
 }
 
 .q_gt_arrow-completed {
@@ -349,4 +349,6 @@
   align-items: center;
   justify-content: center;
   box-sizing: content-box;
+  border-radius: 50%;
+  background: #ebfff7;
 }
