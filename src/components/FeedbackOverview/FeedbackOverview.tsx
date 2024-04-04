@@ -237,6 +237,7 @@ interface feedbackCompProps {
       text?: string,
       errorStyle?: React.CSSProperties
     },
+    TopBar?:React.CSSProperties;
     TextArea?: React.CSSProperties;
     PrimaryButton?: React.CSSProperties;
     SecondaryButton?: React.CSSProperties;
@@ -684,6 +685,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           <div>
             <TopBar
               style={{
+                topbarStyle: styleConfig?.TopBar,
                 headingStyle: {
                   color:
                     styleConfig?.Heading?.color || themeConfig?.primaryColor,

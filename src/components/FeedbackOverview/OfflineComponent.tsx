@@ -243,6 +243,7 @@ interface feedbackCompProps {
     Footer?: React.CSSProperties;
     listHeading?: React.CSSProperties;
     listDescription?: React.CSSProperties;
+    TopBar?:React.CSSProperties;
     listHover?: {
       background?: string;
       iconBackground?: string;
@@ -660,6 +661,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           <div>
             <TopBar
               style={{
+                topbarStyle: styleConfig?.TopBar,
                 headingStyle: {
                   color:
                     styleConfig?.Heading?.color || themeConfig?.primaryColor,
