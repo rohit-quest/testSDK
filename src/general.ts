@@ -182,8 +182,8 @@ class General {
     }
 
     captureSentryException(error: any) {
-        console.log(this.apiType)
-        console.log("hi")
+        // console.log(this.apiType)
+        // console.log("hi")
         if (this.apiType === 'PRODUCTION') {
             // console.log("Calling for Production");
             Sentry.captureException(error);
