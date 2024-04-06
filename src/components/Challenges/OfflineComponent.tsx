@@ -52,7 +52,7 @@ export const ChallengesOffline = ({ userId, token, questId, styleConfig ,offline
 
     setSuggestions(filteredSuggestions);
   }, [searchTerm, offlineFormData]);
-  console.log(suggestions);
+
 
   return (
     <div>
