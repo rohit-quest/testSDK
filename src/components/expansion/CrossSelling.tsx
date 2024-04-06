@@ -92,8 +92,9 @@ export const CrossSelling = ({
         
         requestAnimationFrame(animate);
     };
-    
+    let GeneralFunctions = new General('mixpanel', apiType);
     useEffect(() => {
+        GeneralFunctions.fireTrackingEvent("quest_cross_selling_loaded", "cross_selling");
         let isMounted = true; 
         getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL)
             .then((r) => {
@@ -105,7 +106,8 @@ export const CrossSelling = ({
                     animate();
                 }
             })
-            .catch(() => {
+            .catch((error) => {
+                GeneralFunctions.captureSentryException(error);
                 console.log('Error fetching expiryDate:', expiryDate);
                 requestRef.current = expiryDate;
             });
@@ -158,7 +160,10 @@ export const CrossSelling = ({
                         background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
                         ...styleConfig?.PrimaryButton
                     }} 
-                    onClick={()=>claimRewardHandler()} 
+                    onClick={() => {
+                        GeneralFunctions.fireTrackingEvent("quest_challenges_primary_btn_clicked", "challenges");
+                        claimRewardHandler()
+                    }}
                     className="q_share_link_button"
                 >
                     {shareButtonText}
@@ -170,7 +175,10 @@ export const CrossSelling = ({
                         color: styleConfig?.SecondaryButton?.color || themeConfig?.primaryColor,
                         ...styleConfig?.SecondaryButton
                     }}
-                    onClick={()=>backButtonTrigger()} 
+                    onClick={() => {
+                        GeneralFunctions.fireTrackingEvent("quest_challenges_secondaryy_btn_clicked", "challenges");
+                        backButtonTrigger()
+                    }}
                     className="q_share_link_button_2"
                 >
                     Go to home

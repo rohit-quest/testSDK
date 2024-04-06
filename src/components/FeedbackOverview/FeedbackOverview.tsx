@@ -15,6 +15,7 @@ import Label from "../Modules/Label";
 import TextArea from "../Modules/TextArea";
 import Modal from "../Modules/Modal";
 import TopBar from "../Modules/TopBar";
+import General from "../../general";
 
 const feedback = (color: string = "#939393") => (
   <svg
@@ -353,6 +354,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       </defs>
     </svg>
   );
+  let GeneralFunctions = new General('mixpanel', apiType);
+
+  useEffect(() => {
+    GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_loaded", "feedback_workflow");
+  }, []);
 
   const handleOptionClick = (option: optionType, quest: string) => {
     let cookies = new Cookies();
@@ -374,11 +380,15 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         userId: questUserId,
         token: questUserToken,
       };
-      axios.post(
-        `${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`,
-        { count: 1 },
-        { headers: header }
-      );
+      try {
+        axios.post(
+          `${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`,
+          { count: 1 },
+          { headers: header }
+        );
+      } catch (error) {
+        GeneralFunctions.captureSentryException(error);
+      }
     } else if (uniqueUserId) {
       const body = {
         externalUserId: !!uniqueUserId && uniqueUserId,
@@ -412,7 +422,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             { count: 1 },
             { headers: header }
           );
-        });
+        }).catch((error) => {
+          console.error("Error:", error);
+          GeneralFunctions.captureSentryException(error);
+        });;
     }
 
     if (option === "ContactUs" && contactUrl) {
@@ -425,6 +438,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     }
   };
   function returnAnswers(index: number) {
+    GeneralFunctions.fireTrackingEvent(`quest_feedback_workflow_${selectedOption}_form_submitted`, `feedback_workflow_${selectedOption}_form`);
     const headers = {
       apiKey: apiKey,
       apisecret: apiSecret,
@@ -485,6 +499,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           })
           .catch((error) => {
             console.error("Error:", error);
+            GeneralFunctions.captureSentryException(error);
           })
           .finally(() => {
             setShowLoader(false);
@@ -496,6 +511,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   }
 
   const handleBackClick = () => {
+    GeneralFunctions.fireTrackingEvent(`quest_feedback_workflow_${selectedOption}_form_closed`, `feedback_workflow_${selectedOption}_form`);
     setSelectedOption(null);
   };
   function isDefaultQuestId(questId: string): boolean {
@@ -535,6 +551,9 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               updatedFormdata[index] = criterias;
               return updatedFormdata;
             });
+          }).catch((error) => {
+            console.error("Error:", error);
+            GeneralFunctions.captureSentryException(error);
           });
         } else {
           request = `${BACKEND_URL}api/entities/${entityId}/quests/${id}?userId=${userId}`;
@@ -556,6 +575,9 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               updatedFormdata[index] = criterias;
               return updatedFormdata;
             });
+          }).catch((error) => {
+            console.error("Error:", error);
+            GeneralFunctions.captureSentryException(error);
           });
         }
       });
@@ -813,9 +835,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             <div className="q-fw-content-box">
               {questIds[0] && (
                 <div
-                  onClick={() =>
-                    handleOptionClick("GeneralFeedback", questIds[0])
-                  }
+                onClick={() => {
+                  GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_general_feedback_clicked", "feedback_workflow_general_feedback");
+                  handleOptionClick("GeneralFeedback", questIds[0])
+                }
+                }
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
                     setCardHovered([true, false, false, false])
@@ -887,7 +911,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               )}
               {questIds[1] && (
                 <div
-                  onClick={() => handleOptionClick("ReportBug", questIds[1])}
+                onClick={() => {
+                  GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_report_bug_clicked", "feedback_workflow_report_bug");
+                  handleOptionClick("ReportBug", questIds[1])
+                }}
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
                     setCardHovered([false, true, false, false])
@@ -961,9 +988,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               )}
               {questIds[2] && (
                 <div
-                  onClick={() =>
-                    handleOptionClick("RequestFeature", questIds[2])
-                  }
+                onClick={() => {
+                  GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_request_feature_clicked", "feedback_workflow_request_feature");
+                  handleOptionClick("RequestFeature", questIds[2])
+                }
+                }
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
                     setCardHovered([false, false, true, false])
@@ -1038,7 +1067,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               )}
               {questIds[3] && (
                 <div
-                  onClick={() => handleOptionClick("ContactUs", questIds[3])}
+                onClick={() => {
+                  GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_contactus_clicked", "feedback_workflow_contactus");
+                  handleOptionClick("ContactUs", questIds[3])
+                }}
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
                     setCardHovered([false, false, false, true])

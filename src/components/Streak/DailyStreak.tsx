@@ -54,7 +54,12 @@ export default function DailyStreak({
   );
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
+
+    let GeneralFunctions = new General('mixpanel', apiType);
+
   useEffect(() => {
+    GeneralFunctions.fireTrackingEvent("quest_daily_streak_loaded", "daily_streak");
+
     getResponse({ apiKey, token, userId }, entityId, metric, BACKEND_URL).then(
       (count) => {
         if (count) setDays(count);

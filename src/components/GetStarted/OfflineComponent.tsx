@@ -20,6 +20,7 @@ import QuestLabs from "../QuestLabs";
 import { SecondaryButton } from "../Modules/SecondaryButton";
 import { PrimaryButton } from "../Modules/PrimaryButton";
 import GetStartedSvgs from "./Svgs";
+import General from "../../general";
 
 interface offlineData {
   id: number;
@@ -101,7 +102,7 @@ function OfflineGetStarted({
   const [allCriteriaCompleted, setAllCriteriaCompleted] =
     useState<boolean>(false);
   // const [criteriaSubmit, setCriteriaSubmit] = useState<string[]>([])
-  const { themeConfig } = useContext(QuestContext.Context);
+  const { themeConfig,apiType } = useContext(QuestContext.Context);
   const [dropdowns, setDropdown] = useState<Array<boolean>>([]);
   const [data, setData] = useState(offlineData);
 
@@ -112,6 +113,8 @@ function OfflineGetStarted({
   useEffect(() => {
     offlineData?.length && setData(offlineData);
   }, [offlineData]);
+
+  let GeneralFunctions = new General('mixpanel', apiType);
 
   const handleCriteriaClick = (criteriaId: string | undefined, url: string) => {
     const update = data.map((item, index) => {
@@ -125,6 +128,7 @@ function OfflineGetStarted({
   };
 
   useEffect(() => {
+    GeneralFunctions.fireTrackingEvent("quest_get_started_offline_loaded", "get_started_offline");
     setDropdown(new Array(offlineData.length).fill(false));
   }, []);
 
@@ -197,10 +201,12 @@ function OfflineGetStarted({
                 style={{
                   ...styleConfig?.Card,
                 }}
-                onClick={() =>
+                onClick={() => {
+                  GeneralFunctions.fireTrackingEvent("quest_get_started_offline_link_clicked", "get_started_offline");
                   setDropdown((prev) =>
                     prev.map((e, index) => (i === index ? !e : e))
                   )
+                }
                 }
                 className="gs-single-card-dropDown"
               >
@@ -282,10 +288,12 @@ function OfflineGetStarted({
                         className={"gs_start_btn"}
                         children={e.btn2 || "Start Now"}
                         onClick={(event) => {
-                          event.stopPropagation();
+                          GeneralFunctions.fireTrackingEvent("quest_get_started_offline_primary_button_clicked", "get_started_offline");
+                          event.stopPropagation()
                           !(!allowMultiClick && e.completed) &&
-                            handleCriteriaClick(e.criteriaId, e.url);
-                        }}
+                            handleCriteriaClick(e.criteriaId, e.url)
+                        }
+                        }
                         disabled={!allowMultiClick && e.completed}
                         style={{
                           flex: "inherit",
@@ -302,7 +310,10 @@ function OfflineGetStarted({
                           flex: "inherit",
                           width: "fit-content",
                         }}
-                        onClick={() => window.open(e.url)}
+                        onClick={() => {
+                          GeneralFunctions.fireTrackingEvent("quest_get_started_offline_secondary_button_clicked", "get_started_offline");
+                          window.open(e.url)
+                        }}
                         className="gs_visit_btn"
                         children={e.btn1 || "Visit Website"}
                       />
@@ -315,9 +326,11 @@ function OfflineGetStarted({
                 key={i}
                 className="gs-single-card"
                 onClick={() => {
+                  GeneralFunctions.fireTrackingEvent("quest_get_started_offline_link_clicked", "get_started_offline");
                   !(!allowMultiClick && e.completed) &&
-                    handleCriteriaClick(e.criteriaId, e.url);
-                }}
+                    handleCriteriaClick(e.criteriaId, e.url)
+                }
+                }
               >
                 <div
                   className="gs_card_body"
@@ -368,7 +381,9 @@ function OfflineGetStarted({
                             border: "none",
                             ...styleConfig?.SecondaryButton,
                           }}
-                          onClick={(event) => { event.stopPropagation(); window.open(e.btn1Link); }}
+                          onClick={(event) => {
+                            GeneralFunctions.fireTrackingEvent("quest_get_started_offline_secondary_button_clicked", "get_started_offline");
+                            event.stopPropagation(); window.open(e.btn1Link); }}
                           className="gs_visit_btn gs_tempalate1_btn"
                           children={e.btn1 || "Visit Website"}
                         />
@@ -376,6 +391,7 @@ function OfflineGetStarted({
                           className={"gs_start_btn"}
                           children={e.btn2 || "Start Now"}
                           onClick={(event) => {
+                            GeneralFunctions.fireTrackingEvent("quest_get_started_offline_primary_button_clicked", "get_started_offline");
                             event.stopPropagation();
                             !(!allowMultiClick && e.completed) &&
                               handleCriteriaClick(e.criteriaId, e.url);

@@ -13,7 +13,7 @@ export const entityId = 'e-9850377b-f88f-4426-a2ac-56206c74655a'
 export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMjEyNjM4NywiZXhwIjoxNzEyNzMxMTg3fQ.jSVLBFWdtsICq8u-r5gOcyhcobR46jSWDRy8IwDzgts'
 export const userId = 'u-8268f5e1-f5a1-440c-a333-0f5578a73847'
 
-export default function OnBoardingPreview({ online = true }: {online?: boolean}) {
+export default function OnBoardingPreview({ online = true }: { online?: boolean }) {
 
   const [answer, setAnswer] = useState<answer>([])
   function printAnswer() {
@@ -27,8 +27,9 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
     </button>
   );
 
-  const [state,setState] = useState({t:0,
-    offlineFormData : [
+  const [state, setState] = useState({
+    t: 0,
+    offlineFormData: [
       {
         "type": "USER_INPUT_TEXT",
         "question": "First name",
@@ -41,7 +42,7 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
         placeholder: "",
       },
       {
-        "type": "USER_INPUT_EMAIL",
+        "type": "USER_INPUT_TEXT",
         "question": "Last name",
         "options": [""],
         "criteriaId": "ec-77026e10-1bdf-45fd-8523-29733212a359",
@@ -76,7 +77,7 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
       {
         "type": "USER_INPUT_SINGLE_CHOICE",
         "question": "Your hobbies?",
-        "options": [ "Playing", "Coding", "Gaming"],
+        "options": ["Playing", "Coding", "Gaming"],
         "criteriaId": "ec-87fb0e54-c0e3-4fad-a865-37da2f9d68fb",
         "required": true,
         "linkTitle": "",
@@ -96,12 +97,12 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
         placeholder: ""
       }
     ]
-    })
+  })
 
-    // setTimeout(() => {
-    //   state.offlineFormData.pop();
-    //   setState(c=>({...c}))
-    // }, 2000);
+  // setTimeout(() => {
+  //   state.offlineFormData.pop();
+  //   setState(c=>({...c}))
+  // }, 2000);
 
   if (online)
     return (
@@ -113,7 +114,7 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
         apiType="STAGING"
         themeConfig={{
           // backgroundColor: "blue",
-          borderColor: "red",
+          // borderColor: "red",
           // buttonColor: "green",
           // primaryColor: "pink",
           // secondaryColor: "gray",
@@ -131,7 +132,7 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
           // answerFontSize="14px"
           // template={''}
           // progress={["Personal sdrerwtr", "Professional", "Additional",]}
-          
+
           // text="Go Back"
           // text="Submit and Continue"
           // color=""
@@ -147,29 +148,32 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
           // btnSize="200px"
           // inputBgColor=""
           // inputBorder="1px solid #6525B3"
+          progress={['person', 'persn 2', 'person 3']}
+          headingScreen={[
+            { "name": "Identity Insights", "desc": "Revealing dimensions beyond words" },
+            { "name": "Professional Details", "desc": "Tell us more about your company" },
+            { "name": "Professional Details", "desc": "Tell us more about your company" }
+          ]}
+          template='multi-question'
           singleChoose="modal3"
           multiChoice="modal2"
-          design={[[1, 2], [3, 4], [5, 6,7]]}
+          design={[[1, 2], [3, 4], [5, 6]]}
           // progressBarMultiLine = {true}
           // design={[]}
-          headingScreen={[{ name: "Tell us about yourself", desc: "this is description" },
-          // { name: "Tell us more about your company", desc: "description for this " },
-          // { name: "A little more will help us guide you the best", desc: "description for this " }
-        ]
-        }
+          controlBtnType='Buttons'
           customComponents={<CustomButton />}
           getAnswers={printAnswer}
           // screenHeight=""
           // progressBarType="modal1"
-          styleConfig={{Form : {border:'1px solid black'}}}
-          
+          styleConfig={{ Form: {  } }}
+
         />
       </QuestProvider>
     )
   return (
     <OnBoardingOff
       answer={answer}
-      
+
       setAnswer={setAnswer}
       // answerFontSize="14px"
       progress={["Personal", "Professional", "Additional",]}
@@ -187,9 +191,9 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
       // btnSize="200px"
       // inputBgColor=""
       // inputBorder="1px solid #6525B3"
-      singleChoose="modal3"
+      singleChoose="modal1"
       multiChoice="modal1"
-      design={[[1, 2], [3, 4], [5, 6 , 7]]}
+      design={[[1, 2], [3, 4], [5, 6]]}
 
       headingScreen={[{ name: "Tell us about yourself", desc: "this is description" },
       { name: "Tell us more about your company", desc: "description for this " },
@@ -200,16 +204,7 @@ export default function OnBoardingPreview({ online = true }: {online?: boolean})
       // progressBarType="modal1"
       offlineFormData={state.offlineFormData}
       styleConfig={{
-        Form:{
-          
-        },
-        EmailError:{
-          text:"Invalid email forma jaskwkewejt",
-          errorStyle:{
-            color:'skyblue',
-            fontSize:'22px'
-          }
-        }
+
       }}
     />
   )

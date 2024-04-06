@@ -20,6 +20,7 @@ import TextArea from "../Modules/TextArea.tsx";
 import { SecondaryButton } from "../Modules/SecondaryButton.tsx";
 import { PrimaryButton } from "../Modules/PrimaryButton.tsx";
 import QuestLabs from "../QuestLabs.tsx";
+import General from "../../general.ts";
 
 const Tick = ({fillColor="#6525B3",isActive=false,borderColor="#B9B9B9"}) => isActive?(<svg
     width="16"
@@ -211,6 +212,8 @@ function OnBoarding(props: QuestLoginProps) {
 
     let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
 
+    let GeneralFunctions = new General('mixpanel', apiType);
+
     const templateDesign = () =>{
         switch (template) {
             case "multi-question":
@@ -231,6 +234,8 @@ function OnBoarding(props: QuestLoginProps) {
         }
     }
     useEffect(() => {
+        GeneralFunctions.fireTrackingEvent("quest_onboarding_loaded", "onboarding");
+
         if (entityId) {
             let externalUserId = cookies.get("externalUserId");
             let questUserId = cookies.get("questUserId");
@@ -256,6 +261,7 @@ function OnBoarding(props: QuestLoginProps) {
                 let header = {...headers, ...{questUserId, questUserToken}}
                 axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers: header})
             } else if (!!uniqueUserId) {
+
                 axios.post(`${BACKEND_URL}api/users/external/login`, body, {headers})
                 .then((res) => {
                     let {userId, token} = res.data;
@@ -266,10 +272,16 @@ function OnBoarding(props: QuestLoginProps) {
                     cookies.set("externalUserId", uniqueUserId, {path: "/", expires: date})
                     cookies.set("questUserId", userId, {path: "/", expires: date})
                     cookies.set("questUserToken", token, {path: "/", expires: date})
-                    axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/onboarding-view?userId=${userId}&questId=${questId}`, {count: 1}, {headers: header})
+                    try {
+                        axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/onboarding-view?userId=${userId}&questId=${questId}`, {count: 1}, {headers: header})
+                    } catch (error) {
+                        GeneralFunctions.captureSentryException(error);
+                    }
+                }).catch((error) => {
+                    console.log(error)
+                    GeneralFunctions.captureSentryException(error);
                 })
             }
-
 
             async function getQuestData(userId: string, headers: object) {
                 (loadingTracker && setLoading(true));
@@ -311,6 +323,8 @@ function OnBoarding(props: QuestLoginProps) {
                         }
                     });
                     setAnswer({ ...answer, ...ansArray });
+                }).catch((error) => {
+                    GeneralFunctions.captureSentryException(error);
                 });
                 (loadingTracker && setLoading(false))
             }
@@ -354,7 +368,11 @@ function OnBoarding(props: QuestLoginProps) {
                 token: questUserToken
             }
             if (!!designState && Number(currentPage) + 1 != designState?.length) {
-                axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-complete-page-${Number(currentPage) + 1}?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers})
+                try {
+                    axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-complete-page-${Number(currentPage) + 1}?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers})
+                } catch (error) {
+                    GeneralFunctions.captureSentryException(error);
+                }
             }
 
             setButtonFlag(true);
@@ -828,7 +846,8 @@ function OnBoarding(props: QuestLoginProps) {
     }
 
     function returnAnswers() {
-        
+        GeneralFunctions.fireTrackingEvent("quest_onboarding_submit_btn_clicked", "onboarding");
+
         let crt: any = {...answer};
         for (let i of Object.keys(crt)) {
             if (i.includes("/manual") && crt[i] != "") {
@@ -868,10 +887,18 @@ function OnBoarding(props: QuestLoginProps) {
         }
 
         getAnswers && getAnswers(crt);
-        
-        axios.post(`${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`, {criterias, userId: headers.userId}, {headers})
 
-        axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${headers.userId}/metrics/onboarding-complete?userId=${headers.userId}&questId=${questId}`, {count: 1}, {headers})
+        try {
+            axios.post(`${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`, {criterias, userId: headers.userId}, {headers})
+        } catch (error) {
+            GeneralFunctions.captureSentryException(error);
+        }
+
+        try {
+            axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${headers.userId}/metrics/onboarding-complete?userId=${headers.userId}&questId=${questId}`, {count: 1}, {headers})
+        } catch (error) {
+            GeneralFunctions.captureSentryException(error);
+        }
         
     }
     
@@ -1085,9 +1112,11 @@ function OnBoarding(props: QuestLoginProps) {
                                          ...styleConfig?.SecondaryButton
                                      }}
                                      className="q-onb-main-btn"
-                                     onClick={() =>
-                                         currentPage > 0 &&
+                                     onClick={() =>{
+                                        GeneralFunctions.fireTrackingEvent("quest_onboarding_secondary_btn_clicked", "onboarding");
+                                        currentPage > 0 &&
                                          setCurrentPage(currentPage - 1)
+                                        }
                                      }
                                  >
                                      Previous
@@ -1096,11 +1125,13 @@ function OnBoarding(props: QuestLoginProps) {
                                     }
                                    
                                     <PrimaryButton
-                                        onClick={() =>
+                                        onClick={() =>{
+                                            GeneralFunctions.fireTrackingEvent("quest_onboarding_primary_btn_clicked", "onboarding");
                                             currentPage !=
                                             designState.length - 1
                                                 ? setCurrentPage(currentPage + 1)
-                                                : returnAnswers()
+                                                : returnAnswers();
+                                        }
                                         }
                                         disabled={!btnFlag}
                                         className="q-onb-main-btn2"
@@ -1118,9 +1149,12 @@ function OnBoarding(props: QuestLoginProps) {
                                 <div className="q-onb-main-arrow-div">
                                     <SecondaryButton
                                         className="q-onb-main-arrow"
-                                        onClick={() =>
+                                        onClick={() =>{
+                                            GeneralFunctions.fireTrackingEvent("quest_onboarding_secondary_btn_clicked", "onboarding");
+
                                             currentPage > 0 &&
                                             setCurrentPage(currentPage - 1)
+                                        }
                                         }
                                         style={{
                                             height: styleConfig?.SecondaryButton?.width || '44px',
@@ -1143,11 +1177,14 @@ function OnBoarding(props: QuestLoginProps) {
                                     </SecondaryButton>
                                     <PrimaryButton
                                         className="q-onb-main-arrow2"
-                                        onClick={() =>
+                                        onClick={() =>{
+                                            GeneralFunctions.fireTrackingEvent("quest_onboarding_primary_btn_clicked", "onboarding");
+
                                             currentPage !=
                                             designState.length - 1
                                                 ? setCurrentPage(currentPage + 1)
-                                                : returnAnswers()
+                                                : returnAnswers();
+                                            }
                                         }
                                         disabled={!btnFlag}
                                         style={{
@@ -1167,7 +1204,10 @@ function OnBoarding(props: QuestLoginProps) {
                             <div>
                                 <PrimaryButton
                                     className="q-onb-main-btn3"
-                                    onClick={returnAnswers}
+                                    onClick={() => {
+                                        GeneralFunctions.fireTrackingEvent("quest_onboarding_single_page_submit_button_clicked", "onboarding");
+                                        returnAnswers();
+                                    }}
                                     disabled={!btnFlag}
                                     style={{
                                         border :styleConfig?.SecondaryButton?.border || '1.5px solid #afafaf',

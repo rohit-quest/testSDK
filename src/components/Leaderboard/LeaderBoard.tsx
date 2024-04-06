@@ -3,6 +3,7 @@ import LeaderBoardShow from "./LeaderBoardShow";
 import QuestContext from "../QuestWrapper";
 import axios from "axios";
 import config from "../../config";
+import General from "../../general";
 
 interface LeaderboardData {
   userId: string;
@@ -67,7 +68,9 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({
   const { apiKey, apiSecret, entityId, apiType } = useContext(
     QuestContext.Context
   );
+  let GeneralFunctions = new General('mixpanel', apiType);
   useEffect(() => {
+    GeneralFunctions.fireTrackingEvent("quest_leaderboard_loaded", "leaderboard");
     const getLeaderBoard = async () => {
       try {
         const BACKEND_URL =
@@ -94,6 +97,7 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({
         }
       } catch (error) {
         console.error("Error fetching leaderboard data:", error);
+        GeneralFunctions.captureSentryException(error);
       }
     };
     getLeaderBoard();

@@ -33,14 +33,16 @@ export const ReferShare = ({
   const [copy, setCopy] = useState(false);
   const { apiKey, apiSecret, entityId, apiType } = useContext(QuestContext.Context);
   const style = !!color && !!bgColor ? { color, backgroundColor: bgColor } : {};
-
+  let GeneralFunctions = new General('mixpanel', apiType);
   useEffect(() => {
+    GeneralFunctions.fireTrackingEvent("quest_refer_share_loaded", "refer_share");
     response(questId, {
       apiKey,
       userid: userId,
       entityId,
       apisecret: apiSecret,
       token,
+      apiType
     }).then((r) => setCode(r.referralCode || ""));
   }, []);
 
@@ -82,6 +84,7 @@ export const ReferShare = ({
               <img
                 className="q-referEarn-copy-img"
                 onClick={() => {
+                  GeneralFunctions.fireTrackingEvent("quest_refer_share_referral_code_copy_button_clicked", "refer_share");
                   navigator.clipboard
                     .writeText(shareCode)
                     .then(() => setCopy(true));
@@ -100,7 +103,10 @@ export const ReferShare = ({
             {/* Twitter */}
             <img
               className="q-referShare-content-social-img"
-              onClick={() => shareOnPlatform(shareCode, "twitter")}
+              onClick={() => {
+                GeneralFunctions.fireTrackingEvent("quest_refer_share_twitter_button_clicked", "refer_share");
+                shareOnPlatform(shareCode, "twitter")
+              }}
               src={twitterSvg}
               alt="Twitter"
             />
@@ -109,12 +115,18 @@ export const ReferShare = ({
             <img
               className="q-referShare-content-social-img"
               src={whatsappSvg}
-              onClick={() => shareOnPlatform(shareCode, "whatsapp")}
+              onClick={() => {
+                GeneralFunctions.fireTrackingEvent("quest_refer_share_whatsapp_button_clicked", "refer_share");
+                shareOnPlatform(shareCode, "whatsapp")
+              }}
               alt="Whatsapp"
             />
             <img
               className="q-referShare-content-social-img"
-              onClick={() => shareOnPlatform(shareCode, "telegram")}
+              onClick={() => {
+                GeneralFunctions.fireTrackingEvent("quest_refer_share_telegram_button_clicked", "refer_share");
+                shareOnPlatform(shareCode, "telegram")
+              }}
               src={telegramPng}
               alt="telegramPng"
             />

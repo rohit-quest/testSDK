@@ -10,6 +10,7 @@ import showToast from '../toast/toastService';
 // import Cookies from 'universal-cookie';
 import QuestLabs from '../QuestLabs';
 import TopBar from '../Modules/TopBar';
+import General from '../../general';
 
 // const cookies = new Cookies();
 // let externalUserId = cookies.get("externalUserId");
@@ -73,7 +74,7 @@ const OfflineComponent: React.FC<TutorialProps> = ({
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
-  const { themeConfig } = useContext(QuestContext.Context);
+  const { themeConfig,apiType } = useContext(QuestContext.Context);
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
   const [gradient, setGradient] = useState<boolean>(false);
   const [showLoader, setShowLoader] = useState<boolean>(false);
@@ -81,8 +82,9 @@ const OfflineComponent: React.FC<TutorialProps> = ({
     Array(formdata.length).fill(true)
   );
   // let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
-
+  let GeneralFunctions = new General('mixpanel', apiType);
   const handleNextStep = (id: any, url: string) => {
+    GeneralFunctions.fireTrackingEvent("quest_tutorial_offline_step_link_clicked", "tutorial_offline");
     // const headers = {
     //   apiKey: apiKey,
     //   apisecret: apiSecret,
@@ -124,6 +126,7 @@ const OfflineComponent: React.FC<TutorialProps> = ({
 
 
   useEffect(() => {
+    GeneralFunctions.fireTrackingEvent("quest_tutorial_offline_loaded", "tutorial_offline");
     // if (entityId) {
     //   const headers = {
     //     apiKey: apiKey,

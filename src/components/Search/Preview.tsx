@@ -20,6 +20,7 @@ export default function SearchPreview({ online = false }) {
             apiType="STAGING"
         >
             <Search
+            open={true}
                 // color='red'
                 iconColor='red'
                 // backgroundColor='black'
