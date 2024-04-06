@@ -32,9 +32,8 @@ export interface Props {
 
 export interface ICriteria {
   criteriaId: string;
-  criteriaTitle: string;
+  title: string;
   metricCount: string;
-  completed: boolean;
   isLocked: boolean;
   progressPercent: number;
   progressData: number;
@@ -76,9 +75,8 @@ export const Challenges = ({ userId, token, questId, styleConfig }: Props) => {
             for (let criteria of response.data.eligibilityData) {
               fetchedCriterias.push({
                 criteriaId: criteria.data.criteriaId,
-                criteriaTitle: criteria.data.metadata.title,
+                title: criteria.data.metadata.title,
                 metricCount: criteria.data.metadata.metricCount,
-                completed: criteria.completed,
                 isLocked: criteria.isLocked,
                 progressPercent: criteria.progressPercent,
                 progressData: criteria.progressData,
@@ -102,8 +100,8 @@ export const Challenges = ({ userId, token, questId, styleConfig }: Props) => {
   useEffect(() => {
     let filteredSuggestions = criterias.filter(
       (criteria) =>
-        criteria.criteriaTitle &&
-        criteria.criteriaTitle.toLowerCase().includes(searchTerm.toLowerCase())
+        criteria.title &&
+        criteria.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     setSuggestions(filteredSuggestions);

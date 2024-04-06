@@ -170,7 +170,7 @@ function App() {
         {/* <OnBoardingPreview online={false} /> */}
 
 
-        <GetStartedPreview  online={true} />  
+        {/* <GetStartedPreview  online={true} />   */}
         
 
 {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
@@ -230,7 +230,7 @@ function App() {
 
 
         {/* <FeedbackWorkflowPreview online={true} /> */}
-        {/* <ChallengesPreview online={true} /> */}
+        <ChallengesPreview online={true} />
         
 
 
@@ -251,7 +251,7 @@ function App() {
                     // color="blue"
                     // isArticle={true}
             /> */}
-           <PreviewLeaderboard online={true}/>
+           {/* <PreviewLeaderboard online={true}/> */}
                {/* <QuestLogin
                     // questId=""
                     textColor=""

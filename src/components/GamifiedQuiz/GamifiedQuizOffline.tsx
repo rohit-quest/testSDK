@@ -166,7 +166,7 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
         //     getQuestData(userId, headers)
         // }
         setFormdata(formDataOffline);
-    }, []);
+    }, [formDataOffline]);
 
     const MultipleChoice = ({ onClick, selectedValue, options }: { index: number, onClick: (option: string) => void, selectedValue: string | Array<string>, options: Array<string> }) => {
         // console.log(selectedValue)
