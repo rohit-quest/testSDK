@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import { CSSProperties, Dispatch, SetStateAction } from "react";
 
 type HelphubStyleConfig = {
     Home?: {
@@ -105,9 +105,34 @@ export interface HelpHubProps {
         Tasks?: HelpHubOthersContentTypes;
     }
     showFooter?: boolean;
+    onlineComponent?:boolean;
+    claimStatusUpdates?:string[] | [];
+    setClaimStatusUpdates?:Dispatch<SetStateAction<string[]>>;
+}
+export interface HelpHubPropsOffline {
+    userId: string;
+    token: string;
+    questId?: string;
+    uniqueUserId?: string;
+    uniqueEmailId?: string;
+    styleConfig?: HelphubStyleConfig
+    contentConfig?: {
+        Home?: HelpHubHomeContentTypes;
+        Chat?: HelpHubOthersContentTypes;
+        Help?: HelpHubOthersContentTypes;
+        Updates?: HelpHubOthersContentTypes;
+        Tasks?: HelpHubOthersContentTypes;
+    }
+    showFooter?: boolean;
+    ParentQuest?:QuestTypes;
+    ChildQuest?:QuestCriteriaWithStatusType[][]
+    onlineComponent?:boolean
+    claimStatusUpdates?:string[] | [];
+    setClaimStatusUpdates?:Dispatch<SetStateAction<string[] []>>;
 }
 
 export interface HelpHubHomeTypes {
+    taskStatus?:number;
     questsData: QuestCriteriaWithStatusType[][];
     setSelectedSection: (section: string) => void;
     parentQuest?: QuestTypes;
@@ -115,6 +140,10 @@ export interface HelpHubHomeTypes {
     token?: string;
     styleConfig?: HelphubStyleConfig;
     contentConfig?: HelpHubHomeContentTypes;
+    claimStatusTasks?:string[] | [];
+    onlineComponent?:boolean;
+    showFeedback?:boolean
+    setShowFeedback?:Dispatch<SetStateAction<boolean>>;
 }
 
 export interface HelpHubChatTypes {
@@ -135,6 +164,9 @@ export interface HelpHubUpdatesTypes {
     token: string;
     contentConfig?: HelpHubOthersContentTypes;
     styleConfig?: HelphubStyleConfig;
+    claimStatusUpdates?:string[] | [];
+    setClaimStatusUpdates?:Dispatch<SetStateAction<string[] | []>> | undefined;
+    onlineComponent?:boolean
 }
 
 export interface HelpHubTasksTypes {
@@ -144,6 +176,9 @@ export interface HelpHubTasksTypes {
     token: string;
     contentConfig?: HelpHubOthersContentTypes;
     styleConfig?: HelphubStyleConfig;
+    claimStatusTasks?:string[] | [];
+    setClaimStatusTasks?:Dispatch<SetStateAction<string[] | []>>;
+    onlineComponent?:boolean
 }
 
 interface Metadata {

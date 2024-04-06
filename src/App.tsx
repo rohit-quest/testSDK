@@ -30,6 +30,7 @@ import Survey from "./components/Feedback/Survey";
 import ModalPreview from "./components/Modals/Preview";
 import PreviewLeaderboard from "./components/Leaderboard/Preview";
 import HelpHub from "./components/HelpHub/HelpHub";
+import HelpHubPreview from "./components/HelpHub/Preview";
 
 import SurveyOffline from "./components/Feedback/OfflineComponent";
 import Modal from "./components/Modules/Modal";
@@ -155,7 +156,13 @@ function App() {
           <button onClick={onDifferentTwo}>warning</button> */}
         {/* <ModalPreview/> */}
 
-        <HelpHub token={'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMDkzMTE5NywiZXhwIjoxNzExNTM1OTk3fQ.by5N1ghhEo6TdonXLsNwHNmcpD_h40DC85hidc_XZb0'}  userId="u-8268f5e1-f5a1-440c-a333-0f5578a73847"/>
+        {/* <HelpHub
+          token={'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxMjIwMjIxMCwiZXhwIjoxNzEyODA3MDEwfQ.yCkWcD5yVykmqAmiRKrzdTmqVsptlfq2VPBO4eztNYY'} 
+          userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
+          /> */}
+
+        <HelpHubPreview online={true} />
+
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
         <GamifiedQuizPreview online={true} />
 

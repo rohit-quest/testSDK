@@ -244,7 +244,6 @@ export const claimQuest = async(
         let request = `${backend_url}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
     
         let response = await axios.post(request, {criteriaId, ...(answer && {answer})}, {headers});
-    
         return response.data;
     } catch(err) {
         return err?.response.data;

@@ -16,13 +16,16 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
         userId,
         token,
         contentConfig,
-        styleConfig
+        styleConfig,
+        claimStatusUpdates=[],
+        setClaimStatusUpdates,
+        onlineComponent
     } = props
     const [filterData, setFilterData] = useState<QuestCriteriaWithStatusType[]>([]);
-    const [claimStatus, setClaimStatus] = useState<string[]>([]);
+    // const [claimStatus, setClaimStatus] = useState<string[]>([]);
     const [searchData, setSearchData] = useState<string | number>("");
     const { apiKey, entityId, apiType, themeConfig } = useContext(QuestContext.Context);
-    let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
+    let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
     useEffect(() => {
         let data = updateData.filter((value: QuestCriteriaWithStatusType) => {
@@ -31,10 +34,12 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
         setFilterData(data);
     }, [updateData, searchData])
 
-    useEffect(() => {
-        let arr = updateData.filter((ele: QuestCriteriaWithStatusType) => ele.completed === true).map((ele: QuestCriteriaWithStatusType) => ele.data.criteriaId)
-        setClaimStatus(arr)
-    }, [updateData])
+    // useEffect(() => {
+    //     // let arr = updateData.filter((ele: QuestCriteriaWithStatusType) => ele.completed === true).map((ele: QuestCriteriaWithStatusType) => ele.data.criteriaId)
+    //     // if(onlineComponent){
+    //     //     setClaimStatusUpdates(arr)
+    //     // }
+    // }, [updateData])
 
     const getTimeDifference = (date: string) => {
         let dateGap = (new Date().getTime() - new Date(date).getTime()) / 86400000
@@ -43,12 +48,16 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
 
     const readUpdate = async(criteriaId: string, links?: string) => {
         window.open(links, '_blank');
-        let claimResponse = await claimQuest(BACKEND_URL, entityId, questId, userId, token, apiKey, criteriaId)
-        if (claimResponse.success) {
-            setClaimStatus([...claimStatus, criteriaId]);
+        if(onlineComponent){
+            let claimResponse = await claimQuest(BACKEND_URL, entityId, questId, userId, token, apiKey, criteriaId)
+            if (claimResponse.success) {
+                setClaimStatusUpdates([...claimStatusUpdates, criteriaId]);
+            }
+        }
+        else{
+            setClaimStatusUpdates([...claimStatusUpdates, criteriaId]);
         }
     }
-
 
     return (
         <div className={"helpHubUpdatesCont"} style={{background: themeConfig?.backgroundColor || "#fff", ...styleConfig?.Updates?.Form}}>
@@ -80,7 +89,8 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                         {/* unread update  */}
                         {
                             filterData.map((value: QuestCriteriaWithStatusType, index: number) => (
-                                claimStatus.includes(value?.data?.criteriaId) ?
+                                // claimStatus.includes(value?.data?.criteriaId) ?
+                                claimStatusUpdates.includes(value?.data?.criteriaId) ?
                                 <div
                                     className={`q-helphub-updates-single-update-read`}
                                     key={index}

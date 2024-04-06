@@ -18,20 +18,25 @@ import { createDefaultQuest, getDefaultQuest } from "./Helphub.service";
 import config from "../../config";
 
 const HelpHub = (props: HelpHubProps) => {
-    const { userId, token, questId, uniqueUserId, uniqueEmailId, styleConfig, contentConfig, showFooter } =
-        props;
+    const { userId, token, questId, uniqueUserId, uniqueEmailId, styleConfig, contentConfig, showFooter,onlineComponent, } = props;
 
-    const { apiKey, entityId, featureFlags, apiType, themeConfig } = useContext(
-        QuestContext.Context
-    );
-    let BACKEND_URL =
-        apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
+    const { apiKey, entityId, featureFlags, apiType, themeConfig } = useContext(QuestContext.Context);
+    let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
     const [selectedSection, setSelectedSection] = useState("Home");
     const [helpHub, setHelpHub] = useState(true);
     const [parentQuest, setParentQuest] = useState<QuestTypes>();
-    const [chieldQuestCriteria, setChieldQuestCriteria] = useState<
-        QuestCriteriaWithStatusType[][]
-    >([]);
+    const [chieldQuestCriteria, setChieldQuestCriteria] = useState<QuestCriteriaWithStatusType[][]>([]);
+
+    const [claimStatusUpdates, setClaimStatusUpdates] = useState<string[]>([]);
+    const [claimStatusTasks, setClaimStatusTasks] = useState<string[]>([]);
+    const [showFeedback,setShowFeedback]=useState(true);
+    const [taskStatus,setTaskStatus]=useState<number>(0);
+    const [taskData,setTaskData]=useState<QuestCriteriaWithStatusType[]>([]);
+    const [updateData,setUpdateData]=useState<QuestCriteriaWithStatusType[]>([]);
+
+    useEffect(()=>{
+        setTaskStatus(Math.ceil(100 * (claimStatusTasks?.length / chieldQuestCriteria[3]?.length)));
+    },[claimStatusTasks]);
 
     const getOrCreateQuest = async () => {
         let qId = questId || "q-default-helphub";
@@ -52,9 +57,12 @@ const HelpHub = (props: HelpHubProps) => {
                 apiKey
             );
             setParentQuest(createQuest?.parentQuest);
+            
             setChieldQuestCriteria(createQuest?.eligibilityCriterias);
         } else {
             setParentQuest(getResult?.parentQuest);
+            setTaskData(getResult?.eligibilityCriterias[3]);
+            setUpdateData(getResult?.eligibilityCriterias[2]);
             setChieldQuestCriteria(getResult?.eligibilityCriterias);
         }
     };
@@ -62,6 +70,20 @@ const HelpHub = (props: HelpHubProps) => {
     useEffect(() => {
         getOrCreateQuest();
     }, []);
+
+    useEffect(()=>{
+        let arr = taskData?.filter((ele: QuestCriteriaWithStatusType) => ele.completed === true).map((ele: QuestCriteriaWithStatusType) => ele.data.criteriaId)
+        if(onlineComponent){
+            setClaimStatusTasks(arr);
+        }
+    },[taskData]);
+    
+    useEffect(() => {
+        let arr = updateData.filter((ele: QuestCriteriaWithStatusType) => ele.completed === true).map((ele: QuestCriteriaWithStatusType) => ele.data.criteriaId)
+        if(onlineComponent){
+            setClaimStatusUpdates(arr)
+        }
+    }, [updateData])
 
     return (
         <div  style={{fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif"}}>
@@ -85,6 +107,11 @@ const HelpHub = (props: HelpHubProps) => {
                                 token={token}
                                 styleConfig={styleConfig}
                                 contentConfig={contentConfig?.Home}
+                                claimStatusTasks={claimStatusTasks}
+                                taskStatus={taskStatus}
+                                onlineComponent={onlineComponent}
+                                showFeedback={showFeedback}
+                                setShowFeedback={setShowFeedback}
                             />
                         ) : (
                             ""
@@ -111,7 +138,7 @@ const HelpHub = (props: HelpHubProps) => {
                             <HelpHubUpdates
                                 updateData={
                                     !!chieldQuestCriteria?.length
-                                        ? chieldQuestCriteria[2]
+                                        ? updateData
                                         : []
                                 }
                                 contentConfig={contentConfig?.Updates}
@@ -119,6 +146,9 @@ const HelpHub = (props: HelpHubProps) => {
                                 questId={parentQuest?.childQuestIDs[2] || ""}
                                 userId={userId}
                                 token={token}
+                                claimStatusUpdates={claimStatusUpdates}
+                                setClaimStatusUpdates={setClaimStatusUpdates}
+                                onlineComponent={onlineComponent}
                             />
                         ) : (
                             ""
@@ -127,7 +157,7 @@ const HelpHub = (props: HelpHubProps) => {
                             <HelpHubTasks
                                 tasksData={
                                     !!chieldQuestCriteria?.length
-                                        ? chieldQuestCriteria[3]
+                                        ? taskData
                                         : []
                                 }
                                 contentConfig={contentConfig?.Tasks}
@@ -135,11 +165,15 @@ const HelpHub = (props: HelpHubProps) => {
                                 questId={parentQuest?.childQuestIDs[3] || ""}
                                 userId={userId}
                                 token={token}
+                                claimStatusTasks={claimStatusTasks}
+                                setClaimStatusTasks={setClaimStatusTasks}
+                                onlineComponent={onlineComponent}
                             />
                         ) : (
                             ""
                         )}
 
+                        {/* bottom navigation */}
                         <div className="helphubBottomCont">
                             {/* bottom navigation buttons  */}
                             <div className="helphubSvgCont" style={{background: themeConfig?.backgroundColor || "#fff", ...styleConfig?.Footer}}>

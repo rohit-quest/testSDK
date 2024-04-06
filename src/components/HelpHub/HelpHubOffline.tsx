@@ -13,13 +13,13 @@ import {
     HelpHubProps,
     QuestCriteriaWithStatusType,
     QuestTypes,
+    HelpHubPropsOffline,
 } from "./HelpHub.type";
 import { createDefaultQuest, getDefaultQuest } from "./Helphub.service";
 import config from "../../config";
 
-const HelpHub = (props: HelpHubProps) => {
-    const { userId, token, questId, uniqueUserId, uniqueEmailId, styleConfig, contentConfig, showFooter } =
-        props;
+const HelpHubOffline = (props: HelpHubPropsOffline) => {
+    const { userId, token, questId, uniqueUserId, uniqueEmailId, styleConfig, contentConfig, showFooter,ChildQuest=[],ParentQuest,onlineComponent,} = props;
 
     const { apiKey, entityId, featureFlags, apiType, themeConfig } = useContext(
         QuestContext.Context
@@ -27,36 +27,50 @@ const HelpHub = (props: HelpHubProps) => {
     let BACKEND_URL =
         apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
     const [selectedSection, setSelectedSection] = useState("Home");
-    const [helpHub, setHelpHub] = useState(false);
+    const [helpHub, setHelpHub] = useState(true);
     const [parentQuest, setParentQuest] = useState<QuestTypes>();
-    const [chieldQuestCriteria, setChieldQuestCriteria] = useState<
-        QuestCriteriaWithStatusType[][]
-    >([]);
+    const [chieldQuestCriteria, setChieldQuestCriteria] = useState<QuestCriteriaWithStatusType[][]>([]);
+    const [showFeedback,setShowFeedback]=useState(true);
+    const [claimStatusUpdates, setClaimStatusUpdates] = useState<string[]>([]);
+    const [claimStatusTasks, setClaimStatusTasks] = useState<string[]>([]);
+    const [taskStatus,setTaskStatus]=useState<number>(0);
+
+    useEffect(()=>{
+        setTaskStatus(Math.ceil(100 * (claimStatusTasks?.length / chieldQuestCriteria[3]?.length)));
+    },[claimStatusTasks]);
 
     const getOrCreateQuest = async () => {
         let qId = questId || "q-default-helphub";
-        let getResult = await getDefaultQuest(
-            BACKEND_URL,
-            entityId,
-            qId,
-            userId,
-            token,
-            apiKey,
-        );
-        if (!getResult?.success) {
-            let createQuest = await createDefaultQuest(
-                BACKEND_URL,
-                entityId,
-                userId,
-                token,
-                apiKey
-            );
-            setParentQuest(createQuest?.parentQuest);
-            setChieldQuestCriteria(createQuest?.eligibilityCriterias);
-        } else {
-            setParentQuest(getResult?.parentQuest);
-            setChieldQuestCriteria(getResult?.eligibilityCriterias);
-        }
+        setParentQuest(ParentQuest);
+        setChieldQuestCriteria(ChildQuest);
+
+        // let getResult = await getDefaultQuest(
+        //     BACKEND_URL,
+        //     entityId,
+        //     qId,
+        //     userId,
+        //     token,
+        //     apiKey,
+        // );
+        // console.log("get result",getResult);
+        // if (!getResult?.success) {
+        //     console.log("50")
+        //     let createQuest = await createDefaultQuest(
+        //         BACKEND_URL,
+        //         entityId,
+        //         userId,
+        //         token,
+        //         apiKey
+        //     );
+        //     setParentQuest(createQuest?.parentQuest);
+        //     setChieldQuestCriteria(createQuest?.eligibilityCriterias);
+        // } else {
+        //     console.log("61")
+        //     console.log("parent quest",getResult?.parentQuest)
+        //     console.log("child eleigi criterias",getResult?.eligibilityCriterias)
+        //     setParentQuest(getResult?.parentQuest);
+        //     setChieldQuestCriteria(getResult?.eligibilityCriterias);
+        // }
     };
 
     useEffect(() => {
@@ -64,7 +78,7 @@ const HelpHub = (props: HelpHubProps) => {
     }, []);
 
     return (
-        <div style={{fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif"}}>
+        <div  style={{fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif"}}>
             <div className={"helphubIconUpperCont"}>
                 {/* help button  */}
                 <div
@@ -75,9 +89,10 @@ const HelpHub = (props: HelpHubProps) => {
                 </div>
 
                 {helpHub && (
-                    <div className={"helpHubMainCont animated"}>
+                    <div id="helpHub" className={"helpHubMainCont animated"}>
                         {selectedSection === "Home" ? (
                             <HelpHubHome
+                            taskStatus={taskStatus}
                                 questsData={chieldQuestCriteria}
                                 setSelectedSection={setSelectedSection}
                                 parentQuest={parentQuest}
@@ -85,6 +100,8 @@ const HelpHub = (props: HelpHubProps) => {
                                 token={token}
                                 styleConfig={styleConfig}
                                 contentConfig={contentConfig?.Home}
+                                showFeedback={showFeedback}
+                                setShowFeedback={setShowFeedback}
                             />
                         ) : (
                             ""
@@ -119,6 +136,10 @@ const HelpHub = (props: HelpHubProps) => {
                                 questId={parentQuest?.childQuestIDs[2] || ""}
                                 userId={userId}
                                 token={token}
+                                claimStatusUpdates={claimStatusUpdates}
+                                setClaimStatusUpdates={setClaimStatusUpdates}
+                                onlineComponent={onlineComponent}
+
                             />
                         ) : (
                             ""
@@ -135,6 +156,9 @@ const HelpHub = (props: HelpHubProps) => {
                                 questId={parentQuest?.childQuestIDs[3] || ""}
                                 userId={userId}
                                 token={token}
+                                claimStatusTasks={claimStatusTasks}
+                                setClaimStatusTasks={setClaimStatusTasks}
+                                onlineComponent={onlineComponent}
                             />
                         ) : (
                             ""
@@ -340,4 +364,4 @@ const HelpHub = (props: HelpHubProps) => {
     );
 };
 
-export default HelpHub;
+export default HelpHubOffline;

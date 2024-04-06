@@ -25,20 +25,19 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
         token,
         styleConfig,
         contentConfig,
+        taskStatus,
+        onlineComponent,
+        showFeedback=true,
+        setShowFeedback
     } = props;
-
-    const [allQuestsData, setAllQuestsData] = useState<
-        QuestCriteriaWithStatusType[][]
-    >([]);
-    const [taskStatus, setTaskStatus] = useState<number>(0);
-    const { apiKey, entityId, apiType, themeConfig } = useContext(
-        QuestContext.Context
-    );
+    
+    const [allQuestsData, setAllQuestsData] = useState<QuestCriteriaWithStatusType[][]>([]);
+    // const [taskStatus, setTaskStatus] = useState<number>(0);
+    const { apiKey, entityId, apiType, themeConfig } = useContext(QuestContext.Context);
     let BACKEND_URL =
         apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
-    let [showFeedback, setShowFeedback] = useState<boolean>(false);
+    // let [showFeedback, setShowFeedback] = useState<boolean>(false);
     let [feedbackLoading, setFeedbackLoading] = useState<boolean>(false);
-
     useEffect(() => {
         setAllQuestsData(questsData);
         let arr =
@@ -53,38 +52,48 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
                             ele.data.criteriaId
                     )) ||
             [];
-        setTaskStatus(
-            Math.ceil(
-                100 *
-                    (arr?.length /
-                        (!!questsData?.length ? questsData[3]?.length : 0))
-            ) || 0
-        );
-        setShowFeedback(
-            !!questsData?.length &&
-                !!questsData[0][0] &&
-                questsData[0][0]?.completed == false
-        );
+        // setTaskStatus(
+        //     Math.ceil(
+        //         100 *
+        //             (arr?.length /
+        //                 (!!questsData?.length ? questsData[3]?.length : 0))
+        //     ) || 0
+        // );
+        if(onlineComponent){
+            setShowFeedback(
+                !!questsData?.length &&
+                    !!questsData[0][0] &&
+                    questsData[0][0]?.completed == false
+            );
+        }
+        else{
+            setShowFeedback(showFeedback);
+        }
     }, [questsData]);
 
     const submitQuest = async (answer: number) => {
         setFeedbackLoading(true);
-        let claimResponse = await claimQuest(
-            BACKEND_URL,
-            entityId,
-            parentQuest?.childQuestIDs[0] || "",
-            userId || "",
-            token || "",
-            apiKey,
-            allQuestsData[0][0]?.data?.criteriaId,
-            [answer]
-        );
-        setFeedbackLoading(false);
-        if (claimResponse?.success) {
+        if(onlineComponent){
+            let claimResponse = await claimQuest(
+                BACKEND_URL,
+                entityId,
+                parentQuest?.childQuestIDs[0] || "",
+                userId || "",
+                token || "",
+                apiKey,
+                allQuestsData[0][0]?.data?.criteriaId,
+                [answer]
+            );
+            setFeedbackLoading(false);
+            if (claimResponse?.success) {
+                setShowFeedback(false);
+            }
+        }
+        else{
             setShowFeedback(false);
         }
     };
-
+    
     return (
         <div className={"helpHubMainInnerCont"} style={styleConfig?.Home?.Form}>
             <div className={"MainImgCont"}>
@@ -196,7 +205,6 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
                 {/* search for help  */}
                 <div
                     className="q-helhub-search-community"
-                    
                 >
                     <div className="q-helhub-search-community-inner"
                         style={{
@@ -434,15 +442,17 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
                     <div className="q-helphub-compProfile-progress-con">
                         {/* progress percentage */}
                         <div className="q-helphub-compProfile-progress-per">
-                            {taskStatus}% Completed
+                            {taskStatus || 0}% Completed
                         </div>
-
+                        {/* <div>
+                            {Math.ceil(100 * (claimStatusTasks?.length / tasksData?.length)) || 0}%
+                        </div> */}
                         {/* progress bar container*/}
                         <div className="q-helphub-compProfile-progress-bar-con">
                             {/* progress bar */}
                             <div
                                 className="q-helphub-compProfile-progress-bar"
-                                style={{ width: `${taskStatus}%` }}
+                                style={{ width: `${taskStatus || 0}%` }}
                             ></div>
                         </div>
                     </div>

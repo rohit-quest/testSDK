@@ -8,8 +8,6 @@ import { useContext, useEffect, useState } from "react";
 import config from "../../config";
 import { claimQuest } from "./Helphub.service";
 
-
-
 const HelpHubTasks = (props: HelpHubTasksTypes) => {
     const {
         tasksData,
@@ -17,11 +15,14 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
         userId,
         token,
         contentConfig,
-        styleConfig
-    } = props
-
+        styleConfig,
+       claimStatusTasks=[],
+       setClaimStatusTasks,
+        onlineComponent
+    } = props;
+    
     const [filterData, setFilterData] = useState<QuestCriteriaWithStatusType[]>([]);
-    const [claimStatus, setClaimStatus] = useState<string[]>([]);
+    // const [claimStatus, setClaimStatus] = useState<string[]>([]);
     const [searchData, setSearchData] = useState<string | number>("");
     const { apiKey, entityId, apiType, themeConfig } = useContext(QuestContext.Context);
     let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
@@ -33,20 +34,26 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
         setFilterData(data);
     }, [tasksData, searchData])
 
-    useEffect(() => {
-        let arr = tasksData.filter((ele: QuestCriteriaWithStatusType) => ele.completed === true).map((ele: QuestCriteriaWithStatusType) => ele.data.criteriaId)
-        setClaimStatus(arr)
-    }, [tasksData])
-
+    // useEffect(() => {
+    //     // let arr = tasksData.filter((ele: QuestCriteriaWithStatusType) => ele.completed === true).map((ele: QuestCriteriaWithStatusType) => ele.data.criteriaId)
+    //     // if(onlineComponent){
+    //     //     setClaimStatusTasks(arr);
+    //     // }
+    // }, [tasksData])
 
     const readUpdate = async(criteriaId: string, links?: string) => {
         window.open(links, '_blank');
-        let claimResponse = await claimQuest(BACKEND_URL, entityId, questId, userId, token, apiKey, criteriaId)
-        if (claimResponse.success) {
-            setClaimStatus([...claimStatus, criteriaId]);
+        if(onlineComponent){
+            let claimResponse = await claimQuest(BACKEND_URL, entityId, questId, userId, token, apiKey, criteriaId)
+            if (claimResponse.success) {
+                setClaimStatusTasks([...claimStatusTasks, criteriaId]);
+            }
+        }
+        else{
+            console.log("offline no api")
+            setClaimStatusTasks([...claimStatusTasks, criteriaId]);
         }
     }
-
 
     return (
         <div className={"helpHubTaskCont"} style={{background: themeConfig?.backgroundColor || "#fff", ...styleConfig?.Tasks?.Form}}>
@@ -74,9 +81,9 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
 
                     {/* progress bar  */}
                     <div className='q-helphub-tasks-progress-cont'>
-                        <div className='q-helphub-tasks-progress-per'>{Math.ceil(100 * (claimStatus?.length / tasksData?.length)) || 0}%</div>
+                        <div className='q-helphub-tasks-progress-per'>{Math.ceil(100 * (claimStatusTasks?.length / tasksData?.length)) || 0}%</div>
                         <div className='q-helphub-tasks-progress-bar'>
-                            <div style={{ width: `${100 * (claimStatus?.length / tasksData?.length)}%` }}></div>
+                            <div style={{ width: `${100 * (claimStatusTasks?.length / tasksData?.length)}%` }}></div>
                         </div>
                     </div>
 
@@ -90,7 +97,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                                         <div className='q-helphub-tasks-single-task-para' style={{color: themeConfig?.secondaryColor, ...styleConfig?.Tasks?.Card?.SubHeading}}>{ele?.data?.metadata?.description}</div>
                                     </div>
                                     <div className='q-helphub-tasks-single-task-status'>
-                                        <img style={{ padding: claimStatus?.includes(ele?.data?.criteriaId) ? "5px 4px" : "" }} src={claimStatus?.includes(ele?.data?.criteriaId) ? TaskStatusDone : TaskStatusPending} alt="" />
+                                        <img style={{ padding: claimStatusTasks?.includes(ele?.data?.criteriaId) ? "5px 4px" : "" }} src={claimStatusTasks?.includes(ele?.data?.criteriaId) ? TaskStatusDone : TaskStatusPending} alt="" />
                                     </div>
                                 </div>
                             ))
