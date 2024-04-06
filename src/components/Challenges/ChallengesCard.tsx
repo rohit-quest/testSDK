@@ -50,7 +50,7 @@ const ChallengesCard: React.FC<Props> = ({
         {suggestions.map((item) => (
           <ChallengesInnerCard
             key={item.criteriaId}
-            title={item.criteriaTitle}
+            title={item.title}
             // islockedIcon={item.progressPercent ? challengesIcon1 : challengesLock}
             islockedIcon={item.progressPercent ? "challengesIcon1" : "challengesLock"}
             metricCount={item.metricCount}

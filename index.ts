@@ -70,6 +70,7 @@ import LeaderBoardOffline from "./src/components/Leaderboard/LeaderBoardOffline.
 import Toast from './src/components/toast2/Toast';
 import HelpHub from "./src/components/HelpHub/HelpHub.tsx";
 import { Challenges } from './src/components/Challenges/Challenges';
+import {ChallengesOffline} from './src/components/Challenges/OfflineComponent';
 import UserProfile from "./src/components/UserProfile/UserProfile.tsx";
 import GamifiedQuiz from "./src/components/GamifiedQuiz/GamifiedQuiz.tsx";
 import GamifiedQuizOffline from "./src/components/GamifiedQuiz/GamifiedQuizOffline.tsx";
@@ -118,6 +119,7 @@ export {
     Survey,
     HelpHub,
     Challenges,
+    ChallengesOffline,
     UserProfile,
     GamifiedQuiz,
     GamifiedQuizOffline

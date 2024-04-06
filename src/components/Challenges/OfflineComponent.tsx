@@ -24,86 +24,35 @@ export interface Props {
   userId: string;
   token: string;
   styleConfig?: StyleConfig;
+  offlineFormData?:ICriteria[]
 }
 
 export interface ICriteria {
   criteriaId: string;
-  criteriaTitle: string;
+  title: string;
   metricCount: string;
-  completed: boolean;
   isLocked: boolean;
   progressPercent: number;
   progressData: number;
 }
 
-export const ChallengesOffline = ({ userId, token, questId, styleConfig }: Props) => {
-  const { apiKey, apiSecret, entityId, apiType } = useContext(
-    QuestContext.Context
-  );
+export const ChallengesOffline = ({ userId, token, questId, styleConfig ,offlineFormData=[]}: Props) => {
+
 
   const [criterias, setCriterias] = useState<ICriteria[]>([]);
   const [suggestions, setSuggestions] = useState<ICriteria[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
-  let GeneralFunctions = new General('mixpanel', apiType);
-  useEffect(() => {
-    GeneralFunctions.fireTrackingEvent("quest_challenges_offline_loaded", "challenges_offline");
-    const getChallenges = async () => {
-      try {
-        const BACKEND_URL =
-          apiType === "STAGING"
-            ? config.BACKEND_URL_STAGING
-            : config.BACKEND_URL;
-
-        const response = await axios.get(
-          `${BACKEND_URL}api/entities/${entityId}/quests/${questId}`,
-          {
-            headers: {
-              apiKey: apiKey,
-              apiSecret: apiSecret,
-              userId: userId,
-              token: token,
-            },
-          }
-        );
-
-        if (response.status === 200) {
-          const fetchedCriterias: ICriteria[] = [];
-          if (response.data?.eligibilityData) {
-            for (let criteria of response.data.eligibilityData) {
-              fetchedCriterias.push({
-                criteriaId: criteria.data.criteriaId,
-                criteriaTitle: criteria.data.metadata.title,
-                metricCount: criteria.data.metadata.metricCount,
-                completed: criteria.completed,
-                isLocked: criteria.isLocked,
-                progressPercent: criteria.progressPercent,
-                progressData: criteria.progressData,
-                // metadata: criteria.data.metadata,
-              });
-            }
-          }
-
-          setCriterias(fetchedCriterias);
-        } else {
-          console.error("Unexpected status code:", response.status);
-        }
-      } catch (error) {
-        console.error("Error fetching challenges data:", error);
-      }
-    };
-    getChallenges();
-  }, []);
 
   useEffect(() => {
-    let filteredSuggestions = criterias.filter(
+    let filteredSuggestions = offlineFormData.filter(
       (criteria) =>
-        criteria.criteriaTitle &&
-        criteria.criteriaTitle.toLowerCase().includes(searchTerm.toLowerCase())
+        criteria.title &&
+        criteria.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     setSuggestions(filteredSuggestions);
-  }, [searchTerm, criterias]);
-  console.log(suggestions);
+  }, [searchTerm, offlineFormData]);
+
 
   return (
     <div>
