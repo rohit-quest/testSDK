@@ -70,10 +70,7 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({
   );
   let GeneralFunctions = new General('mixpanel', apiType);
   useEffect(() => {
-    const eventFire = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_leaderboard_loaded", "leaderboard");
-    }
-    eventFire();
+    GeneralFunctions.fireTrackingEvent("quest_leaderboard_loaded", "leaderboard");
     const getLeaderBoard = async () => {
       try {
         const BACKEND_URL =

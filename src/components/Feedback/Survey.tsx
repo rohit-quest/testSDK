@@ -313,10 +313,7 @@ const Survey: React.FC<FeedbackProps> = ({
   };
 
   useEffect(() => {
-    const eventFire = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_survey_loaded", "survey");
-    }
-    eventFire();
+    GeneralFunctions.fireTrackingEvent("quest_survey_loaded", "survey");
     if (bgColor) {
       setGradient(
         bgColor?.includes("linear-gradient") ||
@@ -402,10 +399,7 @@ const Survey: React.FC<FeedbackProps> = ({
   };
 
   function returnAnswers() {
-    const priBtn = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_survey_form_submitted", "survey");
-    }
-    priBtn();
+    GeneralFunctions.fireTrackingEvent("quest_survey_form_submitted", "survey");
     let callApi=false;
    
     for(let i=0;i<formdata.length;i++){
@@ -938,10 +932,7 @@ const Survey: React.FC<FeedbackProps> = ({
                           : "Previous"
                       }
                       onClick={(e) => {
-                        const priBtn = async () => {
-                          const data = await GeneralFunctions.fireTrackingEvent("quest_survey_secondary_button_clicked", "survey");
-                        }
-                        priBtn();
+                        GeneralFunctions.fireTrackingEvent("quest_survey_secondary_button_clicked", "survey");
                         e.preventDefault();
                         e.stopPropagation();
                         if (page === 0) {
@@ -960,10 +951,7 @@ const Survey: React.FC<FeedbackProps> = ({
                         ...styleConfig?.PrimaryButton,
                       }}
                       onClick={() => {
-                        const priBtn = async () => {
-                          const data = await GeneralFunctions.fireTrackingEvent("quest_survey_primary_button_clicked", "survey");
-                        }
-                        priBtn();
+                        GeneralFunctions.fireTrackingEvent("quest_survey_primary_button_clicked", "survey");
                       }}
                       children={
                         sections && sections[page]?.button2Text

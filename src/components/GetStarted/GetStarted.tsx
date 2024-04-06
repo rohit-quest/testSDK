@@ -135,12 +135,6 @@ function GetStarted({
       criteriaId: id,
     };
 
-    // const eventFire = async () => {
-    //   const data = await GeneralFunctions.fireTrackingEvent("quest_get_started_primary_button_api_called", "get_started");
-    //   console.log(data);
-    // }
-    // eventFire();
-
     const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${headers.userId}`;
     setShowLoader(true);
     axios

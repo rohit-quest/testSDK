@@ -223,10 +223,7 @@ const SurveyOffline = ({
   };
 
   useEffect(() => {
-    const eventFire = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_survey_offline_loaded", "survey_offline");
-    }
-    eventFire();
+    GeneralFunctions.fireTrackingEvent("quest_survey_offline_loaded", "survey_offline");
     if (bgColor) {
       setGradient(
         bgColor?.includes('linear-gradient') ||
@@ -301,10 +298,7 @@ const SurveyOffline = ({
 
 
   function returnAnswers() {
-    const priBtn = async () => {
-      const data = await GeneralFunctions.fireTrackingEvent("quest_survey_offline_form_submitted", "survey_offline");
-    }
-    priBtn();
+    GeneralFunctions.fireTrackingEvent("quest_survey_offline_form_submitted", "survey_offline");
     // const headers = {
     //   apiKey: apiKey,
     //   apisecret: apiSecret,
@@ -717,10 +711,7 @@ const SurveyOffline = ({
                     <div className='q_feedback_buttons'>
                       <div onClick={
                         () => {
-                          const priBtn = async () => {
-                            const data = await GeneralFunctions.fireTrackingEvent("quest_survey_offline_secondary_button_clicked", "survey_offline");
-                          }
-                          priBtn();
+                          GeneralFunctions.fireTrackingEvent("quest_survey_offline_secondary_button_clicked", "survey_offline");
                           (0 == page) ? onCancel() : setPage(c => c - 1)
                         }
                       }
@@ -740,10 +731,7 @@ const SurveyOffline = ({
                         }}
                         className="q-fdov-btn-next"
                         onClick={() => {
-                          const priBtn = async () => {
-                            const data = await GeneralFunctions.fireTrackingEvent("quest_survey_offline_primary_button_clicked", "survey_offline");
-                          }
-                          priBtn();
+                          GeneralFunctions.fireTrackingEvent("quest_survey_offline_primary_button_clicked", "survey_offline");
                         }}
                       >
                         {((offlineFormData.length / itemsPerPage) <= page + 1) ? 'Submit' : 'Next'}

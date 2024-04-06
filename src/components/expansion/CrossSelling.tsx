@@ -94,11 +94,7 @@ export const CrossSelling = ({
     };
     let GeneralFunctions = new General('mixpanel', apiType);
     useEffect(() => {
-        const eventFire = async () => {
-            const data = await GeneralFunctions.fireTrackingEvent("quest_cross_selling_loaded", "cross_selling");
-            console.log(data);
-        }
-        eventFire();
+        GeneralFunctions.fireTrackingEvent("quest_cross_selling_loaded", "cross_selling");
         let isMounted = true; 
         getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL)
             .then((r) => {
@@ -165,11 +161,7 @@ export const CrossSelling = ({
                         ...styleConfig?.PrimaryButton
                     }} 
                     onClick={() => {
-                        const priBtn = async () => {
-                            const data = await GeneralFunctions.fireTrackingEvent("quest_challenges_primary_btn_clicked", "challenges");
-                            console.log(data);
-                        }
-                        priBtn();
+                        GeneralFunctions.fireTrackingEvent("quest_challenges_primary_btn_clicked", "challenges");
                         claimRewardHandler()
                     }}
                     className="q_share_link_button"
@@ -184,11 +176,7 @@ export const CrossSelling = ({
                         ...styleConfig?.SecondaryButton
                     }}
                     onClick={() => {
-                        const secBtn = async () => {
-                            const data = await GeneralFunctions.fireTrackingEvent("quest_challenges_secondaryy_btn_clicked", "challenges");
-                            console.log(data);
-                        }
-                        secBtn();
+                        GeneralFunctions.fireTrackingEvent("quest_challenges_secondaryy_btn_clicked", "challenges");
                         backButtonTrigger()
                     }}
                     className="q_share_link_button_2"
