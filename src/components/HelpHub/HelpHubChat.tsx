@@ -32,7 +32,6 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     token,
     userId,
   } = props;
-  //   console.log(props);
 
   const { themeConfig } = useContext(QuestContext.Context);
   const [showPersonalChat, setShowPersonalChat] = useState(false);
@@ -41,6 +40,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const [senderMessageLoading, setSenderMessageLoading] = useState(false);
+  const [messageFailed, setMessageFailed] = useState(true);
 
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
@@ -137,7 +137,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
           message
         );
         console.log(sendMessageResponse);
-        console.log();
+        // console.log();
         console.log("user", message);
 
         console.log("response", sendMessageResponse.data);
@@ -156,6 +156,10 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
           },
         ]);
         setSenderMessageLoading((prev) => !prev);
+        setMessageFailed(true);
+        setTimeout(() => {
+          setMessageFailed(!sendMessageResponse.data.success);
+        }, 2000);
         //   console.log(data);
       };
       sendMessageFunc();
@@ -444,6 +448,17 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                     <div className="dot"></div>
                     <div className="dot"></div>
                   </div>
+                </div>
+              )}
+              {messageFailed && (
+                <div
+                  className="message-failed"
+                  style={{
+                    position: "absolute",
+                    // bottom: "-50px",
+                  }}
+                >
+                  Something went wrong. PLease try again...
                 </div>
               )}
             </div>

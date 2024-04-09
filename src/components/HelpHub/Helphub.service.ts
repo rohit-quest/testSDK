@@ -293,8 +293,6 @@ export const getMessages = async (
       entityId,
       apikey,
     };
-    console.log(headers);
-    // /entities/:entityId/users/:userId/conversation/user",
     let request = `${backend_url}api/entities/${entityId}/users/${userId}/conversation/user`;
 
     let response = await axios.get(request, { headers });
@@ -325,14 +323,12 @@ export const sendMessage = async (
     let body = {
       message: message,
     };
-
-    console.log(headers);
-    console.log(body);
-    // /entities/:entityId/users/:userId/conversation/user
+    console.log(entityId);
     let request = `${backend_url}api/entities/${entityId}/users/${userId}/conversation/user`;
 
     let response = await axios.post(request, body, { headers });
     console.log("res", response);
+    console.log("res", response.data.success);
     return response.data;
   } catch (err) {
     return err?.response.data;
