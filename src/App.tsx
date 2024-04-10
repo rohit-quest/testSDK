@@ -28,14 +28,14 @@ import FeedbackWorkflowPreview from "./components/FeedbackOverview/Preview";
 import FeedbackPreview from "./components/Feedback/Preview";
 import Survey from "./components/Feedback/Survey";
 import ModalPreview from "./components/Modals/Preview";
-import PreviewLeaderboard from './components/Leaderboard/Preview'
+import PreviewLeaderboard from "./components/Leaderboard/Preview";
 import SurveyOffline from "./components/Feedback/OfflineComponent";
 import Modal from "./components/Modules/Modal";
 // import { NormalInput } from './components/Modules/Input'
 import OnBoarding from "./components/Onboarding/Onboarding";
 import DailyStreak from "./components/Streak/DailyStreak";
 import ChallengesPreview from "./components/Challenges/ChallengesPreview";
-import GamifiedQuizPreview from './components/GamifiedQuiz/GamifiedQuizPreview'
+import GamifiedQuizPreview from "./components/GamifiedQuiz/GamifiedQuizPreview";
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-2aa597b4-341f-4c3c-a022-f56877a585c9";
 export const apiSecret =
@@ -104,17 +104,19 @@ function App() {
         entityId={"e-0000000000"}
         featureFlags={{}}
         apiType="STAGING"
-        themeConfig={{
-          // backgroundColor: "black",
-          // borderColor: "blue",
-          // buttonColor: "green",
-          //  primaryColor: "green",
-          // secondaryColor: "blue",
-          // fontFamily: "cursive"
-        }}
+        themeConfig={
+          {
+            // backgroundColor: "black",
+            // borderColor: "blue",
+            // buttonColor: "green",
+            //  primaryColor: "green",
+            // secondaryColor: "blue",
+            // fontFamily: "cursive"
+          }
+        }
       >
         {/* <TutorialPreview online={false} /> */}
-        
+
         {/* <SpinTheWheel
                     userId={userId}
                     questId={questId}
@@ -126,7 +128,7 @@ function App() {
                     wheelImage={'https://quest-media-storage-bucket.s3.us-east-2.amazonaws.com/1706540110821-wrapit2.png'} /> */}
 
         {/* <SearchPreview online={false}/> */}
-        
+
         {/* <SreakPreview/> */}
         {/* <TutorialPreview online={false}/> */}
         {/* { <Payment
@@ -141,8 +143,7 @@ function App() {
                 forEntityId={"e-0000000000"}
             /> } */}
 
-
-          {/* <button onClick={onSuccess}>success</button>
+        {/* <button onClick={onSuccess}>success</button>
           <button onClick={onInfo}>info</button>
           <button onClick={onFailure}>error</button>
           <button onClick={onWarn}>warning</button>
@@ -150,9 +151,8 @@ function App() {
           <button onClick={onDifferentTwo}>warning</button> */}
         {/* <ModalPreview/> */}
 
-
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
-        {/* <GamifiedQuizPreview online={false} /> */}
+        <GamifiedQuizPreview online={true} />
 
         {/* 
                 <HelpCenter
@@ -169,14 +169,12 @@ function App() {
                 /> */}
         {/* <OnBoardingPreview online={false} /> */}
 
-
         {/* <GetStartedPreview  online={true} />   */}
-        
 
-{/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
+        {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
 </Modal> */}
-{/* <OnBoarding
+        {/* <OnBoarding
   questId="q-daf9940a-c2fb-4762-adce-57b9b1fda08c"
   answer={answer}
   setAnswer={setAnswer}
@@ -227,11 +225,8 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-
-
         {/* <FeedbackWorkflowPreview online={true} /> */}
-        <ChallengesPreview online={true} />
-        
+        {/* <ChallengesPreview online={true} /> */}
 
         {/* <FeedbackPreview online={true} /> */}
 
@@ -250,8 +245,8 @@ function App() {
                     // color="blue"
                     // isArticle={true}
             /> */}
-           {/* <PreviewLeaderboard online={true}/> */}
-               {/* <QuestLogin
+        {/* <PreviewLeaderboard online={true}/> */}
+        {/* <QuestLogin
                     // questId=""
                     textColor=""
                     btnTextColor=""
@@ -296,8 +291,8 @@ function App() {
                     
                 /> */}
 
-              {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
-              {/* <SreakPreview online /> */}
+        {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
+        {/* <SreakPreview online /> */}
       </QuestProvider>
     </div>
   );
