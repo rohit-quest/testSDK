@@ -151,6 +151,8 @@ export interface HelpHubChatTypes {
   apiKey?: string;
   styleConfig?: HelphubStyleConfig;
   contentConfig?: HelpHubOthersContentTypes;
+  showBottomNavigation?: boolean;
+  setShowBottomNavigation?: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface HelpHubFaqTypes {
@@ -169,6 +171,8 @@ export interface HelpHubUpdatesTypes {
   claimStatusUpdates?: string[] | [];
   setClaimStatusUpdates?: Dispatch<SetStateAction<string[] | []>> | undefined;
   onlineComponent?: boolean;
+  showBottomNavigation?: boolean;
+  setShowBottomNavigation?: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface HelpHubTasksTypes {

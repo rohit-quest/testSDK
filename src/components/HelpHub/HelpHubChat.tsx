@@ -4,10 +4,13 @@ import InfoButton from "../../assets/images/InfoButton.svg";
 import SendMessageEmojiIcon from "../../assets/images/SendMessageEmojiIcon.svg";
 import SendMessageAttachIcon from "../../assets/images/SendMessageAttachIcon.svg";
 import SendMessageSendIcon from "../../assets/images/SendMessageSendIcon.svg";
+import SendMessageAero from "../../assets/images/SendMessageAero.svg";
+import ChatWoman from "../../assets/images/ChatWoman.svg";
 import CancelButton from "../../assets/images/CancelButton.svg";
 import SearchIcons from "../../assets/images/SearchIcons.svg";
 import Modal1 from "../../assets/images/HelpHubModal1.jpeg";
 import QuestWhiteLogo from "../../assets/images/QuestWhiteLogo.svg";
+import Mic from "../../assets/images/Mic.svg";
 import Modal3 from "../../assets/images/HelpHubModal3.jpeg";
 import HelphubSvg from "./HelphubSvg";
 import { HelpHubChatTypes } from "./HelpHub.type";
@@ -31,6 +34,8 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     entityId,
     token,
     userId,
+    showBottomNavigation,
+    setShowBottomNavigation,
   } = props;
 
   const { themeConfig } = useContext(QuestContext.Context);
@@ -40,7 +45,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const [senderMessageLoading, setSenderMessageLoading] = useState(false);
-  const [messageFailed, setMessageFailed] = useState(true);
+  const [messageFailed, setMessageFailed] = useState(false);
 
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
@@ -52,30 +57,30 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
       senderMessage:
         "I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
     },
-    // {
-    //     profile: "hi",
-    //     senderName: "Alexander Rodriguez...",
-    //     senderMessage:
-    //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    // },
-    // {
-    //     profile: "hi",
-    //     senderName: "Alexander Rodriguez...",
-    //     senderMessage:
-    //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    // },
-    // {
-    //     profile: "hi",
-    //     senderName: "Alexander Rodriguez...",
-    //     senderMessage:
-    //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    // },
-    // {
-    //     profile: "hi",
-    //     senderName: "Alexander Rodriguez...",
-    //     senderMessage:
-    //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    // },
+    {
+      profile: "hi",
+      senderName: "Alexander Rodriguez...",
+      senderMessage:
+        " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+    },
+    {
+      profile: "hi",
+      senderName: "Alexander Rodriguez...",
+      senderMessage:
+        " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+    },
+    {
+      profile: "hi",
+      senderName: "Alexander Rodriguez...",
+      senderMessage:
+        " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+    },
+    {
+      profile: "hi",
+      senderName: "Alexander Rodriguez...",
+      senderMessage:
+        " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+    },
     // {
     //     profile: "hi",
     //     senderName: "Alexander Rodriguez...",
@@ -156,9 +161,9 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
           },
         ]);
         setSenderMessageLoading((prev) => !prev);
-        setMessageFailed(true);
+        // setMessageFailed(true);
         setTimeout(() => {
-          setMessageFailed(!sendMessageResponse.data.success);
+          // setMessageFailed(!sendMessageResponse.data.success);
         }, 2000);
         //   console.log(data);
       };
@@ -208,15 +213,15 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
         }
       );
       setData(conversion);
-      setChats([
-        {
-          profile: "hi",
-          senderName: "Alexander Rodriguez...",
-          senderMessage:
-            conversion[conversion.length - 1].receiver ||
-            conversion[conversion.length - 1].sender,
-        },
-      ]);
+      // setChats([
+      //   {
+      //     profile: "hi",
+      //     senderName: "Alexander Rodriguez...",
+      //     senderMessage:
+      //       conversion[conversion.length - 1].receiver ||
+      //       conversion[conversion.length - 1].sender,
+      //   },
+      // ]);
     };
     getMessagesHistory();
 
@@ -287,17 +292,19 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
             {/* search and chats container */}
             <div className="q-helphub-search-chats-container">
               {/* search  */}
-              <div
-                className="q-helphub-search-container"
-                style={{ ...styleConfig?.Chat?.Searchbox }}
-              >
-                <input
-                  className="q-helphub-search-input"
-                  type="text"
-                  placeholder="Search for help..."
-                />
-                <div className="q-helphub-search-btn">
-                  <img src={SearchIcons} alt="" />
+              <div className="search-outer-div">
+                <div
+                  className="q-helphub-search-container"
+                  style={{ ...styleConfig?.Chat?.Searchbox }}
+                >
+                  <input
+                    className="q-helphub-search-input"
+                    type="text"
+                    placeholder="Search for help..."
+                  />
+                  <div className="q-helphub-search-btn">
+                    <img src={SearchIcons} alt="" />
+                  </div>
                 </div>
               </div>
 
@@ -340,7 +347,10 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
 
                       <button
                         className="q-helphub-chat-btn"
-                        onClick={() => setShowPersonalChat((prev) => !prev)}
+                        onClick={() => {
+                          setShowBottomNavigation(false);
+                          setShowPersonalChat((prev) => !prev);
+                        }}
                       >
                         <img src={OpenSectionButton} alt="" />
                       </button>
@@ -352,9 +362,18 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
 
             {/*send button container */}
             <div className="q-helphub-send-message">
-              <div onClick={() => setShowPersonalChat(true)}>
-                <p>Send a message</p>
+              <div
+                onClick={() => {
+                  setShowBottomNavigation(false);
+                  setShowPersonalChat(true);
+                }}
+              >
+                <p>Send New Message</p>
+                <img src={SendMessageAero} alt="" />
               </div>
+              {/* <div >
+                
+              </div> */}
             </div>
 
             {/* personal chat one to one  */}
@@ -363,48 +382,60 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
       )}
 
       {showPersonalChat && (
-        <div className="q-chat-personal-container">
-          <div className="q-chat-personal-container-header">
-            <div
-              style={{ cursor: "pointer" }}
-              onClick={() => setShowPersonalChat(false)}
-            >
-              <HelphubSvg type={"BackButton"} />
-            </div>
-            <div className="q-chat-personal-container-header-title">
-              Questlabs chats
+        <div className="quest-personal-chat-cont">
+          {/* back and chats */}
+          <div className="quest-personal-chat-head-cont">
+            <div className="quest-head-back-cont">
+              <div
+                className="quest-back-btn"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setShowBottomNavigation(true);
+                  setShowPersonalChat(false);
+                }}
+              >
+                <HelphubSvg type={"BackButton"} />
+              </div>
+              <div className="quest-labs-chat">Questlabs chats</div>
             </div>
             <img src={InfoButton} />
           </div>
 
           <div
-            className="q-chat-personal-container-body-container"
-            ref={scrollRef}
+            className="quest-chat-personal-conversion-cont"
+            // ref={scrollRef}
           >
             <div className="q-chat-personal-container-body">
-              <div className="q-chat-personal-container-body-icons">
-                <div
-                  className="q-chat-personal-container-body-icons-img1"
-                  style={{ marginRight: "-10px" }}
-                >
-                  <img src={Modal1} />
-                </div>
-                <div className="q-chat-personal-container-body-icons-img">
-                  <img src={QuestWhiteLogo} />
-                </div>
-                <div
-                  className="q-chat-personal-container-body-icons-img1"
-                  style={{ marginLeft: "-10px" }}
-                >
-                  <img src={Modal3} />
-                </div>
-              </div>
-              <div>
+              <div className="text">
                 <div className="q-chat-personal-container-body-title">
                   General feedback
                 </div>
                 <div className="q-chat-personal-container-body-description">
                   Give general feedback of this page
+                </div>
+              </div>
+
+              <div className="q-chat-personal-container-body-icons">
+                <div
+                  className="q-chat-personal-container-body-icons-img"
+                  style={{
+                    zIndex: 3,
+                  }}
+                >
+                  <img src={QuestWhiteLogo} />
+                </div>
+                <div
+                  className="q-chat-personal-container-body-icons-img1"
+                  style={{ marginLeft: "-15px", zIndex: 2 }}
+                >
+                  <img src={Modal1} />
+                </div>
+
+                <div
+                  className="q-chat-personal-container-body-icons-img1"
+                  style={{ marginLeft: "-15px", zIndex: 1 }}
+                >
+                  <img src={ChatWoman} />
                 </div>
               </div>
             </div>
@@ -415,8 +446,9 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                   <div
                     style={{
                       display: "flex",
-                      position: "relative",
-                      gap: "6px",
+                      // position: "relative",
+                      gap: "8px",
+                      // backgroundColor: "yellow",
                     }}
                   >
                     {message.receiver && (
@@ -430,7 +462,6 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                         message.sender ? "sender" : "receiver"
                       }`}
                     >
-                      {/* {senderMessageLoading && <div>Loading</div>} */}
                       {message.sender ? message.sender : message.receiver}
                     </div>
 
@@ -455,7 +486,6 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                   className="message-failed"
                   style={{
                     position: "absolute",
-                    // bottom: "-50px",
                   }}
                 >
                   Something went wrong. PLease try again...
@@ -465,33 +495,39 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
           </div>
 
           <div className="q-chat-personal-container-footer">
-            <input
-              className="q-chat-personal-container-footer-input"
-              onKeyUp={(e) => {
-                if (e.key === "Enter") {
-                  //   if (message.length > 0) {
-                  //     setData((data) => [...data, { sender: message }]);
-                  //     setTimeout(() => {
-                  //       setData((data) => [
-                  //         ...data,
-                  //         {
-                  //           receiver:
-                  //             "I am not in the mood to answer, you come back later",
-                  //         },
-                  //       ]);
-                  //     }, 1000);
-                  //   }
-                  //   setMessage("");
-                  handleSave();
-                }
-              }}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-            <div className="q-chat-personal-container-footer-icons">
-              <img src={SendMessageEmojiIcon} />
-              <img src={SendMessageAttachIcon} />
-              <img src={SendMessageSendIcon} onClick={handleSave} />
+            <div>
+              <input
+                className="q-chat-personal-container-footer-input"
+                onKeyUp={(e) => {
+                  if (e.key === "Enter") {
+                    //   if (message.length > 0) {
+                    //     setData((data) => [...data, { sender: message }]);
+                    //     setTimeout(() => {
+                    //       setData((data) => [
+                    //         ...data,
+                    //         {
+                    //           receiver:
+                    //             "I am not in the mood to answer, you come back later",
+                    //         },
+                    //       ]);
+                    //     }, 1000);
+                    //   }
+                    //   setMessage("");
+                    handleSave();
+                  }
+                }}
+                placeholder="Ask a question..."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              />
+              <div className="q-chat-personal-container-footer-icons">
+                <img src={SendMessageEmojiIcon} />
+                <img src={Mic} />
+                <img src={SendMessageAttachIcon} />
+                <div onClick={handleSave}>
+                  <img src={SendMessageAero} />
+                </div>
+              </div>
             </div>
           </div>
         </div>
