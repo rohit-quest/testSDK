@@ -171,7 +171,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
 
         // const { data } = await axios.get(url, { headers: headers });
         const { data } = await axios.get(url, { headers: headers });
-        console.log(data);
+
         let criterias = data?.data?.eligibilityData.map(
           (criteria: {
             criteriaType: string;
@@ -436,7 +436,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
   //   const [gamifiedQuiz, setGamifiedQuiz] = useState(true);
 
   const formSubmitHandler = () => {
-    setGamifiedQuiz(false);
+    // setGamifiedQuiz(false);
     for (const key in selectedOptions) {
       if (selectedOptions.hasOwnProperty(key)) {
         answer[key] = selectedOptions[key];
@@ -599,7 +599,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           >
             <div className="gamified-pop-up-cancel-btn-cont">
               <div>
-                <div onClick={() => setThanksPopup((prev) => !prev)}>
+                <div onClick={() => {setGamifiedQuiz(false); setThanksPopup(false)}}>
                   <img src={CancelButton} alt="" />
                 </div>
               </div>
@@ -655,7 +655,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
         </div>
       ) : null}
 
-      {gamifiedQuiz ? (
+      {(gamifiedQuiz && !thanksPopup ) ? (
         <div className="upper-div">
           <div className="gamified-quiz">
             <div
@@ -795,6 +795,8 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                       onClick={() => {
                         if (sectionNo > 0) {
                           setSectionNo(sectionNo - 1);
+                        }else{
+                          setGamifiedQuiz(false);
                         }
                       }}
                       type="button"
