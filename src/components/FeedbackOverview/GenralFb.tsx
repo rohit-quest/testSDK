@@ -21,6 +21,7 @@ interface GeneralFeedbackContentProps {
   normalInput2: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
   iconColor?: string
   buttonStyle?: CSSProperties;
+  PrimaryButtonText?: string;
 }
 
 const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
@@ -33,6 +34,7 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
   normalInput2,
   buttonStyle = {},
   labelStyle = {},
+  PrimaryButtonText = "Submit",
 }) => {
   const [rating, setRating] = useState<number>(0);
   const handleRatingChange2 = (e: any, id: any, rating: number) => {
@@ -148,7 +150,7 @@ const { themeConfig } = useContext(QuestContext.Context);
             }
           })}
           <PrimaryButton 
-            children='Send Feedback'
+            children={PrimaryButtonText}
             onClick={handleSubmit}
             style={buttonStyle}
             className='q-fdov-btn-continue'

@@ -25,6 +25,25 @@ export default function CrossSellingPreview() {
                 token={token} userId={userId} 
                 // claimRewardHandler={undefined} 
                 // backButtonTrigger={undefined} 
+                gradientBackground={true}
+                styleConfig={{
+                    // Form: {
+                    //     backgroundColor: 'blue',
+                    //     color: 'red'
+                    // },
+                    // Heading: {
+                    //     color: 'red'
+                    // },
+                    Timer: {
+                        primaryColor: 'red',
+                        secondaryColor: 'blue',
+                        backgroundColor: 'yellow',
+                        TimerCard: {
+                            backgroundColor: 'green',
+                            // width: '100px'
+                        }
+                    }
+                }}
                 />
         </QuestProvider>
     )

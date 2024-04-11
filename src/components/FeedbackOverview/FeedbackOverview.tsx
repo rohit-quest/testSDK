@@ -17,10 +17,10 @@ import Modal from "../Modules/Modal";
 import TopBar from "../Modules/TopBar";
 import General from "../../general";
 
-const feedback = (color: string = "#939393") => (
+const feedback = (color: string = "#939393", Size: string = "16px") => (
   <svg
-    width="16"
-    height="16"
+    width={Size}
+    height={Size}
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -44,10 +44,10 @@ const feedback = (color: string = "#939393") => (
     />
   </svg>
 );
-const bug = (color: string = "#939393") => (
+const bug = (color: string = "#939393", Size: string = "16px") => (
   <svg
-    width="16"
-    height="16"
+    width={Size}
+    height={Size}
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -105,10 +105,10 @@ const bug = (color: string = "#939393") => (
     />
   </svg>
 );
-const feature = (color: string = "#939393") => (
+const feature = (color: string = "#939393", Size = "16") => (
   <svg
-    width="16"
-    height="16"
+    width={Size}
+    height={Size}
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -150,10 +150,10 @@ const cross = (color = "#AFAFAF", onClick?: () => void) => (
     </svg>
   </div>
 );
-const contact = (color: string = "#939393") => (
+const contact = (color: string = "#939393", Size: string = "16px") => (
   <svg
-    width="16"
-    height="16"
+    width={Size}
+    height={Size}
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -228,6 +228,8 @@ interface feedbackCompProps {
   backBtn?: boolean;
   iconColor?: string;
   showFooter?: boolean;
+  PrimaryButtonText?: string;
+  SecondaryButtonText?: string;
   styleConfig?: {
     Form?: React.CSSProperties;
     Heading?: React.CSSProperties;
@@ -246,12 +248,15 @@ interface feedbackCompProps {
     Footer?: React.CSSProperties;
     listHeading?: React.CSSProperties;
     listDescription?: React.CSSProperties;
+    Card?: React.CSSProperties;
     listHover?: {
       background?: string;
       iconBackground?: string;
       iconColor?: string;
       Heading?: string;
       Description?: string;
+      IconSize?: string;
+      Icon?: React.CSSProperties;
     };
   };
 }
@@ -279,6 +284,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   ReportBug,
   RequestFeature,
   ContactUs,
+  PrimaryButtonText = "Submit",
+  SecondaryButtonText = "Go to home!",
   descriptions = {
     "General Feedback": "Welcome back, Please complete your details",
     "Report a Bug": "Describe your issue",
@@ -759,6 +766,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   ratingStyle={ratingStyle}
                   iconColor={iconColor}
                   buttonStyle={styleConfig.PrimaryButton}
+                  PrimaryButtonText={PrimaryButtonText}
                 />
               )}
               {selectedOption === "ReportBug" && (
@@ -771,6 +779,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   normalInput2={normalInput2}
                   emailInput={emailInput}
                   handleRemove={handleRemove}
+                  PrimaryButtonText={PrimaryButtonText}
                 />
               )}
               {selectedOption === "RequestFeature" && (
@@ -783,6 +792,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   emailInput={emailInput}
                   answer={answer}
                   handleRemove={handleRemove}
+                  PrimaryButtonText={PrimaryButtonText}
                 />
               )}
               {selectedOption === "ContactUs" && <div></div>}
@@ -821,7 +831,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       your review and will assure you to surely consider them
                     </div>
                   </div>
-                  <div className="q_fw_submit_back" style={{...styleConfig?.SecondaryButton}}>Go to home!</div>
+                  <div className="q_fw_submit_back" style={{...styleConfig?.SecondaryButton}}>{SecondaryButtonText}</div>
                 </div>
               </div>
             </div>
@@ -852,6 +862,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       ? styleConfig.listHover?.background || "#FBFBFB"
                       : "transparent",
                     borderRadius: "8px",
+                    ...styleConfig?.Card,
                   }}
                 >
                   <div
@@ -860,11 +871,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       background: cardHovered[0]
                         ? styleConfig.listHover?.iconBackground || "#F4EBFF"
                         : "#FBFBFB",
+                        ...styleConfig?.listHover?.Icon,
                     }}
                   >
                     {GeneralFeedback?.iconUrl ? <img className="q_feedback_icon_imgurl" src={GeneralFeedback?.iconUrl} /> : feedback(cardHovered[0]
                       ? styleConfig.listHover?.iconColor || "#9035FF"
-                      : iconColor
+                      : iconColor, styleConfig.listHover?.IconSize
                     )}
                     {/* {feedback(
                       cardHovered[0]
@@ -927,6 +939,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       ? styleConfig.listHover?.background || "#FBFBFB"
                       : "transparent",
                     borderRadius: "8px",
+                    ...styleConfig?.Card,
                   }}
                 >
                   <div
@@ -935,11 +948,13 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       background: cardHovered[1]
                         ? styleConfig.listHover?.iconBackground || "#F4EBFF"
                         : "#FBFBFB",
+                        ...styleConfig?.listHover?.Icon,
                     }}
                   >
                     {ReportBug?.iconUrl ? <img className="q_feedback_icon_imgurl" src={ReportBug?.iconUrl} /> : bug(cardHovered[1]
-                      ? styleConfig.listHover?.iconColor || "#9035FF"
-                      : iconColor)}
+                      ? styleConfig.listHover?.iconColor || styleConfig?.listHover?.Icon?.color || "#9035FF"
+                      : iconColor , styleConfig.listHover?.IconSize)}
+
                     {/* {bug(
                       cardHovered[1]
                         ? styleConfig.listHover?.iconColor || "#9035FF"
@@ -1005,6 +1020,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       ? styleConfig.listHover?.background || "#FBFBFB"
                       : "transparent",
                     borderRadius: "8px",
+                    ...styleConfig?.Card,
                   }}
                 >
                   <div
@@ -1013,11 +1029,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       background: cardHovered[2]
                         ? styleConfig.listHover?.iconBackground || "#F4EBFF"
                         : "#FBFBFB",
+                        ...styleConfig?.listHover?.Icon,
                     }}
                   >
                     {RequestFeature?.iconUrl ? <img className="q_feedback_icon_imgurl" src={RequestFeature?.iconUrl} /> : feature(cardHovered[2]
                       ? styleConfig.listHover?.iconColor || "#9035FF"
-                      : iconColor)}
+                      : iconColor, styleConfig.listHover?.IconSize)}
                     {/* {feature(
                       cardHovered[2]
                         ? styleConfig.listHover?.iconColor || "#9035FF"
@@ -1083,6 +1100,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       ? styleConfig.listHover?.background || "#FBFBFB"
                       : "transparent",
                     borderRadius: "8px",
+                    ...styleConfig?.Card,
                   }}
                 >
                   <div
@@ -1091,11 +1109,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       background: cardHovered[3]
                         ? styleConfig.listHover?.iconBackground || "#F4EBFF"
                         : "#FBFBFB",
+                        ...styleConfig?.listHover?.Icon,
                     }}
                   >
                     {ContactUs?.iconUrl ? <img className="q_feedback_icon_imgurl" src={ContactUs?.iconUrl} /> : contact(cardHovered[3]
                       ? styleConfig.listHover?.iconColor || "#9035FF"
-                      : iconColor)}
+                      : iconColor, styleConfig.listHover?.IconSize)}
                     {/* {contact(
                       cardHovered[3]
                         ? styleConfig.listHover?.iconColor || "#9035FF"

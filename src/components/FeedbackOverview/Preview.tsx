@@ -96,6 +96,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
         isOpen={true}
         // onClose={() => setIsOpen(!isOpen)}
         showFooter={true}
+        SecondaryButtonText='red'
         styleConfig={{
             // Description: { color: 'red' },
             // listDescription:{color:'yellow'}
@@ -107,7 +108,9 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                 iconBackground:'grey',
                 background:'yellow',
                 Heading:'green',
-                Description:'red'
+                Description:'red',
+                IconSize:'20px',
+                Icon:{padding:'16px',border:'1px solid blue'}
             }
         }}
         contactUrl="https://calendly.com/sriya-persana/30min"
