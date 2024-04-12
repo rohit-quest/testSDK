@@ -30,7 +30,7 @@ const HelpHub = (props: HelpHubProps) => {
     onlineComponent,
   } = props;
   //   console.log(props);
-
+  console.log(contentConfig);
   const { apiKey, entityId, featureFlags, apiType, themeConfig } = useContext(
     QuestContext.Context
   );
@@ -147,6 +147,7 @@ const HelpHub = (props: HelpHubProps) => {
             )}
             {selectedSection === "Chat" ? (
               <HelpHubChat
+                contentConfig={contentConfig?.Chat}
                 apiType={apiType}
                 entityId={entityId}
                 userId={userId}

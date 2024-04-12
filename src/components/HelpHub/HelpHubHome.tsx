@@ -109,6 +109,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
             className={"helpHubHelloHead"}
             style={{
               fontFamily: themeConfig?.fontFamily,
+              ...styleConfig?.Home?.BannerText,
             }}
           >
             Hello there 👋🏻
@@ -117,6 +118,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
             className={"helpHubHelpHead"}
             style={{
               fontFamily: themeConfig?.fontFamily,
+              ...styleConfig?.Home?.BannerText,
             }}
           >
             How can we help?
@@ -166,20 +168,21 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
               style={{
                 color: themeConfig?.primaryColor,
                 fontFamily: themeConfig?.fontFamily,
-                // ...styleConfig?.Home?.Heading,
+                ...styleConfig?.Home?.Heading,
               }}
             >
-              Send us a message
+              {contentConfig?.chatButton?.heading || "Send us a message"}
             </p>
             <p
               className={"CustomerServiceDesc"}
               style={{
                 color: themeConfig?.secondaryColor,
-                // ...styleConfig?.Home?.Heading,
+                ...styleConfig?.Home?.SubHeading,
                 fontFamily: themeConfig?.fontFamily,
               }}
             >
-              Currently replying under a min
+              {contentConfig?.chatButton?.subHeading ||
+                "Currently replying under a min"}
             </p>
           </div>
 
@@ -212,12 +215,15 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
               className={"SendMessageButton"}
               onClick={() => setSelectedSection("Chat")}
               style={{
-                background: themeConfig?.buttonColor,
+                background:
+                  styleConfig?.Home?.Button?.background ||
+                  themeConfig?.buttonColor,
               }}
             >
               <p
                 style={{
                   fontFamily: themeConfig?.fontFamily,
+                  color: styleConfig?.Home?.Button?.color,
                 }}
               >
                 Message Now
@@ -286,7 +292,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
               <p
                 style={{
                   color: themeConfig?.primaryColor,
-                  // ...styleConfig?.Home?.Heading,
+                  ...styleConfig?.Home?.Heading,
                 }}
               >
                 {contentConfig?.box1?.heading || "The Questlabs community"}

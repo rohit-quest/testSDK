@@ -106,7 +106,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
             className="q-helphub-tasks-upper-cont-text-para"
             style={{
               color: themeConfig?.secondaryColor,
-              ...styleConfig?.Tasks?.Topbar?.Heading,
+              ...styleConfig?.Tasks?.Topbar?.SubHeading,
             }}
           >
             {contentConfig?.subHeading ||

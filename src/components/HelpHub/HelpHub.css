@@ -1552,7 +1552,7 @@
   gap: var(--Size-12, 12px);
   align-self: stretch;
   border-bottom: 1.5px solid var(--Neutral-White-300, #efefef);
-  background: var(--neutral-opacity-white-80, rgba(255, 255, 255, 0.8));
+  /* background: var(--neutral-opacity-white-80, rgba(255, 255, 255, 0.8)); */
 }
 
 .q-helphub-help-total-faqs div {

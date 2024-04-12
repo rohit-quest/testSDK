@@ -37,7 +37,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     showBottomNavigation,
     setShowBottomNavigation,
   } = props;
-
+  console.log(contentConfig);
   const { themeConfig } = useContext(QuestContext.Context);
   const [showPersonalChat, setShowPersonalChat] = useState(false);
   const [message, setMessage] = useState("");
@@ -175,7 +175,8 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     const headerElement = document.getElementById("helpHub");
     if (headerElement && scrollRef.current) {
       const headerHeight = headerElement.clientHeight;
-      scrollRef.current.style.height = headerHeight - 228 + "px";
+      // scrollRef.current.style.height = headerHeight - 228 + "px";
+      scrollRef.current.style.height = headerHeight - 191 + "px";
     }
   };
 
@@ -261,7 +262,9 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                 <div
                   className="q-helphub-chatpage-heading"
                   style={{
-                    color: themeConfig?.primaryColor,
+                    color:
+                      styleConfig?.Chat?.Topbar?.Heading?.color ||
+                      themeConfig?.primaryColor,
                     ...styleConfig?.Chat?.Topbar?.Heading,
                   }}
                 >
@@ -272,7 +275,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                   className="q-helphub-chatpage-para"
                   style={{
                     color: themeConfig?.secondaryColor,
-                    ...styleConfig?.Chat?.Topbar?.Heading,
+                    ...styleConfig?.Chat?.Topbar?.SubHeading,
                   }}
                 >
                   {contentConfig?.subHeading ||
@@ -329,7 +332,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                           className="q-helphub-chat-sender-name"
                           style={{
                             color: themeConfig?.primaryColor,
-                            ...styleConfig?.Updates?.Card?.Heading,
+                            ...styleConfig?.Chat?.Card?.Heading,
                           }}
                         >
                           {value.senderName}
@@ -338,7 +341,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                           className="q-helphub-chat-sender-message"
                           style={{
                             color: themeConfig?.primaryColor,
-                            ...styleConfig?.Updates?.Card?.SubHeading,
+                            ...styleConfig?.Chat?.Card?.SubHeading,
                           }}
                         >
                           {value.senderMessage}
@@ -426,10 +429,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
             <img src={InfoButton} />
           </div>
 
-          <div
-            className="quest-chat-personal-conversion-cont"
-            // ref={scrollRef}
-          >
+          <div className="quest-chat-personal-conversion-cont" ref={scrollRef}>
             <div className="q-chat-personal-container-body">
               <div className="text">
                 <div

@@ -388,21 +388,178 @@ export default function HelpHubPreview({ online = true }) {
           }
           userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
           onlineComponent={online}
-          contentConfig={
+          // contentConfig={{
+          //   Chat: {
+          //     heading: "Chat heading",
+          //     subHeading: "Chat Sub Heading",
+          //   },
+          //   Help: {
+          //     heading: "Help Head",
+          //     subHeading: "Help Sub Head",
+          //   },
+          //   Home: {
+          //     box1: {
+          //       heading: "B1 Haed",
+          //       image: "Image",
+          //       subHeading: "B1 Sub Head",
+          //     },
+          //     box4: {
+          //       heading: "B4 Head",
+          //       subHeading: "B4 sub head",
+          //     },
+          //     box5: {
+          //       heading: "b5 had",
+          //       subHeading: "b5 sub head",
+          //     },
+          //     chatButton: {
+          //       heading: "chat head",
+          //       subHeading: "chat sub head",
+          //     },
+          //   },
+          //   Tasks: {
+          //     heading: "atsk head",
+          //     subHeading: "task sub head",
+          //   },
+          //   Updates: {
+          //     heading: "uo head",
+          //     subHeading: "up sub head",
+          //   },
+          // }}
+          styleConfig={
             {
-              // Chat: "asdfas",
+              // Chat: {
+              //   Card: {
+              //     Heading: {
+              //       color: "red",
+              //     },
+              //     SubHeading: {
+              //       color: "yellow",
+              //     },
+              //   },
+              //   Topbar: {
+              //     Heading: {
+              //       color: "red",
+              //     },
+              //     SubHeading: {
+              //       color: "yellow",
+              //     },
+              //   },
+              //   Form: {
+              //     // color: "red",
+              //   },
+              // },
+              // Footer: {
+              //   // background: "red",
+              // },
+              // Help: {
+              //   Card: {
+              //     Heading: {
+              //       color: "red",
+              //     },
+              //     SubHeading: {
+              //       color: "blue",
+              //     },
+              //   },
+              //   Form: {
+              //     color: "pink",
+              //     // background: "red",
+              //   },
+              //   Searchbox: {
+              //     color: "red",
+              //     background: "red",
+              //   },
+              //   Topbar: {
+              //     Heading: {
+              //       color: "green",
+              //     },
+              //     SubHeading: {
+              //       color: "greenyellow",
+              //     },
+              //   },
+              // },
+              // Home: {
+              //   BannerText: {
+              //     color: "red",
+              //   },
+              //   Button: {
+              //     color: "red",
+              //     background: "green",
+              //   },
+              //   Card: {
+              //     // color: "red",
+              //     // background: "red",
+              //     // backgroundColor: "red",
+              //   },
+              //   Form: {
+              //     // color: "red",
+              //     // background: "red",
+              //     // backgroundColor: "red",
+              //   },
+              //   Heading: {
+              //     // color: "red",
+              //     // background: "red",
+              //   },
+              //   SubHeading: {
+              //     color: "red",
+              //     background: "red",
+              //   },
+              // },
+              // Tasks: {
+              //   Card: {
+              //     // Heading: {
+              //     //   color: "red",
+              //     //   background: "yellow",
+              //     // },
+              //     // SubHeading: {
+              //     //   color: "red",
+              //     //   background: "yellow",
+              //     // },
+              //   },
+              //   Form: {
+              //     // color: "red",
+              //     // background: "yellow",
+              //   },
+              //   Searchbox: {},
+              //   Topbar: {
+              //     Heading: {
+              //       color: "red",
+              //       background: "yellow",
+              //     },
+              //     SubHeading: {
+              //       color: "green",
+              //       background: "yellow",
+              //     },
+              //   },
+              // },
+              // Updates: {
+              //   Card: {
+              //     // Heading: {
+              //     //   color: "red",
+              //     //   background: "yellow",
+              //     // },
+              //     // SubHeading: {
+              //     //   color: "yellow",
+              //     //   background: "red",
+              //     // },
+              //   },
+              //   Form: {
+              //     // color: "red",
+              //     // background: "yellow",
+              //   },
+              //   // Searchbox
+              //   Topbar: {
+              //     Heading: {
+              //       // color: "red",
+              //       // background: "yellow",
+              //     },
+              //     SubHeading: {
+              //       // color: "red",
+              //       // background: "yellow",
+              //     },
+              //   },
+              // },
             }
           }
-          styleConfig={{
-            Chat: {
-              Card: {
-                Heading: {
-                  background: "yellow",
-                },
-              },
-              Form: {},
-            },
-          }}
           // claimStatusUpdates={claimStatusUpdates}
           // setClaimStatusUpdates={setClaimStatusUpdates}
         />

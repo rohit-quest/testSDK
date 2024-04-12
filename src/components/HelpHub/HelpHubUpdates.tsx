@@ -236,7 +236,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                               style={{
                                 color: themeConfig?.secondaryColor,
                                 fontFamily: themeConfig?.fontFamily,
-                                // ...styleConfig?.Home?.Heading,
+                                ...styleConfig?.Updates?.Card?.SubHeading,
                               }}
                             >
                               {getTimeDifference(value?.data?.createdAt)}
@@ -247,7 +247,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                               style={{
                                 color: themeConfig?.primaryColor,
                                 fontFamily: themeConfig?.fontFamily,
-                                // ...styleConfig?.Home?.Heading,
+                                ...styleConfig?.Updates?.Card?.Heading,
                               }}
                             >
                               {value?.data?.metadata?.linkActionName}
@@ -259,7 +259,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                             style={{
                               color: themeConfig?.secondaryColor,
                               fontFamily: themeConfig?.fontFamily,
-                              // ...styleConfig?.Home?.Heading,
+                              ...styleConfig?.Updates?.Card?.SubHeading,
                             }}
                           >
                             {value?.data?.metadata?.description}
