@@ -9,12 +9,14 @@ import showToast from '../toast/toastService';
 import GamifiedQuiz from './GamifiedQuiz';
 // import GamifiedQuizOfflineNew from './GamifiedQuizOfflineNew';
 import GamifiedQuizOffline from './GamifiedQuizOffline';
-export const questId = 'q-d00f89ad-b89f-46bb-82a9-80a1cd7c5717';
-export const apiKey = 'k-e6ec8094-6eef-4e80-a804-112a63607bf5'
-export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
-export const entityId = 'e-5768fd26-d226-4ac1-81e6-3c99427f3fb3'
-export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxMjExNTM1OSwiZXhwIjoxNzEyNzIwMTU5fQ.A0u4nEwrpsSJFk2c-EW8c7XoI1-nxMteic68YqLCFRc'
-export const userId = 'u-88350caa-4080-4505-a169-09f3f15e83b7'
+export const questId = "q-0b37396e-ccaa-45a6-959f-44700e95967d";
+export const apiKey = "k-fe5a805c-77ed-4cae-bd33-9591ebed2805";
+export const apiSecret =
+  "s-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42";
+export const entityId = "e-9850377b-f88f-4426-a2ac-56206c74655a";
+export const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMjgyMDkyOSwiZXhwIjoxNzEzNDI1NzI5fQ.RQXNgNM83WfWhgHRFnRilFaXqmx0x-cvVhaL1TvhlBc";
+export const userId = "u-8268f5e1-f5a1-440c-a333-0f5578a73847";
 
 export default function GamifiedQuizPreviewNew({ online = false }: { online?: boolean }) {
     const [offlineAnswer, setOfflineAnswer] = useState<Record<string, string | Array<string>>>({});

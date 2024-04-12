@@ -45,10 +45,10 @@ export interface referProp {
         gradientDescription?: CSSProperties,
         Input?: CSSProperties,
         Timer?: {
-            primaryColor: string,
-            secondaryColor: string,
-            backgroundColor: string,
-            TimerCard: CSSProperties
+            primaryColor?: string,
+            secondaryColor?: string,
+            backgroundColor?: string,
+            TimerCard?: CSSProperties
         },
         Footer?: CSSProperties
         Icon?: CSSProperties,
@@ -73,7 +73,7 @@ export const CrossSelling = ({
     primaryDescription = 'Welcome back, Please complete your details',
     showDays = false,
     expiryDate = 0,
-    claimRewardHandler = () => { },
+    claimRewardHandler = (email?: string) => { },
     backButtonTrigger = () => { },
     uniqueEmailId,
     uniqueUserId,
@@ -136,6 +136,11 @@ export const CrossSelling = ({
     }, []);
 
 
+    const handleEmail = (email: string) => {
+        claimRewardHandler(email)
+    }
+
+
 
     const jsx = (
         <div className="q_refer_and_earn" style={{
@@ -168,10 +173,10 @@ export const CrossSelling = ({
                         <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor }}>Seconds</div>
                     </div>
                 </div>
-                <div>
+                <div style={{width: "100%"}}>
                 <Label
                      htmlFor={"normalInput"}
-                    children={'Email'}
+                    children={'Email Address'}
                     style={styleConfig?.Label}
                 />
                 <Input
@@ -182,6 +187,7 @@ export const CrossSelling = ({
                     onChange={(e) => setEmail(e.target.value)}
                     emailtext={styleConfig?.EmailError?.text == undefined ? "This is not a valid email" : styleConfig?.EmailError?.text}
                     emailErrorStyle={styleConfig?.EmailError?.errorStyle}
+                    
                 />
                 </div>
                 <PrimaryButton
@@ -191,9 +197,10 @@ export const CrossSelling = ({
                     }}
                     onClick={() => {
                         GeneralFunctions.fireTrackingEvent("quest_challenges_primary_btn_clicked", "challenges");
-                        claimRewardHandler()
+                        handleEmail(email)
                     }}
                     className="q_share_link_button"
+                    disabled={!email}
                 >
                     {shareButtonText}
                 </PrimaryButton>

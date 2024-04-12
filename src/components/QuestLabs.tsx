@@ -18,8 +18,10 @@ export default function QuestLabs({ style, icon = true }: QuestLabsProps) {
     const { themeConfig } = useContext(QuestContext.Context)
     return (
         <div style={{ color: themeConfig.secondaryColor, ...style }} onClick={() => { window.open("https://www.questlabs.ai/", "_blank") }} className='powered_by_quest'>
-            <div style={{color: themeConfig.secondaryColor||style?.color}}>Powered by Quest Labs</div>
-            {icon && <img src={questPowered(style?.color || themeConfig.secondaryColor)} alt="" />}
+            <div style={{ color: themeConfig.secondaryColor || style?.color }}>Powered by Quest Labs</div>
+            {icon && <div style={{ width: "12px", height: "12px", boxSizing:'content-box' }}>
+                <img src={questPowered(style?.color || themeConfig.secondaryColor)} alt="" />
+            </div>}
         </div>
     )
 }

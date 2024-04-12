@@ -167,7 +167,7 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-        {/* <OnBoardingPreview online={false} /> */}
+        {/* <OnBoardingPreview online={true} /> */}
 
 
         {/* <GetStartedPreview  online={true} />   */}
@@ -229,7 +229,7 @@ function App() {
 
 
 
-        {/* <FeedbackWorkflowPreview online={true} /> */}
+        <FeedbackWorkflowPreview online={true} />
         {/* <ChallengesPreview online={true} /> */}
         
 
@@ -237,7 +237,7 @@ function App() {
 
         {/* <ReferEarnPreview/> */}
 
-        <CrossSellingPreview/>
+        {/* <CrossSellingPreview/> */}
 
         {/* <TourPreview /> */}
 
