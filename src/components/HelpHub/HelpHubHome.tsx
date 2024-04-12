@@ -105,8 +105,22 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
         </div>
 
         <div className={"helpHubTextCont"}>
-          <div className={"helpHubHelloHead"}>Hello there 👋🏻</div>
-          <div className={"helpHubHelpHead"}>How can we help?</div>
+          <div
+            className={"helpHubHelloHead"}
+            style={{
+              fontFamily: themeConfig?.fontFamily,
+            }}
+          >
+            Hello there 👋🏻
+          </div>
+          <div
+            className={"helpHubHelpHead"}
+            style={{
+              fontFamily: themeConfig?.fontFamily,
+            }}
+          >
+            How can we help?
+          </div>
           {/* <div className={"helpHubImage"}>
             <img src={Modal3} />
           </div> */}
@@ -115,7 +129,14 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
 
       {/* lower div : div 2 */}
       <div style={{ width: "100%" }} className="q-helphub-InnerCont">
-        <div className={"SendMessageCont"}>
+        <div
+          className={"SendMessageCont"}
+          style={{
+            background: themeConfig?.backgroundColor,
+            ...styleConfig?.Home?.Card,
+            borderColor: themeConfig?.borderColor,
+          }}
+        >
           {/* <div className={"HelloText"} style={styleConfig?.Home?.BannerText}>
             {contentConfig?.heading || "Hello there"}
           </div>
@@ -129,13 +150,35 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
               <div>
                 <img src={CustomerService} alt="" />
               </div>
-              <p>Customer Service</p>
+              <p
+                style={{
+                  fontFamily: themeConfig?.fontFamily,
+                }}
+              >
+                Customer Service
+              </p>
             </div>
           </div>
 
           <div className={"CustomerServiceSendMessageTextCont"}>
-            <p className={"CustomerServiceHead"}>Send us a message</p>
-            <p className={"CustomerServiceDesc"}>
+            <p
+              className={"CustomerServiceHead"}
+              style={{
+                color: themeConfig?.primaryColor,
+                fontFamily: themeConfig?.fontFamily,
+                // ...styleConfig?.Home?.Heading,
+              }}
+            >
+              Send us a message
+            </p>
+            <p
+              className={"CustomerServiceDesc"}
+              style={{
+                color: themeConfig?.secondaryColor,
+                // ...styleConfig?.Home?.Heading,
+                fontFamily: themeConfig?.fontFamily,
+              }}
+            >
               Currently replying under a min
             </p>
           </div>
@@ -168,8 +211,17 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
             <div
               className={"SendMessageButton"}
               onClick={() => setSelectedSection("Chat")}
+              style={{
+                background: themeConfig?.buttonColor,
+              }}
             >
-              <p>Message Now</p>
+              <p
+                style={{
+                  fontFamily: themeConfig?.fontFamily,
+                }}
+              >
+                Message Now
+              </p>
               <img src={SendMessageAero} alt="" />
             </div>
           </div>
@@ -216,6 +268,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
           style={{
             background: themeConfig?.backgroundColor,
             ...styleConfig?.Home?.Card,
+            borderColor: themeConfig?.borderColor,
           }}
         >
           <div className="q-helphub-quest-community-imageCont">
@@ -230,7 +283,14 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
                 ...styleConfig?.Home?.Heading,
               }}
             >
-              <p>{contentConfig?.box1?.heading || "The Questlabs community"}</p>
+              <p
+                style={{
+                  color: themeConfig?.primaryColor,
+                  // ...styleConfig?.Home?.Heading,
+                }}
+              >
+                {contentConfig?.box1?.heading || "The Questlabs community"}
+              </p>
               <img src={OpenSectionButton} alt="" />
             </div>
 
@@ -248,7 +308,14 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
         </div>
 
         {/* search for help  */}
-        <div className="q-helhub-search-community">
+        <div
+          className="q-helhub-search-community"
+          style={{
+            background: themeConfig?.backgroundColor,
+            ...styleConfig?.Home?.Card,
+            borderColor: themeConfig?.borderColor,
+          }}
+        >
           <div className="search-input">
             <div className="q-helphub-search-input-cont">
               <input
@@ -335,6 +402,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
             style={{
               background: themeConfig?.backgroundColor,
               ...styleConfig?.Home?.Card,
+              borderColor: themeConfig?.borderColor,
             }}
           >
             <div className="q-helphub-updates-innercont">
@@ -383,6 +451,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
               onClick={() => setSelectedSection("Updates")}
               style={{
                 background: themeConfig?.buttonColor,
+                fontFamily: themeConfig?.fontFamily,
                 ...styleConfig?.Home?.Button,
               }}
             >
@@ -397,6 +466,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
           style={{
             background: themeConfig?.backgroundColor,
             ...styleConfig?.Home?.Card,
+            borderColor: themeConfig?.borderColor,
           }}
         >
           {/* one */}
@@ -466,6 +536,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
           style={{
             background: themeConfig?.backgroundColor,
             ...styleConfig?.Home?.Card,
+            borderColor: themeConfig?.borderColor,
           }}
         >
           <div className="q-helphub-review-text-emoji-cont">

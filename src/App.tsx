@@ -164,7 +164,7 @@ function App() {
         <HelpHubPreview online={true} />
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
-        <GamifiedQuizPreview online={true} />
+        {/* <GamifiedQuizPreview online={true} /> */}
 
         {/* 
                 <HelpCenter

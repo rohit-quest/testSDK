@@ -9,6 +9,7 @@ import config from "../../config";
 import { claimQuest } from "./Helphub.service";
 import UpdatesImage from "../../assets/images/UpdatesImage.png";
 import TaskUpButton from "../../assets/images/TaskUpButton.svg";
+import TaskCompleted from "../../assets/images/TaskCompleted.svg";
 const HelpHubTasks = (props: HelpHubTasksTypes) => {
   const {
     tasksData,
@@ -71,7 +72,10 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
   };
 
   const [openTaskDiv, setOpenTaskDiv] = useState<number | undefined>(undefined);
-
+  // console.log(claimStatusTasks);
+  // console.log(claimStatusTasks.length);
+  // console.log(claimStatusTasks?.length / tasksData?.length);
+  // console.log("widt of one", Math.ceil(100 / tasksData.length));
   return (
     <div
       className={"helpHubTaskCont"}
@@ -81,7 +85,13 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
       }}
     >
       {/* for heading  */}
-      <div className="q-helphub-tasks-upper-cont">
+      <div
+        className="q-helphub-tasks-upper-cont"
+        style={{
+          background: themeConfig?.backgroundColor,
+          ...styleConfig?.Home?.Card,
+        }}
+      >
         <div className="task-head-text-div">
           <div
             className="q-helphub-tasks-upper-cont-text-head"
@@ -108,12 +118,18 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
         </div>
       </div>
 
-      <div className="q-helphub-tasks-lower-cont">
+      <div
+        className="q-helphub-tasks-lower-cont"
+        style={{
+          background: themeConfig?.backgroundColor,
+          ...styleConfig?.Home?.Card,
+        }}
+      >
         {/* search box  */}
-        <div
+        {/* <div
           className="q-helphub-tasks-search-cont"
           style={{ ...styleConfig?.Tasks?.Searchbox }}
-        ></div>
+        ></div> */}
 
         {/* progress bar  */}
         {/* <div className="q-helphub-tasks-progress-cont">
@@ -133,13 +149,18 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
           </div>
         </div> */}
         <div className="q-helphub-tasks-progress-cont">
-          <div className="q-helphub-tasks-progress-per">
+          <div
+            className="q-helphub-tasks-progress-per"
+            style={{
+              fontFamily: themeConfig?.fontFamily,
+            }}
+          >
             STEP {claimStatusTasks?.length}/{tasksData?.length}
             {/* {Math.ceil(100 * (claimStatusTasks?.length / tasksData?.length)) ||
               0} */}
           </div>
-          <div className="q-helphub-tasks-progress-bar">
-            {/* <div
+          {/* <div className="q-helphub-tasks-progress-bar"> */}
+          {/* <div
               style={{
                 width: `${
                   100 * (claimStatusTasks?.length / tasksData?.length)
@@ -147,50 +168,88 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
               }}
             ></div> */}
 
-            {/* <div>
+          {/* <div>
               {tasksData?.map(() => (
                 <div>hi</div>
               ))}
             </div> */}
-          </div>
+          {/* </div> */}
+
           <div
             style={{
               display: "flex",
               width: "100%",
-              background: "yellow",
+              // background: "yellow",
               justifyContent: "space-between",
               gap: "8px",
             }}
           >
-            {tasksData?.map(() => (
-              <div
-                className="q-helphub-tasks-progress-bar"
-                style={{
-                  width: "10%",
-                }}
-              >
-                {/* <div
-               style={{
-                 width: `${
-                   100 * (claimStatusTasks?.length / tasksData?.length)
-                 }%`,
-               }}
-             ></div> */}
+            {/* <div
+              className="q-helphub-tasks-progress-bar"
+              style={{
+                width: `${Math.ceil(100 / tasksData.length)}%`,
+              }}
+            ></div> */}
 
-                {/* <div>
-               {tasksData?.map(() => (
-                 <div>hi</div>
-               ))}
-             </div> */}
-              </div>
-            ))}
+            {tasksData?.map((value, index) => {
+              // console.log(value);
+              // console.log(value.completed);
+              return (
+                <div
+                  className="q-helphub-tasks-progress-bar-tabs "
+                  style={{
+                    width: `${Math.ceil(100 / tasksData.length)}%`,
+                    background: `${
+                      openTaskDiv === index
+                        ? "var(--Primary-Grape-400, #A357FF)"
+                        : value.completed
+                        ? "var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%))"
+                        : ""
+                    }`,
+                    boxShadow: "0px 1px 4px 0px rgba(0, 0, 0, 0.12)",
+                    borderRadius: `${
+                      index == 0
+                        ? "14px 0px 0px 14px"
+                        : index === tasksData?.length - 1
+                        ? "0px 14px 14px 0px"
+                        : ""
+                    }`,
+                  }}
+                >
+                  {/* {index === 0
+                    ? "first"
+                    : index === tasksData?.length - 1
+                    ? "last"
+                    : ""} */}
+                  {/* <div
+             style={{
+               width: `${
+                 100 * (claimStatusTasks?.length / tasksData?.length)
+               }%`,
+             }}
+           ></div> */}
+
+                  {/* <div>
+             {tasksData?.map(() => (
+               <div>hi</div>
+             ))}
+           </div> */}
+                </div>
+              );
+            })}
           </div>
         </div>
 
         <div className="q-helphub-tasks-task-cont">
           {filterData?.map(
             (ele: QuestCriteriaWithStatusType, index: number) => (
-              <div className="q-helphub-tasks-single-task">
+              <div
+                className="q-helphub-tasks-single-task"
+                style={{
+                  background: themeConfig?.backgroundColor,
+                  ...styleConfig?.Home?.Card,
+                }}
+              >
                 <div
                   className="single-task-close-detail"
                   onClick={() => {
@@ -212,6 +271,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                       className="q-helphub-tasks-single-task-step"
                       style={{
                         color: themeConfig?.secondaryColor,
+                        fontFamily: themeConfig?.fontFamily,
                         ...styleConfig?.Tasks?.Card?.SubHeading,
                       }}
                     >
@@ -220,6 +280,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                     <div
                       className="q-helphub-tasks-single-task-head"
                       style={{
+                        fontFamily: themeConfig?.fontFamily,
                         color: themeConfig?.primaryColor,
                         ...styleConfig?.Tasks?.Card?.Heading,
                       }}
@@ -229,6 +290,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                     <div
                       className="q-helphub-tasks-single-task-para"
                       style={{
+                        fontFamily: themeConfig?.fontFamily,
                         color: themeConfig?.secondaryColor,
                         ...styleConfig?.Tasks?.Card?.SubHeading,
                       }}
@@ -241,11 +303,15 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                       padding: claimStatusTasks?.includes(ele?.data?.criteriaId)
                         ? "5px 4px"
                         : "",
-                      rotate: index === openTaskDiv ? "" : "180deg",
+                      rotate: claimStatusTasks?.includes(ele?.data?.criteriaId)
+                        ? ""
+                        : index === openTaskDiv
+                        ? ""
+                        : "180deg",
                     }}
                     src={
-                      !claimStatusTasks?.includes(ele?.data?.criteriaId)
-                        ? TaskStatusDone
+                      claimStatusTasks?.includes(ele?.data?.criteriaId)
+                        ? TaskCompleted
                         : index === openTaskDiv
                         ? TaskUpButton
                         : TaskUpButton
@@ -256,12 +322,28 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                 {index === openTaskDiv ? (
                   <div className="single-task-close-div">
                     <div className="single-task-close-div-text">
-                      <p>
+                      <p
+                        style={{
+                          fontFamily: themeConfig?.fontFamily,
+                          color: themeConfig?.secondaryColor,
+                          ...styleConfig?.Tasks?.Card?.SubHeading,
+                        }}
+                      >
                         You can complete your user information details by
                         sharing the details asked in the form
                       </p>
-                      <button>
-                        <p>Start Now</p>
+                      <button
+                        style={{
+                          background: themeConfig?.buttonColor,
+                        }}
+                      >
+                        <p
+                          style={{
+                            fontFamily: themeConfig?.fontFamily,
+                          }}
+                        >
+                          Start Now
+                        </p>
                       </button>
                     </div>
                     <div className="single-task-close-div-image-cont">

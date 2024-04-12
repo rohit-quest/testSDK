@@ -323,12 +323,12 @@ export const sendMessage = async (
     let body = {
       message: message,
     };
-    console.log(entityId);
+    // console.log(entityId);
     let request = `${backend_url}api/entities/${entityId}/users/${userId}/conversation/user`;
 
     let response = await axios.post(request, body, { headers });
-    console.log("res", response);
-    console.log("res", response.data.success);
+    // console.log("res", response);
+    // console.log("res", response.data.success);
     return response.data;
   } catch (err) {
     return err?.response.data;

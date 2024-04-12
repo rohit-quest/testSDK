@@ -373,8 +373,12 @@ export default function HelpHubPreview({ online = true }) {
         apiType="STAGING"
         themeConfig={
           {
-            // backgroundColor: "red",
+            // backgroundColor: "wheat",
+            // borderColor: "red",
+            // buttonColor: "pink",
             // fontFamily: "cursive",
+            // primaryColor: "red",
+            // secondaryColor: "green",
           }
         }
       >
@@ -384,7 +388,21 @@ export default function HelpHubPreview({ online = true }) {
           }
           userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
           onlineComponent={online}
-          // contentConfig={}
+          contentConfig={
+            {
+              // Chat: "asdfas",
+            }
+          }
+          styleConfig={{
+            Chat: {
+              Card: {
+                Heading: {
+                  background: "yellow",
+                },
+              },
+              Form: {},
+            },
+          }}
           // claimStatusUpdates={claimStatusUpdates}
           // setClaimStatusUpdates={setClaimStatusUpdates}
         />

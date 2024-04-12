@@ -57,30 +57,30 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
       senderMessage:
         "I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
     },
-    {
-      profile: "hi",
-      senderName: "Alexander Rodriguez...",
-      senderMessage:
-        " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    },
-    {
-      profile: "hi",
-      senderName: "Alexander Rodriguez...",
-      senderMessage:
-        " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    },
-    {
-      profile: "hi",
-      senderName: "Alexander Rodriguez...",
-      senderMessage:
-        " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    },
-    {
-      profile: "hi",
-      senderName: "Alexander Rodriguez...",
-      senderMessage:
-        " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    },
+    // {
+    //   profile: "hi",
+    //   senderName: "Alexander Rodriguez...",
+    //   senderMessage:
+    //     " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+    // },
+    // {
+    //   profile: "hi",
+    //   senderName: "Alexander Rodriguez...",
+    //   senderMessage:
+    //     " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+    // },
+    // {
+    //   profile: "hi",
+    //   senderName: "Alexander Rodriguez...",
+    //   senderMessage:
+    //     " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+    // },
+    // {
+    //   profile: "hi",
+    //   senderName: "Alexander Rodriguez...",
+    //   senderMessage:
+    //     " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
+    // },
     // {
     //     profile: "hi",
     //     senderName: "Alexander Rodriguez...",
@@ -126,7 +126,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   ]);
 
   const handleSave = () => {
-    console.log("sending message");
+    // console.log("sending message");
 
     if (message.length > 0) {
       setSenderMessageLoading(true);
@@ -141,11 +141,11 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
           apiKey,
           message
         );
-        console.log(sendMessageResponse);
+        // console.log(sendMessageResponse);
         // console.log();
-        console.log("user", message);
+        // console.log("user", message);
 
-        console.log("response", sendMessageResponse.data);
+        // console.log("response", sendMessageResponse.data);
         // setTimeout(() => {
         //   setData((data) => [
         //     ...data,
@@ -361,14 +361,30 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
             </div>
 
             {/*send button container */}
-            <div className="q-helphub-send-message">
+            <div
+              className="q-helphub-send-message"
+              style={{
+                background: themeConfig?.backgroundColor,
+                ...styleConfig?.Home?.Card,
+              }}
+            >
               <div
                 onClick={() => {
                   setShowBottomNavigation(false);
                   setShowPersonalChat(true);
                 }}
+                style={{
+                  background: themeConfig?.buttonColor,
+                }}
               >
-                <p>Send New Message</p>
+                <p
+                  style={{
+                    fontFamily: themeConfig?.fontFamily,
+                    // ...styleConfig?.Home?.Button,
+                  }}
+                >
+                  Send New Message
+                </p>
                 <img src={SendMessageAero} alt="" />
               </div>
               {/* <div >
@@ -396,7 +412,16 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
               >
                 <HelphubSvg type={"BackButton"} />
               </div>
-              <div className="quest-labs-chat">Questlabs chats</div>
+              <div
+                className="quest-labs-chat"
+                style={{
+                  fontFamily: themeConfig?.fontFamily,
+                  color: themeConfig?.primaryColor,
+                  // ...styleConfig?.Tasks?.Card?.SubHeading,
+                }}
+              >
+                Questlabs chats
+              </div>
             </div>
             <img src={InfoButton} />
           </div>
@@ -407,10 +432,24 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
           >
             <div className="q-chat-personal-container-body">
               <div className="text">
-                <div className="q-chat-personal-container-body-title">
+                <div
+                  className="q-chat-personal-container-body-title"
+                  style={{
+                    fontFamily: themeConfig?.fontFamily,
+                    color: themeConfig?.primaryColor,
+                    // ...styleConfig?.Tasks?.Card?.SubHeading,
+                  }}
+                >
                   General feedback
                 </div>
-                <div className="q-chat-personal-container-body-description">
+                <div
+                  className="q-chat-personal-container-body-description"
+                  style={{
+                    fontFamily: themeConfig?.fontFamily,
+                    color: themeConfig?.secondaryColor,
+                    // ...styleConfig?.Tasks?.Card?.SubHeading,
+                  }}
+                >
                   Give general feedback of this page
                 </div>
               </div>

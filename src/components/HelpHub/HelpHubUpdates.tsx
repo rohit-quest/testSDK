@@ -87,7 +87,6 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
   const [showOneUpdate, setshowOneUpdate] = useState(false);
   const [updateOneData, setUpdateOneData] = useState<any>({});
   const handleShowUpdate = (value: any) => {
-    console.log(value);
     setUpdateOneData(value);
     setshowOneUpdate((prev) => !prev);
     setShowBottomNavigation((prev) => !prev);
@@ -203,9 +202,11 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                       <div
                         className={`q-helphub-updates-single-update-read`}
                         key={index}
+                        style={{
+                          background: themeConfig?.backgroundColor,
+                          ...styleConfig?.Home?.Card,
+                        }}
                         onClick={() => {
-                          console.log("update");
-                          console.log(value);
                           handleShowUpdate(value);
                           // readUpdate(
                           //   value?.data?.criteriaId,
@@ -216,13 +217,13 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                         <div className="update-img">
                           <div
                             style={{
+                              width: "68px",
+                              height: "114.079px",
+                              borderRadius: "2.237px",
+                              border: "0.447px solid var(--Primary, #9035ff)",
                               background: `url(${UpdatesImage}) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
-                              // backgroundRepeat: "no-repeat",
-                              backgroundSize: "contain",
-                              backgroundPosition: "center top",
-                              width: "68px", // Fixed width
-                              height: "114.079px", // Fixed height
                               overflow: "hidden",
+                              boxSizing: "border-box",
                             }}
                           ></div>
                           {/* <img src={UpdatesImage} alt="" /> */}
@@ -231,13 +232,36 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                         <div className="read-task-details">
                           <div className="update-time">
                             <img src={UpdatesReadLogo} alt="" />
-                            <p>{getTimeDifference(value?.data?.createdAt)}</p>
+                            <p
+                              style={{
+                                color: themeConfig?.secondaryColor,
+                                fontFamily: themeConfig?.fontFamily,
+                                // ...styleConfig?.Home?.Heading,
+                              }}
+                            >
+                              {getTimeDifference(value?.data?.createdAt)}
+                            </p>
                           </div>
                           <div className="update-head">
-                            <p>{value?.data?.metadata?.linkActionName}</p>
+                            <p
+                              style={{
+                                color: themeConfig?.primaryColor,
+                                fontFamily: themeConfig?.fontFamily,
+                                // ...styleConfig?.Home?.Heading,
+                              }}
+                            >
+                              {value?.data?.metadata?.linkActionName}
+                            </p>
                             <img src={OpenSectionButton} alt="" />
                           </div>
-                          <div className="update-desc">
+                          <div
+                            className="update-desc"
+                            style={{
+                              color: themeConfig?.secondaryColor,
+                              fontFamily: themeConfig?.fontFamily,
+                              // ...styleConfig?.Home?.Heading,
+                            }}
+                          >
                             {value?.data?.metadata?.description}
                           </div>
                         </div>
@@ -307,13 +331,36 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                         <div className="read-task-details-unread">
                           <div className="update-time">
                             <img src={UpdatesUnreadLogo} alt="" />
-                            <p>{getTimeDifference(value?.data?.createdAt)}</p>
+                            <p
+                              style={{
+                                color: themeConfig?.secondaryColor,
+                                // ...styleConfig?.Home?.Heading,
+                                fontFamily: themeConfig?.fontFamily,
+                              }}
+                            >
+                              {getTimeDifference(value?.data?.createdAt)}
+                            </p>
                           </div>
                           <div className="update-head">
-                            <p>{value?.data?.metadata?.linkActionName}</p>
+                            <p
+                              style={{
+                                color: themeConfig?.primaryColor,
+                                fontFamily: themeConfig?.fontFamily,
+                                // ...styleConfig?.Home?.Heading,
+                              }}
+                            >
+                              {value?.data?.metadata?.linkActionName}
+                            </p>
                             <img src={UnreadUpdateDarkArror} alt="" />
                           </div>
-                          <div className="update-desc">
+                          <div
+                            className="update-desc"
+                            style={{
+                              color: themeConfig?.primaryColor,
+                              fontFamily: themeConfig?.fontFamily,
+                              // ...styleConfig?.Home?.Heading,
+                            }}
+                          >
                             {value?.data?.metadata?.description}
                           </div>
                         </div>
@@ -329,7 +376,13 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
       {showOneUpdate && (
         <div className="q-update-one-container">
           {/* back and chats */}
-          <div className="q-update-one-container-header">
+          <div
+            className="q-update-one-container-header"
+            style={{
+              background: themeConfig?.backgroundColor,
+              ...styleConfig?.Home?.Card,
+            }}
+          >
             <div
               className="image-div"
               style={{ cursor: "pointer" }}
@@ -341,12 +394,25 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
               <HelphubSvg type={"BackButton"} />
             </div>
 
-            <div className="q-update-one-container-header-title">
+            <div
+              className="q-update-one-container-header-title"
+              style={{
+                color: themeConfig?.secondaryColor,
+                ...styleConfig?.Home?.Heading,
+                fontFamily: themeConfig?.fontFamily,
+              }}
+            >
               New Updates Details
             </div>
           </div>
 
-          <div className="q-update-one-container-data">
+          <div
+            className="q-update-one-container-data"
+            style={{
+              background: themeConfig?.backgroundColor,
+              // ...styleConfig?.Home?.Card,
+            }}
+          >
             {/* <div className="q-chat-personal-container-body">
               <div className="text">
                 <div className="q-chat-personal-container-body-title">
@@ -399,15 +465,13 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
               ></div> */}
               <div
                 style={{
-                  // background: `url(${UpdateOne}) lightgray -10.312px -8.675px / 110.971% 102.745% no-repeat`,
-                  background: `url(${UpdateOne}) lightgray -10.312px -8.675px / 110.971% 102.745% no-repeat`,
-                  // backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
-                  backgroundPosition: "center top", // Center horizontally, show top of the image
+                  width: "188px",
+                  height: "316px",
                   borderRadius: "8px",
-                  border: "0.447px solid var(--Primary, #9035FF)",
-                  width: "188px", // Fixed width
-                  height: "316px", // Fixed height
+                  border: "0.447px solid var(--Primary, #9035ff)",
+                  // background: `url(${UpdatesImage}) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
+                  background: `url(${UpdatesImage}) lightgray -10.312px -8.675px / 110.971% 102.745% no-repeat`,
+                  overflow: "hidden",
                   boxSizing: "border-box",
                 }}
               ></div>
@@ -420,20 +484,50 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                 {updateOneData.completed ? (
                   <div className="update-one-time-read">
                     <img src={UpdatesReadLogo} alt="" />
-                    <p>{getTimeDifference(updateOneData?.data?.createdAt)}</p>
+                    <p
+                      style={{
+                        color: themeConfig?.secondaryColor,
+                        fontFamily: themeConfig?.fontFamily,
+                        // ...styleConfig?.Home?.Heading,
+                      }}
+                    >
+                      {getTimeDifference(updateOneData?.data?.createdAt)}
+                    </p>
                   </div>
                 ) : (
                   <div className="update-one-time">
                     <img src={UpdatesUnreadLogo} alt="" />
-                    <p>{getTimeDifference(updateOneData?.data?.createdAt)}</p>
+                    <p
+                      style={{
+                        color: themeConfig?.secondaryColor,
+                        fontFamily: themeConfig?.fontFamily,
+                        // ...styleConfig?.Home?.Heading,
+                      }}
+                    >
+                      {getTimeDifference(updateOneData?.data?.createdAt)}
+                    </p>
                   </div>
                 )}
-                <div className="update-one-head">
+                <div
+                  className="update-one-head"
+                  style={{
+                    color: themeConfig?.primaryColor,
+                    fontFamily: themeConfig?.fontFamily,
+                    // ...styleConfig?.Home?.Heading,
+                  }}
+                >
                   {updateOneData?.data?.metadata?.linkActionName}
                 </div>
               </div>
 
-              <div className="update-one-update-desc">
+              <div
+                className="update-one-update-desc"
+                style={{
+                  color: themeConfig?.secondaryColor,
+                  fontFamily: themeConfig?.fontFamily,
+                  // ...styleConfig?.Home?.Heading,
+                }}
+              >
                 {updateOneData?.data?.metadata?.description}
               </div>
             </div>
