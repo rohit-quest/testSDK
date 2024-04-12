@@ -150,9 +150,13 @@ export default function GamifiedQuizPreviewNew({
   // }, 2000);
   // console.log(offlineAnswer)
   const [gamifiedQuiz, setGamifiedQuiz] = useState(true);
-
+  const [questions, setQuestions] = useState<number>(0);
+  // console.log(questions);
   const closeme = () => {
     setGamifiedQuiz((c) => !c);
+  };
+  const functionOnSubmit = () => {
+    console.log("Done");
   };
 
   if (online) {
@@ -165,9 +169,21 @@ export default function GamifiedQuizPreviewNew({
         apiType="STAGING"
       >
         {/* <button onClick={closeme}>close me</button> */}
-        {(gamifiedQuiz ) &&
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: 'rgba(0,0,0,0.5)', flexDirection: "column", position: 'fixed', top: '0px', left: '0px', width: '100%', height: '100vh' }}>
-
+        {gamifiedQuiz && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "rgba(0,0,0,0.5)",
+              flexDirection: "column",
+              position: "fixed",
+              top: "0px",
+              left: "0px",
+              width: "100%",
+              height: "100vh",
+            }}
+          >
             <GamifiedQuiz
               setGamifiedQuiz={closeme}
               gamifiedQuiz={gamifiedQuiz}
@@ -175,21 +191,27 @@ export default function GamifiedQuizPreviewNew({
               questId={questId}
               // answer={answer}
               // setAnswer={setAnswer}
+              functionOnSubmit={functionOnSubmit}
               token={token}
               heading="Heading Online"
               // questionSections={[[1, 2, 3, 4], [5, 6], [7, 8], [9, 10]]}
-              questionSections={[[1, 2, 3, 4], [5, 6], [7]]}
+              questionsPerSection={3}
+              // questionSections={[[1, 2, 3, 4], [5, 6], [7]]}
               // questionSections={[[1], [5, 6], [7, 8], [9, 10]]}
-              sectionSubHeading={[
-                "Section 1",
-                "Srction 2",
-                "section 3",
-                "Section 4",
-              ]}
+              sectionSubHeading={
+                [
+                  // "Section 1",
+                  // "Srction 2",
+                  // "section 3",
+                  // "Section 4",
+                ]
+              }
               // sectionSubHeading={["", "", "", ""]}
-              sectionHeading={["Section Head 1", "", "", "Section Head 4"]}
+              // sectionHeading={["Section Head 1", "", "", "Section Head 4"]}
               showFooter={true}
               thanksPopUpFooter={true}
+              questions={questions}
+              setQuestions={setQuestions}
               styleConfig={{
                 Heading: {
                   // background: "yellow",
@@ -248,15 +270,13 @@ export default function GamifiedQuizPreviewNew({
                 },
               }}
 
-            // customComponents={<CustomButton />}
-            // getAnswers={printAnswer}
-            // screenHeight=""
-            // progressBarType="modal1"
+              // customComponents={<CustomButton />}
+              // getAnswers={printAnswer}
+              // screenHeight=""
+              // progressBarType="modal1"
             />
           </div>
-        }
-
-
+        )}
       </QuestProvider>
     );
   }
@@ -270,6 +290,8 @@ export default function GamifiedQuizPreviewNew({
       apiType="STAGING"
     >
       <GamifiedQuizOffline
+        functionOnSubmit={functionOnSubmit}
+        questionsPerSection={3}
         offlineAnswer={offlineAnswer}
         setOfflineAnswer={setOfflineAnswer}
         gamifiedQuiz={gamifiedQuiz}
@@ -280,13 +302,13 @@ export default function GamifiedQuizPreviewNew({
         // setAnswer={setAnswer}
         token={token}
         heading="Heading Offline"
-        questionSections={[
-          [1, 2, 3, 4],
-          [5, 6],
-          [7, 8],
-          [9, 10],
-        ]}
-        // questionSections={[[1], [5, 6], [7, 8], [9, 10]]}
+        // questionSections={[
+        //   [1, 2, 3, 4],
+        //   [5, 6],
+        //   [7, 8],
+        //   [9, 10],
+        // ]}
+        questionSections={[[1, 2, 3, 4], [5, 6], [7]]}
         sectionSubHeading={["Section 1", "Srction 2", "section 3", "Section 4"]}
         sectionHeading={[
           "Section Head 1",
@@ -294,8 +316,8 @@ export default function GamifiedQuizPreviewNew({
           "section Head 3",
           "Section Head 4",
         ]}
-        singleChoiceTextHeading="single choice testing"
-        multiChoiceTextHeading="Multi testing"
+        // singleChoiceTextHeading="single choice testing"
+        // multiChoiceTextHeading="Multi testing"
         showFooter={true}
         thanksPopUpFooter={true}
         styleConfig={{
@@ -357,10 +379,10 @@ export default function GamifiedQuizPreviewNew({
         }}
         formDataOffline={formDataOffline}
 
-      // customComponents={<CustomButton />}
-      // getAnswers={printAnswer}
-      // screenHeight=""
-      // progressBarType="modal1"
+        // customComponents={<CustomButton />}
+        // getAnswers={printAnswer}
+        // screenHeight=""
+        // progressBarType="modal1"
       />
     </QuestProvider>
   );
