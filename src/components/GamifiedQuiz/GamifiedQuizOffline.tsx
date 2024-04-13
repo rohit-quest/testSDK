@@ -46,7 +46,7 @@ interface GamifiedQuizProps {
 
   styleConfig?: {
     Heading?: React.CSSProperties;
-    ComponentTheme?: React.CSSProperties;
+    Form?: React.CSSProperties;
     FormContainer?: React.CSSProperties;
     Input?: React.CSSProperties;
     Question?: React.CSSProperties;
@@ -62,6 +62,10 @@ interface GamifiedQuizProps {
     ThanksPopUpFooter?: React.CSSProperties;
     ThanksPopUpGotoHome?: React.CSSProperties;
     OptionsSelectedColor?: React.CSSProperties;
+    EmailError?: {
+      text?: string;
+      errorStyle?: React.CSSProperties;
+    };
   };
   gamifiedQuiz?: boolean;
   setGamifiedQuiz: Dispatch<SetStateAction<boolean>>;
@@ -99,16 +103,15 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
   sectionSubHeading = [],
   sectionHeading = [],
   questionSections = [],
-
-  formDataOffline,
-  setOfflineAnswer,
-
   setGamifiedQuiz,
   gamifiedQuiz,
   questions,
   setQuestions,
   questionsPerSection = 0,
   functionOnSubmit,
+  formDataOffline,
+  setOfflineAnswer,
+  offlineAnswer,
 }) => {
   const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } =
     useContext(QuestContext.Context);
@@ -133,17 +136,20 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
     //   let questUserId = cookies.get("questUserId");
     //   let questUserToken = cookies.get("questUserToken");
     //   // let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
+
     //   const headers = {
     //     apiKey: apiKey,
     //     // apisecret: apiSecret,
     //     userId: userId,
     //     token: token, // Replace with your actual token
     //   };
+
     //   const body = {
     //     externalUserId: !!uniqueUserId && uniqueUserId,
     //     entityId: entityId,
     //     email: uniqueEmailId,
     //   };
+
     //   if (
     //     !!externalUserId &&
     //     !!questUserId &&
@@ -162,6 +168,7 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
     //       .then((res) => {
     //         let { userId, token } = res.data;
     //         let header = { ...headers, ...{ userId, token } };
+
     //         const date = new Date();
     //         date.setHours(date.getHours() + 12);
     //         cookies.set("externalUserId", uniqueUserId, {
@@ -177,12 +184,15 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
     //         );
     //       });
     //   }
+
     //   const getQuestData = async function getQuestData(
     //     userId: string,
     //     headers: object
     //   ) {
     //     // (loadingTracker && setLoading(true));
+
     //     const url = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/criterias?userId=${userId}`;
+
     //     // const { data } = await axios.get(url, { headers: headers });
     //     const { data } = await axios.get(url, { headers: headers });
     //     // console.log(data);
@@ -216,6 +226,7 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
     //         };
     //       }
     //     );
+
     //     if (questionsPerSection > 0) {
     //       setTotalSectionsPerSectionQuestion(
     //         Math.ceil(
@@ -223,6 +234,7 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
     //         )
     //       );
     //     }
+
     //     if (criterias?.length > 0) {
     //       setFormdata([...criterias]);
     //     } else {
@@ -231,11 +243,15 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
     //   };
     //   getQuestData(userId, headers);
     // }
+
+    if (questionsPerSection > 0) {
+      setTotalSectionsPerSectionQuestion(
+        Math.ceil(formDataOffline.length / questionsPerSection)
+      );
+    }
+
     setFormdata(formDataOffline);
-    setTotalSectionsPerSectionQuestion(
-      Math.ceil(formDataOffline.length / questionsPerSection)
-    );
-  }, [formDataOffline]);
+  }, []);
 
   const MultipleChoice = ({
     onClick,
@@ -346,7 +362,6 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
       }
     } else {
       for (let i = 0; i < questionsPerSection; i++) {
-        // console.log(currentSection * questionsPerSection + i);
         let queNo = currentSection * questionsPerSection + i;
         if (!formdata[queNo]?.required) {
         } else if (
@@ -373,20 +388,6 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
         }
       }
     }
-
-    // for (let i = 0; i < questionSections[sectionNo].length; i++) {
-    //   if (!formdata[questionSections[sectionNo][i] - 1]?.required) {
-    //   } else if (
-    //     answer[formdata[questionSections[sectionNo][i] - 1]?.criteriaId]
-    //       ?.length > 0 &&
-    //     formdata[questionSections[sectionNo][i] - 1]?.required
-    //   ) {
-    //     setGoToNextSection(true);
-    //   } else {
-    //     setGoToNextSection(false);
-    //     break;
-    //   }
-    // }
   }, [
     answer,
     sectionNo,
@@ -403,10 +404,12 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
         {value?.options.map((option, index) => {
           const SelectedBorder = {
             border: `2px solid ${styleConfig?.OptionsSelectedColor?.color}`,
+            fontFamily: themeConfig?.fontFamily,
             // color: styleConfig?.OptionsSelectedColor?.color
           };
           const SelectedOptionColor = {
             color: styleConfig?.OptionsSelectedColor?.color,
+            fontFamily: themeConfig?.fontFamily,
           };
           return (
             <div
@@ -420,19 +423,22 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
               style={
                 selectedOptions[value?.criteriaId]?.includes(option)
                   ? SelectedBorder
-                  : {}
+                  : { borderColor: themeConfig?.borderColor }
               }
             >
               {selectedOptions[value?.criteriaId]?.includes(option)
                 ? MultiChoiceSelectedSVG(
                     styleConfig?.OptionsSelectedColor?.color
                   )
-                : MultiChoiceSVG()}
+                : MultiChoiceSVG(themeConfig?.borderColor)}
               <p
                 style={
                   selectedOptions[value?.criteriaId]?.includes(option)
                     ? SelectedOptionColor
-                    : {}
+                    : {
+                        color: themeConfig?.primaryColor,
+                        fontFamily: themeConfig?.fontFamily,
+                      }
                 }
               >
                 {option}
@@ -453,6 +459,7 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
           };
           const SelectedOptionColor = {
             color: styleConfig?.OptionsSelectedColor?.color,
+            fontFamily: themeConfig?.fontFamily,
           };
 
           return (
@@ -467,19 +474,24 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
               style={
                 answer[value?.criteriaId]?.includes(option)
                   ? SelectedBorder
-                  : {}
+                  : {
+                      borderColor: themeConfig?.borderColor,
+                    }
               }
             >
               {answer[value?.criteriaId]?.includes(option)
                 ? SingleChoiceSelectedSVG(
                     styleConfig?.OptionsSelectedColor?.color
                   )
-                : SingleChoiceSVG()}
+                : SingleChoiceSVG(themeConfig?.borderColor)}
               <p
                 style={
                   answer[value?.criteriaId]?.includes(option)
                     ? SelectedOptionColor
-                    : {}
+                    : {
+                        color: themeConfig?.primaryColor,
+                        fontFamily: themeConfig?.fontFamily,
+                      }
                 }
               >
                 {" "}
@@ -497,17 +509,15 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
     "Thanks for submitting your feedback with us. We appreciate your review and will assure you to surely consider them"
   );
   const [popUpHead, setPopUpHead] = useState("Feedback Submitted");
-  //   const [gamifiedQuiz, setGamifiedQuiz] = useState(true);
 
   const formSubmitHandler = () => {
-    // console.log("f=submit");
     // setGamifiedQuiz(false);
     for (const key in selectedOptions) {
       if (selectedOptions.hasOwnProperty(key)) {
         answer[key] = selectedOptions[key];
       }
     }
-    functionOnSubmit();
+
     // let criterias = Object.keys(answer).map((key: string) => ({
     //   criteriaId: key,
     //   answer: typeof answer[key] === "object" ? answer[key] : [answer[key]],
@@ -567,7 +577,13 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                         {customComponents}
                     </div>
                 } */}
-        <p className="label-inputs">{`${question}${required ? "*" : ""}`}</p>
+        <p
+          className="label-inputs"
+          style={{
+            color: themeConfig?.primaryColor,
+            fontFamily: themeConfig?.fontFamily,
+          }}
+        >{`${question}${required ? "*" : ""}`}</p>
 
         <Input
           type={inputType}
@@ -583,6 +599,12 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
             color: styleConfig?.Input?.color || themeConfig?.primaryColor,
             ...styleConfig?.Input,
           }}
+          emailtext={
+            styleConfig?.EmailError?.text == undefined
+              ? "Invalid email format"
+              : styleConfig?.EmailError?.text
+          }
+          emailErrorStyle={styleConfig?.EmailError?.errorStyle}
         />
       </div>
     );
@@ -606,7 +628,13 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
         {/* <Label htmlFor="dateInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
                     {`${question} ${!!required && "*"}`}
                 </Label> */}
-        <p className="label-inputs">{`${question}${required ? "*" : ""}`}</p>
+        <p
+          className="label-inputs"
+          style={{
+            color: themeConfig?.primaryColor,
+            fontFamily: themeConfig?.fontFamily || "Figtree",
+          }}
+        >{`${question}${required ? "*" : ""}`}</p>
         <Input
           type={"date"}
           placeholder={placeholder}
@@ -616,6 +644,7 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
             borderColor:
               styleConfig?.Input?.borderColor || themeConfig?.borderColor,
             color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+            fontFamily: themeConfig?.fontFamily || "Figtree",
             ...styleConfig?.Input,
           }}
         />
@@ -641,7 +670,13 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
         {/* <Label htmlFor="textAreaInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
                     {`${question} ${!!required && "*"}`}
                 </Label> */}
-        <p className="label-inputs">{`${question}${required ? "*" : ""}`}</p>
+        <p
+          className="label-inputs"
+          style={{
+            color: themeConfig?.primaryColor,
+            fontFamily: themeConfig?.fontFamily,
+          }}
+        >{`${question}${required ? "*" : ""}`}</p>
         <TextArea
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           placeholder={placeholder}
@@ -672,7 +707,15 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
           <div className="question-input-cont">
             {formdata[question]?.type === "USER_INPUT_SINGLE_CHOICE" ||
             formdata[question]?.type === "USER_INPUT_MULTI_CHOICE" ? (
-              <div className="question" style={styleConfig?.Question}>
+              <div
+                className="question"
+                style={{
+                  fontFamily: themeConfig?.fontFamily,
+                  ...styleConfig?.Question,
+                  color:
+                    styleConfig?.Question?.color || themeConfig?.primaryColor,
+                }}
+              >
                 {formdata[question]?.question}
                 {`${formdata[question]?.required ? "*" : ""}`}
               </div>
@@ -742,7 +785,12 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
         <div className="thanks-popup-upper-div">
           <div
             className="gamified-thanks-pop-up"
-            style={styleConfig?.ThanksPopup}
+            style={{
+              background:
+                styleConfig?.ThanksPopup?.background ||
+                themeConfig?.backgroundColor,
+              fontFamily: themeConfig?.fontFamily,
+            }}
           >
             <div className="gamified-pop-up-cancel-btn-cont">
               <div>
@@ -768,7 +816,9 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                   style={{
                     color:
                       styleConfig?.ThanksPopupHeading?.color ||
+                      themeConfig?.primaryColor ||
                       "var(--Neutral-Black-400, #2C2C2C)",
+                    fontFamily: themeConfig?.fontFamily,
                   }}
                 >
                   {popUpHead}
@@ -778,7 +828,9 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                   style={{
                     color:
                       styleConfig?.ThanksPopupDescription?.color ||
+                      themeConfig?.secondaryColor ||
                       "var(--Neutral-Black-100, #939393)",
+                    fontFamily: themeConfig?.fontFamily,
                   }}
                 >
                   {popUpMessage}
@@ -786,7 +838,12 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
               </div>
               <div
                 className="goto-home"
-                style={styleConfig?.ThanksPopUpGotoHome}
+                style={{
+                  borderColor:
+                    styleConfig?.ThanksPopUpGotoHome?.borderColor ||
+                    themeConfig?.borderColor,
+                  background: styleConfig?.ThanksPopUpGotoHome?.background,
+                }}
                 onClick={() => setThanksPopup((prev) => !prev)}
               >
                 Go to home!
@@ -796,7 +853,13 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
             {thanksPopUpFooter ? (
               <div
                 className="gamified-quiz-footer-section"
-                style={styleConfig?.ThanksPopUpFooter}
+                style={{
+                  background: styleConfig?.ThanksPopUpFooter?.background,
+                  color:
+                    styleConfig?.ThanksPopUpFooter?.color ||
+                    themeConfig?.secondaryColor,
+                  fontFamily: themeConfig?.fontFamily,
+                }}
               >
                 Powered by Quest Labs
               </div>
@@ -812,12 +875,19 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
           <div className="gamified-quiz">
             <div
               className="gamified-quiz-header-section"
-              style={styleConfig?.ComponentTheme}
+              style={{
+                background:
+                  styleConfig?.Form?.background || themeConfig?.backgroundColor,
+              }}
             >
               <div className="gamified-quiz-title-section">
                 <div
                   className="gamified-quiz-title-head"
-                  style={styleConfig?.Heading}
+                  style={{
+                    color:
+                      styleConfig?.Heading?.color || themeConfig?.primaryColor,
+                    fontFamily: themeConfig?.fontFamily,
+                  }}
                 >
                   {heading ? heading : "Choose an option"}
                 </div>
@@ -840,18 +910,43 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                     }}
                   >
                     <div className="heading-subheading-container">
-                      <div className="quest-title">
+                      <div
+                        className="quest-title"
+                        style={{
+                          color:
+                            // styleConfig?.SubHeading.color ||
+                            themeConfig?.secondaryColor,
+                          fontFamily: themeConfig?.fontFamily,
+                          paddingBottom: "4px",
+                        }}
+                      >
                         {sectionSubHeading.length > 0
                           ? sectionSubHeading[sectionNo]
                           : "Fill out the Details"}
                       </div>
                       {sectionHeading?.length > 0 &&
                       sectionHeading[sectionNo] ? (
-                        <div className="question" style={styleConfig?.Question}>
+                        <div
+                          className="question"
+                          style={{
+                            color:
+                              styleConfig?.Question?.color ||
+                              themeConfig?.primaryColor,
+                            fontFamily: themeConfig?.fontFamily,
+                          }}
+                        >
                           {sectionHeading[sectionNo] || "Fill out the Details"}
                         </div>
                       ) : (
-                        <div className="question" style={styleConfig?.Question}>
+                        <div
+                          className="question"
+                          style={{
+                            color:
+                              styleConfig?.Question?.color ||
+                              themeConfig?.primaryColor,
+                            fontFamily: themeConfig?.fontFamily,
+                          }}
+                        >
                           {sectionHeading[sectionNo] || "Fill out the Details"}
                         </div>
                       )}
@@ -881,7 +976,12 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                                     "USER_INPUT_MULTI_CHOICE" ? (
                                     <div
                                       className="question"
-                                      style={styleConfig?.Question}
+                                      style={{
+                                        color:
+                                          styleConfig?.Question?.color ||
+                                          themeConfig?.primaryColor,
+                                        fontFamily: themeConfig?.fontFamily,
+                                      }}
                                     >
                                       {formdata[question]?.question}
                                       {`${
@@ -976,6 +1076,10 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                           color:
                             styleConfig?.SecondaryButton?.color ||
                             "var(--Neutral-Black-400, #2C2C2C)",
+                          fontFamily: themeConfig?.fontFamily,
+                          borderColor:
+                            styleConfig?.SecondaryButton?.borderColor ||
+                            themeConfig?.borderColor,
                         }}
                       >
                         {sectionNo > 0 ? "Previous" : "Cancel"}
@@ -999,15 +1103,21 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                           fontFamily: "Figtree",
                           background:
                             styleConfig?.PrimaryButton?.background ||
+                            themeConfig?.buttonColor ||
                             "linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%)",
                           color:
                             styleConfig?.PrimaryButton?.color ||
                             "var(--Neutral-White-100, #FFF)",
 
-                          border: "1.5px solid #D1ACFF",
+                          border: `1.5px solid ${
+                            styleConfig?.PrimaryButton?.borderColor
+                              ? styleConfig?.PrimaryButton?.borderColor
+                              : themeConfig?.buttonColor
+                              ? themeConfig?.buttonColor
+                              : "#D1ACFF"
+                          }`,
                           fontStyle: "normal",
                           fontWeight: "600",
-
                           lineHeight: "20px",
                         }}
                       >
@@ -1035,6 +1145,10 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                           color:
                             styleConfig?.SecondaryButton?.color ||
                             "var(--Neutral-Black-400, #2C2C2C)",
+                          fontFamily: themeConfig?.fontFamily,
+                          borderColor:
+                            styleConfig?.SecondaryButton?.borderColor ||
+                            themeConfig?.borderColor,
                         }}
                       >
                         {sectionNo > 0 ? "Previous" : "Cancel"}
@@ -1064,15 +1178,21 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                           fontFamily: "Figtree",
                           background:
                             styleConfig?.PrimaryButton?.background ||
+                            themeConfig?.buttonColor ||
                             "linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%)",
                           color:
                             styleConfig?.PrimaryButton?.color ||
                             "var(--Neutral-White-100, #FFF)",
 
-                          border: "1.5px solid #D1ACFF",
+                          border: `1.5px solid ${
+                            styleConfig?.PrimaryButton?.borderColor
+                              ? styleConfig?.PrimaryButton?.borderColor
+                              : themeConfig?.buttonColor
+                              ? themeConfig?.buttonColor
+                              : "#D1ACFF"
+                          }`,
                           fontStyle: "normal",
                           fontWeight: "600",
-
                           lineHeight: "20px",
                         }}
                       >
@@ -1091,7 +1211,14 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                 className="gamified-quiz-footer-section"
                 style={styleConfig?.Footer}
               >
-                <div className="footer-content" style={styleConfig?.FooterText}>
+                <div
+                  className="footer-content"
+                  style={{
+                    color:
+                      styleConfig?.Footer?.color || themeConfig?.secondaryColor,
+                    fontFamily: themeConfig?.fontFamily,
+                  }}
+                >
                   Powered by Quest Labs
                 </div>
               </div>

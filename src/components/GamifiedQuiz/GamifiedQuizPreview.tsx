@@ -167,6 +167,16 @@ export default function GamifiedQuizPreviewNew({
         entityId={entityId}
         featureFlags={{}}
         apiType="STAGING"
+        themeConfig={
+          {
+            // backgroundColor: "yellow",
+            // borderColor: "green",
+            // buttonColor: "red",
+            // fontFamily: "cursive",
+            // primaryColor: "red",
+            // secondaryColor: "yellow",
+          }
+        }
       >
         {/* <button onClick={closeme}>close me</button> */}
         {gamifiedQuiz && (
@@ -195,7 +205,7 @@ export default function GamifiedQuizPreviewNew({
               token={token}
               heading="Heading Online"
               // questionSections={[[1, 2, 3, 4], [5, 6], [7, 8], [9, 10]]}
-              questionsPerSection={3}
+              questionsPerSection={5}
               // questionSections={[[1, 2, 3, 4], [5, 6], [7]]}
               // questionSections={[[1], [5, 6], [7, 8], [9, 10]]}
               sectionSubHeading={
@@ -213,18 +223,18 @@ export default function GamifiedQuizPreviewNew({
               questions={questions}
               setQuestions={setQuestions}
               styleConfig={{
+                Form: {
+                  // color: "yellow",
+                  // fontSize: "58px",
+                  // background: "yellow",
+                },
                 Heading: {
                   // background: "yellow",
                   // margin: "25px"
-                  // color: "red"
-                },
-                ComponentTheme: {
-                  // color: 'yellow',
-                  // fontSize: "58px",
-                  // background: "yellow"
+                  // color: "red",
                 },
                 FormContainer: {
-                  // background: "red"
+                  // background: "red",
                 },
                 Question: {
                   // color: "pink",
@@ -234,39 +244,44 @@ export default function GamifiedQuizPreviewNew({
                   // color: "white"
                 },
                 PrimaryButton: {
-                  // background: 'yellow',
-                  // color: "red"
+                  // background: "yellow",
+                  // color: "red",
+                  // borderColor: "blue",
                 },
                 SecondaryButton: {
-                  // background: 'yellow',
-                  // color: 'red'
+                  // background: "yellow",
+                  // color: "red",
+                  // borderColor: "blue",
                 },
                 Footer: {
-                  // background:"red"
+                  // background: "red",
                 },
                 FooterText: {
-                  // color:"yellowgreen"
+                  // color: "yellowgreen",
                 },
+                TextArea: {},
                 ThanksPopup: {
                   // background: "red",
-                  // color: "white"
+                  // color: "white",
                 },
                 ThanksPopupHeading: {
-                  // color: "pink"
+                  // color: "pink",
                 },
                 ThanksPopupDescription: {
-                  // color: "pink"
+                  // color: "pink",
                 },
                 ThanksPopUpFooter: {
                   // background: "yellow",
-                  // color:"white"
+                  // color: "white",
                 },
                 ThanksPopUpGotoHome: {
                   // background: "yellow",
-                  // color:"white"
+                  // borderColor: "black",
+                  // backgroundColor: "yellow",
+                  // color: "white",
                 },
                 OptionsSelectedColor: {
-                  // color: 'red'
+                  // color: "red",
                 },
               }}
 
@@ -289,101 +304,122 @@ export default function GamifiedQuizPreviewNew({
       featureFlags={{}}
       apiType="STAGING"
     >
-      <GamifiedQuizOffline
-        functionOnSubmit={functionOnSubmit}
-        questionsPerSection={3}
-        offlineAnswer={offlineAnswer}
-        setOfflineAnswer={setOfflineAnswer}
-        gamifiedQuiz={gamifiedQuiz}
-        setGamifiedQuiz={setGamifiedQuiz}
-        userId={userId}
-        questId={questId}
-        // answer={answer}
-        // setAnswer={setAnswer}
-        token={token}
-        heading="Heading Offline"
-        // questionSections={[
-        //   [1, 2, 3, 4],
-        //   [5, 6],
-        //   [7, 8],
-        //   [9, 10],
-        // ]}
-        questionSections={[[1, 2, 3, 4], [5, 6], [7]]}
-        sectionSubHeading={["Section 1", "Srction 2", "section 3", "Section 4"]}
-        sectionHeading={[
-          "Section Head 1",
-          "",
-          "section Head 3",
-          "Section Head 4",
-        ]}
-        // singleChoiceTextHeading="single choice testing"
-        // multiChoiceTextHeading="Multi testing"
-        showFooter={true}
-        thanksPopUpFooter={true}
-        styleConfig={{
-          Heading: {
-            // background: "yellow",
-            // margin: "25px"
-            // color: "red"
-          },
-          ComponentTheme: {
-            // color: 'yellow',
-            // fontSize: "58px",
-            // background: "yellow"
-          },
-          FormContainer: {
-            // background: "red"
-          },
-          Question: {
-            // color: "pink",
-          },
-          Input: {
-            // background: "blue",
-            // color: "white"
-          },
-          PrimaryButton: {
-            // background: 'yellow',
-            // color: "red"
-          },
-          SecondaryButton: {
-            // background: 'yellow',
-            // color: 'red'
-          },
-          Footer: {
-            // background:"red"
-          },
-          FooterText: {
-            // color:"yellowgreen"
-          },
-          ThanksPopup: {
-            // background: "red",
-            // color: "white"
-          },
-          ThanksPopupHeading: {
-            // color: "pink"
-          },
-          ThanksPopupDescription: {
-            // color: "pink"
-          },
-          ThanksPopUpFooter: {
-            // background: "yellow",
-            // color:"white"
-          },
-          ThanksPopUpGotoHome: {
-            // background: "yellow",
-            // color:"white"
-          },
-          OptionsSelectedColor: {
-            // color: 'red'
-          },
-        }}
-        formDataOffline={formDataOffline}
+      {gamifiedQuiz && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "rgba(0,0,0,0.5)",
+            flexDirection: "column",
+            position: "fixed",
+            top: "0px",
+            left: "0px",
+            width: "100%",
+            height: "100vh",
+          }}
+        >
+          <GamifiedQuizOffline
+            functionOnSubmit={functionOnSubmit}
+            questionsPerSection={3}
+            offlineAnswer={offlineAnswer}
+            setOfflineAnswer={setOfflineAnswer}
+            gamifiedQuiz={gamifiedQuiz}
+            setGamifiedQuiz={setGamifiedQuiz}
+            userId={userId}
+            questId={questId}
+            setQuestions={setQuestions}
+            questions={questions}
+            // answer={answer}
+            // setAnswer={setAnswer}
 
-        // customComponents={<CustomButton />}
-        // getAnswers={printAnswer}
-        // screenHeight=""
-        // progressBarType="modal1"
-      />
+            token={token}
+            heading="Heading Offline"
+            // questionSections={[
+            //   [1, 2, 3, 4],
+            //   [5, 6],
+            //   [7, 8],
+            //   [9, 10],
+            // ]}
+            // questionSections={[[1, 2, 3, 4], [5, 6], [7]]}
+            sectionSubHeading={[
+              "Section 1",
+              "Srction 2",
+              "section 3",
+              "Section 4",
+            ]}
+            sectionHeading={[
+              "Section Head 1",
+              "",
+              "section Head 3",
+              "Section Head 4",
+            ]}
+            // singleChoiceTextHeading="single choice testing"
+            // multiChoiceTextHeading="Multi testing"
+            showFooter={true}
+            thanksPopUpFooter={true}
+            styleConfig={{
+              Heading: {
+                // background: "yellow",
+                // margin: "25px"
+                // color: "red"
+              },
+
+              FormContainer: {
+                // background: "red"
+              },
+              Question: {
+                // color: "pink",
+              },
+              Input: {
+                // background: "blue",
+                // color: "white"
+              },
+              PrimaryButton: {
+                // background: 'yellow',
+                // color: "red"
+              },
+              SecondaryButton: {
+                // background: 'yellow',
+                // color: 'red'
+              },
+              Footer: {
+                // background:"red"
+              },
+              FooterText: {
+                // color:"yellowgreen"
+              },
+              ThanksPopup: {
+                // background: "red",
+                // color: "white"
+              },
+              ThanksPopupHeading: {
+                // color: "pink"
+              },
+              ThanksPopupDescription: {
+                // color: "pink"
+              },
+              ThanksPopUpFooter: {
+                // background: "yellow",
+                // color:"white"
+              },
+              ThanksPopUpGotoHome: {
+                // background: "yellow",
+                // color:"white"
+              },
+              OptionsSelectedColor: {
+                // color: 'red'
+              },
+            }}
+            formDataOffline={formDataOffline}
+
+            // customComponents={<CustomButton />}
+            // getAnswers={printAnswer}
+            // screenHeight=""
+            // progressBarType="modal1"
+          />
+        </div>
+      )}
     </QuestProvider>
   );
 }

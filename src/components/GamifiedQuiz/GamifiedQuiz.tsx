@@ -43,7 +43,7 @@ interface GamifiedQuizProps {
 
   styleConfig?: {
     Heading?: React.CSSProperties;
-    ComponentTheme?: React.CSSProperties;
+    Form?: React.CSSProperties;
     FormContainer?: React.CSSProperties;
     Input?: React.CSSProperties;
     Question?: React.CSSProperties;
@@ -59,6 +59,10 @@ interface GamifiedQuizProps {
     ThanksPopUpFooter?: React.CSSProperties;
     ThanksPopUpGotoHome?: React.CSSProperties;
     OptionsSelectedColor?: React.CSSProperties;
+    EmailError?: {
+      text?: string;
+      errorStyle?: React.CSSProperties;
+    };
   };
   gamifiedQuiz?: boolean;
   setGamifiedQuiz: Dispatch<SetStateAction<boolean>>;
@@ -384,10 +388,12 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
         {value?.options.map((option, index) => {
           const SelectedBorder = {
             border: `2px solid ${styleConfig?.OptionsSelectedColor?.color}`,
+            fontFamily: themeConfig?.fontFamily,
             // color: styleConfig?.OptionsSelectedColor?.color
           };
           const SelectedOptionColor = {
             color: styleConfig?.OptionsSelectedColor?.color,
+            fontFamily: themeConfig?.fontFamily,
           };
           return (
             <div
@@ -401,19 +407,22 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               style={
                 selectedOptions[value?.criteriaId]?.includes(option)
                   ? SelectedBorder
-                  : {}
+                  : { borderColor: themeConfig?.borderColor }
               }
             >
               {selectedOptions[value?.criteriaId]?.includes(option)
                 ? MultiChoiceSelectedSVG(
                     styleConfig?.OptionsSelectedColor?.color
                   )
-                : MultiChoiceSVG()}
+                : MultiChoiceSVG(themeConfig?.borderColor)}
               <p
                 style={
                   selectedOptions[value?.criteriaId]?.includes(option)
                     ? SelectedOptionColor
-                    : {}
+                    : {
+                        color: themeConfig?.primaryColor,
+                        fontFamily: themeConfig?.fontFamily,
+                      }
                 }
               >
                 {option}
@@ -434,6 +443,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           };
           const SelectedOptionColor = {
             color: styleConfig?.OptionsSelectedColor?.color,
+            fontFamily: themeConfig?.fontFamily,
           };
 
           return (
@@ -448,19 +458,24 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               style={
                 answer[value?.criteriaId]?.includes(option)
                   ? SelectedBorder
-                  : {}
+                  : {
+                      borderColor: themeConfig?.borderColor,
+                    }
               }
             >
               {answer[value?.criteriaId]?.includes(option)
                 ? SingleChoiceSelectedSVG(
                     styleConfig?.OptionsSelectedColor?.color
                   )
-                : SingleChoiceSVG()}
+                : SingleChoiceSVG(themeConfig?.borderColor)}
               <p
                 style={
                   answer[value?.criteriaId]?.includes(option)
                     ? SelectedOptionColor
-                    : {}
+                    : {
+                        color: themeConfig?.primaryColor,
+                        fontFamily: themeConfig?.fontFamily,
+                      }
                 }
               >
                 {" "}
@@ -543,7 +558,13 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                         {customComponents}
                     </div>
                 } */}
-        <p className="label-inputs">{`${question}${required ? "*" : ""}`}</p>
+        <p
+          className="label-inputs"
+          style={{
+            color: themeConfig?.primaryColor,
+            fontFamily: themeConfig?.fontFamily,
+          }}
+        >{`${question}${required ? "*" : ""}`}</p>
 
         <Input
           type={inputType}
@@ -582,7 +603,13 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
         {/* <Label htmlFor="dateInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
                     {`${question} ${!!required && "*"}`}
                 </Label> */}
-        <p className="label-inputs">{`${question}${required ? "*" : ""}`}</p>
+        <p
+          className="label-inputs"
+          style={{
+            color: themeConfig?.primaryColor,
+            fontFamily: themeConfig?.fontFamily || "Figtree",
+          }}
+        >{`${question}${required ? "*" : ""}`}</p>
         <Input
           type={"date"}
           placeholder={placeholder}
@@ -592,6 +619,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
             borderColor:
               styleConfig?.Input?.borderColor || themeConfig?.borderColor,
             color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+            fontFamily: themeConfig?.fontFamily || "Figtree",
             ...styleConfig?.Input,
           }}
         />
@@ -617,7 +645,13 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
         {/* <Label htmlFor="textAreaInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
                     {`${question} ${!!required && "*"}`}
                 </Label> */}
-        <p className="label-inputs">{`${question}${required ? "*" : ""}`}</p>
+        <p
+          className="label-inputs"
+          style={{
+            color: themeConfig?.primaryColor,
+            fontFamily: themeConfig?.fontFamily,
+          }}
+        >{`${question}${required ? "*" : ""}`}</p>
         <TextArea
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           placeholder={placeholder}
@@ -648,7 +682,15 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           <div className="question-input-cont">
             {formdata[question]?.type === "USER_INPUT_SINGLE_CHOICE" ||
             formdata[question]?.type === "USER_INPUT_MULTI_CHOICE" ? (
-              <div className="question" style={styleConfig?.Question}>
+              <div
+                className="question"
+                style={{
+                  fontFamily: themeConfig?.fontFamily,
+                  ...styleConfig?.Question,
+                  color:
+                    styleConfig?.Question?.color || themeConfig?.primaryColor,
+                }}
+              >
                 {formdata[question]?.question}
                 {`${formdata[question]?.required ? "*" : ""}`}
               </div>
@@ -718,7 +760,12 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
         <div className="thanks-popup-upper-div">
           <div
             className="gamified-thanks-pop-up"
-            style={styleConfig?.ThanksPopup}
+            style={{
+              background:
+                styleConfig?.ThanksPopup?.background ||
+                themeConfig?.backgroundColor,
+              fontFamily: themeConfig?.fontFamily,
+            }}
           >
             <div className="gamified-pop-up-cancel-btn-cont">
               <div>
@@ -744,7 +791,9 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                   style={{
                     color:
                       styleConfig?.ThanksPopupHeading?.color ||
+                      themeConfig?.primaryColor ||
                       "var(--Neutral-Black-400, #2C2C2C)",
+                    fontFamily: themeConfig?.fontFamily,
                   }}
                 >
                   {popUpHead}
@@ -754,7 +803,9 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                   style={{
                     color:
                       styleConfig?.ThanksPopupDescription?.color ||
+                      themeConfig?.secondaryColor ||
                       "var(--Neutral-Black-100, #939393)",
+                    fontFamily: themeConfig?.fontFamily,
                   }}
                 >
                   {popUpMessage}
@@ -762,7 +813,12 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               </div>
               <div
                 className="goto-home"
-                style={styleConfig?.ThanksPopUpGotoHome}
+                style={{
+                  borderColor:
+                    styleConfig?.ThanksPopUpGotoHome?.borderColor ||
+                    themeConfig?.borderColor,
+                  background: styleConfig?.ThanksPopUpGotoHome?.background,
+                }}
                 onClick={() => setThanksPopup((prev) => !prev)}
               >
                 Go to home!
@@ -772,7 +828,13 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
             {thanksPopUpFooter ? (
               <div
                 className="gamified-quiz-footer-section"
-                style={styleConfig?.ThanksPopUpFooter}
+                style={{
+                  background: styleConfig?.ThanksPopUpFooter?.background,
+                  color:
+                    styleConfig?.ThanksPopUpFooter?.color ||
+                    themeConfig?.secondaryColor,
+                  fontFamily: themeConfig?.fontFamily,
+                }}
               >
                 Powered by Quest Labs
               </div>
@@ -788,12 +850,19 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           <div className="gamified-quiz">
             <div
               className="gamified-quiz-header-section"
-              style={styleConfig?.ComponentTheme}
+              style={{
+                background:
+                  styleConfig?.Form?.background || themeConfig?.backgroundColor,
+              }}
             >
               <div className="gamified-quiz-title-section">
                 <div
                   className="gamified-quiz-title-head"
-                  style={styleConfig?.Heading}
+                  style={{
+                    color:
+                      styleConfig?.Heading?.color || themeConfig?.primaryColor,
+                    fontFamily: themeConfig?.fontFamily,
+                  }}
                 >
                   {heading ? heading : "Choose an option"}
                 </div>
@@ -816,18 +885,43 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                     }}
                   >
                     <div className="heading-subheading-container">
-                      <div className="quest-title">
+                      <div
+                        className="quest-title"
+                        style={{
+                          color:
+                            // styleConfig?.SubHeading.color ||
+                            themeConfig?.secondaryColor,
+                          fontFamily: themeConfig?.fontFamily,
+                          paddingBottom: "4px",
+                        }}
+                      >
                         {sectionSubHeading.length > 0
                           ? sectionSubHeading[sectionNo]
                           : "Fill out the Details"}
                       </div>
                       {sectionHeading?.length > 0 &&
                       sectionHeading[sectionNo] ? (
-                        <div className="question" style={styleConfig?.Question}>
+                        <div
+                          className="question"
+                          style={{
+                            color:
+                              styleConfig?.Question?.color ||
+                              themeConfig?.primaryColor,
+                            fontFamily: themeConfig?.fontFamily,
+                          }}
+                        >
                           {sectionHeading[sectionNo] || "Fill out the Details"}
                         </div>
                       ) : (
-                        <div className="question" style={styleConfig?.Question}>
+                        <div
+                          className="question"
+                          style={{
+                            color:
+                              styleConfig?.Question?.color ||
+                              themeConfig?.primaryColor,
+                            fontFamily: themeConfig?.fontFamily,
+                          }}
+                        >
                           {sectionHeading[sectionNo] || "Fill out the Details"}
                         </div>
                       )}
@@ -857,7 +951,12 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                                     "USER_INPUT_MULTI_CHOICE" ? (
                                     <div
                                       className="question"
-                                      style={styleConfig?.Question}
+                                      style={{
+                                        color:
+                                          styleConfig?.Question?.color ||
+                                          themeConfig?.primaryColor,
+                                        fontFamily: themeConfig?.fontFamily,
+                                      }}
                                     >
                                       {formdata[question]?.question}
                                       {`${
@@ -952,6 +1051,10 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                           color:
                             styleConfig?.SecondaryButton?.color ||
                             "var(--Neutral-Black-400, #2C2C2C)",
+                          fontFamily: themeConfig?.fontFamily,
+                          borderColor:
+                            styleConfig?.SecondaryButton?.borderColor ||
+                            themeConfig?.borderColor,
                         }}
                       >
                         {sectionNo > 0 ? "Previous" : "Cancel"}
@@ -975,15 +1078,21 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                           fontFamily: "Figtree",
                           background:
                             styleConfig?.PrimaryButton?.background ||
+                            themeConfig?.buttonColor ||
                             "linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%)",
                           color:
                             styleConfig?.PrimaryButton?.color ||
                             "var(--Neutral-White-100, #FFF)",
 
-                          border: "1.5px solid #D1ACFF",
+                          border: `1.5px solid ${
+                            styleConfig?.PrimaryButton?.borderColor
+                              ? styleConfig?.PrimaryButton?.borderColor
+                              : themeConfig?.buttonColor
+                              ? themeConfig?.buttonColor
+                              : "#D1ACFF"
+                          }`,
                           fontStyle: "normal",
                           fontWeight: "600",
-
                           lineHeight: "20px",
                         }}
                       >
@@ -1011,6 +1120,10 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                           color:
                             styleConfig?.SecondaryButton?.color ||
                             "var(--Neutral-Black-400, #2C2C2C)",
+                          fontFamily: themeConfig?.fontFamily,
+                          borderColor:
+                            styleConfig?.SecondaryButton?.borderColor ||
+                            themeConfig?.borderColor,
                         }}
                       >
                         {sectionNo > 0 ? "Previous" : "Cancel"}
@@ -1040,15 +1153,21 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                           fontFamily: "Figtree",
                           background:
                             styleConfig?.PrimaryButton?.background ||
+                            themeConfig?.buttonColor ||
                             "linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%)",
                           color:
                             styleConfig?.PrimaryButton?.color ||
                             "var(--Neutral-White-100, #FFF)",
 
-                          border: "1.5px solid #D1ACFF",
+                          border: `1.5px solid ${
+                            styleConfig?.PrimaryButton?.borderColor
+                              ? styleConfig?.PrimaryButton?.borderColor
+                              : themeConfig?.buttonColor
+                              ? themeConfig?.buttonColor
+                              : "#D1ACFF"
+                          }`,
                           fontStyle: "normal",
                           fontWeight: "600",
-
                           lineHeight: "20px",
                         }}
                       >
@@ -1067,7 +1186,14 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                 className="gamified-quiz-footer-section"
                 style={styleConfig?.Footer}
               >
-                <div className="footer-content" style={styleConfig?.FooterText}>
+                <div
+                  className="footer-content"
+                  style={{
+                    color:
+                      styleConfig?.Footer?.color || themeConfig?.secondaryColor,
+                    fontFamily: themeConfig?.fontFamily,
+                  }}
+                >
                   Powered by Quest Labs
                 </div>
               </div>
