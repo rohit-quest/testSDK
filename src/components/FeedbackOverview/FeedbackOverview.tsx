@@ -316,7 +316,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     {}
   );
   const [showLoader, setShowLoader] = useState<boolean>(false);
-  const [submit, setSubmit] = useState<boolean>(true);
+  const [submit, setSubmit] = useState<boolean>(false);
   const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } =
     useContext(QuestContext.Context);
   const [answer, setAnswer] = useState<Record<string, string>>({});
