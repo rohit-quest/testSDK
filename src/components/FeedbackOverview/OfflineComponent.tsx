@@ -248,6 +248,12 @@ interface feedbackCompProps {
     listHeading?: React.CSSProperties;
     listDescription?: React.CSSProperties;
     TopBar?: React.CSSProperties;
+    Star?:{
+      Style?: React.CSSProperties;
+      PrimaryColor?: string;
+      SecondaryColor?: string;
+      Size?: number;
+    }
     listHover?: {
       background?: string;
       iconBackground?: string;

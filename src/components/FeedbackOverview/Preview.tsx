@@ -36,11 +36,12 @@ export default function FeedbackWorkflowPreview({
           userId={userId}
           token={token}
           showFooter={true}
+          
           questIds={[
-            "q-c268b378-c681-4fbf-928a-d1221a2b6966",
-            "q-c84226f7-cdf2-4e3d-b0df-7afe9875dc03",
-            "q-20c5d6d9-549d-46db-ad86-c8d514e19ecf",
-            "q-967521a8-0104-4674-9d63-b6b77b716633",
+            "q-8801bc27-8512-46d5-8dfe-086790555614",
+            "q-891d36bb-77cf-462c-8a83-5aef542334b3",
+            "q-36954eed-0a50-4260-952a-08e642d61a2c",
+            "q-6061847a-2848-4849-a374-a1acd6c9a482",
           ]}
           GeneralFeedback={{
             heading: "General Fee",
@@ -50,6 +51,7 @@ export default function FeedbackWorkflowPreview({
             iconUrl:
               "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
           }}
+          
           RequestFeature={{
             heading: "Request a Featureqwqewqewqe",
             description: "How can we msdsfdsdfake it better",
@@ -73,28 +75,25 @@ export default function FeedbackWorkflowPreview({
           }}
           contactUrl="https://calendly.com/sriya-persana/30min"
           // showPoweredBy={false}
-          // styleConfig={{
-          //     Form: {
-
-          //     },
-          //     listHover :{
-          //         iconColor:'blue',
-          //         iconBackground:'grey',
-          //         background:'yellow',
-          //         Heading:'green',
-          //         Description:'red'
-          //     }
-          //     // Description: { color: 'red' },
-          //     // listDescription:{color:'yellow'}
-          //     // Heading: { color: 'red' },
-          //     // listHeading: { color: 'blue' }
-          // }}
+          styleConfig={{
+              ThanksPopup: {
+                  Style: {
+                      background: "red",
+                      color: "white",
+                      width: "300px",
+                  },
+              },
+             
+          }}
           // // footerBackgroundColor='red'
           // contactUrl="https://calendly.com/sriya-persana/30min"
           isOpen={true}
           // // onClose={() => setIsOpen(!isOpen)}
           // uniqueUserId="soumitra.petbindhi+25@gmail.com"
           // uniqueEmailId="soumitra.petbindhi+25@gmail.com"
+          
+
+          
         />
       </QuestProvider>
     );
@@ -121,6 +120,7 @@ export default function FeedbackWorkflowPreview({
           IconSize: "20px",
           Icon: { padding: "16px", border: "1px solid blue" },
         },
+
       }}
       contactUrl="https://calendly.com/sriya-persana/30min"
       // GeneralFeedback={{

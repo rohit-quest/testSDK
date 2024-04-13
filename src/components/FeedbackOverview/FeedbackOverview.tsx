@@ -230,6 +230,7 @@ interface feedbackCompProps {
   showFooter?: boolean;
   PrimaryButtonText?: string;
   SecondaryButtonText?: string;
+  StarSize?: number;
   styleConfig?: {
     Form?: React.CSSProperties;
     Heading?: React.CSSProperties;
@@ -240,7 +241,7 @@ interface feedbackCompProps {
       text?: string,
       errorStyle?: React.CSSProperties
     },
-    TopBar?:React.CSSProperties;
+    TopBar?: React.CSSProperties;
     TextArea?: React.CSSProperties;
     PrimaryButton?: React.CSSProperties;
     SecondaryButton?: React.CSSProperties;
@@ -249,6 +250,12 @@ interface feedbackCompProps {
     listHeading?: React.CSSProperties;
     listDescription?: React.CSSProperties;
     Card?: React.CSSProperties;
+    Star?: {
+      Style?: React.CSSProperties;
+      PrimaryColor?: string;
+      SecondaryColor?: string;
+      Size?: number;
+    }
     listHover?: {
       background?: string;
       iconBackground?: string;
@@ -258,6 +265,12 @@ interface feedbackCompProps {
       IconSize?: string;
       Icon?: React.CSSProperties;
     };
+    ThanksPopup?: {
+      Style?: React.CSSProperties;
+      Heading?: React.CSSProperties;
+      Description?: React.CSSProperties;
+      ShowFooter?: boolean;
+    }
   };
 }
 interface FormDataItem {
@@ -286,6 +299,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   ContactUs,
   PrimaryButtonText = "Submit",
   SecondaryButtonText = "Go to home!",
+  StarSize = 32,
   descriptions = {
     "General Feedback": "Welcome back, Please complete your details",
     "Report a Bug": "Describe your issue",
@@ -302,7 +316,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     {}
   );
   const [showLoader, setShowLoader] = useState<boolean>(false);
-  const [submit, setSubmit] = useState<boolean>(false);
+  const [submit, setSubmit] = useState<boolean>(true);
   const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } =
     useContext(QuestContext.Context);
   const [answer, setAnswer] = useState<Record<string, string>>({});
@@ -512,7 +526,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             setShowLoader(false);
           });
       }
-    } else {
+    } else { 
       showToast.error("Please fill in all required fields.");
     }
   }
@@ -767,6 +781,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   iconColor={iconColor}
                   buttonStyle={styleConfig.PrimaryButton}
                   PrimaryButtonText={PrimaryButtonText}
+                  StarStyle={styleConfig?.Star}
+                  labelStyle={styleConfig?.Label}
                 />
               )}
               {selectedOption === "ReportBug" && (
@@ -780,6 +796,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   emailInput={emailInput}
                   handleRemove={handleRemove}
                   PrimaryButtonText={PrimaryButtonText}
+                  buttonStyle={styleConfig.PrimaryButton}
                 />
               )}
               {selectedOption === "RequestFeature" && (
@@ -793,51 +810,14 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   answer={answer}
                   handleRemove={handleRemove}
                   PrimaryButtonText={PrimaryButtonText}
+                  buttonStyle={styleConfig.PrimaryButton}
                 />
               )}
               {selectedOption === "ContactUs" && <div></div>}
             </div>
             {showFooter && <QuestLabs style={styleConfig?.Footer} />}
           </div>
-        ) : submit ? (
-          <div>
-            <div className="q_submit_cross_icon" onClick={handleThanks}>
-              {cross(iconColor, handleBackClick)}
-            </div>
-            <div className="q-fw-thanks">
-              <div>
-                <div className="q-svg-thanks">{thanks}</div>
-                <div className="q_fw_submit_box">
-                  <div className="q_feedback_text_submitted">
-                    <div
-                      className="q_feedback_text_cont"
-                      style={{
-                        color:
-                          styleConfig?.Heading?.color ||
-                          themeConfig?.primaryColor,
-                      }}
-                    >
-                      Feedback Submitted
-                    </div>
-                    <div
-                      className="q_fw_submit_desc"
-                      style={{
-                        color:
-                          styleConfig?.Description?.color ||
-                          themeConfig?.secondaryColor,
-                      }}
-                    >
-                      Thanks for submitting your feedback with us. We appreciate
-                      your review and will assure you to surely consider them
-                    </div>
-                  </div>
-                  <div className="q_fw_submit_back" style={{...styleConfig?.SecondaryButton}}>{SecondaryButtonText}</div>
-                </div>
-              </div>
-            </div>
-            {showFooter && <QuestLabs style={styleConfig?.Footer} />}
-          </div>
-        ) : (
+        ) : !submit ? (
           <div>
             <div className="q-fw-crossBtn">
               <div onClick={() => onClose?.()}>{cross(iconColor)}</div>
@@ -845,11 +825,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             <div className="q-fw-content-box">
               {questIds[0] && (
                 <div
-                onClick={() => {
-                  GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_general_feedback_clicked", "feedback_workflow_general_feedback");
-                  handleOptionClick("GeneralFeedback", questIds[0])
-                }
-                }
+                  onClick={() => {
+                    GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_general_feedback_clicked", "feedback_workflow_general_feedback");
+                    handleOptionClick("GeneralFeedback", questIds[0])
+                  }
+                  }
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
                     setCardHovered([true, false, false, false])
@@ -871,7 +851,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       background: cardHovered[0]
                         ? styleConfig.listHover?.iconBackground || "#F4EBFF"
                         : "#FBFBFB",
-                        ...styleConfig?.listHover?.Icon,
+                      ...styleConfig?.listHover?.Icon,
                     }}
                   >
                     {GeneralFeedback?.iconUrl ? <img className="q_feedback_icon_imgurl" src={GeneralFeedback?.iconUrl} /> : feedback(cardHovered[0]
@@ -923,10 +903,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               )}
               {questIds[1] && (
                 <div
-                onClick={() => {
-                  GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_report_bug_clicked", "feedback_workflow_report_bug");
-                  handleOptionClick("ReportBug", questIds[1])
-                }}
+                  onClick={() => {
+                    GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_report_bug_clicked", "feedback_workflow_report_bug");
+                    handleOptionClick("ReportBug", questIds[1])
+                  }}
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
                     setCardHovered([false, true, false, false])
@@ -948,12 +928,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       background: cardHovered[1]
                         ? styleConfig.listHover?.iconBackground || "#F4EBFF"
                         : "#FBFBFB",
-                        ...styleConfig?.listHover?.Icon,
+                      ...styleConfig?.listHover?.Icon,
                     }}
                   >
                     {ReportBug?.iconUrl ? <img className="q_feedback_icon_imgurl" src={ReportBug?.iconUrl} /> : bug(cardHovered[1]
                       ? styleConfig.listHover?.iconColor || styleConfig?.listHover?.Icon?.color || "#9035FF"
-                      : iconColor , styleConfig.listHover?.IconSize)}
+                      : iconColor, styleConfig.listHover?.IconSize)}
 
                     {/* {bug(
                       cardHovered[1]
@@ -1003,11 +983,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               )}
               {questIds[2] && (
                 <div
-                onClick={() => {
-                  GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_request_feature_clicked", "feedback_workflow_request_feature");
-                  handleOptionClick("RequestFeature", questIds[2])
-                }
-                }
+                  onClick={() => {
+                    GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_request_feature_clicked", "feedback_workflow_request_feature");
+                    handleOptionClick("RequestFeature", questIds[2])
+                  }
+                  }
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
                     setCardHovered([false, false, true, false])
@@ -1029,7 +1009,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       background: cardHovered[2]
                         ? styleConfig.listHover?.iconBackground || "#F4EBFF"
                         : "#FBFBFB",
-                        ...styleConfig?.listHover?.Icon,
+                      ...styleConfig?.listHover?.Icon,
                     }}
                   >
                     {RequestFeature?.iconUrl ? <img className="q_feedback_icon_imgurl" src={RequestFeature?.iconUrl} /> : feature(cardHovered[2]
@@ -1084,10 +1064,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               )}
               {questIds[3] && (
                 <div
-                onClick={() => {
-                  GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_contactus_clicked", "feedback_workflow_contactus");
-                  handleOptionClick("ContactUs", questIds[3])
-                }}
+                  onClick={() => {
+                    GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_contactus_clicked", "feedback_workflow_contactus");
+                    handleOptionClick("ContactUs", questIds[3])
+                  }}
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
                     setCardHovered([false, false, false, true])
@@ -1109,7 +1089,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       background: cardHovered[3]
                         ? styleConfig.listHover?.iconBackground || "#F4EBFF"
                         : "#FBFBFB",
-                        ...styleConfig?.listHover?.Icon,
+                      ...styleConfig?.listHover?.Icon,
                     }}
                   >
                     {ContactUs?.iconUrl ? <img className="q_feedback_icon_imgurl" src={ContactUs?.iconUrl} /> : contact(cardHovered[3]
@@ -1164,8 +1144,58 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             </div>
             <div>{showFooter && <QuestLabs style={styleConfig?.Footer} />}</div>
           </div>
-        )}
+        ):''}
       </div>
+      { submit && 
+          <div 
+          className="q-fw-div"
+          style={{
+            background:
+             styleConfig?.ThanksPopup?.Style?.background || styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor,
+            height: styleConfig?.ThanksPopup?.Style?.height || styleConfig?.Form?.height || "auto",
+            fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+            ...styleConfig?.ThanksPopup?.Style,
+          }}
+          id="disabledClick">
+            <div className="q_submit_cross_icon" onClick={handleThanks}>
+              {cross(iconColor, handleBackClick)}
+            </div>
+            <div className="q-fw-thanks">
+              <div>
+                <div className="q-svg-thanks">{thanks}</div>
+                <div className="q_fw_submit_box">
+                  <div className="q_feedback_text_submitted">
+                    <div
+                      className="q_feedback_text_cont"
+                      style={{
+                        color:
+                          styleConfig?.Heading?.color ||
+                          themeConfig?.primaryColor,
+                        ...styleConfig?.ThanksPopup?.Heading,
+                      }}
+                    >
+                      Feedback Submitted
+                    </div>
+                    <div
+                      className="q_fw_submit_desc"
+                      style={{
+                        color:
+                          styleConfig?.Description?.color ||
+                          themeConfig?.secondaryColor,
+                        ...styleConfig?.ThanksPopup?.Description,
+                      }}
+                    >
+                      Thanks for submitting your feedback with us. We appreciate
+                      your review and will assure you to surely consider them
+                    </div>
+                  </div>
+                  <div className="q_fw_submit_back" style={{ ...styleConfig?.SecondaryButton }}>{SecondaryButtonText}</div>
+                </div>
+              </div>
+            </div>
+            {(styleConfig?.ThanksPopup?.ShowFooter || showFooter) && <QuestLabs style={styleConfig?.Footer} />}
+          </div>
+        }
     </Modal>
   );
 };
