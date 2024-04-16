@@ -65,7 +65,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
   };
 
   const readUpdate = async (criteriaId: string, links?: string) => {
-    window.open(links, "_blank");
+    // window.open(links, "_blank");
     if (onlineComponent) {
       let claimResponse = await claimQuest(
         BACKEND_URL,
@@ -91,6 +91,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
     setshowOneUpdate((prev) => !prev);
     setShowBottomNavigation((prev) => !prev);
   };
+
   return (
     <>
       {!showOneUpdate && (
@@ -318,14 +319,25 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                           console.log("click");
                           console.log(value);
                           handleShowUpdate(value);
-                          // readUpdate(
-                          //   value?.data?.criteriaId,
-                          //   value?.data?.metadata?.linkActionUrl
-                          // );
+                          readUpdate(
+                            value?.data?.criteriaId
+                            // value?.data?.metadata?.linkActionUrl
+                          );
                         }}
                       >
                         <div className="update-img">
-                          <img src={UpdatesImage} alt="" />
+                          <div
+                            style={{
+                              width: "68px",
+                              height: "114.079px",
+                              borderRadius: "2.237px",
+                              border: "0.447px solid var(--Primary, #9035ff)",
+                              background: `url(${UpdatesImage}) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
+                              overflow: "hidden",
+                              boxSizing: "border-box",
+                            }}
+                          ></div>
+                          {/* <img src={UpdatesImage} alt="" /> */}
                         </div>
 
                         <div className="read-task-details-unread">

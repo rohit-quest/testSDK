@@ -30,7 +30,6 @@ const HelpHub = (props: HelpHubProps) => {
     onlineComponent,
   } = props;
   //   console.log(props);
-  console.log(contentConfig);
   const { apiKey, entityId, featureFlags, apiType, themeConfig } = useContext(
     QuestContext.Context
   );

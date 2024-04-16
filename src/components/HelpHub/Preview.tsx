@@ -8,7 +8,7 @@ import { QuestCriteriaWithStatusType, QuestTypes } from "./HelpHub.type";
 
 export const apiKey = "k-e6ec8094-6eef-4e80-a804-112a63607bf5";
 export const apiSecret =
-  "s-f0cc1234-f225-4ae6-b684-08380f9e5bc94387102d-c334-4827-b64f-9bb9edf1663d";
+  "s-1719a62c-5ca6-418f-8d29-f1b2328936d2ff1db443-9ee5-4eee-99f0-3532bd2e7893";
 export const entityId = "e-5768fd26-d226-4ac1-81e6-3c99427f3fb3";
 
 export default function HelpHubPreview({ online = true }) {
@@ -384,7 +384,7 @@ export default function HelpHubPreview({ online = true }) {
       >
         <HelpHub
           token={
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxMjU1Nzc3OCwiZXhwIjoxNzEzMTYyNTc4fQ.lQTHuvidb0AbZpU_Swv3Ww4wiIXISQ_VTkKkjhf9bdk"
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxMzE2NDEzOCwiZXhwIjoxNzEzNzY4OTM4fQ.tZENNsLVFUkWOMcmoOqKEVvAx97PLBZKDZGzhARP_tc"
           }
           userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
           onlineComponent={online}

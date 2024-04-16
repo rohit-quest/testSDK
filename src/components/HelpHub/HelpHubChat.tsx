@@ -17,6 +17,7 @@ import { HelpHubChatTypes } from "./HelpHub.type";
 import QuestContext from "../QuestWrapper";
 import { getMessages, sendMessage } from "./Helphub.service";
 import config from "../../config";
+import { uploadImageToBackend } from "../../general";
 let SenderImg =
   "https://s3-alpha-sig.figma.com/img/c73b/ede1/44dae2a681a58d566da9f69147cc690d?Expires=1713744000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=XJcQc8XNhFza8CJhDAyWRNg9DCoXlrD4E2wn1JDTXS4GFD3XmwsrPggispX-rCLfIw~LJAZGJVvog4bAZ7y5T2UHfn7SkPWSqTZrCftSeZzVjMTej3u5y3ZL28S3tIekwU9BZ3fzSe1HgprPHdZNCxMgOlqyhA6pb9tCSQ6Vu0Z7W8z9Hh6OmCJje68iaAro9DsHtu~wvstZjyfEENlhWWG4wMK5tZTw3hRBYKAmSExdiFb25DjhBUG~cHoXYV6A5286pwskNTO0QrPHULje839o8TdBKsvI4CC2v7yCiYC1V7Qlcd-h6GH-P0DL2qfttlIlZD3frTKsnW1EA-0PHQ__";
 
@@ -37,7 +38,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     showBottomNavigation,
     setShowBottomNavigation,
   } = props;
-  console.log(contentConfig);
+
   const { themeConfig } = useContext(QuestContext.Context);
   const [showPersonalChat, setShowPersonalChat] = useState(false);
   const [message, setMessage] = useState("");
@@ -124,6 +125,8 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
     // },
   ]);
+  const [imageUrl, setImageUrl] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleSave = () => {
     // console.log("sending message");
@@ -169,8 +172,48 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
       };
       sendMessageFunc();
     }
+
+    if (selectedFile) {
+      const uploadFile = async () => {
+        // generalFunction.showLoader();
+        let data = await uploadImageToBackend(
+          selectedFile,
+          BACKEND_URL,
+          apiKey,
+          userId,
+          token
+        );
+        console.log(data?.imageUrl);
+        setImageUrl(data?.imageUrl);
+        setSelectedFile(null);
+        // generalFunction.hideLoader();
+      };
+      uploadFile();
+    }
     setMessage("");
   };
+
+  useEffect(() => {}, [selectedFile]);
+
+  const inputFileChangeHandler = (event: any) => {
+    if (event.target.files[0]) {
+      setSelectedFile(event.target.files[0]);
+      // setImageUrl(URL.createObjectURL(event.target.files[0]));
+      // const uploadFile = async () => {
+      //   // generalFunction.showLoader();
+      //   let data = await uploadImageToBackend(
+      //     event.target.files[0],
+      //     BACKEND_URL,
+      //     apiKey,
+      //     userId,
+      //     token
+      //   );
+      //   setImageUrl(data?.imageUrl);
+      //   // generalFunction.hideLoader();
+      // };
+    }
+  };
+
   const resizeHandler = () => {
     const headerElement = document.getElementById("helpHub");
     if (headerElement && scrollRef.current) {
@@ -562,8 +605,23 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
               <div className="q-chat-personal-container-footer-icons">
                 <img src={SendMessageEmojiIcon} />
                 <img src={Mic} />
-                <img src={SendMessageAttachIcon} />
-                <div onClick={handleSave}>
+
+                {/* <div className="attach-file"> */}
+                <div className="attach-file">
+                  <label htmlFor="profile-img">
+                    <img src={SendMessageAttachIcon} />
+                  </label>
+                  <input
+                    onChange={inputFileChangeHandler}
+                    id="profile-img"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    // ref={fileInputRef}
+                  />
+                </div>
+
+                <div className="sent-btn" onClick={handleSave}>
                   <img src={SendMessageAero} />
                 </div>
               </div>

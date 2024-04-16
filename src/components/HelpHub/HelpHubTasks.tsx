@@ -49,7 +49,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
   //     //     setClaimStatusTasks(arr);
   //     // }
   // }, [tasksData])
-
+  // console.log(claimStatusTasks);
   const readUpdate = async (criteriaId: string, links?: string) => {
     window.open(links, "_blank");
     if (onlineComponent) {
@@ -63,19 +63,20 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
         criteriaId
       );
       if (claimResponse.success) {
-        setClaimStatusTasks([...claimStatusTasks, criteriaId]);
+        let arr = claimStatusTasks.filter((item) =>
+          item !== criteriaId ? item : criteriaId
+        );
+        // setClaimStatusTasks([...claimStatusTasks, criteriaId]);
+        setClaimStatusTasks(arr);
       }
     } else {
-      console.log("offline no api");
-      setClaimStatusTasks([...claimStatusTasks, criteriaId]);
+      if (!claimStatusTasks.includes(criteriaId)) {
+        setClaimStatusTasks([...claimStatusTasks, criteriaId]);
+      }
     }
   };
 
   const [openTaskDiv, setOpenTaskDiv] = useState<number | undefined>(undefined);
-  // console.log(claimStatusTasks);
-  // console.log(claimStatusTasks.length);
-  // console.log(claimStatusTasks?.length / tasksData?.length);
-  // console.log("widt of one", Math.ceil(100 / tasksData.length));
   return (
     <div
       className={"helpHubTaskCont"}
@@ -191,37 +192,38 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
               }}
             ></div> */}
 
-            {tasksData?.map((value, index) => {
-              // console.log(value);
-              // console.log(value.completed);
-              return (
-                <div
-                  className="q-helphub-tasks-progress-bar-tabs "
-                  style={{
-                    width: `${Math.ceil(100 / tasksData.length)}%`,
-                    background: `${
-                      openTaskDiv === index
-                        ? "var(--Primary-Grape-400, #A357FF)"
-                        : value.completed
-                        ? "var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%))"
-                        : ""
-                    }`,
-                    boxShadow: "0px 1px 4px 0px rgba(0, 0, 0, 0.12)",
-                    borderRadius: `${
-                      index == 0
-                        ? "14px 0px 0px 14px"
-                        : index === tasksData?.length - 1
-                        ? "0px 14px 14px 0px"
-                        : ""
-                    }`,
-                  }}
-                >
-                  {/* {index === 0
+            {onlineComponent &&
+              tasksData?.map((value, index) => {
+                // console.log(value);
+                // console.log(value.completed);
+                return (
+                  <div
+                    className="q-helphub-tasks-progress-bar-tabs "
+                    style={{
+                      width: `${Math.ceil(100 / tasksData.length)}%`,
+                      background: `${
+                        openTaskDiv === index
+                          ? "var(--Primary-Grape-400, #A357FF)"
+                          : value.completed
+                          ? "var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%))"
+                          : ""
+                      }`,
+                      boxShadow: "0px 1px 4px 0px rgba(0, 0, 0, 0.12)",
+                      borderRadius: `${
+                        index == 0
+                          ? "14px 0px 0px 14px"
+                          : index === tasksData?.length - 1
+                          ? "0px 14px 14px 0px"
+                          : ""
+                      }`,
+                    }}
+                  >
+                    {/* {index === 0
                     ? "first"
                     : index === tasksData?.length - 1
                     ? "last"
                     : ""} */}
-                  {/* <div
+                    {/* <div
              style={{
                width: `${
                  100 * (claimStatusTasks?.length / tasksData?.length)
@@ -229,14 +231,63 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
              }}
            ></div> */}
 
-                  {/* <div>
+                    {/* <div>
              {tasksData?.map(() => (
                <div>hi</div>
              ))}
            </div> */}
-                </div>
-              );
-            })}
+                  </div>
+                );
+              })}
+
+            {!onlineComponent &&
+              tasksData?.map((value, index) => {
+                // console.log(value);
+                // console.log(value.data.criteriaId);
+                // console.log(value.completed);
+                return (
+                  <div
+                    className="q-helphub-tasks-progress-bar-tabs "
+                    style={{
+                      width: `${Math.ceil(100 / tasksData.length)}%`,
+                      background: `${
+                        openTaskDiv === index
+                          ? "var(--Primary-Grape-400, #A357FF)"
+                          : claimStatusTasks.includes(value?.data?.criteriaId)
+                          ? "var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%))"
+                          : ""
+                      }`,
+                      boxShadow: "0px 1px 4px 0px rgba(0, 0, 0, 0.12)",
+                      borderRadius: `${
+                        index == 0
+                          ? "14px 0px 0px 14px"
+                          : index === tasksData?.length - 1
+                          ? "0px 14px 14px 0px"
+                          : ""
+                      }`,
+                    }}
+                  >
+                    {/* {index === 0
+                    ? "first"
+                    : index === tasksData?.length - 1
+                    ? "last"
+                    : ""} */}
+                    {/* <div
+             style={{
+               width: `${
+                 100 * (claimStatusTasks?.length / tasksData?.length)
+               }%`,
+             }}
+           ></div> */}
+
+                    {/* <div>
+             {tasksData?.map(() => (
+               <div>hi</div>
+             ))}
+           </div> */}
+                  </div>
+                );
+              })}
           </div>
         </div>
 
@@ -253,13 +304,11 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                 <div
                   className="single-task-close-detail"
                   onClick={() => {
-                    console.log(index);
                     if (openTaskDiv === index) {
                       setOpenTaskDiv(undefined);
                     } else {
                       setOpenTaskDiv(index);
                     }
-
                     //   readUpdate(
                     //     ele?.data?.criteriaId,
                     //     ele?.data?.metadata?.linkActionUrl
@@ -336,10 +385,21 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                         style={{
                           background: themeConfig?.buttonColor,
                         }}
+                        // disabled={
+                        //   onlineComponent
+                        //     ? claimStatusTasks.includes(ele?.data.criteriaId)
+                        //     : claimStatusTasks.includes(ele?.data.criteriaId)
+                        // }
                       >
                         <p
                           style={{
                             fontFamily: themeConfig?.fontFamily,
+                          }}
+                          onClick={() => {
+                            readUpdate(
+                              ele?.data?.criteriaId,
+                              ele?.data?.metadata?.linkActionUrl
+                            );
                           }}
                         >
                           Start Now
