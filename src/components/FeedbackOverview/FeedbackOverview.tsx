@@ -300,6 +300,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     useContext(QuestContext.Context);
   const [answer, setAnswer] = useState<Record<string, string>>({});
   const [cardHovered, setCardHovered] = useState([false, false, false, false]);
+  const [session, setSession] = useState<{ [key: string]: string }>({});
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
@@ -476,6 +477,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         const request = `${BACKEND_URL}api/entities/${entityId}/quests/${selectedQuest}/verify-all?userId=${userId}`;
         const requestData = {
           criterias: ansArr,
+          userId: headers?.userId,
+          session: session[selectedQuest]
         };
         setShowLoader(true);
         axios
@@ -515,9 +518,9 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     setSelectedOption(null);
   };
   function isDefaultQuestId(questId: string): boolean {
-    const defaultIdPattern =
-      /^q-[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
-    return !defaultIdPattern.test(questId);
+    const defaultIdPattern = ["q-general-feedback", "q-report-a-bug", "q-request-a-feature", "q-contact-us"].includes(questId);
+      // /^q-[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+    return defaultIdPattern;
   }
 
   useEffect(() => {
@@ -535,6 +538,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           request = `${BACKEND_URL}api/entities/${entityId}/default-quest/?userId=${userId}&defaultId=${id}`;
           axios.post(request, {}, { headers: headers }).then((res) => {
             let response = res.data.data;
+            setSession((prev) => ({...prev, [id]: response.session}))
             let criterias = response?.eligibilityData?.map((criteria: any) => {
               return {
                 type: criteria?.data?.criteriaType,
@@ -559,6 +563,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           request = `${BACKEND_URL}api/entities/${entityId}/quests/${id}?userId=${userId}`;
           axios.get(request, { headers: headers }).then((res) => {
             let response = res.data;
+            setSession((prev) => ({...prev, [id]: response.session}))
             let criterias = response?.eligibilityData?.map((criteria: any) => {
               return {
                 type: criteria?.data?.criteriaType,
