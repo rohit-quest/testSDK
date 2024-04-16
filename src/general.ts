@@ -229,7 +229,6 @@ const createUrl = (
   token: any
 ) => {
   const url = `${BACKEND_URL}${apiString}`;
-  console.log(url);
   const headers = {
     apiKey: apikey,
     userId: userId,
@@ -249,10 +248,6 @@ export const uploadImageToBackend = async (
   userId: any,
   token: any
 ) => {
-  console.log("252");
-  console.log(apikey);
-  console.log(userId);
-  console.log(token);
   if (!file) {
     return null;
   }

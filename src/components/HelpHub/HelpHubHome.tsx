@@ -322,7 +322,10 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
             borderColor: themeConfig?.borderColor,
           }}
         >
-          <div className="search-input">
+          <div
+            className="search-input"
+            onClick={() => setSelectedSection("Help")}
+          >
             <div className="q-helphub-search-input-cont">
               <input
                 className="q-helphub-search-input"
@@ -411,7 +414,10 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
               borderColor: themeConfig?.borderColor,
             }}
           >
-            <div className="q-helphub-updates-innercont">
+            <div
+              className="q-helphub-updates-innercont"
+              onClick={() => setSelectedSection("Updates")}
+            >
               <div
                 className="q-helphub-quest-community-desc"
                 style={{

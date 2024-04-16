@@ -344,7 +344,12 @@ const HelpHub = (props: HelpHubProps) => {
 
               {/* Footer: powered by quest labs  */}
               {showFooter != false && (
-                <div className="helphubFooterCont">
+                <div
+                  className="helphubFooterCont"
+                  onClick={() => {
+                    window.open("https://www.questlabs.ai/");
+                  }}
+                >
                   <div className="helphubFooterText">Powered by Quest Labs</div>
                   <div>
                     <HelphubSvg type="footerLogo" />

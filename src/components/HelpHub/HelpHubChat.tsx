@@ -8,6 +8,8 @@ import SendMessageAero from "../../assets/images/SendMessageAero.svg";
 import ChatWoman from "../../assets/images/ChatWoman.svg";
 import CancelButton from "../../assets/images/CancelButton.svg";
 import SearchIcons from "../../assets/images/SearchIcons.svg";
+import DeleteIcon from "../../assets/images/DeleteIcon.svg";
+import ImageUploadIcon from "../../assets/images/ImageUploadIcon.svg";
 import Modal1 from "../../assets/images/HelpHubModal1.jpeg";
 import QuestWhiteLogo from "../../assets/images/QuestWhiteLogo.svg";
 import Mic from "../../assets/images/Mic.svg";
@@ -125,53 +127,34 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
     // },
   ]);
-  const [imageUrl, setImageUrl] = useState("");
+
+  const [uploadedImageUrl, setUploadedImageUrl] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFileName, setSelectedFileName] = useState("");
+  const [scrollWidthSet, setScrollWidthSet] = useState(true);
 
   const handleSave = () => {
-    // console.log("sending message");
-
-    if (message.length > 0) {
+    const sendMessageFunc = async (message: string) => {
       setSenderMessageLoading(true);
-      const sendMessageFunc = async () => {
-        setData((data) => [...data, { sender: message }]);
-        //   let qId = questId || "q-default-helphub";
-        let sendMessageResponse = await sendMessage(
-          BACKEND_URL,
-          entityId,
-          userId,
-          token,
-          apiKey,
-          message
-        );
-        // console.log(sendMessageResponse);
-        // console.log();
-        // console.log("user", message);
+      setData((data) => [...data, { sender: message }]);
+      //   let qId = questId || "q-default-helphub";
+      let sendMessageResponse = await sendMessage(
+        BACKEND_URL,
+        entityId,
+        userId,
+        token,
+        apiKey,
+        message
+      );
 
-        // console.log("response", sendMessageResponse.data);
-        // setTimeout(() => {
-        //   setData((data) => [
-        //     ...data,
-        //     {
-        //       receiver: sendMessageResponse.data,
-        //     },
-        //   ]);
-        // }, 1000);
-        setData((data) => [
-          ...data,
-          {
-            receiver: sendMessageResponse.data,
-          },
-        ]);
-        setSenderMessageLoading((prev) => !prev);
-        // setMessageFailed(true);
-        setTimeout(() => {
-          // setMessageFailed(!sendMessageResponse.data.success);
-        }, 2000);
-        //   console.log(data);
-      };
-      sendMessageFunc();
-    }
+      setData((data) => [
+        ...data,
+        {
+          receiver: sendMessageResponse.data,
+        },
+      ]);
+      setSenderMessageLoading((prev) => !prev);
+    };
 
     if (selectedFile) {
       const uploadFile = async () => {
@@ -183,12 +166,57 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
           userId,
           token
         );
-        console.log(data?.imageUrl);
-        setImageUrl(data?.imageUrl);
+        setUploadedImageUrl(data?.imageUrl);
         setSelectedFile(null);
+        setSelectedFileName("");
+        sendMessageFunc(data?.imageUrl);
+        setScrollWidthSet((prev) => !prev);
         // generalFunction.hideLoader();
       };
       uploadFile();
+    }
+
+    if (message.length > 0) {
+      // setSenderMessageLoading(true);
+      // const sendMessageFunc = async () => {
+      //   console.log(uploadedImageUrl);
+      //   setData((data) => [...data, { sender: message }]);
+      //   //   let qId = questId || "q-default-helphub";
+      //   let sendMessageResponse = await sendMessage(
+      //     BACKEND_URL,
+      //     entityId,
+      //     userId,
+      //     token,
+      //     apiKey,
+      //     message
+      //   );
+      //   // console.log(sendMessageResponse);
+      //   // console.log();
+      //   // console.log("user", message);
+
+      //   // console.log("response", sendMessageResponse.data);
+      //   // setTimeout(() => {
+      //   //   setData((data) => [
+      //   //     ...data,
+      //   //     {
+      //   //       receiver: sendMessageResponse.data,
+      //   //     },
+      //   //   ]);
+      //   // }, 1000);
+      //   setData((data) => [
+      //     ...data,
+      //     {
+      //       receiver: sendMessageResponse.data,
+      //     },
+      //   ]);
+      //   setSenderMessageLoading((prev) => !prev);
+      //   // setMessageFailed(true);
+      //   setTimeout(() => {
+      //     // setMessageFailed(!sendMessageResponse.data.success);
+      //   }, 2000);
+      //   //   console.log(data);
+      // };
+      sendMessageFunc(message);
     }
     setMessage("");
   };
@@ -198,6 +226,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   const inputFileChangeHandler = (event: any) => {
     if (event.target.files[0]) {
       setSelectedFile(event.target.files[0]);
+      setSelectedFileName(event.target.files[0].name);
       // setImageUrl(URL.createObjectURL(event.target.files[0]));
       // const uploadFile = async () => {
       //   // generalFunction.showLoader();
@@ -228,7 +257,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
     resizeHandler();
-  }, [data]);
+  }, [data, scrollWidthSet]);
 
   useEffect(() => {
     window.addEventListener("resize", resizeHandler);
@@ -360,7 +389,14 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
 
                 {chat.map((value, index) => {
                   return (
-                    <div className="q-helphub-chat-detail">
+                    <div
+                      className="q-helphub-chat-detail"
+                      onClick={() => {
+                        setShowBottomNavigation(false);
+                        setShowPersonalChat((prev) => !prev);
+                        setScrollWidthSet((prev) => !prev);
+                      }}
+                    >
                       {/* <div className="q-helphub-chat-sender-profile">
                         {value.profile}
                       </div> */}
@@ -393,10 +429,10 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
 
                       <button
                         className="q-helphub-chat-btn"
-                        onClick={() => {
-                          setShowBottomNavigation(false);
-                          setShowPersonalChat((prev) => !prev);
-                        }}
+                        // onClick={() => {
+                        //   setShowBottomNavigation(false);
+                        //   setShowPersonalChat((prev) => !prev);
+                        // }}
                       >
                         <img src={OpenSectionButton} alt="" />
                       </button>
@@ -418,6 +454,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                 onClick={() => {
                   setShowBottomNavigation(false);
                   setShowPersonalChat(true);
+                  setScrollWidthSet((prev) => !prev);
                 }}
                 style={{
                   background: themeConfig?.buttonColor,
@@ -454,6 +491,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                 onClick={() => {
                   setShowBottomNavigation(true);
                   setShowPersonalChat(false);
+                  setScrollWidthSet((prev) => !prev);
                 }}
               >
                 <HelphubSvg type={"BackButton"} />
@@ -524,36 +562,51 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
 
             <div className="chat-container" id="chatContainer">
               {data &&
-                data.map((message, index) => (
-                  <div
-                    style={{
-                      display: "flex",
-                      // position: "relative",
-                      gap: "8px",
-                      // backgroundColor: "yellow",
-                    }}
-                  >
-                    {message.receiver && (
-                      <div className="chat-profile-img-receiver">
-                        <img src={QuestWhiteLogo} />
-                      </div>
-                    )}
+                data.map((message, index) => {
+                  return (
                     <div
-                      key={index}
-                      className={`message ${
-                        message.sender ? "sender" : "receiver"
-                      }`}
+                      style={{
+                        display: "flex",
+                        gap: "8px",
+                        marginBottom: "12px",
+                      }}
                     >
-                      {message.sender ? message.sender : message.receiver}
-                    </div>
+                      {message.receiver && (
+                        <div className="chat-profile-img-receiver">
+                          <img src={QuestWhiteLogo} />
+                        </div>
+                      )}
 
-                    {message.sender && (
-                      <div className="chat-profile-img-sender">
-                        <img src={Modal1} />
+                      <div
+                        key={index}
+                        className={`message ${
+                          message.sender ? "sender" : "receiver"
+                        }`}
+                      >
+                        {/* {message.sender ? message.sender : message.receiver} */}
+                        {message.sender ? (
+                          message.sender.includes(
+                            "https://quest-media-storage-bucket"
+                          ) ? (
+                            <div className="chat-coversion-img">
+                              <img src={message.sender} alt="" />
+                            </div>
+                          ) : (
+                            message.sender
+                          )
+                        ) : (
+                          message.receiver
+                        )}
                       </div>
-                    )}
-                  </div>
-                ))}
+
+                      {message.sender && (
+                        <div className="chat-profile-img-sender">
+                          <img src={Modal1} />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               {senderMessageLoading && (
                 <div className="chat-bubble">
                   <div className="typing">
@@ -578,39 +631,99 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
 
           <div className="q-chat-personal-container-footer">
             <div>
-              <input
-                className="q-chat-personal-container-footer-input"
-                onKeyUp={(e) => {
-                  if (e.key === "Enter") {
-                    //   if (message.length > 0) {
-                    //     setData((data) => [...data, { sender: message }]);
-                    //     setTimeout(() => {
-                    //       setData((data) => [
-                    //         ...data,
-                    //         {
-                    //           receiver:
-                    //             "I am not in the mood to answer, you come back later",
-                    //         },
-                    //       ]);
-                    //     }, 1000);
-                    //   }
-                    //   setMessage("");
-                    handleSave();
-                  }
-                }}
-                placeholder="Ask a question..."
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-              />
+              {selectedFileName ? (
+                <div className="selected-file-div">
+                  <img src={ImageUploadIcon} alt="" />
+                  <p>{selectedFileName}</p>
+                </div>
+              ) : (
+                <input
+                  className="q-chat-personal-container-footer-input"
+                  onKeyUp={(e) => {
+                    if (e.key === "Enter") {
+                      //   if (message.length > 0) {
+                      //     setData((data) => [...data, { sender: message }]);
+                      //     setTimeout(() => {
+                      //       setData((data) => [
+                      //         ...data,
+                      //         {
+                      //           receiver:
+                      //             "I am not in the mood to answer, you come back later",
+                      //         },
+                      //       ]);
+                      //     }, 1000);
+                      //   }
+                      //   setMessage("");
+                      handleSave();
+                    }
+                  }}
+                  placeholder="Ask a question..."
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                />
+              )}
               <div className="q-chat-personal-container-footer-icons">
-                <img src={SendMessageEmojiIcon} />
-                <img src={Mic} />
+                {selectedFileName ? (
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "16px",
+                      alignItems: "center",
+                    }}
+                  >
+                    <p
+                      style={{
+                        color: "var(--Neutral-Black-200, #6E6E6E)",
+                        fontFamily: themeConfig?.fontFamily || "Figtree",
+                        fontSize: "14px",
+                        fontStyle: "normal",
+                        fontWeight: 500,
+                        lineHeight: "20px" /* 142.857% */,
+                        textDecorationLine: "underline",
+                      }}
+                    >
+                      View
+                    </p>
 
-                {/* <div className="attach-file"> */}
+                    <div
+                      style={{
+                        width: "1px",
+                        height: "18px",
+                        background: "var(--Neutral-White-400, #E0E0E0)",
+                      }}
+                    ></div>
+                  </div>
+                ) : (
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "16px",
+                    }}
+                  >
+                    <img src={SendMessageEmojiIcon} />
+                    <img src={Mic} />
+                  </div>
+                )}
+                {/* {selectedFileName ? "View" : <img src={SendMessageEmojiIcon} />}
+                {selectedFileName ? "|" : <img src={Mic} />} */}
+
                 <div className="attach-file">
-                  <label htmlFor="profile-img">
-                    <img src={SendMessageAttachIcon} />
-                  </label>
+                  {!selectedFileName ? (
+                    <label htmlFor="profile-img">
+                      <img src={SendMessageAttachIcon} />
+                    </label>
+                  ) : (
+                    <img
+                      src={DeleteIcon}
+                      style={{
+                        cursor: "pointer",
+                      }}
+                      onClick={() => {
+                        setSelectedFile(null);
+                        setSelectedFileName("");
+                      }}
+                    />
+                  )}
                   <input
                     onChange={inputFileChangeHandler}
                     id="profile-img"

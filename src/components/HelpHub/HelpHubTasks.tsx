@@ -201,13 +201,27 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                     className="q-helphub-tasks-progress-bar-tabs "
                     style={{
                       width: `${Math.ceil(100 / tasksData.length)}%`,
+                      // background: `${
+                      //   openTaskDiv === index
+                      //     ? "var(--Primary-Grape-400, #A357FF)"
+                      //     : value.completed
+                      //     ? "var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%))"
+                      //     : ""
+                      // }`,
+
                       background: `${
-                        openTaskDiv === index
-                          ? "var(--Primary-Grape-400, #A357FF)"
-                          : value.completed
+                        value.completed
                           ? "var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%))"
+                          : openTaskDiv === index
+                          ? "var(--Primary-Grape-400, #A357FF)"
                           : ""
+
+                        // ? "var(--Primary-Grape-400, #A357FF)"
+                        // : value.completed
+                        // ? "var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%))"
+                        // : ""
                       }`,
+
                       boxShadow: "0px 1px 4px 0px rgba(0, 0, 0, 0.12)",
                       borderRadius: `${
                         index == 0
@@ -250,12 +264,24 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                     className="q-helphub-tasks-progress-bar-tabs "
                     style={{
                       width: `${Math.ceil(100 / tasksData.length)}%`,
+                      // background: `${
+                      //   openTaskDiv === index
+                      //     ? "var(--Primary-Grape-400, #A357FF)"
+                      //     : claimStatusTasks.includes(value?.data?.criteriaId)
+                      //     ? "var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%))"
+                      //     : ""
+                      // }`,
                       background: `${
-                        openTaskDiv === index
-                          ? "var(--Primary-Grape-400, #A357FF)"
-                          : claimStatusTasks.includes(value?.data?.criteriaId)
+                        claimStatusTasks.includes(value?.data?.criteriaId)
                           ? "var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%))"
+                          : openTaskDiv === index
+                          ? "var(--Primary-Grape-400, #A357FF)"
                           : ""
+
+                        // ? "var(--Primary-Grape-400, #A357FF)"
+                        // : value.completed
+                        // ? "var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%))"
+                        // : ""
                       }`,
                       boxShadow: "0px 1px 4px 0px rgba(0, 0, 0, 0.12)",
                       borderRadius: `${
@@ -299,6 +325,17 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                 style={{
                   background: themeConfig?.backgroundColor,
                   ...styleConfig?.Home?.Card,
+                }}
+                onClick={() => {
+                  if (openTaskDiv === index) {
+                    setOpenTaskDiv(undefined);
+                  } else {
+                    setOpenTaskDiv(index);
+                  }
+                  //   readUpdate(
+                  //     ele?.data?.criteriaId,
+                  //     ele?.data?.metadata?.linkActionUrl
+                  //   );
                 }}
               >
                 <div
@@ -384,6 +421,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                       <button
                         style={{
                           background: themeConfig?.buttonColor,
+                          cursor: "pointer",
                         }}
                         // disabled={
                         //   onlineComponent

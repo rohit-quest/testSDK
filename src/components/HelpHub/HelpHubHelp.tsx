@@ -99,6 +99,11 @@ const HelpHubTasks = (props: HelpHubFaqTypes) => {
                         faqIndex === index ? "open" : "close"
                       }`}
                       key={index}
+                      onClick={() => {
+                        index === faqIndex
+                          ? setFaqIndex(undefined)
+                          : setFaqIndex(index);
+                      }}
                     >
                       <div
                         className="text"
