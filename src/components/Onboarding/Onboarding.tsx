@@ -337,7 +337,7 @@ function OnBoarding(props: QuestLoginProps) {
                 const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/criterias?userId=${userId}`;
                 await axios.get(request, { headers: headers }).then((res) => {
                     let response = res.data;
-                    console.log(response)
+
                     if (response.data.uiProps?.questThemeData) {
                         setQuestThemeData(response?.data?.uiProps?.questThemeData)
                         if (response.data.uiProps?.questThemeData.theme) {
@@ -517,9 +517,6 @@ function OnBoarding(props: QuestLoginProps) {
     //   </div>)
     // }
 
-    console.log(BrandTheme,'520')
-
-
     const ProgressBar = () => {
         useEffect(() => {
             if (!!progressRef.current && progressRef.current.clientWidth != wd) {
@@ -534,14 +531,14 @@ function OnBoarding(props: QuestLoginProps) {
                             <div key={i}>
                                 {
                                     steps.includes(i) == true ?
-                                        <div className="q-onb-progress-comp" style={{ borderColor: styleConfig?.ProgressBar?.completeTabColor || "#098849" }}>
+                                        <div className="q-onb-progress-comp" style={{ borderColor: styleConfig?.ProgressBar?.completeTabColor   || "#098849" }}>
                                             <div
                                                 style={{
                                                     maxWidth: `${((((wd - (progress.length - 1) * 15)) / progress.length) - 32)}px`,
                                                     whiteSpace: progressBarMultiLine ? "normal" : "nowrap",
                                                     overflow: progressBarMultiLine ? "" : "hidden",
                                                     textOverflow: progressBarMultiLine ? "" : "ellipsis",
-                                                    color: styleConfig?.ProgressBar?.completeTabColor || "#098849"
+                                                    color: styleConfig?.ProgressBar?.completeTabColor  || "#098849"
                                                 }}
                                             >
                                                 {prog}
@@ -553,14 +550,14 @@ function OnBoarding(props: QuestLoginProps) {
 
                                         </div>
                                         :
-                                        (i == currentPage) ? (<div className="q-onb-progress-comp" style={{ borderColor: styleConfig?.ProgressBar?.currentTabColor || "#2C2C2C" }}>
+                                        (i == currentPage) ? (<div className="q-onb-progress-comp" style={{ borderColor: styleConfig?.ProgressBar?.currentTabColor ||  "#2C2C2C" }}>
                                             <div
                                                 style={{
                                                     maxWidth: `${((((wd - (progress.length - 1) * 15)) / progress.length) - 32)}px`,
                                                     whiteSpace: progressBarMultiLine ? "normal" : "nowrap",
                                                     overflow: progressBarMultiLine ? "" : "hidden",
                                                     textOverflow: progressBarMultiLine ? "" : "ellipsis",
-                                                    color: styleConfig?.ProgressBar?.currentTabColor || "#2C2C2C"
+                                                    color: styleConfig?.ProgressBar?.currentTabColor  || "#2C2C2C"
                                                 }}
                                             >
                                                 {prog}
@@ -581,7 +578,7 @@ function OnBoarding(props: QuestLoginProps) {
                                                         whiteSpace: progressBarMultiLine ? "normal" : "nowrap",
                                                         overflow: progressBarMultiLine ? "" : "hidden",
                                                         textOverflow: progressBarMultiLine ? "" : "ellipsis",
-                                                        color: styleConfig?.ProgressBar?.pendingTabColor || "#AFAFAF"
+                                                        color: styleConfig?.ProgressBar?.pendingTabColor  || "#AFAFAF"
                                                     }}
                                                 >
                                                     {prog}
@@ -724,7 +721,7 @@ function OnBoarding(props: QuestLoginProps) {
                         {customComponents}
                     </div>
                 }
-                <Label htmlFor="textAreaInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
+                <Label htmlFor="textAreaInput" style={{ color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Label }}>
                     {`${question} ${!!required ? "*" : ""}`}
                 </Label>
                 <SingleChoice
@@ -734,7 +731,7 @@ function OnBoarding(props: QuestLoginProps) {
                     checked={answer[criteriaId]}
                     style={{
                         borderColor: styleConfig?.SingleChoice?.style?.borderColor || themeConfig?.borderColor,
-                        color: styleConfig?.SingleChoice?.style?.color || themeConfig?.secondaryColor,
+                        color: styleConfig?.SingleChoice?.style?.color || BrandTheme?.primaryColor || themeConfig?.secondaryColor,
                         ...styleConfig?.SingleChoice?.style
                     }}
                     selectedStyle={{
@@ -784,7 +781,7 @@ function OnBoarding(props: QuestLoginProps) {
                     onChange={(e) => handleUpdate(e, criteriaId, "check")}
                     style={{
                         borderColor: styleConfig?.MultiChoice?.style?.borderColor || themeConfig?.borderColor,
-                        color: styleConfig?.MultiChoice?.style?.color || BrandTheme?.secondaryColor || themeConfig?.primaryColor,
+                        color: styleConfig?.MultiChoice?.style?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
                         ...styleConfig?.MultiChoice?.style
                     }}
                     selectedStyle={{
@@ -811,7 +808,7 @@ function OnBoarding(props: QuestLoginProps) {
                         {customComponents}
                     </div>
                 }
-                <Label htmlFor="textAreaInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
+                <Label htmlFor="textAreaInput" style={{ color: styleConfig?.Label?.color || BrandTheme?.primaryColor ||  themeConfig?.primaryColor, ...styleConfig?.Label }}>
                     {`${question} ${!!required ? "*" : ""}`}
                 </Label>
                 <MultiChoiceTwo
@@ -962,11 +959,11 @@ function OnBoarding(props: QuestLoginProps) {
 
     }
 
+
     if (featureFlags[config.FLAG_CONSTRAINTS.OnboardingFlag]?.isEnabled == false) {
         return (<div></div>)
     }
-
-    console.log(questThemeData, "questThemeData")
+ 
 
     return (
         formdata.length > 0 && (
@@ -979,14 +976,14 @@ function OnBoarding(props: QuestLoginProps) {
                     {formdata.length > 0 && !!headingScreen &&
                         (typeof headingScreen == "object" && !!headingScreen.name ? (
                             <div className="q-onb-main-heading" style={styleConfig?.Topbar}>
-                                <div className="q-onb-main-h3" style={{ color: styleConfig?.Heading?.color || BrandTheme?.primaryColor ||  themeConfig?.primaryColor, ...styleConfig?.Heading }}>
+                                <div className="q-onb-main-h3" style={{ color: styleConfig?.Heading?.color || BrandTheme?.titleColor  || BrandTheme?.primaryColor ||  themeConfig?.primaryColor, ...styleConfig?.Heading }}>
                                     {headingScreen?.name}
                                 </div>
                                 <div className="q-onb-main-h4" style={{ color: styleConfig?.Description?.color || BrandTheme?.secondaryColor || themeConfig?.secondaryColor, ...styleConfig?.Description }}>{headingScreen?.desc}</div>
                             </div>
                         ) : !!headingScreen[currentPage] ? (
                             <div className="q-onb-main-heading" style={styleConfig?.Topbar}>
-                                <div className="q-onb-main-h3" style={{ color: styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Heading }}>
+                                <div className="q-onb-main-h3" style={{ color: styleConfig?.Heading?.color || BrandTheme?.titleColor || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Heading }}>
                                     {headingScreen[currentPage]?.name}
                                 </div>
                                 <div className="q-onb-main-h4" style={{ color: styleConfig?.Description?.color || BrandTheme?.secondaryColor || themeConfig?.secondaryColor, ...styleConfig?.Description }}>

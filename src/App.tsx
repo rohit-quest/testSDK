@@ -167,7 +167,7 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-        <OnBoardingPreview online={true} />
+        {/* <OnBoardingPreview online={true} /> */}
 
         {/* <GetStartedPreview  online={true} />   */}
 
@@ -225,7 +225,7 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-        {/* <FeedbackWorkflowPreview online={true} /> */}
+        <FeedbackWorkflowPreview online={true} />
         {/* <ChallengesPreview online={true} /> */}
 
         {/* <FeedbackPreview online={true} /> */}

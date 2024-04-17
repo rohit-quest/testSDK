@@ -263,6 +263,28 @@ interface FormDataItem {
   required?: boolean;
   placeholder?: string;
 }
+
+type BrandTheme = {
+  accentColor?: string;
+  background?: string;
+  borderRadius?: string;
+  buttonColor?: string;
+  contentColor?: string;
+  fontFamily?: string;
+  logo?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  tertiaryColor?: string;
+  titleColor?: string;
+}
+interface QuestThemeData {
+  accentColor: string;
+  theme: string;
+  borderRadius: string;
+  buttonColor: string;
+  images: string[]
+
+}
 const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   userId,
   token,
@@ -301,6 +323,26 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   const [answer, setAnswer] = useState<Record<string, string>>({});
   const [cardHovered, setCardHovered] = useState([false, false, false, false]);
   const [session, setSession] = useState<{ [key: string]: string }>({});
+  const [questThemeData, setQuestThemeData] = useState<QuestThemeData>({
+    accentColor: "",
+    theme: "",
+    borderRadius: "",
+    buttonColor: "",
+    images: []
+})
+const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
+    accentColor: "",
+    background: "",
+    borderRadius: "",
+    buttonColor: "",
+    contentColor: "",
+    fontFamily: "",
+    logo: "",
+    primaryColor: "",
+    secondaryColor: "",
+    tertiaryColor: "",
+    titleColor: ""
+})
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
@@ -356,6 +398,16 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     </svg>
   );
   let GeneralFunctions = new General('mixpanel', apiType);
+
+  const getTheme = async (theme: string) => {
+    try {
+        const request = `${BACKEND_URL}api/entities/${entityId}?userId=${userId}`;
+        const response = await axios.get(request, { headers: { apiKey, userId, token } })
+        setBrandTheme(response.data.data.theme.BrandTheme[theme])
+    } catch (error) {
+        GeneralFunctions.captureSentryException(error);
+    }
+}
 
   useEffect(() => {
     GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_loaded", "feedback_workflow");
@@ -538,6 +590,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           request = `${BACKEND_URL}api/entities/${entityId}/default-quest/?userId=${userId}&defaultId=${id}`;
           axios.post(request, {}, { headers: headers }).then((res) => {
             let response = res.data.data;
+            if (response.uiProps?.questThemeData) {
+              setQuestThemeData(response?.uiProps?.questThemeData)
+              if (response.uiProps?.questThemeData.theme) {
+                  getTheme(response.uiProps.questThemeData.theme)
+              }
+          }
             setSession((prev) => ({...prev, [id]: response.session}))
             let criterias = response?.eligibilityData?.map((criteria: any) => {
               return {
@@ -701,8 +759,9 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         className="q-fw-div"
         style={{
           background:
-            styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor,
+            styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor,
           height: styleConfig?.Form?.height || "auto",
+          borderRadius: styleConfig?.Form?.borderRadius || questThemeData?.borderRadius || BrandTheme?.borderRadius,
           fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
           ...styleConfig?.Form,
         }}
@@ -715,12 +774,13 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 topbarStyle: styleConfig?.TopBar,
                 headingStyle: {
                   color:
-                    styleConfig?.Heading?.color || themeConfig?.primaryColor,
+                    styleConfig?.Heading?.color || BrandTheme?.titleColor || BrandTheme?.primaryColor || themeConfig?.primaryColor,
                   ...styleConfig?.Heading,
                 },
                 descriptionStyle: {
                   color:
                     styleConfig?.Description?.color ||
+                    BrandTheme?.secondaryColor ||
                     themeConfig?.secondaryColor,
                   ...styleConfig?.Description,
                 },
@@ -809,6 +869,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       style={{
                         color:
                           styleConfig?.Heading?.color ||
+                          BrandTheme?.primaryColor ||
                           themeConfig?.primaryColor,
                       }}
                     >
@@ -819,6 +880,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       style={{
                         color:
                           styleConfig?.Description?.color ||
+                          BrandTheme?.secondaryColor ||
                           themeConfig?.secondaryColor,
                       }}
                     >
@@ -830,7 +892,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 </div>
               </div>
             </div>
-            {showFooter && <QuestLabs style={styleConfig?.Footer} />}
+            {showFooter && <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />}
           </div>
         ) : (
           <div>

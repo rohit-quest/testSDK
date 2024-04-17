@@ -193,7 +193,7 @@ export default function OnBoardingPreview({ online = true }: { online?: boolean 
       // inputBgColor=""
       // inputBorder="1px solid #6525B3"
       singleChoose="modal1"
-      multiChoice="modal1"
+      multiChoice="modal2"
       design={[[1, 2], [3, 4], [5, 6]]}
 
       headingScreen={[{ name: "Tell us about yourself", desc: "this is description" },

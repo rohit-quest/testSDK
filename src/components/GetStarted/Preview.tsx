@@ -63,7 +63,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
             entityId={entityId}
             featureFlags={{}}
             apiType="STAGING"
-            themeConfig={{fontFamily:'cursive'}}
+            // themeConfig={{fontFamily:'cursive'}}
         >
             <GetStarted
                 questId={questId}
@@ -85,17 +85,17 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
                 onCompleteAllStatus={() => {
                     // showToast.success({ text: "completed successfully" })
                 }}
-                template={1}
+                template={2}
                 showLoadingIndicator={true}
 
                 // showDropDown
-            uniqueUserId="soumitra.petbindhi+1@gmail.com"
+              uniqueUserId="soumitra.petbindhi+1@gmail.com"
             showProgressBar
             
-             showFooter={false}
+             showFooter={true}
              styleConfig={{
                 // Card:{backgroundColor:'red',borderBottom:'1px solid blue'}
-                Topbar:{border:'none'}
+                // Topbar:{border:'none'}
              }}
              ButtonType='Buttons'
             />

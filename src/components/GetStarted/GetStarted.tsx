@@ -63,6 +63,19 @@ type GetStartedProps = {
     }
   }
 };
+type BrandTheme = {
+  accentColor?: string;
+  background?: string;
+  borderRadius?: string;
+  buttonColor?: string;
+  contentColor?: string;
+  fontFamily?: string;
+  logo?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  tertiaryColor?: string;
+  titleColor?: string;
+}
 interface TutorialStep {
   id: number;
   title: string;
@@ -77,15 +90,22 @@ interface TutorialStep {
   imageUrl?: string;
 }
 
+interface QuestThemeData {
+  accentColor: string;
+  theme: string;
+  borderRadius: string;
+  buttonColor: string;
+  images: string[]
+
+}
+
 function GetStarted({
   userId,
   token,
   questId,
-  // cardBackground = 'transparent',
   onCompleteAllStatus,
   iconUrls =[],
   uniqueUserId,
-  // cardBorderColor = '#EFEFEF',
   headingText,
   descriptionText,
   uniqueEmailId,
@@ -109,6 +129,26 @@ function GetStarted({
   const [allCriteriaCompleted, setAllCriteriaCompleted] = useState<boolean>(false);
   const [criteriaSubmit, setCriteriaSubmit] = useState<string[]>([]);
   const [dropdowns, setDropdown] = useState<Array<boolean>>([]);
+  const [questThemeData, setQuestThemeData] = useState<QuestThemeData>({
+    accentColor: "",
+    theme: "",
+    borderRadius: "",
+    buttonColor: "",
+    images: []
+})
+const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
+    accentColor: "",
+    background: "",
+    borderRadius: "",
+    buttonColor: "",
+    contentColor: "",
+    fontFamily: "",
+    logo: "",
+    primaryColor: "",
+    secondaryColor: "",
+    tertiaryColor: "",
+    titleColor: ""
+})
 
   let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
   const cookies = new Cookies();
@@ -118,6 +158,18 @@ function GetStarted({
   let questUserToken = cookies.get("questUserToken");
 
   let GeneralFunctions = new General('mixpanel', apiType);
+
+
+
+  const getTheme = async (theme: string) => {
+    try {
+        const request = `${BACKEND_URL}api/entities/${entityId}?userId=${userId}`;
+        const response = await axios.get(request, { headers: { apiKey, userId, token } })
+        setBrandTheme(response.data.data.theme.BrandTheme[theme])
+    } catch (error) {
+        GeneralFunctions.captureSentryException(error);
+    }
+}
 
   const handleCriteriaClick = (id: any, url: string) => {
     // clg
@@ -212,6 +264,12 @@ function GetStarted({
         axios.get(request, { headers: header }).then((res) => {
           let response = res.data;
 
+          if (response.data.uiProps?.questThemeData) {
+            setQuestThemeData(response?.data?.uiProps?.questThemeData)
+            if (response.data.uiProps?.questThemeData.theme) {
+                getTheme(response.data.uiProps.questThemeData.theme)
+            }
+        }
           let criterias = response?.eligibilityData?.map((criteria: any) => {
             return {
               type: criteria?.data?.criteriaType,
@@ -335,7 +393,7 @@ function GetStarted({
     formdata.length > 0 &&
     <div
       style={{
-        background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
+        background: styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", borderRadius: styleConfig?.Form?.borderRadius || questThemeData?.borderRadius || BrandTheme?.borderRadius, ...styleConfig?.Form
       }}
       className="get_started_box"
     >
@@ -345,10 +403,10 @@ function GetStarted({
         : true) && (
           <div className="gs-heading-div" style={{...styleConfig?.Topbar}}>
             <div>
-              <div style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }} className="gs-heading">
+              <div style={{ color: styleConfig?.Heading?.color || BrandTheme?.titleColor || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Heading }} className="gs-heading">
                 {headingText || "Quickstart Guide"}
               </div>
-              <div style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description }} className="gs-subheading">
+              <div style={{ color: styleConfig?.Description?.color || BrandTheme?.secondaryColor || themeConfig?.secondaryColor, ...styleConfig?.Description }} className="gs-subheading">
                 {descriptionText ||
                   "Get started with Quest and explore how Quest can take your customer engagement to the next level"}
               </div>
@@ -402,13 +460,13 @@ function GetStarted({
                   </div>
                   <div className="gs-card-text">
                     <div
-                      style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
+                      style={{ color: styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor }}
                       className="gs-card-head"
                     >
                       {e.title}
                     </div>
                     <div
-                      style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
+                      style={{ color: styleConfig?.Description?.color || BrandTheme?.secondaryColor || themeConfig?.secondaryColor }}
                       className="gs-card-desc"
                     >
                       {e.description}
@@ -440,7 +498,7 @@ function GetStarted({
                 </div>
                 {dropdowns[i] && (
                   <div className="gs_card_dropdown">
-                    <div className="gs_drop_desc" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>{e.longDescription}</div>
+                    <div className="gs_drop_desc" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor || themeConfig?.secondaryColor }}>{e.longDescription}</div>
                     <div className="gs_drop_btns">
                       <PrimaryButton className={'gs_start_btn'} children={e.btn2 || "Start Now" } onClick={(event) => {
                         GeneralFunctions.fireTrackingEvent("quest_get_started_primary_button_clicked", "get_started");
@@ -453,7 +511,7 @@ function GetStarted({
                         style={{
                           flex: 'inherit',
                           width: 'fit-content',
-                          background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
+                          background: styleConfig?.PrimaryButton?.background || questThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig?.buttonColor || styleConfig?.PrimaryButton?.background || BrandTheme?.buttonColor,
                           ...styleConfig?.PrimaryButton
                         }}
                       />
@@ -499,13 +557,13 @@ function GetStarted({
                   </div>
                   <div className="gs-card-text">
                     <div
-                      style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
+                      style={{ color: styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor }}
                       className="gs-card-head"
                     >
                       {e.title}
                     </div>
                     <div
-                      style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
+                      style={{ color: styleConfig?.Description?.color || BrandTheme?.secondaryColor || themeConfig?.secondaryColor }}
                       className="gs-card-desc"
                     >
                       {e.description}
@@ -544,6 +602,7 @@ function GetStarted({
                             width: "fit-content",
                             background:
                               styleConfig?.PrimaryButton?.background ||
+                              questThemeData?.buttonColor || BrandTheme?.buttonColor ||
                               themeConfig?.buttonColor,
                             ...styleConfig?.PrimaryButton,
                           }}
@@ -586,7 +645,7 @@ function GetStarted({
         ? !!formdata.length && !allCriteriaCompleted
         : true)) &&
         <div>
-          <QuestLabs style={styleConfig?.Footer} />
+          <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />
         </div>
       }
     </div>
