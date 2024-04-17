@@ -152,7 +152,7 @@ function App() {
         {/* <ModalPreview/> */}
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
-        <GamifiedQuizPreview online={true} />
+        {/* <GamifiedQuizPreview online={true} /> */}
 
         {/* 
                 <HelpCenter
@@ -167,7 +167,7 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-        {/* <OnBoardingPreview online={false} /> */}
+        <OnBoardingPreview online={true} />
 
         {/* <GetStartedPreview  online={true} />   */}
 
