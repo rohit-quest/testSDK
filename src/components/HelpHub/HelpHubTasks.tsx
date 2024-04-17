@@ -77,9 +77,10 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
   };
 
   const [openTaskDiv, setOpenTaskDiv] = useState<number | undefined>(undefined);
+
   return (
     <div
-      className={"helpHubTaskCont"}
+      className={"helpHubTaskCont animatedDissolve"}
       style={{
         background: themeConfig?.backgroundColor || "#fff",
         ...styleConfig?.Tasks?.Form,
@@ -321,7 +322,8 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
           {filterData?.map(
             (ele: QuestCriteriaWithStatusType, index: number) => (
               <div
-                className="q-helphub-tasks-single-task"
+                // className="q-helphub-tasks-single-task  "
+                className={"q-helphub-tasks-single-task"}
                 style={{
                   background: themeConfig?.backgroundColor,
                   ...styleConfig?.Home?.Card,
@@ -332,26 +334,9 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                   } else {
                     setOpenTaskDiv(index);
                   }
-                  //   readUpdate(
-                  //     ele?.data?.criteriaId,
-                  //     ele?.data?.metadata?.linkActionUrl
-                  //   );
                 }}
               >
-                <div
-                  className="single-task-close-detail"
-                  onClick={() => {
-                    if (openTaskDiv === index) {
-                      setOpenTaskDiv(undefined);
-                    } else {
-                      setOpenTaskDiv(index);
-                    }
-                    //   readUpdate(
-                    //     ele?.data?.criteriaId,
-                    //     ele?.data?.metadata?.linkActionUrl
-                    //   );
-                  }}
-                >
+                <div className="single-task-close-detail">
                   <div className="q-helphub-tasks-single-task-detail">
                     <div
                       className="q-helphub-tasks-single-task-step"
@@ -405,8 +390,21 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                     alt=""
                   />
                 </div>
-                {index === openTaskDiv ? (
-                  <div className="single-task-close-div">
+
+                <div
+                  className={` ${
+                    index === openTaskDiv
+                      ? "single-task-open-div-cont"
+                      : "single-task-close-div-cont"
+                  }`}
+                >
+                  <div
+                  // className={` ${
+                  //   index === openTaskDiv
+                  //     ? "single-task-open-div"
+                  //     : "single-task-close-div"
+                  // }`}
+                  >
                     <div className="single-task-close-div-text">
                       <p
                         style={{
@@ -447,20 +445,31 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                     <div className="single-task-close-div-image-cont">
                       <div
                         style={{
-                          width: "152px",
+                          width: "100%",
                           height: "255px",
+                          // borderRadius: "5px",
+                          // border: "1px solid var(--Primary, #9035FF)",
+                          // background: `url(${UpdatesImage}) lightgray -8.338px -7px / 110.971% 102.745% no-repeat`,
+                          // backgroundPosition: "center-top",
+                          // width: "152px",
+                          // width: "100%",
+                          // height: "255px",
+                          // flexShrink: "0",
                           borderRadius: "5px",
                           border: "1px solid var(--Primary, #9035FF)",
-                          background: `url(${UpdatesImage}) lightgray -8.338px -7px / 110.971% 102.745% no-repeat`,
-                          overflow: "hidden",
-                          boxSizing: "border-box",
+                          background: `url(${UpdatesImage}) lightgray -5.338px -7px / 110.971% 102.745% no-repeat`,
+
+                          // background: "red",
                         }}
                       ></div>
                     </div>
                   </div>
+                </div>
+                {/* {index === openTaskDiv ? (
+                  
                 ) : (
                   ""
-                )}
+                )} */}
               </div>
             )
           )}

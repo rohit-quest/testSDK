@@ -97,7 +97,10 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
   };
 
   return (
-    <div className={"helpHubMainInnerCont"} style={styleConfig?.Home?.Form}>
+    <div
+      className={"helpHubMainInnerCont animatedDissolve"}
+      style={styleConfig?.Home?.Form}
+    >
       {/* upper div: div 1 */}
       <div className={"MainImgCont"}>
         <div className={"QuestWhiteLogoCont"}>

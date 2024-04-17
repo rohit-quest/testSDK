@@ -425,141 +425,143 @@ export default function HelpHubPreview({ online = true }) {
           //     subHeading: "up sub head",
           //   },
           // }}
-          styleConfig={
-            {
-              // Chat: {
-              //   Card: {
-              //     Heading: {
-              //       color: "red",
-              //     },
-              //     SubHeading: {
-              //       color: "yellow",
-              //     },
-              //   },
-              //   Topbar: {
-              //     Heading: {
-              //       color: "red",
-              //     },
-              //     SubHeading: {
-              //       color: "yellow",
-              //     },
-              //   },
-              //   Form: {
-              //     // color: "red",
-              //   },
-              // },
-              // Footer: {
-              //   // background: "red",
-              // },
-              // Help: {
-              //   Card: {
-              //     Heading: {
-              //       color: "red",
-              //     },
-              //     SubHeading: {
-              //       color: "blue",
-              //     },
-              //   },
-              //   Form: {
-              //     color: "pink",
-              //     // background: "red",
-              //   },
-              //   Searchbox: {
-              //     color: "red",
-              //     background: "red",
-              //   },
-              //   Topbar: {
-              //     Heading: {
-              //       color: "green",
-              //     },
-              //     SubHeading: {
-              //       color: "greenyellow",
-              //     },
-              //   },
-              // },
-              // Home: {
-              //   BannerText: {
-              //     color: "red",
-              //   },
-              //   Button: {
-              //     color: "red",
-              //     background: "green",
-              //   },
-              //   Card: {
-              //     // color: "red",
-              //     // background: "red",
-              //     // backgroundColor: "red",
-              //   },
-              //   Form: {
-              //     // color: "red",
-              //     // background: "red",
-              //     // backgroundColor: "red",
-              //   },
-              //   Heading: {
-              //     // color: "red",
-              //     // background: "red",
-              //   },
-              //   SubHeading: {
-              //     color: "red",
-              //     background: "red",
-              //   },
-              // },
-              // Tasks: {
-              //   Card: {
-              //     // Heading: {
-              //     //   color: "red",
-              //     //   background: "yellow",
-              //     // },
-              //     // SubHeading: {
-              //     //   color: "red",
-              //     //   background: "yellow",
-              //     // },
-              //   },
-              //   Form: {
-              //     // color: "red",
-              //     // background: "yellow",
-              //   },
-              //   Searchbox: {},
-              //   Topbar: {
-              //     Heading: {
-              //       color: "red",
-              //       background: "yellow",
-              //     },
-              //     SubHeading: {
-              //       color: "green",
-              //       background: "yellow",
-              //     },
-              //   },
-              // },
-              // Updates: {
-              //   Card: {
-              //     // Heading: {
-              //     //   color: "red",
-              //     //   background: "yellow",
-              //     // },
-              //     // SubHeading: {
-              //     //   color: "yellow",
-              //     //   background: "red",
-              //     // },
-              //   },
-              //   Form: {
-              //     // color: "red",
-              //     // background: "yellow",
-              //   },
-              //   // Searchbox
-              //   Topbar: {
-              //     Heading: {
-              //       // color: "red",
-              //       // background: "yellow",
-              //     },
-              //     SubHeading: {
-              //       // color: "red",
-              //       // background: "yellow",
-              //     },
-              //   },
-              // },
-            }
-          }
+          styleConfig={{
+            Main: {
+              height: "600px",
+              width: "680px",
+            },
+            // Chat: {
+            //   Card: {
+            //     Heading: {
+            //       color: "red",
+            //     },
+            //     SubHeading: {
+            //       color: "yellow",
+            //     },
+            //   },
+            //   Topbar: {
+            //     Heading: {
+            //       color: "red",
+            //     },
+            //     SubHeading: {
+            //       color: "yellow",
+            //     },
+            //   },
+            //   Form: {
+            //     // color: "red",
+            //   },
+            // },
+            // Footer: {
+            //   // background: "red",
+            // },
+            // Help: {
+            //   Card: {
+            //     Heading: {
+            //       color: "red",
+            //     },
+            //     SubHeading: {
+            //       color: "blue",
+            //     },
+            //   },
+            //   Form: {
+            // color: "pink",
+            //     // background: "red",
+            //   },
+            //   Searchbox: {
+            //     color: "red",
+            //     background: "red",
+            //   },
+            //   Topbar: {
+            //     Heading: {
+            //       color: "green",
+            //     },
+            //     SubHeading: {
+            //       color: "greenyellow",
+            //     },
+            //   },
+            // },
+            // Home: {
+            //   BannerText: {
+            //     color: "red",
+            //   },
+            //   Button: {
+            //     color: "red",
+            //     background: "green",
+            //   },
+            //   Card: {
+            //     // color: "red",
+            //     // background: "red",
+            //     // backgroundColor: "red",
+            //   },
+            //   Form: {
+            //     // color: "red",
+            //     // background: "red",
+            //     // backgroundColor: "red",
+            //   },
+            //   Heading: {
+            //     // color: "red",
+            //     // background: "red",
+            //   },
+            //   SubHeading: {
+            //     color: "red",
+            //     background: "red",
+            //   },
+            // },
+            // Tasks: {
+            //   Card: {
+            //     // Heading: {
+            //     //   color: "red",
+            //     //   background: "yellow",
+            //     // },
+            //     // SubHeading: {
+            //     //   color: "red",
+            //     //   background: "yellow",
+            //     // },
+            //   },
+            //   Form: {
+            //     // color: "red",
+            //     // background: "yellow",
+            //   },
+            //   Searchbox: {},
+            //   Topbar: {
+            //     Heading: {
+            //       color: "red",
+            //       background: "yellow",
+            //     },
+            //     SubHeading: {
+            //       color: "green",
+            //       background: "yellow",
+            //     },
+            //   },
+            // },
+            // Updates: {
+            //   Card: {
+            //     // Heading: {
+            //     //   color: "red",
+            //     //   background: "yellow",
+            //     // },
+            //     // SubHeading: {
+            //     //   color: "yellow",
+            //     //   background: "red",
+            //     // },
+            //   },
+            //   Form: {
+            //     // color: "red",
+            //     // background: "yellow",
+            //   },
+            //   // Searchbox
+            //   Topbar: {
+            //     Heading: {
+            //       // color: "red",
+            //       // background: "yellow",
+            //     },
+            //     SubHeading: {
+            //       // color: "red",
+            //       // background: "yellow",
+            //     },
+            //   },
+            // },
+          }}
           // claimStatusUpdates={claimStatusUpdates}
           // setClaimStatusUpdates={setClaimStatusUpdates}
         />
@@ -581,6 +583,12 @@ export default function HelpHubPreview({ online = true }) {
         userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
         // ParentQuest={}
         // ChildQuest={}
+        styleConfig={{
+          Main: {
+            height: "400px",
+            width: "580px",
+          },
+        }}
         ParentQuest={parentQuest}
         ChildQuest={childQuest}
         onlineComponent={online}

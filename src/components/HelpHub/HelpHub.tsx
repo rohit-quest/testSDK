@@ -36,6 +36,8 @@ const HelpHub = (props: HelpHubProps) => {
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
   const [selectedSection, setSelectedSection] = useState("Home");
+  const [prevSelectedSection, setPrevSelectedSection] = useState("");
+
   const [helpHub, setHelpHub] = useState(true);
   const [parentQuest, setParentQuest] = useState<QuestTypes>();
   const [chieldQuestCriteria, setChieldQuestCriteria] = useState<
@@ -59,6 +61,10 @@ const HelpHub = (props: HelpHubProps) => {
       )
     );
   }, [claimStatusTasks]);
+
+  useEffect(() => {
+    console.log(showBottomNavigation);
+  }, [showBottomNavigation]);
 
   const getOrCreateQuest = async () => {
     let qId = questId || "q-default-helphub";
@@ -111,11 +117,23 @@ const HelpHub = (props: HelpHubProps) => {
     }
   }, [updateData]);
 
+  useEffect(() => {
+    setPrevSelectedSection(selectedSection);
+  }, [selectedSection]);
+
   return (
     <div
-      style={{ fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" }}
+      style={{
+        fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+        background: "red",
+      }}
     >
-      <div className={"helphubIconUpperCont"}>
+      <div
+        className={"helphubIconUpperCont"}
+        style={{
+          background: "yellow",
+        }}
+      >
         {/* help button  */}
         <div
           className={"helhubIconCont"}
@@ -125,7 +143,14 @@ const HelpHub = (props: HelpHubProps) => {
         </div>
 
         {helpHub && (
-          <div id="helpHub" className={"helpHubMainCont animated"}>
+          <div
+            id="helpHub"
+            className={"helpHubMainCont animated"}
+            style={{
+              height: styleConfig?.Main?.height,
+              width: styleConfig?.Main?.width,
+            }}
+          >
             {selectedSection === "Home" ? (
               <HelpHubHome
                 questsData={chieldQuestCriteria}
@@ -205,15 +230,148 @@ const HelpHub = (props: HelpHubProps) => {
 
             {/* bottom navigation */}
             <div className="helphubBottomCont">
-              {showBottomNavigation && (
+              {/* {showBottomNavigation && (
                 <div
-                  className="helphubSvgCont"
+                  // className="helphubSvgCont"
+                  className={`helphubSvgCont ${
+                    showBottomNavigation ? "showNav" : "hideNav"
+                  }`}
                   style={{
                     background: themeConfig?.backgroundColor || "#fff",
                     ...styleConfig?.Footer,
                   }}
                 >
-                  {/* home  */}
+                  <div onClick={() => setSelectedSection("Home")}>
+                    <HelphubSvg
+                      type={"home"}
+                      primaryColor={
+                        selectedSection == "Home" ? "#9035FF" : "#B9B9B9"
+                      }
+                      secondaryColor={
+                        selectedSection == "Home" ? "white" : "#B9B9B9"
+                      }
+                    />
+
+                    <div
+                      style={{
+                        color:
+                          selectedSection == "Home" ? "#9035FF" : "#b9b9b9",
+                        fontWeight: selectedSection == "Home" ? "600" : "400",
+                      }}
+                      className="helphubSvgTitle"
+                    >
+                      Home
+                    </div>
+                  </div>
+
+                  <div onClick={() => setSelectedSection("Chat")}>
+                    <HelphubSvg
+                      type={"Chat"}
+                      primaryColor={
+                        selectedSection == "Chat" ? "#9035FF" : "#B9B9B9"
+                      }
+                      secondaryColor={
+                        selectedSection == "Chat" ? "white" : "#B9B9B9"
+                      }
+                    />
+
+                    <div
+                      style={{
+                        color:
+                          selectedSection == "Chat" ? "#9035FF" : "#b9b9b9",
+                        fontWeight: selectedSection == "Chat" ? "600" : "400",
+                      }}
+                      className="helphubSvgTitle"
+                    >
+                      Chat
+                    </div>
+                  </div>
+
+                  <div onClick={() => setSelectedSection("Help")}>
+                    <HelphubSvg
+                      type={"Help"}
+                      primaryColor={
+                        selectedSection == "Help" ? "#9035FF" : "#B9B9B9"
+                      }
+                      secondaryColor={
+                        selectedSection == "Help" ? "white" : "#B9B9B9"
+                      }
+                    />
+
+                    <div
+                      style={{
+                        color:
+                          selectedSection == "Help" ? "#9035FF" : "#b9b9b9",
+                        fontWeight: selectedSection == "Help" ? "600" : "400",
+                      }}
+                      className="helphubSvgTitle"
+                    >
+                      Help
+                    </div>
+                  </div>
+
+                  <div onClick={() => setSelectedSection("Updates")}>
+                    <HelphubSvg
+                      type={"Updates"}
+                      primaryColor={
+                        selectedSection == "Updates" ? "#9035FF" : "#B9B9B9"
+                      }
+                      secondaryColor={
+                        selectedSection == "Updates" ? "white" : "#B9B9B9"
+                      }
+                    />
+
+                    <div
+                      style={{
+                        color:
+                          selectedSection == "Updates" ? "#9035FF" : "#b9b9b9",
+                        fontWeight:
+                          selectedSection == "Updates" ? "600" : "400",
+                      }}
+                      className="helphubSvgTitle"
+                    >
+                      Updates
+                    </div>
+                  </div>
+
+                  <div onClick={() => setSelectedSection("Tasks")}>
+                    <HelphubSvg
+                      type={"Tasks"}
+                      primaryColor={
+                        selectedSection == "Tasks" ? "#9035FF" : "#B9B9B9"
+                      }
+                      secondaryColor={
+                        selectedSection == "Tasks" ? "white" : "#B9B9B9"
+                      }
+                    />
+
+                    <div
+                      style={{
+                        color:
+                          selectedSection == "Tasks" ? "#9035FF" : "#b9b9b9",
+                        fontWeight: selectedSection == "Tasks" ? "600" : "400",
+                      }}
+                      className="helphubSvgTitle"
+                    >
+                      Tasks
+                    </div>
+                  </div>
+                </div>
+              )} */}
+
+              <div
+                // className="helphubSvgCont"
+                className={`helphubSvgCont ${
+                  showBottomNavigation ? "showNav" : "hideNav"
+                }`}
+                // style={{
+                //   background: themeConfig?.backgroundColor || "#fff",
+                //   ...styleConfig?.Footer,
+                // }}
+              >
+                <div
+                // className={`${showBottomNavigation ? "showNav" : "hideNav"}`}
+                >
                   <div onClick={() => setSelectedSection("Home")}>
                     {/* Home icon  */}
                     <HelphubSvg
@@ -238,7 +396,6 @@ const HelpHub = (props: HelpHubProps) => {
                     </div>
                   </div>
 
-                  {/* chat page */}
                   <div onClick={() => setSelectedSection("Chat")}>
                     {/* Chat icon  */}
                     <HelphubSvg
@@ -263,7 +420,6 @@ const HelpHub = (props: HelpHubProps) => {
                     </div>
                   </div>
 
-                  {/* help page  */}
                   <div onClick={() => setSelectedSection("Help")}>
                     {/* help icon  */}
                     <HelphubSvg
@@ -288,7 +444,6 @@ const HelpHub = (props: HelpHubProps) => {
                     </div>
                   </div>
 
-                  {/* update page */}
                   <div onClick={() => setSelectedSection("Updates")}>
                     {/* update icon */}
                     <HelphubSvg
@@ -315,7 +470,6 @@ const HelpHub = (props: HelpHubProps) => {
                     </div>
                   </div>
 
-                  {/* task page */}
                   <div onClick={() => setSelectedSection("Tasks")}>
                     {/* task icon  */}
                     <HelphubSvg
@@ -340,7 +494,7 @@ const HelpHub = (props: HelpHubProps) => {
                     </div>
                   </div>
                 </div>
-              )}
+              </div>
 
               {/* Footer: powered by quest labs  */}
               {showFooter != false && (
