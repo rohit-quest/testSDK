@@ -152,7 +152,7 @@ function App() {
         {/* <ModalPreview/> */}
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
-        <GamifiedQuizPreview online={true} />
+        {/* <GamifiedQuizPreview online={true} /> */}
 
         {/* 
                 <HelpCenter
@@ -225,7 +225,7 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-        {/* <FeedbackWorkflowPreview online={true} /> */}
+        <FeedbackWorkflowPreview online={true} />
         {/* <ChallengesPreview online={true} /> */}
 
         {/* <FeedbackPreview online={true} /> */}

@@ -73,7 +73,8 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
                 //         background:'yellow',
                 //         Heading:'green',
                 //         Description:'red'
-                //     }
+                //     },
+                //     // ThanksPopUp:{backgroundColor:"red"}
                 //     // Description: { color: 'red' },
                 //     // listDescription:{color:'yellow'}
                 //     // Heading: { color: 'red' },
