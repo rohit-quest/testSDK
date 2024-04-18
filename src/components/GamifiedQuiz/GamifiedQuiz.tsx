@@ -101,7 +101,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
   setGamifiedQuiz,
   gamifiedQuiz,
   setQuestions,
-  questionsPerSection = 0,
+  questionsPerSection = 2,
   functionOnSubmit,
   feedbackContent,
 }) => {
@@ -503,7 +503,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
     placeholder: string,
     inputType: logoType
   ) => {
-    console.log(styleConfig?.Input?.color);
+
     return (
       <div key={criteriaId}>
         <p
@@ -690,7 +690,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
     );
   }
 
-  useEffect(() => {}, [currentSection]);
+
 
   return (
     <>
