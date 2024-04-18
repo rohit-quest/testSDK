@@ -152,7 +152,7 @@ function App() {
         {/* <ModalPreview/> */}
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
-        <GamifiedQuizPreview online={false} />
+        <GamifiedQuizPreview online={true} />
 
         {/* 
                 <HelpCenter
