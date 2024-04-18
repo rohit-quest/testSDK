@@ -364,12 +364,12 @@ function OnBoarding(props: QuestLoginProps) {
             let headers = {
                 apikey: apiKey,
                 apisecret: apiSecret,
-                userId: questUserId,
-                token: questUserToken
+                userId: questUserId ? questUserId : userId,
+                token: questUserToken ? questUserToken : token
             }
             if (!!designState && Number(currentPage) + 1 != designState?.length) {
                 try {
-                    axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-complete-page-${Number(currentPage) + 1}?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers})
+                    axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${headers.userId}/metrics/onboarding-complete-page-${Number(currentPage) + 1}?userId=${headers.userId}&questId=${questId}`, {count: 1}, {headers})
                 } catch (error) {
                     GeneralFunctions.captureSentryException(error);
                 }

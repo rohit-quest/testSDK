@@ -52,8 +52,10 @@ type GetStartedProps = {
     Topbar?:CSSProperties,
     ProgressBar?: {
       barColor?: string,
-      ProgressText?: CSSProperties
+      ProgressText?: CSSProperties,
+      barParentColor?: string
     }
+    CardContainer?: CSSProperties,
     Icon?: CSSProperties
     Arrow?: {
       Background?: string,
@@ -211,8 +213,9 @@ function GetStarted({
         const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}`;
         axios.get(request, { headers: header }).then((res) => {
           let response = res.data;
-
+            
           let criterias = response?.eligibilityData?.map((criteria: any) => {
+            console.log(criteria)
             return {
               type: criteria?.data?.criteriaType,
               title: criteria?.data?.metadata?.linkActionName,
@@ -224,7 +227,7 @@ function GetStarted({
               criteriaId: criteria?.data?.criteriaId,
               completed: criteria?.completed,
               longDescription:
-                criteria?.longDescription ||
+                criteria?.data?.metadata?.longDescription ||
                 "Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users",
               imageUrl: criteria?.data?.metadata?.imageUrl,
             };
@@ -361,7 +364,7 @@ function GetStarted({
             <div className="q_progress_percentage" style={{color: styleConfig?.ProgressBar?.ProgressText?.color || "#9035ff"}}>
               {Math.floor(completedPercentage) || 0}% Completed
             </div>
-            <div className="q_gt_progress_bar">
+            <div className="q_gt_progress_bar" style={{background:styleConfig?.ProgressBar?.barParentColor}}>
               <div
                 className="q_progress_bar_completed"
                 style={{ width: `${completedPercentage}%`, background: styleConfig?.ProgressBar?.barColor || "#9035ff" }}
@@ -369,7 +372,7 @@ function GetStarted({
             </div>
           </div>
         )}
-      <div className="gs-cards-container" style={{ padding: showProgressBar ? '0px 20px 20px 20px' : '20px', gap: template == 2 ? '0px' : '16px' }}>
+      <div className="gs-cards-container" style={{ padding: showProgressBar ? '0px 20px 20px 20px' : '20px', gap: template == 2 ? styleConfig?.CardContainer?.gap || '0px' : styleConfig?.CardContainer?.gap || '16px', ...styleConfig?.CardContainer }}>
         {(autoHide === true ? !allCriteriaCompleted : true) &&
           formdata.map((e, i) =>
             template == 2 ? (
