@@ -77,6 +77,7 @@ type offlineGetStartedProps = {
       CompletedBackground?: string,
       CompletedIconColor?: string
     }
+    CardContainer?: CSSProperties
 
   };
   offlineData: offlineData[];
@@ -185,13 +186,7 @@ function OfflineGetStarted({
             </div>
           </div>
         )}
-      <div
-        className="gs-cards-container"
-        style={{
-          padding: showProgressBar ? "0px 20px 20px 20px" : "20px",
-          gap: template == 2 ? "0px" : "16px",
-        }}
-      >
+      <div className="gs-cards-container" style={{ padding: showProgressBar ? '0px 20px 20px 20px' : '20px', gap: template == 2 ? styleConfig?.CardContainer?.gap || '0px' : styleConfig?.CardContainer?.gap || '16px', ...styleConfig?.CardContainer }}>
         {(autoHide === true ? !allCriteriaCompleted : true) &&
           data?.length &&
           data.map((e, i) =>
