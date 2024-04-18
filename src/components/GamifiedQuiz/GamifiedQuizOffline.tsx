@@ -9,7 +9,6 @@ import {
   useState,
 } from "react";
 import QuestContext from "../QuestWrapper";
-import Cookies from "universal-cookie";
 import config from "../../config";
 import { Input, logoType } from "../Modules/Input";
 import { PrimaryButton } from "../Modules/PrimaryButton";
@@ -73,7 +72,6 @@ interface GamifiedQuizProps {
   questions?: number;
   setQuestions?: Dispatch<SetStateAction<number>> | undefined;
   questionsPerSection?: number;
-
   formDataOffline: FormData[] | [];
 }
 interface FormData {
@@ -99,13 +97,10 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
   questionSections = [],
   setGamifiedQuiz,
   gamifiedQuiz,
-  questions,
-  setQuestions,
   questionsPerSection = 0,
   functionOnSubmit,
   formDataOffline,
   setOfflineAnswer,
-  offlineAnswer,
 }) => {
   const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } =
     useContext(QuestContext.Context);
@@ -117,9 +112,6 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
   const [totalSectionsPerSectionQuestion, setTotalSectionsPerSectionQuestion] =
     useState<number>(0);
   const [currentSection, setCurrentSection] = useState<number>(0);
-
-  let BACKEND_URL =
-    apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
   const [sectionNo, setSectionNo] = useState<number>(0);
 
@@ -319,27 +311,6 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
           break;
         }
       }
-      // for (let i = 0; i < questionSections[sectionNo].length; i++) {
-      //   if (
-      //     formdata[questionSections[sectionNo][i] - 1]?.type ===
-      //     "USER_INPUT_MULTI_CHOICE"
-      //   ) {
-      //     const ansOptions =
-      //       selectedOptions[
-      //         formdata[questionSections[sectionNo][i] - 1]?.criteriaId
-      //       ];
-      //     if (!formdata[questionSections[sectionNo][i] - 1]?.required) {
-      //     } else if (
-      //       ansOptions?.length > 0 &&
-      //       formdata[questionSections[sectionNo][i] - 1]?.required
-      //     ) {
-      //       setGoToNextSection(true);
-      //     } else {
-      //       setGoToNextSection(false);
-      //       break;
-      //     }
-      //   }
-      // }
     } else {
       console.log("336");
       for (let i = 0; i < questionsPerSection; i++) {
@@ -364,19 +335,6 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
           break;
         }
       }
-      // for (let i = 0; i < questionsPerSection; i++) {
-      //   let queNo = currentSection * questionsPerSection + i;
-      //   if (formdata[queNo]?.type === "USER_INPUT_MULTI_CHOICE") {
-      //     const ansOptions = selectedOptions[formdata[queNo]?.criteriaId];
-      //     if (!formdata[queNo]?.required) {
-      //     } else if (ansOptions?.length > 0 && formdata[queNo]?.required) {
-      //       setGoToNextSection(true);
-      //     } else {
-      //       setGoToNextSection(false);
-      //       break;
-      //     }
-      //   }
-      // }
     }
   }, [
     answer,
@@ -395,7 +353,6 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
           const SelectedBorder = {
             border: `2px solid ${styleConfig?.OptionsSelectedColor?.color}`,
             fontFamily: themeConfig?.fontFamily,
-            // color: styleConfig?.OptionsSelectedColor?.color
           };
           const SelectedOptionColor = {
             color: styleConfig?.OptionsSelectedColor?.color,
@@ -576,7 +533,6 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
             borderColor:
               styleConfig?.Input?.borderColor || themeConfig?.borderColor,
             color: styleConfig?.Input?.color || themeConfig?.primaryColor,
-            // ...styleConfig?.Input,
           }}
           emailtext={
             styleConfig?.EmailError?.text == undefined
@@ -635,15 +591,6 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
   ) => {
     return (
       <div key={criteriaId}>
-        {/* {
-                    (customComponentPositions == index + 1) &&
-                    <div style={{ paddingBottom: "12px" }}>
-                        {customComponents}
-                    </div>
-                } */}
-        {/* <Label htmlFor="textAreaInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
-                    {`${question} ${!!required && "*"}`}
-                </Label> */}
         <p
           className="label-inputs"
           style={{

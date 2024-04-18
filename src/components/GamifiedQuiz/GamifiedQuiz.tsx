@@ -207,9 +207,6 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               criteriaId: criteria?.criteriaId,
               required: criteria?.metadata?.isRequired,
               placeholder: criteria?.metadata?.placeholder,
-              // linkTitle: criteria?.metadata?.linkActionName || "",
-              // linkUrl: criteria?.metadata?.linkActionUrl || "",
-              // manualInput: criteria?.metadata?.manualInput || false,
             };
           }
         );

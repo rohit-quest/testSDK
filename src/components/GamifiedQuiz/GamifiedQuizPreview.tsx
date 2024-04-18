@@ -162,16 +162,14 @@ export default function GamifiedQuizPreviewNew({
         entityId={entityId}
         featureFlags={{}}
         apiType="STAGING"
-        themeConfig={
-          {
-            // backgroundColor: "yellow", //done
-            // borderColor: "green", //done
-            // buttonColor: "red", //done
-            // fontFamily: "cursive", //done
-            // primaryColor: "red", //
-            // secondaryColor: "yellow",
-          }
-        }
+        themeConfig={{
+          // backgroundColor: "yellow", //done
+          // borderColor: "green", //done
+          // buttonColor: "red", //done
+          fontFamily: "cursive", //done
+          // primaryColor: "red", //
+          // secondaryColor: "yellow",
+        }}
       >
         {gamifiedQuiz && (
           <div
@@ -231,6 +229,12 @@ export default function GamifiedQuizPreviewNew({
                 },
                 LabelColor: {
                   // color: "green", //done
+                },
+                EmailError: {
+                  // errorStyle: {
+                  //   color: "blue",
+                  // },
+                  // text: "asdfasd",
                 },
                 Heading: {
                   // background: "yellow",
@@ -404,6 +408,12 @@ export default function GamifiedQuizPreviewNew({
               SubHeading: {
                 // color: "yellow",
               },
+              EmailError: {
+                // errorStyle: {
+                //   color: "blue",
+                // },
+                // text: "asdfasd",
+              },
               LabelColor: {
                 // color: "yellow",
               },
@@ -450,7 +460,7 @@ export default function GamifiedQuizPreviewNew({
                 // color: "white",
               },
               OptionsSelectedColor: {
-                // color: "red",
+                color: "red",
               },
             }}
             formDataOffline={formDataOffline}
