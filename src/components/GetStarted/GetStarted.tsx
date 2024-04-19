@@ -6,11 +6,7 @@ import QuestContext from "../QuestWrapper";
 import { toast } from "react-toastify";
 import Loader from "../Login/Loader";
 import Cookies from "universal-cookie";
-import {
-  greenCheck,
-  gsTick,
-  questLogo,
-} from "../../assets/images";
+import { greenCheck, gsTick, questLogo } from "../../assets/images";
 import GetStartedSvgs from "./Svgs";
 import QuestLabs from "../QuestLabs";
 import { PrimaryButton } from "../Modules/PrimaryButton";
@@ -23,7 +19,7 @@ type GetStartedProps = {
   questId: string;
   cardBackground?: string;
   onCompleteAllStatus?: () => void;
-  iconUrls?: Array<string> ;
+  iconUrls?: Array<string>;
   uniqueUserId?: string;
   uniqueEmailId?: string;
   cardBorderColor?: string;
@@ -42,28 +38,35 @@ type GetStartedProps = {
   onLinkTrigger?: (url: string, index: number) => void;
   template?: 1 | 2;
   styleConfig?: {
-    Heading?: CSSProperties,
-    Description?: CSSProperties,
-    PrimaryButton?: CSSProperties,
-    SecondaryButton?: CSSProperties,
-    Form?: CSSProperties,
-    Footer?: CSSProperties,
-    Card?: CSSProperties,
-    Topbar?:CSSProperties,
+    Heading?: CSSProperties;
+    Description?: CSSProperties;
+    PrimaryButton?: CSSProperties;
+    SecondaryButton?: CSSProperties;
+    Form?: CSSProperties;
+    Footer?: CSSProperties;
+    Card?: CSSProperties;
+    Topbar?: CSSProperties;
     ProgressBar?: {
-      barColor?: string,
-      ProgressText?: CSSProperties,
-      barParentColor?: string
-    }
-    CardContainer?: CSSProperties,
-    Icon?: CSSProperties
+      barColor?: string;
+      ProgressText?: CSSProperties;
+      barParentColor?: string;
+    };
+    CardContainer?: CSSProperties;
+    Icon?: CSSProperties;
     Arrow?: {
-      Background?: string,
-      IconColor?: string,
-      CompletedBackground?: string,
-      CompletedIconColor?: string
-    }
-  }
+      Background?: string;
+      IconColor?: string;
+      CompletedBackground?: string;
+      CompletedIconColor?: string;
+    };
+    IsImageOpen?: {
+      ContainerDiv?: CSSProperties;
+      ImageContainer?: {
+        ImageContainerProperties?: CSSProperties;
+        Image?: CSSProperties;
+      };
+    };
+  };
 };
 interface TutorialStep {
   id: number;
@@ -85,7 +88,7 @@ function GetStarted({
   questId,
   // cardBackground = 'transparent',
   onCompleteAllStatus,
-  iconUrls =[],
+  iconUrls = [],
   uniqueUserId,
   // cardBorderColor = '#EFEFEF',
   headingText,
@@ -99,27 +102,32 @@ function GetStarted({
   showAnnouncement = false,
   ButtonType = "Arrow",
   allowMultiClick = false,
-  onLinkTrigger = (url: string, index: number) => { window.location.href = url },
+  onLinkTrigger = (url: string, index: number) => {
+    window.location.href = url;
+  },
   showFooter = true,
-  styleConfig
+  styleConfig,
 }: GetStartedProps) {
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
-  const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } = useContext(
-    QuestContext.Context
-  );
+  const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } =
+    useContext(QuestContext.Context);
   const [showLoader, setShowLoader] = useState<boolean>(false);
-  const [allCriteriaCompleted, setAllCriteriaCompleted] = useState<boolean>(false);
+  const [allCriteriaCompleted, setAllCriteriaCompleted] =
+    useState<boolean>(false);
   const [criteriaSubmit, setCriteriaSubmit] = useState<string[]>([]);
   const [dropdowns, setDropdown] = useState<Array<boolean>>([]);
 
-  let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
+  let BACKEND_URL =
+    apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
   const cookies = new Cookies();
-  const completedPercentage = (formdata?.reduce((a, b) => a + (b.completed ? 1 : 0), 0) * 100) / formdata.length;
+  const completedPercentage =
+    (formdata?.reduce((a, b) => a + (b.completed ? 1 : 0), 0) * 100) /
+    formdata.length;
   let externalUserId = cookies.get("externalUserId");
   let questUserId = cookies.get("questUserId");
   let questUserToken = cookies.get("questUserToken");
 
-  let GeneralFunctions = new General('mixpanel', apiType);
+  let GeneralFunctions = new General("mixpanel", apiType);
 
   const handleCriteriaClick = (id: any, url: string) => {
     // clg
@@ -158,9 +166,11 @@ function GetStarted({
       });
   };
 
-
   useEffect(() => {
-    GeneralFunctions.fireTrackingEvent("quest_get_started_loaded", "get_started");
+    GeneralFunctions.fireTrackingEvent(
+      "quest_get_started_loaded",
+      "get_started"
+    );
 
     if (entityId) {
       const headers = {
@@ -202,53 +212,57 @@ function GetStarted({
             });
             cookies.set("questUserId", userId, { path: "/", expires: date });
             cookies.set("questUserToken", token, { path: "/", expires: date });
-          }).catch((error) => {
+          })
+          .catch((error) => {
             GeneralFunctions.captureSentryException(error);
-          });;
+          });
       } else {
         fetchData(headers);
       }
-      
+
       function fetchData(header: any) {
         const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}`;
-        axios.get(request, { headers: header }).then((res) => {
-          let response = res.data;
-            
-          let criterias = response?.eligibilityData?.map((criteria: any) => {
-            console.log(criteria)
-            return {
-              type: criteria?.data?.criteriaType,
-              title: criteria?.data?.metadata?.linkActionName,
-              url: criteria?.data?.metadata?.linkActionUrl,
-              description: criteria?.data?.metadata?.description,
-              btn1: criteria?.data?.metadata?.btn1,
-              btn2: criteria?.data?.metadata?.btn2,
-              btn1Link: criteria?.data?.metadata?.btn1Link,
-              criteriaId: criteria?.data?.criteriaId,
-              completed: criteria?.completed,
-              longDescription:
-                criteria?.data?.metadata?.longDescription ||
-                "Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users",
-              imageUrl: criteria?.data?.metadata?.imageUrl,
-            };
+        axios
+          .get(request, { headers: header })
+          .then((res) => {
+            let response = res.data;
+
+            let criterias = response?.eligibilityData?.map((criteria: any) => {
+              console.log(criteria);
+              return {
+                type: criteria?.data?.criteriaType,
+                title: criteria?.data?.metadata?.linkActionName,
+                url: criteria?.data?.metadata?.linkActionUrl,
+                description: criteria?.data?.metadata?.description,
+                btn1: criteria?.data?.metadata?.btn1,
+                btn2: criteria?.data?.metadata?.btn2,
+                btn1Link: criteria?.data?.metadata?.btn1Link,
+                criteriaId: criteria?.data?.criteriaId,
+                completed: criteria?.completed,
+                longDescription:
+                  criteria?.data?.metadata?.longDescription ||
+                  "Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users",
+                imageUrl: criteria?.data?.metadata?.imageUrl,
+              };
+            });
+            const allCriteriasCompleted = criterias.every(
+              (criteria: any) => criteria.completed === true
+            );
+            if (allCriteriasCompleted) {
+              setAllCriteriaCompleted(true);
+            }
+            criterias = Array.isArray(criterias) ? criterias : [];
+            if (!dropdowns.length)
+              setDropdown(new Array(criterias.length).fill(false));
+            setFormdata([...criterias]);
+          })
+          .catch((error) => {
+            GeneralFunctions.captureSentryException(error);
           });
-          const allCriteriasCompleted = criterias.every(
-            (criteria: any) => criteria.completed === true
-          );
-          if (allCriteriasCompleted) {
-            setAllCriteriaCompleted(true);
-          }
-          criterias = Array.isArray(criterias) ? criterias : [];
-          if (!dropdowns.length)
-            setDropdown(new Array(criterias.length).fill(false));
-          setFormdata([...criterias]);
-        }).catch((error) => {
-          GeneralFunctions.captureSentryException(error);
-        });
       }
     }
   }, [criteriaSubmit]);
-  
+
   useEffect(() => {
     if (allCriteriaCompleted) {
       const headers = {
@@ -290,7 +304,8 @@ function GetStarted({
             });
             cookies.set("questUserId", userId, { path: "/", expires: date });
             cookies.set("questUserToken", token, { path: "/", expires: date });
-          }).catch((error) => {
+          })
+          .catch((error) => {
             GeneralFunctions.captureSentryException(error);
           });
       } else {
@@ -326,217 +341,261 @@ function GetStarted({
     }
   }, [allCriteriaCompleted]);
 
-
-
-  if (featureFlags[config.FLAG_CONSTRAINTS.GetStartedFlag]?.isEnabled == false) {
+  if (
+    featureFlags[config.FLAG_CONSTRAINTS.GetStartedFlag]?.isEnabled == false
+  ) {
     return <div></div>;
   }
   if (showLoadingIndicator && showLoader) {
-    return <Loader />
+    return <Loader />;
   }
   return (
-    formdata.length > 0 &&
-    <div
-      style={{
-        background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
-      }}
-      className="get_started_box"
-    >
-
-      {(autoHide === true
-        ? !!formdata.length && !allCriteriaCompleted
-        : true) && (
-          <div className="gs-heading-div" style={{...styleConfig?.Topbar}}>
+    formdata.length > 0 && (
+      <div
+        style={{
+          background:
+            styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor,
+          height: styleConfig?.Form?.height || "auto",
+          fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+          ...styleConfig?.Form,
+        }}
+        className="get_started_box"
+      >
+        {(autoHide === true
+          ? !!formdata.length && !allCriteriaCompleted
+          : true) && (
+          <div className="gs-heading-div" style={{ ...styleConfig?.Topbar }}>
             <div>
-              <div style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }} className="gs-heading">
+              <div
+                style={{
+                  color:
+                    styleConfig?.Heading?.color || themeConfig?.primaryColor,
+                  ...styleConfig?.Heading,
+                }}
+                className="gs-heading"
+              >
                 {headingText || "Quickstart Guide"}
               </div>
-              <div style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description }} className="gs-subheading">
+              <div
+                style={{
+                  color:
+                    styleConfig?.Description?.color ||
+                    themeConfig?.secondaryColor,
+                  ...styleConfig?.Description,
+                }}
+                className="gs-subheading"
+              >
                 {descriptionText ||
                   "Get started with Quest and explore how Quest can take your customer engagement to the next level"}
               </div>
             </div>
           </div>
         )}
-      {(autoHide === true ? !!formdata.length && !allCriteriaCompleted : true) &&
-        showProgressBar && (
-          <div className="q_gt_progress">
-            <div className="q_progress_percentage" style={{color: styleConfig?.ProgressBar?.ProgressText?.color || "#9035ff"}}>
-              {Math.floor(completedPercentage) || 0}% Completed
-            </div>
-            <div className="q_gt_progress_bar" style={{background:styleConfig?.ProgressBar?.barParentColor}}>
+        {(autoHide === true
+          ? !!formdata.length && !allCriteriaCompleted
+          : true) &&
+          showProgressBar && (
+            <div className="q_gt_progress">
               <div
-                className="q_progress_bar_completed"
-                style={{ width: `${completedPercentage}%`, background: styleConfig?.ProgressBar?.barColor || "#9035ff" }}
-              ></div>
-            </div>
-          </div>
-        )}
-      <div className="gs-cards-container" style={{ padding: showProgressBar ? '0px 20px 20px 20px' : '20px', gap: template == 2 ? styleConfig?.CardContainer?.gap || '0px' : styleConfig?.CardContainer?.gap || '16px', ...styleConfig?.CardContainer }}>
-        {(autoHide === true ? !allCriteriaCompleted : true) &&
-          formdata.map((e, i) =>
-            template == 2 ? (
-              <div
-                key={i}
+                className="q_progress_percentage"
                 style={{
-                  // background: cardBackground,
-                  // borderBottom: `1px solid ${cardBorderColor}`,
-                  ...styleConfig?.Card
+                  color:
+                    styleConfig?.ProgressBar?.ProgressText?.color || "#9035ff",
                 }}
-                onClick={(e) => {
-                  GeneralFunctions.fireTrackingEvent("quest_get_started_link_clicked", "get_started");
-
-                  setDropdown((prev) =>
-                    prev.map((e, index) => (i === index ? !e : e))
-                  )
-                }
-                }
-                className="gs-single-card-dropDown"
               >
-                <div
-                  className="gs_card_body_dropDown"
-                >
-                  <div className="gs_card_body_image" style={{ ...styleConfig?.Icon }}>
-                    <img
-                      className="gs-card-icon"
-                      src={e.imageUrl || (!!iconUrls.length ? iconUrls?.[i] : "") || questLogo}
-                      alt=""
-                    />
-                  </div>
-                  <div className="gs-card-text">
-                    <div
-                      style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
-                      className="gs-card-head"
-                    >
-                      {e.title}
-                    </div>
-                    <div
-                      style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
-                      className="gs-card-desc"
-                    >
-                      {e.description}
-                    </div>
-                  </div>
-                  <div>
-                    {
-                      <div className="gs-card-img-button">
-                        {e.completed ? (
-                          <div className="q_gt_arrow-completed" style={{ background: styleConfig?.Arrow?.CompletedBackground }}>
-                            <GetStartedSvgs type={'greenCheck'} color={styleConfig?.Arrow?.CompletedIconColor || '#098849'} /></div>
-                        ) : (
-                          <div className="q_gt_arrow" style={{ background: styleConfig?.Arrow?.Background }}>
-                            {dropdowns[i] ? (
-                              <GetStartedSvgs  type={'upArrow'} color={styleConfig?.Arrow?.IconColor || arrowColor} />
-                            ) : (
-                              e.completed ? (
-                                <GetStartedSvgs type={'greenCheck'} color={styleConfig?.Arrow?.CompletedIconColor || '#098849'} />
-                              ) : (
-                                <GetStartedSvgs type={'downArrowIcon'} color={ styleConfig?.Arrow?.IconColor || arrowColor} />
-                              )
-                            )}
-                          </div>
-
-                        )}
-                      </div>
-                    }
-                  </div>
-                </div>
-                {dropdowns[i] && (
-                  <div className="gs_card_dropdown">
-                    <div className="gs_drop_desc" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>{e.longDescription}</div>
-                    <div className="gs_drop_btns">
-                      <PrimaryButton className={'gs_start_btn'} children={e.btn2 || "Start Now" } onClick={(event) => {
-                        GeneralFunctions.fireTrackingEvent("quest_get_started_primary_button_clicked", "get_started");
-                        event.stopPropagation()
-                        !(!allowMultiClick && e.completed) &&
-                          handleCriteriaClick(e.criteriaId, e.url)
-                      }
-                      }
-                        disabled={(!allowMultiClick && e.completed)}
-                        style={{
-                          flex: 'inherit',
-                          width: 'fit-content',
-                          background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
-                          ...styleConfig?.PrimaryButton
-                        }}
-                      />
-                      <SecondaryButton
-                        style={{
-                          ...styleConfig?.SecondaryButton,
-                          flex: 'inherit',
-                          width: 'fit-content'
-                        }}
-                        onClick={() => {
-                          GeneralFunctions.fireTrackingEvent("quest_get_started_secondary_button_clicked", "get_started");
-                          window.open(e.url)
-                        }}
-                        className="gs_visit_btn"
-                        children={e.btn1 || "Visit Website"} />
-                    </div>
-                  </div>
-                )}
+                {Math.floor(completedPercentage) || 0}% Completed
               </div>
-            ) : (
               <div
-                key={i}
-                className="gs-single-card"
-                onClick={() => {
-                  !(!allowMultiClick && e.completed) &&
-                    handleCriteriaClick(e.criteriaId, e.url)
-                }
-
-                }
+                className="q_gt_progress_bar"
+                style={{ background: styleConfig?.ProgressBar?.barParentColor }}
               >
                 <div
-                  className="gs_card_body"
+                  className="q_progress_bar_completed"
                   style={{
-                    ...styleConfig?.Card
+                    width: `${completedPercentage}%`,
+                    background: styleConfig?.ProgressBar?.barColor || "#9035ff",
                   }}
+                ></div>
+              </div>
+            </div>
+          )}
+        <div
+          className="gs-cards-container"
+          style={{
+            padding: showProgressBar ? "0px 20px 20px 20px" : "20px",
+            gap:
+              template == 2
+                ? styleConfig?.CardContainer?.gap || "0px"
+                : styleConfig?.CardContainer?.gap || "16px",
+            ...styleConfig?.CardContainer,
+          }}
+        >
+          {(autoHide === true ? !allCriteriaCompleted : true) &&
+            formdata.map((e, i) =>
+              template == 2 ? (
+                <div
+                  key={i}
+                  style={{
+                    // background: cardBackground,
+                    // borderBottom: `1px solid ${cardBorderColor}`,
+                    ...styleConfig?.Card,
+                  }}
+                  onClick={(e) => {
+                    GeneralFunctions.fireTrackingEvent(
+                      "quest_get_started_link_clicked",
+                      "get_started"
+                    );
+
+                    setDropdown((prev) =>
+                      prev.map((e, index) => (i === index ? !e : e))
+                    );
+                  }}
+                  className="gs-single-card-dropDown"
                 >
-                  <div className="gs_card_body_image" style={{ ...styleConfig?.Icon }}>
-                    <img
-                      className="gs-card-icon"
-                      src={e.imageUrl || (!!iconUrls.length ? iconUrls?.[i] : "") || questLogo}
-                      alt=""
-                    />
-                  </div>
-                  <div className="gs-card-text">
-                    <div
-                      style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}
-                      className="gs-card-head"
-                    >
-                      {e.title}
-                    </div>
-                    <div
-                      style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
-                      className="gs-card-desc"
-                    >
-                      {e.description}
-                    </div>
-                  </div>
-                  {/* <div className="gs-card-btn-container"> */}
-                  {ButtonType === "Buttons" &&
-                    (!e.completed ? (
-                      <div className="gs_drop_btns">
-                        <SecondaryButton
-                          style={{
-                            flex: "inherit",
-                            width: "fit-content",
-                            border: "none",
-                            ...styleConfig?.SecondaryButton,
-                          }}
-                          onClick={(event) => { 
-                            GeneralFunctions.fireTrackingEvent("quest_get_started_secondary_button_clicked", "get_started");
-                            event.stopPropagation();
-                            window.open(e.btn1Link); }}
-                          className="gs_visit_btn gs_tempalate1_btn"
-                          children={e.btn1 || "Visit Website"}
+                  <div className="gs_card_body_dropDown">
+                    {!dropdowns[i] && (
+                      <div
+                        className="gs_card_body_image"
+                        style={{ ...styleConfig?.Icon }}
+                      >
+                        <img
+                          className="gs-card-icon"
+                          src={
+                            e.imageUrl ||
+                            (!!iconUrls.length ? iconUrls?.[i] : "") ||
+                            questLogo
+                          }
+                          alt=""
                         />
+                      </div>
+                    )}
+                    <div className="gs-card-text">
+                      <div
+                        style={{
+                          color:
+                            styleConfig?.Heading?.color ||
+                            themeConfig?.primaryColor,
+                        }}
+                        className="gs-card-head"
+                      >
+                        {e.title}
+                      </div>
+                      <div
+                        style={{
+                          color:
+                            styleConfig?.Description?.color ||
+                            themeConfig?.secondaryColor,
+                        }}
+                        className="gs-card-desc"
+                      >
+                        {e.description}
+                      </div>
+                    </div>
+                    <div>
+                      {
+                        <div className="gs-card-img-button">
+                          {e.completed ? (
+                            <div
+                              className="q_gt_arrow-completed"
+                              style={{
+                                background:
+                                  styleConfig?.Arrow?.CompletedBackground,
+                              }}
+                            >
+                              <GetStartedSvgs
+                                type={"greenCheck"}
+                                color={
+                                  styleConfig?.Arrow?.CompletedIconColor ||
+                                  "#098849"
+                                }
+                              />
+                            </div>
+                          ) : (
+                            <div
+                              className="q_gt_arrow"
+                              style={{
+                                background: styleConfig?.Arrow?.Background,
+                              }}
+                            >
+                              {dropdowns[i] ? (
+                                <GetStartedSvgs
+                                  type={"upArrow"}
+                                  color={
+                                    styleConfig?.Arrow?.IconColor || arrowColor
+                                  }
+                                />
+                              ) : e.completed ? (
+                                <GetStartedSvgs
+                                  type={"greenCheck"}
+                                  color={
+                                    styleConfig?.Arrow?.CompletedIconColor ||
+                                    "#098849"
+                                  }
+                                />
+                              ) : (
+                                <GetStartedSvgs
+                                  type={"downArrowIcon"}
+                                  color={
+                                    styleConfig?.Arrow?.IconColor || arrowColor
+                                  }
+                                />
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      }
+                    </div>
+                  </div>
+                  {dropdowns[i] && (
+                    <div className="gs_card_dropdown">
+                      <div
+                        className="card-drop-down-cont"
+                        style={{
+                          ...styleConfig?.IsImageOpen?.ContainerDiv,
+                        }}
+                      >
+                        <div
+                          style={{
+                            ...styleConfig?.IsImageOpen?.ImageContainer
+                              ?.ImageContainerProperties,
+                          }}
+                        >
+                          {/* <img src={e.imageUrl} alt="" /> */}
+                          <img
+                            src={
+                              e.imageUrl ||
+                              (!!iconUrls.length ? iconUrls?.[i] : "") ||
+                              questLogo
+                            }
+                            alt=""
+                            style={{
+                              ...styleConfig?.IsImageOpen?.ImageContainer
+                                ?.Image,
+                            }}
+                          />
+                          {/* hi */}
+                        </div>
+                        {/* hi */}
+                      </div>
+                      <div
+                        className="gs_drop_desc"
+                        style={{
+                          color:
+                            styleConfig?.Description?.color ||
+                            themeConfig?.secondaryColor,
+                        }}
+                      >
+                        {e.longDescription}
+                      </div>
+                      <div className="gs_drop_btns">
                         <PrimaryButton
                           className={"gs_start_btn"}
-                          children={e.btn2 ||"Start Now"}
+                          children={e.btn2 || "Start Now"}
                           onClick={(event) => {
-                            GeneralFunctions.fireTrackingEvent("quest_get_started_primary_button_clicked", "get_started");
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_get_started_primary_button_clicked",
+                              "get_started"
+                            );
                             event.stopPropagation();
                             !(!allowMultiClick && e.completed) &&
                               handleCriteriaClick(e.criteriaId, e.url);
@@ -551,48 +610,192 @@ function GetStarted({
                             ...styleConfig?.PrimaryButton,
                           }}
                         />
+                        <SecondaryButton
+                          style={{
+                            ...styleConfig?.SecondaryButton,
+                            flex: "inherit",
+                            width: "fit-content",
+                          }}
+                          onClick={() => {
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_get_started_secondary_button_clicked",
+                              "get_started"
+                            );
+                            window.open(e.url);
+                          }}
+                          className="gs_visit_btn"
+                          children={e.btn1 || "Visit Website"}
+                        />
                       </div>
-                    ) : (
-                      <div className="gs-card-img-button">
-                      <div className="q_gt_arrow-completed" style={{ background: styleConfig?.Arrow?.CompletedBackground }}>
-                        <GetStartedSvgs type={"greenCheck"} color={ styleConfig?.Arrow?.CompletedIconColor || "#098849"} />
-                      </div>
-                      </div>
-
-                    ))}
-                  {ButtonType === "Arrow" && (
-                    <div className="gs-card-img-button">
-                      {e.completed ? (
-                        <div className="q_gt_arrow-completed" style={{ background: styleConfig?.Arrow?.CompletedBackground }}>
-                          <GetStartedSvgs
-                            type={"greenCheck"}
-                            color={styleConfig?.Arrow?.CompletedIconColor || "#098849"}
-                          />
-                        </div>
-                      ) : (
-                        <div className="q_gt_arrow" style={{ background: styleConfig?.Arrow?.Background }}>
-                          <GetStartedSvgs
-                            type={"arrowRight"}
-                            color={styleConfig?.Arrow?.IconColor || arrowColor}
-                          />
-                        </div>
-                      )}
                     </div>
                   )}
                 </div>
-              </div>
-              // </div>
-            )
+              ) : (
+                <div
+                  key={i}
+                  className="gs-single-card"
+                  onClick={() => {
+                    !(!allowMultiClick && e.completed) &&
+                      handleCriteriaClick(e.criteriaId, e.url);
+                  }}
+                >
+                  <div
+                    className="gs_card_body"
+                    style={{
+                      ...styleConfig?.Card,
+                    }}
+                  >
+                    <div
+                      className="gs_card_body_image"
+                      style={{ ...styleConfig?.Icon }}
+                    >
+                      <img
+                        className="gs-card-icon"
+                        src={
+                          e.imageUrl ||
+                          (!!iconUrls.length ? iconUrls?.[i] : "") ||
+                          questLogo
+                        }
+                        alt=""
+                      />
+                    </div>
+                    <div className="gs-card-text">
+                      <div
+                        style={{
+                          color:
+                            styleConfig?.Heading?.color ||
+                            themeConfig?.primaryColor,
+                        }}
+                        className="gs-card-head"
+                      >
+                        {e.title}
+                      </div>
+                      <div
+                        style={{
+                          color:
+                            styleConfig?.Description?.color ||
+                            themeConfig?.secondaryColor,
+                        }}
+                        className="gs-card-desc"
+                      >
+                        {e.description}
+                      </div>
+                    </div>
+                    {/* <div className="gs-card-btn-container"> */}
+                    {ButtonType === "Buttons" &&
+                      (!e.completed ? (
+                        <div className="gs_drop_btns">
+                          <SecondaryButton
+                            style={{
+                              flex: "inherit",
+                              width: "fit-content",
+                              border: "none",
+                              ...styleConfig?.SecondaryButton,
+                            }}
+                            onClick={(event) => {
+                              GeneralFunctions.fireTrackingEvent(
+                                "quest_get_started_secondary_button_clicked",
+                                "get_started"
+                              );
+                              event.stopPropagation();
+                              window.open(e.btn1Link);
+                            }}
+                            className="gs_visit_btn gs_tempalate1_btn"
+                            children={e.btn1 || "Visit Website"}
+                          />
+                          <PrimaryButton
+                            className={"gs_start_btn"}
+                            children={e.btn2 || "Start Now"}
+                            onClick={(event) => {
+                              GeneralFunctions.fireTrackingEvent(
+                                "quest_get_started_primary_button_clicked",
+                                "get_started"
+                              );
+                              event.stopPropagation();
+                              !(!allowMultiClick && e.completed) &&
+                                handleCriteriaClick(e.criteriaId, e.url);
+                            }}
+                            disabled={!allowMultiClick && e.completed}
+                            style={{
+                              flex: "inherit",
+                              width: "fit-content",
+                              background:
+                                styleConfig?.PrimaryButton?.background ||
+                                themeConfig?.buttonColor,
+                              ...styleConfig?.PrimaryButton,
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        <div className="gs-card-img-button">
+                          <div
+                            className="q_gt_arrow-completed"
+                            style={{
+                              background:
+                                styleConfig?.Arrow?.CompletedBackground,
+                            }}
+                          >
+                            <GetStartedSvgs
+                              type={"greenCheck"}
+                              color={
+                                styleConfig?.Arrow?.CompletedIconColor ||
+                                "#098849"
+                              }
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    {ButtonType === "Arrow" && (
+                      <div className="gs-card-img-button">
+                        {e.completed ? (
+                          <div
+                            className="q_gt_arrow-completed"
+                            style={{
+                              background:
+                                styleConfig?.Arrow?.CompletedBackground,
+                            }}
+                          >
+                            <GetStartedSvgs
+                              type={"greenCheck"}
+                              color={
+                                styleConfig?.Arrow?.CompletedIconColor ||
+                                "#098849"
+                              }
+                            />
+                          </div>
+                        ) : (
+                          <div
+                            className="q_gt_arrow"
+                            style={{
+                              background: styleConfig?.Arrow?.Background,
+                            }}
+                          >
+                            <GetStartedSvgs
+                              type={"arrowRight"}
+                              color={
+                                styleConfig?.Arrow?.IconColor || arrowColor
+                              }
+                            />
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                // </div>
+              )
+            )}
+        </div>
+        {showFooter &&
+          (autoHide === true
+            ? !!formdata.length && !allCriteriaCompleted
+            : true) && (
+            <div>
+              <QuestLabs style={styleConfig?.Footer} />
+            </div>
           )}
       </div>
-      {(showFooter && (autoHide === true
-        ? !!formdata.length && !allCriteriaCompleted
-        : true)) &&
-        <div>
-          <QuestLabs style={styleConfig?.Footer} />
-        </div>
-      }
-    </div>
+    )
   );
 }
 
