@@ -63,7 +63,8 @@ type GetStartedProps = {
       CompletedBackground?: string,
       CompletedIconColor?: string
     }
-  }
+  };
+  enableVariation?: boolean;
 };
 interface TutorialStep {
   id: number;
@@ -101,7 +102,8 @@ function GetStarted({
   allowMultiClick = false,
   onLinkTrigger = (url: string, index: number) => { window.location.href = url },
   showFooter = true,
-  styleConfig
+  styleConfig,
+  enableVariation = false
 }: GetStartedProps) {
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
   const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } = useContext(
@@ -210,7 +212,7 @@ function GetStarted({
       }
       
       function fetchData(header: any) {
-        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}`;
+        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}&getVariation=${enableVariation}`;
         axios.get(request, { headers: header }).then((res) => {
           let response = res.data;
             

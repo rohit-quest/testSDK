@@ -56,6 +56,7 @@ interface propType {
     CommandButton?: CSSProperties;
   };
   showFooter?: boolean;
+  enableVariation?: true
 }
 
 export default function Search(prop: propType): JSX.Element {
@@ -73,6 +74,7 @@ export default function Search(prop: propType): JSX.Element {
     styleConfig,
     showFooter = true,
     iconColor,
+    enableVariation = false
   } = prop;
   const inputElement = useRef<HTMLInputElement>(null);
   const [searchResults, setResults] = useState<data>(defaultResult);
@@ -140,7 +142,7 @@ export default function Search(prop: propType): JSX.Element {
   }, [isOpen]);
 
   useEffect(() => {
-    getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL).then(
+    getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL, enableVariation).then(
       (response) => {
         setData([...response].splice(0, defulatResultLength));
         setResults([...response].splice(0, defulatResultLength));

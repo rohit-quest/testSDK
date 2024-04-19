@@ -71,6 +71,7 @@ interface GamifiedQuizProps {
   questions?: number;
   setQuestions?: any;
   questionsPerSection?: number;
+  enableVariation?: boolean
 }
 
 interface FormData {
@@ -104,6 +105,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
   questionsPerSection = 2,
   functionOnSubmit,
   feedbackContent,
+  enableVariation = false,
 }) => {
   const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(
     QuestContext.Context
@@ -181,7 +183,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
         userId: string,
         headers: object
       ) {
-        const url = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/criterias?userId=${userId}`;
+        const url = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/criterias?userId=${userId}&getVariation=${enableVariation}`;
         const { data } = await axios.get(url, { headers: headers });
 
         setQuestions(data.data.eligibilityCriterias.length);

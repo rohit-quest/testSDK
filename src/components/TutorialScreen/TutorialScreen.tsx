@@ -31,6 +31,7 @@ interface TutorialProps {
   isOpen?: boolean;
   onClose?: Function;
   showFooter?: boolean;
+  enableVariation?: boolean;
 }
 
 const Tutorial: React.FC<TutorialProps> = ({
@@ -47,6 +48,7 @@ const Tutorial: React.FC<TutorialProps> = ({
   isOpen = true,
   showFooter = true,
   onClose = () => { },
+  enableVariation = false
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
@@ -151,7 +153,7 @@ const Tutorial: React.FC<TutorialProps> = ({
         userId: userId,
         token: token,
       };
-      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}`;
+      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}&getVariation=${enableVariation}`;
 
       axios.get(request, { headers: headers }).then((res) => {
         let response = res.data;

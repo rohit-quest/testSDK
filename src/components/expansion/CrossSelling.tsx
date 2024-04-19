@@ -47,7 +47,8 @@ export interface referProp {
         },
         Footer?: CSSProperties
     };
-    showFooter?:boolean
+    showFooter?:boolean,
+    enableVariation?:boolean
 }
 
 export const CrossSelling = ({
@@ -67,7 +68,8 @@ export const CrossSelling = ({
     uniqueEmailId,
     uniqueUserId,
     styleConfig,
-    showFooter = true
+    showFooter = true,
+    enableVariation = false
 }: referProp) => {
     const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(QuestContext.Context);
     const BACKEND_URL = apiType === "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
@@ -96,7 +98,7 @@ export const CrossSelling = ({
     useEffect(() => {
         GeneralFunctions.fireTrackingEvent("quest_cross_selling_loaded", "cross_selling");
         let isMounted = true; 
-        getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL)
+        getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL, enableVariation)
             .then((r) => {
                 if (isMounted && r) {
                     requestRef.current = +r; 

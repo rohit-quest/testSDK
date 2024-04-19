@@ -49,6 +49,7 @@ interface TutorialProps {
 }
  footerBackgroundColor?:string;
  showFooter?: boolean;
+ enableVariation?: boolean
 }
 
 const TutorialScreen: React.FC<TutorialProps> = ({
@@ -63,7 +64,8 @@ const TutorialScreen: React.FC<TutorialProps> = ({
   iconColor='#939393',
   onLinkTrigger = link =>{window.open(link, 'smallWindow', 'width=500,height=500');},
   styleConfig,
-  showFooter = true
+  showFooter = true,
+  enableVariation = false
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
@@ -162,7 +164,7 @@ const TutorialScreen: React.FC<TutorialProps> = ({
       }
       
       function fetchData(header: any) {
-        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}`;
+        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}&getVariation=${enableVariation}`;
   
         axios.get(request, { headers: header }).then((res) => {
           let response = res.data;

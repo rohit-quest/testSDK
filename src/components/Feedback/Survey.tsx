@@ -138,6 +138,7 @@ interface FeedbackProps {
     },
   };
   showFooter?: boolean;
+  enableVariation?: boolean
 }
 
 const Survey: React.FC<FeedbackProps> = ({
@@ -161,6 +162,7 @@ const Survey: React.FC<FeedbackProps> = ({
   styleConfig = {},
   isInline = false,
   sections,
+  enableVariation = false
 }) => {
   interface FormDataItem {
     type?: string;
@@ -327,7 +329,7 @@ const Survey: React.FC<FeedbackProps> = ({
         userId: userId,
         token: token,
       };
-      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}`;
+      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}&getVariation=${enableVariation}`;
 
       axios.get(request, { headers: headers }).then((res) => {
         let response = res.data;

@@ -28,14 +28,15 @@ interface HelpProps {
     descriptioin?: string;
     onClose: Function
     uniqueEmailId?: string,
-    uniqueUserId?: string
+    uniqueUserId?: string,
+    enableVariation?: boolean
 }
 
 type data = [{ title: string, link: string, description: string, icon: string }] | []
 let dataBackUP: data = [];
 
-function getResponse(headers: CustomHeaders, entityId: string, questId: string): Promise<any> {
-    const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${headers.userId}`;
+function getResponse(headers: CustomHeaders, entityId: string, questId: string, enableVariation: boolean): Promise<any> {
+    const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${headers.userId}&getVariation=${enableVariation}`;
 
     // @ts-ignore p
     return axios.get(request, { headers })
@@ -69,7 +70,8 @@ export const HelpCenter = (
         descriptioin = "Discover our key features",
         onClose = (() => { }),
         uniqueEmailId,
-        uniqueUserId
+        uniqueUserId,
+        enableVariation = false
     }: HelpProps) => {
 
     const [isOpen, setIsOpen] = useState(true);
@@ -84,7 +86,7 @@ export const HelpCenter = (
 
 
     useEffect(() => {
-        getResponse({ apiKey, apisecret: apiSecret, token, userId }, entityId, questId)
+        getResponse({ apiKey, apisecret: apiSecret, token, userId }, entityId, questId, enableVariation)
             .then((response) => {
                 setData(response)
                 dataBackUP = response;
