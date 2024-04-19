@@ -20,6 +20,7 @@ import {
   MultiChoiceSelectedSVG,
   MultiChoiceSVG,
 } from "./SVG";
+import General from "../../general";
 
 interface GamifiedQuizProps {
   offlineAnswer: any;
@@ -114,8 +115,12 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
   const [currentSection, setCurrentSection] = useState<number>(0);
 
   const [sectionNo, setSectionNo] = useState<number>(0);
-
+  let GeneralFunctions = new General("mixpanel", apiType);
   useEffect(() => {
+    GeneralFunctions.fireTrackingEvent(
+      "quest_gamifiedquiz_offline_loaded",
+      "gamifiedquiz_offline"
+    );
     // if (entityId) {
     //   let externalUserId = cookies.get("externalUserId");
     //   let questUserId = cookies.get("questUserId");
@@ -454,6 +459,10 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
   const [thanksPopup, setThanksPopup] = useState(false);
 
   const formSubmitHandler = () => {
+    GeneralFunctions.fireTrackingEvent(
+      "quest_gamifiedquiz_offline_submit_button_clicked",
+      "gamifiedquiz_offline"
+    );
     for (const key in selectedOptions) {
       if (selectedOptions.hasOwnProperty(key)) {
         answer[key] = selectedOptions[key];
@@ -512,7 +521,6 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
     placeholder: string,
     inputType: logoType
   ) => {
-    console.log(styleConfig?.Input?.color);
     return (
       <div key={criteriaId}>
         <p
@@ -717,6 +725,10 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
               <div>
                 <div
                   onClick={() => {
+                    GeneralFunctions.fireTrackingEvent(
+                      "quest_gamifiedquiz_feedback_close_button_clicked",
+                      "gamifiedquiz_offline"
+                    );
                     setGamifiedQuiz(false);
                     setThanksPopup(false);
                   }}
@@ -770,7 +782,13 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                   background: styleConfig?.ThanksPopUpGotoHome?.background,
                   color: styleConfig?.ThanksPopUpGotoHome?.color,
                 }}
-                onClick={() => setThanksPopup((prev) => !prev)}
+                onClick={() => {
+                  GeneralFunctions.fireTrackingEvent(
+                    "quest_gamifiedquiz_feedback_gotohome_button_clicked",
+                    "gamifiedquiz"
+                  );
+                  setThanksPopup((prev) => !prev);
+                }}
               >
                 Go to home!
               </div>
@@ -984,8 +1002,16 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                         onClick={() => {
                           if (sectionNo > 0) {
                             setSectionNo(sectionNo - 1);
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_gamifiedquiz_offline_previous_section_button_clicked",
+                              "gamifiedquiz_offline"
+                            );
                           } else {
                             setGamifiedQuiz(false);
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_gamifiedquiz_offline_cancel_button_clicked",
+                              "gamifiedquiz"
+                            );
                           }
                         }}
                         type="button"
@@ -1012,6 +1038,10 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
 
                           if (sectionNo < totalSections.length - 1) {
                             setSectionNo(sectionNo + 1);
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_gamifiedquiz_offline_next_section_button_clicked",
+                              "gamifiedquiz_offline"
+                            );
                           } else if (sectionNo >= totalSections.length - 1) {
                             formSubmitHandler();
                           }
@@ -1052,8 +1082,16 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                         onClick={() => {
                           if (currentSection > 0) {
                             setCurrentSection(currentSection - 1);
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_gamifiedquiz_offline_previous_section_button_clicked",
+                              "gamifiedquiz_offline"
+                            );
                           } else {
                             setGamifiedQuiz(false);
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_gamifiedquiz_offline_cancel_button_clicked",
+                              "gamifiedquiz_offline"
+                            );
                           }
                         }}
                         type="button"
@@ -1081,6 +1119,10 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                             currentSection <
                             totalSectionsPerSectionQuestion - 1
                           ) {
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_gamifiedquiz_offline_next_section_button_clicked",
+                              "gamifiedquiz_offline"
+                            );
                             setCurrentSection(currentSection + 1);
                           } else if (
                             currentSection >=
