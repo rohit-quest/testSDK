@@ -48,6 +48,7 @@ export async function getResponse(headers: CustomHeaders, entityId: string, ques
             if (!!res.data.eligibilityData) {
                 const data = res.data.eligibilityData as QuestArray
                 const formatData = data.map(e => ({
+
                     text: e.data.metadata.linkActionName,
                     link: e.data.metadata.linkActionUrl,
                     description: e.data.metadata.discription || "Provide the required information",
@@ -56,7 +57,7 @@ export async function getResponse(headers: CustomHeaders, entityId: string, ques
                     longDescription: e.data.metadata.longDescription || "No more digging through Dropbox and Google Drive. Always know where to find “the latest,” so you can stay in your design flow."
                 }))
                 // return [...formatData.map(e=>({...e,resultType: "action"})),...formatData.map(e=>({...e,resultType: "command"}))]
-                return formatData;
+                return {formatData, questThemeData:res?.data?.data?.uiProps?.questThemeData};
             }
             return []
         })

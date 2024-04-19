@@ -140,6 +140,29 @@ interface FeedbackProps {
   showFooter?: boolean;
 }
 
+interface QuestThemeData {
+  accentColor: string;
+  theme: string;
+  borderRadius: string;
+  buttonColor: string;
+  images: string[]
+
+}
+
+type BrandTheme = {
+  accentColor?: string;
+  background?: string;
+  borderRadius?: string;
+  buttonColor?: string;
+  contentColor?: string;
+  fontFamily?: string;
+  logo?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  tertiaryColor?: string;
+  titleColor?: string;
+}
+
 const Survey: React.FC<FeedbackProps> = ({
   heading = "Feedback",
   subHeading = "Please share your feedback",
@@ -186,6 +209,27 @@ const Survey: React.FC<FeedbackProps> = ({
   const [isVisible, setIsVisible] = useState(true);
   const [page, setPage] = useState(0);
   const [data, setData] = useState<FormDataItem[]>([]);
+  const [questThemeData, setQuestThemeData] = useState<QuestThemeData>({
+    accentColor: "",
+    theme: "",
+    borderRadius: "",
+    buttonColor: "",
+    images: []
+})
+const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
+    accentColor: "",
+    background: "",
+    borderRadius: "",
+    buttonColor: "",
+    contentColor: "",
+    fontFamily: "",
+    logo: "",
+    primaryColor: "",
+    secondaryColor: "",
+    tertiaryColor: "",
+    titleColor: ""
+})
+
   const cookies = new Cookies()
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
@@ -312,6 +356,16 @@ const Survey: React.FC<FeedbackProps> = ({
     setLikePopup(true);
   };
 
+  const getTheme = async (theme: string) => {
+    try {
+        const request = `${BACKEND_URL}api/entities/${entityId}?userId=${userId}`;
+        const response = await axios.get(request, { headers: { apiKey, userId, token } })
+        setBrandTheme(response.data.data.theme.BrandTheme[theme])
+    } catch (error) {
+        GeneralFunctions.captureSentryException(error);
+    }
+}
+
   useEffect(() => {
     GeneralFunctions.fireTrackingEvent("quest_survey_loaded", "survey");
     if (bgColor) {
@@ -331,6 +385,12 @@ const Survey: React.FC<FeedbackProps> = ({
 
       axios.get(request, { headers: headers }).then((res) => {
         let response = res.data;
+        if (response.data.uiProps?.questThemeData) {
+          setQuestThemeData(response?.data?.uiProps?.questThemeData)
+          if (response.data.uiProps?.questThemeData.theme) {
+              getTheme(response.data.uiProps.questThemeData.theme)
+          }
+      }
         setSession(response.session);
         let criterias = response?.eligibilityData?.map((criteria: any) => {
           return {
@@ -529,11 +589,15 @@ const Survey: React.FC<FeedbackProps> = ({
         <Label
           htmlFor="normalInput"
           children={`${question}${required===true?"*":""}`}
-          style={styleConfig?.Label}
+          style={{ color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Label }}
         />
         <Input
           type={type}
-          style={styleConfig?.Input}
+          style={{
+            borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+            color: styleConfig?.Input?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
+            ...styleConfig?.Input
+        }}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           value={answer[criteriaId]}
           placeholder={placeholder}
@@ -552,11 +616,15 @@ const Survey: React.FC<FeedbackProps> = ({
         <Label
           htmlFor="normalInput"
           children={`${question}${required===true?"*":""}`}
-          style={styleConfig?.Label}
+          style={{ color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Label }}
         />
         <Input
           type="email"
-          style={styleConfig?.Input}
+          style={{
+            borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+            color: styleConfig?.Input?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
+            ...styleConfig?.Input
+        }}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           value={answer[criteriaId]}
           placeholder={placeholder}
@@ -582,10 +650,14 @@ const Survey: React.FC<FeedbackProps> = ({
         <Label
           htmlFor="normalInput"
           children={`${question}${required===true?"*":""}`}
-          style={styleConfig?.Label}
+          style={{ color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Label }}
         />
         <TextArea
-          style={styleConfig?.TextArea}
+           style={{
+            borderColor: styleConfig?.TextArea?.borderColor || themeConfig?.borderColor,
+            color: styleConfig?.TextArea?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
+            ...styleConfig?.TextArea
+        }}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           value={answer[criteriaId]}
           placeholder={(sections && sections[page].placeholder) || placeholder}
@@ -665,7 +737,10 @@ const Survey: React.FC<FeedbackProps> = ({
             <PrimaryButton
               children="Submit"
               onClick={() => handleComments(criteriaId, comment)}
-              style={styleConfig?.PrimaryButton}
+              style={{
+                background: styleConfig?.PrimaryButton?.background || questThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig?.buttonColor,
+                ...styleConfig?.PrimaryButton
+            }}
             />
           </div>
         </div>
@@ -685,7 +760,7 @@ const Survey: React.FC<FeedbackProps> = ({
         <Label
           className="q-onb-singleChoiceOne-lebel"
           children={`${question}${required===true?"*":""}`}
-          style={styleConfig?.Label}
+          style={{ color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Label }}
         />
 
         <div className="q-onb-singleChoiceOne-optDiv">
@@ -732,7 +807,7 @@ const Survey: React.FC<FeedbackProps> = ({
             {customComponents}
           </div>
         } */}
-        <Label htmlFor="textAreaInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
+        <Label htmlFor="textAreaInput" style={{ color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Label }}>
           {`${question}${required===true?"*":""}`}
         </Label>
         <MultiChoiceTwo
@@ -741,14 +816,14 @@ const Survey: React.FC<FeedbackProps> = ({
           checked={!!answer[criteriaId] && answer[criteriaId]}
           onChange={(e) => handleUpdate(e, criteriaId, "check")}
           style={{
-            borderColor: styleConfig?.MultiChoice?.style?.borderColor || themeConfig?.borderColor, ...styleConfig?.MultiChoice?.style,
-            color: styleConfig?.MultiChoice?.style?.color || themeConfig?.primaryColor,
+            borderColor: styleConfig?.MultiChoice?.style?.borderColor || themeConfig?.borderColor,
+            color: styleConfig?.MultiChoice?.style?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
             ...styleConfig?.MultiChoice?.style
-          }}
-          selectedStyle={{
-            color: styleConfig?.MultiChoice?.selectedStyle?.color || themeConfig?.primaryColor,
+        }}
+        selectedStyle={{
+            color: styleConfig?.MultiChoice?.selectedStyle?.color || questThemeData?.accentColor  || BrandTheme?.accentColor || themeConfig?.primaryColor,
             ...styleConfig?.MultiChoice?.selectedStyle
-          }}
+        }}
         />
       </div>
     );
@@ -770,7 +845,7 @@ const Survey: React.FC<FeedbackProps> = ({
             {customComponents}
           </div>
         } */}
-        <Label htmlFor="dateInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
+        <Label htmlFor="dateInput" style={{ color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Label }}>
           {`${question} ${!!required ? "*" : ""}`}
         </Label>
         <Input
@@ -779,10 +854,10 @@ const Survey: React.FC<FeedbackProps> = ({
           value={answer[criteriaId]}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           style={{
-            borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
-            color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+            borderColor: styleConfig?.Input?.borderColor ||  themeConfig?.borderColor,
+            color: styleConfig?.Input?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
             ...styleConfig?.Input
-          }}
+        }}
         />
       </div>
     );
@@ -792,9 +867,10 @@ const Survey: React.FC<FeedbackProps> = ({
     <div
       style={{
         background:
-          styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor,
+          styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor,
+          borderRadius: styleConfig?.Form?.borderRadius || questThemeData?.borderRadius || BrandTheme?.borderRadius,
         height: styleConfig?.Form?.height || "auto",
-        fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+        fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
         ...styleConfig?.Form,
       }}
       className="q-feedback-cont"
@@ -812,8 +888,8 @@ const Survey: React.FC<FeedbackProps> = ({
                     (sections && sections[page]?.subHeading) || subHeading || ""
                   }
                   style={{
-                    headingStyle: styleConfig?.Heading,
-                    descriptionStyle: styleConfig?.Description,
+                    headingStyle: {color: styleConfig?.Heading?.color || BrandTheme?.primaryColor,...styleConfig?.Heading},
+                    descriptionStyle: {color: styleConfig?.Description?.color || BrandTheme?.secondaryColor,...styleConfig?.Description},
                     iconStyle: { display: "none" },
                     topbarStyle: {
                       display:
@@ -948,6 +1024,9 @@ const Survey: React.FC<FeedbackProps> = ({
                         border:
                           styleConfig?.PrimaryButton?.border ||
                           "1.5px solid #afafaf",
+                        background:
+                          styleConfig?.PrimaryButton?.background ||
+                          questThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig?.buttonColor,  
                         ...styleConfig?.PrimaryButton,
                       }}
                       onClick={() => {
@@ -964,7 +1043,8 @@ const Survey: React.FC<FeedbackProps> = ({
                     />
                   </div>
                 </form>
-                {showFooter && <QuestLabs style={styleConfig?.Footer} />}
+                {showFooter &&  <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />
+}
               </div>
             )}
             {thanksPopup && (
@@ -982,6 +1062,7 @@ const Survey: React.FC<FeedbackProps> = ({
                           style={{
                             color:
                               styleConfig?.Heading?.color ||
+                              BrandTheme?.primaryColor ||
                               themeConfig?.primaryColor,
                           }}
                         >
@@ -991,7 +1072,8 @@ const Survey: React.FC<FeedbackProps> = ({
                           className="q_fw_submit_desc"
                           style={{
                             color:
-                              styleConfig?.Description?.color ||
+                              styleConfig?.Description?.color || 
+                              BrandTheme?.secondaryColor ||
                               themeConfig?.secondaryColor,
                           }}
                         >
@@ -1003,13 +1085,21 @@ const Survey: React.FC<FeedbackProps> = ({
                       <div
                         onClick={() => setThanksPopup(false)}
                         className="q_fw_submit_back"
+                        style={{
+                          ...styleConfig?.SecondaryButton,
+                          color:
+                            styleConfig?.SecondaryButton?.color ||
+                            BrandTheme?.secondaryColor ||
+                            themeConfig?.secondaryColor,
+                        }}
                       >
                         Go to home!
                       </div>
                     </div>
                   </div>
                 </div>
-                {showFooter && <QuestLabs style={styleConfig?.Footer} />}
+                {showFooter &&  <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />
+}
               </div>
             )}
           </>

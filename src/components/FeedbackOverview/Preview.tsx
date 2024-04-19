@@ -16,7 +16,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
             apiSecret="s-7462f377-2ce4-4593-a907-3a2a00cdf951be06358a-d95d-4576-b3b4-a07dda2dab36"
             entityId={entityId}
             featureFlags={{}}
-            apiType="PRODUCTION"
+            apiType="STAGING"
             themeConfig={{
                 // primaryColor: "red",
                 // fontFamily:"cursive"

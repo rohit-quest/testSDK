@@ -4,13 +4,13 @@ import Feedback from './Feedback';
 import { QuestProvider } from '../QuestWrapper';
 import Survey from './Survey';
 import SurveyOffline from './OfflineComponent';
-// export const questId = 'q-252e5090-699e-4860-9301-d91cde3c1c26';
-export const questId = 'q-7217a1e1-6575-42bd-8ab7-9f15bd0f6a42';
-export const apiKey = 'k-e6ec8094-6eef-4e80-a804-112a63607bf5'
-export const apiSecret = 's-000b6012-ee89-4193-bfb8-49873edaaa501e5a0e3f-effb-4f6f-bf62-30c885d62679'
-export const entityId = 'e-5768fd26-d226-4ac1-81e6-3c99427f3fb3'
-export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxMjA1MjI0OSwiZXhwIjoxNzEyNjU3MDQ5fQ.-ZHN0sbKMqhOhLhz61I_ZUJDAMndnTNE64bLQzW1YCo'
-export const userId = 'u-88350caa-4080-4505-a169-09f3f15e83b7'
+
+export const questId = 'q-90642c61-398d-4f4d-bc19-6fdd00dda121';
+export const apiKey = 'k-fe5a805c-77ed-4cae-bd33-9591ebed2805'
+export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
+export const entityId = 'e-9850377b-f88f-4426-a2ac-56206c74655a'
+export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMzIzOTY1MiwiZXhwIjoxNzEzODQ0NDUyfQ.dRoNwXgz0tE3plJPkrKBlm8dAeHMzs_5uIYOloVbmHE'
+export const userId = 'u-8268f5e1-f5a1-440c-a333-0f5578a73847'
 
 export default function FeedbackPreview({ online = true }) {
     const [state, setState] = useState([
@@ -103,46 +103,46 @@ export default function FeedbackPreview({ online = true }) {
                     // questId={"q-1a12c0e1-35a8-48a3-8cde-a8616f341b88"}
                     heading={"Share Your FeedBack"}
                     subHeading={"How was your experience?"}
-                    uniqueUserId={Date.now().toString()}
+                    // uniqueUserId={Date.now().toString()}
                     // uniqueEmailId='soumitra.petbindhi+25@gmail.com'
-                    styleConfig={{
-                        Form: {
-                            // font: "sans",
-                            // color: "red",
-                            // backgroundColor: "gray"
-                        },
-                        Heading: {
-                            color: "red",
-                            // fontSize:'10px'
-                        },
-                        Label: {
-                            // color: "green"
-                        },
-                        TopBar: {
-                            // display: "none"
-                        },
-                        Rating: {
-                            RatingContainer: {
-                                color: "red",
+                    // styleConfig={{
+                    //     Form: {
+                    //         // font: "sans",
+                    //         // color: "red",
+                    //         // backgroundColor: "gray"
+                    //     },
+                    //     Heading: {
+                    //         color: "red",
+                    //         // fontSize:'10px'
+                    //     },
+                    //     Label: {
+                    //         // color: "green"
+                    //     },
+                    //     TopBar: {
+                    //         // display: "none"
+                    //     },
+                    //     Rating: {
+                    //         RatingContainer: {
+                    //             color: "red",
 
 
-                            },
-                            SingleRating: {
-                                color: "red",
-                                background: "yellow"
+                    //         },
+                    //         SingleRating: {
+                    //             color: "red",
+                    //             background: "yellow"
 
-                            },
-                            RatingText: {
-                                color: "green"
-                            },
-                            Hover: {
-                                color: "grey",
-                                background: "yellow"
-                            },
-                            // LeftRatingText:'Not',
-                            // RightRatingText:'Perfect'
-                        }
-                    }}
+                    //         },
+                    //         RatingText: {
+                    //             color: "green"
+                    //         },
+                    //         Hover: {
+                    //             color: "grey",
+                    //             background: "yellow"
+                    //         },
+                    //         // LeftRatingText:'Not',
+                    //         // RightRatingText:'Perfect'
+                    //     }
+                    // }}
                     // showFooter={false}
                     // supportUrl={"supportUrl"}
                     // delay={5000}

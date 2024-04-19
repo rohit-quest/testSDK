@@ -719,6 +719,9 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
     );
   };
 
+
+  console.log(BrandTheme, "BrandTheme")
+
   const normalInput2 = (
     question: string,
     criteriaId: string,
