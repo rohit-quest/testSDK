@@ -18,7 +18,7 @@ const HelpHubTasks = (props: HelpHubFaqTypes) => {
 
   useEffect(() => {
     let data = faqData.filter((value: QuestCriteriaWithStatusType) => {
-      return value?.data?.metadata?.question
+      return value?.question
         ?.toLowerCase()
         .includes(searchData?.toString().toLowerCase());
     });
@@ -120,7 +120,7 @@ const HelpHubTasks = (props: HelpHubFaqTypes) => {
                             ...styleConfig?.Help?.Card?.Heading,
                           }}
                         >
-                          {value?.data?.metadata?.question}
+                          {value?.question}
                         </div>
                         <div className="but">
                           <img src={OpenSectionButton} alt="" />
@@ -134,7 +134,7 @@ const HelpHubTasks = (props: HelpHubFaqTypes) => {
                           ...styleConfig?.Help?.Card?.SubHeading,
                         }}
                       >
-                        {value?.data?.metadata?.answer}
+                        {value?.answer}
                       </div>
                     </div>
                   );

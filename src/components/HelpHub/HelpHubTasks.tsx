@@ -36,7 +36,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
 
   useEffect(() => {
     let data = tasksData.filter((value: QuestCriteriaWithStatusType) => {
-      return value?.data?.metadata?.linkActionName
+      return value?.linkTitle
         ?.toLowerCase()
         .includes(searchData?.toString().toLowerCase());
     });
@@ -272,7 +272,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                       //     : ""
                       // }`,
                       background: `${
-                        claimStatusTasks.includes(value?.data?.criteriaId)
+                        claimStatusTasks.includes(value?.criteriaId)
                           ? "var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%))"
                           : openTaskDiv === index
                           ? "var(--Primary-Grape-400, #A357FF)"
@@ -337,6 +337,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                   //     ele?.data?.metadata?.linkActionUrl
                   //   );
                 }}
+                key={index}
               >
                 <div
                   className="single-task-close-detail"
@@ -371,7 +372,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                         ...styleConfig?.Tasks?.Card?.Heading,
                       }}
                     >
-                      {ele?.data?.metadata?.linkActionName}
+                      {ele?.linkTitle}
                     </div>
                     <div
                       className="q-helphub-tasks-single-task-para"
@@ -381,22 +382,22 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                         ...styleConfig?.Tasks?.Card?.SubHeading,
                       }}
                     >
-                      {ele?.data?.metadata?.description}
+                      {ele?.description}
                     </div>
                   </div>
                   <img
                     style={{
-                      padding: claimStatusTasks?.includes(ele?.data?.criteriaId)
+                      padding: claimStatusTasks?.includes(ele?.criteriaId)
                         ? "5px 4px"
                         : "",
-                      rotate: claimStatusTasks?.includes(ele?.data?.criteriaId)
+                      rotate: claimStatusTasks?.includes(ele?.criteriaId)
                         ? ""
                         : index === openTaskDiv
                         ? ""
                         : "180deg",
                     }}
                     src={
-                      claimStatusTasks?.includes(ele?.data?.criteriaId)
+                      claimStatusTasks?.includes(ele?.criteriaId)
                         ? TaskCompleted
                         : index === openTaskDiv
                         ? TaskUpButton
@@ -407,7 +408,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                 </div>
                 {index === openTaskDiv ? (
                   <div className="single-task-close-div">
-                    <div className="single-task-close-div-text">
+                    <div className="single-task-close-div-text" style={{width: ele?.imageUrl ? "calc(100% - 176px)" : "100%"}}>
                       <p
                         style={{
                           fontFamily: themeConfig?.fontFamily,
@@ -435,8 +436,8 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                           }}
                           onClick={() => {
                             readUpdate(
-                              ele?.data?.criteriaId,
-                              ele?.data?.metadata?.linkActionUrl
+                              ele?.criteriaId,
+                              ele?.linkUrl
                             );
                           }}
                         >
@@ -444,19 +445,21 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                         </p>
                       </button>
                     </div>
-                    <div className="single-task-close-div-image-cont">
-                      <div
-                        style={{
-                          width: "152px",
-                          height: "255px",
-                          borderRadius: "5px",
-                          border: "1px solid var(--Primary, #9035FF)",
-                          background: `url(${UpdatesImage}) lightgray -8.338px -7px / 110.971% 102.745% no-repeat`,
-                          overflow: "hidden",
-                          boxSizing: "border-box",
-                        }}
-                      ></div>
-                    </div>
+                    {ele?.imageUrl &&
+                      <div className="single-task-close-div-image-cont">
+                        <div
+                          style={{
+                            // width: "152px",
+                            height: "255px",
+                            borderRadius: "5px",
+                            border: "1px solid var(--Primary, #9035FF)",
+                            background: `url(${ele?.imageUrl || UpdatesImage}) lightgray -8.338px -7px / 110.971% 102.745% no-repeat`,
+                            overflow: "hidden",
+                            boxSizing: "border-box",
+                          }}
+                        ></div>
+                      </div>
+                    }
                   </div>
                 ) : (
                   ""
