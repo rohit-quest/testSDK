@@ -17,6 +17,7 @@ import Modal from "../Modules/Modal";
 import TopBar from "../Modules/TopBar";
 import General from "../../general";
 
+
 const feedback = (color: string = "#939393") => (
   <svg
     width="16"
@@ -238,7 +239,7 @@ interface feedbackCompProps {
       text?: string,
       errorStyle?: React.CSSProperties
     },
-    TopBar?:React.CSSProperties;
+    TopBar?: React.CSSProperties;
     TextArea?: React.CSSProperties;
     PrimaryButton?: React.CSSProperties;
     SecondaryButton?: React.CSSProperties;
@@ -329,8 +330,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     borderRadius: "",
     buttonColor: "",
     images: []
-})
-const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
+  })
+  const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
     accentColor: "",
     background: "",
     borderRadius: "",
@@ -342,7 +343,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
     secondaryColor: "",
     tertiaryColor: "",
     titleColor: ""
-})
+  })
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
@@ -401,13 +402,13 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
 
   const getTheme = async (theme: string) => {
     try {
-        const request = `${BACKEND_URL}api/entities/${entityId}?userId=${userId}`;
-        const response = await axios.get(request, { headers: { apiKey, userId, token } })
-        setBrandTheme(response.data.data.theme.BrandTheme[theme])
+      const request = `${BACKEND_URL}api/entities/${entityId}?userId=${userId}`;
+      const response = await axios.get(request, { headers: { apiKey, userId, token } })
+      setBrandTheme(response.data.data.theme.BrandTheme[theme])
     } catch (error) {
-        GeneralFunctions.captureSentryException(error);
+      GeneralFunctions.captureSentryException(error);
     }
-}
+  }
 
   useEffect(() => {
     GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_loaded", "feedback_workflow");
@@ -490,6 +491,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
       setAnswer({});
     }
   };
+
   function returnAnswers(index: number) {
     GeneralFunctions.fireTrackingEvent(`quest_feedback_workflow_${selectedOption}_form_submitted`, `feedback_workflow_${selectedOption}_form`);
     const headers = {
@@ -569,11 +571,25 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
     GeneralFunctions.fireTrackingEvent(`quest_feedback_workflow_${selectedOption}_form_closed`, `feedback_workflow_${selectedOption}_form`);
     setSelectedOption(null);
   };
+  
   function isDefaultQuestId(questId: string): boolean {
     const defaultIdPattern = ["q-general-feedback", "q-report-a-bug", "q-request-a-feature", "q-contact-us"].includes(questId);
-      // /^q-[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+    // /^q-[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
     return defaultIdPattern;
   }
+
+  const getParentQuestData = async (questId: string) => {
+    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/parent?userId=${userId}`;
+    await axios.get(request, { headers: { apiKey: apiKey, apisecret: apiSecret, userId: userId, token: token } }).then((res) => {
+      let response = res.data;
+      if (response?.parentQuest?.uiProps?.questThemeData) {
+        setQuestThemeData(response?.parentQuest?.uiProps?.questThemeData)
+        if (response?.parentQuest?.uiProps?.questThemeData.theme) {
+          getTheme(response?.parentQuest?.uiProps.questThemeData.theme)
+        }
+      }
+    });
+  };
 
   useEffect(() => {
     const headers = {
@@ -583,6 +599,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
       token: token,
     };
     let request;
+    let count = 0;
     {
       questIds.map((id, index) => {
         const isDefault = isDefaultQuestId(id);
@@ -590,13 +607,8 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
           request = `${BACKEND_URL}api/entities/${entityId}/default-quest/?userId=${userId}&defaultId=${id}`;
           axios.post(request, {}, { headers: headers }).then((res) => {
             let response = res.data.data;
-            if (response.uiProps?.questThemeData) {
-              setQuestThemeData(response?.uiProps?.questThemeData)
-              if (response.uiProps?.questThemeData.theme) {
-                  getTheme(response.uiProps.questThemeData.theme)
-              }
-          }
-            setSession((prev) => ({...prev, [id]: response.session}))
+
+            setSession((prev) => ({ ...prev, [id]: response.session }))
             let criterias = response?.eligibilityData?.map((criteria: any) => {
               return {
                 type: criteria?.data?.criteriaType,
@@ -621,7 +633,11 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
           request = `${BACKEND_URL}api/entities/${entityId}/quests/${id}?userId=${userId}`;
           axios.get(request, { headers: headers }).then((res) => {
             let response = res.data;
-            setSession((prev) => ({...prev, [id]: response.session}))
+            if(count == 0 && response?.data?.parentQuestId){
+              getParentQuestData(response?.data?.parentQuestId)
+              count++
+            }
+            setSession((prev) => ({ ...prev, [id]: response.session }))
             let criterias = response?.eligibilityData?.map((criteria: any) => {
               return {
                 type: criteria?.data?.criteriaType,
@@ -679,11 +695,11 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
         <Label
           htmlFor={"normalInput"}
           children={question}
-          style={styleConfig.Label}
+          style={{color : styleConfig?.Label?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.Label}}
         />
         <Input
           type="text"
-          style={styleConfig.Input}
+          style={{color: styleConfig?.Input?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.Input}}
           placeholder={placeholder}
           value={answer[criteriaId]}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
@@ -701,11 +717,11 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
         <Label
           htmlFor={"normalInput"}
           children={question}
-          style={styleConfig.Label}
+          style={{color : styleConfig?.Label?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.Label}}
         />
         <Input
           type="email"
-          style={styleConfig.Input}
+          style={{color: styleConfig?.Input?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.Input}}
           placeholder={placeholder}
           value={answer[criteriaId]}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
@@ -720,7 +736,6 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
   };
 
 
-  console.log(BrandTheme, "BrandTheme")
 
   const normalInput2 = (
     question: string,
@@ -732,13 +747,13 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
         <Label
           htmlFor={"normalInput"}
           children={question}
-          style={styleConfig.Label}
+          style={{color : styleConfig?.Label?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor ,...styleConfig.Label}}
         />
         <TextArea
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           value={answer[criteriaId]}
           placeholder={placeholder}
-          style={{ borderColor: themeConfig.borderColor, color: styleConfig?.TextArea?.color || styleConfig?.Heading?.color || themeConfig.primaryColor, ...styleConfig.TextArea }}
+          style={{ borderColor: themeConfig.borderColor, color: styleConfig?.TextArea?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.TextArea }}
         />
       </div>
     );
@@ -765,7 +780,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
             styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor,
           height: styleConfig?.Form?.height || "auto",
           borderRadius: styleConfig?.Form?.borderRadius || questThemeData?.borderRadius || BrandTheme?.borderRadius,
-          fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+          fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
           ...styleConfig?.Form,
         }}
         id="disabledClick"
@@ -826,7 +841,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                   handleRemove={handleRemove}
                   ratingStyle={ratingStyle}
                   iconColor={iconColor}
-                  buttonStyle={styleConfig.PrimaryButton}
+                  buttonStyle={{background:questThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor, ...styleConfig.PrimaryButton}}
                 />
               )}
               {selectedOption === "ReportBug" && (
@@ -839,6 +854,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                   normalInput2={normalInput2}
                   emailInput={emailInput}
                   handleRemove={handleRemove}
+                  buttonStyle={{background:questThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor, ...styleConfig.PrimaryButton}}
                 />
               )}
               {selectedOption === "RequestFeature" && (
@@ -851,11 +867,12 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                   emailInput={emailInput}
                   answer={answer}
                   handleRemove={handleRemove}
+                  buttonStyle={{background:questThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor, ...styleConfig.PrimaryButton}}
                 />
               )}
               {selectedOption === "ContactUs" && <div></div>}
             </div>
-            {showFooter && <QuestLabs style={styleConfig?.Footer} />}
+            {showFooter &&  <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />}
           </div>
         ) : submit ? (
           <div>
@@ -891,7 +908,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                       your review and will assure you to surely consider them
                     </div>
                   </div>
-                  <div className="q_fw_submit_back" style={{...styleConfig?.SecondaryButton}}>Go to home!</div>
+                  <div className="q_fw_submit_back" style={{color : BrandTheme?.secondaryColor || themeConfig?.secondaryColor, ...styleConfig?.SecondaryButton }}>Go to home!</div>
                 </div>
               </div>
             </div>
@@ -905,11 +922,11 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
             <div className="q-fw-content-box">
               {questIds[0] && (
                 <div
-                onClick={() => {
-                  GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_general_feedback_clicked", "feedback_workflow_general_feedback");
-                  handleOptionClick("GeneralFeedback", questIds[0])
-                }
-                }
+                  onClick={() => {
+                    GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_general_feedback_clicked", "feedback_workflow_general_feedback");
+                    handleOptionClick("GeneralFeedback", questIds[0])
+                  }
+                  }
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
                     setCardHovered([true, false, false, false])
@@ -949,10 +966,12 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                         color: cardHovered[0]
                           ? styleConfig?.listHover?.Heading ||
                           styleConfig.listHeading?.color ||
-                          styleConfig?.Heading?.color ||
+                          styleConfig?.Heading?.color || 
+                          BrandTheme?.primaryColor ||
                           themeConfig?.primaryColor
                           : styleConfig.listHeading?.color ||
                           styleConfig?.Heading?.color ||
+                          BrandTheme?.primaryColor ||
                           themeConfig?.primaryColor,
                         ...styleConfig?.listHeading,
                       }}
@@ -966,9 +985,11 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                           ? styleConfig?.listHover?.Description ||
                           styleConfig?.listDescription?.color ||
                           styleConfig?.Description?.color ||
+                          BrandTheme?.secondaryColor ||
                           themeConfig?.secondaryColor
                           : styleConfig?.listDescription?.color ||
                           styleConfig?.Description?.color ||
+                          BrandTheme?.secondaryColor ||
                           themeConfig?.secondaryColor,
                         ...styleConfig?.listDescription,
                       }}
@@ -981,10 +1002,10 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
               )}
               {questIds[1] && (
                 <div
-                onClick={() => {
-                  GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_report_bug_clicked", "feedback_workflow_report_bug");
-                  handleOptionClick("ReportBug", questIds[1])
-                }}
+                  onClick={() => {
+                    GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_report_bug_clicked", "feedback_workflow_report_bug");
+                    handleOptionClick("ReportBug", questIds[1])
+                  }}
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
                     setCardHovered([false, true, false, false])
@@ -1025,9 +1046,11 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                             ? styleConfig?.listHover?.Heading ||
                             styleConfig.listHeading?.color ||
                             styleConfig?.Heading?.color ||
+                            BrandTheme?.primaryColor ||
                             themeConfig?.primaryColor
                             : styleConfig.listHeading?.color ||
                             styleConfig?.Heading?.color ||
+                            BrandTheme?.primaryColor ||
                             themeConfig?.primaryColor,
                           ...styleConfig?.listHeading,
                         }}
@@ -1043,9 +1066,11 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                             ? styleConfig?.listHover?.Description ||
                             styleConfig?.listDescription?.color ||
                             styleConfig?.Description?.color ||
+                            BrandTheme?.secondaryColor ||
                             themeConfig?.secondaryColor
                             : styleConfig?.listDescription?.color ||
                             styleConfig?.Description?.color ||
+                            BrandTheme?.secondaryColor ||
                             themeConfig?.secondaryColor,
                           ...styleConfig?.listDescription,
                         }}
@@ -1058,11 +1083,11 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
               )}
               {questIds[2] && (
                 <div
-                onClick={() => {
-                  GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_request_feature_clicked", "feedback_workflow_request_feature");
-                  handleOptionClick("RequestFeature", questIds[2])
-                }
-                }
+                  onClick={() => {
+                    GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_request_feature_clicked", "feedback_workflow_request_feature");
+                    handleOptionClick("RequestFeature", questIds[2])
+                  }
+                  }
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
                     setCardHovered([false, false, true, false])
@@ -1103,9 +1128,11 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                             ? styleConfig?.listHover?.Heading ||
                             styleConfig.listHeading?.color ||
                             styleConfig?.Heading?.color ||
+                            BrandTheme?.primaryColor ||
                             themeConfig?.primaryColor
                             : styleConfig.listHeading?.color ||
                             styleConfig?.Heading?.color ||
+                            BrandTheme?.primaryColor ||
                             themeConfig?.primaryColor,
                           ...styleConfig?.listHeading,
                         }}
@@ -1121,9 +1148,11 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                             ? styleConfig?.listHover?.Description ||
                             styleConfig?.listDescription?.color ||
                             styleConfig?.Description?.color ||
+                            BrandTheme?.secondaryColor ||
                             themeConfig?.secondaryColor
                             : styleConfig?.listDescription?.color ||
                             styleConfig?.Description?.color ||
+                            BrandTheme?.secondaryColor ||
                             themeConfig?.secondaryColor,
                           ...styleConfig?.listDescription,
                         }}
@@ -1137,10 +1166,10 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
               )}
               {questIds[3] && (
                 <div
-                onClick={() => {
-                  GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_contactus_clicked", "feedback_workflow_contactus");
-                  handleOptionClick("ContactUs", questIds[3])
-                }}
+                  onClick={() => {
+                    GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_contactus_clicked", "feedback_workflow_contactus");
+                    handleOptionClick("ContactUs", questIds[3])
+                  }}
                   className="q-hover q-fw-cards"
                   onMouseEnter={() =>
                     setCardHovered([false, false, false, true])
@@ -1181,9 +1210,11 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                             ? styleConfig?.listHover?.Heading ||
                             styleConfig.listHeading?.color ||
                             styleConfig?.Heading?.color ||
+                            BrandTheme?.primaryColor ||
                             themeConfig?.primaryColor
                             : styleConfig.listHeading?.color ||
                             styleConfig?.Heading?.color ||
+                            BrandTheme?.primaryColor ||
                             themeConfig?.primaryColor,
                           ...styleConfig?.listHeading,
                         }}
@@ -1198,9 +1229,11 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                             ? styleConfig?.listHover?.Description ||
                             styleConfig?.listDescription?.color ||
                             styleConfig?.Description?.color ||
+                            BrandTheme?.secondaryColor ||
                             themeConfig?.secondaryColor
                             : styleConfig?.listDescription?.color ||
                             styleConfig?.Description?.color ||
+                            BrandTheme?.secondaryColor ||
                             themeConfig?.secondaryColor,
                           ...styleConfig?.listDescription,
                         }}
@@ -1213,7 +1246,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                 </div>
               )}
             </div>
-            <div>{showFooter && <QuestLabs style={styleConfig?.Footer} />}</div>
+            <div>{showFooter && <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />}</div>
           </div>
         )}
       </div>
