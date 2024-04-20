@@ -92,6 +92,7 @@ export default function GetStartedPreview({
           questId={questId}
           userId={userId}
           token={token}
+          isImageOpen={false}
           // buttonColor="yellow"
           cardBackground="yellowGreen"
           cardBorderColor="red"
@@ -108,7 +109,7 @@ export default function GetStartedPreview({
           onCompleteAllStatus={() => {
             // showToast.success({ text: "completed successfully" })
           }}
-          template={1}
+          template={2}
           showLoadingIndicator={true}
           // showDropDown
           //   uniqueUserId="soumitra.petbindhi+1@gmail.com"
@@ -183,7 +184,7 @@ export default function GetStartedPreview({
                   //   borderRadius: "0",
                 },
                 Image: {
-                  //   borderRadius: "50px",
+                  // borderRadius: "50px",
                   //   height: "150px",
                 },
               },
@@ -215,8 +216,8 @@ export default function GetStartedPreview({
       // onLinkTrigger = {()=>{
 
       // }}
-
-      template={1}
+      isImageOpen={true}
+      template={2}
       styleConfig={{
         Arrow: {
           //   Background: "red",

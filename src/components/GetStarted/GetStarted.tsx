@@ -37,6 +37,7 @@ type GetStartedProps = {
   showFooter?: boolean;
   onLinkTrigger?: (url: string, index: number) => void;
   template?: 1 | 2;
+  isImageOpen?: boolean;
   styleConfig?: {
     Heading?: CSSProperties;
     Description?: CSSProperties;
@@ -107,6 +108,7 @@ function GetStarted({
   },
   showFooter = true,
   styleConfig,
+  isImageOpen,
 }: GetStartedProps) {
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
   const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } =
@@ -228,7 +230,6 @@ function GetStarted({
             let response = res.data;
 
             let criterias = response?.eligibilityData?.map((criteria: any) => {
-              console.log(criteria);
               return {
                 type: criteria?.data?.criteriaType,
                 title: criteria?.data?.metadata?.linkActionName,
@@ -453,7 +454,7 @@ function GetStarted({
                   className="gs-single-card-dropDown"
                 >
                   <div className="gs_card_body_dropDown">
-                    {!dropdowns[i] && (
+                    {!dropdowns[i] ? (
                       <div
                         className="gs_card_body_image"
                         style={{ ...styleConfig?.Icon }}
@@ -468,7 +469,25 @@ function GetStarted({
                           alt=""
                         />
                       </div>
+                    ) : !isImageOpen ? (
+                      <div
+                        className="gs_card_body_image"
+                        style={{ ...styleConfig?.Icon }}
+                      >
+                        <img
+                          className="gs-card-icon"
+                          src={
+                            e.imageUrl ||
+                            (!!iconUrls.length ? iconUrls?.[i] : "") ||
+                            questLogo
+                          }
+                          alt=""
+                        />
+                      </div>
+                    ) : (
+                      ""
                     )}
+
                     <div className="gs-card-text">
                       <div
                         style={{
@@ -548,35 +567,40 @@ function GetStarted({
                   </div>
                   {dropdowns[i] && (
                     <div className="gs_card_dropdown">
-                      <div
-                        className="card-drop-down-cont"
-                        style={{
-                          ...styleConfig?.IsImageOpen?.ContainerDiv,
-                        }}
-                      >
+                      {isImageOpen && (
                         <div
+                          className="card-drop-down-cont"
                           style={{
-                            ...styleConfig?.IsImageOpen?.ImageContainer
-                              ?.ImageContainerProperties,
+                            ...styleConfig?.IsImageOpen?.ContainerDiv,
                           }}
                         >
-                          {/* <img src={e.imageUrl} alt="" /> */}
-                          <img
-                            src={
-                              e.imageUrl ||
-                              (!!iconUrls.length ? iconUrls?.[i] : "") ||
-                              questLogo
-                            }
-                            alt=""
+                          <div
                             style={{
                               ...styleConfig?.IsImageOpen?.ImageContainer
-                                ?.Image,
+                                ?.ImageContainerProperties,
                             }}
-                          />
+                          >
+                            {/* <img src={e.imageUrl} alt="" /> */}
+                            <img
+                              src={
+                                e.imageUrl ||
+                                (!!iconUrls.length ? iconUrls?.[i] : "") ||
+                                questLogo
+                              }
+                              alt=""
+                              style={{
+                                borderRadius:
+                                  styleConfig?.IsImageOpen?.ImageContainer
+                                    ?.Image?.borderRadius || "50%",
+                                ...styleConfig?.IsImageOpen?.ImageContainer
+                                  ?.Image,
+                              }}
+                            />
+                            {/* hi */}
+                          </div>
                           {/* hi */}
                         </div>
-                        {/* hi */}
-                      </div>
+                      )}
                       <div
                         className="gs_drop_desc"
                         style={{

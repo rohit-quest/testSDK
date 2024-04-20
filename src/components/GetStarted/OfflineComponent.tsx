@@ -47,6 +47,7 @@ type offlineGetStartedProps = {
   headingText?: string;
   descriptionText?: string;
   autoHide?: boolean;
+  isImageOpen?: boolean;
   showProgressBar?: boolean;
   completedButtonColor?: string;
   completedButtonBackgroundColor?: string;
@@ -106,6 +107,7 @@ function OfflineGetStarted({
   onLinkTrigger = (url: string, index: number) => {
     window.location.href = url;
   },
+  isImageOpen,
 }: offlineGetStartedProps) {
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [allCriteriaCompleted, setAllCriteriaCompleted] =
@@ -229,7 +231,7 @@ function OfflineGetStarted({
                 className="gs-single-card-dropDown"
               >
                 <div className="gs_card_body_dropDown">
-                  {!dropdowns[i] && (
+                  {!dropdowns[i] ? (
                     <div
                       className="gs_card_body_image"
                       style={{ ...styleConfig?.Icon }}
@@ -244,7 +246,25 @@ function OfflineGetStarted({
                         alt=""
                       />
                     </div>
+                  ) : !isImageOpen ? (
+                    <div
+                      className="gs_card_body_image"
+                      style={{ ...styleConfig?.Icon }}
+                    >
+                      <img
+                        className="gs-card-icon"
+                        src={
+                          e.imageUrl ||
+                          (!!iconUrls.length ? iconUrls?.[i] : "") ||
+                          questLogo
+                        }
+                        alt=""
+                      />
+                    </div>
+                  ) : (
+                    ""
                   )}
+
                   <div className="gs-card-text">
                     <div
                       style={{
@@ -324,34 +344,37 @@ function OfflineGetStarted({
                 </div>
                 {dropdowns[i] && (
                   <div className="gs_card_dropdown">
-                    <div
-                      className="card-drop-down-cont"
-                      style={{
-                        ...styleConfig?.IsImageOpen?.ContainerDiv,
-                      }}
-                    >
+                    {isImageOpen && (
                       <div
+                        className="card-drop-down-cont"
                         style={{
-                          ...styleConfig?.IsImageOpen?.ImageContainer
-                            ?.ImageContainerProperties,
+                          ...styleConfig?.IsImageOpen?.ContainerDiv,
                         }}
                       >
-                        {/* <img src={e.imageUrl} alt="" /> */}
-                        <img
-                          src={
-                            e.imageUrl ||
-                            (!!iconUrls.length ? iconUrls?.[i] : "") ||
-                            questLogo
-                          }
-                          alt=""
+                        <div
                           style={{
-                            ...styleConfig?.IsImageOpen?.ImageContainer?.Image,
+                            ...styleConfig?.IsImageOpen?.ImageContainer
+                              ?.ImageContainerProperties,
                           }}
-                        />
+                        >
+                          {/* <img src={e.imageUrl} alt="" /> */}
+                          <img
+                            src={
+                              e.imageUrl ||
+                              (!!iconUrls.length ? iconUrls?.[i] : "") ||
+                              questLogo
+                            }
+                            alt=""
+                            style={{
+                              ...styleConfig?.IsImageOpen?.ImageContainer
+                                ?.Image,
+                            }}
+                          />
+                          {/* hi */}
+                        </div>
                         {/* hi */}
                       </div>
-                      {/* hi */}
-                    </div>
+                    )}
                     <div
                       className="gs_drop_desc"
                       style={{
