@@ -169,7 +169,7 @@ function App() {
                 /> */}
         {/* <OnBoardingPreview online={false} /> */}
 
-        {/* <GetStartedPreview  online={true} />   */}
+        <GetStartedPreview online={false} />
 
         {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
@@ -225,7 +225,7 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-        <FeedbackWorkflowPreview online={true} />
+        {/* <FeedbackWorkflowPreview online={true} /> */}
         {/* <ChallengesPreview online={true} /> */}
 
         {/* <FeedbackPreview online={true} /> */}
