@@ -23,6 +23,7 @@ import {
   MultiChoiceSelectedSVG,
   MultiChoiceSVG,
 } from "./SVG";
+import General from "../../general";
 
 interface GamifiedQuizProps {
   userId: string;
@@ -123,7 +124,14 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
 
   const [sectionNo, setSectionNo] = useState<number>(0);
 
+  let GeneralFunctions = new General("mixpanel", apiType);
+
   useEffect(() => {
+    GeneralFunctions.fireTrackingEvent(
+      "quest_gamifiedquiz_loaded",
+      "gamifiedquiz"
+    );
+
     if (entityId) {
       let externalUserId = cookies.get("externalUserId");
       let questUserId = cookies.get("questUserId");
@@ -149,11 +157,15 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
         externalUserId == uniqueUserId
       ) {
         let header = { ...headers, ...{ questUserId, questUserToken } };
-        axios.post(
-          `${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&questId=${questId}`,
-          { count: 1 },
-          { headers: header }
-        );
+        try {
+          axios.post(
+            `${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&questId=${questId}`,
+            { count: 1 },
+            { headers: header }
+          );
+        } catch (error) {
+          GeneralFunctions.captureSentryException(error);
+        }
       } else if (!!uniqueUserId) {
         axios
           .post(`${BACKEND_URL}api/users/external/login`, body, { headers })
@@ -169,11 +181,18 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
             });
             cookies.set("questUserId", userId, { path: "/", expires: date });
             cookies.set("questUserToken", token, { path: "/", expires: date });
-            axios.post(
-              `${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/onboarding-view?userId=${userId}&questId=${questId}`,
-              { count: 1 },
-              { headers: header }
-            );
+            try {
+              axios.post(
+                `${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/onboarding-view?userId=${userId}&questId=${questId}`,
+                { count: 1 },
+                { headers: header }
+              );
+            } catch (error) {
+              GeneralFunctions.captureSentryException(error);
+            }
+          })
+          .catch((error) => {
+            GeneralFunctions.captureSentryException(error);
           });
       }
 
@@ -182,47 +201,52 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
         headers: object
       ) {
         const url = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/criterias?userId=${userId}`;
-        const { data } = await axios.get(url, { headers: headers });
 
-        setQuestions(data.data.eligibilityCriterias.length);
+        try {
+          const { data } = await axios.get(url, { headers: headers });
 
-        let criterias = data?.data?.eligibilityData.map(
-          (criteria: {
-            criteriaType: string;
-            metadata: {
-              title: string;
-              options: string[];
-              isRequired: string;
-              placeholder: string;
-              linkActionName: string;
-              linkActionUrl: string;
-              manualInput: string;
-            };
-            criteriaId: string;
-          }) => {
-            return {
-              type: criteria?.criteriaType,
-              question: criteria?.metadata?.title,
-              options: criteria?.metadata?.options || [],
-              criteriaId: criteria?.criteriaId,
-              required: criteria?.metadata?.isRequired,
-              placeholder: criteria?.metadata?.placeholder,
-            };
-          }
-        );
+          setQuestions(data.data.eligibilityCriterias.length);
 
-        if (questionsPerSection > 0) {
-          setTotalSectionsPerSectionQuestion(
-            Math.ceil(
-              data.data.eligibilityCriterias.length / questionsPerSection
-            )
+          let criterias = data?.data?.eligibilityData.map(
+            (criteria: {
+              criteriaType: string;
+              metadata: {
+                title: string;
+                options: string[];
+                isRequired: string;
+                placeholder: string;
+                linkActionName: string;
+                linkActionUrl: string;
+                manualInput: string;
+              };
+              criteriaId: string;
+            }) => {
+              return {
+                type: criteria?.criteriaType,
+                question: criteria?.metadata?.title,
+                options: criteria?.metadata?.options || [],
+                criteriaId: criteria?.criteriaId,
+                required: criteria?.metadata?.isRequired,
+                placeholder: criteria?.metadata?.placeholder,
+              };
+            }
           );
-        }
 
-        if (criterias?.length > 0) {
-          setFormdata([...criterias]);
-        } else {
-          setFormdata([]);
+          if (questionsPerSection > 0) {
+            setTotalSectionsPerSectionQuestion(
+              Math.ceil(
+                data.data.eligibilityCriterias.length / questionsPerSection
+              )
+            );
+          }
+
+          if (criterias?.length > 0) {
+            setFormdata([...criterias]);
+          } else {
+            setFormdata([]);
+          }
+        } catch (error) {
+          GeneralFunctions.captureSentryException(error);
         }
       };
       getQuestData(userId, headers);
@@ -448,6 +472,10 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
   const [popUpHead, setPopUpHead] = useState("Feedback Submitted");
 
   const formSubmitHandler = () => {
+    GeneralFunctions.fireTrackingEvent(
+      "quest_gamifiedquiz_submit_button_clicked",
+      "gamifiedquiz"
+    );
     for (const key in selectedOptions) {
       if (selectedOptions.hasOwnProperty(key)) {
         answer[key] = selectedOptions[key];
@@ -484,8 +512,9 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           setThanksPopup(true);
         }
       })
-      .catch((e) => {
-        console.log("error", e);
+      .catch((error) => {
+        GeneralFunctions.captureSentryException(error);
+        console.log("error", error);
       });
   };
 
@@ -503,7 +532,6 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
     placeholder: string,
     inputType: logoType
   ) => {
-
     return (
       <div key={criteriaId}>
         <p
@@ -690,8 +718,6 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
     );
   }
 
-
-
   return (
     <>
       {thanksPopup ? (
@@ -709,6 +735,10 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               <div>
                 <div
                   onClick={() => {
+                    GeneralFunctions.fireTrackingEvent(
+                      "quest_gamifiedquiz_feedback_close_button_clicked",
+                      "gamifiedquiz"
+                    );
                     setGamifiedQuiz(false);
                     setThanksPopup(false);
                   }}
@@ -761,7 +791,13 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                   background: styleConfig?.ThanksPopUpGotoHome?.background,
                   color: styleConfig?.ThanksPopUpGotoHome?.color,
                 }}
-                onClick={() => setThanksPopup((prev) => !prev)}
+                onClick={() => {
+                  GeneralFunctions.fireTrackingEvent(
+                    "quest_gamifiedquiz_feedback_gotohome_button_clicked",
+                    "gamifiedquiz"
+                  );
+                  setThanksPopup((prev) => !prev);
+                }}
               >
                 Go to home!
               </div>
@@ -975,8 +1011,16 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                         onClick={() => {
                           if (sectionNo > 0) {
                             setSectionNo(sectionNo - 1);
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_gamifiedquiz_previous_section_button_clicked",
+                              "gamifiedquiz"
+                            );
                           } else {
                             setGamifiedQuiz(false);
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_gamifiedquiz_cancel_button_clicked",
+                              "gamifiedquiz"
+                            );
                           }
                         }}
                         type="button"
@@ -1002,6 +1046,10 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                           const totalSections = Object.keys(questionSections);
 
                           if (sectionNo < totalSections.length - 1) {
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_gamifiedquiz_next_section_button_clicked",
+                              "gamifiedquiz"
+                            );
                             setSectionNo(sectionNo + 1);
                           } else if (sectionNo >= totalSections.length - 1) {
                             formSubmitHandler();
@@ -1042,9 +1090,17 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                       <button
                         onClick={() => {
                           if (currentSection > 0) {
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_gamifiedquiz_previous_section_button_clicked",
+                              "gamifiedquiz"
+                            );
                             setCurrentSection(currentSection - 1);
                           } else {
                             setGamifiedQuiz(false);
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_gamifiedquiz_cancel_button_clicked",
+                              "gamifiedquiz"
+                            );
                           }
                         }}
                         type="button"
@@ -1072,6 +1128,10 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                             currentSection <
                             totalSectionsPerSectionQuestion - 1
                           ) {
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_gamifiedquiz_next_section_button_clicked",
+                              "gamifiedquiz"
+                            );
                             setCurrentSection(currentSection + 1);
                           } else if (
                             currentSection >=
