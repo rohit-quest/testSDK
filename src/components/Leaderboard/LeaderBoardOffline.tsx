@@ -30,19 +30,19 @@ interface MembershipTier {
 }
 
 export interface StyleConfig {
-  Form?:CSSProperties;
+  Form?: CSSProperties;
   MainHeading?: CSSProperties;
   Heading?: CSSProperties;
   Description?: CSSProperties;
-  PointsBackground?:CSSProperties
+  PointsBackground?: CSSProperties;
   PointsColor?: CSSProperties;
-  InnerBackground?:CSSProperties;
-  IndexColor?:CSSProperties;
-  IndexBackground?:CSSProperties;
+  InnerBackground?: CSSProperties;
+  IndexColor?: CSSProperties;
+  IndexBackground?: CSSProperties;
   ProgressBarColor?: CSSProperties;
-  IconStyle?:{
-    color? :string;
-  }
+  IconStyle?: {
+    color?: string;
+  };
   Footer?: CSSProperties;
 }
 
@@ -50,34 +50,40 @@ interface LeaderBoardProps {
   userId: string;
   token: string;
   styleConfig?: StyleConfig;
-  offlineFormData?:LeaderboardData[]
+  offlineFormData?: LeaderboardData[];
 }
 
 const LeaderBoardOffline: React.FC<LeaderBoardProps> = ({
   userId,
   token,
   styleConfig,
-  offlineFormData =[]
+
+  offlineFormData = [],
 }) => {
   const [leaderboardData, setLeaderboardData] = useState({
-    data:offlineFormData
+    data: offlineFormData,
   });
-
+  const { apiType } = useContext(QuestContext.Context);
+  let GeneralFunctions = new General("mixpanel", apiType);
   useEffect(() => {
+    GeneralFunctions.fireTrackingEvent(
+      "quest_leaderboard_offline_loaded",
+      "leaderboard_offline"
+    );
     setLeaderboardData({
-      data:offlineFormData
-    })
+      data: offlineFormData,
+    });
   }, []);
 
   return (
     <div>
-      {leaderboardData && 
+      {leaderboardData && (
         <LeaderBoardShow
           leaderboardUserData={leaderboardData}
           memberShip={[]}
           styleConfig={styleConfig}
-        />}
-     
+        />
+      )}
     </div>
   );
 };

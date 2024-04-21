@@ -1,61 +1,54 @@
 import "./GamifiedQuiz.css";
 import GamifiedQuizTaskLogo from "../../assets/images/GamifiedQuizTaskLogo.svg";
-import CancelButton from "../../assets/images/CancelButton.svg";
 import SubmitConfirmButton from "../../assets/images/SubmitConfirmButton.svg";
 import {
   Dispatch,
-  FormEvent,
   SetStateAction,
   useContext,
   useEffect,
   useState,
 } from "react";
 import QuestContext from "../QuestWrapper";
-import Cookies from "universal-cookie";
 import config from "../../config";
 import { Input, logoType } from "../Modules/Input";
 import { PrimaryButton } from "../Modules/PrimaryButton";
 import TextArea from "../Modules/TextArea";
-import Label from "../Modules/Label";
+import { CancelButton } from "./SVG";
 import {
-  Phone,
   SingleChoiceSVG,
   SingleChoiceSelectedSVG,
   MultiChoiceSelectedSVG,
   MultiChoiceSVG,
 } from "./SVG";
+import General from "../../general";
 
 interface GamifiedQuizProps {
   offlineAnswer: any;
   setOfflineAnswer: any;
-
   userId: string;
   token: string;
   questId: string;
   uniqueUserId?: string;
   uniqueEmailId?: string;
   heading?: string;
-
   showFooter?: boolean;
   thanksPopUpFooter?: boolean;
-
-  questionSections: number[][];
-  sectionSubHeading: string[];
-  sectionHeading: string[];
-
-  inputTextHeading?: string;
-  multiChoiceTextHeading?: string;
-  singleChoiceTextHeading?: string;
-  // showFooter?: boolean;
-  // thanksPopUpFooter?: boolean
-  gamifiedQuiz?: boolean;
-  setGamifiedQuiz?: Dispatch<SetStateAction<boolean>>;
+  questionSections?: number[][];
+  sectionSubHeading?: string[];
+  sectionHeading?: string[];
+  feedbackContent?: {
+    FeedbackHeading?: string;
+    FeedbackDescription?: string;
+  };
   styleConfig?: {
     Heading?: React.CSSProperties;
-    ComponentTheme?: React.CSSProperties;
+    Form?: React.CSSProperties;
     FormContainer?: React.CSSProperties;
+    LabelColor?: React.CSSProperties;
     Input?: React.CSSProperties;
+    IconColor?: React.CSSProperties;
     Question?: React.CSSProperties;
+    SubHeading?: React.CSSProperties;
     TextArea?: React.CSSProperties;
     PrimaryButton?: React.CSSProperties;
     SecondaryButton?: React.CSSProperties;
@@ -68,11 +61,20 @@ interface GamifiedQuizProps {
     ThanksPopUpFooter?: React.CSSProperties;
     ThanksPopUpGotoHome?: React.CSSProperties;
     OptionsSelectedColor?: React.CSSProperties;
+    EmailError?: {
+      text?: string;
+      errorStyle?: React.CSSProperties;
+    };
   };
 
+  gamifiedQuiz?: boolean;
+  setGamifiedQuiz: Dispatch<SetStateAction<boolean>>;
+  functionOnSubmit?: any;
+  questions?: number;
+  setQuestions?: Dispatch<SetStateAction<number>> | undefined;
+  questionsPerSection?: number;
   formDataOffline: FormData[] | [];
 }
-
 interface FormData {
   type: string;
   question: string;
@@ -85,141 +87,165 @@ interface FormData {
   manualInput: string | boolean;
 }
 
-// type answerData = Record
-
 const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
-  userId,
-  token,
-  questId,
-  uniqueUserId,
-  uniqueEmailId,
   heading,
   styleConfig,
   showFooter,
   thanksPopUpFooter,
-  sectionSubHeading,
-  sectionHeading,
-  questionSections,
-  formDataOffline,
-  setOfflineAnswer,
+  feedbackContent,
+  sectionSubHeading = [],
+  sectionHeading = [],
+  questionSections = [],
   setGamifiedQuiz,
   gamifiedQuiz,
+  questionsPerSection = 0,
+  functionOnSubmit,
+  formDataOffline,
+  setOfflineAnswer,
 }) => {
   const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } =
     useContext(QuestContext.Context);
 
-  const cookies = new Cookies();
   const [formdata, setFormdata] = useState<FormData[] | []>([]);
   const [answer, setAnswer] = useState<Record<string, string | Array<string>>>(
     {}
   );
-  let BACKEND_URL =
-    apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
+  const [totalSectionsPerSectionQuestion, setTotalSectionsPerSectionQuestion] =
+    useState<number>(0);
+  const [currentSection, setCurrentSection] = useState<number>(0);
 
   const [sectionNo, setSectionNo] = useState<number>(0);
-
+  let GeneralFunctions = new General("mixpanel", apiType);
   useEffect(() => {
-    // if (entityId) {
-    //     let externalUserId = cookies.get("externalUserId");
-    //     let questUserId = cookies.get("questUserId");
-    //     let questUserToken = cookies.get("questUserToken");
-    //     // let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
-
-    //     const headers = {
-    //         apiKey: apiKey,
-    //         // apisecret: apiSecret,
-    //         userId: userId,
-    //         token: token, // Replace with your actual token
-    //     };
-
-    //     const body = {
-    //         externalUserId: !!uniqueUserId && uniqueUserId,
-    //         entityId: entityId,
-    //         email: uniqueEmailId
-    //     }
-
-    //     if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
-    //         let header = { ...headers, ...{ questUserId, questUserToken } }
-    //         axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&questId=${questId}`, { count: 1 }, { headers: header })
-    //     } else if (!!uniqueUserId) {
-    //         axios.post(`${BACKEND_URL}api/users/external/login`, body, { headers })
-    //             .then((res) => {
-    //                 let { userId, token } = res.data;
-    //                 let header = { ...headers, ...{ userId, token } }
-
-    //                 const date = new Date();
-    //                 date.setHours(date.getHours() + 12)
-    //                 cookies.set("externalUserId", uniqueUserId, { path: "/", expires: date })
-    //                 cookies.set("questUserId", userId, { path: "/", expires: date })
-    //                 cookies.set("questUserToken", token, { path: "/", expires: date })
-    //                 axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/onboarding-view?userId=${userId}&questId=${questId}`, { count: 1 }, { headers: header })
-    //             })
-    //     }
-
-    //     const getQuestData = async function getQuestData(userId: string, headers: object) {
-    //         // (loadingTracker && setLoading(true));
-
-    //         const url = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/criterias?userId=${userId}`;
-
-    //         // const { data } = await axios.get(url, { headers: headers });
-    //         const { data } = await axios.get(url, { headers: headers });
-    //         let criterias = data.data.eligibilityData.map((criteria: {
-    //             criteriaType: string;
-    //             metadata: { title: string; options: string[], isOptional: string, placeholder: string, linkActionName: string, linkActionUrl: string, manualInput: string };
-    //             criteriaId: string;
-    //         }) => {
-    //             return {
-    //                 type: criteria?.criteriaType,
-    //                 question: criteria?.metadata?.title,
-    //                 options: criteria?.metadata?.options || [],
-    //                 criteriaId: criteria?.criteriaId,
-    //                 required: !criteria?.metadata?.isOptional,
-    //                 placeholder: criteria?.metadata?.placeholder,
-    //                 // linkTitle: criteria?.metadata?.linkActionName || "",
-    //                 // linkUrl: criteria?.metadata?.linkActionUrl || "",
-    //                 // manualInput: criteria?.metadata?.manualInput || false,
-    //             };
-    //         });
-    //         setFormdata([...criterias]);
-    //     }
-    //     getQuestData(userId, headers)
-    // }
-    setFormdata(formDataOffline);
-  }, [formDataOffline]);
-
-  const MultipleChoice = ({
-    onClick,
-    selectedValue,
-    options,
-  }: {
-    index: number;
-    onClick: (option: string) => void;
-    selectedValue: string | Array<string>;
-    options: Array<string>;
-  }) => {
-    // console.log(selectedValue)
-    return (
-      <div>
-        {options.map((option, index) => (
-          <div
-            key={index}
-            onClick={() => onClick(option)}
-            className={`gamified-quiz-header-ques-options ${
-              selectedValue.includes(option) ? "selected-option" : ""
-            }`}
-          >
-            <p>{option}</p>
-          </div>
-        ))}
-      </div>
+    GeneralFunctions.fireTrackingEvent(
+      "quest_gamifiedquiz_offline_loaded",
+      "gamifiedquiz_offline"
     );
-  };
+    // if (entityId) {
+    //   let externalUserId = cookies.get("externalUserId");
+    //   let questUserId = cookies.get("questUserId");
+    //   let questUserToken = cookies.get("questUserToken");
+    //   // let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
+
+    //   const headers = {
+    //     apiKey: apiKey,
+    //     // apisecret: apiSecret,
+    //     userId: userId,
+    //     token: token, // Replace with your actual token
+    //   };
+
+    //   const body = {
+    //     externalUserId: !!uniqueUserId && uniqueUserId,
+    //     entityId: entityId,
+    //     email: uniqueEmailId,
+    //   };
+
+    //   if (
+    //     !!externalUserId &&
+    //     !!questUserId &&
+    //     !!questUserToken &&
+    //     externalUserId == uniqueUserId
+    //   ) {
+    //     let header = { ...headers, ...{ questUserId, questUserToken } };
+    //     axios.post(
+    //       `${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&questId=${questId}`,
+    //       { count: 1 },
+    //       { headers: header }
+    //     );
+    //   } else if (!!uniqueUserId) {
+    //     axios
+    //       .post(`${BACKEND_URL}api/users/external/login`, body, { headers })
+    //       .then((res) => {
+    //         let { userId, token } = res.data;
+    //         let header = { ...headers, ...{ userId, token } };
+
+    //         const date = new Date();
+    //         date.setHours(date.getHours() + 12);
+    //         cookies.set("externalUserId", uniqueUserId, {
+    //           path: "/",
+    //           expires: date,
+    //         });
+    //         cookies.set("questUserId", userId, { path: "/", expires: date });
+    //         cookies.set("questUserToken", token, { path: "/", expires: date });
+    //         axios.post(
+    //           `${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/onboarding-view?userId=${userId}&questId=${questId}`,
+    //           { count: 1 },
+    //           { headers: header }
+    //         );
+    //       });
+    //   }
+
+    //   const getQuestData = async function getQuestData(
+    //     userId: string,
+    //     headers: object
+    //   ) {
+    //     // (loadingTracker && setLoading(true));
+
+    //     const url = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/criterias?userId=${userId}`;
+
+    //     // const { data } = await axios.get(url, { headers: headers });
+    //     const { data } = await axios.get(url, { headers: headers });
+    //     // console.log(data);
+    //     // console.log(data.data.eligibilityCriterias.length);
+    //     setQuestions(data.data.eligibilityCriterias.length);
+    //     let criterias = data?.data?.eligibilityData.map(
+    //       (criteria: {
+    //         criteriaType: string;
+    //         metadata: {
+    //           title: string;
+    //           options: string[];
+    //           isRequired: string;
+    //           placeholder: string;
+    //           linkActionName: string;
+    //           linkActionUrl: string;
+    //           manualInput: string;
+    //         };
+    //         criteriaId: string;
+    //       }) => {
+    //         // console.log(criteria?.metadata?.isRequired)
+    //         return {
+    //           type: criteria?.criteriaType,
+    //           question: criteria?.metadata?.title,
+    //           options: criteria?.metadata?.options || [],
+    //           criteriaId: criteria?.criteriaId,
+    //           required: criteria?.metadata?.isRequired,
+    //           placeholder: criteria?.metadata?.placeholder,
+    //           // linkTitle: criteria?.metadata?.linkActionName || "",
+    //           // linkUrl: criteria?.metadata?.linkActionUrl || "",
+    //           // manualInput: criteria?.metadata?.manualInput || false,
+    //         };
+    //       }
+    //     );
+
+    //     if (questionsPerSection > 0) {
+    //       setTotalSectionsPerSectionQuestion(
+    //         Math.ceil(
+    //           data.data.eligibilityCriterias.length / questionsPerSection
+    //         )
+    //       );
+    //     }
+
+    //     if (criterias?.length > 0) {
+    //       setFormdata([...criterias]);
+    //     } else {
+    //       setFormdata([]);
+    //     }
+    //   };
+    //   getQuestData(userId, headers);
+    // }
+
+    if (questionsPerSection > 0) {
+      setTotalSectionsPerSectionQuestion(
+        Math.ceil(formDataOffline.length / questionsPerSection)
+      );
+    }
+
+    setFormdata(formDataOffline);
+  }, []);
 
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, Array<string>>
   >({});
-
-  const [isSelected, setIsSelected] = useState(false);
 
   const [change, setChange] = useState(true);
   const [checkChange, setCheckChange] = useState(true);
@@ -253,52 +279,35 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
       answer[criteriaId] = [...answer[criteriaId], option];
     }
     setChange((prev) => !prev);
-    setIsSelected((prev) => !prev);
   };
 
   const [goToNextSection, setGoToNextSection] = useState(false);
 
   useEffect(() => {
-    for (let i = 0; i < questionSections[sectionNo].length; i++) {
-      if (!formdata[questionSections[sectionNo][i] - 1]?.required) {
-      } else if (
-        answer[formdata[questionSections[sectionNo][i] - 1]?.criteriaId]
-          ?.length > 0 &&
-        formdata[questionSections[sectionNo][i] - 1]?.required
-      ) {
-        setGoToNextSection(true);
-      } else {
-        setGoToNextSection(false);
-        break;
-      }
-    }
-
-    for (let i = 0; i < questionSections[sectionNo].length; i++) {
-      if (!formdata[questionSections[sectionNo][i] - 1]?.required) {
-      } else if (
-        answer[formdata[questionSections[sectionNo][i] - 1]?.criteriaId]
-          ?.length > 0 &&
-        formdata[questionSections[sectionNo][i] - 1]?.required
-      ) {
-        setGoToNextSection(true);
-      } else {
-        setGoToNextSection(false);
-        break;
-      }
-    }
-
-    for (let i = 0; i < questionSections[sectionNo].length; i++) {
-      if (
-        formdata[questionSections[sectionNo][i] - 1]?.type ===
-        "USER_INPUT_MULTI_CHOICE"
-      ) {
-        const ansOptions =
-          selectedOptions[
-            formdata[questionSections[sectionNo][i] - 1]?.criteriaId
-          ];
-        if (!formdata[questionSections[sectionNo][i] - 1]?.required) {
+    if (questionSections?.length > 0) {
+      for (let i = 0; i < questionSections[sectionNo].length; i++) {
+        if (
+          formdata[questionSections[sectionNo][i] - 1]?.type ===
+          "USER_INPUT_MULTI_CHOICE"
+        ) {
+          const ansOptions =
+            selectedOptions[
+              formdata[questionSections[sectionNo][i] - 1]?.criteriaId
+            ];
+          if (!formdata[questionSections[sectionNo][i] - 1]?.required) {
+          } else if (
+            ansOptions?.length > 0 &&
+            formdata[questionSections[sectionNo][i] - 1]?.required
+          ) {
+            setGoToNextSection(true);
+          } else {
+            setGoToNextSection(false);
+            break;
+          }
+        } else if (!formdata[questionSections[sectionNo][i] - 1]?.required) {
         } else if (
-          ansOptions?.length > 0 &&
+          answer[formdata[questionSections[sectionNo][i] - 1]?.criteriaId]
+            ?.length > 0 &&
           formdata[questionSections[sectionNo][i] - 1]?.required
         ) {
           setGoToNextSection(true);
@@ -307,8 +316,40 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
           break;
         }
       }
+    } else {
+      console.log("336");
+      for (let i = 0; i < questionsPerSection; i++) {
+        let queNo = currentSection * questionsPerSection + i;
+        if (formdata[queNo]?.type === "USER_INPUT_MULTI_CHOICE") {
+          const ansOptions = selectedOptions[formdata[queNo]?.criteriaId];
+          if (!formdata[queNo]?.required) {
+          } else if (ansOptions?.length > 0 && formdata[queNo]?.required) {
+            setGoToNextSection(true);
+          } else {
+            setGoToNextSection(false);
+            break;
+          }
+        } else if (!formdata[queNo]?.required) {
+        } else if (
+          answer[formdata[queNo]?.criteriaId]?.length > 0 &&
+          formdata[queNo]?.required
+        ) {
+          setGoToNextSection(true);
+        } else {
+          setGoToNextSection(false);
+          break;
+        }
+      }
     }
-  }, [answer, sectionNo, change, sectionNo, checkChange, sectionNo]);
+  }, [
+    answer,
+    sectionNo,
+    change,
+    sectionNo,
+    checkChange,
+    sectionNo,
+    currentSection,
+  ]);
 
   const MultiChoice = ({ value }: { value: FormData }) => {
     return (
@@ -316,10 +357,11 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
         {value?.options.map((option, index) => {
           const SelectedBorder = {
             border: `2px solid ${styleConfig?.OptionsSelectedColor?.color}`,
-            // color: styleConfig?.OptionsSelectedColor?.color
+            fontFamily: themeConfig?.fontFamily,
           };
           const SelectedOptionColor = {
             color: styleConfig?.OptionsSelectedColor?.color,
+            fontFamily: themeConfig?.fontFamily,
           };
           return (
             <div
@@ -333,19 +375,22 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
               style={
                 selectedOptions[value?.criteriaId]?.includes(option)
                   ? SelectedBorder
-                  : {}
+                  : { borderColor: themeConfig?.borderColor }
               }
             >
               {selectedOptions[value?.criteriaId]?.includes(option)
                 ? MultiChoiceSelectedSVG(
                     styleConfig?.OptionsSelectedColor?.color
                   )
-                : MultiChoiceSVG()}
+                : MultiChoiceSVG(themeConfig?.borderColor)}
               <p
                 style={
                   selectedOptions[value?.criteriaId]?.includes(option)
                     ? SelectedOptionColor
-                    : {}
+                    : {
+                        color: themeConfig?.primaryColor,
+                        fontFamily: themeConfig?.fontFamily,
+                      }
                 }
               >
                 {option}
@@ -366,6 +411,7 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
           };
           const SelectedOptionColor = {
             color: styleConfig?.OptionsSelectedColor?.color,
+            fontFamily: themeConfig?.fontFamily,
           };
 
           return (
@@ -380,19 +426,24 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
               style={
                 answer[value?.criteriaId]?.includes(option)
                   ? SelectedBorder
-                  : {}
+                  : {
+                      borderColor: themeConfig?.borderColor,
+                    }
               }
             >
               {answer[value?.criteriaId]?.includes(option)
                 ? SingleChoiceSelectedSVG(
                     styleConfig?.OptionsSelectedColor?.color
                   )
-                : SingleChoiceSVG()}
+                : SingleChoiceSVG(themeConfig?.borderColor)}
               <p
                 style={
                   answer[value?.criteriaId]?.includes(option)
                     ? SelectedOptionColor
-                    : {}
+                    : {
+                        color: themeConfig?.primaryColor,
+                        fontFamily: themeConfig?.fontFamily,
+                      }
                 }
               >
                 {" "}
@@ -406,47 +457,52 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
   };
 
   const [thanksPopup, setThanksPopup] = useState(false);
-  const [popUpMessage, setPopUpMessage] = useState(
-    "Thanks for submitting your feedback with us. We appreciate your review and will assure you to surely consider them"
-  );
-  const [popUpHead, setPopUpHead] = useState("Feedback Submitted");
-  //   const [gamifiedQuiz, setGamifiedQuiz] = useState(true);
 
   const formSubmitHandler = () => {
-    setGamifiedQuiz(false);
+    GeneralFunctions.fireTrackingEvent(
+      "quest_gamifiedquiz_offline_submit_button_clicked",
+      "gamifiedquiz_offline"
+    );
     for (const key in selectedOptions) {
       if (selectedOptions.hasOwnProperty(key)) {
         answer[key] = selectedOptions[key];
       }
     }
 
-    // let criterias = Object.keys(answer)
-    //     .map((key: string) => ({
-    //         criteriaId: key,
-    //         answer: typeof answer[key] === "object" ? answer[key] : [answer[key]],
-    //         question: formdata[formdata.findIndex(ele => ele.criteriaId == key)].question
-    //     }));
+    // let criterias = Object.keys(answer).map((key: string) => ({
+    //   criteriaId: key,
+    //   answer: typeof answer[key] === "object" ? answer[key] : [answer[key]],
+    //   question:
+    //     formdata[formdata.findIndex((ele) => ele.criteriaId == key)].question,
+    // }));
 
     // let headers = {
-    //     apikey: apiKey,
-    //     apisecret: apiSecret,
-    //     userId: uniqueUserId || userId,
-    //     token: token
-    // }
-    // const data = axios.post(`${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`, { criterias, userId: headers.userId }, { headers }).then((res) => {
+    //   apikey: apiKey,
+    //   apisecret: apiSecret,
+    //   userId: uniqueUserId || userId,
+    //   token: token,
+    // };
+    // const data = axios
+    //   .post(
+    //     `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`,
+    //     { criterias, userId: headers.userId },
+    //     { headers }
+    //   )
+    //   .then((res) => {
+    //     functionOnSubmit();
     //     setThanksPopup(res.data.success);
     //     if (res.data.success) {
-    //         setThanksPopup(res.data.success);
+    //       setThanksPopup(res.data.success);
+    //     } else {
+    //       setPopUpHead("Feedback Not Submitted");
+    //       setPopUpMessage(res.data.error);
+    //       setThanksPopup(true);
     //     }
-    //     else {
-    //         setPopUpHead("Feedback Not Submitted");
-    //         setPopUpMessage(res.data.error);
-    //         setThanksPopup(true);
-    //     }
-    // }).catch((e) => {
-    //     console.log("error", e)
-    // });
-    // console.log(answer)
+    //   })
+    //   .catch((e) => {
+    //     console.log("error", e);
+    //   });
+    functionOnSubmit();
     setOfflineAnswer(answer);
     setThanksPopup(true);
   };
@@ -467,29 +523,33 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
   ) => {
     return (
       <div key={criteriaId}>
-        {/* {
-                    (customComponentPositions == index + 1) &&
-                    <div style={{ paddingBottom: "12px" }}>
-                        {customComponents}
-                    </div>
-                } */}
-        {/* <Label htmlFor="normalInput">
-                    {`${question}${required?"*":""}`}
-                </Label> */}
-        <p className="label-inputs">{`${question}${required ? "*" : ""}`}</p>
+        <p
+          className="label-inputs"
+          style={{
+            color: styleConfig?.LabelColor?.color || themeConfig?.primaryColor,
+            fontFamily: themeConfig?.fontFamily,
+          }}
+        >{`${question}${required ? "*" : ""}`}</p>
+
         <Input
           type={inputType}
           placeholder={placeholder}
           value={answer[criteriaId] as string}
-          iconColor={
-            styleConfig?.Input?.color || themeConfig?.primaryColor || "black"
-          }
+          iconColor={styleConfig?.IconColor?.color}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           style={{
             borderColor:
               styleConfig?.Input?.borderColor || themeConfig?.borderColor,
             color: styleConfig?.Input?.color || themeConfig?.primaryColor,
-            ...styleConfig?.Input,
+          }}
+          emailtext={
+            styleConfig?.EmailError?.text == undefined
+              ? "Invalid email format"
+              : styleConfig?.EmailError?.text
+          }
+          emailErrorStyle={{
+            fontFamily: themeConfig?.fontFamily || "Figtree",
+            ...styleConfig?.EmailError?.errorStyle,
           }}
         />
       </div>
@@ -505,25 +565,24 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
   ) => {
     return (
       <div key={criteriaId}>
-        {/* {
-                    (customComponentPositions == index + 1) &&
-                    <div style={{ paddingBottom: "12px" }}>
-                        {customComponents}
-                    </div>
-                } */}
-        {/* <Label htmlFor="dateInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
-                    {`${question} ${!!required && "*"}`}
-                </Label> */}
-        <p className="label-inputs">{`${question}${required ? "*" : ""}`}</p>
+        <p
+          className="label-inputs"
+          style={{
+            color: styleConfig?.LabelColor?.color || themeConfig?.primaryColor,
+            fontFamily: themeConfig?.fontFamily || "Figtree",
+          }}
+        >{`${question}${required ? "*" : ""}`}</p>
         <Input
           type={"date"}
           placeholder={placeholder}
           value={answer[criteriaId] as string}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
+          iconColor={styleConfig?.IconColor?.color}
           style={{
             borderColor:
               styleConfig?.Input?.borderColor || themeConfig?.borderColor,
             color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+            fontFamily: themeConfig?.fontFamily || "Figtree",
             ...styleConfig?.Input,
           }}
         />
@@ -540,16 +599,13 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
   ) => {
     return (
       <div key={criteriaId}>
-        {/* {
-                    (customComponentPositions == index + 1) &&
-                    <div style={{ paddingBottom: "12px" }}>
-                        {customComponents}
-                    </div>
-                } */}
-        {/* <Label htmlFor="textAreaInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
-                    {`${question} ${!!required && "*"}`}
-                </Label> */}
-        <p className="label-inputs">{`${question}${required ? "*" : ""}`}</p>
+        <p
+          className="label-inputs"
+          style={{
+            color: styleConfig?.LabelColor?.color || themeConfig?.primaryColor,
+            fontFamily: themeConfig?.fontFamily,
+          }}
+        >{`${question}${required ? "*" : ""}`}</p>
         <TextArea
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           placeholder={placeholder}
@@ -565,18 +621,122 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
     );
   };
 
+  useEffect(() => {}, [gamifiedQuiz]);
+
+  const QuestionArray = [];
+
+  for (let i = 0; i < questionsPerSection; i++) {
+    let question = currentSection * questionsPerSection + i;
+    let value = formdata[question];
+    let index = question;
+
+    QuestionArray.push(
+      <div className="gamified-quiz-criteria-div" key={index}>
+        <div className="gamified-quiz-header-ques-title-cont">
+          <div className="question-input-cont">
+            {formdata[question]?.type === "USER_INPUT_SINGLE_CHOICE" ||
+            formdata[question]?.type === "USER_INPUT_MULTI_CHOICE" ? (
+              <div
+                className="question"
+                style={{
+                  fontFamily: themeConfig?.fontFamily,
+                  ...styleConfig?.Question,
+                  color:
+                    styleConfig?.Question?.color || themeConfig?.primaryColor,
+                }}
+              >
+                {formdata[question]?.question}
+                {`${formdata[question]?.required ? "*" : ""}`}
+              </div>
+            ) : null}
+
+            {formdata[question]?.type === "USER_INPUT_TEXT" ? (
+              normalInput(
+                value.question,
+                value.required || false,
+                value.criteriaId,
+                index,
+                value.placeholder || value.question,
+                "text"
+              )
+            ) : formdata[question]?.type === "USER_INPUT_EMAIL" ? (
+              normalInput(
+                value.question,
+                value.required || false,
+                value.criteriaId,
+                index,
+                value.placeholder || value.question,
+                "email"
+              )
+            ) : formdata[question]?.type === "USER_INPUT_PHONE" ? (
+              normalInput(
+                value.question,
+                value.required || false,
+                value.criteriaId,
+                index,
+                value.placeholder || value.question,
+                "number"
+              )
+            ) : formdata[question]?.type === "USER_INPUT_DATE" ? (
+              dateInput(
+                value.question,
+                value.required || false,
+                value.criteriaId,
+                index,
+                value.placeholder || value.question
+              )
+            ) : formdata[question]?.type === "USER_INPUT_TEXTAREA" ? (
+              textAreaInput(
+                value.question,
+                value.required || false,
+                value.criteriaId,
+                index,
+                value.placeholder || value.question
+              )
+            ) : formdata[question]?.type === "USER_INPUT_MULTI_CHOICE" ? (
+              <MultiChoice value={value} />
+            ) : formdata[question]?.type === "USER_INPUT_SINGLE_CHOICE" ? (
+              <SingleChoice value={value} />
+            ) : (
+              ""
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  useEffect(() => {}, [currentSection]);
+
   return (
     <>
       {thanksPopup ? (
         <div className="thanks-popup-upper-div">
           <div
             className="gamified-thanks-pop-up"
-            style={styleConfig?.ThanksPopup}
+            style={{
+              background:
+                styleConfig?.ThanksPopup?.background ||
+                themeConfig?.backgroundColor,
+              fontFamily: themeConfig?.fontFamily,
+            }}
           >
             <div className="gamified-pop-up-cancel-btn-cont">
               <div>
-                <div onClick={() => setThanksPopup((prev) => !prev)}>
-                  <img src={CancelButton} alt="" />
+                <div
+                  onClick={() => {
+                    GeneralFunctions.fireTrackingEvent(
+                      "quest_gamifiedquiz_feedback_close_button_clicked",
+                      "gamifiedquiz_offline"
+                    );
+                    setGamifiedQuiz(false);
+                    setThanksPopup(false);
+                  }}
+                  style={{
+                    background: styleConfig?.ThanksPopUpFooter?.background,
+                  }}
+                >
+                  {CancelButton(styleConfig?.IconColor?.color)}
                 </div>
               </div>
             </div>
@@ -592,26 +752,43 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                   style={{
                     color:
                       styleConfig?.ThanksPopupHeading?.color ||
+                      themeConfig?.primaryColor ||
                       "var(--Neutral-Black-400, #2C2C2C)",
+                    fontFamily: themeConfig?.fontFamily,
                   }}
                 >
-                  {popUpHead}
+                  {feedbackContent?.FeedbackHeading || "Feedback Submitted"}
                 </div>
                 <div
                   className="pop-up-message-para"
                   style={{
                     color:
                       styleConfig?.ThanksPopupDescription?.color ||
+                      themeConfig?.secondaryColor ||
                       "var(--Neutral-Black-100, #939393)",
+                    fontFamily: themeConfig?.fontFamily,
                   }}
                 >
-                  {popUpMessage}
+                  {feedbackContent?.FeedbackDescription ||
+                    "Thanks for submitting your feedback with us. We appreciate your review and will assure you to surely consider them"}
                 </div>
               </div>
               <div
                 className="goto-home"
-                style={styleConfig?.ThanksPopUpGotoHome}
-                onClick={() => setThanksPopup((prev) => !prev)}
+                style={{
+                  borderColor:
+                    styleConfig?.ThanksPopUpGotoHome?.borderColor ||
+                    themeConfig?.borderColor,
+                  background: styleConfig?.ThanksPopUpGotoHome?.background,
+                  color: styleConfig?.ThanksPopUpGotoHome?.color,
+                }}
+                onClick={() => {
+                  GeneralFunctions.fireTrackingEvent(
+                    "quest_gamifiedquiz_feedback_gotohome_button_clicked",
+                    "gamifiedquiz"
+                  );
+                  setThanksPopup((prev) => !prev);
+                }}
               >
                 Go to home!
               </div>
@@ -620,7 +797,13 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
             {thanksPopUpFooter ? (
               <div
                 className="gamified-quiz-footer-section"
-                style={styleConfig?.ThanksPopUpFooter}
+                style={{
+                  background: styleConfig?.ThanksPopUpFooter?.background,
+                  color:
+                    styleConfig?.ThanksPopUpFooter?.color ||
+                    themeConfig?.secondaryColor,
+                  fontFamily: themeConfig?.fontFamily,
+                }}
               >
                 Powered by Quest Labs
               </div>
@@ -630,17 +813,25 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
           </div>
         </div>
       ) : null}
-      {gamifiedQuiz ? (
+
+      {gamifiedQuiz && !thanksPopup ? (
         <div className="upper-div">
           <div className="gamified-quiz">
             <div
               className="gamified-quiz-header-section"
-              style={styleConfig?.ComponentTheme}
+              style={{
+                background:
+                  styleConfig?.Form?.background || themeConfig?.backgroundColor,
+              }}
             >
               <div className="gamified-quiz-title-section">
                 <div
                   className="gamified-quiz-title-head"
-                  style={styleConfig?.Heading}
+                  style={{
+                    color:
+                      styleConfig?.Heading?.color || themeConfig?.primaryColor,
+                    fontFamily: themeConfig?.fontFamily,
+                  }}
                 >
                   {heading ? heading : "Choose an option"}
                 </div>
@@ -660,171 +851,334 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                       width: "100%",
                       display: "flex",
                       flexDirection: "column",
-                      // gap: "20px"
                     }}
                   >
                     <div className="heading-subheading-container">
-                      <div className="quest-title">
-                        {sectionSubHeading[sectionNo]}
+                      <div
+                        className="quest-title"
+                        style={{
+                          color:
+                            styleConfig?.SubHeading?.color ||
+                            themeConfig?.secondaryColor,
+                          fontFamily: themeConfig?.fontFamily,
+                          paddingBottom: "4px",
+                        }}
+                      >
+                        {sectionSubHeading.length > 0
+                          ? sectionSubHeading[sectionNo]
+                          : "Fill out the Details"}
                       </div>
-                      {sectionHeading[sectionNo] ? (
-                        <div className="question" style={styleConfig?.Question}>
-                          {sectionHeading[sectionNo]}
+                      {sectionHeading?.length > 0 &&
+                      sectionHeading[sectionNo] ? (
+                        <div
+                          className="question"
+                          style={{
+                            color:
+                              styleConfig?.Question?.color ||
+                              themeConfig?.primaryColor,
+                            fontFamily: themeConfig?.fontFamily,
+                          }}
+                        >
+                          {sectionHeading[sectionNo] || "Fill out the Details"}
                         </div>
-                      ) : null}
+                      ) : (
+                        <div
+                          className="question"
+                          style={{
+                            color:
+                              styleConfig?.Question?.color ||
+                              themeConfig?.primaryColor,
+                            fontFamily: themeConfig?.fontFamily,
+                          }}
+                        >
+                          {sectionHeading[sectionNo] || "Fill out the Details"}
+                        </div>
+                      )}
                     </div>
 
-                    {questionSections[sectionNo].map((question) => {
-                      question = question - 1;
-                      const value: FormData = formdata[question];
-                      const index: number = question;
+                    {questionSections?.length > 0
+                      ? questionSections[sectionNo].map((question) => {
+                          question = question - 1;
+                          const value: FormData = formdata[question];
+                          const index: number = question;
 
-                      return (
-                        <div className="gamified-quiz-criteria-div" key={index}>
-                          <div className="gamified-quiz-header-ques-title-cont">
-                            <div className="question-input-cont">
-                              {formdata[question]?.type ===
-                                "USER_INPUT_SINGLE_CHOICE" ||
-                              formdata[question]?.type ===
-                                "USER_INPUT_MULTI_CHOICE" ? (
-                                <div
-                                  className="question"
-                                  style={styleConfig?.Question}
-                                >
-                                  {formdata[question]?.question}
-                                  {formdata[question]?.required ? "*" : ""}
+                          return (
+                            <div
+                              className="gamified-quiz-criteria-div"
+                              key={index}
+                            >
+                              <div className="gamified-quiz-header-ques-title-cont">
+                                <div className="question-input-cont">
+                                  {formdata[question]?.type ===
+                                    "USER_INPUT_SINGLE_CHOICE" ||
+                                  formdata[question]?.type ===
+                                    "USER_INPUT_MULTI_CHOICE" ? (
+                                    <div
+                                      className="question"
+                                      style={{
+                                        color:
+                                          styleConfig?.Question?.color ||
+                                          themeConfig?.primaryColor,
+                                        fontFamily: themeConfig?.fontFamily,
+                                      }}
+                                    >
+                                      {formdata[question]?.question}
+                                      {`${
+                                        formdata[question]?.required ? "*" : ""
+                                      }`}
+                                    </div>
+                                  ) : null}
+
+                                  {formdata[question]?.type ===
+                                  "USER_INPUT_TEXT" ? (
+                                    normalInput(
+                                      value.question,
+                                      value.required || false,
+                                      value.criteriaId,
+                                      index,
+                                      value.placeholder || value.question,
+                                      "text"
+                                    )
+                                  ) : formdata[question]?.type ===
+                                    "USER_INPUT_EMAIL" ? (
+                                    normalInput(
+                                      value.question,
+                                      value.required || false,
+                                      value.criteriaId,
+                                      index,
+                                      value.placeholder || value.question,
+                                      "email"
+                                    )
+                                  ) : formdata[question]?.type ===
+                                    "USER_INPUT_PHONE" ? (
+                                    normalInput(
+                                      value.question,
+                                      value.required || false,
+                                      value.criteriaId,
+                                      index,
+                                      value.placeholder || value.question,
+                                      "number"
+                                    )
+                                  ) : formdata[question]?.type ===
+                                    "USER_INPUT_DATE" ? (
+                                    dateInput(
+                                      value.question,
+                                      value.required || false,
+                                      value.criteriaId,
+                                      index,
+                                      value.placeholder || value.question
+                                    )
+                                  ) : formdata[question]?.type ===
+                                    "USER_INPUT_TEXTAREA" ? (
+                                    textAreaInput(
+                                      value.question,
+                                      value.required || false,
+                                      value.criteriaId,
+                                      index,
+                                      value.placeholder || value.question
+                                    )
+                                  ) : formdata[question]?.type ===
+                                    "USER_INPUT_MULTI_CHOICE" ? (
+                                    <MultiChoice value={value} />
+                                  ) : formdata[question]?.type ===
+                                    "USER_INPUT_SINGLE_CHOICE" ? (
+                                    <SingleChoice value={value} />
+                                  ) : (
+                                    ""
+                                  )}
                                 </div>
-                              ) : null}
-
-                              {formdata[question]?.type ===
-                              "USER_INPUT_TEXT" ? (
-                                normalInput(
-                                  value.question,
-                                  value.required || false,
-                                  value.criteriaId,
-                                  index,
-                                  value.placeholder || value.question,
-                                  "text"
-                                )
-                              ) : formdata[question]?.type ===
-                                "USER_INPUT_EMAIL" ? (
-                                normalInput(
-                                  value.question,
-                                  value.required || false,
-                                  value.criteriaId,
-                                  index,
-                                  value.placeholder || value.question,
-                                  "email"
-                                )
-                              ) : formdata[question]?.type ===
-                                "USER_INPUT_PHONE" ? (
-                                normalInput(
-                                  value.question,
-                                  value.required || false,
-                                  value.criteriaId,
-                                  index,
-                                  value.placeholder || value.question,
-                                  "number"
-                                )
-                              ) : formdata[question]?.type ===
-                                "USER_INPUT_DATE" ? (
-                                dateInput(
-                                  value.question,
-                                  value.required || false,
-                                  value.criteriaId,
-                                  index,
-                                  value.placeholder || value.question
-                                )
-                              ) : formdata[question]?.type ===
-                                "USER_INPUT_TEXTAREA" ? (
-                                textAreaInput(
-                                  value.question,
-                                  value.required || false,
-                                  value.criteriaId,
-                                  index,
-                                  value.placeholder || value.question
-                                )
-                              ) : formdata[question]?.type ===
-                                "USER_INPUT_MULTI_CHOICE" ? (
-                                <MultiChoice value={value} />
-                              ) : formdata[question]?.type ===
-                                "USER_INPUT_SINGLE_CHOICE" ? (
-                                <SingleChoice value={value} />
-                              ) : (
-                                ""
-                              )}
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                      );
-                    })}
+                          );
+                        })
+                      : QuestionArray}
+
+                    {}
                   </div>
 
-                  <div className="gamified-quiz-header-ques-cancel-next">
-                    <button
-                      onClick={() => {
-                        if (sectionNo > 0) {
-                          setSectionNo(sectionNo - 1);
-                        }
-                      }}
-                      type="button"
-                      className="cancel-btn"
-                      style={{
-                        background:
-                          styleConfig?.SecondaryButton?.background ||
-                          "var(--Neutral-White-100, #FFF)",
-                        color:
-                          styleConfig?.SecondaryButton?.color ||
-                          "var(--Neutral-Black-400, #2C2C2C)",
-                      }}
-                    >
-                      {sectionNo > 0 ? "Previous" : "Cancel"}
-                    </button>
+                  {questionSections?.length > 0 ? (
+                    <div className="gamified-quiz-header-ques-cancel-next">
+                      <button
+                        onClick={() => {
+                          if (sectionNo > 0) {
+                            setSectionNo(sectionNo - 1);
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_gamifiedquiz_offline_previous_section_button_clicked",
+                              "gamifiedquiz_offline"
+                            );
+                          } else {
+                            setGamifiedQuiz(false);
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_gamifiedquiz_offline_cancel_button_clicked",
+                              "gamifiedquiz"
+                            );
+                          }
+                        }}
+                        type="button"
+                        className="cancel-btn"
+                        style={{
+                          background:
+                            styleConfig?.SecondaryButton?.background ||
+                            "var(--Neutral-White-100, #FFF)",
+                          color:
+                            styleConfig?.SecondaryButton?.color ||
+                            "var(--Neutral-Black-400, #2C2C2C)",
+                          fontFamily: themeConfig?.fontFamily,
+                          borderColor:
+                            styleConfig?.SecondaryButton?.borderColor,
+                        }}
+                      >
+                        {sectionNo > 0 ? "Previous" : "Cancel"}
+                      </button>
 
-                    <PrimaryButton
-                      type={"button"}
-                      onClick={() => {
-                        const totalSections = Object.keys(questionSections);
+                      <PrimaryButton
+                        type={"button"}
+                        onClick={() => {
+                          const totalSections = Object.keys(questionSections);
 
-                        if (sectionNo < totalSections.length - 1) {
-                          setSectionNo(sectionNo + 1);
-                        } else if (sectionNo >= totalSections.length - 1) {
-                          formSubmitHandler();
-                        }
-                      }}
-                      disabled={!goToNextSection}
-                      className="q-onb-main-btn2"
-                      style={{
-                        font: "",
-                        fontFamily: "Figtree",
-                        background:
-                          styleConfig?.PrimaryButton?.background ||
-                          "linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%)",
-                        color:
-                          styleConfig?.PrimaryButton?.color ||
-                          "var(--Neutral-White-100, #FFF)",
+                          if (sectionNo < totalSections.length - 1) {
+                            setSectionNo(sectionNo + 1);
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_gamifiedquiz_offline_next_section_button_clicked",
+                              "gamifiedquiz_offline"
+                            );
+                          } else if (sectionNo >= totalSections.length - 1) {
+                            formSubmitHandler();
+                          }
+                        }}
+                        disabled={!goToNextSection}
+                        className="q-onb-main-btn2"
+                        style={{
+                          font: "",
+                          fontFamily: "Figtree",
+                          background:
+                            styleConfig?.PrimaryButton?.background ||
+                            themeConfig?.buttonColor ||
+                            "linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%)",
+                          color:
+                            styleConfig?.PrimaryButton?.color ||
+                            "var(--Neutral-White-100, #FFF)",
 
-                        border: "1.5px solid #D1ACFF",
-                        fontStyle: "normal",
-                        fontWeight: "600",
+                          border: `1.5px solid ${
+                            styleConfig?.PrimaryButton?.borderColor
+                              ? styleConfig?.PrimaryButton?.borderColor
+                              : themeConfig?.buttonColor
+                              ? themeConfig?.buttonColor
+                              : "#D1ACFF"
+                          }`,
+                          fontStyle: "normal",
+                          fontWeight: "600",
+                          lineHeight: "20px",
+                        }}
+                      >
+                        {sectionNo >= questionSections.length - 1
+                          ? "Submit"
+                          : "Next"}
+                      </PrimaryButton>
+                    </div>
+                  ) : (
+                    <div className="gamified-quiz-header-ques-cancel-next">
+                      <button
+                        onClick={() => {
+                          if (currentSection > 0) {
+                            setCurrentSection(currentSection - 1);
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_gamifiedquiz_offline_previous_section_button_clicked",
+                              "gamifiedquiz_offline"
+                            );
+                          } else {
+                            setGamifiedQuiz(false);
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_gamifiedquiz_offline_cancel_button_clicked",
+                              "gamifiedquiz_offline"
+                            );
+                          }
+                        }}
+                        type="button"
+                        className="cancel-btn"
+                        style={{
+                          background:
+                            styleConfig?.SecondaryButton?.background ||
+                            "var(--Neutral-White-100, #FFF)",
+                          color:
+                            styleConfig?.SecondaryButton?.color ||
+                            "var(--Neutral-Black-400, #2C2C2C)",
+                          fontFamily: themeConfig?.fontFamily,
+                          borderColor:
+                            styleConfig?.SecondaryButton?.borderColor ||
+                            themeConfig?.borderColor,
+                        }}
+                      >
+                        {sectionNo > 0 ? "Previous" : "Cancel"}
+                      </button>
 
-                        lineHeight: "20px",
-                      }}
-                    >
-                      {sectionNo >= questionSections.length - 1
-                        ? "Submit"
-                        : "Next"}
-                    </PrimaryButton>
-                  </div>
+                      <PrimaryButton
+                        type={"button"}
+                        onClick={() => {
+                          if (
+                            currentSection <
+                            totalSectionsPerSectionQuestion - 1
+                          ) {
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_gamifiedquiz_offline_next_section_button_clicked",
+                              "gamifiedquiz_offline"
+                            );
+                            setCurrentSection(currentSection + 1);
+                          } else if (
+                            currentSection >=
+                            totalSectionsPerSectionQuestion - 1
+                          ) {
+                            formSubmitHandler();
+                          }
+                        }}
+                        disabled={!goToNextSection}
+                        className="q-onb-main-btn2"
+                        style={{
+                          font: "",
+                          fontFamily: "Figtree",
+                          background:
+                            styleConfig?.PrimaryButton?.background ||
+                            themeConfig?.buttonColor ||
+                            "linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%)",
+                          color:
+                            styleConfig?.PrimaryButton?.color ||
+                            "var(--Neutral-White-100, #FFF)",
+
+                          border: `1.5px solid ${
+                            styleConfig?.PrimaryButton?.borderColor
+                              ? styleConfig?.PrimaryButton?.borderColor
+                              : themeConfig?.buttonColor
+                              ? themeConfig?.buttonColor
+                              : "#D1ACFF"
+                          }`,
+                          fontStyle: "normal",
+                          fontWeight: "600",
+                          lineHeight: "20px",
+                        }}
+                      >
+                        {currentSection >= totalSectionsPerSectionQuestion - 1
+                          ? "Submit"
+                          : "Next"}
+                      </PrimaryButton>
+                    </div>
+                  )}
                 </form>
               </div>
             </div>
+
             {showFooter ? (
               <div
                 className="gamified-quiz-footer-section"
                 style={styleConfig?.Footer}
               >
-                <div className="footer-content" style={styleConfig?.FooterText}>
+                <div
+                  className="footer-content"
+                  style={{
+                    color:
+                      styleConfig?.Footer?.color || themeConfig?.secondaryColor,
+                    fontFamily: themeConfig?.fontFamily,
+                  }}
+                >
                   Powered by Quest Labs
                 </div>
               </div>

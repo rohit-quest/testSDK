@@ -170,7 +170,7 @@ function App() {
         {/* <OnBoardingPreview online={true} /> */}
 
 
-        {/* <GetStartedPreview  online={true} />   */}
+        <GetStartedPreview online={false} />
 
         {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>

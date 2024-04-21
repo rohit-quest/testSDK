@@ -10,90 +10,89 @@ export const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMjg1MTMxMywiZXhwIjoxNzEzNDU2MTEzfQ.gDs6fRxpZ0rQ_9MjlJoa3glPIyhtELQ5G0FTTUghWK4";
 export const userId = "u-8268f5e1-f5a1-440c-a333-0f5578a73847";
 
-export default function FeedbackWorkflowPreview({
-  online = false,
-}: {
-  online?: boolean;
-}) {
-  if (online)
-    return (
-      <QuestProvider
-        apiKey={apiKey}
-        apiSecret="s-7462f377-2ce4-4593-a907-3a2a00cdf951be06358a-d95d-4576-b3b4-a07dda2dab36"
-        entityId={entityId}
-        featureFlags={{}}
-        apiType="STAGING"
-        themeConfig={
-          {
-            // primaryColor: "red",
-            // fontFamily:"cursive"
-            // backgroundColor:'red',
-            // primaryColor:'white'
-          }
-        }
-      >
-        <FeedbackWorkflow
-          userId={userId}
-          token={token}
-          showFooter={true}
-          
-          questIds={[
-            "q-8801bc27-8512-46d5-8dfe-086790555614",
-            "q-891d36bb-77cf-462c-8a83-5aef542334b3",
-            "q-36954eed-0a50-4260-952a-08e642d61a2c",
-            "q-6061847a-2848-4849-a374-a1acd6c9a482",
-          ]}
-          GeneralFeedback={{
-            heading: "General Fee",
-            description: "Give general feedsdasdasdback on this page",
-            formHeading: "General Feedbackasddffd",
-            formDescription: "Welcome back,sdfsdf Please complete your details",
-            iconUrl:
-              "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
-          }}
-          
-          RequestFeature={{
-            heading: "Request a Featureqwqewqewqe",
-            description: "How can we msdsfdsdfake it better",
-            formHeading: "Request a Feature",
-            iconUrl:
-              "https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg",
-          }}
-          ReportBug={{
-            heading: "Reportasdasd a Bug",
-            description: "Describazsdasde your issue",
-            formHeading: "Report wewea Bug",
-            formDescription: "Describe yosddffdur issue",
-            iconUrl:
-              "https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg",
-          }}
-          ContactUs={{
-            heading: "Contacasasdt us",
-            description: "Invite oasasdasdher admins and moderators",
-            iconUrl:
-              "https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg",
-          }}
-          contactUrl="https://calendly.com/sriya-persana/30min"
-          // showPoweredBy={false}
-          styleConfig={{
-              ThanksPopup: {
-                  Style: {
-                      background: "red",
-                      color: "white",
-                      width: "300px",
-                  },
-              },
-             
-          }}
-          // // footerBackgroundColor='red'
-          // contactUrl="https://calendly.com/sriya-persana/30min"
-          isOpen={true}
-          // // onClose={() => setIsOpen(!isOpen)}
-          // uniqueUserId="soumitra.petbindhi+25@gmail.com"
-          // uniqueEmailId="soumitra.petbindhi+25@gmail.com"
-          
+export default function FeedbackWorkflowPreview({ online = false }: { online?: boolean }) {
 
-          
+    if (online)
+        return (<QuestProvider
+            apiKey={apiKey}
+            apiSecret="s-7462f377-2ce4-4593-a907-3a2a00cdf951be06358a-d95d-4576-b3b4-a07dda2dab36"
+            entityId={entityId}
+            featureFlags={{}}
+            apiType="PRODUCTION"
+            themeConfig={{
+                // primaryColor: "red",
+                // fontFamily:"cursive"
+                // backgroundColor:'red',
+                // primaryColor:'white'
+            }}
+        >
+
+            <FeedbackWorkflow
+                userId={userId}
+                token={token}
+                showFooter={true}
+                questIds={[
+                    'q-general-feedback',
+                    'q-report-a-bug',
+                    'q-request-a-feature',
+                    'q-contact-us',
+                ]}
+                 GeneralFeedback={{
+                    heading: "General Fee",
+                    description: "Give general feedsdasdasdback on this page",
+                    formHeading: "General Feedbackasddffd",
+                    formDescription: "Welcome back,sdfsdf Please complete your details",
+                    iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+                }}
+                RequestFeature={{
+                    heading: "Request a Featureqwqewqewqe",
+                    description: "How can we msdsfdsdfake it better",
+                    formHeading: "Request a Feature",
+                    iconUrl:'https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg'
+                }}
+                ReportBug={{
+                    heading: "Reportasdasd a Bug",
+                    description: "Describazsdasde your issue",
+                    formHeading: "Report wewea Bug",
+                    formDescription: "Describe yosddffdur issue",
+                    iconUrl:'https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg'
+                }}
+                ContactUs={{
+                    heading: "Contacasasdt us",
+                    description: "Invite oasasdasdher admins and moderators",
+                    iconUrl:'https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg'
+                }}
+                contactUrl="https://calendly.com/sriya-persana/30min"
+
+                // showPoweredBy={false}
+                // styleConfig={{
+                //     Form: {
+
+                //     },
+                //     listHover :{
+                //         iconColor:'blue',
+                //         iconBackground:'grey',
+                //         background:'yellow',
+                //         Heading:'green',
+                //         Description:'red'
+                //     },
+                //     // ThanksPopUp:{backgroundColor:"red"}
+                //     // Description: { color: 'red' },
+                //     // listDescription:{color:'yellow'}
+                //     // Heading: { color: 'red' },
+                //     // listHeading: { color: 'blue' }
+                // }}
+                // // footerBackgroundColor='red'
+                // contactUrl="https://calendly.com/sriya-persana/30min"
+                isOpen={true}
+                // // onClose={() => setIsOpen(!isOpen)}
+                // uniqueUserId="soumitra.petbindhi+25@gmail.com"
+                // uniqueEmailId="soumitra.petbindhi+25@gmail.com"
+                
+ 
+            />
+
+        </QuestProvider>)
         />
       </QuestProvider>
     );

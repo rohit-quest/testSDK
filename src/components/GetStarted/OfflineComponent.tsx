@@ -47,6 +47,7 @@ type offlineGetStartedProps = {
   headingText?: string;
   descriptionText?: string;
   autoHide?: boolean;
+  isImageOpen?: boolean;
   showProgressBar?: boolean;
   completedButtonColor?: string;
   completedButtonBackgroundColor?: string;
@@ -67,17 +68,24 @@ type offlineGetStartedProps = {
     Card?: CSSProperties;
     Topbar?: CSSProperties;
     ProgressBar?: {
-      barColor?: string,
-      ProgressText?: CSSProperties
-    }
-    Icon?: CSSProperties
+      barColor?: string;
+      ProgressText?: CSSProperties;
+    };
+    Icon?: CSSProperties;
     Arrow?: {
-      Background?: string,
-      IconColor?: string,
-      CompletedBackground?: string,
-      CompletedIconColor?: string
-    }
-
+      Background?: string;
+      IconColor?: string;
+      CompletedBackground?: string;
+      CompletedIconColor?: string;
+    };
+    CardContainer?: CSSProperties;
+    IsImageOpen?: {
+      ContainerDiv?: CSSProperties;
+      ImageContainer?: {
+        ImageContainerProperties?: CSSProperties;
+        Image?: CSSProperties;
+      };
+    };
   };
   offlineData: offlineData[];
 };
@@ -96,25 +104,28 @@ function OfflineGetStarted({
   styleConfig,
   offlineData,
   ButtonType = "Arrow",
-  onLinkTrigger = (url: string, index: number) => { window.location.href = url },
+  onLinkTrigger = (url: string, index: number) => {
+    window.location.href = url;
+  },
+  isImageOpen,
 }: offlineGetStartedProps) {
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [allCriteriaCompleted, setAllCriteriaCompleted] =
     useState<boolean>(false);
   // const [criteriaSubmit, setCriteriaSubmit] = useState<string[]>([])
-  const { themeConfig,apiType } = useContext(QuestContext.Context);
+  const { themeConfig, apiType } = useContext(QuestContext.Context);
   const [dropdowns, setDropdown] = useState<Array<boolean>>([]);
   const [data, setData] = useState(offlineData);
 
   const completedPercentage = data?.length
     ? (data?.reduce((a, b) => a + (b.completed ? 1 : 0), 0) * 100) /
-    data?.length
+      data?.length
     : 0;
   useEffect(() => {
     offlineData?.length && setData(offlineData);
   }, [offlineData]);
 
-  let GeneralFunctions = new General('mixpanel', apiType);
+  let GeneralFunctions = new General("mixpanel", apiType);
 
   const handleCriteriaClick = (criteriaId: string | undefined, url: string) => {
     const update = data.map((item, index) => {
@@ -128,7 +139,10 @@ function OfflineGetStarted({
   };
 
   useEffect(() => {
-    GeneralFunctions.fireTrackingEvent("quest_get_started_offline_loaded", "get_started_offline");
+    GeneralFunctions.fireTrackingEvent(
+      "quest_get_started_offline_loaded",
+      "get_started_offline"
+    );
     setDropdown(new Array(offlineData.length).fill(false));
   }, []);
 
@@ -189,7 +203,11 @@ function OfflineGetStarted({
         className="gs-cards-container"
         style={{
           padding: showProgressBar ? "0px 20px 20px 20px" : "20px",
-          gap: template == 2 ? "0px" : "16px",
+          gap:
+            template == 2
+              ? styleConfig?.CardContainer?.gap || "0px"
+              : styleConfig?.CardContainer?.gap || "16px",
+          ...styleConfig?.CardContainer,
         }}
       >
         {(autoHide === true ? !allCriteriaCompleted : true) &&
@@ -202,22 +220,51 @@ function OfflineGetStarted({
                   ...styleConfig?.Card,
                 }}
                 onClick={() => {
-                  GeneralFunctions.fireTrackingEvent("quest_get_started_offline_link_clicked", "get_started_offline");
+                  GeneralFunctions.fireTrackingEvent(
+                    "quest_get_started_offline_link_clicked",
+                    "get_started_offline"
+                  );
                   setDropdown((prev) =>
                     prev.map((e, index) => (i === index ? !e : e))
-                  )
-                }
-                }
+                  );
+                }}
                 className="gs-single-card-dropDown"
               >
                 <div className="gs_card_body_dropDown">
-                  <div className="gs_card_body_image" style={{ ...styleConfig?.Icon }}>
-                    <img
-                      className="gs-card-icon"
-                      src={e.imageUrl || (!!iconUrls.length ? iconUrls?.[i] : "") || questLogo}
-                      alt=""
-                    />
-                  </div>
+                  {!dropdowns[i] ? (
+                    <div
+                      className="gs_card_body_image"
+                      style={{ ...styleConfig?.Icon }}
+                    >
+                      <img
+                        className="gs-card-icon"
+                        src={
+                          e.imageUrl ||
+                          (!!iconUrls.length ? iconUrls?.[i] : "") ||
+                          questLogo
+                        }
+                        alt=""
+                      />
+                    </div>
+                  ) : !isImageOpen ? (
+                    <div
+                      className="gs_card_body_image"
+                      style={{ ...styleConfig?.Icon }}
+                    >
+                      <img
+                        className="gs-card-icon"
+                        src={
+                          e.imageUrl ||
+                          (!!iconUrls.length ? iconUrls?.[i] : "") ||
+                          questLogo
+                        }
+                        alt=""
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
+
                   <div className="gs-card-text">
                     <div
                       style={{
@@ -244,25 +291,49 @@ function OfflineGetStarted({
                     {
                       <div className="gs-card-img-button">
                         {e.completed ? (
-                          <div className="q_gt_arrow-completed" style={{ background: styleConfig?.Arrow?.CompletedBackground }}>
+                          <div
+                            className="q_gt_arrow-completed"
+                            style={{
+                              background:
+                                styleConfig?.Arrow?.CompletedBackground,
+                            }}
+                          >
                             <GetStartedSvgs
                               type={"greenCheck"}
-                              color={styleConfig?.Arrow?.CompletedIconColor || "#098849"}
+                              color={
+                                styleConfig?.Arrow?.CompletedIconColor ||
+                                "#098849"
+                              }
                             />
                           </div>
                         ) : (
-                          <div className="q_gt_arrow" style={{ background: styleConfig?.Arrow?.Background }}>
+                          <div
+                            className="q_gt_arrow"
+                            style={{
+                              background: styleConfig?.Arrow?.Background,
+                            }}
+                          >
                             {dropdowns[i] ? (
                               <GetStartedSvgs
                                 type={"upArrow"}
-                                color={styleConfig?.Arrow?.IconColor || arrowColor}
+                                color={
+                                  styleConfig?.Arrow?.IconColor || arrowColor
+                                }
                               />
                             ) : e.completed ? (
-                              <GetStartedSvgs type={"greenCheck"} color={styleConfig?.Arrow?.CompletedIconColor || "#098849"} />
+                              <GetStartedSvgs
+                                type={"greenCheck"}
+                                color={
+                                  styleConfig?.Arrow?.CompletedIconColor ||
+                                  "#098849"
+                                }
+                              />
                             ) : (
                               <GetStartedSvgs
                                 type={"downArrowIcon"}
-                                color={styleConfig?.Arrow?.IconColor || arrowColor}
+                                color={
+                                  styleConfig?.Arrow?.IconColor || arrowColor
+                                }
                               />
                             )}
                           </div>
@@ -273,6 +344,37 @@ function OfflineGetStarted({
                 </div>
                 {dropdowns[i] && (
                   <div className="gs_card_dropdown">
+                    {isImageOpen && (
+                      <div
+                        className="card-drop-down-cont"
+                        style={{
+                          ...styleConfig?.IsImageOpen?.ContainerDiv,
+                        }}
+                      >
+                        <div
+                          style={{
+                            ...styleConfig?.IsImageOpen?.ImageContainer
+                              ?.ImageContainerProperties,
+                          }}
+                        >
+                          {/* <img src={e.imageUrl} alt="" /> */}
+                          <img
+                            src={
+                              e.imageUrl ||
+                              (!!iconUrls.length ? iconUrls?.[i] : "") ||
+                              questLogo
+                            }
+                            alt=""
+                            style={{
+                              ...styleConfig?.IsImageOpen?.ImageContainer
+                                ?.Image,
+                            }}
+                          />
+                          {/* hi */}
+                        </div>
+                        {/* hi */}
+                      </div>
+                    )}
                     <div
                       className="gs_drop_desc"
                       style={{
@@ -288,12 +390,14 @@ function OfflineGetStarted({
                         className={"gs_start_btn"}
                         children={e.btn2 || "Start Now"}
                         onClick={(event) => {
-                          GeneralFunctions.fireTrackingEvent("quest_get_started_offline_primary_button_clicked", "get_started_offline");
-                          event.stopPropagation()
+                          GeneralFunctions.fireTrackingEvent(
+                            "quest_get_started_offline_primary_button_clicked",
+                            "get_started_offline"
+                          );
+                          event.stopPropagation();
                           !(!allowMultiClick && e.completed) &&
-                            handleCriteriaClick(e.criteriaId, e.url)
-                        }
-                        }
+                            handleCriteriaClick(e.criteriaId, e.url);
+                        }}
                         disabled={!allowMultiClick && e.completed}
                         style={{
                           flex: "inherit",
@@ -311,8 +415,11 @@ function OfflineGetStarted({
                           width: "fit-content",
                         }}
                         onClick={() => {
-                          GeneralFunctions.fireTrackingEvent("quest_get_started_offline_secondary_button_clicked", "get_started_offline");
-                          window.open(e.url)
+                          GeneralFunctions.fireTrackingEvent(
+                            "quest_get_started_offline_secondary_button_clicked",
+                            "get_started_offline"
+                          );
+                          window.open(e.url);
                         }}
                         className="gs_visit_btn"
                         children={e.btn1 || "Visit Website"}
@@ -326,11 +433,13 @@ function OfflineGetStarted({
                 key={i}
                 className="gs-single-card"
                 onClick={() => {
-                  GeneralFunctions.fireTrackingEvent("quest_get_started_offline_link_clicked", "get_started_offline");
+                  GeneralFunctions.fireTrackingEvent(
+                    "quest_get_started_offline_link_clicked",
+                    "get_started_offline"
+                  );
                   !(!allowMultiClick && e.completed) &&
-                    handleCriteriaClick(e.criteriaId, e.url)
-                }
-                }
+                    handleCriteriaClick(e.criteriaId, e.url);
+                }}
               >
                 <div
                   className="gs_card_body"
@@ -340,11 +449,18 @@ function OfflineGetStarted({
                     ...styleConfig?.Card,
                   }}
                 >
-                  <div className="gs_card_body_image" style={{ ...styleConfig?.Icon }}>
+                  <div
+                    className="gs_card_body_image"
+                    style={{ ...styleConfig?.Icon }}
+                  >
                     <img
                       className="gs-card-icon"
                       width="24px"
-                      src={e.imageUrl || (!!iconUrls.length ? iconUrls?.[i] : "") || questLogo}
+                      src={
+                        e.imageUrl ||
+                        (!!iconUrls.length ? iconUrls?.[i] : "") ||
+                        questLogo
+                      }
                       alt=""
                     />
                   </div>
@@ -382,8 +498,13 @@ function OfflineGetStarted({
                             ...styleConfig?.SecondaryButton,
                           }}
                           onClick={(event) => {
-                            GeneralFunctions.fireTrackingEvent("quest_get_started_offline_secondary_button_clicked", "get_started_offline");
-                            event.stopPropagation(); window.open(e.btn1Link); }}
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_get_started_offline_secondary_button_clicked",
+                              "get_started_offline"
+                            );
+                            event.stopPropagation();
+                            window.open(e.btn1Link);
+                          }}
                           className="gs_visit_btn gs_tempalate1_btn"
                           children={e.btn1 || "Visit Website"}
                         />
@@ -391,7 +512,10 @@ function OfflineGetStarted({
                           className={"gs_start_btn"}
                           children={e.btn2 || "Start Now"}
                           onClick={(event) => {
-                            GeneralFunctions.fireTrackingEvent("quest_get_started_offline_primary_button_clicked", "get_started_offline");
+                            GeneralFunctions.fireTrackingEvent(
+                              "quest_get_started_offline_primary_button_clicked",
+                              "get_started_offline"
+                            );
                             event.stopPropagation();
                             !(!allowMultiClick && e.completed) &&
                               handleCriteriaClick(e.criteriaId, e.url);
@@ -409,26 +533,47 @@ function OfflineGetStarted({
                       </div>
                     ) : (
                       <div className="gs-card-img-button">
-                        <div className="q_gt_arrow-completed" style={{ background: styleConfig?.Arrow?.CompletedBackground }}>
-                          <GetStartedSvgs type={"greenCheck"}  color={styleConfig?.Arrow?.CompletedIconColor || "#098849"} />
+                        <div
+                          className="q_gt_arrow-completed"
+                          style={{
+                            background: styleConfig?.Arrow?.CompletedBackground,
+                          }}
+                        >
+                          <GetStartedSvgs
+                            type={"greenCheck"}
+                            color={
+                              styleConfig?.Arrow?.CompletedIconColor ||
+                              "#098849"
+                            }
+                          />
                         </div>
                       </div>
-
                     ))}
                   {ButtonType === "Arrow" && (
                     <div className="gs-card-img-button">
                       {e.completed ? (
-                        <div className="q_gt_arrow-completed" style={{ background: styleConfig?.Arrow?.CompletedBackground }}>
+                        <div
+                          className="q_gt_arrow-completed"
+                          style={{
+                            background: styleConfig?.Arrow?.CompletedBackground,
+                          }}
+                        >
                           <GetStartedSvgs
                             type={"greenCheck"}
-                            color={styleConfig?.Arrow?.CompletedIconColor || "#098849"}
+                            color={
+                              styleConfig?.Arrow?.CompletedIconColor ||
+                              "#098849"
+                            }
                           />
                         </div>
                       ) : (
-                        <div className="q_gt_arrow" style={{ background: styleConfig?.Arrow?.Background }}>
+                        <div
+                          className="q_gt_arrow"
+                          style={{ background: styleConfig?.Arrow?.Background }}
+                        >
                           <GetStartedSvgs
                             type={"arrowRight"}
-                            color={ styleConfig?.Arrow?.IconColor || arrowColor }
+                            color={styleConfig?.Arrow?.IconColor || arrowColor}
                           />
                         </div>
                       )}
