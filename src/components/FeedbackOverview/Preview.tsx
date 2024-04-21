@@ -92,8 +92,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
  
             />
 
-        </QuestProvider>)
-        />
+
       </QuestProvider>
     );
 
