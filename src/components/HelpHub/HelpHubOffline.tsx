@@ -40,10 +40,10 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
   const [selectedSection, setSelectedSection] = useState("Home");
   const [helpHub, setHelpHub] = useState(true);
-  const [parentQuest, setParentQuest] = useState<QuestTypes>();
-  const [chieldQuestCriteria, setChieldQuestCriteria] = useState<
-    QuestCriteriaWithStatusType[][]
-  >([]);
+  // const [parentQuest, setParentQuest] = useState<QuestTypes>();
+  // const [chieldQuestCriteria, setChieldQuestCriteria] = useState<
+    // QuestCriteriaWithStatusType[][]
+  // >([]);
 
   const [claimStatusUpdates, setClaimStatusUpdates] = useState<string[]>([]);
   const [claimStatusTasks, setClaimStatusTasks] = useState<string[]>([]);
@@ -58,50 +58,22 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
   useEffect(() => {
     setTaskStatus(
       Math.ceil(
-        100 * (claimStatusTasks?.length / chieldQuestCriteria[3]?.length)
+        100 * (claimStatusTasks?.length / ChildQuest[3]?.length)
       )
     );
   }, [claimStatusTasks]);
 
-  const getOrCreateQuest = async () => {
-    let qId = questId || "q-default-helphub";
-    // let getResult = await getDefaultQuest(
-    //   BACKEND_URL,
-    //   entityId,
-    //   qId,
-    //   userId,
-    //   token,
-    //   apiKey
-    // );
-    // if (!getResult?.success) {
-    //   let createQuest = await createDefaultQuest(
-    //     BACKEND_URL,
-    //     entityId,
-    //     userId,
-    //     token,
-    //     apiKey
-    //   );
-    //   setParentQuest(createQuest?.parentQuest);
 
-    //   setChieldQuestCriteria(createQuest?.eligibilityCriterias);
-    // } else {
-    //   setParentQuest(getResult?.parentQuest);
-    //   setTaskData(getResult?.eligibilityCriterias[3]);
-    //   setUpdateData(getResult?.eligibilityCriterias[2]);
-    //   setChieldQuestCriteria(getResult?.eligibilityCriterias);
-    // }
-  };
 
-  useEffect(() => {
-    setParentQuest(ParentQuest);
-    setChieldQuestCriteria(ChildQuest);
-    getOrCreateQuest();
-  }, []);
+  // useEffect(() => {
+  //   setParentQuest(ParentQuest);
+  //   setChieldQuestCriteria(ChildQuest);
+  // }, []);
 
   useEffect(() => {
     let arr = taskData
       ?.filter((ele: QuestCriteriaWithStatusType) => ele.completed === true)
-      .map((ele: QuestCriteriaWithStatusType) => ele.data.criteriaId);
+      .map((ele: QuestCriteriaWithStatusType) => ele.criteriaId);
     if (onlineComponent) {
       setClaimStatusTasks(arr);
     }
@@ -110,7 +82,7 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
   useEffect(() => {
     let arr = updateData
       .filter((ele: QuestCriteriaWithStatusType) => ele.completed === true)
-      .map((ele: QuestCriteriaWithStatusType) => ele.data.criteriaId);
+      .map((ele: QuestCriteriaWithStatusType) => ele.criteriaId);
     if (onlineComponent) {
       setClaimStatusUpdates(arr);
     }
@@ -140,9 +112,9 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
           >
             {selectedSection === "Home" ? (
               <HelpHubHome
-                questsData={chieldQuestCriteria}
+                questsData={ChildQuest}
                 setSelectedSection={setSelectedSection}
-                parentQuest={parentQuest}
+                parentQuest={ParentQuest}
                 userId={userId}
                 token={token}
                 styleConfig={styleConfig}
@@ -174,7 +146,7 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
             {selectedSection === "Help" ? (
               <HelpHubHelp
                 faqData={
-                  !!chieldQuestCriteria?.length ? chieldQuestCriteria[1] : []
+                  !!ChildQuest?.length ? ChildQuest[1] : []
                 }
                 styleConfig={styleConfig}
                 contentConfig={contentConfig?.Help}
@@ -185,11 +157,11 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
             {selectedSection === "Updates" ? (
               <HelpHubUpdates
                 updateData={
-                  !!chieldQuestCriteria?.length ? chieldQuestCriteria[2] : []
+                  !!ChildQuest?.length ? ChildQuest[2] : []
                 }
                 contentConfig={contentConfig?.Updates}
                 styleConfig={styleConfig}
-                questId={parentQuest?.childQuestIDs[2] || ""}
+                questId={ParentQuest?.childQuestIDs[2] || ""}
                 userId={userId}
                 token={token}
                 claimStatusUpdates={claimStatusUpdates}
@@ -204,11 +176,11 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
             {selectedSection === "Tasks" ? (
               <HelpHubTasks
                 tasksData={
-                  !!chieldQuestCriteria?.length ? chieldQuestCriteria[3] : []
+                  !!ChildQuest?.length ? ChildQuest[3] : []
                 }
                 contentConfig={contentConfig?.Tasks}
                 styleConfig={styleConfig}
-                questId={parentQuest?.childQuestIDs[3] || ""}
+                questId={ParentQuest?.childQuestIDs[3] || ""}
                 userId={userId}
                 token={token}
                 claimStatusTasks={claimStatusTasks}

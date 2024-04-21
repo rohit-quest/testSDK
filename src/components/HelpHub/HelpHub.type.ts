@@ -220,9 +220,22 @@ export interface QuestCriteriaType {
 }
 
 export interface QuestCriteriaWithStatusType {
-  completed: boolean;
-  isLocked?: boolean;
-  data: QuestCriteriaType;
+  // completed: boolean;
+  // isLocked?: boolean;
+  // data: QuestCriteriaType;
+  type: string,
+  question: string,
+  description: string,
+  options: string[],
+  criteriaId: string,
+  required: boolean,
+  linkTitle: string,
+  linkUrl: string,
+  manualInput: boolean | string,
+  completed: boolean,
+  answer: string,
+  createdAt: string,
+  imageUrl: string,
 }
 
 export interface QuestTypes {

@@ -2381,6 +2381,8 @@
   width: 100%;
   max-width: 180px;
   max-width: 50%;
+  /* max-width: 180px; */
+  /* width: calc(100% - 176px); */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -2390,6 +2392,7 @@
 
 .single-task-close-div-text > p {
   /* width: 180px; */
+  /* width: 100%; */
   color: var(--Neutral-Black-100, #939393);
   font-family: Figtree;
   font-size: 12px;
@@ -2438,6 +2441,7 @@
   border-radius: 8px;
   background: var(--Primary-Grape-100, #f4ebff);
   box-sizing: border-box;
+  width: 176px;
 }
 .single-task-close-div-image-cont > div {
   /* height: 255px;

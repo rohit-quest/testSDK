@@ -1,11 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import CancelButton from "../../assets/images/CancelButton.svg";
-import SearchIcons from "../../assets/images/SearchIcons.svg";
 import OpenSectionButton from "../../assets/images/OpenSectionButton.svg";
-import UnreadUpdateLogo from "../../assets/images/UnreadUpdateLogo.svg";
-import ReadUpdateLogo from "../../assets/images/ReadUpdateLogo.svg";
 import UpdatesImage from "../../assets/images/UpdatesImage.png";
-import UpdateOne from "../../assets/images/UpdateOne.png";
 import UpdatesUnreadLogo from "../../assets/images/UpdatesUnreadLogo.svg";
 import UpdatesReadLogo from "../../assets/images/UpdatesReadLogo.svg";
 import UnreadUpdateDarkArror from "../../assets/images/UnreadUpdateDarkArror.svg";
@@ -45,7 +41,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
 
   useEffect(() => {
     let data = updateData.filter((value: QuestCriteriaWithStatusType) => {
-      return value?.data?.metadata?.linkActionName
+      return value?.linkTitle
         ?.toLowerCase()
         .includes(searchData?.toString().toLowerCase());
     });
@@ -85,7 +81,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
   };
 
   const [showOneUpdate, setshowOneUpdate] = useState(false);
-  const [updateOneData, setUpdateOneData] = useState<any>({});
+  const [updateOneData, setUpdateOneData] = useState<QuestCriteriaWithStatusType>({});
 
   const [updateOneoutAnimation, setUpdateOneOutAnimation] = useState<
     boolean | null
@@ -183,7 +179,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                 {filterData.map(
                   (value: QuestCriteriaWithStatusType, index: number) =>
                     // claimStatus.includes(value?.data?.criteriaId) ?
-                    claimStatusUpdates.includes(value?.data?.criteriaId) ? (
+                    claimStatusUpdates.includes(value?.criteriaId) ? (
                       //   <div
                       //     className={`q-helphub-updates-single-update-read`}
                       //     key={index}
@@ -266,7 +262,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                               flexShrink: "0",
                               borderRadius: "2.237px",
                               border: " 0.447px solid var(--Primary, #9035FF)",
-                              background: `url(${UpdatesImage}) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
+                              background: `url(${value?.imageUrl || UpdatesImage}) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
                             }}
                           ></div>
                           {/* <img src={UpdatesImage} alt="" /> */}
@@ -282,7 +278,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                                 ...styleConfig?.Updates?.Card?.SubHeading,
                               }}
                             >
-                              {getTimeDifference(value?.data?.createdAt)}
+                              {getTimeDifference(value?.createdAt)}
                             </p>
                           </div>
                           <div className="update-head">
@@ -293,7 +289,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                                 ...styleConfig?.Updates?.Card?.Heading,
                               }}
                             >
-                              {value?.data?.metadata?.linkActionName}
+                              {value?.linkTitle}
                             </p>
                             <img src={OpenSectionButton} alt="" />
                           </div>
@@ -305,7 +301,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                               ...styleConfig?.Updates?.Card?.SubHeading,
                             }}
                           >
-                            {value?.data?.metadata?.description}
+                            {value?.description}
                           </div>
                         </div>
                       </div>
@@ -358,12 +354,10 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                         className={`q-helphub-updates-single-update-read`}
                         key={index}
                         onClick={() => {
-                          console.log("click");
-                          console.log(value);
                           handleShowUpdate(value);
 
                           readUpdate(
-                            value?.data?.criteriaId
+                            value?.criteriaId
                             // value?.data?.metadata?.linkActionUrl
                           );
                         }}
@@ -376,7 +370,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                               flexShrink: "0",
                               borderRadius: "2.237px",
                               border: " 0.447px solid var(--Primary, #9035FF)",
-                              background: `url(${UpdatesImage}) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
+                              background: `url(${value?.imageUrl || UpdatesImage}) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
                             }}
                           ></div>
                           {/* <img src={UpdatesImage} alt="" /> */}
@@ -392,7 +386,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                                 fontFamily: themeConfig?.fontFamily,
                               }}
                             >
-                              {getTimeDifference(value?.data?.createdAt)}
+                              {getTimeDifference(value?.createdAt)}
                             </p>
                           </div>
                           <div className="update-head">
@@ -403,7 +397,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                                 // ...styleConfig?.Home?.Heading,
                               }}
                             >
-                              {value?.data?.metadata?.linkActionName}
+                              {value?.linkTitle}
                             </p>
                             <img src={UnreadUpdateDarkArror} alt="" />
                           </div>
@@ -415,7 +409,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                               // ...styleConfig?.Home?.Heading,
                             }}
                           >
-                            {value?.data?.metadata?.description}
+                            {value?.description}
                           </div>
                         </div>
                       </div>
@@ -537,7 +531,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                   // borderRadius: "8px",
                   // border: "0.447px solid var(--Primary, #9035ff)",
                   // background: `url(${UpdatesImage}) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
-                  background: `url(${UpdatesImage})  lightgray -10.312px -8.675px / 110.971% 102.745% no-repeat`,
+                  background: `url(${updateOneData?.imageUrl || UpdatesImage})  lightgray -10.312px -8.675px / 110.971% 102.745% no-repeat`,
                   // overflow: "hidden",
                   // boxSizing: "border-box",
                 }}
@@ -548,7 +542,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
             <div className="update-one-text-cont">
               {/* <div className="update-text-head"></div> */}
               <div className="update-text-head-time">
-                {updateOneData.completed ? (
+                {updateOneData?.completed ? (
                   <div className="update-one-time-read">
                     <img src={UpdatesReadLogo} alt="" />
                     <p
@@ -558,7 +552,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                         // ...styleConfig?.Home?.Heading,
                       }}
                     >
-                      {getTimeDifference(updateOneData?.data?.createdAt)}
+                      {getTimeDifference(updateOneData?.createdAt)}
                     </p>
                   </div>
                 ) : (
@@ -571,7 +565,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                         // ...styleConfig?.Home?.Heading,
                       }}
                     >
-                      {getTimeDifference(updateOneData?.data?.createdAt)}
+                      {getTimeDifference(updateOneData?.createdAt || "")}
                     </p>
                   </div>
                 )}
@@ -583,7 +577,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                     // ...styleConfig?.Home?.Heading,
                   }}
                 >
-                  {updateOneData?.data?.metadata?.linkActionName}
+                  {updateOneData?.linkTitle}
                 </div>
               </div>
 
@@ -595,67 +589,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                   // ...styleConfig?.Home?.Heading,
                 }}
               >
-                {updateOneData?.data?.metadata?.description}
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Dolores nobis illum cum, dolorem exercitationem doloremque atque
-                odit modi blanditiis, repellat excepturi omnis corporis ducimus
-                tempora quas quod officia adipisci impedit! Quam tempore
-                quisquam nobis nam voluptatem incidunt laborum sed magni
-                aliquid. Maiores dolorum molestiae eius quo fuga alias magni, ad
-                tempore accusamus dignissimos aliquid quaerat, esse velit
-                cumque. Quod sunt amet ullam nobis voluptatibus omnis, soluta
-                accusantium, tenetur adipisci sed molestias libero ipsa
-                perspiciatis, accusamus culpa molestiae. Placeat ipsa nihil
-                omnis explicabo, nostrum aliquid voluptate, recusandae rerum
-                molestias, quibusdam incidunt. Provident sint eos ducimus odio
-                facilis quis voluptatibus explicabo sapiente veritatis minima
-                facere sunt non omnis, earum voluptatem illum? Voluptates illum
-                consectetur non ad itaque aut cumque aliquid corrupti quia in,
-                nostrum temporibus quam earum, eligendi harum inventore
-                reiciendis nobis deleniti quibusdam placeat dolor exercitationem
-                mollitia voluptatibus. Voluptas quasi voluptatibus neque
-                assumenda veniam! Unde, labore ipsa maxime itaque odio iste hic
-                commodi totam voluptatem sequi voluptate fugiat voluptas aut
-                inventore culpa dolorem tenetur vero amet voluptates officiis
-                mollitia. Distinctio magnam vel quos eius esse dignissimos
-                excepturi non et delectus architecto deleniti, rerum tenetur
-                earum aperiam sapiente neque error harum eum cumque vitae fugit
-                deserunt maiores! Assumenda, vel neque ipsa natus voluptatibus
-                est illo beatae molestias atque facere non et perferendis! Ex a
-                assumenda hic maiores. Ratione iusto quam ad facere quia
-                temporibus velit unde ut pariatur odit asperiores totam soluta
-                facilis est repudiandae inventore ab voluptas officiis enim
-                blanditiis, laboriosam nobis iure saepe. Harum cum dolorem
-                quisquam, atque libero accusantium aperiam facilis. Cum fugiat
-                nulla laudantium, explicabo amet blanditiis facilis eligendi
-                harum animi ullam sed autem id a voluptas quidem illum iure vero
-                asperiores eaque, est repellendus placeat ab ipsa. Perspiciatis,
-                sit vel velit rem quia similique magni aliquid, minus, sint
-                asperiores illum exercitationem deleniti rerum. Unde veniam aut
-                temporibus vitae? Autem, rerum? Assumenda molestiae iusto minus
-                expedita optio error repellendus repellat odio minima dolor
-                magni accusantium, voluptas doloribus dicta voluptatum fugiat
-                quibusdam? Dolores dolorem ducimus similique iusto rerum
-                temporibus fugit nostrum quia sapiente mollitia a sequi ipsum
-                facilis reiciendis, labore nisi magnam nesciunt aperiam? Fuga,
-                exercitationem reprehenderit, quam, expedita earum consequuntur
-                eveniet atque dolorem adipisci autem voluptas ipsa ipsum culpa
-                ab! Voluptates in eos, fugit facilis est quae rerum, tenetur
-                nisi dicta blanditiis itaque veniam cum magni neque ipsam ab
-                unde, ex mollitia id? Ipsa, deserunt quo aspernatur eligendi
-                illum aut amet voluptate repellendus corporis nam, doloribus
-                iusto quod doloremque facilis ducimus cupiditate ex sapiente
-                quasi? Placeat labore obcaecati quos molestiae minus, deserunt
-                iusto cum sunt eum quia veniam nisi voluptates, sit iure fugit
-                dolorum repellendus quaerat voluptate aliquam. Dolor voluptates
-                culpa voluptatem voluptatum officia et laborum officiis harum ut
-                magnam ipsum labore est cum voluptas porro molestias doloremque
-                expedita tenetur, aliquam quam soluta ipsam beatae maxime
-                maiores? Dolorum, eius odit voluptatem quod laboriosam ipsa
-                illum eum sed voluptate ducimus reprehenderit voluptas unde sunt
-                facilis quam assumenda? Similique excepturi illum beatae quaerat
-                laudantium tempora nesciunt, minima animi commodi sint ipsa,
-                esse officiis a eius unde ducimus eveniet ab facere.
+                {updateOneData?.description}
               </div>
             </div>
             {/* <div className="chat-container" id="chatContainer">

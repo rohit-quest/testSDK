@@ -54,7 +54,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
       (!!questsData?.length &&
         questsData[3]
           ?.filter((ele: QuestCriteriaWithStatusType) => ele.completed === true)
-          .map((ele: QuestCriteriaWithStatusType) => ele.data.criteriaId)) ||
+          .map((ele: QuestCriteriaWithStatusType) => ele.criteriaId)) ||
       [];
     // setTaskStatus(
     //     Math.ceil(
@@ -84,7 +84,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
         userId || "",
         token || "",
         apiKey,
-        allQuestsData[0][0]?.data?.criteriaId,
+        allQuestsData[0][0]?.criteriaId,
         [answer]
       );
       setFeedbackLoading(false);
@@ -383,7 +383,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
                         ...styleConfig?.Home?.SubHeading,
                       }}
                     >
-                      {value?.data?.metadata?.question}
+                      {value?.question}
                     </div>
                     <div>
                       <svg
@@ -446,7 +446,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
                               ...styleConfig?.Home?.Heading,
                             }}
                           >
-                            {value?.data?.metadata?.linkActionName}
+                            {value?.linkTitle}
                           </div>
                           <div
                             style={{
@@ -454,7 +454,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
                               ...styleConfig?.Home?.SubHeading,
                             }}
                           >
-                            {value?.data?.metadata?.description}
+                            {value?.description}
                           </div>
                         </div>
                       )

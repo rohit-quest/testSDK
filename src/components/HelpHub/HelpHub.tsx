@@ -29,7 +29,7 @@ const HelpHub = (props: HelpHubProps) => {
     showFooter,
     onlineComponent,
   } = props;
-  //   console.log(props);
+  
   const { apiKey, entityId, featureFlags, apiType, themeConfig } = useContext(
     QuestContext.Context
   );
@@ -86,12 +86,93 @@ const HelpHub = (props: HelpHubProps) => {
       );
       setParentQuest(createQuest?.parentQuest);
 
-      setChieldQuestCriteria(createQuest?.eligibilityCriterias);
+      let criterias = getResult?.eligibilityCriterias?.map((criteriaData: any) => criteriaData?.map(
+        (criteria: {
+          data: {
+            createdAt: string;
+            criteriaType: string;
+            metadata: {
+              imageUrl: string;
+              description: string;
+              question: string;
+              answer: string;
+              title: string;
+              options: string[],
+              isOptional: string,
+              placeholder: string,
+              linkActionName: string,
+              linkActionUrl: string,
+              manualInput: string
+            };
+            criteriaId: string;
+          },
+          userAnswer: [],
+          completed: boolean
+          }) => {
+              return {
+                  type: criteria?.data?.criteriaType,
+                  question: criteria?.data?.metadata?.title || criteria?.data?.metadata?.question || "",
+                  description: criteria?.data?.metadata?.description || "",
+                  options: criteria?.data?.metadata?.options || [],
+                  criteriaId: criteria?.data?.criteriaId || "",
+                  required: !criteria?.data?.metadata?.isOptional,
+                  linkTitle: criteria?.data?.metadata?.linkActionName || "",
+                  linkUrl: criteria?.data?.metadata?.linkActionUrl || "",
+                  manualInput: criteria?.data?.metadata?.manualInput || false,
+                  completed: !!criteria?.userAnswer?.length || criteria?.completed,
+                  answer: criteria?.data?.metadata?.answer || "",
+                  createdAt: criteria?.data?.createdAt || "",
+                  imageUrl: criteria?.data?.metadata?.imageUrl || "",
+              };
+          }
+      ));
+
+      setChieldQuestCriteria(criterias);
     } else {
+      let criterias = getResult?.eligibilityCriterias?.map((criteriaData: any) => criteriaData?.map(
+        (criteria: {
+          data: {
+            createdAt: string;
+            criteriaType: string;
+            metadata: {
+              imageUrl: string;
+              description: string;
+              question: string;
+              answer: string;
+              title: string;
+              options: string[],
+              isOptional: string,
+              placeholder: string,
+              linkActionName: string,
+              linkActionUrl: string,
+              manualInput: string
+            };
+            criteriaId: string;
+          },
+          userAnswer: [],
+          completed: boolean
+          }) => {
+              return {
+                  type: criteria?.data?.criteriaType,
+                  question: criteria?.data?.metadata?.title || criteria?.data?.metadata?.question || "",
+                  description: criteria?.data?.metadata?.description || "",
+                  options: criteria?.data?.metadata?.options || [],
+                  criteriaId: criteria?.data?.criteriaId || "",
+                  required: !criteria?.data?.metadata?.isOptional,
+                  linkTitle: criteria?.data?.metadata?.linkActionName || "",
+                  linkUrl: criteria?.data?.metadata?.linkActionUrl || "",
+                  manualInput: criteria?.data?.metadata?.manualInput || false,
+                  completed: !!criteria?.userAnswer?.length || criteria?.completed,
+                  answer: criteria?.data?.metadata?.answer || "",
+                  createdAt: criteria?.data?.createdAt || "",
+                  imageUrl: criteria?.data?.metadata?.imageUrl || "",
+              };
+          }
+      ));
       setParentQuest(getResult?.parentQuest);
-      setTaskData(getResult?.eligibilityCriterias[3]);
-      setUpdateData(getResult?.eligibilityCriterias[2]);
-      setChieldQuestCriteria(getResult?.eligibilityCriterias);
+      setTaskData(criterias[3]);
+      setUpdateData(criterias[2]);
+      setChieldQuestCriteria(criterias);
     }
   };
 
@@ -102,7 +183,7 @@ const HelpHub = (props: HelpHubProps) => {
   useEffect(() => {
     let arr = taskData
       ?.filter((ele: QuestCriteriaWithStatusType) => ele.completed === true)
-      .map((ele: QuestCriteriaWithStatusType) => ele.data.criteriaId);
+      .map((ele: QuestCriteriaWithStatusType) => ele.criteriaId);
     if (onlineComponent) {
       setClaimStatusTasks(arr);
     }
@@ -111,7 +192,7 @@ const HelpHub = (props: HelpHubProps) => {
   useEffect(() => {
     let arr = updateData
       .filter((ele: QuestCriteriaWithStatusType) => ele.completed === true)
-      .map((ele: QuestCriteriaWithStatusType) => ele.data.criteriaId);
+      .map((ele: QuestCriteriaWithStatusType) => ele.criteriaId);
     if (onlineComponent) {
       setClaimStatusUpdates(arr);
     }
