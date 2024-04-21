@@ -496,12 +496,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         setResult(headers, userId);
       }
 
-      function setResult(headers: object, userId: string) {
+      function setResult(headers: { userId ? : string }, userId: string) {
         const request = `${BACKEND_URL}api/entities/${entityId}/quests/${selectedQuest}/verify-all?userId=${userId}`;
         const requestData = {
           criterias: ansArr,
           userId: headers?.userId,
-          session: session[selectedQuest]
+          session: selectedQuest && session[selectedQuest],
         };
         setShowLoader(true);
         axios
