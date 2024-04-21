@@ -1,12 +1,14 @@
-import { QuestProvider } from '../QuestWrapper';
-import FeedbackWorkflow from './FeedbackOverview';
-import FeedbackWorkflowOffline from './OfflineComponent.tsx';
-export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
-export const apiKey = 'k-68a0c6b8-b27f-49c6-a315-b0c9cba15bf4'
-export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
-export const entityId = 'e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5'
-export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
-export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
+import { QuestProvider } from "../QuestWrapper";
+import FeedbackWorkflow from "./FeedbackOverview";
+import FeedbackWorkflowOffline from "./OfflineComponent.tsx";
+export const questId = "q-290aef93-4b20-45e2-b2f6-4bc19b5bd8ef";
+export const apiKey = "k-fe5a805c-77ed-4cae-bd33-9591ebed2805";
+export const apiSecret =
+  "s-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42";
+export const entityId = "e-9850377b-f88f-4426-a2ac-56206c74655a";
+export const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMjg1MTMxMywiZXhwIjoxNzEzNDU2MTEzfQ.gDs6fRxpZ0rQ_9MjlJoa3glPIyhtELQ5G0FTTUghWK4";
+export const userId = "u-8268f5e1-f5a1-440c-a333-0f5578a73847";
 
 export default function FeedbackWorkflowPreview({ online = false }: { online?: boolean }) {
 
@@ -91,138 +93,145 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
             />
 
         </QuestProvider>)
+        />
+      </QuestProvider>
+    );
 
-    return (<FeedbackWorkflowOffline
-        // contactUrl="https://calendly.com/sriya-persana/30min"
-        isOpen={true}
-        // onClose={() => setIsOpen(!isOpen)}
-        showFooter={true}
-        styleConfig={{
-            // Description: { color: 'red' },
-            // listDescription:{color:'yellow'}
-            Heading: { color: 'red' },
-            // listHeading: { color: 'blue' },
+  return (
+    <FeedbackWorkflowOffline
+      // contactUrl="https://calendly.com/sriya-persana/30min"
+      isOpen={true}
+      // onClose={() => setIsOpen(!isOpen)}
+      showFooter={true}
+      SecondaryButtonText="red"
+      styleConfig={{
+        // Description: { color: 'red' },
+        // listDescription:{color:'yellow'}
+        Heading: { color: "red" },
+        // listHeading: { color: 'blue' },
 
-            listHover :{
-                iconColor:'blue',
-                iconBackground:'grey',
-                background:'yellow',
-                Heading:'green',
-                Description:'red'
-            }
-        }}
-        contactUrl="https://calendly.com/sriya-persana/30min"
+        listHover: {
+          iconColor: "blue",
+          iconBackground: "grey",
+          background: "yellow",
+          Heading: "green",
+          Description: "red",
+          IconSize: "20px",
+          Icon: { padding: "16px", border: "1px solid blue" },
+        },
 
-        // GeneralFeedback={{
-        //     heading: "General Fee",
-        //     description: "Give general feedsdasdasdback on this page",
-        //     formHeading: "General Feedbackasddffd",
-        //     formDescription: "Welcome back,sdfsdf Please complete your details",
-        //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
-        // }}
-        // RequestFeature={{
-        //     heading: "Request a Featureqwqewqewqe",
-        //     description: "How can we msdsfdsdfake it better",
-        //     formHeading: "Request a Feature",
-        //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
-        // }}
-        // ReportBug={{
-        //     heading: "Reportasdasd a Bug",
-        //     description: "Describazsdasde your issue",
-        //     formHeading: "Report wewea Bug",
-        //     formDescription: "Describe yosddffdur issue",
-        //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
-        // }}
-        // ContactUs={{
-        //     heading: "Contacasasdt us",
-        //     description: "Invite oasasdasdher admins and moderators",
-        //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
-        // }}
-        offlineFormData={
-            [
-                [{
-                    "type": "RATING",
-                    "question": "Rating",
-                    "options": [""],
-                    "criteriaId": "ec-84192fef-c91c5-d4ace713aaeb",
-                    "required": true,
-                },
-                {
-                    "type": "USER_INPUT_EMAIL",
-                    "question": "Enter your Email",
-                    "options": [""],
-                    "criteriaId": "ec-84192fef-c917-410f-4ace713aae",
-                    "required": true,
-                },
-                {
-                    "type": "USER_INPUT_TEXTAREA",
-                    "question": "Comment",
-                    "options": [""],
-                    "criteriaId": "ec-84192fef-c917-410f-9d4ace713aae",
-                    "required": true,
-                }],
-                [
-                    {
-                        "type": "USER_INPUT_TEXT",
-                        "question": "Title",
-                        "options": [""],
-                        "criteriaId": "ec-84192fef-c917-410f-4ace713aee",
-                        "required": true,
-                        placeholder: ""
-                    },
-                    {
-                        "type": "USER_INPUT_EMAIL",
-                        "question": "Email",
-                        "options": [""],
-                        "criteriaId": "ec-84192fef-c917-410f-9ace713aef",
-                        "required": true,
-                        placeholder: ""
-                    },
-                    {
-                        "type": "USER_INPUT_TEXTAREA",
-                        "question": "Bug",
-                        "options": [""],
-                        "criteriaId": "ec-84192fef-c7-410f-9bc5-d4ce713aaeg",
-                        "required": true,
-                        placeholder: ""
-                    }
-                ],
-                [
-                    {
-                        "type": "USER_INPUT_TEXT",
-                        "question": "What feature are you missing?",
-                        "options": [""],
-                        "criteriaId": "ec-84192fef-c917-410f-d4ace713aeh",
-                        "required": true,
-                        placeholder: ""
-                    },
-                    {
-                        "type": "USER_INPUT_EMAIL",
-                        "question": "Your email address",
-                        "options": [""],
-                        "criteriaId": "ec-84192fef-c917-4101jioaaei",
-                        "required": true,
-                        placeholder: ""
-                    },
-                    {
-                        "type": "USER_INPUT_TEXT",
-                        "question": "Tell us more about the problem",
-                        "options": [""],
-                        "criteriaId": "ec-84192fef-c9170f-9bc5acjie713aaej",
-                        "required": true,
-                        placeholder: ""
-                    }]
-                , [
-                    {
-                        "type": "LINK_OPEN_READ",
-                        "question": "",
-                        "criteriaId": "ec-e32b88d7-0e43-4254-9c94-44859ceedcdc",
-                        "required": true,
-                    },
-                ]
-            ]
-        }
-    >
-
-    </FeedbackWorkflowOffline>)
+      }}
+      contactUrl="https://calendly.com/sriya-persana/30min"
+      // GeneralFeedback={{
+      //     heading: "General Fee",
+      //     description: "Give general feedsdasdasdback on this page",
+      //     formHeading: "General Feedbackasddffd",
+      //     formDescription: "Welcome back,sdfsdf Please complete your details",
+      //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+      // }}
+      // RequestFeature={{
+      //     heading: "Request a Featureqwqewqewqe",
+      //     description: "How can we msdsfdsdfake it better",
+      //     formHeading: "Request a Feature",
+      //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+      // }}
+      // ReportBug={{
+      //     heading: "Reportasdasd a Bug",
+      //     description: "Describazsdasde your issue",
+      //     formHeading: "Report wewea Bug",
+      //     formDescription: "Describe yosddffdur issue",
+      //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+      // }}
+      // ContactUs={{
+      //     heading: "Contacasasdt us",
+      //     description: "Invite oasasdasdher admins and moderators",
+      //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+      // }}
+      offlineFormData={[
+        [
+          {
+            type: "RATING",
+            question: "Rating",
+            options: [""],
+            criteriaId: "ec-84192fef-c91c5-d4ace713aaeb",
+            required: true,
+          },
+          {
+            type: "USER_INPUT_EMAIL",
+            question: "Enter your Email",
+            options: [""],
+            criteriaId: "ec-84192fef-c917-410f-4ace713aae",
+            required: true,
+          },
+          {
+            type: "USER_INPUT_TEXTAREA",
+            question: "Comment",
+            options: [""],
+            criteriaId: "ec-84192fef-c917-410f-9d4ace713aae",
+            required: true,
+          },
+        ],
+        [
+          {
+            type: "USER_INPUT_TEXT",
+            question: "Title",
+            options: [""],
+            criteriaId: "ec-84192fef-c917-410f-4ace713aee",
+            required: true,
+            placeholder: "",
+          },
+          {
+            type: "USER_INPUT_EMAIL",
+            question: "Email",
+            options: [""],
+            criteriaId: "ec-84192fef-c917-410f-9ace713aef",
+            required: true,
+            placeholder: "",
+          },
+          {
+            type: "USER_INPUT_TEXTAREA",
+            question: "Bug",
+            options: [""],
+            criteriaId: "ec-84192fef-c7-410f-9bc5-d4ce713aaeg",
+            required: true,
+            placeholder: "",
+          },
+        ],
+        [
+          {
+            type: "USER_INPUT_TEXT",
+            question: "What feature are you missing?",
+            options: [""],
+            criteriaId: "ec-84192fef-c917-410f-d4ace713aeh",
+            required: true,
+            placeholder: "",
+          },
+          {
+            type: "USER_INPUT_EMAIL",
+            question: "Your email address",
+            options: [""],
+            criteriaId: "ec-84192fef-c917-4101jioaaei",
+            required: true,
+            placeholder: "",
+          },
+          {
+            type: "USER_INPUT_TEXT",
+            question: "Tell us more about the problem",
+            options: [""],
+            criteriaId: "ec-84192fef-c9170f-9bc5acjie713aaej",
+            required: true,
+            placeholder: "",
+          },
+        ],
+        [
+          {
+            type: "LINK_OPEN_READ",
+            question: "",
+            criteriaId: "ec-e32b88d7-0e43-4254-9c94-44859ceedcdc",
+            required: true,
+          },
+        ],
+      ]}
+    ></FeedbackWorkflowOffline>
+  );
 }

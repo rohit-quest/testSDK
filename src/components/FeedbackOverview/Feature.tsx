@@ -12,6 +12,7 @@ interface FeatureContentProps {
   emailInput: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
   normalInput2: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
   buttonStyle?: CSSProperties;
+  PrimaryButtonText?: string;
 }
 
 const FeatureContent: React.FC<FeatureContentProps> = ({
@@ -21,6 +22,7 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
   emailInput,
   normalInput2,
   buttonStyle = {},
+  PrimaryButtonText = "Submit"
 }) => {
 
   return (
@@ -44,7 +46,7 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
               );
             }
           })}
-          <PrimaryButton className='q-fdov-btn-continue' children='Submit' onClick={handleSubmit} style={buttonStyle} />
+          <PrimaryButton className='q-fdov-btn-continue' children={PrimaryButtonText || 'Submit'} onClick={handleSubmit} style={buttonStyle} />
         </>
       ) : (
         <div className="q-center">

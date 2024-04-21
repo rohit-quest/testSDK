@@ -208,7 +208,7 @@ input[data-autocompleted] {
   background-color: transparent !important;
 }
 
-.powered_by_quest div {
+/* .powered_by_quest div {
   flex: 1 0 0;
   color: #939393;
   font-size: 10px;
@@ -216,18 +216,24 @@ input[data-autocompleted] {
   font-weight: 400;
   line-height: 12px;
   letter-spacing: -0.1px;
-}
+} */
 
 .powered_by_quest {
   display: flex;
   padding: 12px 20px;
   background: #fbfbfb;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 12px;
   cursor: pointer;
   align-self: stretch;
   border-radius: 0 0 10px 10px;
+  color: #939393;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: -0.1px;
 }
 
 .qt_toast {
