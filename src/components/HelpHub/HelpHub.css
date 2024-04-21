@@ -2321,7 +2321,8 @@
 }
 
 .single-task-close-div-text {
-  max-width: 180px;
+  /* max-width: 180px; */
+  /* width: calc(100% - 176px); */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -2329,7 +2330,8 @@
 }
 
 .single-task-close-div-text > p {
-  width: 180px;
+  /* width: 180px; */
+  width: 100%;
   color: var(--Neutral-Black-100, #939393);
   font-family: Figtree;
   font-size: 12px;
@@ -2363,12 +2365,13 @@
     var(--Size-0, 12px);
   justify-content: center;
   align-items: center;
-  flex: 1 0 0;
+  /* flex: 1 0 0; */
   border-radius: 8px;
   background: var(--Primary-Grape-100, #f4ebff);
   height: 148px;
   overflow: hidden;
   box-sizing: border-box;
+  width: 176px;
 }
 
 /* personal chat  */
