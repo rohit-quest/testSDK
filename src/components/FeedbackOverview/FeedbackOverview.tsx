@@ -136,6 +136,7 @@ const cross = (color = "#AFAFAF", onClick?: () => void) => (
       borderRadius: "4px",
     }}
   >
+    
     <svg
       width="16"
       height="16"
