@@ -2,7 +2,7 @@ import  { useState } from 'react'
 import { QuestProvider } from '../QuestWrapper';
 import GetStarted from './GetStarted';
 import GetStartedOff from './OfflineComponent';
-export const questId = 'q-13c36ef7-8661-4770-bd4c-bdd367f879ff';
+export const questId = 'q-ce583002-a614-40e3-bee0-00436b0f474d';
 export const apiKey = 'k-fe5a805c-77ed-4cae-bd33-9591ebed2805'
 export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
 export const entityId = 'e-9850377b-f88f-4426-a2ac-56206c74655a'
@@ -113,7 +113,7 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
         allowMultiClick={true}
         // width="50vw" 
         autoHide={false}
-
+         template={2}
         // arrowColor='red'
         cardBorderColor='red'
         headingText="What’s new"
@@ -123,8 +123,27 @@ export default function GetStartedPreview({ online = true }: { online?: boolean 
         // onLinkTrigger = {()=>{
             
         // }}
-        
-        template={1}
+
+        BrandTheme={{
+            background: 'black',
+            fontFamily: 'Cursive',
+            primaryColor: 'white',
+            secondaryColor: 'grey',
+            tertiaryColor: 'white',
+            accentColor: 'blue',
+            borderRadius: '10px',
+            titleColor: 'yellow',
+            contentColor: '#3927F8',
+            buttonColor: '#3927F8',
+            logo: ''
+        }}
+        QuestThemeData={{
+            accentColor: 'blue',
+            theme: 'light',
+            borderRadius: '30px',
+            buttonColor: 'green',
+            images: []
+        }}
         styleConfig={{
             //   Topbar:{border:'none'}
             // SecondaryButton:{

@@ -50,7 +50,9 @@ export async function getResponse(headers: CustomHeaders, entityId: string, ques
     const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${headers.userId}`;
 
     return axios.get(request, { headers: { ...headers } })
-        .then((res) => res.data?.data?.endsAt )
+        .then((res) => {  res.data?.data?.endsAt ;
+            console.log(res.data)
+        } )
         .catch((error) => {
             console.log(error);
             return null

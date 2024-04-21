@@ -19,6 +19,8 @@ import TextArea from '../Modules/TextArea';
 import TopBar from '../Modules/TopBar';
 import { MultiChoiceTwo } from '../Modules/MultiChoice';
 import General from '../../general';
+import { SecondaryButton } from '../Modules/SecondaryButton';
+import { PrimaryButton } from '../Modules/PrimaryButton';
 
 const thanks = (
   <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -44,6 +46,30 @@ const thanks = (
 
 );
 
+
+interface QuestThemeData {
+  accentColor: string;
+  theme: string;
+  borderRadius: string;
+  buttonColor: string;
+  images: string[]
+
+}
+
+type BrandTheme = {
+  accentColor?: string;
+  background?: string;
+  borderRadius?: string;
+  buttonColor?: string;
+  contentColor?: string;
+  fontFamily?: string;
+  logo?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  tertiaryColor?: string;
+  titleColor?: string;
+}
+
 interface FeedbackProps {
   heading?: string;
   subHeading?: string;
@@ -64,6 +90,8 @@ interface FeedbackProps {
   itemsPerPage?: number;
   iconColor?: string;
   offlineFormData: Array<FormDataItem>;
+  BrandTheme?: BrandTheme;
+  QuestThemeData?: QuestThemeData;
   ratingType?: string;
   styleConfig?: {
     Form?: React.CSSProperties,
@@ -123,6 +151,8 @@ const SurveyOffline = ({
   ratingType = 'number',
   offlineFormData = [],
   styleConfig = {},
+  BrandTheme,
+  QuestThemeData,
   showFooter = true
 }: FeedbackProps) => {
 
@@ -217,10 +247,6 @@ const SurveyOffline = ({
     returnAnswers();
   };
 
-  const handleRatingChange2 = (rating: number) => {
-    setRating(rating);
-    setLikePopup(true);
-  };
 
   useEffect(() => {
     GeneralFunctions.fireTrackingEvent("quest_survey_offline_loaded", "survey_offline");
@@ -230,31 +256,6 @@ const SurveyOffline = ({
         bgColor?.includes('radial-gradient')
       );
     }
-    // if (entityId) {
-    //   const headers = {
-    //     apiKey: apiKey,
-    //     apisecret: apiSecret,
-    //     userId: userId,
-    //     token: token,
-    //   };
-    //   const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}`;
-
-    //   axios.get(request, { headers: headers }).then((res) => {
-    // let response = res.data;
-    // setSession(response.session);
-    // let criterias = response?.eligibilityData?.map((criteria: any) => {
-    //   return {
-    //     type: criteria?.data?.criteriaType,
-    //     question: criteria?.data?.metadata?.title,
-    //     options: criteria?.data?.metadata?.options || [],
-    //     criteriaId: criteria?.data?.criteriaId,
-    //     required: !criteria?.data?.metadata?.isOptional,
-    //     placeholder: criteria?.data?.metadata?.placeholder,
-    //   };
-    // });
-    // criterias = Array.isArray(criterias) ? criterias : [];
-    //   });
-    // }
   }, []);
 
   const handleUpdate = (e: any, id: string, j: string, k?: number) => {
@@ -289,59 +290,12 @@ const SurveyOffline = ({
     }
   };
 
-  const handleRemove = (id: string) => {
-    setAnswer({
-      ...answer,
-      [id]: ""
-    })
-  }
 
 
   function returnAnswers() {
     GeneralFunctions.fireTrackingEvent("quest_survey_offline_form_submitted", "survey_offline");
-    // const headers = {
-    //   apiKey: apiKey,
-    //   apisecret: apiSecret,
-    //   userId: userId,
-    //   token: token,
-    // };
-    // const arr = Object.values(answer);
-    // if(!answer || !arr?.length || arr.length<FormData?.length) return showToast.error("Please fill of the details")
-    // for(let e of arr)
-    //     if(!e || (Array.isArray(e) && !e.length)) return showToast.error("Please fill Some of the details");
-    // if(arr.length<(data?.length)) return ;
-    // if (answer) {
-    //   const ansArr = formdata.map((ans: any) => ({
-    //     question: ans?.question || '',
-    //     answer: [answer[ans?.criteriaId] || ''],
-    //     criteriaId: ans?.criteriaId || '',
-    //   }));
-    //   const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${userId}`;
-    //   const requestData = {
-    //     criterias: ansArr,
-    //     userId,
-    //     session,
-    //   };
-    //   setShowLoader(true);
-    //   axios
-    //     .post(request, requestData, { headers: headers })
-    //     .then((response) => {
-    //       if (response.data.success) {
     setThanksPopup(true);
     onSubmit && onSubmit();
-    //       } else {
-    //         toast.error(response.data.error);
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.error('Error:', error);
-    //     })
-    //     .finally(() => {
-    //       setShowLoader(false);
-    //     });
-    // } else {
-    //   toast.error('Please fill in all required fields.');
-    // }
   }
 
 
@@ -359,11 +313,15 @@ const SurveyOffline = ({
         <Label
           htmlFor="normalInput"
           children={question}
-          style={styleConfig?.Label}
+          style={{ color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Label }}
         />
         <Input
           type="text"
-          style={styleConfig?.Input}
+          style={{
+            borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+            color: styleConfig?.Input?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
+            ...styleConfig?.Input
+        }}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           value={answer[criteriaId]}
           placeholder={placeholder}
@@ -377,11 +335,15 @@ const SurveyOffline = ({
         <Label
           htmlFor="normalInput"
           children={question}
-          style={styleConfig?.Label}
+          style={{ color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Label }}
         />
         <Input
           type="email"
-          style={styleConfig?.Input}
+          style={{
+            borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+            color: styleConfig?.Input?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
+            ...styleConfig?.Input
+        }}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           value={answer[criteriaId]}
           placeholder={placeholder}
@@ -399,10 +361,14 @@ const SurveyOffline = ({
         <Label
           htmlFor="normalInput"
           children={question}
-          style={styleConfig?.Label}
+          style={{ color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Label }}
         />
         <TextArea
-          style={styleConfig?.TextArea}
+           style={{
+            borderColor: styleConfig?.TextArea?.borderColor || themeConfig?.borderColor,
+            color: styleConfig?.TextArea?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
+            ...styleConfig?.TextArea
+        }}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           value={answer[criteriaId]}
           placeholder={placeholder}
@@ -417,14 +383,14 @@ const SurveyOffline = ({
         <div>
           <div className="like-dislike-cont">
             <div className="icon-inside-like-dislike">{tick}</div>
-            <div className="p-2" style={{ color: '#00A96D' }}>
+            <div className="p-2" style={{ color: "#00A96D" }}>
               Thanks again for your feedback.
             </div>
           </div>
           <div
             style={{
-              margin: '5% 0% 1% 0%',
-              fontSize: '18px',
+              margin: "5% 0% 1% 0%",
+              fontSize: "18px",
               fontFamily: font,
               color: textColor,
             }}
@@ -446,55 +412,53 @@ const SurveyOffline = ({
           <div className="q-cmts">{comment.length}/200</div>
           <div className="q-feed-desc">
             We’re unable to respond directly to your feedback. If you have a
-            customer support inquiry, please{' '}
+            customer support inquiry, please{" "}
             <div
               onClick={() => (window.location.href = `${supportUrl}`)}
               style={{
-                fontWeight: '600',
-                textDecoration: 'underline',
-                display: "inline"
+                fontWeight: "600",
+                textDecoration: "underline",
+                display: "inline",
               }}
             >
               contact customer support.
             </div>
           </div>
           <div className="q-feed-btns-div">
-            <button
+            <SecondaryButton
+              children="Skip"
               onClick={() => handleComments(criteriaId, comment)}
-              className="q-btn-feed"
-            >
-              Skip
-            </button>
-            <button
+              style={styleConfig?.SecondaryButton}
+            />
+            <PrimaryButton
+              children="Submit"
               onClick={() => handleComments(criteriaId, comment)}
-              className="q-btn-feed"
               style={{
-                backgroundColor: btnColor ? btnColor : '#333333',
-                color: btnTextColor ? btnTextColor : 'white',
-              }}
-            >
-              Submit
-            </button>
+                background: styleConfig?.PrimaryButton?.background || QuestThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig?.buttonColor,
+                ...styleConfig?.PrimaryButton
+            }}
+            />
           </div>
         </div>
       </div>
     );
   };
 
-
   const singleChoiceOne = (
     options: string[],
     question: string,
     required: boolean,
-    criteriaId: string,
+    criteriaId: string
   ) => {
+    // options = ["sdas", "sdas", "dasd"]
     return (
       <div key={criteriaId}>
-        <div
+        <Label
           className="q-onb-singleChoiceOne-lebel"
-        >
-          {question} {required && "*"}
-        </div>
+          children={`${question}${required===true?"*":""}`}
+          style={{ color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Label }}
+        />
+
         <div className="q-onb-singleChoiceOne-optDiv">
           {options.map((option: string, id: number) => (
             <div className="q_onb_singlehoiceOne_lebel" key={id}>
@@ -503,9 +467,7 @@ const SurveyOffline = ({
                 type="radio"
                 value={option}
                 checked={answer[criteriaId] == option}
-                onChange={(e) =>
-                  handleUpdate(e, criteriaId, "radio")
-                }
+                onChange={(e) => handleUpdate(e, criteriaId, "radio")}
                 name={`default-radio${criteriaId}`}
                 className="q-onb-singleChoiceOne-inp"
               />
@@ -536,7 +498,7 @@ const SurveyOffline = ({
             {customComponents}
           </div>
         } */}
-        <Label htmlFor="textAreaInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
+        <Label htmlFor="textAreaInput" style={{ color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Label }}>
           {`${question} ${!!required ? "*" : ""}`}
         </Label>
         <MultiChoiceTwo
@@ -546,11 +508,11 @@ const SurveyOffline = ({
           onChange={(e) => handleUpdate(e, criteriaId, "check")}
           style={{
             borderColor: styleConfig?.MultiChoice?.style?.borderColor || themeConfig?.borderColor, ...styleConfig?.MultiChoice?.style,
-            color: styleConfig?.MultiChoice?.style?.color || themeConfig?.primaryColor,
+            color: styleConfig?.MultiChoice?.style?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
             ...styleConfig?.MultiChoice?.style
           }}
           selectedStyle={{
-            color: styleConfig?.MultiChoice?.selectedStyle?.color || themeConfig?.primaryColor,
+            color: styleConfig?.MultiChoice?.selectedStyle?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
             ...styleConfig?.MultiChoice?.selectedStyle
           }}
         />
@@ -573,7 +535,7 @@ const SurveyOffline = ({
             {customComponents}
           </div>
         } */}
-        <Label htmlFor="dateInput" style={{ color: styleConfig?.Label?.color || themeConfig?.primaryColor, ...styleConfig?.Label }}>
+        <Label htmlFor="dateInput" style={{ color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Label }}>
           {`${question} ${!!required ? "*" : ""}`}
         </Label>
         <Input
@@ -582,8 +544,8 @@ const SurveyOffline = ({
           value={answer[criteriaId]}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           style={{
-            borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
-            color: styleConfig?.Input?.color || themeConfig?.primaryColor,
+            borderColor: styleConfig?.Input?.borderColor ||  themeConfig?.borderColor,
+            color: styleConfig?.Input?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
             ...styleConfig?.Input
           }}
         />
@@ -593,13 +555,13 @@ const SurveyOffline = ({
 
   const handleThanks = () => {
     setThanksPopup(false);
-    // setSelectedOption(null);
   };
 
   return (
     <div
       style={{
-        background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
+        background: styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor, borderRadius: styleConfig?.Form?.borderRadius || 
+        QuestThemeData?.borderRadius || BrandTheme?.borderRadius, height: styleConfig?.Form?.height || "auto", fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
       }}
       className="q-feedback-cont"
       id='q-surveyOffline'
@@ -614,8 +576,8 @@ const SurveyOffline = ({
                     heading={heading || ''}
                     description={subHeading || ''}
                     style={{
-                      headingStyle: styleConfig?.Heading,
-                      descriptionStyle: styleConfig?.Description,
+                      headingStyle: {color: styleConfig?.Heading?.color || BrandTheme?.titleColor || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Heading},
+                      descriptionStyle: {color: styleConfig?.Description?.color || BrandTheme?.secondaryColor || themeConfig?.secondaryColor, ...styleConfig?.Description},
                       iconStyle: { display: "none" },
                     }} />
                   <form onSubmit={e => {
@@ -651,28 +613,19 @@ const SurveyOffline = ({
                       } else if (data.type === 'RATING') {
                         return (
                           <div className="mb">
-                            <label
-                              className='q-fd-lebels'
+                           <Label
+                              className="q-fd-lebels"
+                              style={{color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,...styleConfig?.Label}}
                             >
-                              {data.question || 'Rating Scale'}
-                            </label>
+                              {`${data.question?data.question:"Rating Scale"}${data.required===true?"*":""} `}
+                            </Label>
                             <div
                               style={{
                                 display: 'flex',
-                                marginTop: '4px',
+                                marginTop: '6px',
                               }}
                             >
-                              {/* {[1, 2, 3, 4, 5].map((star) => (
-                                <div
-                                  className="q-star-div"
-                                  key={star}
-                                  onClick={() =>
-                                    handleRatingChange(data.criteriaId, star)
-                                  }
-                                >
-                                  {star <= rating ? blackStar : whiteStar}
-                                </div>
-                              ))} */}
+
                               <Rating
                                 count={5}
                                 getCurrentRating={(item) =>
@@ -756,14 +709,26 @@ const SurveyOffline = ({
                       </div>
                       <div className='q_fw_submit_box'>
                         <div className='q_feedback_text_submitted'>
-                          <div className='q_feedback_text_cont' style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}>
+                          <div className='q_feedback_text_cont' style={{ color: styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor }}>
                             Feedback Submitted
                           </div>
                           <div className='q_fw_submit_desc'
-                            style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}
+                            style={{ color: styleConfig?.Description?.color || BrandTheme?.secondaryColor || themeConfig?.secondaryColor }}
                           >Thanks for submitting your feedback with us. We appreciate your review and will assure you to surely consider them</div>
                         </div>
-                        <div onClick={() => setThanksPopup(false)} className='q_fw_submit_back'>Go to home!</div>
+                        <div
+                        onClick={() => setThanksPopup(false)}
+                        className="q_fw_submit_back"
+                        style={{
+                          ...styleConfig?.SecondaryButton,
+                          color:
+                            styleConfig?.SecondaryButton?.color ||
+                            BrandTheme?.secondaryColor ||
+                            themeConfig?.secondaryColor,
+                        }}
+                      >
+                        Go to home!
+                      </div>
                       </div>
                     </div>
                   </div>

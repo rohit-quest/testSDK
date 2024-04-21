@@ -115,7 +115,7 @@ function App() {
           }
         }
       >
-        {/* <TutorialPreview online={false} /> */}
+        {/* <TutorialPreview online={true} /> */}
 
         {/* <SpinTheWheel
                     userId={userId}
@@ -225,12 +225,13 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-        <FeedbackWorkflowPreview online={false} />
+        {/* <FeedbackWorkflowPreview online={true} /> */}
+
         {/* <ChallengesPreview online={true} /> */}
 
-        {/* <FeedbackPreview online={true} /> */}
+        {/* <FeedbackPreview online={false} /> */}
 
-        {/* <ReferEarnPreview/> */}
+        <ReferEarnPreview/>
 
         {/* <CrossSellingPreview/> */}
 

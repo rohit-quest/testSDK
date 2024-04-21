@@ -649,14 +649,14 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           background:
             styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor,
           height: styleConfig?.Form?.height || "auto",
-          borderRadius: styleConfig?.Form?.borderRadius || questThemeData?.borderRadius || BrandTheme?.borderRadius,
+          borderRadius: styleConfig?.Form?.borderRadius || QuestThemeData?.borderRadius || BrandTheme?.borderRadius,
           fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
           ...styleConfig?.Form,
         }}
         id="disabledClick"
       >
         {selectedOption && !submit ? (
-          <div style={{ borderRadius: styleConfig?.Form?.borderRadius || questThemeData?.borderRadius || BrandTheme?.borderRadius }}>
+          <div style={{ borderRadius: styleConfig?.Form?.borderRadius || QuestThemeData?.borderRadius || BrandTheme?.borderRadius }}>
             <TopBar
               style={{
                 topbarStyle: styleConfig?.TopBar,

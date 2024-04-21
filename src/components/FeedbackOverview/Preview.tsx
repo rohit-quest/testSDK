@@ -136,7 +136,7 @@ export default function FeedbackWorkflowPreview({
       QuestThemeData={{
           accentColor: 'blue',
           theme: 'light',
-          borderRadius: '50px',
+          borderRadius: '16px',
           buttonColor: 'green',
           images: []
       }}

@@ -5,7 +5,7 @@ import { QuestProvider } from '../QuestWrapper';
 import Survey from './Survey';
 import SurveyOffline from './OfflineComponent';
 
-export const questId = 'q-90642c61-398d-4f4d-bc19-6fdd00dda121';
+export const questId = 'q-3f8517b9-4bba-4891-9d99-46d328dfb98a';
 export const apiKey = 'k-fe5a805c-77ed-4cae-bd33-9591ebed2805'
 export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
 export const entityId = 'e-9850377b-f88f-4426-a2ac-56206c74655a'
@@ -211,28 +211,48 @@ export default function FeedbackPreview({ online = true }) {
         itemsPerPage={2}
         offlineFormData={state}
         showFooter={false}
+        BrandTheme={{
+            background: 'black',
+            fontFamily: 'Cursive',
+            primaryColor: 'white',
+            secondaryColor: 'grey',
+            tertiaryColor: 'white',
+            accentColor: 'blue',
+            borderRadius: '10px',
+            titleColor: 'yellow',
+            contentColor: '#3927F8',
+            buttonColor: '#3927F8',
+            logo: ''
+        }}
+        QuestThemeData={{
+            accentColor: 'blue',
+            theme: 'light',
+            borderRadius: '16px',
+            buttonColor: 'green',
+            images: []
+        }}
         styleConfig={{
-            Form: {
-                font: "sans",
-                // color: "red",
-                // backgroundColor: "gray"
-            },
-            Rating: {
-                RatingContainer: {
-                    color: "red",
+            // Form: {
+            //     font: "sans",
+            //     // color: "red",
+            //     // backgroundColor: "gray"
+            // },
+            // Rating: {
+            //     RatingContainer: {
+            //         color: "red",
 
-                },
-                SingleRating: {
-                    color: "red"
-                },
-                RatingText: {
-                    color: "green"
-                },
-                Hover: {
-                    color: "grey",
-                    background: "yellow",
-                }
-            }
+            //     },
+            //     SingleRating: {
+            //         color: "red"
+            //     },
+            //     RatingText: {
+            //         color: "green"
+            //     },
+            //     Hover: {
+            //         color: "grey",
+            //         background: "yellow",
+            //     }
+            // }
         }}
     />)
 }

@@ -79,6 +79,26 @@ export default function TutorialPreview({ online = true }) {
                         "status": false
                     }
                 ]}
+                BrandTheme={{
+                    background: 'black',
+                    fontFamily: 'Cursive',
+                    primaryColor: 'white',
+                    secondaryColor: 'grey',
+                    tertiaryColor: 'white',
+                    accentColor: 'blue',
+                    borderRadius: '10px',
+                    titleColor: 'yellow',
+                    contentColor: '#3927F8',
+                    buttonColor: '#3927F8',
+                    logo: ''
+                }}
+                QuestThemeData={{
+                    accentColor: 'blue',
+                    theme: 'light',
+                    borderRadius: '16px',
+                    buttonColor: 'green',
+                    images: []
+                }}
                 styleConfig={{
                     Form: {
                         // backgroundColor: "black",

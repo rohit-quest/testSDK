@@ -952,7 +952,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                           <div className="mb-4">
                             <Label
                               className="q-fd-lebels"
-                              style={styleConfig?.Label}
+                              style={{color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,...styleConfig?.Label}}
                             >
                               {`${data.question?data.question:"Rating Scale"}${data.required===true?"*":""} `}
                             </Label>

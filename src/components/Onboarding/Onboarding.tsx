@@ -218,7 +218,7 @@ function OnBoarding(props: QuestLoginProps) {
         showFooter = true
     } = props;
 
-    // let { design =[] } = props;
+
     const [formdata, setFormdata] = useState<FormData[] | []>([]);
     const [currentPage, setCurrentPage] = useState<number>(0);
     const [btnFlag, setButtonFlag] = useState<boolean>(false);
@@ -236,7 +236,7 @@ function OnBoarding(props: QuestLoginProps) {
     })
     const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
         accentColor: "",
-        background: "",
+        background:  "",
         borderRadius: "",
         buttonColor: "",
         contentColor: "",
@@ -968,7 +968,7 @@ function OnBoarding(props: QuestLoginProps) {
     return (
         formdata.length > 0 && (
             <div className="q-onb-home" style={{
-                background: styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor || "#fff", height: styleConfig?.Form?.height || "auto", borderRadius: styleConfig?.Form?.borderRadius || questThemeData?.borderRadius || BrandTheme?.borderRadius , fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
+                background: styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor || "#fff", height: styleConfig?.Form?.height || "auto", borderRadius:  styleConfig?.Form?.borderRadius || questThemeData?.borderRadius || BrandTheme?.borderRadius , fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
             }}>
                 <div
                     className="q-onb-ch"
@@ -1279,7 +1279,10 @@ function OnBoarding(props: QuestLoginProps) {
                                 </div>
                             ))}
                     </div>
-                    {(formdata && showFooter) && <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />}
+                    {(formdata && showFooter) &&  <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, 
+            borderBottomLeftRadius: styleConfig?.Footer?.borderTopStyle || styleConfig?.Form?.borderTopStyle || questThemeData?.borderRadius || BrandTheme?.borderRadius,
+            borderBottomRightRadius: styleConfig?.Footer?.borderTopStyle || styleConfig?.Form?.borderTopStyle || questThemeData?.borderRadius || BrandTheme?.borderRadius,
+            ...styleConfig?.Footer }} />}
                 </div>
             </div>
         )

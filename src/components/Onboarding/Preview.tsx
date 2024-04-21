@@ -195,6 +195,26 @@ export default function OnBoardingPreview({ online = true }: { online?: boolean 
       singleChoose="modal1"
       multiChoice="modal2"
       design={[[1, 2], [3, 4], [5, 6]]}
+      BrandTheme={{
+        background: 'black',
+        fontFamily: 'Cursive',
+        primaryColor: 'white',
+        secondaryColor: 'grey',
+        tertiaryColor: 'white',
+        accentColor: 'blue',
+        borderRadius: '10px',
+        titleColor: 'yellow',
+        contentColor: '#3927F8',
+        buttonColor: '#3927F8',
+        logo: ''
+    }}
+    QuestThemeData={{
+        accentColor: 'blue',
+        theme: 'light',
+        borderRadius: '30px',
+        buttonColor: 'green',
+        images: []
+    }}
 
       headingScreen={[{ name: "Tell us about yourself", desc: "this is description" },
       { name: "Tell us more about your company", desc: "description for this " },
