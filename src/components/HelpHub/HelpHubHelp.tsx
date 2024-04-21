@@ -27,7 +27,7 @@ const HelpHubTasks = (props: HelpHubFaqTypes) => {
 
   return (
     <div
-      className={"helpHubHelpCont"}
+      className={"helpHubHelpCont animatedDissolve"}
       style={{
         background: themeConfig?.backgroundColor || "#fff",
         ...styleConfig?.Help?.Form,
@@ -95,9 +95,10 @@ const HelpHubTasks = (props: HelpHubFaqTypes) => {
                 (value: QuestCriteriaWithStatusType, index: number) => {
                   return (
                     <div
-                      className={`q-helphub-help-single-faq-${
-                        faqIndex === index ? "open" : "close"
-                      }`}
+                      // className={`q-helphub-help-single-faq-${
+                      //   faqIndex === index ? "open" : "close"
+                      // }`}
+                      className="q-helphub-help-single-faq"
                       key={index}
                       onClick={() => {
                         index === faqIndex
@@ -128,7 +129,9 @@ const HelpHubTasks = (props: HelpHubFaqTypes) => {
                       </div>
 
                       <div
-                        className="ans"
+                        className={`${
+                          faqIndex === index ? "ansOpen" : "ansClose"
+                        }`}
                         style={{
                           color: themeConfig?.secondaryColor,
                           ...styleConfig?.Help?.Card?.SubHeading,

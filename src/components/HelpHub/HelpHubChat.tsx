@@ -315,12 +315,39 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     //   );
     // };
   }, []);
+  const [updateOutAnimation, setUpdateOutAnimation] = useState<boolean | null>(
+    null
+  );
+  const [updateOneoutAnimation, setUpdateOneOutAnimation] = useState<
+    boolean | null
+  >(null);
 
+  const [updateOutTempAnimation, setUpdateOutTempAnimation] = useState<
+    boolean | null
+  >(null);
+
+  useEffect(() => {
+    console.log("updateOutAnimation", updateOutAnimation);
+    console.log("updateOneoutAnimation", updateOneoutAnimation);
+  }, [updateOneoutAnimation, updateOutAnimation]);
   return (
     <>
       {!showPersonalChat && (
         <div
-          className={"helpHubChat"}
+          // className={`helpHubChat`}
+          // // className={selectedSection === "Home" ? "animatedComponent" : ""}
+          // style={{
+          //   background: themeConfig?.backgroundColor || "#fff",
+          //   ...styleConfig?.Chat?.Form,
+          // }}
+          className={`helpHubChat animatedDissolve ${
+            updateOutAnimation
+              ? "updateOutAnimation"
+              : updateOutTempAnimation
+              ? "updateInAnimation"
+              : ""
+          }`}
+          // className={selectedSection === "Home" ? "animatedComponent" : ""}
           style={{
             background: themeConfig?.backgroundColor || "#fff",
             ...styleConfig?.Chat?.Form,
@@ -391,10 +418,27 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                   return (
                     <div
                       className="q-helphub-chat-detail"
+                      // onClick={() => {
+                      //   setShowBottomNavigation(false);
+                      //   setShowPersonalChat((prev) => !prev);
+                      //   setScrollWidthSet((prev) => !prev);
+
+                      // }}
                       onClick={() => {
-                        setShowBottomNavigation(false);
-                        setShowPersonalChat((prev) => !prev);
+                        // setShowBottomNavigation(false);
+                        // setShowPersonalChat((prev) => !prev);
+                        setUpdateOutAnimation(true);
                         setScrollWidthSet((prev) => !prev);
+
+                        // setUpdateOneData(value);
+
+                        setTimeout(() => {
+                          setShowPersonalChat((prev) => !prev);
+                          // setshowOneUpdate((prev) => !prev);
+                          setShowBottomNavigation((prev) => !prev);
+                          setUpdateOneOutAnimation(false);
+                          setScrollWidthSet((prev) => !prev);
+                        }, 100);
                       }}
                     >
                       {/* <div className="q-helphub-chat-sender-profile">
@@ -452,9 +496,22 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
             >
               <div
                 onClick={() => {
-                  setShowBottomNavigation(false);
-                  setShowPersonalChat(true);
+                  setUpdateOutAnimation(true);
                   setScrollWidthSet((prev) => !prev);
+
+                  // setUpdateOneData(value);
+
+                  setTimeout(() => {
+                    setShowPersonalChat((prev) => !prev);
+                    // setshowOneUpdate((prev) => !prev);
+                    setShowBottomNavigation((prev) => !prev);
+                    setUpdateOneOutAnimation(false);
+                    setScrollWidthSet((prev) => !prev);
+                  }, 100);
+
+                  // setShowBottomNavigation(false);
+                  // setShowPersonalChat(true);
+                  // setScrollWidthSet((prev) => !prev);
                 }}
                 style={{
                   background: themeConfig?.buttonColor,
@@ -481,17 +538,38 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
       )}
 
       {showPersonalChat && (
-        <div className="quest-personal-chat-cont">
+        <div
+          // className={`quest-personal-chat-cont ${
+          //   showPersonalChat ? "animatedComponentIn" : "animatedComponentOut"
+          // }`}
+          className={`quest-personal-chat-cont ${
+            !updateOneoutAnimation ? "updateOneIn" : "updateOneOut"
+          }`}
+        >
           {/* back and chats */}
           <div className="quest-personal-chat-head-cont">
             <div className="quest-head-back-cont">
               <div
                 className="quest-back-btn"
                 style={{ cursor: "pointer" }}
+                // onClick={() => {
+                //   setShowBottomNavigation(true);
+                //   setShowPersonalChat(false);
+                //   setScrollWidthSet((prev) => !prev);
+                // }}
                 onClick={() => {
-                  setShowBottomNavigation(true);
-                  setShowPersonalChat(false);
+                  // setShowBottomNavigation(true);
+                  // setShowPersonalChat(false);
                   setScrollWidthSet((prev) => !prev);
+
+                  setUpdateOneOutAnimation((prev) => !prev);
+                  setUpdateOutTempAnimation(true);
+                  setTimeout(() => {
+                    setShowBottomNavigation(true);
+                    setUpdateOutAnimation(false);
+                    // setScrollWidthSet((prev) => !prev);
+                    setShowPersonalChat(false);
+                  }, 250);
                 }}
               >
                 <HelphubSvg type={"BackButton"} />

@@ -81,18 +81,49 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
   };
 
   const [showOneUpdate, setshowOneUpdate] = useState(false);
-  const [updateOneData, setUpdateOneData] = useState<QuestCriteriaWithStatusType>();
+  const [updateOneData, setUpdateOneData] = useState<QuestCriteriaWithStatusType>({});
+
+  const [updateOneoutAnimation, setUpdateOneOutAnimation] = useState<
+    boolean | null
+  >(null);
+  const [updateOutAnimation, setUpdateOutAnimation] = useState<boolean | null>(
+    null
+  );
+
+  const [updateOutTempAnimation, setUpdateOutTempAnimation] = useState<
+    boolean | null
+  >(null);
+
   const handleShowUpdate = (value: any) => {
+    setUpdateOutAnimation(true);
     setUpdateOneData(value);
-    setshowOneUpdate((prev) => !prev);
-    setShowBottomNavigation((prev) => !prev);
+
+    setTimeout(() => {
+      setshowOneUpdate((prev) => !prev);
+      setShowBottomNavigation((prev) => !prev);
+      setUpdateOneOutAnimation(false);
+    }, 100);
   };
 
+  useEffect(() => {
+    console.log("updateOutAnimation", updateOutAnimation);
+    console.log("updateOneoutAnimation", updateOneoutAnimation);
+  }, [updateOneoutAnimation, updateOutAnimation]);
+
+  // console.log(object);
   return (
     <>
       {!showOneUpdate && (
         <div
-          className={"helpHubUpdatesCont"}
+          // className={"helpHubUpdatesCont"}
+          // className={"helpHubUpdatesCont"}
+          className={`helpHubUpdatesCont animatedDissolve ${
+            updateOutAnimation
+              ? "updateOutAnimation"
+              : updateOutTempAnimation
+              ? "updateInAnimation"
+              : ""
+          }`}
           style={{
             background: themeConfig?.backgroundColor,
             ...styleConfig?.Updates?.Form,
@@ -213,14 +244,25 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                       >
                         <div className="update-img">
                           <div
+                            // style={{
+                            //   width: "68px",
+                            //   height: "114.079px",
+                            //   borderRadius: "2.237px",
+                            //   border: "0.447px solid var(--Primary, #9035ff)",
+                            //   background: `url(${UpdatesImage}) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
+                            //   overflow: "hidden",
+                            //   boxSizing: "border-box",
+                            //   backgroundPosition: "center",
+                            //   objectFit: "cover",
+                            //   objectPosition: "center top",
+                            // }}
                             style={{
-                              width: "68px",
+                              width: "60px",
                               height: "114.079px",
+                              flexShrink: "0",
                               borderRadius: "2.237px",
-                              border: "0.447px solid var(--Primary, #9035ff)",
+                              border: " 0.447px solid var(--Primary, #9035FF)",
                               background: `url(${value?.imageUrl || UpdatesImage}) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
-                              overflow: "hidden",
-                              boxSizing: "border-box",
                             }}
                           ></div>
                           {/* <img src={UpdatesImage} alt="" /> */}
@@ -313,6 +355,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                         key={index}
                         onClick={() => {
                           handleShowUpdate(value);
+
                           readUpdate(
                             value?.criteriaId
                             // value?.data?.metadata?.linkActionUrl
@@ -322,13 +365,12 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                         <div className="update-img">
                           <div
                             style={{
-                              width: "68px",
+                              width: "60px",
                               height: "114.079px",
+                              flexShrink: "0",
                               borderRadius: "2.237px",
-                              border: "0.447px solid var(--Primary, #9035ff)",
+                              border: " 0.447px solid var(--Primary, #9035FF)",
                               background: `url(${value?.imageUrl || UpdatesImage}) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
-                              overflow: "hidden",
-                              boxSizing: "border-box",
                             }}
                           ></div>
                           {/* <img src={UpdatesImage} alt="" /> */}
@@ -380,7 +422,12 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
       )}
 
       {showOneUpdate && (
-        <div className="q-update-one-container">
+        <div
+          // className="q-update-one-container"
+          className={`q-update-one-container ${
+            !updateOneoutAnimation ? "updateOneIn" : "updateOneOut"
+          }`}
+        >
           {/* back and chats */}
           <div
             className="q-update-one-container-header"
@@ -393,8 +440,15 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
               className="image-div"
               style={{ cursor: "pointer" }}
               onClick={() => {
-                setShowBottomNavigation(true);
-                setshowOneUpdate((prev) => !prev);
+                setUpdateOneOutAnimation((prev) => !prev);
+                setUpdateOutTempAnimation(true);
+                setTimeout(() => {
+                  setShowBottomNavigation(true);
+                  setUpdateOutAnimation(false);
+                  setshowOneUpdate((prev) => !prev);
+                }, 250);
+                // setShowBottomNavigation(true);
+                // setshowOneUpdate((prev) => !prev);
               }}
             >
               <HelphubSvg type={"BackButton"} />
@@ -471,14 +525,15 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
               ></div> */}
               <div
                 style={{
-                  width: "188px",
-                  height: "316px",
-                  borderRadius: "8px",
-                  border: "0.447px solid var(--Primary, #9035ff)",
+                  // width: "188px",
+                  // width: "50%",
+                  // height: "316px",
+                  // borderRadius: "8px",
+                  // border: "0.447px solid var(--Primary, #9035ff)",
                   // background: `url(${UpdatesImage}) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
-                  background: `url(${updateOneData?.imageUrl || UpdatesImage}) lightgray -10.312px -8.675px / 110.971% 102.745% no-repeat`,
-                  overflow: "hidden",
-                  boxSizing: "border-box",
+                  background: `url(${updateOneData?.imageUrl || UpdatesImage})  lightgray -10.312px -8.675px / 110.971% 102.745% no-repeat`,
+                  // overflow: "hidden",
+                  // boxSizing: "border-box",
                 }}
               ></div>
               {/* <img src={UpdatesImage} alt="" /> */}

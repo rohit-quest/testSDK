@@ -1,6 +1,10 @@
 import { CSSProperties, Dispatch, SetStateAction } from "react";
 
 type HelphubStyleConfig = {
+  Main?: {
+    height?: string;
+    width?: string;
+  };
   Home?: {
     Form?: CSSProperties;
     BannerText?: CSSProperties;
@@ -107,6 +111,10 @@ export interface HelpHubProps {
   setClaimStatusUpdates?: Dispatch<SetStateAction<string[]>>;
 }
 export interface HelpHubPropsOffline {
+  Main?: {
+    height?: string;
+    width?: string;
+  };
   userId: string;
   token: string;
   questId?: string;
