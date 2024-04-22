@@ -1,0 +1,96 @@
+
+/* tour-helper */
+.tour-helper{
+  width: 250px;
+  background-color: white;
+  --padding: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.tour-image{
+  position: relative;
+  height: 150px;
+}
+.tour-image > img{
+  position: relative;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  z-index: 3;
+}
+.tour-image .tour-back-btn{
+  position: absolute;
+  top: var(--padding);
+  left: var(--padding);
+  cursor: pointer;
+  z-index: 4;
+}
+.tour-image .tour-background{
+  background-color: #F4EBFF;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+.tour-image .tour-background > div{
+  height: 100%;
+  aspect-ratio: 1/1;
+  border: 1px solid black;
+  border-radius: 50%;
+  box-sizing: border-box;
+  position: absolute;
+  --distance: 30%
+}
+.tour-image .tour-background > div:nth-child(1){
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(calc(-50% + var(--distance)));
+  background-color: #D1ACFF;
+  z-index: 1;
+}
+.tour-image .tour-background > div:nth-child(2){
+  top: 50%;
+  left: 50%;
+  transform: translateX(calc(-50% - var(--distance))) translateY(calc(-50% - var(--distance)));
+}
+.tour-image .tour-background > div:nth-child(3){
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  transform: translateX(calc(-50% + var(--distance))) translateY(calc(-50% - var(--distance)));
+}
+.tour-content{
+  padding: var(--padding);
+}
+.tour-content-info{
+  color: gray;
+}
+.tour-content-description{
+  font-size: 16px;
+  color: gray;
+}
+.tour-content .tour-content-actions{
+  display: flex;
+  gap: 20px;
+}
+.tour-content > .tour-content-actions > button{
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid lightgray;
+  background-color: white;
+  white-space: nowrap;
+}
+.tour-content > .tour-content-actions > button:last-child{
+  color: white;
+  background: linear-gradient(84.15deg, #9035FF 0.36%, #0065FF 100.36%);
+}
+.tour-helper .tour-watermark{
+  padding: 10px var(--padding);
+  background-color: rgb(242, 242, 242);
+  color: gray;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
