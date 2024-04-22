@@ -138,11 +138,7 @@ interface FeedbackProps {
     },
   };
   showFooter?: boolean;
-<<<<<<< Updated upstream
-  enableVariation?: boolean
-=======
   enableVariation?: boolean;
->>>>>>> Stashed changes
 }
 
 const Survey: React.FC<FeedbackProps> = ({

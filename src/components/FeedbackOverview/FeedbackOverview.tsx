@@ -255,11 +255,7 @@ interface feedbackCompProps {
     },
     ThanksPopUp?:React.CSSProperties;
   };
-<<<<<<< Updated upstream
-  enableVariation?:boolean;
-=======
   enableVariation?: boolean
->>>>>>> Stashed changes
 }
 interface FormDataItem {
   type?: string;
@@ -480,13 +476,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         setResult(headers, userId);
       }
 
-<<<<<<< Updated upstream
-      function setResult(headers: object, userId: string) {
-        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${selectedQuest}/verify-all?userId=${userId}`;
-=======
       function setResult(headers: { userId ? : string }, userId: string) {
         const request = `${BACKEND_URL}api/entities/${entityId}/quests/${selectedQuest}/verify-all?userId=${userId}&getVariation=${enableVariation}`;
->>>>>>> Stashed changes
         const requestData = {
           criterias: ansArr,
           userId: headers?.userId,

@@ -55,11 +55,7 @@ const Feedback: React.FC<FeedbackProps> = ({
   onCancel = ()=>{},
   uniqueEmailId,
   uniqueUserId,
-<<<<<<< Updated upstream
-  enableVariation
-=======
   enableVariation = false
->>>>>>> Stashed changes
 }) => {
   interface FormDataItem {
     type?: string;

@@ -49,11 +49,7 @@ interface TutorialProps {
 }
  footerBackgroundColor?:string;
  showFooter?: boolean;
-<<<<<<< Updated upstream
  enableVariation?: boolean
-=======
- enableVariation?: boolean;
->>>>>>> Stashed changes
 }
 
 const TutorialScreen: React.FC<TutorialProps> = ({

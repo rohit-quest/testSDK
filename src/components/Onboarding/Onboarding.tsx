@@ -130,15 +130,9 @@ interface QuestLoginProps {
             currentTabColor?: string,
             pendingTabColor?: string
         }
-<<<<<<< Updated upstream
-        Footer? : CSSProperties,
-        enableVariation?: boolean
-    }
-=======
         Footer? : CSSProperties
     },
     enableVariation?: boolean
->>>>>>> Stashed changes
 }
 
 interface FormData {
