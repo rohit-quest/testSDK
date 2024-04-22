@@ -14,7 +14,7 @@ import {
   QuestCriteriaWithStatusType,
   QuestTypes,
 } from "./HelpHub.type";
-import { createDefaultQuest, getDefaultQuest } from "./Helphub.service";
+import { createDefaultQuest, getDefaultQuest, getEntityDetails } from "./Helphub.service";
 import config from "../../config";
 
 const HelpHub = (props: HelpHubProps) => {
@@ -53,6 +53,7 @@ const HelpHub = (props: HelpHubProps) => {
   const [updateData, setUpdateData] = useState<QuestCriteriaWithStatusType[]>(
     []
   );
+  const [entityImage,setEntityImage]=useState<string>("");
 
   useEffect(() => {
     setTaskStatus(
@@ -63,7 +64,7 @@ const HelpHub = (props: HelpHubProps) => {
   }, [claimStatusTasks]);
 
   useEffect(() => {
-    console.log(showBottomNavigation);
+    // console.log(showBottomNavigation);
   }, [showBottomNavigation]);
 
   const getOrCreateQuest = async () => {
@@ -76,6 +77,7 @@ const HelpHub = (props: HelpHubProps) => {
       token,
       apiKey
     );
+    console.log(getResult)
     if (!getResult?.success) {
       let createQuest = await createDefaultQuest(
         BACKEND_URL,
@@ -176,8 +178,24 @@ const HelpHub = (props: HelpHubProps) => {
     }
   };
 
+  const entityDetails=async()=>{
+    let qId = questId || "q-default-helphub";
+    let {data} = await getEntityDetails(
+      BACKEND_URL,
+      entityId,
+      qId,
+      userId,
+      token,
+      apiKey
+    );
+    console.log(data.imageUrl)
+    setEntityImage(data.imageUrl)
+    // https://staging.questprotocol.xyz/api/entities/e-9850377b-f88f-4426-a2ac-56206c74655a
+  }
+
   useEffect(() => {
     getOrCreateQuest();
+    entityDetails();
   }, []);
 
   useEffect(() => {
@@ -246,6 +264,7 @@ const HelpHub = (props: HelpHubProps) => {
                 onlineComponent={onlineComponent}
                 showFeedback={showFeedback}
                 setShowFeedback={setShowFeedback}
+                entityImage={entityImage}
               />
             ) : (
               ""
@@ -261,6 +280,7 @@ const HelpHub = (props: HelpHubProps) => {
                 styleConfig={styleConfig}
                 showBottomNavigation={showBottomNavigation}
                 setShowBottomNavigation={setShowBottomNavigation}
+                entityImage={entityImage}
               />
             ) : (
               ""
@@ -289,6 +309,7 @@ const HelpHub = (props: HelpHubProps) => {
                 onlineComponent={onlineComponent}
                 showBottomNavigation={showBottomNavigation}
                 setShowBottomNavigation={setShowBottomNavigation}
+                entityImage={entityImage}
               />
             ) : (
               ""

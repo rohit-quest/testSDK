@@ -440,6 +440,7 @@
 
 .hideNav {
   height: 0;
+  opacity: 0;
   max-height: 0px;
   transition: max-height 0.3s ease;
 }
@@ -1652,7 +1653,8 @@
 
 /* open  */
 .q-helphub-help-single-faq > .ansOpen {
-  max-height: 50px;
+  /* max-height: 50px; */
+  height: 100%;
   align-self: stretch;
   color: var(--Neutral-White-500, #b9b9b9);
   padding-top: 8px;
@@ -1871,7 +1873,14 @@
   background: var(--Primary-Grape-100, #f4ebff);
   overflow: hidden;
   box-sizing: border-box;
+  
+}
+.q-helphub-updates-single-update-read > .update-img>div {
+  width: 60px;
   position: relative;
+  /* object-fit: contain; */
+  object-fit: cover;
+  
 }
 .q-helphub-updates-single-update-read > .update-img > img {
   width: 100%; /* Make the image width 100% of the container */
@@ -2730,8 +2739,9 @@ input[type="file"] {
 }
 
 .chat-profile-img-receiver img {
-  width: 14px;
-  height: 14px;
+  width: 100%;
+  height: 100%;
+  border-radius: 28px;
 }
 
 /* typng indicators */
@@ -3133,4 +3143,14 @@ input[type="file"] {
 /* Apply dissolve animation to the component */
 .animatedDissolve {
   animation: dissolve 0.3s ease forwards;
+}
+
+
+.no-conversation{
+  display: flex;
+  padding: 20px 0;
+  justify-content: center;
+  align-self: stretch;
+  overflow-y: scroll;
+  box-sizing: border-box;
 }

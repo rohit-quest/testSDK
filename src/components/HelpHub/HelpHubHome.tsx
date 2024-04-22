@@ -35,6 +35,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
     onlineComponent,
     showFeedback = true,
     setShowFeedback,
+    entityImage
   } = props;
 
   const [allQuestsData, setAllQuestsData] = useState<
@@ -104,7 +105,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
       {/* upper div: div 1 */}
       <div className={"MainImgCont"}>
         <div className={"QuestWhiteLogoCont"}>
-          <img src={QuestWhiteLogo} />
+          <img src={entityImage||QuestWhiteLogo} />
         </div>
 
         <div className={"helpHubTextCont"}>

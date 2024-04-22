@@ -27,11 +27,13 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
     onlineComponent,
     setShowBottomNavigation,
     showBottomNavigation,
+    entityImage
   } = props;
   const [filterData, setFilterData] = useState<QuestCriteriaWithStatusType[]>(
     []
   );
   // const [claimStatus, setClaimStatus] = useState<string[]>([]);
+  console.log(updateData)
   const [searchData, setSearchData] = useState<string | number>("");
   const { apiKey, entityId, apiType, themeConfig } = useContext(
     QuestContext.Context
@@ -106,11 +108,11 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
   };
 
   useEffect(() => {
-    console.log("updateOutAnimation", updateOutAnimation);
-    console.log("updateOneoutAnimation", updateOneoutAnimation);
+    // console.log("updateOutAnimation", updateOutAnimation);
+    // console.log("updateOneoutAnimation", updateOneoutAnimation);
   }, [updateOneoutAnimation, updateOutAnimation]);
 
-  // console.log(object);
+  // console.log(updateData);
   return (
     <>
       {!showOneUpdate && (
@@ -262,7 +264,11 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                               flexShrink: "0",
                               borderRadius: "2.237px",
                               border: " 0.447px solid var(--Primary, #9035FF)",
-                              background: `url(${value?.imageUrl || UpdatesImage}) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
+                              background: `url(${value?.imageUrl || entityImage ||  UpdatesImage}) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
+                              objectFit:"contain",
+                              backgroundSize:"cover",
+                              backgroundPosition:"center top"
+
                             }}
                           ></div>
                           {/* <img src={UpdatesImage} alt="" /> */}
@@ -531,9 +537,10 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                   // borderRadius: "8px",
                   // border: "0.447px solid var(--Primary, #9035ff)",
                   // background: `url(${UpdatesImage}) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
-                  background: `url(${updateOneData?.imageUrl || UpdatesImage})  lightgray -10.312px -8.675px / 110.971% 102.745% no-repeat`,
+                  background: `url(${updateOneData?.imageUrl || entityImage || UpdatesImage})  lightgray -10.312px -8.675px / 110.971% 102.745% no-repeat`,
                   // overflow: "hidden",
                   // boxSizing: "border-box",
+                  objectFit:"contain"
                 }}
               ></div>
               {/* <img src={UpdatesImage} alt="" /> */}

@@ -82,7 +82,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
     <div
       className={"helpHubTaskCont animatedDissolve"}
       style={{
-        background: themeConfig?.backgroundColor || "#fff",
+        background: themeConfig?.backgroundColor ,
         ...styleConfig?.Tasks?.Form,
       }}
     >

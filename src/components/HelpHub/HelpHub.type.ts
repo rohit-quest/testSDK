@@ -149,6 +149,7 @@ export interface HelpHubHomeTypes {
   onlineComponent?: boolean;
   showFeedback?: boolean;
   setShowFeedback?: Dispatch<SetStateAction<boolean>>;
+  entityImage?:string
 }
 
 export interface HelpHubChatTypes {
@@ -161,6 +162,7 @@ export interface HelpHubChatTypes {
   contentConfig?: HelpHubOthersContentTypes;
   showBottomNavigation?: boolean;
   setShowBottomNavigation?: Dispatch<SetStateAction<boolean>>;
+  entityImage?:string
 }
 
 export interface HelpHubFaqTypes {
@@ -181,6 +183,7 @@ export interface HelpHubUpdatesTypes {
   onlineComponent?: boolean;
   showBottomNavigation?: boolean;
   setShowBottomNavigation?: Dispatch<SetStateAction<boolean>>;
+  entityImage?:string
 }
 
 export interface HelpHubTasksTypes {

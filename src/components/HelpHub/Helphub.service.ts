@@ -245,6 +245,32 @@ export const getDefaultQuest = async (
   }
 };
 
+export const getEntityDetails = async (
+  backend_url: string,
+  entityId: string,
+  questId: string,
+  userId: string,
+  token: string,
+  apikey: string
+) => {
+  try {
+    let headers = {
+      userId,
+      token,
+      entityId,
+      apikey,
+    };
+
+    let request = `${backend_url}api/entities/${entityId}`;
+
+    let response = await axios(request, { headers });
+
+    return response?.data;
+  } catch (err) {
+    return err?.response?.data;
+  }
+};
+
 export const claimQuest = async (
   backend_url: string,
   entityId: string,

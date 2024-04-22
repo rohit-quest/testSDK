@@ -161,7 +161,7 @@ function App() {
           userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
           /> */}
 
-        <HelpHubPreview online={false} />
+        <HelpHubPreview online={true} />
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
         {/* <GamifiedQuizPreview online={true} /> */}

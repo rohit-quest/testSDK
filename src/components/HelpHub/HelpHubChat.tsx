@@ -39,6 +39,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     userId,
     showBottomNavigation,
     setShowBottomNavigation,
+    entityImage
   } = props;
 
   const { themeConfig } = useContext(QuestContext.Context);
@@ -349,7 +350,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
           }`}
           // className={selectedSection === "Home" ? "animatedComponent" : ""}
           style={{
-            background: themeConfig?.backgroundColor || "#fff",
+            background: themeConfig?.backgroundColor,
             ...styleConfig?.Chat?.Form,
           }}
         >
@@ -392,7 +393,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
           {/*  */}
           <div className="q-helphub-chatpage-lower-container">
             {/* search and chats container */}
-            <div className="q-helphub-search-chats-container">
+            {(data.length >0)?<div className="q-helphub-search-chats-container">
               {/* search  */}
               <div className="search-outer-div">
                 <div
@@ -445,7 +446,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                         {value.profile}
                       </div> */}
                       <img
-                        src={SenderImg}
+                        src={entityImage|| SenderImg}
                         alt=""
                         className="q-helphub-chat-sender-profile"
                       />
@@ -484,7 +485,9 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                   );
                 })}
               </div>
-            </div>
+            </div>:(<div className="no-conversation">
+            No Conversation Available
+          </div>)}
 
             {/*send button container */}
             <div
@@ -534,6 +537,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
 
             {/* personal chat one to one  */}
           </div>
+          
         </div>
       )}
 
@@ -599,7 +603,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                     // ...styleConfig?.Tasks?.Card?.SubHeading,
                   }}
                 >
-                  General feedback
+                  How can we help?
                 </div>
                 <div
                   className="q-chat-personal-container-body-description"
@@ -609,18 +613,18 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                     // ...styleConfig?.Tasks?.Card?.SubHeading,
                   }}
                 >
-                  Give general feedback of this page
+                  Currently replying in under a minute
                 </div>
               </div>
 
               <div className="q-chat-personal-container-body-icons">
                 <div
-                  className="q-chat-personal-container-body-icons-img"
+                  className="q-chat-personal-container-body-icons-img1"
                   style={{
                     zIndex: 3,
                   }}
                 >
-                  <img src={QuestWhiteLogo} />
+                  <img src={entityImage||QuestWhiteLogo} />
                 </div>
                 <div
                   className="q-chat-personal-container-body-icons-img1"
@@ -651,7 +655,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                     >
                       {message.receiver && (
                         <div className="chat-profile-img-receiver">
-                          <img src={QuestWhiteLogo} />
+                          <img src={entityImage || QuestWhiteLogo} />
                         </div>
                       )}
 

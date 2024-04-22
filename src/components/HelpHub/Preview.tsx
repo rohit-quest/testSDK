@@ -303,7 +303,7 @@ export default function HelpHubPreview({ online = true }) {
       >
         <HelpHub
           token={
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxMzE2NDEzOCwiZXhwIjoxNzEzNzY4OTM4fQ.tZENNsLVFUkWOMcmoOqKEVvAx97PLBZKDZGzhARP_tc"
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxMzc3MDU4MCwiZXhwIjoxNzE0Mzc1MzgwfQ.JxcNxIbyNIU_upYCE7l4i2REDoR72PjITCGMWWxrdZM"
           }
           userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
           onlineComponent={online}
@@ -346,8 +346,8 @@ export default function HelpHubPreview({ online = true }) {
           // }}
           styleConfig={{
             Main: {
-              height: "600px",
-              width: "680px",
+              height: "700px",
+              width: "400px",
             },
             // Chat: {
             //   Card: {
@@ -497,15 +497,15 @@ export default function HelpHubPreview({ online = true }) {
     >
       <HelpHubOffline
         token={
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxMjIwMjIxMCwiZXhwIjoxNzEyODA3MDEwfQ.yCkWcD5yVykmqAmiRKrzdTmqVsptlfq2VPBO4eztNYY"
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxMzE2NDEzOCwiZXhwIjoxNzEzNzY4OTM4fQ.tZENNsLVFUkWOMcmoOqKEVvAx97PLBZKDZGzhARP_tc"
         }
         userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
         // ParentQuest={}
         // ChildQuest={}
         styleConfig={{
           Main: {
-            height: "400px",
-            width: "580px",
+            height: "700px",
+            width: "400px",
           },
         }}
         ParentQuest={parentQuest}

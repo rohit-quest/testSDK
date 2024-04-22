@@ -8,7 +8,7 @@ import config from "../../config";
 
 const HelpHubTasks = (props: HelpHubFaqTypes) => {
   const { faqData, contentConfig, styleConfig } = props;
-
+console.log(faqData)
   const [faqIndex, setFaqIndex] = useState<number | undefined>(undefined);
   const [filterData, setFilterData] = useState<QuestCriteriaWithStatusType[]>(
     []
@@ -29,7 +29,7 @@ const HelpHubTasks = (props: HelpHubFaqTypes) => {
     <div
       className={"helpHubHelpCont animatedDissolve"}
       style={{
-        background: themeConfig?.backgroundColor || "#fff",
+        background: themeConfig?.backgroundColor,
         ...styleConfig?.Help?.Form,
       }}
     >
@@ -92,8 +92,8 @@ const HelpHubTasks = (props: HelpHubFaqTypes) => {
 
             <div className="q-helphub-help-total-faqs-cont">
               {filterData?.map(
-                (value: QuestCriteriaWithStatusType, index: number) => {
-                  return (
+                (value: QuestCriteriaWithStatusType, index: number) => {                  
+                  return (value.type==="VIEW_ONLY_TEXT" &&
                     <div
                       // className={`q-helphub-help-single-faq-${
                       //   faqIndex === index ? "open" : "close"
