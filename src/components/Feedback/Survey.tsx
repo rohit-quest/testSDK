@@ -138,7 +138,11 @@ interface FeedbackProps {
     },
   };
   showFooter?: boolean;
+<<<<<<< Updated upstream
   enableVariation?: boolean
+=======
+  enableVariation?: boolean;
+>>>>>>> Stashed changes
 }
 
 const Survey: React.FC<FeedbackProps> = ({
@@ -447,7 +451,7 @@ const Survey: React.FC<FeedbackProps> = ({
         answer: [answer[ans?.criteriaId] || ""],
         criteriaId: ans?.criteriaId || "",
       }));
-      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`;
+      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}&getVariation=${enableVariation}`;
       const requestData = {
         criterias: ansArr,
         userId: headers.userId,

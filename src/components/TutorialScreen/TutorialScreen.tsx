@@ -47,6 +47,7 @@ const Tutorial: React.FC<TutorialProps> = ({
   textColor,
   isOpen = true,
   showFooter = true,
+  enableVariation = false
   onClose = () => { },
   enableVariation = false
 }) => {
@@ -72,7 +73,7 @@ const Tutorial: React.FC<TutorialProps> = ({
     const json = {
       criteriaId: id,
     };
-    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
+    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}&getVariation=${enableVariation}`;
 
     setShowLoader(true);
     axios

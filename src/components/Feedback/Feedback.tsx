@@ -55,7 +55,11 @@ const Feedback: React.FC<FeedbackProps> = ({
   onCancel = ()=>{},
   uniqueEmailId,
   uniqueUserId,
+<<<<<<< Updated upstream
   enableVariation
+=======
+  enableVariation = false
+>>>>>>> Stashed changes
 }) => {
   interface FormDataItem {
     type?: string;
@@ -226,7 +230,7 @@ const Feedback: React.FC<FeedbackProps> = ({
         answer: [answer[ans?.criteriaId] || ''],
         criteriaId: ans?.criteriaId || '',
       }));
-      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${userId}`;
+      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${userId}&getVariation=${enableVariation}`;
       const requestData = {
         criterias: ansArr,
         userId,

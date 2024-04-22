@@ -49,7 +49,11 @@ interface TutorialProps {
 }
  footerBackgroundColor?:string;
  showFooter?: boolean;
+<<<<<<< Updated upstream
  enableVariation?: boolean
+=======
+ enableVariation?: boolean;
+>>>>>>> Stashed changes
 }
 
 const TutorialScreen: React.FC<TutorialProps> = ({
@@ -94,7 +98,7 @@ const TutorialScreen: React.FC<TutorialProps> = ({
     const json = {
       criteriaId: id,
     };
-    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
+    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}&getVariation=${enableVariation}`;
 
     setShowLoader(true);
     axios

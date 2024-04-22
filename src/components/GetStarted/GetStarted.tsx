@@ -103,6 +103,10 @@ function GetStarted({
   onLinkTrigger = (url: string, index: number) => { window.location.href = url },
   showFooter = true,
   styleConfig,
+<<<<<<< Updated upstream
+=======
+  isImageOpen,
+>>>>>>> Stashed changes
   enableVariation = false
 }: GetStartedProps) {
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
@@ -139,7 +143,7 @@ function GetStarted({
       criteriaId: id,
     };
 
-    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${headers.userId}`;
+    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${headers.userId}&getVariation=${enableVariation}`;
     setShowLoader(true);
     axios
       .post(request, json, { headers: headers })
@@ -213,6 +217,7 @@ function GetStarted({
       
       function fetchData(header: any) {
         const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}&getVariation=${enableVariation}`;
+<<<<<<< Updated upstream
         axios.get(request, { headers: header }).then((res) => {
           let response = res.data;
             
@@ -233,6 +238,43 @@ function GetStarted({
                 "Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users",
               imageUrl: criteria?.data?.metadata?.imageUrl,
             };
+=======
+        axios
+          .get(request, { headers: header })
+          .then((res) => {
+            let response = res.data;
+
+            let criterias = response?.eligibilityData?.map((criteria: any) => {
+              return {
+                type: criteria?.data?.criteriaType,
+                title: criteria?.data?.metadata?.linkActionName,
+                url: criteria?.data?.metadata?.linkActionUrl,
+                description: criteria?.data?.metadata?.description,
+                btn1: criteria?.data?.metadata?.btn1,
+                btn2: criteria?.data?.metadata?.btn2,
+                btn1Link: criteria?.data?.metadata?.btn1Link,
+                criteriaId: criteria?.data?.criteriaId,
+                completed: criteria?.completed,
+                longDescription:
+                  criteria?.data?.metadata?.longDescription ||
+                  "Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users",
+                imageUrl: criteria?.data?.metadata?.imageUrl,
+              };
+            });
+            const allCriteriasCompleted = criterias.every(
+              (criteria: any) => criteria.completed === true
+            );
+            if (allCriteriasCompleted) {
+              setAllCriteriaCompleted(true);
+            }
+            criterias = Array.isArray(criterias) ? criterias : [];
+            if (!dropdowns.length)
+              setDropdown(new Array(criterias.length).fill(false));
+            setFormdata([...criterias]);
+          })
+          .catch((error) => {
+            GeneralFunctions.captureSentryException(error);
+>>>>>>> Stashed changes
           });
           const allCriteriasCompleted = criterias.every(
             (criteria: any) => criteria.completed === true
@@ -303,7 +345,7 @@ function GetStarted({
         const json = {
           userId: header.userId,
         };
-        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/claim?userId=${header.userId}`;
+        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/claim?userId=${header.userId}&getVariation=${enableVariation}`;
         setShowLoader(true);
         axios
           .post(request, json, { headers: header })

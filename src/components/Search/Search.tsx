@@ -56,7 +56,11 @@ interface propType {
     CommandButton?: CSSProperties;
   };
   showFooter?: boolean;
+<<<<<<< Updated upstream
   enableVariation?: true
+=======
+  enableVariation?: boolean;
+>>>>>>> Stashed changes
 }
 
 export default function Search(prop: propType): JSX.Element {
