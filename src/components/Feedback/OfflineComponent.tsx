@@ -676,7 +676,7 @@ const SurveyOffline = ({
                       <button
                         type='submit'
                         style={{
-                          backgroundColor: btnColor,
+                          background: styleConfig?.PrimaryButton?.background || QuestThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig?.buttonColor ||  btnColor,
                           color: btnTextColor,
                           fontFamily: font,
                           border: styleConfig?.PrimaryButton?.border || '1.5px solid #afafaf',

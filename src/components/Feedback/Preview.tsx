@@ -228,7 +228,7 @@ export default function FeedbackPreview({ online = true }) {
             accentColor: 'blue',
             theme: 'light',
             borderRadius: '16px',
-            buttonColor: 'green',
+            buttonColor: 'yellow',
             images: []
         }}
         styleConfig={{
