@@ -21,7 +21,8 @@ export interface questFormPropType {
     onSubmit?: () => void
     shadowColor?: string;
     inputBgColor?: string;
-    width?: string
+    width?: string;
+    enableVariation?: boolean
 }
 
 export interface metadata {
@@ -94,10 +95,11 @@ export async function fetchQuestions({
     userId = "",
     token = "",
     entityId = "e-cbd250cc-3fcb-4085-a95e-712742ffa7ac",
-    questId = ""
+    questId = "",
+    enableVariation = false
 }) {
     const headers = { apiKey, apiSecret, userId, token };
-    const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}`;
+    const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}&getVariation=${enableVariation}`;
 
     try {
         const res = await axios.get(request, { headers });

@@ -131,7 +131,8 @@ interface QuestLoginProps {
             pendingTabColor?: string
         }
         Footer? : CSSProperties
-    }
+    },
+    enableVariation?: boolean
 }
 
 interface FormData {
@@ -197,7 +198,8 @@ function OnBoarding(props: QuestLoginProps) {
         template,
         design = [],
         styleConfig,
-        showFooter = true
+        showFooter = true,
+        enableVariation = false
     } = props;
 
     // let { design =[] } = props;
@@ -285,7 +287,7 @@ function OnBoarding(props: QuestLoginProps) {
 
             async function getQuestData(userId: string, headers: object) {
                 (loadingTracker && setLoading(true));
-                const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/criterias?userId=${userId}`;
+                const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/criterias?userId=${userId}&getVariation=${enableVariation}`;
                 await axios.get(request, { headers: headers }).then((res) => {
                     let response = res.data;
                     let criterias = response?.data?.eligibilityData?.map(
@@ -889,7 +891,7 @@ function OnBoarding(props: QuestLoginProps) {
         getAnswers && getAnswers(crt);
 
         try {
-            axios.post(`${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`, {criterias, userId: headers.userId}, {headers})
+            axios.post(`${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}&getVariation=${enableVariation}`, {criterias, userId: headers.userId}, {headers})
         } catch (error) {
             GeneralFunctions.captureSentryException(error);
         }

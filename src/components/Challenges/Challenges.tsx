@@ -27,6 +27,7 @@ export interface Props {
   questId: string;
   userId: string;
   token: string;
+  enableVariation: boolean;
   styleConfig?: StyleConfig;
 }
 
@@ -39,7 +40,7 @@ export interface ICriteria {
   progressData: number;
 }
 
-export const Challenges = ({ userId, token, questId, styleConfig }: Props) => {
+export const Challenges = ({ userId, token, questId, styleConfig, enableVariation }: Props) => {
   const { apiKey, apiSecret, entityId, apiType } = useContext(
     QuestContext.Context
   );
@@ -58,7 +59,7 @@ export const Challenges = ({ userId, token, questId, styleConfig }: Props) => {
             : config.BACKEND_URL;
 
         const response = await axios.get(
-          `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}`,
+          `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}&getVariation=${enableVariation}`,
           {
             headers: {
               apiKey: apiKey,

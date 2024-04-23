@@ -132,7 +132,7 @@ interface QuestLoginProps {
             pendingTabColor?: string
         }
     }
-    offlineFormData: offlineFormData[] | []
+    offlineFormData: offlineFormData[] | [],
 }
 
 interface offlineFormData {

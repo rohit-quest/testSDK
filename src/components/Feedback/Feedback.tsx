@@ -32,7 +32,8 @@ interface FeedbackProps {
   crossLogoForInput?: boolean;
   onCancel?: Function ;
   uniqueEmailId?: string;
-  uniqueUserId?: string
+  uniqueUserId?: string;
+  enableVariation?: boolean;
 }
 
 const Feedback: React.FC<FeedbackProps> = ({
@@ -53,7 +54,8 @@ const Feedback: React.FC<FeedbackProps> = ({
   crossLogoForInput = false,
   onCancel = ()=>{},
   uniqueEmailId,
-  uniqueUserId
+  uniqueUserId,
+  enableVariation = false
 }) => {
   interface FormDataItem {
     type?: string;
@@ -147,7 +149,7 @@ const Feedback: React.FC<FeedbackProps> = ({
         userId: userId,
         token: token,
       };
-      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}`;
+      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}&getVariation=${enableVariation}`;
 
       axios.get(request, { headers: headers }).then((res) => {
         let response = res.data;
@@ -224,7 +226,7 @@ const Feedback: React.FC<FeedbackProps> = ({
         answer: [answer[ans?.criteriaId] || ''],
         criteriaId: ans?.criteriaId || '',
       }));
-      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${userId}`;
+      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${userId}&getVariation=${enableVariation}`;
       const requestData = {
         criterias: ansArr,
         userId,

@@ -31,6 +31,7 @@ interface TutorialProps {
   isOpen?: boolean;
   onClose?: Function;
   showFooter?: boolean;
+  enableVariation?: boolean;
 }
 
 const Tutorial: React.FC<TutorialProps> = ({
@@ -46,7 +47,8 @@ const Tutorial: React.FC<TutorialProps> = ({
   textColor,
   isOpen = true,
   showFooter = true,
-  onClose = () => { },
+  enableVariation = false,
+  onClose = () => { }
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
@@ -70,7 +72,7 @@ const Tutorial: React.FC<TutorialProps> = ({
     const json = {
       criteriaId: id,
     };
-    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
+    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}&getVariation=${enableVariation}`;
 
     setShowLoader(true);
     axios
@@ -151,7 +153,7 @@ const Tutorial: React.FC<TutorialProps> = ({
         userId: userId,
         token: token,
       };
-      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}`;
+      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}&getVariation=${enableVariation}`;
 
       axios.get(request, { headers: headers }).then((res) => {
         let response = res.data;

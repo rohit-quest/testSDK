@@ -55,19 +55,20 @@ type GetStartedProps = {
     CardContainer?: CSSProperties;
     Icon?: CSSProperties;
     Arrow?: {
-      Background?: string;
-      IconColor?: string;
-      CompletedBackground?: string;
-      CompletedIconColor?: string;
-    };
-    IsImageOpen?: {
-      ContainerDiv?: CSSProperties;
-      ImageContainer?: {
-        ImageContainerProperties?: CSSProperties;
-        Image?: CSSProperties;
-      };
+      Background?: string,
+      IconColor?: string,
+      CompletedBackground?: string,
+      CompletedIconColor?: string
+    }
+  };
+  IsImageOpen?: {
+    ContainerDiv?: CSSProperties;
+    ImageContainer?: {
+      ImageContainerProperties?: CSSProperties;
+      Image?: CSSProperties;
     };
   };
+  enableVariation?: boolean;
 };
 interface TutorialStep {
   id: number;
@@ -108,6 +109,7 @@ function GetStarted({
   },
   showFooter = true,
   styleConfig,
+  enableVariation = false
   isImageOpen,
 }: GetStartedProps) {
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
@@ -147,7 +149,7 @@ function GetStarted({
       criteriaId: id,
     };
 
-    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${headers.userId}`;
+    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${headers.userId}&getVariation=${enableVariation}`;
     setShowLoader(true);
     axios
       .post(request, json, { headers: headers })
@@ -223,7 +225,7 @@ function GetStarted({
       }
 
       function fetchData(header: any) {
-        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}`;
+        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}&getVariation=${enableVariation}`;
         axios
           .get(request, { headers: header })
           .then((res) => {
@@ -317,7 +319,7 @@ function GetStarted({
         const json = {
           userId: header.userId,
         };
-        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/claim?userId=${header.userId}`;
+        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/claim?userId=${header.userId}&getVariation=${enableVariation}`;
         setShowLoader(true);
         axios
           .post(request, json, { headers: header })

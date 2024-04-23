@@ -46,8 +46,8 @@ interface CustomHeaders {
     token: string;
 }
 
-export async function getResponse(headers: CustomHeaders, entityId: string, questId: string,BACKEND_URL: string): Promise<any> {
-    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${headers.userId}`;
+export async function getResponse(headers: CustomHeaders, entityId: string, questId: string,BACKEND_URL: string, enableVariation: boolean = false): Promise<any> {
+    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${headers.userId}&getVariation=${enableVariation}`;
 
     return axios.get(request, { headers: { ...headers } })
         .then((res) => res.data?.data?.endsAt )
