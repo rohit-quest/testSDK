@@ -63,9 +63,9 @@ class Toast {
     this.#toastElem.classList.add("qt_toast");
 
     if (options?.template === 2) {
-      this.#toastElem.style.minWidth = "376px"
       let div = document.createElement("div");
       div.className = "qt_toast-text";
+      div.style.width = "320px"
       this.#toastElem.append(div);
       this.#toastElem.style.gap = "12px"
 
@@ -172,7 +172,7 @@ class Toast {
   }
 
   set image(src: string | undefined) {
-    if (!src) {
+    if (src == undefined) {
       const img = document.createElement("img");
       const classNameWithoutToast = this.#toastElem.className.replace(
         "qt_toast ",

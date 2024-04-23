@@ -228,7 +228,7 @@ function App() {
         <button onClick={() => { showToast.success({ duration: 100000, text: "This is a success message", template: 2, descritption: "SUCCESS" }) }}>Success</button> */}
 
 
-        <button onClick={() => Toast.success({ text: "This is a success message", position: 'bottom-center', autoClose: 1000, template: 2, description: "SUCCESS" })}>Success</button>
+        <button onClick={() => Toast.success({ text: "This is a success message", position: 'top-right', autoClose: 100000, template: 2, description: "SUCCESS" })}>Success</button>
         <button onClick={() => Toast.info({ text: "This is a info message", position: 'bottom-center', autoClose: 1000, template: 2, description: "INFO" })}>Info</button>
         <button onClick={() => Toast.error({ text: "This is a error message", position: 'bottom-center', autoClose: 1000, template: 2, description: "Error" })}>Error</button>
         <button onClick={() => Toast.warning({ text: "This is a succes warning message", position: 'bottom-center', autoClose: 1000, template: 2, description: "WARNING" })}>Warning</button>
