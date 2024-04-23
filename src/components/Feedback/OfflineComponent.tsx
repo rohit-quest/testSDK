@@ -691,7 +691,7 @@ const SurveyOffline = ({
                       </button>
                     </div>
                   </form>
-                  {showFooter && <QuestLabs style={styleConfig?.Footer} />}
+                  {showFooter &&  <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />}
                 </div>
               )}
               {thanksPopup && (
@@ -732,7 +732,7 @@ const SurveyOffline = ({
                       </div>
                     </div>
                   </div>
-                  {showFooter && <QuestLabs style={styleConfig?.Footer} />}
+                  {showFooter &&  <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />}
                 </div>
               )}
             </>

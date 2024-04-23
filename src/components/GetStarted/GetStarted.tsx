@@ -156,7 +156,6 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
   let externalUserId = cookies.get("externalUserId");
   let questUserId = cookies.get("questUserId");
   let questUserToken = cookies.get("questUserToken");
-
   let GeneralFunctions = new General('mixpanel', apiType);
 
 

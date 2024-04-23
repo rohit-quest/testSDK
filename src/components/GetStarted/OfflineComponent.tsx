@@ -165,6 +165,7 @@ function OfflineGetStarted({
         background:
           styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor,
         height: styleConfig?.Form?.height || "auto",
+        borderRadius: styleConfig?.Form?.borderRadius || QuestThemeData?.borderRadius || BrandTheme?.borderRadius,
         fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
         ...styleConfig?.Form,
       }}
