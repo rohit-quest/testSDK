@@ -189,6 +189,7 @@ class Toast {
       }
       const customImg = document.createElement("img");
       customImg.src = src;
+      customImg.style.borderRadius = "50%"
       this.#toastElem.insertBefore(customImg, this.#toastElem.firstChild);
     }
   }
