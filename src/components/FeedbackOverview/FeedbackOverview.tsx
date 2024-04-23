@@ -480,7 +480,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         const request = `${BACKEND_URL}api/entities/${entityId}/quests/${selectedQuest}/verify-all?userId=${userId}&getVariation=${enableVariation}`;
         const requestData = {
           criterias: ansArr,
-          userId: userId,
+          userId: headers?.userId,
           session: session[selectedQuest ?? '']
         };
         setShowLoader(true);
