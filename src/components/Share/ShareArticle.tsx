@@ -20,7 +20,8 @@ export interface articleProps {
   textColor?: string;
   token: string;
   questId: string;
-  userId: string
+  userId: string,
+  enableVariation?: boolean
 }
 
 type CustomHeaders = {
@@ -30,8 +31,8 @@ type CustomHeaders = {
   token: string;
 }
 
-async function getResponse(headers: CustomHeaders, entityId: string, questId: string, apiType: string): Promise<{ metadata: Metadata }> {
-  const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${headers.userId}`;
+async function getResponse(headers: CustomHeaders, entityId: string, questId: string, apiType: string, enableVariation: boolean): Promise<{ metadata: Metadata }> {
+  const request = `${config.BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${headers.userId}&getVariation=${enableVariation}`;
   let GeneralFunctions = new General('mixpanel', apiType);
   try {
     const res = await axios.get(request, { headers })
@@ -53,7 +54,8 @@ const ShareArticle: React.FC<articleProps> = ({
   textColor = "",
   questId = "",
   token = "",
-  userId = ""
+  userId = "",
+  enableVariation = false
 }: articleProps) => {
 
   const [shareLink, setLink] = useState("https://www.questlabs.ai/")
@@ -62,7 +64,7 @@ const ShareArticle: React.FC<articleProps> = ({
   useEffect(() => {
     GeneralFunctions.fireTrackingEvent("quest_share_article_loaded", "share_article");
 
-    getResponse({ apiKey, apisecret: apiSecret, token, userId }, entityId, questId,apiType)
+    getResponse({ apiKey, apisecret: apiSecret, token, userId }, entityId, questId,apiType, enableVariation)
       .then((response) => {
         setLink(response.metadata.linkActionUrl)
       })

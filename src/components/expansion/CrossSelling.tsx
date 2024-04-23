@@ -58,7 +58,8 @@ export interface referProp {
             errorStyle?: CSSProperties
         }
     };
-    showFooter?: boolean
+    showFooter?:boolean,
+    enableVariation?:boolean
 }
 
 export const CrossSelling = ({
@@ -79,6 +80,7 @@ export const CrossSelling = ({
     uniqueUserId,
     styleConfig,
     showFooter = true,
+    enableVariation = false
     Icon = 'gift'
 }: referProp) => {
     const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(QuestContext.Context);
@@ -108,8 +110,8 @@ export const CrossSelling = ({
     let GeneralFunctions = new General('mixpanel', apiType);
     useEffect(() => {
         GeneralFunctions.fireTrackingEvent("quest_cross_selling_loaded", "cross_selling");
-        let isMounted = true;
-        getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL)
+        let isMounted = true; 
+        getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL, enableVariation)
             .then((r) => {
                 if (isMounted && r) {
                     requestRef.current = +r;

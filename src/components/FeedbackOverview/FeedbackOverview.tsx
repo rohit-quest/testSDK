@@ -274,6 +274,7 @@ interface feedbackCompProps {
     },
     ThanksPopUp?:React.CSSProperties;
   };
+  enableVariation?: boolean
 }
 interface FormDataItem {
   type?: string;
@@ -311,6 +312,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   iconColor = "#939393",
   styleConfig = {},
   showFooter = true,
+  enableVariation = false
 }) => {
   const [selectedOption, setSelectedOption] = useState<optionType | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
@@ -497,11 +499,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       }
 
       function setResult(headers: { userId ? : string }, userId: string) {
-        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${selectedQuest}/verify-all?userId=${userId}`;
+        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${selectedQuest}/verify-all?userId=${userId}&getVariation=${enableVariation}`;
         const requestData = {
           criterias: ansArr,
           userId: headers?.userId,
-          session: selectedQuest && session[selectedQuest],
+          session: session[selectedQuest ?? '']
         };
         setShowLoader(true);
         axios
@@ -583,7 +585,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             GeneralFunctions.captureSentryException(error);
           });
         } else {
-          request = `${BACKEND_URL}api/entities/${entityId}/quests/${id}?userId=${userId}`;
+          request = `${BACKEND_URL}api/entities/${entityId}/quests/${id}?userId=${userId}&getVariation=${enableVariation}`;
           axios.get(request, { headers: headers }).then((res) => {
             let response = res.data;
             setSession((prev) => ({...prev, [id]: response.session}))
