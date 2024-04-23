@@ -35,19 +35,19 @@ interface LeaderboardResponse {
 }
 
 export interface StyleConfig {
-  Form?:CSSProperties;
+  Form?: CSSProperties;
   MainHeading?: CSSProperties;
   Heading?: CSSProperties;
   Description?: CSSProperties;
-  PointsBackground?:CSSProperties
+  PointsBackground?: CSSProperties;
   PointsColor?: CSSProperties;
-  InnerBackground?:CSSProperties;
-  IndexColor?:CSSProperties;
-  IndexBackground?:CSSProperties;
+  InnerBackground?: CSSProperties;
+  IndexColor?: CSSProperties;
+  IndexBackground?: CSSProperties;
   ProgressBarColor?: CSSProperties;
-  IconStyle?:{
-    color? :string;
-  }
+  IconStyle?: {
+    color?: string;
+  };
   Footer?: CSSProperties;
 }
 
@@ -68,9 +68,12 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({
   const { apiKey, apiSecret, entityId, apiType } = useContext(
     QuestContext.Context
   );
-  let GeneralFunctions = new General('mixpanel', apiType);
+  let GeneralFunctions = new General("mixpanel", apiType);
   useEffect(() => {
-    GeneralFunctions.fireTrackingEvent("quest_leaderboard_loaded", "leaderboard");
+    GeneralFunctions.fireTrackingEvent(
+      "quest_leaderboard_loaded",
+      "leaderboard"
+    );
     const getLeaderBoard = async () => {
       try {
         const BACKEND_URL =
@@ -104,13 +107,13 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({
   }, []);
   return (
     <div>
-      {leaderboardData && 
+      {leaderboardData && (
         <LeaderBoardShow
           leaderboardUserData={leaderboardData}
           memberShip={leaderboardData.membershipsTiers}
           styleConfig={styleConfig}
-        />}
-     
+        />
+      )}
     </div>
   );
 };

@@ -1,17 +1,17 @@
-import {
-    referIcon,
-} from "../../assets/images";
 import "./crossSelling.css";
 import "../expansion/Refer.css";
 import { CSSProperties, useContext, useEffect, useRef, useState } from "react";
-import { getResponse, response, shareOnPlatform } from "./Response.ts";
+import { getResponse } from "./Response.ts";
 import QuestContext from "../QuestWrapper.tsx";
 import { grabDealIcon } from "./Svg.ts";
+import { grabDealIcon2 } from "./Svg.ts";
 import QuestLabs from "../QuestLabs.tsx";
 import config from "../../config.ts";
 import General from "../../general.ts";
 import { SecondaryButton } from "../Modules/SecondaryButton.tsx";
 import { PrimaryButton } from "../Modules/PrimaryButton.tsx";
+import { Input } from "../Modules/Input.tsx";
+import Label from "../Modules/Label.tsx";
 
 export interface referProp {
     questId: string;
@@ -33,6 +33,7 @@ export interface referProp {
     backButtonTrigger?: Function;
     uniqueEmailId?: string;
     uniqueUserId?: string;
+    Icon?: 'gift' | 'percentage';
     styleConfig?: {
         Form?: CSSProperties,
         BackgroundWrapper?: CSSProperties,
@@ -40,12 +41,22 @@ export interface referProp {
         Description?: CSSProperties,
         PrimaryButton?: CSSProperties,
         SecondaryButton?: CSSProperties,
+        gradientHeading?: CSSProperties,
+        gradientDescription?: CSSProperties,
+        Input?: CSSProperties,
         Timer?: {
-            primaryColor: string,
-            secondaryColor: string,
-            backgroundColor: string
+            primaryColor?: string,
+            secondaryColor?: string,
+            backgroundColor?: string,
+            TimerCard?: CSSProperties
         },
         Footer?: CSSProperties
+        Icon?: CSSProperties,
+        Label?: CSSProperties,
+        EmailError?: {
+            text?: string,
+            errorStyle?: CSSProperties
+        }
     };
     showFooter?:boolean,
     enableVariation?:boolean
@@ -63,20 +74,22 @@ export const CrossSelling = ({
     primaryDescription = 'Welcome back, Please complete your details',
     showDays = false,
     expiryDate = 0,
-    claimRewardHandler = ()=>{},
-    backButtonTrigger = ()=>{},
+    claimRewardHandler = (email?: string) => { },
+    backButtonTrigger = () => { },
     uniqueEmailId,
     uniqueUserId,
     styleConfig,
     showFooter = true,
     enableVariation = false
+    Icon = 'gift'
 }: referProp) => {
     const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(QuestContext.Context);
     const BACKEND_URL = apiType === "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
+    const [email, setEmail] = useState("");
 
     const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
     const requestRef = useRef<number>(expiryDate);
-    
+
     const animate = () => {
         const currentTime = Date.now();
         const remainingTime = requestRef.current - currentTime;
@@ -84,14 +97,14 @@ export const CrossSelling = ({
             setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
             return;
         }
-    
+
         const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
         const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-    
+
         setTimeLeft({ days, hours, minutes, seconds });
-        
+
         requestAnimationFrame(animate);
     };
     let GeneralFunctions = new General('mixpanel', apiType);
@@ -101,7 +114,7 @@ export const CrossSelling = ({
         getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL, enableVariation)
             .then((r) => {
                 if (isMounted && r) {
-                    requestRef.current = +r; 
+                    requestRef.current = +r;
                     animate();
                 } else {
                     requestRef.current = expiryDate;
@@ -113,64 +126,87 @@ export const CrossSelling = ({
                 console.log('Error fetching expiryDate:', expiryDate);
                 requestRef.current = expiryDate;
             });
-         if(entityId && uniqueUserId)   {
+        if (entityId && uniqueUserId) {
             const functions = new General('')
             functions.getExternalLogin({ apiType, uniqueUserId, entityId, userId, apiKey, apiSecret, token, uniqueEmailId })
-         }
-    
+        }
+
         return () => {
-            isMounted = false; 
+            isMounted = false;
             cancelAnimationFrame(requestRef.current);
         };
     }, []);
-    
-    
+
+
+    const handleEmail = (email: string) => {
+        claimRewardHandler(email)
+    }
+
+
 
     const jsx = (
         <div className="q_refer_and_earn" style={{
             // background: styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Form
             background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
-            }}>
+        }}>
             <div className="q_refer_head">
-                <img src={grabDealIcon()} className="refer_head_img" alt="" />
+                <img src={Icon === 'gift' ? grabDealIcon() : grabDealIcon2()} className="refer_head_img" alt="" />
             </div>
             <div className="q_refer_content">
                 <div className="refer_content_box">
-                    <div className="q_refer_heading" style={{color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading}}>{heading}</div>
-                    <div className="q_refer_desc" style={{color: styleConfig?.Description?.color || themeConfig?.primaryColor, ...styleConfig?.Description}}>{description}</div>
+                    <div className="q_refer_heading" style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }}>{heading}</div>
+                    <div className="q_refer_desc" style={{ color: styleConfig?.Description?.color || themeConfig?.primaryColor, ...styleConfig?.Description }}>{description}</div>
                 </div>
                 <div className="q_time_left">
-                    {showDays && !!timeLeft.days && (<div className="q_hours_left" style={{background: styleConfig?.Timer?.backgroundColor}}>
-                        <div style={{color: styleConfig?.Timer?.primaryColor}}>{timeLeft.days}</div>
-                        <div className="q_time_left_text" style={{color: styleConfig?.Timer?.secondaryColor}}>Days</div>
+                    {showDays && !!timeLeft.days && (<div className="q_hours_left" style={{ background: styleConfig?.Timer?.backgroundColor, ...styleConfig?.Timer?.TimerCard }}>
+                        <div style={{ color: styleConfig?.Timer?.primaryColor }}>{timeLeft.days}</div>
+                        <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor }}>Days</div>
                     </div>)}
-                    <div className="q_hours_left" style={{background: styleConfig?.Timer?.backgroundColor}}>
-                        <div style={{color: styleConfig?.Timer?.primaryColor}}>{timeLeft.hours < 10 ? 0 : ""}{timeLeft.hours}</div>
-                        <div className="q_time_left_text" style={{color: styleConfig?.Timer?.secondaryColor}}>Hours</div>
+                    <div className="q_hours_left" style={{ background: styleConfig?.Timer?.backgroundColor, ...styleConfig?.Timer?.TimerCard }}>
+                        <div style={{ color: styleConfig?.Timer?.primaryColor }}>{timeLeft.hours < 10 ? 0 : ""}{timeLeft.hours}</div>
+                        <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor }}>Hours</div>
                     </div>
-                    <div className="q_minutes_left" style={{background: styleConfig?.Timer?.backgroundColor}}>
-                        <div style={{color: styleConfig?.Timer?.primaryColor}}>{timeLeft.minutes < 10 ? 0 : ""}{timeLeft.minutes}</div>
-                        <div className="q_time_left_text" style={{color: styleConfig?.Timer?.secondaryColor}}>Minutes</div>
+                    <div className="q_minutes_left" style={{ background: styleConfig?.Timer?.backgroundColor, ...styleConfig?.Timer?.TimerCard }}>
+                        <div style={{ color: styleConfig?.Timer?.primaryColor }}>{timeLeft.minutes < 10 ? 0 : ""}{timeLeft.minutes}</div>
+                        <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor }}>Minutes</div>
                     </div>
-                    <div className="q_seconds_left" style={{background: styleConfig?.Timer?.backgroundColor}}>
-                        <div style={{color: styleConfig?.Timer?.primaryColor}}>{timeLeft.seconds < 10 ? 0 : ""}{timeLeft.seconds}</div>
-                        <div className="q_time_left_text" style={{color: styleConfig?.Timer?.secondaryColor}}>Seconds</div>
+                    <div className="q_seconds_left" style={{ background: styleConfig?.Timer?.backgroundColor, ...styleConfig?.Timer?.TimerCard }}>
+                        <div style={{ color: styleConfig?.Timer?.primaryColor }}>{timeLeft.seconds < 10 ? 0 : ""}{timeLeft.seconds}</div>
+                        <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor }}>Seconds</div>
                     </div>
                 </div>
-                <PrimaryButton 
+                <div style={{width: "100%"}}>
+                <Label
+                     htmlFor={"normalInput"}
+                    children={'Email Address'}
+                    style={styleConfig?.Label}
+                />
+                <Input
+                    type="email"
+                    style={styleConfig?.Input}
+                    placeholder={'Enter your email address'}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    emailtext={styleConfig?.EmailError?.text == undefined ? "This is not a valid email" : styleConfig?.EmailError?.text}
+                    emailErrorStyle={styleConfig?.EmailError?.errorStyle}
+                    
+                />
+                </div>
+                <PrimaryButton
                     style={{
                         background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
                         ...styleConfig?.PrimaryButton
-                    }} 
+                    }}
                     onClick={() => {
                         GeneralFunctions.fireTrackingEvent("quest_challenges_primary_btn_clicked", "challenges");
-                        claimRewardHandler()
+                        handleEmail(email)
                     }}
                     className="q_share_link_button"
+                    disabled={!email}
                 >
                     {shareButtonText}
                 </PrimaryButton>
-                <SecondaryButton 
+                <SecondaryButton
                     style={{
                         borderColor: styleConfig?.SecondaryButton?.borderColor || themeConfig?.borderColor,
                         backgroundColor: styleConfig?.SecondaryButton?.backgroundColor || themeConfig?.backgroundColor,
@@ -192,14 +228,15 @@ export const CrossSelling = ({
 
     if (gradientBackground) return <div className="q_gradient_background" style={{
         fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
-        ...styleConfig?.BackgroundWrapper}}>
+        ...styleConfig?.BackgroundWrapper
+    }}>
         <div className="q_gradient_head">
             <div className="q_gradient_heading">{primaryHeading}</div>
             <div className="q_gradient_description">{primaryDescription}</div>
         </div>
         {jsx}
         <div className="q_gradient_quest_powered">
-        {showFooter && <QuestLabs style={styleConfig?.Footer} />}
+            {showFooter && <QuestLabs style={styleConfig?.Footer} />}
         </div>
     </div>
     return jsx;
