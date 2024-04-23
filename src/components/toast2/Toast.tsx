@@ -1,7 +1,7 @@
 import { success, error, warning, info } from './svg';
 
 interface DefaultImages {
-  [key: string]: string; 
+  [key: string]: string;
   success: string;
   warning: string;
   error: string;
@@ -21,13 +21,15 @@ interface ToastOptions {
   background?: string;
   // progressColor?: string;
   image?: string;
-  borderColor?:string
+  borderColor?: string;
+  template?: number;
+  description?: string;
 }
 
 const DEFAULT_OPTIONS: ToastOptions = {
   autoClose: 5000,
   position: "top-right",
-  onClose: () => {},
+  onClose: () => { },
   canClose: true,
   // showProgress: true,
   defaultImages: {
@@ -36,6 +38,7 @@ const DEFAULT_OPTIONS: ToastOptions = {
     error: error(),
     info: info(),
   } as DefaultImages,
+  template: 1
 };
 
 class Toast {
@@ -58,6 +61,24 @@ class Toast {
   constructor(options: ToastOptions) {
     this.#toastElem = document.createElement("div");
     this.#toastElem.classList.add("qt_toast");
+
+    if (options?.template === 2) {
+      this.#toastElem.style.minWidth = "376px"
+      let div = document.createElement("div");
+      div.className = "qt_toast-text";
+      this.#toastElem.append(div);
+      this.#toastElem.style.gap = "12px"
+
+      this.#toastElem.style.fontSize = "12px";
+      this.#toastElem.style.fontWeight = "600";
+      this.#toastElem.style.lineHeight = "16px";
+      this.#toastElem.style.fontStyle = "normal";
+      this.#toastElem.style.textOverflow = "ellipsis";
+      this.#toastElem.style.overflow = "hidden";
+      this.#toastElem.style.color = "#2C2C2C";
+      this.#toastElem.style.padding = "12px"
+    }
+
     requestAnimationFrame(() => {
       this.#toastElem.classList.add("qt_show");
     });
@@ -70,6 +91,24 @@ class Toast {
     };
     this.update({ ...DEFAULT_OPTIONS, ...options });
     this.image = options.image;
+
+    if (!options?.template || options?.template === 1) {
+      const styleElement = document.createElement('style');
+
+      styleElement.textContent = `
+        .qt_toast::after {
+          content: "\\00D7";
+          position: absolute;
+          right: 12px;
+          font-size: 16px;
+          margin-bottom: 2px;
+          font-weight: 600;
+          margin-left: 15px;
+        }
+      `;
+
+      document.head.appendChild(styleElement);
+    }
   }
 
   static success(options: ToastOptions): Toast {
@@ -155,7 +194,33 @@ class Toast {
   }
 
   set text(value: string) {
-    this.#toastElem.textContent = value;
+    let div = this.#toastElem.querySelector(".qt_toast-text");
+    if (div) {
+      let p = document.createElement("p");
+      p.innerText = value;
+      div?.appendChild(p);
+    } else {
+      this.#toastElem.textContent = value;
+    }
+  }
+
+  set description(value: string) {
+    let div = this.#toastElem.querySelector(".qt_toast-text");
+    if (div) {
+      let p = document.createElement("p");
+      p.innerText = value;
+
+      p.style.color = "#939393";
+      p.style.fontSize = "10px";
+      p.style.letterSpacing = "-0.1px";
+      p.style.fontWeight = "400";
+      p.style.lineHeight = "12px";
+      p.style.fontStyle = "normal";
+      p.style.textOverflow = "ellipsis";
+      p.style.overflow = "hidden";
+      p.style.lineHeight = "12px";
+      div?.appendChild(p);
+    }
   }
 
   set canClose(value: boolean | undefined) {

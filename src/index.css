@@ -321,7 +321,7 @@ input[data-autocompleted] {
   right: 0;
 }
 
-.qt_toast::after {
+/* .qt_toast::after {
   content: "\00D7";
   position: absolute;
   right: 12px;
@@ -329,7 +329,7 @@ input[data-autocompleted] {
   margin-bottom: 2px;
   font-weight: 600;
   margin-left: 15px;
-}
+} */
 
 .qt_toast-container {
   position: fixed;
