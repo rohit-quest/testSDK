@@ -47,9 +47,8 @@ const Tutorial: React.FC<TutorialProps> = ({
   textColor,
   isOpen = true,
   showFooter = true,
-  enableVariation = false
-  onClose = () => { },
-  enableVariation = false
+  enableVariation = false,
+  onClose = () => { }
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
