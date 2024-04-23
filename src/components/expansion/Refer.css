@@ -19,6 +19,10 @@
 .refer_head_img {
     width: 80px;
     height: 80px;
+    border-radius: 10px;
+    overflow: hidden;
+    object-fit: cover;
+    object-position: center;
 }
 
 .q_refer_content {

@@ -12,7 +12,31 @@ import config from "../../config.ts";
 import General from "../../general.ts";
 import { SecondaryButton } from "../Modules/SecondaryButton.tsx";
 import { PrimaryButton } from "../Modules/PrimaryButton.tsx";
+import axios from "axios";
 
+
+
+
+type BrandTheme = {
+    accentColor?: string;
+    background?: string;
+    borderRadius?: string;
+    buttonColor?: string;
+    contentColor?: string;
+    fontFamily?: string;
+    logo?: string;
+    primaryColor?: string;
+    secondaryColor?: string;
+    tertiaryColor?: string;
+    titleColor?: string;
+}
+interface QuestThemeData {
+    accentColor: string;
+    theme: string;
+    borderRadius: string;
+    buttonColor: string;
+    images: string[]
+}
 export interface referProp {
     questId: string;
     headingColor?: string;
@@ -33,6 +57,8 @@ export interface referProp {
     backButtonTrigger?: Function;
     uniqueEmailId?: string;
     uniqueUserId?: string;
+    BrandTheme?: BrandTheme;
+    QuestThemeData?: QuestThemeData;
     styleConfig?: {
         Form?: CSSProperties,
         BackgroundWrapper?: CSSProperties,
@@ -47,7 +73,7 @@ export interface referProp {
         },
         Footer?: CSSProperties
     };
-    showFooter?:boolean
+    showFooter?: boolean
 }
 
 export const CrossSelling = ({
@@ -62,19 +88,51 @@ export const CrossSelling = ({
     primaryDescription = 'Welcome back, Please complete your details',
     showDays = false,
     expiryDate = 0,
-    claimRewardHandler = ()=>{},
-    backButtonTrigger = ()=>{},
+    claimRewardHandler = () => { },
+    backButtonTrigger = () => { },
     uniqueEmailId,
     uniqueUserId,
     styleConfig,
+    BrandTheme,
+    QuestThemeData,
     showFooter = true
 }: referProp) => {
     const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(QuestContext.Context);
     const BACKEND_URL = apiType === "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
+    const [questThemeData, setQuestThemeData] = useState<QuestThemeData>( QuestThemeData || {
+        accentColor: "",
+        theme: "",
+        borderRadius: "",
+        buttonColor: "",
+        images: []
+    })
+    const [brandTheme, setBrandTheme] = useState<BrandTheme>( BrandTheme  || {
+        accentColor: "",
+        background: "",
+        borderRadius: "",
+        buttonColor: "",
+        contentColor: "",
+        fontFamily: "",
+        logo: "",
+        primaryColor: "",
+        secondaryColor: "",
+        tertiaryColor: "",
+        titleColor: ""
+    })
 
     const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
     const requestRef = useRef<number>(expiryDate);
-    
+
+    const getTheme = async (theme: string) => {
+        try {
+            const request = `${BACKEND_URL}api/entities/${entityId}?userId=${userId}`;
+            const response = await axios.get(request, { headers: { apiKey, userId, token } })
+            setBrandTheme(response?.data?.data?.theme?.BrandTheme[theme])
+        } catch (error) {
+            GeneralFunctions.captureSentryException(error);
+        }
+    }
+
     const animate = () => {
         const currentTime = Date.now();
         const remainingTime = requestRef.current - currentTime;
@@ -82,24 +140,28 @@ export const CrossSelling = ({
             setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
             return;
         }
-    
+
         const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
         const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-    
+
         setTimeLeft({ days, hours, minutes, seconds });
-        
+
         requestAnimationFrame(animate);
     };
     let GeneralFunctions = new General('mixpanel', apiType);
     useEffect(() => {
         GeneralFunctions.fireTrackingEvent("quest_cross_selling_loaded", "cross_selling");
-        let isMounted = true; 
+        let isMounted = true;
         getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL)
             .then((r) => {
                 if (isMounted && r) {
-                    requestRef.current = +r; 
+                    if(r.uiProps?.questThemeData){
+                        setQuestThemeData(r.uiProps?.questThemeData)
+                        getTheme(r.uiProps?.questThemeData.theme)
+                    }
+                    requestRef.current = +r.endsAt;
                     animate();
                 } else {
                     requestRef.current = expiryDate;
@@ -111,55 +173,54 @@ export const CrossSelling = ({
                 console.log('Error fetching expiryDate:', expiryDate);
                 requestRef.current = expiryDate;
             });
-         if(entityId && uniqueUserId)   {
+        if (entityId && uniqueUserId) {
             const functions = new General('')
             functions.getExternalLogin({ apiType, uniqueUserId, entityId, userId, apiKey, apiSecret, token, uniqueEmailId })
-         }
-    
+        }
+
         return () => {
-            isMounted = false; 
+            isMounted = false;
             cancelAnimationFrame(requestRef.current);
         };
     }, []);
-    
-    
+
+
 
     const jsx = (
         <div className="q_refer_and_earn" style={{
-            // background: styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Form
-            background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
-            }}>
+            background: styleConfig?.Form?.backgroundColor || brandTheme?.background || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: brandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
+        }}>
             <div className="q_refer_head">
-                <img src={grabDealIcon()} className="refer_head_img" alt="" />
+                <img src={questThemeData?.images?.[0] || grabDealIcon()} className="refer_head_img" alt="" />
             </div>
             <div className="q_refer_content">
                 <div className="refer_content_box">
-                    <div className="q_refer_heading" style={{color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading}}>{heading}</div>
-                    <div className="q_refer_desc" style={{color: styleConfig?.Description?.color || themeConfig?.primaryColor, ...styleConfig?.Description}}>{description}</div>
+                    <div className="q_refer_heading" style={{ color: styleConfig?.Heading?.color || brandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Heading }}>{heading}</div>
+                    <div className="q_refer_desc" style={{ color: styleConfig?.Description?.color || themeConfig?.primaryColor, ...styleConfig?.Description }}>{description}</div>
                 </div>
                 <div className="q_time_left">
-                    {showDays && !!timeLeft.days && (<div className="q_hours_left" style={{background: styleConfig?.Timer?.backgroundColor}}>
-                        <div style={{color: styleConfig?.Timer?.primaryColor}}>{timeLeft.days}</div>
-                        <div className="q_time_left_text" style={{color: styleConfig?.Timer?.secondaryColor}}>Days</div>
+                    {showDays && !!timeLeft.days && (<div className="q_hours_left" style={{ background: styleConfig?.Timer?.backgroundColor }}>
+                        <div style={{ color: styleConfig?.Timer?.primaryColor ||  brandTheme?.primaryColor || themeConfig?.primaryColor }}>{timeLeft.days}</div>
+                        <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor || brandTheme?.secondaryColor || themeConfig?.secondaryColor }}>Days</div>
                     </div>)}
-                    <div className="q_hours_left" style={{background: styleConfig?.Timer?.backgroundColor}}>
-                        <div style={{color: styleConfig?.Timer?.primaryColor}}>{timeLeft.hours < 10 ? 0 : ""}{timeLeft.hours}</div>
-                        <div className="q_time_left_text" style={{color: styleConfig?.Timer?.secondaryColor}}>Hours</div>
+                    <div className="q_hours_left" style={{ background: styleConfig?.Timer?.backgroundColor }}>
+                        <div style={{ color: styleConfig?.Timer?.primaryColor || brandTheme?.primaryColor || themeConfig?.primaryColor }}>{timeLeft.hours < 10 ? 0 : ""}{timeLeft.hours}</div>
+                        <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor || brandTheme?.secondaryColor || themeConfig?.secondaryColor }}>Hours</div>
                     </div>
-                    <div className="q_minutes_left" style={{background: styleConfig?.Timer?.backgroundColor}}>
-                        <div style={{color: styleConfig?.Timer?.primaryColor}}>{timeLeft.minutes < 10 ? 0 : ""}{timeLeft.minutes}</div>
-                        <div className="q_time_left_text" style={{color: styleConfig?.Timer?.secondaryColor}}>Minutes</div>
+                    <div className="q_minutes_left" style={{ background: styleConfig?.Timer?.backgroundColor }}>
+                        <div style={{ color: styleConfig?.Timer?.primaryColor || brandTheme?.primaryColor || themeConfig?.primaryColor }}>{timeLeft.minutes < 10 ? 0 : ""}{timeLeft.minutes}</div>
+                        <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor || brandTheme?.secondaryColor || themeConfig?.secondaryColor }}>Minutes</div>
                     </div>
-                    <div className="q_seconds_left" style={{background: styleConfig?.Timer?.backgroundColor}}>
-                        <div style={{color: styleConfig?.Timer?.primaryColor}}>{timeLeft.seconds < 10 ? 0 : ""}{timeLeft.seconds}</div>
-                        <div className="q_time_left_text" style={{color: styleConfig?.Timer?.secondaryColor}}>Seconds</div>
+                    <div className="q_seconds_left" style={{ background: styleConfig?.Timer?.backgroundColor }}>
+                        <div style={{ color: styleConfig?.Timer?.primaryColor || brandTheme?.primaryColor || themeConfig?.primaryColor }}>{timeLeft.seconds < 10 ? 0 : ""}{timeLeft.seconds}</div>
+                        <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor || brandTheme?.secondaryColor || themeConfig?.secondaryColor }}>Seconds</div>
                     </div>
                 </div>
-                <PrimaryButton 
+                <PrimaryButton
                     style={{
-                        background: styleConfig?.PrimaryButton?.background || themeConfig?.buttonColor,
+                        background: styleConfig?.PrimaryButton?.background || questThemeData?.buttonColor || brandTheme?.buttonColor || themeConfig?.buttonColor,
                         ...styleConfig?.PrimaryButton
-                    }} 
+                    }}
                     onClick={() => {
                         GeneralFunctions.fireTrackingEvent("quest_challenges_primary_btn_clicked", "challenges");
                         claimRewardHandler()
@@ -168,7 +229,7 @@ export const CrossSelling = ({
                 >
                     {shareButtonText}
                 </PrimaryButton>
-                <SecondaryButton 
+                <SecondaryButton
                     style={{
                         borderColor: styleConfig?.SecondaryButton?.borderColor || themeConfig?.borderColor,
                         backgroundColor: styleConfig?.SecondaryButton?.backgroundColor || themeConfig?.backgroundColor,
@@ -184,20 +245,21 @@ export const CrossSelling = ({
                     Go to home
                 </SecondaryButton>
             </div>
-            {(!gradientBackground && showFooter) && <QuestLabs style={styleConfig?.Footer} />}
+            {(!gradientBackground && showFooter) &&  <QuestLabs style={{ background:  styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || styleConfig?.Form?.background || brandTheme?.background  || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />}
         </div>
     );
 
     if (gradientBackground) return <div className="q_gradient_background" style={{
         fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
-        ...styleConfig?.BackgroundWrapper}}>
+        ...styleConfig?.BackgroundWrapper
+    }}>
         <div className="q_gradient_head">
-            <div className="q_gradient_heading">{primaryHeading}</div>
-            <div className="q_gradient_description">{primaryDescription}</div>
+            <div className="q_gradient_heading" style={{ color:  brandTheme?.titleColor   }}>{primaryHeading}</div>
+            <div className="q_gradient_description" style={{ color:brandTheme?.tertiaryColor }}>{primaryDescription}</div>
         </div>
         {jsx}
         <div className="q_gradient_quest_powered">
-        {showFooter && <QuestLabs style={styleConfig?.Footer} />}
+            {showFooter &&  <QuestLabs style={{ background:  styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor  || styleConfig?.Form?.background || brandTheme?.background  || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />}
         </div>
     </div>
     return jsx;
