@@ -1,6 +1,6 @@
-import React from 'react'
+import {HelperProps} from 'tour-navigator/lib/TourNavigator/types'
 
-export default function TourHelper({steps, currentStep, currentStepIndex, prev, next}) {
+export default function TourHelper({steps, currentStep, currentStepIndex, prev, next}: HelperProps) {
     const isFirst = currentStepIndex == 0
     const isLast = currentStepIndex == (steps.length - 1)
 
@@ -18,7 +18,7 @@ export default function TourHelper({steps, currentStep, currentStepIndex, prev, 
                 <div /><div /><div />
             </div>
             {
-                currentStep.data?.image ? <img src={currentStep.data?.image} />:null
+                currentStep?.data?.image ? <img src={currentStep.data?.image} />:null
             }
             <div className='tour-back-btn' onClick={prev}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,10 +31,10 @@ export default function TourHelper({steps, currentStep, currentStepIndex, prev, 
                 <small>{currentStepIndex+1}/{steps.length}</small>
             </div>
             <h3 className='tour-content-title'>
-                {currentStep.data.title}
+                {currentStep?.data.title}
             </h3>
             <p className='tour-content-description'>
-                {currentStep.data.description}
+                {currentStep?.data.description}
             </p>
             <div className='tour-content-actions'>
                 {
