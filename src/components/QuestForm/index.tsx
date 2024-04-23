@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import QuestContext from '../../components/QuestWrapper';
-import { ApiResponse, Submit, fetchQuestions, metadata, questFormPropType } from "./response.ts";
+import { ApiResponse, Submit, fetchQuestions, metadata, questFormPropType } from "./response";
 import enterPng from '../../assets/images/enter.png';
 import "./form.css";
 
