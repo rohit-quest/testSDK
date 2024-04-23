@@ -1,24 +1,57 @@
 import {HelperProps} from 'tour-navigator/lib/TourNavigator/types'
+import './tourHelper.css'
+import { CSSProperties } from 'react'
 
-export default function TourHelper({steps, currentStep, currentStepIndex, prev, next}: HelperProps) {
+interface TourHelperProps extends HelperProps {
+    headerStyle?: CSSProperties;
+    descriptionStyle?: CSSProperties;
+    helperBackgroundStyle?: CSSProperties;
+    helperStyle?: CSSProperties;
+    footerStyle?: CSSProperties;
+    firstButtonStyle?: CSSProperties;
+    lastButtonStyle?: CSSProperties;
+    imgStyle?: CSSProperties,
+    onComplete?: () => void
+}
+export default function TourHelper({
+    steps, 
+    currentStep, 
+    currentStepIndex, 
+    prev, 
+    next,
+    headerStyle,
+    descriptionStyle,
+    helperBackgroundStyle,
+    helperStyle,
+    footerStyle,
+    firstButtonStyle,
+    lastButtonStyle,
+    imgStyle,
+    onComplete
+}: TourHelperProps) {
+
     const isFirst = currentStepIndex == 0
     const isLast = currentStepIndex == (steps.length - 1)
 
-    const handleNext = () => {
-        if(isLast){
-             // on get started
-        }else {
-            next()
-        }
-    }
+  const handleNext = () => {
+    if(isLast) return onComplete?.()
+    next()
+  }
   return (
-    <div className='tour-helper'>
+    <div className='tour-helper' style={{
+        ...helperStyle
+    }}>
         <div className='tour-image'>
-            <div className='tour-background'>
+            <div 
+                className='tour-background'
+                style={{
+                    ...helperBackgroundStyle
+                }}
+            >
                 <div /><div /><div />
             </div>
             {
-                currentStep?.data?.image ? <img src={currentStep.data?.image} />:null
+                currentStep?.data?.image ? <img src={currentStep.data?.image} style={imgStyle} />:null
             }
             <div className='tour-back-btn' onClick={prev}>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,20 +63,30 @@ export default function TourHelper({steps, currentStep, currentStepIndex, prev, 
             <div className='tour-content-info'>
                 <small>{currentStepIndex+1}/{steps.length}</small>
             </div>
-            <h3 className='tour-content-title'>
+            <h3 
+                className='tour-content-title'
+                style={{
+                    ...headerStyle
+                }}
+            >
                 {currentStep?.data.title}
             </h3>
-            <p className='tour-content-description'>
+            <p 
+                className='tour-content-description'
+                style={{
+                    ...descriptionStyle
+                }}
+            >
                 {currentStep?.data.description}
             </p>
             <div className='tour-content-actions'>
                 {
-                    isFirst ? null:<button onClick={prev}>Back</button>
+                    isFirst ? null:<button onClick={prev} style={{...firstButtonStyle}}>Back</button>
                 }
-                <button onClick={handleNext}>{isLast ? 'Get Started':'Continue'}</button>
+                <button onClick={handleNext} style={{...lastButtonStyle}}>{isLast ? 'Get Started':'Continue'}</button>
             </div>
         </div>
-        <div className='tour-watermark'>
+        <div className='tour-watermark' style={footerStyle}>
             <small>Powered by Quest Labs</small>
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 0V4L8 8V4H4V6.64083C4 7.39167 4.60833 8 5.35917 8H8L4 12C1.79083 12 0 10.2092 0 8V0H12Z" fill="#B9B9B9"/>

@@ -36,6 +36,10 @@ import OnBoarding from "./components/Onboarding/Onboarding";
 import DailyStreak from "./components/Streak/DailyStreak";
 import ChallengesPreview from "./components/Challenges/ChallengesPreview";
 import GamifiedQuizPreview from "./components/GamifiedQuiz/GamifiedQuizPreview";
+import WalkThrough from "./components/Walkthrough/WalkThrough";
+import Walkthrough from "./components/Walkthrough/WalkThrough";
+import { Align, Position } from "tour-navigator/lib/TourNavigator/types";
+
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-2aa597b4-341f-4c3c-a022-f56877a585c9";
 export const apiSecret =
@@ -226,7 +230,7 @@ function App() {
                 <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
  */}
 
-        <FeedbackWorkflowPreview online={true} />
+        {/* <FeedbackWorkflowPreview online={true} /> */}
         {/* <ChallengesPreview online={true} /> */}
         
 
@@ -295,7 +299,37 @@ function App() {
 
         {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
         {/* <SreakPreview online /> */}
+
+        <Walkthrough
+            isOpen={isOpen}
+            id="app"
+            steps={[
+              {
+                selector: '.gs-single-card-dropDown',
+                data: {title: 'First Tab', description: 'Click on this'},
+                position: Position.RIGHT,
+                align: Align.END
+              },
+              {
+                selector: '.gs-heading-div',
+                data: {title: 'Second Tab', description: 'Click on this'},
+                align: Align.CENTER
+              }
+            ]}
+            themeConfig={{
+              primaryColor: 'red',
+              backgroundColor: 'white',
+              borderColor: 'lightgray',
+              buttonColor: 'green',
+              secondaryColor: 'yellow'
+            }}
+            onComplete={() => {alert('Welcome to the page'); setIsOpen(false)}}
+            onRequestClose={() => setIsOpen(false)}
+            onAfterOpen={() => document.documentElement.style.overflow = 'hidden'}
+            onBeforeClose={() => document.documentElement.style.overflow = ''}
+        />
       </QuestProvider>
+      < div style={{height: 1999}}/>
     </div>
   );
 }
