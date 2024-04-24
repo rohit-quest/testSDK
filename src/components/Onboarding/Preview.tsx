@@ -6,11 +6,11 @@ import { answer } from '../QuestForm/response';
 import showToast from '../toast/toastService';
 import Toast from '../toast2/Toast';
 import UserProfile from '../UserProfile/UserProfile';
-export const questId = 'q-a8e16042-1831-46b4-875a-888c0ac8b1bc';
+export const questId = 'q-0132f324-3d17-4fab-859a-a31d9a061c15';
 export const apiKey = 'k-fe5a805c-77ed-4cae-bd33-9591ebed2805'
 export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
 export const entityId = 'e-9850377b-f88f-4426-a2ac-56206c74655a'
-export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMzIzOTY1MiwiZXhwIjoxNzEzODQ0NDUyfQ.dRoNwXgz0tE3plJPkrKBlm8dAeHMzs_5uIYOloVbmHE'
+export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMjg1MTMxMywiZXhwIjoxNzEzNDU2MTEzfQ.gDs6fRxpZ0rQ_9MjlJoa3glPIyhtELQ5G0FTTUghWK4'
 export const userId = 'u-8268f5e1-f5a1-440c-a333-0f5578a73847'
 
 export default function OnBoardingPreview({ online = true }: { online?: boolean }) {
@@ -160,7 +160,6 @@ export default function OnBoardingPreview({ online = true }: { online?: boolean 
           design={[[1, 2], [3, 4], [5, 6]]}
           // progressBarMultiLine = {true}
           // design={[]}
-          // uniqueUserId={'10000000000000'}
           controlBtnType='Buttons'
           customComponents={<CustomButton />}
           getAnswers={printAnswer}
@@ -193,28 +192,8 @@ export default function OnBoardingPreview({ online = true }: { online?: boolean 
       // inputBgColor=""
       // inputBorder="1px solid #6525B3"
       singleChoose="modal1"
-      multiChoice="modal2"
+      multiChoice="modal1"
       design={[[1, 2], [3, 4], [5, 6]]}
-      BrandTheme={{
-        background: 'black',
-        fontFamily: 'Cursive',
-        primaryColor: 'white',
-        secondaryColor: 'grey',
-        tertiaryColor: 'white',
-        accentColor: 'blue',
-        borderRadius: '10px',
-        titleColor: 'yellow',
-        contentColor: '#3927F8',
-        buttonColor: '#3927F8',
-        logo: ''
-    }}
-    QuestThemeData={{
-        accentColor: 'blue',
-        theme: 'light',
-        borderRadius: '30px',
-        buttonColor: 'green',
-        images: []
-    }}
 
       headingScreen={[{ name: "Tell us about yourself", desc: "this is description" },
       { name: "Tell us more about your company", desc: "description for this " },

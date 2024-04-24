@@ -40,8 +40,8 @@ interface Quest {
 }
 
 export type QuestArray = Quest[];
-export async function getResponse(headers: CustomHeaders, entityId: string, questId: string,BACKEND_URL): Promise<any> {
-    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${headers.userId}`;
+export async function getResponse(headers: CustomHeaders, entityId: string, questId: string,BACKEND_URL, enableVariation: boolean): Promise<any> {
+    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${headers.userId}&getVariation=${enableVariation}`;
 
     return axios.get(request, { headers: { ...headers } })
         .then((res) => {

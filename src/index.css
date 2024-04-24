@@ -197,18 +197,19 @@ body {
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px; /* 142.857% */
+  line-height: 20px;
 }
 
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
   transition: background-color 600000s 0s, color 600000s 0s;
 }
+
 input[data-autocompleted] {
   background-color: transparent !important;
 }
 
-.powered_by_quest div {
+/* .powered_by_quest div {
   flex: 1 0 0;
   color: #939393;
   font-size: 10px;
@@ -216,18 +217,24 @@ input[data-autocompleted] {
   font-weight: 400;
   line-height: 12px;
   letter-spacing: -0.1px;
-}
+} */
 
 .powered_by_quest {
   display: flex;
   padding: 12px 20px;
   background: #fbfbfb;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 12px;
   cursor: pointer;
   align-self: stretch;
   border-radius: 0 0 10px 10px;
+  color: #939393;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 12px;
+  letter-spacing: -0.1px;
 }
 
 .qt_toast {
@@ -238,7 +245,7 @@ input[data-autocompleted] {
   position: relative;
   cursor: pointer;
   transition: transform 300ms ease-in-out;
-  overflow: hidden;
+  /* overflow: hidden; */
   display: flex;
   align-items: center;
   gap: 8px;
@@ -315,7 +322,7 @@ input[data-autocompleted] {
   right: 0;
 }
 
-.qt_toast::after {
+/* .qt_toast::after {
   content: "\00D7";
   position: absolute;
   right: 12px;
@@ -323,7 +330,7 @@ input[data-autocompleted] {
   margin-bottom: 2px;
   font-weight: 600;
   margin-left: 15px;
-}
+} */
 
 .qt_toast-container {
   position: fixed;
@@ -385,6 +392,7 @@ input[data-autocompleted] {
   border: 1px solid #f5c5bb;
   background: #fcedea;
 }
+
 .qt_toast.info {
   border-radius: 8px;
   border: 1px solid #abcdf1;

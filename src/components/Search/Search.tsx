@@ -57,6 +57,7 @@ interface propType {
     CommandButton?: CSSProperties;
   };
   showFooter?: boolean;
+  enableVariation?: boolean
 }
 
 type BrandTheme = {
@@ -96,6 +97,7 @@ export default function Search(prop: propType): JSX.Element {
     styleConfig,
     showFooter = true,
     iconColor,
+    enableVariation = false
   } = prop;
   const inputElement = useRef<HTMLInputElement>(null);
   const [searchResults, setResults] = useState<data>(defaultResult);
@@ -194,7 +196,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
 }
 
   useEffect(() => {
-    getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL).then(
+    getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL, enableVariation).then(
       (response) => {
         setQuestThemeData(response.questThemeData)
         setData([...response.formatData].splice(0, defulatResultLength));

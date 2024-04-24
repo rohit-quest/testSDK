@@ -9,7 +9,7 @@ import {
 } from "../../assets/images";
 import "./Refer.css";
 import { useContext, useEffect, useState } from "react";
-import { referProp, response, shareOnPlatform } from "./Response.ts";
+import { referProp, response, shareOnPlatform } from "./Response";
 import QuestContext from "../QuestWrapper.tsx";
 import PopupComponent from "./Popup.tsx";
 import ShareArticle from "../Share/ShareArticle.tsx";

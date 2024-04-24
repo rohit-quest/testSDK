@@ -74,8 +74,8 @@
   align-self: stretch;
 }
 .gs-subheading {
-  color:  #939393;
-  color:  #939393;
+  color: #939393;
+  color: #939393;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -112,7 +112,7 @@
 .q_gt_progress_bar {
   display: flex;
   align-self: stretch;
-  color:  #2c2c2c;
+  color: #2c2c2c;
   font-size: 10px;
   font-style: normal;
   font-weight: 600;
@@ -169,7 +169,7 @@
   gap: 12px;
   align-self: stretch;
   border-radius: 10px;
-  border: 1px solid  #efefef;
+  border: 1px solid #efefef;
 }
 .gs_card_body_dropDown {
   display: flex;
@@ -194,6 +194,7 @@
   gap: 16px;
   width: 100%;
   padding: 0px 12px;
+  box-sizing: border-box;
 }
 
 .gs_drop_img {
@@ -206,7 +207,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  align-self: stretch;
+  /* align-self: stretch; */
 }
 
 .gs_start_btn {
@@ -231,11 +232,11 @@
   padding: 10px 16px;
   border-radius: 10px;
   /* border: 1.5px solid #efefef; */
-  background:  #fff;
+  background: #fff;
   justify-content: center;
   align-items: center;
   gap: 4px;
-  color:  #2c2c2c;
+  color: #2c2c2c;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -245,7 +246,7 @@
 
 .gs_drop_desc {
   align-self: stretch;
-  color:  #939393;
+  color: #939393;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -266,7 +267,7 @@
   align-items: center;
   gap: 6.1px;
   border-radius: 7.625px;
-  background:  #9035ff;
+  background: #9035ff;
   box-sizing: content-box;
   white-space: nowrap;
 }
@@ -278,8 +279,8 @@
   align-items: flex-start;
   gap: 20px;
   align-self: stretch;
-  border-bottom: 1px solid  #efefef;
-  border-bottom: 1px solid  #efefef;
+  border-bottom: 1px solid #efefef;
+  border-bottom: 1px solid #efefef;
 }
 
 .gs_steps {
@@ -325,7 +326,7 @@
   align-items: center;
   gap: 8px;
   border-radius: 48px;
-  background:#f4ebff;
+  background: #f4ebff;
   justify-content: center;
   width: 32px;
   height: 32px;
@@ -351,4 +352,40 @@
   box-sizing: content-box;
   border-radius: 50%;
   background: #ebfff7;
+}
+
+.card-drop-down-cont {
+  width: 100%;
+  display: flex;
+  padding: 50px 66px 0px 66px;
+  padding: 50px 0 0 0;
+  justify-content: center;
+  align-items: start;
+  align-self: stretch;
+  border-radius: 10px;
+  background: var(
+    --Primary,
+    linear-gradient(84deg, #9035ff 0.36%, #0065ff 100.36%)
+  );
+  box-sizing: border-box;
+  overflow: hidden;
+  height: 160px;
+}
+.card-drop-down-cont > div {
+  margin: 0 auto;
+  height: 180px;
+  width: 180px;
+  display: flex;
+  /* padding: 30px; */
+  align-items: center;
+  justify-content: center;
+  /* gap: 12px; */
+  border-radius: 192px;
+  background: var(--neutral-opacity-white-20, rgba(255, 255, 255, 0.2));
+  box-sizing: border-box;
+  /* background: red; */
+}
+.card-drop-down-cont > div > img {
+  width: 120px;
+  height: 120px;
 }

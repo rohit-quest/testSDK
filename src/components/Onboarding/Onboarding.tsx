@@ -139,8 +139,10 @@ interface QuestLoginProps {
             currentTabColor?: string,
             pendingTabColor?: string
         }
-        Footer?: CSSProperties
-    }
+
+        Footer? : CSSProperties
+    },
+    enableVariation?: boolean
 }
 
 interface FormData {
@@ -215,7 +217,8 @@ function OnBoarding(props: QuestLoginProps) {
         template,
         design = [],
         styleConfig,
-        showFooter = true
+        showFooter = true,
+        enableVariation = false
     } = props;
 
 
@@ -334,7 +337,7 @@ function OnBoarding(props: QuestLoginProps) {
 
             async function getQuestData(userId: string, headers: object) {
                 (loadingTracker && setLoading(true));
-                const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/criterias?userId=${userId}`;
+                const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/criterias?userId=${userId}&getVariation=${enableVariation}`;
                 await axios.get(request, { headers: headers }).then((res) => {
                     let response = res.data;
 
@@ -420,12 +423,14 @@ function OnBoarding(props: QuestLoginProps) {
             let headers = {
                 apikey: apiKey,
                 apisecret: apiSecret,
-                userId: questUserId,
-                token: questUserToken
+                userId: questUserId ? questUserId : userId,
+                token: questUserToken ? questUserToken : token
             }
             if (!!designState && Number(currentPage) + 1 != designState?.length) {
                 try {
-                    axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-complete-page-${Number(currentPage) + 1}?userId=${questUserId}&questId=${questId}`, { count: 1 }, { headers })
+
+                    axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${headers.userId}/metrics/onboarding-complete-page-${Number(currentPage) + 1}?userId=${headers.userId}&questId=${questId}`, {count: 1}, {headers})
+
                 } catch (error) {
                     GeneralFunctions.captureSentryException(error);
                 }
@@ -946,7 +951,8 @@ function OnBoarding(props: QuestLoginProps) {
         getAnswers && getAnswers(crt);
 
         try {
-            axios.post(`${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`, { criterias, userId: headers.userId }, { headers })
+            axios.post(`${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}&getVariation=${enableVariation}`, {criterias, userId: headers.userId}, {headers})
+
         } catch (error) {
             GeneralFunctions.captureSentryException(error);
         }

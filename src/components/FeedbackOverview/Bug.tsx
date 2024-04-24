@@ -12,6 +12,7 @@ interface BugContentProps {
   emailInput: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
   normalInput2: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
   buttonStyle?: CSSProperties;
+  PrimaryButtonText?: string;
 }
 
 const BugContent: React.FC<BugContentProps> = ({
@@ -21,6 +22,7 @@ const BugContent: React.FC<BugContentProps> = ({
   emailInput,
   normalInput2,
   buttonStyle = {},
+  PrimaryButtonText = "Submit"
 }) => {
 
   return (
@@ -44,7 +46,7 @@ const BugContent: React.FC<BugContentProps> = ({
               );
             }
           })}
-          <PrimaryButton children='Submit' className='q-fdov-btn-continue' onClick={handleSubmit} style={buttonStyle} />
+          <PrimaryButton children={PrimaryButtonText || 'Submit'} className='q-fdov-btn-continue' onClick={handleSubmit} style={buttonStyle} />
         </>
       ) : (
         <div className="q-center">

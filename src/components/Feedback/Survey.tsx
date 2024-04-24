@@ -138,6 +138,7 @@ interface FeedbackProps {
     },
   };
   showFooter?: boolean;
+  enableVariation?: boolean;
 }
 
 interface QuestThemeData {
@@ -184,6 +185,7 @@ const Survey: React.FC<FeedbackProps> = ({
   styleConfig = {},
   isInline = false,
   sections,
+  enableVariation = false
 }) => {
   interface FormDataItem {
     type?: string;
@@ -381,7 +383,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
         userId: userId,
         token: token,
       };
-      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}`;
+      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}&getVariation=${enableVariation}`;
 
       axios.get(request, { headers: headers }).then((res) => {
         let response = res.data;
@@ -505,7 +507,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
         answer: [answer[ans?.criteriaId] || ""],
         criteriaId: ans?.criteriaId || "",
       }));
-      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`;
+      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}&getVariation=${enableVariation}`;
       const requestData = {
         criterias: ansArr,
         userId: headers.userId,

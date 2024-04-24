@@ -49,6 +49,7 @@ interface TutorialProps {
   };
   footerBackgroundColor?: string;
   showFooter?: boolean;
+  enableVariation?: boolean
 }
 
 interface QuestThemeData {
@@ -57,6 +58,7 @@ interface QuestThemeData {
   borderRadius: string;
   buttonColor: string;
   images: string[];
+
 }
 
 type BrandTheme = {
@@ -88,6 +90,8 @@ const TutorialScreen: React.FC<TutorialProps> = ({
   },
   styleConfig,
   showFooter = true,
+  enableVariation = false
+
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
@@ -152,7 +156,7 @@ const TutorialScreen: React.FC<TutorialProps> = ({
     const json = {
       criteriaId: id,
     };
-    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
+    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}&getVariation=${enableVariation}`;
 
     setShowLoader(true);
     axios
@@ -234,8 +238,7 @@ const TutorialScreen: React.FC<TutorialProps> = ({
       }
 
       function fetchData(header: any) {
-        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}`;
-
+        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}&getVariation=${enableVariation}`;
         axios
           .get(request, { headers: header })
           .then((res) => {
