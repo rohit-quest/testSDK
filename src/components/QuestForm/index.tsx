@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import QuestContext from '../../components/QuestWrapper';
-import { ApiResponse, Submit, fetchQuestions, metadata, questFormPropType } from "./response.ts";
+import { ApiResponse, Submit, fetchQuestions, metadata, questFormPropType } from "./response";
 import enterPng from '../../assets/images/enter.png';
 import "./form.css";
 
@@ -10,7 +10,7 @@ export const QuestForm = (props: questFormPropType) => {
     const {
         userId = "", questId = "", shadowColor = "rgba(0, 0, 0, 0.25)", token = "", setAnswer = (() => {
         }), onSubmit = (() => {
-        })
+        }), enableVariation = false
     } = props;
     const headers = useContext(QuestContext.Context) || null;
     const { apiKey, apiSecret, entityId, featureFlags } = useContext(QuestContext.Context);
@@ -27,7 +27,7 @@ export const QuestForm = (props: questFormPropType) => {
         headingSize = "24px", descSize = "24px", inputBgColor = "#F6F6F6"
     } = props;
     const setData = async () => {
-        const res = await fetchQuestions({ ...headers, userId, questId, token });
+        const res = await fetchQuestions({ ...headers, userId, questId, token, enableVariation });
         if (!res?.success) return;
         setSubject(res);
         let crts = res?.eligibilityData.map(e => ({

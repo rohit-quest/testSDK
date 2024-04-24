@@ -44,8 +44,8 @@ export type QuestArray = Quest[];
 
 export type walkResponeType = Array<{ text: string, link?: string, description?: string, selector: string, icon?: string, position: positionType }>;
 
-export async function getResponse(headers: CustomHeaders, entityId: string, questId: string, BACKEND_URL: string): Promise<walkResponeType> {
-    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${headers.userId}`;
+export async function getResponse(headers: CustomHeaders, entityId: string, questId: string, BACKEND_URL: string, enableVariation: boolean): Promise<walkResponeType> {
+    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${headers.userId}&getVariation=${enableVariation}`;
 
     try {
         const res = await axios.get(request, { headers: { ...headers } });

@@ -13,8 +13,7 @@ export interface referProp {
     heading?: string;
     description?: String;
     uniqueUserId?: string,
-    uniqueEmailId?: string,
-    
+    uniqueEmailId?: string
 }
 
 

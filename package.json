@@ -1,7 +1,7 @@
 {
   "name": "@questlabs/react-sdk",
   "private": false,
-  "version": "1.7.1",
+  "version": "1.5.4",
   "type": "module",
   "main": "dist/index.umd.js",
   "module": "dist/index.es.js",
@@ -34,7 +34,7 @@
     "@stripe/react-stripe-js": "^2.4.0",
     "@stripe/stripe-js": "^2.2.2",
     "@types/react-select": "^5.0.1",
-    "axios": "^1.5.0",
+    "axios": "^1.6.8",
     "mixpanel-browser": "^2.48.1",
     "query-string": "^8.1.0",
     "react": "^18.2.0",
