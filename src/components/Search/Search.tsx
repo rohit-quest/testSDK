@@ -200,7 +200,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
         setData([...response.formatData].splice(0, defulatResultLength));
         setResults([...response.formatData].splice(0, defulatResultLength));
         if(response.questThemeData?.theme){
-          getTheme(response.questThemeData?.theme)
+          // getTheme(response.questThemeData?.theme) disabled for now
         }
       }
     );

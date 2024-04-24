@@ -159,7 +159,7 @@ export const CrossSelling = ({
                 if (isMounted && r) {
                     if(r.uiProps?.questThemeData){
                         setQuestThemeData(r.uiProps?.questThemeData)
-                        getTheme(r.uiProps?.questThemeData.theme)
+                        // getTheme(r.uiProps?.questThemeData.theme) // disable for now
                     }
                     requestRef.current = +r.endsAt;
                     animate();

@@ -243,7 +243,7 @@ const TutorialScreen: React.FC<TutorialProps> = ({
             if (response.data.uiProps?.questThemeData) {
               setQuestThemeData(response?.data?.uiProps?.questThemeData)
               if (response.data.uiProps?.questThemeData.theme) {
-                getTheme(response.data.uiProps.questThemeData.theme)
+                // getTheme(response.data.uiProps.questThemeData.theme) disabled for now
               }
             }
             let criterias = response?.eligibilityData?.map((criteria: any) => {

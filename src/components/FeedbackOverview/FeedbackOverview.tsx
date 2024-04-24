@@ -585,7 +585,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       if (response?.parentQuest?.uiProps?.questThemeData) {
         setQuestThemeData(response?.parentQuest?.uiProps?.questThemeData)
         if (response?.parentQuest?.uiProps?.questThemeData.theme) {
-          getTheme(response?.parentQuest?.uiProps.questThemeData.theme)
+          // getTheme(response?.parentQuest?.uiProps.questThemeData.theme) disabled for now
         }
       }
     });
