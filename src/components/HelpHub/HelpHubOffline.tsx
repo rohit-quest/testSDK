@@ -15,7 +15,7 @@ import {
   QuestCriteriaWithStatusType,
   QuestTypes,
 } from "./HelpHub.type";
-import { createDefaultQuest, getDefaultQuest } from "./Helphub.service";
+import { createDefaultQuest, getDefaultQuest, getEntityDetails } from "./Helphub.service";
 import config from "../../config";
 
 const HelpHubOffline = (props: HelpHubPropsOffline) => {
@@ -31,6 +31,7 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
     onlineComponent,
     ChildQuest = [],
     ParentQuest,
+    entityLogo
   } = props;
 
   const { apiKey, entityId, featureFlags, apiType, themeConfig } = useContext(
@@ -54,6 +55,7 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
   const [updateData, setUpdateData] = useState<QuestCriteriaWithStatusType[]>(
     []
   );
+  const [entityImage, setEntityImage]=useState<string>("");
 
   useEffect(() => {
     setTaskStatus(
@@ -63,12 +65,22 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
     );
   }, [claimStatusTasks]);
 
+  const entityDetails = async () => {
+    let qId = questId || "q-default-helphub";
+    let {data} = await getEntityDetails(
+      BACKEND_URL,
+      entityId,
+      qId,
+      userId,
+      token,
+      apiKey
+    );
+    setEntityImage(data.imageUrl)
+  }
 
-
-  // useEffect(() => {
-  //   setParentQuest(ParentQuest);
-  //   setChieldQuestCriteria(ChildQuest);
-  // }, []);
+  useEffect(() => {
+    entityDetails()
+  }, []);
 
   useEffect(() => {
     let arr = taskData
@@ -92,11 +104,11 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
     <div
       style={{ fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif" }}
     >
-      <div className={"helphubIconUpperCont"}>
-        {/* help button  */}
+      <div className={"helphubIconUpperCont"} style={{position: "static"}}>
         <div
           className={"helhubIconCont"}
           onClick={() => setHelpHub((prev) => !prev)}
+          style={{display: "none"}}
         >
           <img src={helpIcon} />
         </div>
@@ -108,6 +120,7 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
             style={{
               height: styleConfig?.Main?.height,
               width: styleConfig?.Main?.width,
+              position: "static",
             }}
           >
             {selectedSection === "Home" ? (
@@ -124,6 +137,7 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
                 onlineComponent={onlineComponent}
                 showFeedback={showFeedback}
                 setShowFeedback={setShowFeedback}
+                entityImage={entityImage || entityLogo}
               />
             ) : (
               ""
@@ -139,6 +153,7 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
                 styleConfig={styleConfig}
                 showBottomNavigation={showBottomNavigation}
                 setShowBottomNavigation={setShowBottomNavigation}
+                entityImage={entityImage || entityLogo}
               />
             ) : (
               ""
@@ -169,6 +184,7 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
                 onlineComponent={onlineComponent}
                 showBottomNavigation={showBottomNavigation}
                 setShowBottomNavigation={setShowBottomNavigation}
+                entityImage={entityImage}
               />
             ) : (
               ""

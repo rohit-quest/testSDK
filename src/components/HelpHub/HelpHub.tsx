@@ -16,6 +16,8 @@ import {
 } from "./HelpHub.type";
 import { createDefaultQuest, getDefaultQuest, getEntityDetails } from "./Helphub.service";
 import config from "../../config";
+import messagesIcon from "../../assets/images/messages.svg";
+import addIcon from "../../assets/images/add.svg";
 
 const HelpHub = (props: HelpHubProps) => {
   const {
@@ -77,7 +79,6 @@ const HelpHub = (props: HelpHubProps) => {
       token,
       apiKey
     );
-    console.log(getResult)
     if (!getResult?.success) {
       let createQuest = await createDefaultQuest(
         BACKEND_URL,
@@ -188,7 +189,6 @@ const HelpHub = (props: HelpHubProps) => {
       token,
       apiKey
     );
-    console.log(data.imageUrl)
     setEntityImage(data.imageUrl)
     // https://staging.questprotocol.xyz/api/entities/e-9850377b-f88f-4426-a2ac-56206c74655a
   }
@@ -224,27 +224,24 @@ const HelpHub = (props: HelpHubProps) => {
     <div
       style={{
         fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
-        background: "red",
       }}
     >
       <div
         className={"helphubIconUpperCont"}
-        style={{
-          background: "yellow",
-        }}
       >
         {/* help button  */}
         <div
           className={"helhubIconCont"}
           onClick={() => setHelpHub((prev) => !prev)}
         >
-          <img src={helpIcon} />
+          <img src={addIcon} className={`helphub-open-addIcon ${helpHub ? "show-icon" : ""}`} />
+          <img src={messagesIcon} className={`helphub-open-messagesIcon ${!helpHub ? "show-icon" : ""}`} />
         </div>
 
-        {helpHub && (
+        {/* {helpHub && ( */}
           <div
             id="helpHub"
-            className={"helpHubMainCont animated"}
+            className={`helpHubMainCont ${helpHub ? "animated" : ""}`}
             style={{
               height: styleConfig?.Main?.height,
               width: styleConfig?.Main?.width,
@@ -614,7 +611,7 @@ const HelpHub = (props: HelpHubProps) => {
               )}
             </div>
           </div>
-        )}
+        {/* )} */}
       </div>
     </div>
   );

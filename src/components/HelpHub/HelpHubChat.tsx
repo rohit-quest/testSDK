@@ -15,11 +15,15 @@ import QuestWhiteLogo from "../../assets/images/QuestWhiteLogo.svg";
 import Mic from "../../assets/images/Mic.svg";
 import Modal3 from "../../assets/images/HelpHubModal3.jpeg";
 import HelphubSvg from "./HelphubSvg";
-import { HelpHubChatTypes } from "./HelpHub.type";
+import { Conversation, HelpHubChatTypes, MessageTypes } from "./HelpHub.type";
 import QuestContext from "../QuestWrapper";
-import { getMessages, sendMessage } from "./Helphub.service";
+import { getMessages, satisfyOrNot, sendMessage } from "./Helphub.service";
 import config from "../../config";
 import { uploadImageToBackend } from "../../general";
+import likeImg from "../../assets/images/like_color.svg";
+import dislikeImg from "../../assets/images/dislike_color.svg";
+import aiTag from "../../assets/images/aiTag.svg";
+import adminTag from "../../assets/images/adminTag.svg";
 let SenderImg =
   "https://s3-alpha-sig.figma.com/img/c73b/ede1/44dae2a681a58d566da9f69147cc690d?Expires=1713744000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=XJcQc8XNhFza8CJhDAyWRNg9DCoXlrD4E2wn1JDTXS4GFD3XmwsrPggispX-rCLfIw~LJAZGJVvog4bAZ7y5T2UHfn7SkPWSqTZrCftSeZzVjMTej3u5y3ZL28S3tIekwU9BZ3fzSe1HgprPHdZNCxMgOlqyhA6pb9tCSQ6Vu0Z7W8z9Hh6OmCJje68iaAro9DsHtu~wvstZjyfEENlhWWG4wMK5tZTw3hRBYKAmSExdiFb25DjhBUG~cHoXYV6A5286pwskNTO0QrPHULje839o8TdBKsvI4CC2v7yCiYC1V7Qlcd-h6GH-P0DL2qfttlIlZD3frTKsnW1EA-0PHQ__";
 
@@ -45,7 +49,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   const { themeConfig } = useContext(QuestContext.Context);
   const [showPersonalChat, setShowPersonalChat] = useState(false);
   const [message, setMessage] = useState("");
-  const [data, setData] = useState<ChatMessage[]>([]);
+  const [data, setData] = useState<Conversation[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const [senderMessageLoading, setSenderMessageLoading] = useState(false);
@@ -54,106 +58,127 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
-  const [chat, setChats] = useState([
-    {
-      profile: "hi",
-      senderName: "Alexander Rodriguez...",
-      senderMessage:
-        "I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    },
-    // {
-    //   profile: "hi",
-    //   senderName: "Alexander Rodriguez...",
-    //   senderMessage:
-    //     " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    // },
-    // {
-    //   profile: "hi",
-    //   senderName: "Alexander Rodriguez...",
-    //   senderMessage:
-    //     " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    // },
-    // {
-    //   profile: "hi",
-    //   senderName: "Alexander Rodriguez...",
-    //   senderMessage:
-    //     " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    // },
-    // {
-    //   profile: "hi",
-    //   senderName: "Alexander Rodriguez...",
-    //   senderMessage:
-    //     " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    // },
-    // {
-    //     profile: "hi",
-    //     senderName: "Alexander Rodriguez...",
-    //     senderMessage:
-    //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    // },
-    // {
-    //     profile: "hi",
-    //     senderName: "Alexander Rodriguez...",
-    //     senderMessage:
-    //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    // },
-    // {
-    //     profile: "hi",
-    //     senderName: "Alexander Rodriguez...",
-    //     senderMessage:
-    //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    // },
-    // {
-    //     profile: "hi",
-    //     senderName: "Alexander Rodriguez...",
-    //     senderMessage:
-    //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    // },
-    // {
-    //     profile: "hi",
-    //     senderName: "Alexander Rodriguez...",
-    //     senderMessage:
-    //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    // },
-    // {
-    //     profile: "hi",
-    //     senderName: "Alexander Rodriguez...",
-    //     senderMessage:
-    //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    // },
-    // {
-    //     profile: "hi",
-    //     senderName: "Alexander Rodriguez...",
-    //     senderMessage:
-    //         " I don't have personal preferences, but I can recommend books based on your interests. What genre are you into? For a cultural experience, Kyoto in Japan is fantastic.",
-    // },
-  ]);
+  const [chat, setChat] = useState<MessageTypes[]>();
 
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
-  const [selectedFileName, setSelectedFileName] = useState("");
-  const [scrollWidthSet, setScrollWidthSet] = useState(true);
+  const [selectedFileName, setSelectedFileName] = useState<string>("");
+  const [scrollWidthSet, setScrollWidthSet] = useState<boolean>(true);
+  const [selectedConversationId, setSelectedConversationId] = useState<string>("");
+  const [askSatisfaction, setAskSatisfaction] = useState<boolean>(false);
+  const [onlyAdminReply, setOnlyAdminReply] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false)
+  const [fetchData, setFetchData] = useState<boolean>(false)
 
+  const storeLastChat = (chatHistory: MessageTypes[]) => {
+    let lastSeenRecord: { [key: string]: string } = JSON.parse(localStorage.getItem("lastSeenRecord") || "{}");
+    (chatHistory || chat)?.forEach((ele) => {
+      lastSeenRecord[ele.conversationId] = ele?.conversations?.content;
+    });
+    localStorage.setItem("lastSeenRecord", JSON.stringify(lastSeenRecord));
+  }
+
+  const handleSatisfied = async (isSatisfied: boolean) => {
+    let satisfiedResponse = await satisfyOrNot(
+      BACKEND_URL,
+      entityId,
+      userId,
+      token,
+      apiKey,
+      isSatisfied,
+      selectedConversationId
+    );
+
+    if (satisfiedResponse?.success) {
+      setAskSatisfaction(false)
+      if (isSatisfied == false) {
+        let updateChat = chat?.map((ele) => {
+          if (ele.conversationId == selectedConversationId) {
+            return {
+              ...ele,
+              onlyAdminReply: true,
+              isResolved: false,
+            };
+          } else {
+            return ele;
+          }
+        }) || [];
+        setChat(updateChat);
+        setOnlyAdminReply(true);
+      }
+    }
+  }
+
+  useEffect(() => {
+    let updateChat = chat?.filter((ele) => ele.conversationId == selectedConversationId) || [];
+    if (updateChat?.length > 0) {
+      setOnlyAdminReply(updateChat[0]?.onlyAdminReply)
+    }
+  }, [data]);
+  
   const handleSave = () => {
     const sendMessageFunc = async (message: string) => {
       setSenderMessageLoading(true);
-      setData((data) => [...data, { sender: message }]);
-      //   let qId = questId || "q-default-helphub";
+      let userChat: Conversation = {
+        senderRole: "USER",
+        _id: new Date().toISOString(),
+        senderId: userId || "",
+        content: message,
+        timestamp: new Date().toISOString(),
+      };
+      setData((data: Conversation[]) => [...data, userChat]);
+      let updateLastChat: MessageTypes[] | [] = chat?.map((ele) => {
+        if (ele.conversationId == selectedConversationId) {
+          return {
+            ...ele,
+            conversations: userChat,
+          };
+        } else {
+          return ele;
+        }
+      }) || [];
+      setChat(updateLastChat);
+      storeLastChat(updateLastChat || []);
+      
       let sendMessageResponse = await sendMessage(
         BACKEND_URL,
         entityId,
         userId,
         token,
         apiKey,
-        message
+        message,
+        selectedConversationId
       );
 
-      setData((data) => [
-        ...data,
-        {
-          receiver: sendMessageResponse.data,
-        },
-      ]);
+      if (sendMessageResponse?.data?.replied) {
+        setData((data) => [...data, sendMessageResponse?.data?.message]);
+
+        let findData = false
+        updateLastChat = chat?.map((ele) => {
+          if (ele.conversationId == selectedConversationId) {
+            findData = true
+            return {
+              ...ele,
+              conversations: sendMessageResponse?.data?.message,
+            };
+          } else {
+            return ele;
+          }
+        }) || [];
+
+        if (!findData) {
+          let newChat = sendMessageResponse?.data?.conversationData
+          newChat.conversations = sendMessageResponse?.data?.message
+          updateLastChat = [...updateLastChat, newChat]
+        }
+        
+        if (sendMessageResponse?.data?.askSatisfaction) {
+          setAskSatisfaction(true)
+        }
+      }
+
+      setChat(updateLastChat);
+      storeLastChat(updateLastChat || []);
       setSenderMessageLoading((prev) => !prev);
     };
 
@@ -172,51 +197,11 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
         setSelectedFileName("");
         sendMessageFunc(data?.imageUrl);
         setScrollWidthSet((prev) => !prev);
-        // generalFunction.hideLoader();
       };
       uploadFile();
     }
 
     if (message.length > 0) {
-      // setSenderMessageLoading(true);
-      // const sendMessageFunc = async () => {
-      //   console.log(uploadedImageUrl);
-      //   setData((data) => [...data, { sender: message }]);
-      //   //   let qId = questId || "q-default-helphub";
-      //   let sendMessageResponse = await sendMessage(
-      //     BACKEND_URL,
-      //     entityId,
-      //     userId,
-      //     token,
-      //     apiKey,
-      //     message
-      //   );
-      //   // console.log(sendMessageResponse);
-      //   // console.log();
-      //   // console.log("user", message);
-
-      //   // console.log("response", sendMessageResponse.data);
-      //   // setTimeout(() => {
-      //   //   setData((data) => [
-      //   //     ...data,
-      //   //     {
-      //   //       receiver: sendMessageResponse.data,
-      //   //     },
-      //   //   ]);
-      //   // }, 1000);
-      //   setData((data) => [
-      //     ...data,
-      //     {
-      //       receiver: sendMessageResponse.data,
-      //     },
-      //   ]);
-      //   setSenderMessageLoading((prev) => !prev);
-      //   // setMessageFailed(true);
-      //   setTimeout(() => {
-      //     // setMessageFailed(!sendMessageResponse.data.success);
-      //   }, 2000);
-      //   //   console.log(data);
-      // };
       sendMessageFunc(message);
     }
     setMessage("");
@@ -228,19 +213,6 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     if (event.target.files[0]) {
       setSelectedFile(event.target.files[0]);
       setSelectedFileName(event.target.files[0].name);
-      // setImageUrl(URL.createObjectURL(event.target.files[0]));
-      // const uploadFile = async () => {
-      //   // generalFunction.showLoader();
-      //   let data = await uploadImageToBackend(
-      //     event.target.files[0],
-      //     BACKEND_URL,
-      //     apiKey,
-      //     userId,
-      //     token
-      //   );
-      //   setImageUrl(data?.imageUrl);
-      //   // generalFunction.hideLoader();
-      // };
     }
   };
 
@@ -266,55 +238,38 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     return () => window.removeEventListener("resize", resizeHandler);
   }, []);
 
-  useEffect(() => {
-    const getMessagesHistory = async () => {
-      //   let qId = questId || "q-default-helphub";
-      let getResult = await getMessages(
+
+
+  const getMessagesHistory = async (conversationId: string | undefined) => {
+    if (conversationId) {
+      setLoading(true)
+      setSelectedConversationId(conversationId);
+      let getResult: {data: {conversations: Conversation[]}} = await getMessages(
         BACKEND_URL,
         entityId,
         userId,
         token,
-        apiKey
+        apiKey,
+        conversationId || ""
       );
-
-      let conversion = getResult.data.conversations.map(
-        (chat: any, index: number) => {
-          let chatObj = {
-            sender: chat.senderRole === "USER" ? chat.content : null,
-            receiver: chat.senderRole == "ASSISTANT" ? chat.content : null,
-          };
-          return chatObj;
-        }
+      setData(getResult?.data?.conversations);
+      setLoading(false)
+    } else {
+      setFetchData(true)
+      let getResult: {data: MessageTypes[]} = await getMessages(
+        BACKEND_URL,
+        entityId,
+        userId,
+        token,
+        apiKey,
+        conversationId || ""
       );
-      setData(conversion);
-      // setChats([
-      //   {
-      //     profile: "hi",
-      //     senderName: "Alexander Rodriguez...",
-      //     senderMessage:
-      //       conversion[conversion.length - 1].receiver ||
-      //       conversion[conversion.length - 1].sender,
-      //   },
-      // ]);
-    };
-    getMessagesHistory();
-
-    // const testApi = async () => {
-    //   let request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
-
-    //   let headers = {
-    //     userId,
-    //     token,
-    //     entityId,
-    //     apikey,
-    //   };
-
-    //   let response = await axios.post(
-    //     request,
-    //     { criteriaId, ...(answer && { answer }) },
-    //     { headers }
-    //   );
-    // };
+      setChat(getResult?.data)
+      setFetchData(false)
+    }
+  };
+  useEffect(() => {
+    getMessagesHistory("");
   }, []);
   const [updateOutAnimation, setUpdateOutAnimation] = useState<boolean | null>(
     null
@@ -327,10 +282,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     boolean | null
   >(null);
 
-  useEffect(() => {
-    console.log("updateOutAnimation", updateOutAnimation);
-    console.log("updateOneoutAnimation", updateOneoutAnimation);
-  }, [updateOneoutAnimation, updateOutAnimation]);
+
   return (
     <>
       {!showPersonalChat && (
@@ -393,7 +345,9 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
           {/*  */}
           <div className="q-helphub-chatpage-lower-container">
             {/* search and chats container */}
-            {(data.length >0)?<div className="q-helphub-search-chats-container">
+            {!fetchData && 
+            (!!chat?.length ? 
+            <div className="q-helphub-search-chats-container">
               {/* search  */}
               <div className="search-outer-div">
                 <div
@@ -415,7 +369,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
               <div className="q-helphub-chats-section">
                 {/* only one chat */}
 
-                {chat.map((value, index) => {
+                {chat?.map((value, index) => {
                   return (
                     <div
                       className="q-helphub-chat-detail"
@@ -430,7 +384,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                         // setShowPersonalChat((prev) => !prev);
                         setUpdateOutAnimation(true);
                         setScrollWidthSet((prev) => !prev);
-
+                        getMessagesHistory(value?.conversationId)
                         // setUpdateOneData(value);
 
                         setTimeout(() => {
@@ -459,7 +413,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                             ...styleConfig?.Chat?.Card?.Heading,
                           }}
                         >
-                          {value.senderName}
+                          {"value"}
                         </div>
                         <div
                           className="q-helphub-chat-sender-message"
@@ -468,7 +422,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                             ...styleConfig?.Chat?.Card?.SubHeading,
                           }}
                         >
-                          {value.senderMessage}
+                          {value?.conversations?.content}
                         </div>
                       </div>
 
@@ -485,9 +439,11 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                   );
                 })}
               </div>
-            </div>:(<div className="no-conversation">
+            </div>
+            :
+            (<div className="no-conversation">
             No Conversation Available
-          </div>)}
+          </div>))}
 
             {/*send button container */}
             <div
@@ -505,8 +461,10 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                   // setUpdateOneData(value);
 
                   setTimeout(() => {
-                    setShowPersonalChat((prev) => !prev);
                     // setshowOneUpdate((prev) => !prev);
+                    setData([])
+                    setSelectedConversationId("")
+                    setShowPersonalChat((prev) => !prev);
                     setShowBottomNavigation((prev) => !prev);
                     setUpdateOneOutAnimation(false);
                     setScrollWidthSet((prev) => !prev);
@@ -564,8 +522,10 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                 onClick={() => {
                   // setShowBottomNavigation(true);
                   // setShowPersonalChat(false);
+                  setOnlyAdminReply(false)
+                  setData([])
+                  setAskSatisfaction(false)
                   setScrollWidthSet((prev) => !prev);
-
                   setUpdateOneOutAnimation((prev) => !prev);
                   setUpdateOutTempAnimation(true);
                   setTimeout(() => {
@@ -593,54 +553,56 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
           </div>
 
           <div className="quest-chat-personal-conversion-cont" ref={scrollRef}>
-            <div className="q-chat-personal-container-body">
-              <div className="text">
-                <div
-                  className="q-chat-personal-container-body-title"
-                  style={{
-                    fontFamily: themeConfig?.fontFamily,
-                    color: themeConfig?.primaryColor,
-                    // ...styleConfig?.Tasks?.Card?.SubHeading,
-                  }}
-                >
-                  How can we help?
-                </div>
-                <div
-                  className="q-chat-personal-container-body-description"
-                  style={{
-                    fontFamily: themeConfig?.fontFamily,
-                    color: themeConfig?.secondaryColor,
-                    // ...styleConfig?.Tasks?.Card?.SubHeading,
-                  }}
-                >
-                  Currently replying in under a minute
-                </div>
-              </div>
-
-              <div className="q-chat-personal-container-body-icons">
-                <div
-                  className="q-chat-personal-container-body-icons-img1"
-                  style={{
-                    zIndex: 3,
-                  }}
-                >
-                  <img src={entityImage||QuestWhiteLogo} />
-                </div>
-                <div
-                  className="q-chat-personal-container-body-icons-img1"
-                  style={{ marginLeft: "-15px", zIndex: 2 }}
-                >
-                  <img src={Modal1} />
+            { !loading &&
+              <div className="q-chat-personal-container-body">
+                <div className="text">
+                  <div
+                    className="q-chat-personal-container-body-title"
+                    style={{
+                      fontFamily: themeConfig?.fontFamily,
+                      color: themeConfig?.primaryColor,
+                      // ...styleConfig?.Tasks?.Card?.SubHeading,
+                    }}
+                  >
+                    How can we help?
+                  </div>
+                  <div
+                    className="q-chat-personal-container-body-description"
+                    style={{
+                      fontFamily: themeConfig?.fontFamily,
+                      color: themeConfig?.secondaryColor,
+                      // ...styleConfig?.Tasks?.Card?.SubHeading,
+                    }}
+                  >
+                    Currently replying in under a minute
+                  </div>
                 </div>
 
-                <div
-                  className="q-chat-personal-container-body-icons-img1"
-                  style={{ marginLeft: "-15px", zIndex: 1 }}
-                >
-                  <img src={ChatWoman} />
+                <div className="q-chat-personal-container-body-icons">
+                  <div
+                    className="q-chat-personal-container-body-icons-img1"
+                    style={{
+                      zIndex: 3,
+                    }}
+                  >
+                    <img src={entityImage||QuestWhiteLogo} />
+                  </div>
+                  <div
+                    className="q-chat-personal-container-body-icons-img1"
+                    style={{ marginLeft: "-15px", zIndex: 2 }}
+                  >
+                    <img src={Modal1} />
+                  </div>
+
+                  <div
+                    className="q-chat-personal-container-body-icons-img1"
+                    style={{ marginLeft: "-15px", zIndex: 1 }}
+                  >
+                    <img src={ChatWoman} />
+                  </div>
                 </div>
               </div>
-            </div>
+            }
 
             <div className="chat-container" id="chatContainer">
               {data &&
@@ -653,35 +615,40 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                         marginBottom: "12px",
                       }}
                     >
-                      {message.receiver && (
+                      {message?.senderRole === "ASSISTANT" && (
                         <div className="chat-profile-img-receiver">
                           <img src={entityImage || QuestWhiteLogo} />
+                          <img src={aiTag} id="chat-profile-img-receiver-tag"/>
+                        </div>
+                      )}
+
+                      {message?.senderRole === "ADMIN" && (
+                        <div className="chat-profile-img-receiver">
+                          <img src={entityImage || QuestWhiteLogo} />
+                          <img src={adminTag} id="chat-profile-img-receiver-tag"/>
                         </div>
                       )}
 
                       <div
                         key={index}
                         className={`message ${
-                          message.sender ? "sender" : "receiver"
+                          message?.senderRole === "USER" ? "sender" : "receiver"
                         }`}
                       >
-                        {/* {message.sender ? message.sender : message.receiver} */}
-                        {message.sender ? (
-                          message.sender.includes(
+                        {
+                          (message.content.includes(
                             "https://quest-media-storage-bucket"
-                          ) ? (
+                          ) || message.content.includes("https://pin.questprotocol.xyz/ipfs")) ? (
                             <div className="chat-coversion-img">
-                              <img src={message.sender} alt="" />
+                              <img src={message.content} alt="" />
                             </div>
                           ) : (
-                            message.sender
+                            message.content
                           )
-                        ) : (
-                          message.receiver
-                        )}
+                        }
                       </div>
 
-                      {message.sender && (
+                      {message?.senderRole === "USER" && (
                         <div className="chat-profile-img-sender">
                           <img src={Modal1} />
                         </div>
@@ -689,7 +656,16 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                     </div>
                   );
                 })}
-              {senderMessageLoading && (
+                { askSatisfaction &&
+                  <div className="q-helphub-satisfied">
+                    <p>Was your problem resolved by the customer support team?</p>
+                    <div className="q-helphub-satisfied-icons">
+                      <img src={likeImg} alt="" onClick={() => handleSatisfied(true)} />
+                      <img src={dislikeImg} alt="" onClick={() => handleSatisfied(false)} />
+                    </div>
+                  </div>
+                }
+              {senderMessageLoading && !onlyAdminReply && (
                 <div className="chat-bubble">
                   <div className="typing">
                     <div className="dot"></div>
@@ -723,19 +699,6 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                   className="q-chat-personal-container-footer-input"
                   onKeyUp={(e) => {
                     if (e.key === "Enter") {
-                      //   if (message.length > 0) {
-                      //     setData((data) => [...data, { sender: message }]);
-                      //     setTimeout(() => {
-                      //       setData((data) => [
-                      //         ...data,
-                      //         {
-                      //           receiver:
-                      //             "I am not in the mood to answer, you come back later",
-                      //         },
-                      //       ]);
-                      //     }, 1000);
-                      //   }
-                      //   setMessage("");
                       handleSave();
                     }
                   }}
@@ -812,7 +775,6 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                     type="file"
                     accept="image/*"
                     className="hidden"
-                    // ref={fileInputRef}
                   />
                 </div>
 

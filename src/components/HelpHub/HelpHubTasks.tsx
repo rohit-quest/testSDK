@@ -406,7 +406,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                   //     : "single-task-close-div"
                   // }`}
                   >
-                    <div className="single-task-close-div-text">
+                    <div className="single-task-close-div-text" style={{width: !!ele?.imageUrl ? "calc(100% - 176px)" : "100%"}}>
                       <p
                         style={{
                           fontFamily: themeConfig?.fontFamily,
@@ -443,27 +443,29 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                         </p>
                       </button>
                     </div>
-                    <div className="single-task-close-div-image-cont">
-                      <div
-                        style={{
-                          width: "100%",
-                          height: "255px",
-                          // borderRadius: "5px",
-                          // border: "1px solid var(--Primary, #9035FF)",
-                          // background: `url(${UpdatesImage}) lightgray -8.338px -7px / 110.971% 102.745% no-repeat`,
-                          // backgroundPosition: "center-top",
-                          // width: "152px",
-                          // width: "100%",
-                          // height: "255px",
-                          // flexShrink: "0",
-                          borderRadius: "5px",
-                          border: "1px solid var(--Primary, #9035FF)",
-                          background: `url(${ele?.imageUrl || UpdatesImage}) lightgray -5.338px -7px / 110.971% 102.745% no-repeat`,
+                    {ele?.imageUrl &&
+                      <div className="single-task-close-div-image-cont">
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "255px",
+                            // borderRadius: "5px",
+                            // border: "1px solid var(--Primary, #9035FF)",
+                            // background: `url(${UpdatesImage}) lightgray -8.338px -7px / 110.971% 102.745% no-repeat`,
+                            // backgroundPosition: "center-top",
+                            // width: "152px",
+                            // width: "100%",
+                            // height: "255px",
+                            // flexShrink: "0",
+                            borderRadius: "5px",
+                            border: "1px solid var(--Primary, #9035FF)",
+                            background: `url(${ele?.imageUrl || UpdatesImage}) lightgray -5.338px -7px / 110.971% 102.745% no-repeat`,
 
-                          // background: "red",
-                        }}
-                      ></div>
-                    </div>
+                            // background: "red",
+                          }}
+                        ></div>
+                      </div>
+                    }
                   </div>
                 </div>
                 {/* {index === openTaskDiv ? (

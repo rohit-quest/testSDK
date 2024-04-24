@@ -308,7 +308,8 @@ export const getMessages = async (
   //   questId: string,
   userId: string | undefined,
   token: string | undefined,
-  apikey: string | undefined
+  apikey: string | undefined,
+  conversationId: string | undefined
   //   criteriaId: string,
   //   answer?: string[] | number[]
 ) => {
@@ -319,7 +320,10 @@ export const getMessages = async (
       entityId,
       apikey,
     };
-    let request = `${backend_url}api/entities/${entityId}/users/${userId}/conversation/user`;
+    let request = !!conversationId ?
+    `${backend_url}api/entities/${entityId}/users/${userId}/conversation/user?conversationId=${conversationId}`
+    :
+    `${backend_url}api/entities/${entityId}/users/${userId}/conversation/user`;
 
     let response = await axios.get(request, { headers });
     return response.data;
@@ -335,9 +339,8 @@ export const sendMessage = async (
   userId: string | undefined,
   token: string | undefined,
   apikey: string | undefined,
-  message: string
-  //   criteriaId: string,
-  //   answer?: string[] | number[]
+  message: string,
+  conversationId: string
 ) => {
   try {
     let headers = {
@@ -350,11 +353,46 @@ export const sendMessage = async (
       message: message,
     };
     // console.log(entityId);
-    let request = `${backend_url}api/entities/${entityId}/users/${userId}/conversation/user`;
+    let request = 
+    conversationId ?
+    `${backend_url}api/entities/${entityId}/users/${userId}/conversation/user?conversationId=${conversationId}`
+    :
+    `${backend_url}api/entities/${entityId}/users/${userId}/conversation/user?new_conversation=true`;
 
     let response = await axios.post(request, body, { headers });
     // console.log("res", response);
     // console.log("res", response.data.success);
+    return response.data;
+  } catch (err) {
+    return err?.response.data;
+  }
+};
+
+export const satisfyOrNot = async (
+  backend_url: string,
+  entityId: string | undefined,
+  //   questId: string,
+  userId: string | undefined,
+  token: string | undefined,
+  apikey: string | undefined,
+  isSatisfied: boolean,
+  conversationId: string
+) => {
+  try {
+    let headers = {
+      userId,
+      token,
+      entityId,
+      apikey,
+    };
+    let body = {
+      isSatisfied
+    };
+    // console.log(entityId);
+    let request = `${backend_url}api/entities/${entityId}/users/${userId}/user/satisfied?conversationId=${conversationId}`
+
+    let response = await axios.post(request, body, { headers });
+    
     return response.data;
   } catch (err) {
     return err?.response.data;

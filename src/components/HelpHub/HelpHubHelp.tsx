@@ -8,7 +8,6 @@ import config from "../../config";
 
 const HelpHubTasks = (props: HelpHubFaqTypes) => {
   const { faqData, contentConfig, styleConfig } = props;
-console.log(faqData)
   const [faqIndex, setFaqIndex] = useState<number | undefined>(undefined);
   const [filterData, setFilterData] = useState<QuestCriteriaWithStatusType[]>(
     []

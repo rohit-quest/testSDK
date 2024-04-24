@@ -134,6 +134,7 @@ export interface HelpHubPropsOffline {
   onlineComponent?: boolean;
   claimStatusUpdates?: string[] | [];
   setClaimStatusUpdates?: Dispatch<SetStateAction<string[][]>>;
+  entityLogo?: string;
 }
 
 export interface HelpHubHomeTypes {
@@ -272,4 +273,26 @@ export interface QuestTypes {
   createdAt: string;
   conditions: any[];
   __v: number;
+}
+
+
+type ConversationId = string;
+
+export type Conversation = {
+  senderRole: "ASSISTANT" | "USER" | "ADMIN";
+  _id?: string;
+  senderId: string;
+  content: string;
+  timestamp: string;
+}
+
+export interface MessageTypes {
+  createdAt: string;
+  entityId: string;
+  isArchived: boolean;
+  isResolved: boolean;
+  onlyAdminReply: boolean;
+  userId: string;
+  conversations: Conversation;
+  conversationId: ConversationId;
 }

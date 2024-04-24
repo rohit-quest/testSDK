@@ -105,7 +105,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
       {/* upper div: div 1 */}
       <div className={"MainImgCont"}>
         <div className={"QuestWhiteLogoCont"}>
-          <img src={entityImage||QuestWhiteLogo} />
+          {entityImage && <img src={entityImage} />}
         </div>
 
         <div className={"helpHubTextCont"}>
@@ -376,6 +376,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
                     className="q-helphub-search-messege-cont"
                     key={index}
                     onClick={() => setSelectedSection("Help")}
+                    style={{borderBottom: allQuestsData[1]?.length - 1 == index ? "none" : "1px solid var(--Neutral-White-300, #efefef)"}}
                   >
                     <div
                       className="q-helphub-search-messege-title"
