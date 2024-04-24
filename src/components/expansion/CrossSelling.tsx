@@ -110,7 +110,7 @@ export const CrossSelling = ({
     BrandTheme,
     QuestThemeData,
     showFooter = true,
-    enableVariation = false
+    enableVariation = false,
     Icon = 'gift'
 }: referProp) => {
     const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(QuestContext.Context);
@@ -222,7 +222,7 @@ export const CrossSelling = ({
             <div className="q_refer_content">
                 <div className="refer_content_box">
                     <div className="q_refer_heading" style={{ color: styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Heading }}>{heading}</div>
-                    <div className="q_refer_desc" style={{ color: styleConfig?.Description?.color || BrandTheme?.secondaryColor || themeConfig?.secondaryColor, ...styleConfig?.Description }}>{description}</div> themeConfig?.primaryColor, ...styleConfig?.Description }}>{description}</div>
+                    <div className="q_refer_desc" style={{ color: styleConfig?.Description?.color || BrandTheme?.secondaryColor || themeConfig?.secondaryColor, ...styleConfig?.Description }}>{description}</div> 
                 </div>
                 <div className="q_time_left">
                     {showDays && !!timeLeft.days && (<div className="q_hours_left" style={{ background: styleConfig?.Timer?.backgroundColor, ...styleConfig?.Timer?.TimerCard }}>
@@ -298,12 +298,12 @@ export const CrossSelling = ({
         ...styleConfig?.BackgroundWrapper
     }}>
         <div className="q_gradient_head">
-            <div className="q_gradient_heading" style={{ color:  brandTheme?.titleColor   }}>{primaryHeading}</div>
-            <div className="q_gradient_description" style={{ color:brandTheme?.tertiaryColor }}>{primaryDescription}</div>
+            <div className="q_gradient_heading">{primaryHeading}</div>
+            <div className="q_gradient_description">{primaryDescription}</div>
         </div>
         {jsx}
         <div className="q_gradient_quest_powered">
-      {showFooter &&  <QuestLabs style={{ background:  styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor  || styleConfig?.Form?.background || brandTheme?.background  || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />}
+            {showFooter && <QuestLabs style={styleConfig?.Footer} />}
         </div>
     </div>
     return jsx;
