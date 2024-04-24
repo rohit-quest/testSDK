@@ -36,6 +36,8 @@ import OnBoarding from "./components/Onboarding/Onboarding";
 import DailyStreak from "./components/Streak/DailyStreak";
 import ChallengesPreview from "./components/Challenges/ChallengesPreview";
 import GamifiedQuizPreview from "./components/GamifiedQuiz/GamifiedQuizPreview";
+import showToast from "./components/toast/toastService";
+import Toast from "./components/toast2/Toast";
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-2aa597b4-341f-4c3c-a022-f56877a585c9";
 export const apiSecret =
@@ -170,7 +172,7 @@ function App() {
         {/* <OnBoardingPreview online={true} /> */}
 
 
-        <GetStartedPreview online={false} />
+        {/* <GetStartedPreview online={false} /> */}
 
         {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
@@ -220,15 +222,19 @@ function App() {
                     }}>
                     Show Confetti</button> */}
 
-        {/* <button onClick={() => { showToast.warn({ duration: 3000, text: "This is a warning message" }) }}>warning</button>
-                <button onClick={() => { showToast.error({ duration: 2000, text: "" }) }}>Error</button>
-                <button onClick={() => { showToast.info({ duration: 2000, text: "" }) }}>Info</button>
-                <button onClick={() => { showToast.success({ duration: 2000, text: "" }) }}>Success</button>
- */}
+        {/* <button onClick={() => { showToast.warn({ duration: 100000, text: "This is a warning message", template: 2, descritption: "WARNING" }) }}>Warning</button>
+        <button onClick={() => { showToast.error({ duration: 100000, text: "This is a error message", template: 2, descritption: "ERROR" }) }}>Error</button>
+        <button onClick={() => { showToast.info({ duration: 100000, text: "This is a info message", template: 2, descritption: "INFO" }) }}>Info</button>
+        <button onClick={() => { showToast.success({ duration: 100000, text: "This is a success message", template: 2, descritption: "SUCCESS" }) }}>Success</button> */}
 
-        <FeedbackWorkflowPreview online={true} />
+
+        <button onClick={() => Toast.success({ text: "This is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success message", position: 'top-right', autoClose: 100000, template: 2, description: "SUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESS" })}>Success</button>
+        <button onClick={() => Toast.info({ text: "This is a info message", position: 'bottom-center', autoClose: 1000, template: 2, description: "INFO" })}>Info</button>
+        <button onClick={() => Toast.error({ text: "This is a error message", position: 'bottom-center', autoClose: 1000, template: 2, description: "Error" })}>Error</button>
+        <button onClick={() => Toast.warning({ text: "This is a succes warning message", position: 'bottom-center', autoClose: 1000, template: 2, description: "WARNING" })}>Warning</button>
+        {/* <FeedbackWorkflowPreview online={true} /> */}
         {/* <ChallengesPreview online={true} /> */}
-        
+
 
         {/* <FeedbackPreview online={true} /> */}
 
