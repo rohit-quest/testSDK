@@ -232,7 +232,7 @@ function App() {
         <button onClick={() => Toast.info({ text: "This is a info message", position: 'bottom-center', autoClose: 1000, template: 2, description: "INFO" })}>Info</button>
         <button onClick={() => Toast.error({ text: "This is a error message", position: 'bottom-center', autoClose: 1000, template: 2, description: "Error" })}>Error</button>
         <button onClick={() => Toast.warning({ text: "This is a succes warning message", position: 'bottom-center', autoClose: 1000, template: 2, description: "WARNING" })}>Warning</button> */}
-        <FeedbackWorkflowPreview online={true} />
+        <FeedbackWorkflowPreview online={false} />
         {/* <ChallengesPreview online={true} /> */}
 
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus nam, ut modi reprehenderit architecto vero quasi debitis, praesentium nihil hic voluptatem, fugit assumenda. A suscipit natus pariatur nisi consectetur nulla voluptates corrupti voluptatem officiis alias eveniet doloribus eos veritatis, quam dolorem praesentium, velit assumenda iusto rerum totam repellendus laudantium ratione est illum. Dolorum qui ut beatae esse odit rerum! Culpa reiciendis facilis consequuntur harum nesciunt, veritatis consectetur incidunt in exercitationem velit, modi natus doloribus ipsa numquam aut. Quo, ipsam fuga consectetur doloremque nesciunt ullam quam expedita accusantium minima sed eum repellendus reprehenderit eos laborum voluptatum itaque numquam maxime quae exercitationem.

@@ -169,6 +169,12 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
             criteriaId: "ec-84192fef-c917-410f-9d4ace713aae",
             required: true,
           },
+          {
+            type: "USER_INPUT_IMAGE",
+            question: "",
+            criteriaId: "ec-e32b88d7-0e43-4254-9c94-44859ceedcdc",
+            required: true,
+          }
         ],
         [
           {
@@ -225,12 +231,6 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
         [
           {
             type: "LINK_OPEN_READ",
-            question: "",
-            criteriaId: "ec-e32b88d7-0e43-4254-9c94-44859ceedcdc",
-            required: true,
-          },
-          {
-            type: "USER_INPUT_IMAGE",
             question: "",
             criteriaId: "ec-e32b88d7-0e43-4254-9c94-44859ceedcdc",
             required: true,
