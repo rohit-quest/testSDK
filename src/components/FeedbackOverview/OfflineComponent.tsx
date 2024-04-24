@@ -738,7 +738,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   handleRemove={handleRemove}
                   ratingStyle={ratingStyle}
                   iconColor={iconColor}
-                  buttonStyle={{background: QuestThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor,...styleConfig.PrimaryButton}}
+                  buttonStyle={{background: styleConfig.PrimaryButton?.background || QuestThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor,...styleConfig.PrimaryButton}}
                   labelStyle={{color: BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.Label}}
                   PrimaryButtonText={PrimaryButtonText}
                 />
@@ -753,7 +753,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   normalInput2={normalInput2}
                   emailInput={emailInput}
                   handleRemove={handleRemove}
-                  buttonStyle={{background: QuestThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor,...styleConfig.PrimaryButton}}
+                  buttonStyle={{background: styleConfig.PrimaryButton?.background || QuestThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor,...styleConfig.PrimaryButton}}
                   PrimaryButtonText={PrimaryButtonText}
 
                 />
@@ -769,7 +769,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   answer={answer}
                   handleRemove={handleRemove}
 
-                  buttonStyle={{background: QuestThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor,...styleConfig.PrimaryButton}}
+                  buttonStyle={{background: styleConfig.PrimaryButton?.background || QuestThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor,...styleConfig.PrimaryButton}}
                   PrimaryButtonText={PrimaryButtonText}
                 />
               )}

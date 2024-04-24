@@ -820,8 +820,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   headingStyle: {
                     color:
                       styleConfig?.Heading?.color || 
-                      BrandTheme?.primaryColor ||
                       BrandTheme?.titleColor ||
+                      BrandTheme?.primaryColor ||
                       themeConfig?.primaryColor,
                     ...styleConfig?.Heading,
                   },
@@ -871,7 +871,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                     handleRemove={handleRemove}
                     ratingStyle={ratingStyle}
                     iconColor={iconColor}
-                    buttonStyle={styleConfig.PrimaryButton}
+                    buttonStyle={{background: styleConfig.PrimaryButton?.background || questThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor, ...styleConfig.PrimaryButton}}
                     PrimaryButtonText={PrimaryButtonText}
                     StarStyle={styleConfig?.Star}
                     labelStyle={styleConfig?.Label}
@@ -888,7 +888,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                     emailInput={emailInput}
                     handleRemove={handleRemove}
                     PrimaryButtonText={PrimaryButtonText}
-                    buttonStyle={styleConfig.PrimaryButton}
+                    buttonStyle={{background: styleConfig.PrimaryButton?.background || questThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor, ...styleConfig.PrimaryButton}}
                   />
                 )}
                 {selectedOption === "RequestFeature" && (
@@ -902,7 +902,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                     answer={answer}
                     handleRemove={handleRemove}
                     PrimaryButtonText={PrimaryButtonText}
-                    buttonStyle={styleConfig.PrimaryButton}
+                    buttonStyle={{background: styleConfig.PrimaryButton?.background || questThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor, ...styleConfig.PrimaryButton}}
                   />
                 )}
                 {selectedOption === "ContactUs" && <div></div>}
