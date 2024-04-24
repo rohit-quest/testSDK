@@ -806,7 +806,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             background:
               styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor,
             height: styleConfig?.Form?.height || "auto",
-            fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+            borderRadius: styleConfig?.Form?.borderRadius || questThemeData?.borderRadius || BrandTheme?.borderRadius,
+            fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
             ...styleConfig?.Form,
           }}
           id="disabledClick"
@@ -818,12 +819,16 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   topbarStyle: styleConfig?.TopBar,
                   headingStyle: {
                     color:
-                      styleConfig?.Heading?.color || themeConfig?.primaryColor,
+                      styleConfig?.Heading?.color || 
+                      BrandTheme?.primaryColor ||
+                      BrandTheme?.titleColor ||
+                      themeConfig?.primaryColor,
                     ...styleConfig?.Heading,
                   },
                   descriptionStyle: {
                     color:
                       styleConfig?.Description?.color ||
+                      BrandTheme?.secondaryColor ||
                       themeConfig?.secondaryColor,
                     ...styleConfig?.Description,
                   },
@@ -1044,9 +1049,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ? styleConfig?.listHover?.Heading ||
                               styleConfig.listHeading?.color ||
                               styleConfig?.Heading?.color ||
+                              BrandTheme?.primaryColor ||
                               themeConfig?.primaryColor
                               : styleConfig.listHeading?.color ||
                               styleConfig?.Heading?.color ||
+                              BrandTheme?.primaryColor ||
                               themeConfig?.primaryColor,
                             ...styleConfig?.listHeading,
                           }}
@@ -1062,9 +1069,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ? styleConfig?.listHover?.Description ||
                               styleConfig?.listDescription?.color ||
                               styleConfig?.Description?.color ||
+                              BrandTheme?.secondaryColor ||
                               themeConfig?.secondaryColor
                               : styleConfig?.listDescription?.color ||
                               styleConfig?.Description?.color ||
+                              BrandTheme?.secondaryColor ||
                               themeConfig?.secondaryColor,
                             ...styleConfig?.listDescription,
                           }}
@@ -1124,9 +1133,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ? styleConfig?.listHover?.Heading ||
                               styleConfig.listHeading?.color ||
                               styleConfig?.Heading?.color ||
+                              themeConfig?.primaryColor ||
                               themeConfig?.primaryColor
                               : styleConfig.listHeading?.color ||
                               styleConfig?.Heading?.color ||
+                              themeConfig?.primaryColor ||
                               themeConfig?.primaryColor,
                             ...styleConfig?.listHeading,
                           }}
@@ -1142,9 +1153,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ? styleConfig?.listHover?.Description ||
                               styleConfig?.listDescription?.color ||
                               styleConfig?.Description?.color ||
+                              BrandTheme?.secondaryColor ||
                               themeConfig?.secondaryColor
                               : styleConfig?.listDescription?.color ||
                               styleConfig?.Description?.color ||
+                              BrandTheme?.secondaryColor ||
                               themeConfig?.secondaryColor,
                             ...styleConfig?.listDescription,
                           }}
@@ -1204,9 +1217,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ? styleConfig?.listHover?.Heading ||
                               styleConfig.listHeading?.color ||
                               styleConfig?.Heading?.color ||
+                              BrandTheme?.primaryColor ||
                               themeConfig?.primaryColor
                               : styleConfig.listHeading?.color ||
                               styleConfig?.Heading?.color ||
+                              BrandTheme?.primaryColor ||
                               themeConfig?.primaryColor,
                             ...styleConfig?.listHeading,
                           }}
@@ -1221,9 +1236,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ? styleConfig?.listHover?.Description ||
                               styleConfig?.listDescription?.color ||
                               styleConfig?.Description?.color ||
+                              BrandTheme?.secondaryColor ||
                               themeConfig?.secondaryColor
                               : styleConfig?.listDescription?.color ||
                               styleConfig?.Description?.color ||
+                              BrandTheme?.secondaryColor ||
                               themeConfig?.secondaryColor,
                             ...styleConfig?.listDescription,
                           }}
@@ -1248,9 +1265,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           className="q-fw-div"
           style={{
             background:
-              styleConfig?.ThanksPopup?.Style?.background || styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor,
+              styleConfig?.ThanksPopup?.Style?.background ||  styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor,
             height: styleConfig?.ThanksPopup?.Style?.height || styleConfig?.Form?.height || "auto",
             fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+            borderRadius: styleConfig?.Form?.borderRadius || questThemeData?.borderRadius || BrandTheme?.borderRadius,
             ...styleConfig?.ThanksPopup?.Style,
           }}
           id="disabledClick">
@@ -1267,6 +1285,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                     style={{
                       color:
                         styleConfig?.Heading?.color ||
+                        BrandTheme?.primaryColor ||
                         themeConfig?.primaryColor,
                       ...styleConfig?.ThanksPopup?.Heading,
                     }}
@@ -1278,6 +1297,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                     style={{
                       color:
                         styleConfig?.Description?.color ||
+                        BrandTheme?.secondaryColor ||
                         themeConfig?.secondaryColor,
                       ...styleConfig?.ThanksPopup?.Description,
                     }}

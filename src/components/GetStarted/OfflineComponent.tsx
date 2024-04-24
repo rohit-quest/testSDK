@@ -129,16 +129,10 @@ function OfflineGetStarted({
   styleConfig,
   offlineData,
   ButtonType = "Arrow",
-<<<<<<< pankaj/Adding-Theme
   BrandTheme,
   QuestThemeData,
   onLinkTrigger = (url: string, index: number) => { window.location.href = url },
-=======
-  onLinkTrigger = (url: string, index: number) => {
-    window.location.href = url;
-  },
-  isImageOpen,
->>>>>>> main
+  isImageOpen = false,
 }: offlineGetStartedProps) {
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [allCriteriaCompleted, setAllCriteriaCompleted] =

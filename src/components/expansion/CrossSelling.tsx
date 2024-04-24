@@ -214,32 +214,32 @@ export const CrossSelling = ({
     const jsx = (
         <div className="q_refer_and_earn" style={{
             // background: styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Form
-            background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
+            background: styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", borderRadius: styleConfig?.Form?.borderRadius || questThemeData?.borderRadius || BrandTheme?.borderRadius, ...styleConfig?.Form
         }}>
             <div className="q_refer_head">
-                <img src={Icon === 'gift' ? grabDealIcon() : grabDealIcon2()} className="refer_head_img" alt="" />
+                <img src={QuestThemeData?.images?.[0] || Icon === 'gift' ? grabDealIcon() : grabDealIcon2()} className="refer_head_img" alt="" />
             </div>
             <div className="q_refer_content">
                 <div className="refer_content_box">
-                    <div className="q_refer_heading" style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }}>{heading}</div>
-                    <div className="q_refer_desc" style={{ color: styleConfig?.Description?.color || themeConfig?.primaryColor, ...styleConfig?.Description }}>{description}</div>
+                    <div className="q_refer_heading" style={{ color: styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Heading }}>{heading}</div>
+                    <div className="q_refer_desc" style={{ color: styleConfig?.Description?.color || BrandTheme?.secondaryColor || themeConfig?.secondaryColor, ...styleConfig?.Description }}>{description}</div> themeConfig?.primaryColor, ...styleConfig?.Description }}>{description}</div>
                 </div>
                 <div className="q_time_left">
                     {showDays && !!timeLeft.days && (<div className="q_hours_left" style={{ background: styleConfig?.Timer?.backgroundColor, ...styleConfig?.Timer?.TimerCard }}>
-                        <div style={{ color: styleConfig?.Timer?.primaryColor }}>{timeLeft.days}</div>
-                        <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor }}>Days</div>
+                        <div style={{ color: styleConfig?.Timer?.primaryColor || BrandTheme?.primaryColor }}>{timeLeft.days}</div>
+                        <div className="q_time_left_text" style={{ color:  styleConfig?.Timer?.secondaryColor || BrandTheme?.secondaryColor }}>Days</div>
                     </div>)}
                     <div className="q_hours_left" style={{ background: styleConfig?.Timer?.backgroundColor, ...styleConfig?.Timer?.TimerCard }}>
-                        <div style={{ color: styleConfig?.Timer?.primaryColor }}>{timeLeft.hours < 10 ? 0 : ""}{timeLeft.hours}</div>
-                        <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor }}>Hours</div>
+                        <div style={{ color: styleConfig?.Timer?.primaryColor || BrandTheme?.primaryColor }}>{timeLeft.hours < 10 ? 0 : ""}{timeLeft.hours}</div>
+                        <div className="q_time_left_text" style={{ color:  styleConfig?.Timer?.secondaryColor || BrandTheme?.secondaryColor }}>Hours</div>
                     </div>
                     <div className="q_minutes_left" style={{ background: styleConfig?.Timer?.backgroundColor, ...styleConfig?.Timer?.TimerCard }}>
-                        <div style={{ color: styleConfig?.Timer?.primaryColor }}>{timeLeft.minutes < 10 ? 0 : ""}{timeLeft.minutes}</div>
-                        <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor }}>Minutes</div>
+                        <div style={{ color: styleConfig?.Timer?.primaryColor || BrandTheme?.primaryColor }}>{timeLeft.minutes < 10 ? 0 : ""}{timeLeft.minutes}</div>
+                        <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor || BrandTheme?.secondaryColor }}>Minutes</div>
                     </div>
                     <div className="q_seconds_left" style={{ background: styleConfig?.Timer?.backgroundColor, ...styleConfig?.Timer?.TimerCard }}>
-                        <div style={{ color: styleConfig?.Timer?.primaryColor }}>{timeLeft.seconds < 10 ? 0 : ""}{timeLeft.seconds}</div>
-                        <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor }}>Seconds</div>
+                        <div style={{ color: styleConfig?.Timer?.primaryColor || BrandTheme?.primaryColor }}>{timeLeft.seconds < 10 ? 0 : ""}{timeLeft.seconds}</div>
+                        <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor || BrandTheme?.secondaryColor }}>Seconds</div>
                     </div>
                 </div>
                 <div style={{width: "100%"}}>

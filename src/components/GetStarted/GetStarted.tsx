@@ -60,14 +60,15 @@ type GetStartedProps = {
       CompletedBackground?: string,
       CompletedIconColor?: string
     }
-  };
-  IsImageOpen?: {
-    ContainerDiv?: CSSProperties;
-    ImageContainer?: {
-      ImageContainerProperties?: CSSProperties;
-      Image?: CSSProperties;
+    IsImageOpen?: {
+      ContainerDiv?: CSSProperties;
+      ImageContainer?: {
+        ImageContainerProperties?: CSSProperties;
+        Image?: CSSProperties;
+      };
     };
   };
+
   enableVariation?: boolean;
 };
 type BrandTheme = {
@@ -129,8 +130,8 @@ function GetStarted({
   },
   showFooter = true,
   styleConfig,
-  enableVariation = false
-  isImageOpen,
+  enableVariation = false,
+  isImageOpen = false,
 }: GetStartedProps) {
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
   const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } =
@@ -651,6 +652,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                         style={{
                           color:
                             styleConfig?.Description?.color ||
+                            BrandTheme?.secondaryColor ||
                             themeConfig?.secondaryColor,
                         }}
                       >
@@ -734,6 +736,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                         style={{
                           color:
                             styleConfig?.Heading?.color ||
+                            BrandTheme?.primaryColor ||
                             themeConfig?.primaryColor,
                         }}
                         className="gs-card-head"
@@ -744,6 +747,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                         style={{
                           color:
                             styleConfig?.Description?.color ||
+                            BrandTheme?.secondaryColor ||
                             themeConfig?.secondaryColor,
                         }}
                         className="gs-card-desc"
@@ -791,6 +795,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                               width: "fit-content",
                               background:
                                 styleConfig?.PrimaryButton?.background ||
+                                questThemeData?.buttonColor || BrandTheme?.buttonColor ||
                                 themeConfig?.buttonColor,
                               ...styleConfig?.PrimaryButton,
                             }}
