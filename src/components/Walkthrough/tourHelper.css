@@ -67,12 +67,15 @@
 .tour-content{
   padding: var(--padding);
 }
+.tour-content-title{
+  color: var(--primaryColor, black);
+}
 .tour-content-info{
-  color: gray;
+  color: var(--secondaryColor, gray);
 }
 .tour-content-description{
   font-size: 16px;
-  color: gray;
+  color: var(--secondaryColor, gray);
 }
 .tour-content .tour-content-actions{
   display: flex;
@@ -94,8 +97,11 @@
 .tour-helper .tour-watermark{
   padding: 10px var(--padding);
   background-color: rgb(242, 242, 242);
-  color: gray;
+  color: var(--secondaryColor, gray);
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+.tour-helper .tour-watermark svg path{
+  fill: var(--secondaryColor, gray);
 }

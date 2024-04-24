@@ -316,12 +316,10 @@ function App() {
                 align: Align.CENTER
               }
             ]}
-            themeConfig={{
-              primaryColor: 'red',
-              backgroundColor: 'white',
-              borderColor: 'lightgray',
-              buttonColor: 'green',
-              secondaryColor: 'yellow'
+            styleConfig={{
+              Form: {
+                fill: 'green'
+              }
             }}
             onComplete={() => {alert('Welcome to the page'); setIsOpen(false)}}
             onRequestClose={() => setIsOpen(false)}

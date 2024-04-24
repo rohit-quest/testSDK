@@ -3,23 +3,14 @@ import { MultiRouteTourProps } from "multiroute-tour-navigator/lib/MultiRouteTou
 import { ClientBoundingRect, HelperProps, TourNavigatorProps } from "tour-navigator/lib/TourNavigator/types";
 import TourHelper from "./TourHelper";
 import TourNavigator from "tour-navigator";
-import { CSSProperties } from "react";
+import { CSSProperties, useContext } from "react";
 import Overlay from "./Overlay";
+import QuestWrapper from "../QuestWrapper";
 
 export enum WalkThroughType {
     SINGLEPAGE = 'singlepage',
     MULTIPAGE = 'multipage'
 }
-
-type ThemeConfig = {
-    primaryColor?: string;
-    secondaryColor?: string;
-    borderColor?: string;
-    buttonColor?: string;
-    backgroundColor?: string;
-    fontFamily?: string;
-}
-
   
 type StyleConfig = {
     Form?: CSSProperties;
@@ -37,25 +28,24 @@ interface WalkThroughProps extends MultiRouteTourProps, TourNavigatorProps {
     type?: WalkThroughType;
     onComplete?: () => void;
     styleConfig?: StyleConfig;
-    themeConfig?: ThemeConfig;
 }
 
 export default function Walkthrough({ 
     type = WalkThroughType.SINGLEPAGE,
     onComplete,
     styleConfig,
-    themeConfig,
     ...props 
 }: WalkThroughProps): JSX.Element {
 
+    const { themeConfig } = useContext(QuestWrapper.Context);
+
     const themeConfigCSS = {
         '--background': themeConfig?.backgroundColor,
-        '--primary': themeConfig?.primaryColor,
+        '--primaryColor': themeConfig?.primaryColor,
         '--borderColor': themeConfig?.borderColor,
         '--buttonColor': themeConfig?.buttonColor,
         '--fontFamily': themeConfig?.fontFamily,
         '--secondaryColor': themeConfig?.secondaryColor,
-
     } as CSSProperties
 
     const CustomOverlay = styleConfig?.Form ? (overlayProps: ClientBoundingRect) => (
