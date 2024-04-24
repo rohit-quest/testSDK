@@ -65,7 +65,8 @@ class Toast {
     if (options?.template === 2) {
       let div = document.createElement("div");
       div.className = "qt_toast-text";
-      div.style.width = "320px"
+      div.style.width = "320px";
+      div.style.overflow = "hidden";
       this.#toastElem.append(div);
       this.#toastElem.style.gap = "12px"
 
@@ -73,8 +74,6 @@ class Toast {
       this.#toastElem.style.fontWeight = "600";
       this.#toastElem.style.lineHeight = "16px";
       this.#toastElem.style.fontStyle = "normal";
-      this.#toastElem.style.textOverflow = "ellipsis";
-      this.#toastElem.style.overflow = "hidden";
       this.#toastElem.style.color = "#2C2C2C";
       this.#toastElem.style.padding = "12px"
     }
@@ -212,14 +211,14 @@ class Toast {
       p.innerText = value;
 
       p.style.color = "#939393";
+      p.style.width = "100%"
       p.style.fontSize = "10px";
       p.style.letterSpacing = "-0.1px";
       p.style.fontWeight = "400";
       p.style.lineHeight = "12px";
       p.style.fontStyle = "normal";
-      p.style.textOverflow = "ellipsis";
-      p.style.overflow = "hidden";
       p.style.lineHeight = "12px";
+      p.style.overflowWrap = "break-word";
       div?.appendChild(p);
     }
   }

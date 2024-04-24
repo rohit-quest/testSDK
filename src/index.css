@@ -245,7 +245,7 @@ input[data-autocompleted] {
   position: relative;
   cursor: pointer;
   transition: transform 300ms ease-in-out;
-  overflow: hidden;
+  /* overflow: hidden; */
   display: flex;
   align-items: center;
   gap: 8px;
