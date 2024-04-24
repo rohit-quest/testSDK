@@ -18,6 +18,7 @@ import TopBar from "../Modules/TopBar";
 import General from "../../general";
 
 const feedback = (color: string = "#939393", Size: string = "16px") => (
+
   <svg
     width={Size}
     height={Size}
@@ -284,6 +285,28 @@ interface FormDataItem {
   required?: boolean;
   placeholder?: string;
 }
+
+type BrandTheme = {
+  accentColor?: string;
+  background?: string;
+  borderRadius?: string;
+  buttonColor?: string;
+  contentColor?: string;
+  fontFamily?: string;
+  logo?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  tertiaryColor?: string;
+  titleColor?: string;
+}
+interface QuestThemeData {
+  accentColor: string;
+  theme: string;
+  borderRadius: string;
+  buttonColor: string;
+  images: string[]
+
+}
 const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   userId,
   token,
@@ -326,6 +349,26 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   const [answer, setAnswer] = useState<Record<string, string>>({});
   const [cardHovered, setCardHovered] = useState([false, false, false, false]);
   const [session, setSession] = useState<{ [key: string]: string }>({});
+  const [questThemeData, setQuestThemeData] = useState<QuestThemeData>({
+    accentColor: "",
+    theme: "",
+    borderRadius: "",
+    buttonColor: "",
+    images: []
+  })
+  const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
+    accentColor: "",
+    background: "",
+    borderRadius: "",
+    buttonColor: "",
+    contentColor: "",
+    fontFamily: "",
+    logo: "",
+    primaryColor: "",
+    secondaryColor: "",
+    tertiaryColor: "",
+    titleColor: ""
+  })
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
@@ -381,6 +424,16 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     </svg>
   );
   let GeneralFunctions = new General('mixpanel', apiType);
+
+  const getTheme = async (theme: string) => {
+    try {
+      const request = `${BACKEND_URL}api/entities/${entityId}?userId=${userId}`;
+      const response = await axios.get(request, { headers: { apiKey, userId, token } })
+      setBrandTheme(response.data.data.theme.BrandTheme[theme])
+    } catch (error) {
+      GeneralFunctions.captureSentryException(error);
+    }
+  }
 
   useEffect(() => {
     GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_loaded", "feedback_workflow");
@@ -463,6 +516,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       setAnswer({});
     }
   };
+
   function returnAnswers(index: number) {
     GeneralFunctions.fireTrackingEvent(`quest_feedback_workflow_${selectedOption}_form_submitted`, `feedback_workflow_${selectedOption}_form`);
     const headers = {
@@ -542,11 +596,25 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     GeneralFunctions.fireTrackingEvent(`quest_feedback_workflow_${selectedOption}_form_closed`, `feedback_workflow_${selectedOption}_form`);
     setSelectedOption(null);
   };
+  
   function isDefaultQuestId(questId: string): boolean {
     const defaultIdPattern = ["q-general-feedback", "q-report-a-bug", "q-request-a-feature", "q-contact-us"].includes(questId);
-      // /^q-[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
+    // /^q-[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
     return defaultIdPattern;
   }
+
+  const getParentQuestData = async (questId: string) => {
+    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/parent?userId=${userId}`;
+    await axios.get(request, { headers: { apiKey: apiKey, apisecret: apiSecret, userId: userId, token: token } }).then((res) => {
+      let response = res.data;
+      if (response?.parentQuest?.uiProps?.questThemeData) {
+        setQuestThemeData(response?.parentQuest?.uiProps?.questThemeData)
+        if (response?.parentQuest?.uiProps?.questThemeData.theme) {
+          // getTheme(response?.parentQuest?.uiProps.questThemeData.theme) disabled for now
+        }
+      }
+    });
+  };
 
   useEffect(() => {
     const headers = {
@@ -556,6 +624,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       token: token,
     };
     let request;
+    let count = 0;
     {
       questIds.map((id, index) => {
         const isDefault = isDefaultQuestId(id);
@@ -563,7 +632,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           request = `${BACKEND_URL}api/entities/${entityId}/default-quest/?userId=${userId}&defaultId=${id}`;
           axios.post(request, {}, { headers: headers }).then((res) => {
             let response = res.data.data;
-            setSession((prev) => ({...prev, [id]: response.session}))
+
+            setSession((prev) => ({ ...prev, [id]: response.session }))
             let criterias = response?.eligibilityData?.map((criteria: any) => {
               return {
                 type: criteria?.data?.criteriaType,
@@ -588,7 +658,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           request = `${BACKEND_URL}api/entities/${entityId}/quests/${id}?userId=${userId}&getVariation=${enableVariation}`;
           axios.get(request, { headers: headers }).then((res) => {
             let response = res.data;
-            setSession((prev) => ({...prev, [id]: response.session}))
+            if(count == 0 && response?.data?.parentQuestId){
+              getParentQuestData(response?.data?.parentQuestId)
+              count++
+            }
+            setSession((prev) => ({ ...prev, [id]: response.session }))
             let criterias = response?.eligibilityData?.map((criteria: any) => {
               return {
                 type: criteria?.data?.criteriaType,
@@ -646,11 +720,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         <Label
           htmlFor={"normalInput"}
           children={question}
-          style={styleConfig.Label}
+          style={{color : styleConfig?.Label?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.Label}}
         />
         <Input
           type="text"
-          style={styleConfig.Input}
+          style={{color: styleConfig?.Input?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.Input}}
           placeholder={placeholder}
           value={answer[criteriaId]}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
@@ -668,11 +742,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         <Label
           htmlFor={"normalInput"}
           children={question}
-          style={styleConfig.Label}
+          style={{color : styleConfig?.Label?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.Label}}
         />
         <Input
           type="email"
-          style={styleConfig.Input}
+          style={{color: styleConfig?.Input?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.Input}}
           placeholder={placeholder}
           value={answer[criteriaId]}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
@@ -686,6 +760,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     );
   };
 
+
+
   const normalInput2 = (
     question: string,
     criteriaId: string,
@@ -696,13 +772,13 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         <Label
           htmlFor={"normalInput"}
           children={question}
-          style={styleConfig.Label}
+          style={{color : styleConfig?.Label?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor ,...styleConfig.Label}}
         />
         <TextArea
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           value={answer[criteriaId]}
           placeholder={placeholder}
-          style={{ borderColor: themeConfig.borderColor, color: styleConfig?.TextArea?.color || styleConfig?.Heading?.color || themeConfig.primaryColor, ...styleConfig.TextArea }}
+          style={{ borderColor: themeConfig.borderColor, color: styleConfig?.TextArea?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.TextArea }}
         />
       </div>
     );
@@ -730,7 +806,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
             background:
               styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor,
             height: styleConfig?.Form?.height || "auto",
-            fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+            borderRadius: styleConfig?.Form?.borderRadius || questThemeData?.borderRadius || BrandTheme?.borderRadius,
+            fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
             ...styleConfig?.Form,
           }}
           id="disabledClick"
@@ -742,12 +819,16 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   topbarStyle: styleConfig?.TopBar,
                   headingStyle: {
                     color:
-                      styleConfig?.Heading?.color || themeConfig?.primaryColor,
+                      styleConfig?.Heading?.color || 
+                      BrandTheme?.titleColor ||
+                      BrandTheme?.primaryColor ||
+                      themeConfig?.primaryColor,
                     ...styleConfig?.Heading,
                   },
                   descriptionStyle: {
                     color:
                       styleConfig?.Description?.color ||
+                      BrandTheme?.secondaryColor ||
                       themeConfig?.secondaryColor,
                     ...styleConfig?.Description,
                   },
@@ -790,7 +871,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                     handleRemove={handleRemove}
                     ratingStyle={ratingStyle}
                     iconColor={iconColor}
-                    buttonStyle={styleConfig.PrimaryButton}
+                    buttonStyle={{background: styleConfig.PrimaryButton?.background || questThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor, ...styleConfig.PrimaryButton}}
                     PrimaryButtonText={PrimaryButtonText}
                     StarStyle={styleConfig?.Star}
                     labelStyle={styleConfig?.Label}
@@ -807,7 +888,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                     emailInput={emailInput}
                     handleRemove={handleRemove}
                     PrimaryButtonText={PrimaryButtonText}
-                    buttonStyle={styleConfig.PrimaryButton}
+                    buttonStyle={{background: styleConfig.PrimaryButton?.background || questThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor, ...styleConfig.PrimaryButton}}
                   />
                 )}
                 {selectedOption === "RequestFeature" && (
@@ -821,7 +902,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                     answer={answer}
                     handleRemove={handleRemove}
                     PrimaryButtonText={PrimaryButtonText}
-                    buttonStyle={styleConfig.PrimaryButton}
+                    buttonStyle={{background: styleConfig.PrimaryButton?.background || questThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor, ...styleConfig.PrimaryButton}}
                   />
                 )}
                 {selectedOption === "ContactUs" && <div></div>}
@@ -835,6 +916,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               </div>
               <div className="q-fw-content-box">
                 {questIds[0] && (
+
                   <div
                     onClick={() => {
                       GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_general_feedback_clicked", "feedback_workflow_general_feedback");
@@ -856,6 +938,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       ...styleConfig?.Card,
                     }}
                   >
+
                     <div
                       className="q_feedback_icon"
                       style={{
@@ -883,9 +966,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                             ? styleConfig?.listHover?.Heading ||
                             styleConfig.listHeading?.color ||
                             styleConfig?.Heading?.color ||
+                            BrandTheme?.primaryColor ||
                             themeConfig?.primaryColor
                             : styleConfig.listHeading?.color ||
                             styleConfig?.Heading?.color ||
+                            BrandTheme?.primaryColor ||
                             themeConfig?.primaryColor,
                           ...styleConfig?.listHeading,
                         }}
@@ -899,9 +984,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                             ? styleConfig?.listHover?.Description ||
                             styleConfig?.listDescription?.color ||
                             styleConfig?.Description?.color ||
+                            BrandTheme?.secondaryColor ||
                             themeConfig?.secondaryColor
                             : styleConfig?.listDescription?.color ||
                             styleConfig?.Description?.color ||
+                            BrandTheme?.secondaryColor ||
                             themeConfig?.secondaryColor,
                           ...styleConfig?.listDescription,
                         }}
@@ -913,6 +1000,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   </div>
                 )}
                 {questIds[1] && (
+
                   <div
                     onClick={() => {
                       GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_report_bug_clicked", "feedback_workflow_report_bug");
@@ -961,9 +1049,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ? styleConfig?.listHover?.Heading ||
                               styleConfig.listHeading?.color ||
                               styleConfig?.Heading?.color ||
+                              BrandTheme?.primaryColor ||
                               themeConfig?.primaryColor
                               : styleConfig.listHeading?.color ||
                               styleConfig?.Heading?.color ||
+                              BrandTheme?.primaryColor ||
                               themeConfig?.primaryColor,
                             ...styleConfig?.listHeading,
                           }}
@@ -979,9 +1069,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ? styleConfig?.listHover?.Description ||
                               styleConfig?.listDescription?.color ||
                               styleConfig?.Description?.color ||
+                              BrandTheme?.secondaryColor ||
                               themeConfig?.secondaryColor
                               : styleConfig?.listDescription?.color ||
                               styleConfig?.Description?.color ||
+                              BrandTheme?.secondaryColor ||
                               themeConfig?.secondaryColor,
                             ...styleConfig?.listDescription,
                           }}
@@ -1041,9 +1133,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ? styleConfig?.listHover?.Heading ||
                               styleConfig.listHeading?.color ||
                               styleConfig?.Heading?.color ||
+                              themeConfig?.primaryColor ||
                               themeConfig?.primaryColor
                               : styleConfig.listHeading?.color ||
                               styleConfig?.Heading?.color ||
+                              themeConfig?.primaryColor ||
                               themeConfig?.primaryColor,
                             ...styleConfig?.listHeading,
                           }}
@@ -1059,9 +1153,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ? styleConfig?.listHover?.Description ||
                               styleConfig?.listDescription?.color ||
                               styleConfig?.Description?.color ||
+                              BrandTheme?.secondaryColor ||
                               themeConfig?.secondaryColor
                               : styleConfig?.listDescription?.color ||
                               styleConfig?.Description?.color ||
+                              BrandTheme?.secondaryColor ||
                               themeConfig?.secondaryColor,
                             ...styleConfig?.listDescription,
                           }}
@@ -1121,9 +1217,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ? styleConfig?.listHover?.Heading ||
                               styleConfig.listHeading?.color ||
                               styleConfig?.Heading?.color ||
+                              BrandTheme?.primaryColor ||
                               themeConfig?.primaryColor
                               : styleConfig.listHeading?.color ||
                               styleConfig?.Heading?.color ||
+                              BrandTheme?.primaryColor ||
                               themeConfig?.primaryColor,
                             ...styleConfig?.listHeading,
                           }}
@@ -1138,9 +1236,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ? styleConfig?.listHover?.Description ||
                               styleConfig?.listDescription?.color ||
                               styleConfig?.Description?.color ||
+                              BrandTheme?.secondaryColor ||
                               themeConfig?.secondaryColor
                               : styleConfig?.listDescription?.color ||
                               styleConfig?.Description?.color ||
+                              BrandTheme?.secondaryColor ||
                               themeConfig?.secondaryColor,
                             ...styleConfig?.listDescription,
                           }}
@@ -1165,9 +1265,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           className="q-fw-div"
           style={{
             background:
-              styleConfig?.ThanksPopup?.Style?.background || styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor,
+              styleConfig?.ThanksPopup?.Style?.background ||  styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor,
             height: styleConfig?.ThanksPopup?.Style?.height || styleConfig?.Form?.height || "auto",
             fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+            borderRadius: styleConfig?.Form?.borderRadius || questThemeData?.borderRadius || BrandTheme?.borderRadius,
             ...styleConfig?.ThanksPopup?.Style,
           }}
           id="disabledClick">
@@ -1184,6 +1285,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                     style={{
                       color:
                         styleConfig?.Heading?.color ||
+                        BrandTheme?.primaryColor ||
                         themeConfig?.primaryColor,
                       ...styleConfig?.ThanksPopup?.Heading,
                     }}
@@ -1195,6 +1297,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                     style={{
                       color:
                         styleConfig?.Description?.color ||
+                        BrandTheme?.secondaryColor ||
                         themeConfig?.secondaryColor,
                       ...styleConfig?.ThanksPopup?.Description,
                     }}
@@ -1206,8 +1309,9 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 <div className="q_fw_submit_back" style={{ ...styleConfig?.SecondaryButton }}>{SecondaryButtonText}</div>
               </div>
             </div>
+
           </div>
-          {(styleConfig?.ThanksPopup?.ShowFooter || showFooter) && <QuestLabs style={styleConfig?.Footer} />}
+          {(styleConfig?.ThanksPopup?.ShowFooter || showFooter) && <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />}
         </div>
       }
     </Modal>

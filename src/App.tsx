@@ -117,7 +117,7 @@ function App() {
           }
         }
       >
-        {/* <TutorialPreview online={false} /> */}
+        {/* <TutorialPreview online={true} /> */}
 
         {/* <SpinTheWheel
                     userId={userId}
@@ -172,7 +172,7 @@ function App() {
         {/* <OnBoardingPreview online={true} /> */}
 
 
-        {/* <GetStartedPreview online={false} /> */}
+        {/* <GetStartedPreview online={true} /> */}
 
         {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
@@ -232,11 +232,12 @@ function App() {
         <button onClick={() => Toast.info({ text: "This is a info message", position: 'bottom-center', autoClose: 1000, template: 2, description: "INFO" })}>Info</button>
         <button onClick={() => Toast.error({ text: "This is a error message", position: 'bottom-center', autoClose: 1000, template: 2, description: "Error" })}>Error</button>
         <button onClick={() => Toast.warning({ text: "This is a succes warning message", position: 'bottom-center', autoClose: 1000, template: 2, description: "WARNING" })}>Warning</button>
-        {/* <FeedbackWorkflowPreview online={true} /> */}
+        <FeedbackWorkflowPreview online={true} />
+
         {/* <ChallengesPreview online={true} /> */}
 
-
         {/* <FeedbackPreview online={true} /> */}
+
 
         {/* <ReferEarnPreview/> */}
 

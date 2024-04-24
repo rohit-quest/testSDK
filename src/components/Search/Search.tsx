@@ -7,6 +7,7 @@ import QuestContext from "../QuestWrapper.tsx";
 import QuestLabs from "../QuestLabs.tsx";
 import config from "../../config.ts";
 import General from "../../general.ts";
+import axios from "axios";
 
 
 type data = {
@@ -59,6 +60,28 @@ interface propType {
   enableVariation?: boolean
 }
 
+type BrandTheme = {
+  accentColor?: string;
+  background?: string;
+  borderRadius?: string;
+  buttonColor?: string;
+  contentColor?: string;
+  fontFamily?: string;
+  logo?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  tertiaryColor?: string;
+  titleColor?: string;
+}
+interface QuestThemeData {
+  accentColor: string;
+  theme: string;
+  borderRadius: string;
+  buttonColor: string;
+  images: string[]
+
+}
+
 export default function Search(prop: propType): JSX.Element {
   const {
     wholerScreen = true,
@@ -83,6 +106,27 @@ export default function Search(prop: propType): JSX.Element {
   const { apiKey, entityId, apiType, apiSecret, themeConfig } = useContext(
     QuestContext.Context
   );
+
+  const [questThemeData, setQuestThemeData] = useState<QuestThemeData>({
+    accentColor: "",
+    theme: "",
+    borderRadius: "",
+    buttonColor: "",
+    images: []
+})
+const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
+    accentColor: "",
+    background: "",
+    borderRadius: "",
+    buttonColor: "",
+    contentColor: "",
+    fontFamily: "",
+    logo: "",
+    primaryColor: "",
+    secondaryColor: "",
+    tertiaryColor: "",
+    titleColor: ""
+})
 
   let GeneralFunctions = new General('mixpanel', apiType);
 
@@ -141,11 +185,25 @@ export default function Search(prop: propType): JSX.Element {
     }
   }, [isOpen]);
 
+  const getTheme = async (theme: string) => {
+    try {
+        const request = `${BACKEND_URL}api/entities/${entityId}?userId=${userId}`;
+        const response = await axios.get(request, { headers: { apiKey, userId, token } })
+        setBrandTheme(response.data.data.theme.BrandTheme[theme])
+    } catch (error) {
+        GeneralFunctions.captureSentryException(error);
+    }
+}
+
   useEffect(() => {
     getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL, enableVariation).then(
       (response) => {
-        setData([...response].splice(0, defulatResultLength));
-        setResults([...response].splice(0, defulatResultLength));
+        setQuestThemeData(response.questThemeData)
+        setData([...response.formatData].splice(0, defulatResultLength));
+        setResults([...response.formatData].splice(0, defulatResultLength));
+        if(response.questThemeData?.theme){
+          // getTheme(response.questThemeData?.theme) disabled for now
+        }
       }
     );
     if (prop.open === true) setOpen(true);
@@ -169,9 +227,10 @@ export default function Search(prop: propType): JSX.Element {
       className="q_search_bar"
       style={{
         background:
-          styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor,
+          styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor,
         height: styleConfig?.Form?.height || "auto",
-        fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+        borderRadius: styleConfig?.Form?.borderRadius || BrandTheme?.borderRadius || questThemeData?.borderRadius,
+        fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
         ...styleConfig?.Form,
       }}
     >
@@ -200,8 +259,8 @@ export default function Search(prop: propType): JSX.Element {
                 handleSearch(e.target.value);
               }}
               style={{
-                fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
-                color: styleConfig?.Input?.color || themeConfig.primaryColor,
+                fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
+                color: styleConfig?.Input?.color ||  BrandTheme?.primaryColor || themeConfig.primaryColor,
                 ...styleConfig?.Input
               }}
               className="q_input_main_cont"
@@ -258,10 +317,12 @@ export default function Search(prop: propType): JSX.Element {
                   style={{
                     color:
                       i === selectedResultIndex
-                        ? styleConfig?.listHover?.Heading ||
+                        ? styleConfig?.listHover?.Heading || 
+                        BrandTheme?.primaryColor ||
                         styleConfig?.Heading?.color ||
                         themeConfig?.primaryColor
-                        : styleConfig?.Heading?.color ||
+                        : styleConfig?.Heading?.color || 
+                        BrandTheme?.primaryColor ||
                         themeConfig?.primaryColor,
                     ...styleConfig?.Heading,
                   }}
@@ -275,8 +336,10 @@ export default function Search(prop: propType): JSX.Element {
                       i === selectedResultIndex
                         ? styleConfig?.listHover?.Description ||
                         styleConfig?.Description?.color ||
+                        BrandTheme?.secondaryColor ||
                         themeConfig?.secondaryColor
                         : styleConfig?.Description?.color ||
+                        BrandTheme?.secondaryColor ||
                         themeConfig?.secondaryColor,
                     ...styleConfig?.Description,
                   }}
@@ -296,7 +359,7 @@ export default function Search(prop: propType): JSX.Element {
             />
             <div
               style={{
-                color: themeConfig.primaryColor,
+                color: BrandTheme?.primaryColor || themeConfig.primaryColor,
                 ...styleConfig?.Heading,
               }}
               className="q_search_details_head"
@@ -305,7 +368,7 @@ export default function Search(prop: propType): JSX.Element {
             </div>
             <div
               style={{
-                color: themeConfig.secondaryColor,
+                color: BrandTheme?.secondaryColor || themeConfig.secondaryColor,
                 ...styleConfig?.Description,
               }}
               className="q_search_result_desc"
@@ -320,7 +383,8 @@ export default function Search(prop: propType): JSX.Element {
           </div>
         )}
       </div>
-      {showFooter && <QuestLabs style={styleConfig?.Footer} />}
+      {showFooter &&  <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />
+}
     </div>
   );
 
@@ -329,7 +393,7 @@ export default function Search(prop: propType): JSX.Element {
       <div className="q_search_box" style={{...styleConfig?.Topbar}}>
         <img
           className="q_search_bar_icon"
-          src={searchIcon(themeConfig.secondaryColor)}
+          src={searchIcon(BrandTheme?.secondaryColor || themeConfig.secondaryColor)}
           alt=""
         />
         <div className="q_searchBox_input_cont">
@@ -350,8 +414,8 @@ export default function Search(prop: propType): JSX.Element {
                 handleSearch(e.target.value);
               }}
               style={{
-                fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
-                color: styleConfig?.Input?.color || themeConfig.primaryColor,
+                fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
+                color: styleConfig?.Input?.color || BrandTheme?.primaryColor || themeConfig.primaryColor,
                 ...styleConfig?.Input
               }}
               className="q_input_main_cont"
@@ -403,9 +467,11 @@ export default function Search(prop: propType): JSX.Element {
                           color:
                             i === selectedResultIndex
                               ? styleConfig?.listHover?.Heading ||
+                              BrandTheme?.primaryColor ||
                               styleConfig?.Heading?.color ||
                               themeConfig?.primaryColor
                               : styleConfig?.Heading?.color ||
+                              BrandTheme?.primaryColor ||
                               themeConfig?.primaryColor,
                           ...styleConfig?.Heading,
                         }}
@@ -418,9 +484,11 @@ export default function Search(prop: propType): JSX.Element {
                           color:
                             i === selectedResultIndex
                               ? styleConfig?.listHover?.Description ||
+                              BrandTheme?.secondaryColor ||
                               styleConfig?.Description?.color ||
                               themeConfig?.secondaryColor
                               : styleConfig?.Description?.color ||
+                              BrandTheme?.secondaryColor ||
                               themeConfig?.secondaryColor,
                           ...styleConfig?.Description,
                         }}
@@ -471,9 +539,11 @@ export default function Search(prop: propType): JSX.Element {
                           color:
                             i === selectedResultIndex
                               ? styleConfig?.listHover?.Heading ||
+                              BrandTheme?.primaryColor ||
                               styleConfig?.Heading?.color ||
                               themeConfig?.primaryColor
                               : styleConfig?.Heading?.color ||
+                              BrandTheme?.primaryColor ||
                               themeConfig?.primaryColor,
                           ...styleConfig?.Heading,
                         }}
@@ -486,9 +556,11 @@ export default function Search(prop: propType): JSX.Element {
                           color:
                             i === selectedResultIndex
                               ? styleConfig?.listHover?.Description ||
+                              BrandTheme?.secondaryColor ||
                               styleConfig?.Description?.color ||
                               themeConfig?.secondaryColor
                               : styleConfig?.Description?.color ||
+                              BrandTheme?.secondaryColor ||
                               themeConfig?.secondaryColor,
                           ...styleConfig?.Description,
                         }}
@@ -523,7 +595,8 @@ export default function Search(prop: propType): JSX.Element {
           </div>
         )}
       </div>
-      {showFooter && <QuestLabs style={styleConfig?.Footer} />}
+      {showFooter &&  <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />
+}
     </div>
   );
 
