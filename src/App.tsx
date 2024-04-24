@@ -98,14 +98,15 @@ function App() {
   const [isOpen, setIsOpen] = useState(true);
   const [answer, setAnswer] = useState([]);
 
+  // const CSGetstarted = new 
   return (
     <div
     // style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
     >
       <QuestProvider
-        apiKey={"k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be"}
-        apiSecret={apiSecret}
-        entityId={"e-0000000000"}
+        apiKey={"k-ac38b717-eb62-41aa-83f4-7eef8d3ff9b5"}
+        apiSecret={''}
+        entityId={"e-e6cc0ded-bf40-4f1f-94a3-a9ba73be098f"}
         featureFlags={{}}
         apiType="STAGING"
         themeConfig={
@@ -174,6 +175,9 @@ function App() {
         {/* <OnBoardingPreview online={true} /> */}
 
 
+        {
+          
+        }
         <GetStartedPreview online={false} />
 
         {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
@@ -317,15 +321,17 @@ function App() {
               }
             ]}
             styleConfig={{
-              Form: {
-                fill: 'green'
-              }
+              Form: {background: 'green'},
+              Background: {background: 'red'}, 
+              Footer: {background: 'blue'}
             }}
             onComplete={() => {alert('Welcome to the page'); setIsOpen(false)}}
             onRequestClose={() => setIsOpen(false)}
             onAfterOpen={() => document.documentElement.style.overflow = 'hidden'}
             onBeforeClose={() => document.documentElement.style.overflow = ''}
         />
+
+
       </QuestProvider>
       < div style={{height: 1999}}/>
     </div>

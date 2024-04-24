@@ -119,6 +119,7 @@ function GetStarted({
   const [criteriaSubmit, setCriteriaSubmit] = useState<string[]>([]);
   const [dropdowns, setDropdown] = useState<Array<boolean>>([]);
 
+  console.log(useContext(QuestContext.Context))
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
   const cookies = new Cookies();
@@ -173,7 +174,7 @@ function GetStarted({
       "quest_get_started_loaded",
       "get_started"
     );
-
+    console.log(entityId)
     if (entityId) {
       const headers = {
         apiKey: apiKey,

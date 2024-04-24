@@ -14,14 +14,14 @@ export enum WalkThroughType {
   
 type StyleConfig = {
     Form?: CSSProperties;
-    HelperContainer?: CSSProperties;
+    Background?: CSSProperties;
     Heading?: CSSProperties;
     Description?: CSSProperties;
-    HelperBackground?: CSSProperties;
     Footer?: CSSProperties;
     FirstButton?: CSSProperties;
     LastButton?: CSSProperties;
-    Image?: CSSProperties
+    Image?: CSSProperties;
+    Overlay?: CSSProperties
 }
 
 interface WalkThroughProps extends MultiRouteTourProps, TourNavigatorProps {
@@ -48,10 +48,10 @@ export default function Walkthrough({
         '--secondaryColor': themeConfig?.secondaryColor,
     } as CSSProperties
 
-    const CustomOverlay = styleConfig?.Form ? (overlayProps: ClientBoundingRect) => (
+    const CustomOverlay = styleConfig?.Overlay ? (overlayProps: ClientBoundingRect) => (
         <Overlay
             id={props.id}
-            style={styleConfig?.Form}
+            style={styleConfig?.Overlay}
             {...overlayProps}
         />
     ):undefined
@@ -61,11 +61,11 @@ export default function Walkthrough({
             {...helperProps}
             helperStyle={{
                 ...themeConfigCSS,
-                ...styleConfig?.HelperContainer
+                ...styleConfig?.Form
             }}
             headerStyle={styleConfig?.Heading}
             descriptionStyle={styleConfig?.Description}
-            helperBackgroundStyle={styleConfig?.HelperBackground}
+            helperBackgroundStyle={styleConfig?.Background}
             footerStyle={styleConfig?.Footer}
             firstButtonStyle={styleConfig?.FirstButton}
             lastButtonStyle={styleConfig?.LastButton}
