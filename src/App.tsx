@@ -38,6 +38,9 @@ import ChallengesPreview from "./components/Challenges/ChallengesPreview";
 import GamifiedQuizPreview from "./components/GamifiedQuiz/GamifiedQuizPreview";
 import showToast from "./components/toast/toastService";
 import Toast from "./components/toast2/Toast";
+import FeedbackComponent from './components/FeedbackComponent/Feedback'
+import { FeedbackType } from "./components/FeedbackComponent/types";
+
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-2aa597b4-341f-4c3c-a022-f56877a585c9";
 export const apiSecret =
@@ -101,9 +104,11 @@ function App() {
     // style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
     >
       <QuestProvider
-        apiKey={"k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be"}
+        // apiKey={"k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be"}
         apiSecret={apiSecret}
-        entityId={"e-0000000000"}
+        // entityId={"e-0000000000"}
+        apiKey="k-ac38b717-eb62-41aa-83f4-7eef8d3ff9b5"
+        entityId="e-e6cc0ded-bf40-4f1f-94a3-a9ba73be098f"
         featureFlags={{}}
         apiType="STAGING"
         themeConfig={
@@ -111,7 +116,7 @@ function App() {
             // backgroundColor: "black",
             // borderColor: "blue",
             // buttonColor: "green",
-            //  primaryColor: "green",
+            // primaryColor: "green",
             // secondaryColor: "blue",
             // fontFamily: "cursive"
           }
@@ -228,11 +233,11 @@ function App() {
         <button onClick={() => { showToast.success({ duration: 100000, text: "This is a success message", template: 2, descritption: "SUCCESS" }) }}>Success</button> */}
 
 
-        <button onClick={() => Toast.success({ text: "This is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success message", position: 'top-right', autoClose: 100000, template: 2, description: "SUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESS" })}>Success</button>
+        {/* <button onClick={() => Toast.success({ text: "This is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success message", position: 'top-right', autoClose: 100000, template: 2, description: "SUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESS" })}>Success</button>
         <button onClick={() => Toast.info({ text: "This is a info message", position: 'bottom-center', autoClose: 1000, template: 2, description: "INFO" })}>Info</button>
         <button onClick={() => Toast.error({ text: "This is a error message", position: 'bottom-center', autoClose: 1000, template: 2, description: "Error" })}>Error</button>
         <button onClick={() => Toast.warning({ text: "This is a succes warning message", position: 'bottom-center', autoClose: 1000, template: 2, description: "WARNING" })}>Warning</button>
-        <FeedbackWorkflowPreview online={true} />
+        <FeedbackWorkflowPreview online={true} /> */}
 
         {/* <ChallengesPreview online={true} /> */}
 
@@ -302,6 +307,14 @@ function App() {
 
         {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
         {/* <SreakPreview online /> */}
+        <FeedbackComponent
+          userId='u-06d65461-7c5f-4737-946d-c8ab8c80eb25'
+          token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTA2ZDY1NDYxLTdjNWYtNDczNy05NDZkLWM4YWI4YzgwZWIyNSIsImlhdCI6MTcxNDA1MDAxMSwiZXhwIjoxNzE0NjU0ODExfQ.EUgwEH6JwADsfZIBZlshixGKdugIW-VCba8NvWtN6_8'
+          questId={'q-5944f1e4-48d0-499d-8219-f3823735fe55'}
+          type={FeedbackType.STAR}
+          styleConfig={{Form: {border: '1px solid whitesmoke'}}}
+          redirectUrl='/'
+        />
       </QuestProvider>
     </div>
   );

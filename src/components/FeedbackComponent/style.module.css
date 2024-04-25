@@ -1,0 +1,166 @@
+.feedbackContainer{
+    font-family: var(--fontFamily, Figtree, sans-serif);
+    margin: auto;
+    width: 100%;
+    max-width: 376px;
+    border-radius: 12px;
+    background-color: var(--backgroundColor, white);
+    border: 1px solid var(--borderColor, white);
+    overflow: hidden;
+}
+.feedbackHeader{
+    margin: 20px;
+    color: var(--primaryColor, black);
+}
+.feedbackHeader p{
+    font-size: .9rem;
+    color: var(--secondaryColor, gray);
+}
+.feedbackMessage{
+    display: flex;
+    justify-content: space-between;
+    font-size: .9rem;
+    margin: 10px 20px;
+    color: var(--secondaryColor, #545454);
+}
+.feedbackWatermark{
+    color: var(--secondaryColor, #939393);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: var(--backgroundColor, #FBFBFB);
+}
+.feedbackWatermark svg path{
+    fill: var(--secondaryColor, #B9B9B9);
+}
+.feedbackSection{
+    margin: 0 20px;
+}
+
+/* Numbering */
+.feedbackNumbering{
+    display: flex;
+    gap: 20px;
+}
+.feedbackNumbering > div{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    border: 1.5px solid var(--borderColor, #E2E2E2);
+    border-radius: 10px;
+    cursor: pointer;
+}
+.feedbackNumbering > div.feedbackNumberingSelected{
+    border-color: var(--primaryColor, rgba(52, 116, 52, 1));
+}
+.feedbackNumbering > div.feedbackNumberingSelected > svg{
+    animation: bounce 1s 1;
+
+}
+.feedbackNumbering > div.feedbackNumberingSelected > svg path:first-child{
+    fill: var(--primaryColor, rgba(52, 116, 52, 1));
+    opacity: .8;
+}
+.feedbackNumbering > div.feedbackNumberingSelected > svg path:last-child{
+    fill: var(--primaryColor, rgba(52, 116, 52, 1));
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-10px);
+    }
+    60% {
+      transform: translateY(-5px);
+    }
+}
+
+/* Emoji */
+.feedbackEmojiContainer, 
+.feedbackStarContainer, 
+.feedbackNumberContainer{
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+}
+.feedbackEmojiContainer > div, 
+.feedbackStarContainer > div,
+.feedbackNumberContainer > div{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1/1;
+    max-width: 50px;
+    border-radius: 3.159px;
+    border: 0.474px solid var(--borderColor, #FEB872);
+    background: var(--secondaryColor, #FFF2D1);
+    cursor: pointer;
+    filter: grayscale(100);
+    transition: all .5s;
+}
+.feedbackStarContainer > div{
+    filter: grayscale(0);
+    background-color: transparent;
+    border: none;
+}
+.feedbackNumberContainer > div{
+    filter: grayscale(0);
+    background-color: var(--backgroundColor, #FFF);
+    border-width: 1.18px;
+    border-color: var(--borderColor, #E5D0FB);
+    color: var(--primaryColor, #8040BF);
+    border-radius: 8px;
+    opacity: .5;
+}
+.feedbackNumberContainer > div:nth-child(3){
+    background-color: var(--backgroundColor, #E5D0FB);
+    border-color: var(--borderColor, #9035FF);
+}
+.feedbackNumberContainer > div:nth-child(4){
+    background-color: var(--backgroundColor, #AD71EA);
+    border-color: var(--backgroundColor, #7339AC);
+    color: var(--primaryColor, white);
+}
+.feedbackNumberContainer > div:nth-child(5){
+    background-color: var(--backgroundColor, #662F9D);
+    border-color: var(--borderColor, #662F9D);
+    color: var(--primaryColor, white);
+}
+.feedbackEmojiSelected{
+    filter: grayscale(0) !important;
+}
+.feedbackStarContainer > div > svg path{
+    transition: all .5s;
+}
+.feedbackStarSelected > svg path{
+    fill: var(--primaryColor, #F9C23C);
+}
+.feedbackNumberSelected {
+    opacity: 1 !important;
+}
+.feedbackSuccessContainer{
+    padding: 20px;
+}
+.feedbackSuccessContainer p h2{
+    margin-top: 20px;
+}
+.feedbackSuccessContainer p{
+    font-size: .9rem;
+    color: var(--primaryColor, gray);
+    margin-bottom: 20px;
+}
+.feedbackSuccessContainer button{
+    padding: 10px 30px;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid var(--borderColor, lightgray);
+    background-color: var(--backgroundColor);
+    cursor: pointer;
+}
