@@ -6,12 +6,14 @@ import { answer } from '../QuestForm/response';
 import showToast from '../toast/toastService';
 import Toast from '../toast2/Toast';
 import UserProfile from '../UserProfile/UserProfile';
-export const questId = 'q-a8e16042-1831-46b4-875a-888c0ac8b1bc';
-export const apiKey = 'k-fe5a805c-77ed-4cae-bd33-9591ebed2805'
-export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
-export const entityId = 'e-9850377b-f88f-4426-a2ac-56206c74655a'
-export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMzg1MjEyOSwiZXhwIjoxNzE0NDU2OTI5fQ.yxm1cgS6bRwzuIr6SycJmEv52gXsVYSS7xi2TNa8lC8'
-export const userId = 'u-8268f5e1-f5a1-440c-a333-0f5578a73847'
+export const questId = "q-dfae2d1a-9e5c-4c6f-99c6-d35c6a43a534";
+export const apiKey = "k-e6ec8094-6eef-4e80-a804-112a63607bf5";
+export const apiSecret =
+  "s-772ea55b-1f58-4f1a-bcb1-5ba5e1cc8e4f9edf825c-bdf9-4b2d-a182-bdbef8c071d4";
+export const entityId = "e-5768fd26-d226-4ac1-81e6-3c99427f3fb3";
+export const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxNDAyNjcyOCwiZXhwIjoxNzE0NjMxNTI4fQ.xtzUsfvK35xLMwWeuQVmxjanQeLsoOGjuEIJSH8iBuM";
+export const userId = "u-88350caa-4080-4505-a169-09f3f15e83b7";
 
 export default function OnBoardingPreview({ online = true }: { online?: boolean }) {
 
@@ -154,10 +156,16 @@ export default function OnBoardingPreview({ online = true }: { online?: boolean 
             { "name": "Professional Details", "desc": "Tell us more about your company" },
             { "name": "Professional Details", "desc": "Tell us more about your company" }
           ]}
-          template='multi-question'
+          // template='multi-question'
+          template='single-question'
           singleChoose="modal3"
           multiChoice="modal2"
-          design={[[1, 2], [3, 4], [5, 6]]}
+          design={[
+            [8, 7, 6],
+            [ 5],
+            [4, 3],
+            [2, 1],
+          ]}
           // progressBarMultiLine = {true}
           // design={[]}
           controlBtnType='Buttons'
@@ -191,9 +199,11 @@ export default function OnBoardingPreview({ online = true }: { online?: boolean 
       // btnSize="200px"
       // inputBgColor=""
       // inputBorder="1px solid #6525B3"
+      // template='multi-question'
+      template='single-question'
       singleChoose="modal1"
       multiChoice="modal1"
-      design={[[1, 2], [3, 4], [5, 6]]}
+      design={[[6,1, 2,3], [3, 4], [5, 6]]}
 
       headingScreen={[{ name: "Tell us about yourself", desc: "this is description" },
       { name: "Tell us more about your company", desc: "description for this " },
