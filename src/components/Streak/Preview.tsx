@@ -1,11 +1,11 @@
 import { QuestProvider } from '../QuestWrapper';
 import DailyStreak from './DailyStreak';
-export const questId = 'q-2b37975b-30f7-4572-a5f4-c354439b3970';
-export const apiKey = 'k-68a0c6b8-b27f-49c6-a315-b0c9cba15bf4'
+export const questId = 'q-3225e0c4-9bbe-46c6-a0a0-0bffd77e004f';
+export const apiKey = 'k-fe5a805c-77ed-4cae-bd33-9591ebed2805'
 export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
-export const entityId = 'e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5'
-export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE'
-export const userId = 'u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed'
+export const entityId = 'e-9850377b-f88f-4426-a2ac-56206c74655a'
+export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMzc5NTk2OCwiZXhwIjoxNzE0NDAwNzY4fQ.YB5kwwQ5BwIS-kITDGncRxrcms1dNaQ873LIrpnsmwI'
+export const userId = 'u-8268f5e1-f5a1-440c-a333-0f5578a73847'
 const createUrl = (string="") => `data:image/svg+xml,${encodeURIComponent(string)}`
 
 let a1 = createUrl(`<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -64,19 +64,20 @@ export default function SreakPreview({ online = true }) {
             apiSecret="s-7462f377-2ce4-4593-a907-3a2a00cdf91be06358a-d95d-4576-b3b4-a07dda2dab36"
             entityId={entityId}
             featureFlags={{}}
-            apiType="PRODUCTION"
+            apiType="STAGING"
             themeConfig={{
                 fontFamily:'cursive'
             }}
+
         >
             <DailyStreak
                 // description=''
                 // filledStreakImg={a1}
                 // pendingStreakImg=''
                 counter={5}
-                metric=''
-                token=''
-                userId=''
+                metric='daily-visit'
+                token={token}
+                userId={userId}
                 styleConfig={{
                     // Description: { color: 'red' },
                     // Form: { background: 'blue' }

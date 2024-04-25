@@ -30,6 +30,7 @@ interface propType {
     token: string;
     userId: string;
     questId: string;
+    enableVariation?: boolean;
 }
 
 type positionType = "left" | "top" | "right" | "bottom" | "right-top" | "right-bottom" | "top-left" | "top-right" | "bottom-left" | "bottom-right";
@@ -44,7 +45,8 @@ const WalkThrough = ({
     disableScrollSelector,
     animation,
     tooltip,
-    iconColor="#939393"
+    iconColor="#939393",
+    enableVariation = false
 }: propType) => {
     const [currentStep, setCurrentStep] = useState(0);
     const { apiKey, entityId ,apiType} = useContext(QuestContext.Context);
@@ -112,7 +114,7 @@ const WalkThrough = ({
     };
 
     useEffect(() => {
-        getResponse({ apiKey, token, userId }, entityId, questId,BACKEND_URL)
+        getResponse({ apiKey, token, userId }, entityId, questId,BACKEND_URL, enableVariation)
             .then((response) => {
                 if (response?.length) {
                     setData(() => response);

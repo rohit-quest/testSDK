@@ -78,7 +78,7 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value, on
             style={
               {
                 fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
-                color: themeConfig.primaryColor
+                color: style?.color || themeConfig.primaryColor
               }
             }
           />
