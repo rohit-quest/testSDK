@@ -117,7 +117,7 @@ function App() {
           }
         }
       >
-        {/* <TutorialPreview online={false} /> */}
+        {/* <TutorialPreview online={true} /> */}
 
         {/* <SpinTheWheel
                     userId={userId}
@@ -172,7 +172,7 @@ function App() {
         {/* <OnBoardingPreview online={true} /> */}
 
 
-        {/* <GetStartedPreview online={false} /> */}
+        {/* <GetStartedPreview online={true} /> */}
 
         {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
