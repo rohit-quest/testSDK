@@ -246,13 +246,13 @@ showToast.warn = (prop?: alert) => {
 showToast.info = (prop?: alert) => {
   let text = "Alert ";
   let duration = 2000;
-  let position: 'left' | 'right' | 'center' | 'bottom' | 'bottom-right' | 'bottom-left' = 'center';
+  let position: 'left' | 'right' | 'center' | 'bottom' | 'bottom-right' | 'bottom-left' = 'right';
   if (typeof prop === "string") {
     text = prop;
   } else {
     duration = prop?.duration || duration;
     text = prop?.text || text;
-    position = prop?.position || 'center';
+    position = prop?.position || 'right';
   }
   console.log(position)
   const div = General(

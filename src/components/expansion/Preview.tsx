@@ -1,17 +1,18 @@
 import { Referral as ReferEarn } from './ReferEarn'
 import { QuestProvider } from '../QuestWrapper'
 
-const entityId='e-d97d4353-c517-4ce3-a5e0-f81b3dbb80b5';
-const questId="q-2b37975b-30f7-4572-a5f4-c354439b3970";
-const userId = "u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed";
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE"
-const apiKey = "k-68a0c6b8-b27f-49c6-a315-b0c9cba15bf4"
-const apiSecret = ""
+export const questId = 'q-3225e0c4-9bbe-46c6-a0a0-0bffd77e004f';
+export const apiKey = 'k-fe5a805c-77ed-4cae-bd33-9591ebed2805'
+export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
+export const entityId = 'e-9850377b-f88f-4426-a2ac-56206c74655a'
+export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMzc5NTk2OCwiZXhwIjoxNzE0NDAwNzY4fQ.YB5kwwQ5BwIS-kITDGncRxrcms1dNaQ873LIrpnsmwI'
+export const userId = 'u-8268f5e1-f5a1-440c-a333-0f5578a73847'
 
 export default function ReferEarnPreview() {
     return (
 
         <QuestProvider apiKey={apiKey} apiSecret={apiSecret} featureFlags={{}} entityId={entityId} 
+        apiType="STAGING"
         themeConfig={{
             // fontFamily: 'cursive'
         }}
@@ -35,7 +36,7 @@ export default function ReferEarnPreview() {
              }}
             // iconColor='red'
             // secondaryIconColor='red'
-            // gradientBackground={true}
+            gradientBackground={true}
             showFooter={false}
             showReferralCode={false}
               />
