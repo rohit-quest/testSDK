@@ -7,18 +7,15 @@ import QuestContext from "../QuestWrapper";
 import config from "../../config";
 import axios from "axios";
 import Loader from "../Login/Loader";
-import Cookies from "universal-cookie";
 import showToast from "../toast/toastService";
 import QuestLabs from "../QuestLabs";
 import { Input } from "../Modules/Input";
 import Label from "../Modules/Label";
 import TextArea from "../Modules/TextArea";
-import Modal from "../Modules/Modal";
 import TopBar from "../Modules/TopBar";
 import General from "../../general";
-import { SecondaryButton } from "../Modules/SecondaryButton";
 import { ScreenCapture } from "react-screen-capture";
-import imageCompression from "browser-image-compression";
+
 
 const feedback = (color: string = "#939393", Size: string = "16px") => (
   <svg
@@ -206,9 +203,9 @@ type optionType =
   | "GeneralFeedback";
 
 interface feedbackCompProps {
-  // userId: string;
-  // token: string;
-  // questIds: string[];
+  userId?: string;
+  token?: string;
+  questIds?: string[];
   answer?: any;
   setAnswer?: any;
   getAnswers?: any;
@@ -219,17 +216,6 @@ interface feedbackCompProps {
   backgroundColor?: string;
   starColor?: string;
   starBorderColor?: string;
-  tickBg?: string;
-  ratingStyle?: "Star" | "Numbers" | "Smiles";
-  PrimaryButtonText?: string;
-  SecondaryButtonText?: string;
-  // uniqueUserId?: string;
-  // uniqueEmailId?: string;
-  descriptions?: Record<optionType, string>;
-  backBtn?: boolean;
-  iconColor?: string;
-  BrandTheme?: BrandTheme;
-  QuestThemeData?: QuestThemeData;
   GeneralFeedback?: {
     heading?: string;
     description?: string;
@@ -256,24 +242,36 @@ interface feedbackCompProps {
     description?: string;
     iconUrl?: string;
   };
+  tickBg?: string;
+  ratingStyle?: "Star" | "Numbers" | "Smiles";
+  uniqueUserId?: string;
+  uniqueEmailId?: string;
+  descriptions?: Record<optionType, string>;
+  backBtn?: boolean;
+  iconColor?: string;
+  showFooter?: boolean;
+  PrimaryButtonText?: string;
+  SecondaryButtonText?: string;
+  StarSize?: number;
   styleConfig?: {
     Form?: React.CSSProperties;
     Heading?: React.CSSProperties;
     Description?: React.CSSProperties;
     Input?: React.CSSProperties;
     Label?: React.CSSProperties;
-    TextArea?: React.CSSProperties;
     EmailError?: {
-      text?: string;
-      errorStyle?: React.CSSProperties;
-    };
+      text?: string,
+      errorStyle?: React.CSSProperties
+    },
+    TopBar?: React.CSSProperties;
+    TextArea?: React.CSSProperties;
     PrimaryButton?: React.CSSProperties;
     SecondaryButton?: React.CSSProperties;
     Modal?: React.CSSProperties;
     Footer?: React.CSSProperties;
     listHeading?: React.CSSProperties;
     listDescription?: React.CSSProperties;
-    TopBar?: React.CSSProperties;
+    Card?: React.CSSProperties;
     Star?: {
       Style?: React.CSSProperties;
       PrimaryColor?: string;
@@ -289,10 +287,18 @@ interface feedbackCompProps {
       IconSize?: string;
       Icon?: React.CSSProperties;
     };
-    ThanksPopUp?: React.CSSProperties;
+    ThanksPopup?: {
+      Style?: React.CSSProperties;
+      Heading?: React.CSSProperties;
+      Description?: React.CSSProperties;
+      ShowFooter?: boolean;
+      Icon?: React.CSSProperties;
+    },
   };
-  showFooter?: boolean;
+  enableVariation?: boolean
   offlineFormData: FormDataItem[][];
+  BrandTheme?: BrandTheme;
+  QuestThemeData?: QuestThemeData;  
 }
 interface FormDataItem {
   type?: string;
@@ -319,44 +325,18 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   starColor,
   starBorderColor,
   ratingStyle,
-  // uniqueUserId,
-  // uniqueEmailId,
   GeneralFeedback,
   ReportBug,
   ContactUs,
   RequestFeature,
   SecondaryButtonText = "Go to home!",
   PrimaryButtonText = "Submit",
-  descriptions = {
-    "General Feedback": "Welcome back, Please complete your details",
-    "Report a Bug": "Describe your issue",
-    "Contact us": "Invite other admins and moderators",
-    "Request a Feature": "How can we make it better",
-  },
   iconColor = "#939393",
   styleConfig = {},
   offlineFormData,
   showFooter = true,
-  BrandTheme = {
-    accentColor: "",
-    background: "",
-    borderRadius: "",
-    buttonColor: "",
-    contentColor: "",
-    fontFamily: "",
-    logo: "",
-    primaryColor: "",
-    secondaryColor: "",
-    tertiaryColor: "",
-    titleColor: ""
-  },
-  QuestThemeData = {
-    accentColor: "",
-    theme: "",
-    borderRadius: "",
-    buttonColor: "",
-    images: []
-  }
+  BrandTheme ,
+  QuestThemeData 
 }) => {
   const [selectedOption, setSelectedOption] = useState<optionType | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
@@ -367,8 +347,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     useContext(QuestContext.Context);
   const [cardHovered, setCardHovered] = useState([false, false, false, false]);
   const [answer, setAnswer] = useState<Record<string, string>>({});
-  const [questThemeData, setQuestThemeData] = useState<QuestThemeData>(QuestThemeData)
-  const [brandTheme, setBrandTheme] = useState<BrandTheme>(BrandTheme)
+
 
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
@@ -387,39 +366,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     }
   };
   const uploadFileToBackend: any = async (file: any) => {
-    //   if (file?.size > 1000000) {
-    //     try {
-    //       // Resize the image to below 1MB
-    //       const compressedImage = await imageCompression(file, {
-    //         maxSizeMB: 1,
-    //         maxWidthOrHeight: 1024,
-    //         useWebWorker: true,
-    //         initialQuality: 1,
-    //       });
-
-    //       // Call the uploadImageToBackend function recursively with the compressed image
-    //       return await uploadFileToBackend(compressedImage);
-    //     } catch (error) {
-    //       return null;
-    //     }
-    //   }
-    //   const formData = new FormData();
-    //   formData.append("uploaded_file", file);
-    //   try {
-    //     let res = await axios.post("https://staging.questprotocol.xyz/api/upload-img", formData, {
-    //       headers: {
-    //         userId, token, apiKey, apiSecret,
-    //         "Content-Type": "form-data",
-    //       },
-    //     })
-    //     if (res == null || !res?.data || res?.data.success == false || !res?.data?.imageUrl) {
-    //       console.log(null);
-    //     } else {
-    //       return res.data.imageUrl
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
+  
   }
 
   const ref = React.useRef<HTMLDivElement>(null);
@@ -435,11 +382,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       <g clipRule="url(#clip0_4046_146)">
         <path
           d="M40 80C62.0914 80 80 62.0914 80 40C80 17.9086 62.0914 0 40 0C17.9086 0 0 17.9086 0 40C0 62.0914 17.9086 80 40 80Z"
-          fill={styleConfig?.ThanksPopUp?.backgroundColor || "url(#paint0_linear_4046_146)"}
+          fill={styleConfig?.ThanksPopup?.Icon?.backgroundColor || "url(#paint0_linear_4046_146)"}
         />
         <path
           d="M48.4167 79.0566C49.1837 78.9078 49.9463 78.7367 50.7033 78.5432C51.987 78.1844 53.2519 77.7617 54.4933 77.2766C55.7363 76.7955 56.9545 76.2526 58.1433 75.6499C59.3325 75.0449 60.4906 74.3807 61.6133 73.6599C62.7348 72.939 63.8195 72.1625 64.8633 71.3332C65.9091 70.5029 66.9125 69.6207 67.87 68.6899C68.8259 67.7614 69.7348 66.7858 70.5933 65.7666C71.4526 64.7465 72.2603 63.684 73.0133 62.5832C73.7662 61.4843 74.4638 60.3484 75.1033 59.1799C75.743 58.0097 76.3237 56.8082 76.8433 55.5799C77.3635 54.3514 77.8218 53.0976 78.2167 51.8232C78.5548 50.7075 78.8439 49.5776 79.0833 48.4366L55.3167 24.6732C53.3096 22.6573 50.9236 21.0581 48.2961 19.9677C45.6686 18.8774 42.8514 18.3174 40.0067 18.3199C37.1594 18.3168 34.3395 18.8765 31.7092 19.9668C29.0789 21.0572 26.6901 22.6566 24.68 24.6732C22.6649 26.6839 21.0661 29.0724 19.9753 31.7018C18.8845 34.3312 18.323 37.1499 18.323 39.9966C18.323 42.8433 18.8845 45.662 19.9753 48.2914C21.0661 50.9208 22.6649 53.3092 24.68 55.3199L48.4167 79.0566Z"
-          fill={styleConfig?.ThanksPopUp?.backgroundColor || "url(#paint0_linear_4046_146)"}
+          fill={styleConfig?.ThanksPopup?.Icon?.backgroundColor || "url(#paint0_linear_4046_146)"}
         />
         <path
           d="M40.0033 18.3232C45.5433 18.3232 51.0833 20.4398 55.3233 24.6765C57.3384 26.6872 58.9372 29.0756 60.028 31.705C61.1188 34.3344 61.6803 37.1532 61.6803 39.9998C61.6803 42.8465 61.1188 45.6653 60.028 48.2947C58.9372 50.9241 57.3384 53.3125 55.3233 55.3232C53.3126 57.3383 50.9242 58.937 48.2948 60.0279C45.6654 61.1187 42.8467 61.6802 40 61.6802C37.1533 61.6802 34.3346 61.1187 31.7052 60.0279C29.0758 58.937 26.6873 57.3383 24.6767 55.3232C22.6615 53.3125 21.0628 50.9241 19.972 48.2947C18.8811 45.6653 18.3196 42.8465 18.3196 39.9998C18.3196 37.1532 18.8811 34.3344 19.972 31.705C21.0628 29.0756 22.6615 26.6872 24.6767 24.6765C26.6867 22.6599 29.0756 21.0604 31.7059 19.9701C34.3361 18.8798 37.156 18.3201 40.0033 18.3232ZM49.87 33.3298C49.5544 33.3601 49.2539 33.4791 49.0033 33.6732L36.8233 42.8065L31.18 37.1665C29.9566 35.8932 27.5467 38.2998 28.8233 39.5232L35.49 46.1898C35.779 46.4631 36.1536 46.6281 36.5504 46.6566C36.9471 46.6852 37.3415 46.5756 37.6667 46.3465L51 36.3465C52.12 35.5298 51.43 33.3532 50.0433 33.3332C49.9867 33.3303 49.9299 33.3303 49.8733 33.3332L49.87 33.3298Z"
@@ -485,48 +432,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   }, []);
 
   const handleOptionClick = (option: optionType) => {
-    let cookies = new Cookies();
-    let externalUserId = cookies.get("externalUserId");
-    let questUserId = cookies.get("questUserId");
-    let questUserToken = cookies.get("questUserToken");
-    let personalUserId = JSON.parse(
-      localStorage.getItem("persana-user") || "{}"
-    );
-    // if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
-    //   let header = {
-    //     apiKey: apiKey,
-    //     apisecret: apiSecret,
-    //     userId: questUserId,
-    //     token: questUserToken,
-    //   }
-    //   axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`, { count: 1 }, { headers: header })
-    // } else if (uniqueUserId) {
-    //   const body = {
-    //     externalUserId: !!uniqueUserId && uniqueUserId,
-    //     entityId: entityId,
-    //     email: uniqueEmailId
-    //   }
-
-    //   const headers = {
-    //     apiKey: apiKey,
-    //     apisecret: apiSecret,
-    //     userId: userId,
-    //     token: token,
-    //   };
-
-    //   axios.post(`${BACKEND_URL}api/users/external/login`, body, { headers })
-    //     .then((res) => {
-    //       let { userId, token } = res.data;
-    //       let header = { ...headers, ...{ userId, token } }
-    //       let cookies = new Cookies();
-    //       const date = new Date();
-    //       date.setHours(date.getHours() + 12)
-    //       cookies.set("externalUserId", uniqueUserId, { path: "/", expires: date })
-    //       cookies.set("questUserId", userId, { path: "/", expires: date })
-    //       cookies.set("questUserToken", token, { path: "/", expires: date })
-    //       axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${quest}?userId=${userId}&questId=${quest}`, { count: 1 }, { headers: header })
-    //     })
-    // }
+  
 
     if (option === "ContactUs" && contactUrl) {
       window.open(contactUrl, "_blank");
@@ -543,65 +449,20 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       `quest_feedback_workflow_offline${selectedOption}_form_submitted`,
       `feedback_workflow_offline${selectedOption}_form`
     );
-    // const headers = {
-    //   apiKey: apiKey,
-    //   apisecret: apiSecret,
-    //   userId: userId,
-    //   token: token,
-    // };
-    // let cookies = new Cookies();
-    // let externalUserId = cookies.get("externalUserId");
-    // let questUserId = cookies.get("questUserId");
-    // let questUserToken = cookies.get("questUserToken");
     if (Object.keys(answer).length !== 0) {
-      const ansArr = offlineFormData[index].map((ans: any) => ({
+      const ansArr = offlineFormData[index]?.map((ans: any) => ({
         question: ans?.question || "",
         answer: [answer[ans?.criteriaId] || ""],
         criteriaId: ans?.criteriaId || "",
       }));
-      // if (!!externalUserId && !!questUserId && !!questUserToken && externalUserId == uniqueUserId) {
-      //   let header = {
-      //     apiKey: apiKey,
-      //     apisecret: apiSecret,
-      //     userId: questUserId,
-      //     token: questUserToken,
-      //   }
-      //   setResult(header, header.userId)
-      // } else {
-      //   setResult(headers, userId)
-      // }
 
-      // function setResult(headers: object, userId: string) {
-      //   const request = `${BACKEND_URL}api/entities/${entityId}/quests/${selectedQuest}/verify-all?userId=${userId}`;
-      //   const requestData = {
-      //     criterias: ansArr,
-      //   };
-      //   setShowLoader(true);
-      //   axios
-      //     .post(request, requestData, { headers: headers })
-      //     .then((response) => {
-      //       if (response.data.success) {
       showToast.success({ text: "Thank you for your feedback" });
       setSubmit(true);
       setTimeout(() => {
         setSubmit(false);
         setSelectedOption(null);
       }, 4000);
-      //           axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/feedback-${selectedQuest}-com?userId=${userId}&questId=${selectedQuest}`, { count: 1 }, { headers: headers })
-      //         } else {
-      //           showToast.error({ text: response.data.error });
-      //         }
-      //       })
-      //       .catch((error) => {
-      //         console.error('Error:', error);
-      //       })
-      //       .finally(() => {
-      //         setShowLoader(false);
-      //       });
-      //   }
-      // } else {
-      //   showToast.error('Please fill in all required fields.');
-      // }
+
     }
   }
 
@@ -631,11 +492,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       [id]: "",
     });
   };
-  function isValidEmail(email: string) {
-    if (!email) return false;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return !emailRegex.test(email);
-  }
+
   const normalInput = (
     question: string,
     criteriaId: string,
@@ -721,7 +578,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     return <div></div>;
   }
 
-  const handleScreenCapture = async (capture: string) => {
+  const handleScreenCapture = async (capture: any) => {
     setIsVisible(true);
     const now = new Date();
     const hours = now.getHours();
@@ -759,9 +616,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 className="q-fw-div"
                 style={{
                   background:
-                    styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor,
+                    styleConfig?.Form?.backgroundColor ||  BrandTheme?.background || themeConfig?.backgroundColor,
                   height: styleConfig?.Form?.height || "auto",
-                  fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+                  borderRadius: styleConfig?.Form?.borderRadius || QuestThemeData?.borderRadius || BrandTheme?.borderRadius,
+                  fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
                   ...styleConfig?.Form,
                 }}
                 id="disabledClick"
@@ -773,13 +631,17 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         topbarStyle: styleConfig?.TopBar,
                         headingStyle: {
                           color:
-                            styleConfig?.Heading?.color || themeConfig?.primaryColor,
+                            styleConfig?.Heading?.color || 
+                      BrandTheme?.titleColor ||
+                      BrandTheme?.primaryColor ||
+                      themeConfig?.primaryColor,
                           ...styleConfig?.Heading,
                         },
                         descriptionStyle: {
                           color:
                             styleConfig?.Description?.color ||
-                            themeConfig?.secondaryColor,
+                            BrandTheme?.secondaryColor ||
+                      themeConfig?.secondaryColor,
                           ...styleConfig?.Description,
                         },
                       }}
@@ -788,8 +650,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                           ? ContactUs?.description ||
                           "Invite other admins and moderators"
                           : selectedOption == "RequestFeature"
-                            ? RequestFeature?.formDescription ||
-                            "How can we make it better"
+                            ? RequestFeature?.formDescription || "How can we make it better"
                             : selectedOption == "ReportBug"
                               ? ReportBug?.formDescription || "Describe your issue"
                               : GeneralFeedback?.formDescription ||
@@ -822,8 +683,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                           handleRemove={handleRemove}
                           ratingStyle={ratingStyle}
                           iconColor={iconColor}
-                          buttonStyle={styleConfig.PrimaryButton}
+                          buttonStyle={{background: styleConfig.PrimaryButton?.background || QuestThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor, ...styleConfig.PrimaryButton}}
                           PrimaryButtonText={PrimaryButtonText}
+                          StarStyle={styleConfig?.Star}
+                          labelStyle={styleConfig?.Label}
                           isVisible={isVisible}
                           setIsVisible={setIsVisible}
                           screenshot={screenshot}
@@ -846,6 +709,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                           emailInput={emailInput}
                           handleRemove={handleRemove}
                           PrimaryButtonText={PrimaryButtonText}
+                          buttonStyle={{background: styleConfig.PrimaryButton?.background || QuestThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor, ...styleConfig.PrimaryButton}}
                         />
                       )}
                       {selectedOption === "RequestFeature" && (
@@ -859,70 +723,27 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                           answer={answer}
                           handleRemove={handleRemove}
                           PrimaryButtonText={PrimaryButtonText}
+                          buttonStyle={{background: styleConfig.PrimaryButton?.background || QuestThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor, ...styleConfig.PrimaryButton}}
                         />
                       )}
                       {selectedOption === "ContactUs" && <div></div>}
                     </div>
-                    {showFooter && <QuestLabs style={styleConfig?.Footer} />}
+                    {showFooter && <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />}
                   </div>
-                ) : submit ? (
-                  <div>
-                    <div className="q_submit_cross_icon" onClick={handleThanks}>
-                      {cross(iconColor, handleBackClick)}
-                    </div>
-                    <div className="q-fw-thanks">
-                      <div>
-                        <div className="q-svg-thanks">{thanks}</div>
-                        <div className="q_fw_submit_box">
-                          <div className="q_feedback_text_submitted">
-                            <div
-                              className="q_feedback_text_cont"
-                              style={{
-                                color:
-                                  styleConfig?.Heading?.color ||
-                                  themeConfig?.primaryColor,
-                              }}
-                            >
-                              Feedback Submitted
-                            </div>
-                            <div
-                              className="q_fw_submit_desc"
-                              style={{
-                                color:
-                                  styleConfig?.Description?.color ||
-                                  themeConfig?.secondaryColor,
-                              }}
-                            >
-                              Thanks for submitting your feedback with us. We appreciate
-                              your review and will assure you to surely consider them
-                            </div>
-                          </div>
-                          <div
-                            className="q_fw_submit_back"
-                            style={{ ...styleConfig?.SecondaryButton }}
-                          >
-                            {SecondaryButtonText}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {showFooter && <QuestLabs style={styleConfig?.Footer} />}
-                  </div>
-                ) : (
+                ) : !submit ? (
                   <div>
                     <div className="q-fw-crossBtn">
                       <div onClick={() => onClose?.()}>{cross(iconColor)}</div>
                     </div>
                     <div className="q-fw-content-box">
-                      {
-                        <div
+                      {/* {questIds[0] && ( */}
+      
+                      <div
                           onClick={() => {
-                            GeneralFunctions.fireTrackingEvent(
-                              "quest_feedback_workflow_offline_general_feedback_clicked",
-                              "feedback_workflow_general_feedback"
-                            );
-                            handleOptionClick("GeneralFeedback");
-                          }}
+                            GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_general_feedback_clicked", "feedback_workflow_general_feedback");
+                            handleOptionClick("GeneralFeedback")
+                          }
+                          }
                           className="q-hover q-fw-cards"
                           onMouseEnter={() =>
                             setCardHovered([true, false, false, false])
@@ -935,9 +756,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ? styleConfig.listHover?.background || "#FBFBFB"
                               : "transparent",
                             borderRadius: "8px",
+                            ...styleConfig?.Card,
                           }}
                         >
-                          <div
+      
+                    <div
                             className="q_feedback_icon"
                             style={{
                               background: cardHovered[0]
@@ -946,24 +769,15 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ...styleConfig?.listHover?.Icon,
                             }}
                           >
-                            {GeneralFeedback?.iconUrl ? (
-                              <img
-                                className="q_feedback_icon_imgurl"
-                                src={GeneralFeedback?.iconUrl}
-                              />
-                            ) : (
-                              feedback(
-                                cardHovered[0]
-                                  ? styleConfig.listHover?.iconColor || "#9035FF"
-                                  : iconColor,
-                                styleConfig.listHover?.IconSize
-                              )
+                            {GeneralFeedback?.iconUrl ? <img className="q_feedback_icon_imgurl" src={GeneralFeedback?.iconUrl} /> : feedback(cardHovered[0]
+                              ? styleConfig.listHover?.iconColor || "#9035FF"
+                              : iconColor, styleConfig.listHover?.IconSize
                             )}
                             {/* {feedback(
-                      cardHovered[0]
-                        ? styleConfig.listHover?.iconColor || "#9035FF"
-                        : iconColor
-                    )} */}
+                  cardHovered[0]
+                    ? styleConfig.listHover?.iconColor || "#9035FF"
+                    : iconColor
+                )} */}
                           </div>
                           <div>
                             <div
@@ -973,9 +787,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                                   ? styleConfig?.listHover?.Heading ||
                                   styleConfig.listHeading?.color ||
                                   styleConfig?.Heading?.color ||
+                                  BrandTheme?.primaryColor ||
                                   themeConfig?.primaryColor
                                   : styleConfig.listHeading?.color ||
                                   styleConfig?.Heading?.color ||
+                                  BrandTheme?.primaryColor ||
                                   themeConfig?.primaryColor,
                                 ...styleConfig?.listHeading,
                               }}
@@ -989,10 +805,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                                   ? styleConfig?.listHover?.Description ||
                                   styleConfig?.listDescription?.color ||
                                   styleConfig?.Description?.color ||
-                                  themeConfig?.secondaryColor
+                                  BrandTheme?.secondaryColor ||
+                            themeConfig?.secondaryColor
                                   : styleConfig?.listDescription?.color ||
                                   styleConfig?.Description?.color ||
-                                  themeConfig?.secondaryColor,
+                                  BrandTheme?.secondaryColor ||
+                            themeConfig?.secondaryColor,
                                 ...styleConfig?.listDescription,
                               }}
                             >
@@ -1001,15 +819,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                             </div>
                           </div>
                         </div>
-                      }
-                      {
-                        <div
+                    
+      
+                  <div
                           onClick={() => {
-                            GeneralFunctions.fireTrackingEvent(
-                              "quest_feedback_workflow_offline_report_bug_clicked",
-                              "feedback_workflow_report_bug"
-                            );
-                            handleOptionClick("ReportBug");
+                            GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_report_bug_clicked", "feedback_workflow_report_bug");
+                            handleOptionClick("ReportBug")
                           }}
                           className="q-hover q-fw-cards"
                           onMouseEnter={() =>
@@ -1023,6 +838,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ? styleConfig.listHover?.background || "#FBFBFB"
                               : "transparent",
                             borderRadius: "8px",
+                            ...styleConfig?.Card,
                           }}
                         >
                           <div
@@ -1034,24 +850,15 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ...styleConfig?.listHover?.Icon,
                             }}
                           >
-                            {ReportBug?.iconUrl ? (
-                              <img
-                                className="q_feedback_icon_imgurl"
-                                src={ReportBug?.iconUrl}
-                              />
-                            ) : (
-                              bug(
-                                cardHovered[1]
-                                  ? styleConfig.listHover?.iconColor || "#9035FF"
-                                  : iconColor,
-                                styleConfig.listHover?.IconSize,
-                              )
-                            )}
+                            {ReportBug?.iconUrl ? <img className="q_feedback_icon_imgurl" src={ReportBug?.iconUrl} /> : bug(cardHovered[1]
+                              ? styleConfig.listHover?.iconColor || styleConfig?.listHover?.Icon?.color || "#9035FF"
+                              : iconColor, styleConfig.listHover?.IconSize)}
+
                             {/* {bug(
-                      cardHovered[1]
-                        ? styleConfig.listHover?.iconColor || "#9035FF"
-                        : iconColor
-                    )} */}
+                  cardHovered[1]
+                    ? styleConfig.listHover?.iconColor || "#9035FF"
+                    : iconColor
+                )} */}
                           </div>
                           <div>
                             <div>
@@ -1062,10 +869,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                                     ? styleConfig?.listHover?.Heading ||
                                     styleConfig.listHeading?.color ||
                                     styleConfig?.Heading?.color ||
-                                    themeConfig?.primaryColor
+                                    BrandTheme?.primaryColor ||
+                              themeConfig?.primaryColor
                                     : styleConfig.listHeading?.color ||
                                     styleConfig?.Heading?.color ||
-                                    themeConfig?.primaryColor,
+                                    BrandTheme?.primaryColor ||
+                              themeConfig?.primaryColor,
                                   ...styleConfig?.listHeading,
                                 }}
                               >
@@ -1080,10 +889,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                                     ? styleConfig?.listHover?.Description ||
                                     styleConfig?.listDescription?.color ||
                                     styleConfig?.Description?.color ||
-                                    themeConfig?.secondaryColor
+                                    BrandTheme?.secondaryColor ||
+                              themeConfig?.secondaryColor
                                     : styleConfig?.listDescription?.color ||
                                     styleConfig?.Description?.color ||
-                                    themeConfig?.secondaryColor,
+                                    BrandTheme?.secondaryColor ||
+                              themeConfig?.secondaryColor,
                                   ...styleConfig?.listDescription,
                                 }}
                               >
@@ -1092,16 +903,13 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                             </div>
                           </div>
                         </div>
-                      }
-                      {
+                 
                         <div
                           onClick={() => {
-                            GeneralFunctions.fireTrackingEvent(
-                              "quest_feedback_workflow_offline_request_feature_clicked",
-                              "feedback_workflow_request_feature"
-                            );
-                            handleOptionClick("RequestFeature");
-                          }}
+                            GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_request_feature_clicked", "feedback_workflow_request_feature");
+                            handleOptionClick("RequestFeature")
+                          }
+                          }
                           className="q-hover q-fw-cards"
                           onMouseEnter={() =>
                             setCardHovered([false, false, true, false])
@@ -1114,6 +922,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ? styleConfig.listHover?.background || "#FBFBFB"
                               : "transparent",
                             borderRadius: "8px",
+                            ...styleConfig?.Card,
                           }}
                         >
                           <div
@@ -1125,24 +934,14 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ...styleConfig?.listHover?.Icon,
                             }}
                           >
-                            {RequestFeature?.iconUrl ? (
-                              <img
-                                className="q_feedback_icon_imgurl"
-                                src={RequestFeature?.iconUrl}
-                              />
-                            ) : (
-                              feature(
-                                cardHovered[2]
-                                  ? styleConfig.listHover?.iconColor || "#9035FF"
-                                  : iconColor,
-                                styleConfig.listHover?.IconSize
-                              )
-                            )}
+                            {RequestFeature?.iconUrl ? <img className="q_feedback_icon_imgurl" src={RequestFeature?.iconUrl} /> : feature(cardHovered[2]
+                              ? styleConfig.listHover?.iconColor || "#9035FF"
+                              : iconColor, styleConfig.listHover?.IconSize)}
                             {/* {feature(
-                      cardHovered[2]
-                        ? styleConfig.listHover?.iconColor || "#9035FF"
-                        : iconColor
-                    )} */}
+                  cardHovered[2]
+                    ? styleConfig.listHover?.iconColor || "#9035FF"
+                    : iconColor
+                )} */}
                           </div>
                           <div>
                             <div>
@@ -1153,10 +952,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                                     ? styleConfig?.listHover?.Heading ||
                                     styleConfig.listHeading?.color ||
                                     styleConfig?.Heading?.color ||
-                                    themeConfig?.primaryColor
+                                    themeConfig?.primaryColor ||
+                              themeConfig?.primaryColor
                                     : styleConfig.listHeading?.color ||
                                     styleConfig?.Heading?.color ||
-                                    themeConfig?.primaryColor,
+                                    themeConfig?.primaryColor ||
+                              themeConfig?.primaryColor,
                                   ...styleConfig?.listHeading,
                                 }}
                               >
@@ -1171,10 +972,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                                     ? styleConfig?.listHover?.Description ||
                                     styleConfig?.listDescription?.color ||
                                     styleConfig?.Description?.color ||
-                                    themeConfig?.secondaryColor
+                                    BrandTheme?.secondaryColor ||
+                              themeConfig?.secondaryColor
                                     : styleConfig?.listDescription?.color ||
                                     styleConfig?.Description?.color ||
-                                    themeConfig?.secondaryColor,
+                                    BrandTheme?.secondaryColor ||
+                              themeConfig?.secondaryColor,
                                   ...styleConfig?.listDescription,
                                 }}
                               >
@@ -1184,15 +987,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                             </div>
                           </div>
                         </div>
-                      }
-                      {
+                     
                         <div
                           onClick={() => {
-                            GeneralFunctions.fireTrackingEvent(
-                              "quest_feedback_workflow_offline_contactus_clicked",
-                              "feedback_workflow_contactus"
-                            );
-                            handleOptionClick("ContactUs");
+                            GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_contactus_clicked", "feedback_workflow_contactus");
+                            handleOptionClick("ContactUs")
                           }}
                           className="q-hover q-fw-cards"
                           onMouseEnter={() =>
@@ -1206,6 +1005,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ? styleConfig.listHover?.background || "#FBFBFB"
                               : "transparent",
                             borderRadius: "8px",
+                            ...styleConfig?.Card,
                           }}
                         >
                           <div
@@ -1217,24 +1017,14 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               ...styleConfig?.listHover?.Icon,
                             }}
                           >
-                            {ContactUs?.iconUrl ? (
-                              <img
-                                className="q_feedback_icon_imgurl"
-                                src={ContactUs?.iconUrl}
-                              />
-                            ) : (
-                              contact(
-                                cardHovered[3]
-                                  ? styleConfig.listHover?.iconColor || "#9035FF"
-                                  : iconColor,
-                                styleConfig.listHover?.IconSize
-                              )
-                            )}
+                            {ContactUs?.iconUrl ? <img className="q_feedback_icon_imgurl" src={ContactUs?.iconUrl} /> : contact(cardHovered[3]
+                              ? styleConfig.listHover?.iconColor || "#9035FF"
+                              : iconColor, styleConfig.listHover?.IconSize)}
                             {/* {contact(
-                      cardHovered[3]
-                        ? styleConfig.listHover?.iconColor || "#9035FF"
-                        : iconColor
-                    )} */}
+                  cardHovered[3]
+                    ? styleConfig.listHover?.iconColor || "#9035FF"
+                    : iconColor
+                )} */}
                           </div>
                           <div>
                             <div>
@@ -1245,10 +1035,12 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                                     ? styleConfig?.listHover?.Heading ||
                                     styleConfig.listHeading?.color ||
                                     styleConfig?.Heading?.color ||
-                                    themeConfig?.primaryColor
+                                    BrandTheme?.primaryColor ||
+                              themeConfig?.primaryColor
                                     : styleConfig.listHeading?.color ||
                                     styleConfig?.Heading?.color ||
-                                    themeConfig?.primaryColor,
+                                    BrandTheme?.primaryColor ||
+                              themeConfig?.primaryColor,
                                   ...styleConfig?.listHeading,
                                 }}
                               >
@@ -1257,36 +1049,93 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                             </div>
                             <div>
                               <div
-                                className="q-fw-tab-description"
                                 style={{
                                   color: cardHovered[3]
                                     ? styleConfig?.listHover?.Description ||
                                     styleConfig?.listDescription?.color ||
                                     styleConfig?.Description?.color ||
-                                    themeConfig?.secondaryColor
+                                    BrandTheme?.secondaryColor ||
+                              themeConfig?.secondaryColor
                                     : styleConfig?.listDescription?.color ||
                                     styleConfig?.Description?.color ||
-                                    themeConfig?.secondaryColor,
+                                    BrandTheme?.secondaryColor ||
+                              themeConfig?.secondaryColor,
                                   ...styleConfig?.listDescription,
                                 }}
+                                className="q-fw-tab-description"
                               >
                                 {ContactUs?.description || "Tell us how we can help"}
                               </div>
                             </div>
                           </div>
                         </div>
-                      }
+                    
                     </div>
-                    <div>{showFooter && <QuestLabs style={styleConfig.Footer} />}</div>
+                    <div>{showFooter && <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />}</div>
                   </div>
-                )}
+                ) : ''}
               </div>
             </div>
+
+
+            {submit &&
+              <div
+                className="q-fw-div"
+                style={{
+                  background:
+                    styleConfig?.ThanksPopup?.Style?.background ||  styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor,
+                  height: styleConfig?.ThanksPopup?.Style?.height || styleConfig?.Form?.height || "auto",
+                  fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+                  borderRadius: styleConfig?.Form?.borderRadius || QuestThemeData?.borderRadius || BrandTheme?.borderRadius,
+            ...styleConfig?.ThanksPopup?.Style,
+                }}
+                id="disabledClick">
+                <div className="q_submit_cross_icon" onClick={handleThanks}>
+                  {cross(iconColor, handleBackClick)}
+                </div>
+                <div className="q-fw-thanks">
+                  <div>
+                    <div className="q-svg-thanks">{thanks}</div>
+                    <div className="q_fw_submit_box">
+                      <div className="q_feedback_text_submitted">
+                        <div
+                          className="q_feedback_text_cont"
+                          style={{
+                            color:
+                              styleConfig?.Heading?.color ||
+                              BrandTheme?.primaryColor ||
+                        themeConfig?.primaryColor,
+                            ...styleConfig?.ThanksPopup?.Heading,
+                          }}
+                        >
+                          Feedback Submitted
+                        </div>
+                        <div
+                          className="q_fw_submit_desc"
+                          style={{
+                            color:
+                              styleConfig?.Description?.color ||
+                              BrandTheme?.secondaryColor ||
+                        themeConfig?.secondaryColor,
+                            ...styleConfig?.ThanksPopup?.Description,
+                          }}
+                        >
+                          Thanks for submitting your feedback with us. We appreciate
+                          your review and will assure you to surely consider them
+                        </div>
+                      </div>
+                      <div className="q_fw_submit_back" style={{ ...styleConfig?.SecondaryButton }}>{SecondaryButtonText}</div>
+                    </div>
+                  </div>
+          </div>
+                {(styleConfig?.ThanksPopup?.ShowFooter || showFooter) && <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />}
+              </div>
+            }
           </div>
         )}
       </ScreenCapture>
     </div>
-  );
+  )
 };
 
 export default FeedbackWorkflow;
