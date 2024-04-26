@@ -241,7 +241,7 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
     }
 
     setFormdata(formDataOffline);
-  }, []);
+  }, [formDataOffline]);
 
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, Array<string>>
