@@ -1,6 +1,6 @@
 import MultiRouteTour from "multiroute-tour-navigator";
 import { MultiRouteTourProps } from "multiroute-tour-navigator/lib/MultiRouteTour";
-import { ClientBoundingRect, HelperProps, TourNavigatorProps } from "tour-navigator/lib/TourNavigator/types";
+import { Align, ClientBoundingRect, HelperProps, Position, TourNavigatorProps, OverlayProps } from "tour-navigator/lib/TourNavigator/types";
 import TourHelper from "./TourHelper";
 import TourNavigator from "tour-navigator";
 import { CSSProperties, useContext } from "react";
@@ -91,3 +91,7 @@ export default function Walkthrough({
         />
     )
 }
+
+export type WalkthroughHelperProps = HelperProps
+export type WalkthroughOverlayProps = OverlayProps
+export { Align, Position }

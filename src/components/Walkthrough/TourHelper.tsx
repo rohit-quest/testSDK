@@ -1,8 +1,8 @@
-import {HelperProps} from 'tour-navigator/lib/TourNavigator/types'
 import './tourHelper.css'
 import { CSSProperties } from 'react'
+import { WalkthroughHelperProps } from './Walkthrough';
 
-interface TourHelperProps extends HelperProps {
+interface TourHelperProps extends WalkthroughHelperProps {
     headerStyle?: CSSProperties;
     descriptionStyle?: CSSProperties;
     helperBackgroundStyle?: CSSProperties;
@@ -13,6 +13,7 @@ interface TourHelperProps extends HelperProps {
     imgStyle?: CSSProperties,
     onComplete?: () => void
 }
+
 export default function TourHelper({
     steps, 
     currentStep, 

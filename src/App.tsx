@@ -36,9 +36,7 @@ import OnBoarding from "./components/Onboarding/Onboarding";
 import DailyStreak from "./components/Streak/DailyStreak";
 import ChallengesPreview from "./components/Challenges/ChallengesPreview";
 import GamifiedQuizPreview from "./components/GamifiedQuiz/GamifiedQuizPreview";
-import WalkThrough from "./components/Walkthrough/WalkThrough";
-import Walkthrough from "./components/Walkthrough/WalkThrough";
-import { Align, Position } from "tour-navigator/lib/TourNavigator/types";
+import Walkthrough, { Align, Position } from "./components/Walkthrough/WalkThrough";
 
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-2aa597b4-341f-4c3c-a022-f56877a585c9";
