@@ -1,5 +1,3 @@
-import { backButton } from "../../assets/assetsSVG";
-
 const HelphubSvg = (props: any) => {
   const GetSvg = (type: string) => {
     switch (type) {

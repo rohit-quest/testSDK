@@ -120,7 +120,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
         </div>
       </div>
 
-      <div className="container">
+      <div className="helphub-task-container">
         <div className="q-helphub-tasks-progress-cont">
           <div
             className="q-helphub-tasks-progress-per"
@@ -166,32 +166,17 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
 
             {onlineComponent &&
               tasksData?.map((value, index) => {
-                // console.log(value);
-                // console.log(value.completed);
                 return (
                   <div
                     className="q-helphub-tasks-progress-bar-tabs "
                     style={{
                       width: `${Math.ceil(100 / tasksData.length)}%`,
-                      // background: `${
-                      //   openTaskDiv === index
-                      //     ? "var(--Primary-Grape-400, #A357FF)"
-                      //     : value.completed
-                      //     ? "var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%))"
-                      //     : ""
-                      // }`,
-
                       background: `${
                         value.completed
                           ? "var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%))"
                           : openTaskDiv === index
                           ? "var(--Primary-Grape-400, #A357FF)"
                           : ""
-
-                        // ? "var(--Primary-Grape-400, #A357FF)"
-                        // : value.completed
-                        // ? "var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%))"
-                        // : ""
                       }`,
 
                       boxShadow: "0px 1px 4px 0px rgba(0, 0, 0, 0.12)",
@@ -204,56 +189,23 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                       }`,
                     }}
                   >
-                    {/* {index === 0
-                    ? "first"
-                    : index === tasksData?.length - 1
-                    ? "last"
-                    : ""} */}
-                    {/* <div
-             style={{
-               width: `${
-                 100 * (claimStatusTasks?.length / tasksData?.length)
-               }%`,
-             }}
-           ></div> */}
-
-                    {/* <div>
-             {tasksData?.map(() => (
-               <div>hi</div>
-             ))}
-           </div> */}
                   </div>
                 );
               })}
 
             {!onlineComponent &&
               tasksData?.map((value, index) => {
-                // console.log(value);
-                // console.log(value.data.criteriaId);
-                // console.log(value.completed);
                 return (
                   <div
                     className="q-helphub-tasks-progress-bar-tabs "
                     style={{
                       width: `${Math.ceil(100 / tasksData.length)}%`,
-                      // background: `${
-                      //   openTaskDiv === index
-                      //     ? "var(--Primary-Grape-400, #A357FF)"
-                      //     : claimStatusTasks.includes(value?.data?.criteriaId)
-                      //     ? "var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%))"
-                      //     : ""
-                      // }`,
                       background: `${
                         claimStatusTasks.includes(value?.criteriaId)
                           ? "var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%))"
                           : openTaskDiv === index
                           ? "var(--Primary-Grape-400, #A357FF)"
                           : ""
-
-                        // ? "var(--Primary-Grape-400, #A357FF)"
-                        // : value.completed
-                        // ? "var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%))"
-                        // : ""
                       }`,
                       boxShadow: "0px 1px 4px 0px rgba(0, 0, 0, 0.12)",
                       borderRadius: `${
@@ -265,198 +217,147 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                       }`,
                     }}
                   >
-                    {/* {index === 0
-                    ? "first"
-                    : index === tasksData?.length - 1
-                    ? "last"
-                    : ""} */}
-                    {/* <div
-             style={{
-               width: `${
-                 100 * (claimStatusTasks?.length / tasksData?.length)
-               }%`,
-             }}
-           ></div> */}
-
-                    {/* <div>
-             {tasksData?.map(() => (
-               <div>hi</div>
-             ))}
-           </div> */}
                   </div>
                 );
               })}
           </div>
         </div>
         <div className="q-helphub-tasks-task-cont">
-            {filterData?.map(
-              (ele: QuestCriteriaWithStatusType, index: number) => (
-                <div
-                  // className="q-helphub-tasks-single-task  "
-                  className={"q-helphub-tasks-single-task"}
-                  style={{
-                    background: themeConfig?.backgroundColor,
-                    ...styleConfig?.Home?.Card,
-                  }}
-                  onClick={() => {
-                    if (openTaskDiv === index) {
-                      setOpenTaskDiv(undefined);
-                    } else {
-                      setOpenTaskDiv(index);
-                    }
-                  }}
-                  key={index}
-                >
-                  <div className="single-task-close-detail">
-                    <div className="q-helphub-tasks-single-task-detail">
-                      <div
-                        className="q-helphub-tasks-single-task-step"
-                        style={{
-                          color: themeConfig?.secondaryColor,
-                          fontFamily: themeConfig?.fontFamily,
-                          ...styleConfig?.Tasks?.Card?.SubHeading,
-                        }}
-                      >
-                        STEP {index + 1}
-                      </div>
-                      <div
-                        className="q-helphub-tasks-single-task-head"
-                        style={{
-                          fontFamily: themeConfig?.fontFamily,
-                          color: themeConfig?.primaryColor,
-                          ...styleConfig?.Tasks?.Card?.Heading,
-                        }}
-                      >
-                        {ele?.linkTitle}
-                      </div>
-                      <div
-                        className="q-helphub-tasks-single-task-para"
-                        style={{
-                          fontFamily: themeConfig?.fontFamily,
-                          color: themeConfig?.secondaryColor,
-                          ...styleConfig?.Tasks?.Card?.SubHeading,
-                        }}
-                      >
-                        {ele?.description}
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Incidunt reprehenderit saepe explicabo harum porro
-                        provident tempora, odio, assumenda, eaque facilis nemo
-                        accusantium maxime. Est ipsa, sed quos quidem iusto cum,
-                        omnis ducimus magnam laboriosam architecto quisquam
-                        voluptatem, explicabo consequatur temporibus enim
-                        consectetur soluta. Architecto, incidunt? Alias vero
-                        soluta magnam. Non.
-                      </div>
-                    </div>
-                    <img
+          {filterData?.map(
+            (ele: QuestCriteriaWithStatusType, index: number) => (
+              <div
+                className={"q-helphub-tasks-single-task"}
+                style={{
+                  background: themeConfig?.backgroundColor,
+                  ...styleConfig?.Home?.Card,
+                }}
+                onClick={() => {
+                  if (openTaskDiv === index) {
+                    setOpenTaskDiv(undefined);
+                  } else {
+                    setOpenTaskDiv(index);
+                  }
+                }}
+                key={index}
+              >
+                <div className="single-task-close-detail">
+                  <div className="q-helphub-tasks-single-task-detail">
+                    <div
+                      className="q-helphub-tasks-single-task-step"
                       style={{
-                        padding: claimStatusTasks?.includes(ele?.criteriaId)
-                          ? "5px 4px"
-                          : "",
-                        rotate: claimStatusTasks?.includes(ele?.criteriaId)
-                          ? ""
-                          : index === openTaskDiv
-                          ? ""
-                          : "180deg",
+                        color: themeConfig?.secondaryColor,
+                        fontFamily: themeConfig?.fontFamily,
+                        ...styleConfig?.Tasks?.Card?.SubHeading,
                       }}
-                      src={
-                        claimStatusTasks?.includes(ele?.criteriaId)
-                          ? TaskCompleted
-                          : index === openTaskDiv
-                          ? TaskUpButton
-                          : TaskUpButton
-                      }
-                      alt=""
-                    />
+                    >
+                      STEP {index + 1}
+                    </div>
+                    <div
+                      className="q-helphub-tasks-single-task-head"
+                      style={{
+                        fontFamily: themeConfig?.fontFamily,
+                        color: themeConfig?.primaryColor,
+                        ...styleConfig?.Tasks?.Card?.Heading,
+                      }}
+                    >
+                      {ele?.linkTitle}
+                    </div>
+                    <div
+                      className="q-helphub-tasks-single-task-para"
+                      style={{
+                        fontFamily: themeConfig?.fontFamily,
+                        color: themeConfig?.secondaryColor,
+                        ...styleConfig?.Tasks?.Card?.SubHeading,
+                      }}
+                    >
+                      {ele?.description}
+                    </div>
                   </div>
+                  <img
+                    style={{
+                      padding: claimStatusTasks?.includes(ele?.criteriaId)
+                        ? "5px 4px"
+                        : "",
+                      rotate: claimStatusTasks?.includes(ele?.criteriaId)
+                        ? ""
+                        : index === openTaskDiv
+                        ? ""
+                        : "180deg",
+                    }}
+                    src={
+                      claimStatusTasks?.includes(ele?.criteriaId)
+                        ? TaskCompleted
+                        : index === openTaskDiv
+                        ? TaskUpButton
+                        : TaskUpButton
+                    }
+                    alt=""
+                  />
+                </div>
 
-                  <div
-                    className={` ${
-                      index === openTaskDiv
-                        ? "single-task-open-div-cont"
-                        : "single-task-close-div-cont"
-                    }`}
-                  >
-                    <div>
-                      <div
-                        className="single-task-close-div-text"
+                <div
+                  className={` ${
+                    index === openTaskDiv
+                      ? "single-task-open-div-cont"
+                      : "single-task-close-div-cont"
+                  }`}
+                >
+                  <div>
+                    <div
+                      className="single-task-close-div-text"
+                      style={{
+                        width: !!ele?.imageUrl ? "calc(100% - 176px)" : "100%",
+                      }}
+                    >
+                      <p
                         style={{
-                          width: !!ele?.imageUrl
-                            ? "calc(100% - 176px)"
-                            : "100%",
+                          fontFamily: themeConfig?.fontFamily,
+                          color: themeConfig?.secondaryColor,
+                          ...styleConfig?.Tasks?.Card?.SubHeading,
+                        }}
+                      >
+                        You can complete your user information details by
+                        sharing the details asked in the form.
+                      </p>
+                      <button
+                        style={{
+                          background: themeConfig?.buttonColor,
+                          cursor: "pointer",
                         }}
                       >
                         <p
                           style={{
                             fontFamily: themeConfig?.fontFamily,
-                            color: themeConfig?.secondaryColor,
-                            ...styleConfig?.Tasks?.Card?.SubHeading,
+                          }}
+                          onClick={() => {
+                            readUpdate(ele?.criteriaId, ele?.linkUrl);
                           }}
                         >
-                          You can complete your user information details by
-                          sharing the details asked in the form Lorem ipsum
-                          dolor sit amet consectetur adipisicing elit. Adipisci
-                          at quibusdam vel magni fugit. Quasi dolorum tempora
-                          iusto laboriosam aut, commodi ullam. Laboriosam porro
-                          non voluptatibus fugiat at iusto magni. Sit dolorum
-                          itaque expedita quis odio, voluptatibus labore
-                          voluptatum perferendis dolore nulla aut autem
-                          repellendus eum velit, quod libero quos.
+                          Start Now
                         </p>
-                        <button
-                          style={{
-                            background: themeConfig?.buttonColor,
-                            cursor: "pointer",
-                          }}
-                          // disabled={
-                          //   onlineComponent
-                          //     ? claimStatusTasks.includes(ele?.data.criteriaId)
-                          //     : claimStatusTasks.includes(ele?.data.criteriaId)
-                          // }
-                        >
-                          <p
-                            style={{
-                              fontFamily: themeConfig?.fontFamily,
-                            }}
-                            onClick={() => {
-                              readUpdate(ele?.criteriaId, ele?.linkUrl);
-                            }}
-                          >
-                            Start Now
-                          </p>
-                        </button>
-                      </div>
-                      {ele?.imageUrl && (
-                        <div className="single-task-close-div-image-cont">
-                          <div
-                            style={{
-                              width: "100%",
-                              height: "255px",
-                              // borderRadius: "5px",
-                              // border: "1px solid var(--Primary, #9035FF)",
-                              // background: `url(${UpdatesImage}) lightgray -8.338px -7px / 110.971% 102.745% no-repeat`,
-                              // backgroundPosition: "center-top",
-                              // width: "152px",
-                              // width: "100%",
-                              // height: "255px",
-                              // flexShrink: "0",
-                              borderRadius: "5px",
-                              border: "1px solid var(--Primary, #9035FF)",
-                              background: `url(${
-                                ele?.imageUrl || UpdatesImage
-                              }) lightgray -5.338px -7px / 110.971% 102.745% no-repeat`,
-
-                              // background: "red",
-                            }}
-                          ></div>
-                        </div>
-                      )}
+                      </button>
                     </div>
+                    {ele?.imageUrl && (
+                      <div className="single-task-close-div-image-cont">
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "255px",
+                            borderRadius: "5px",
+                            border: "1px solid var(--Primary, #9035FF)",
+                            background: `url(${
+                              ele?.imageUrl || UpdatesImage
+                            }) lightgray -5.338px -7px / 110.971% 102.745% no-repeat`,
+                          }}
+                        ></div>
+                      </div>
+                    )}
                   </div>
                 </div>
-              )
-            )}
-          </div>
+              </div>
+            )
+          )}
+        </div>
         <div
           className="q-helphub-tasks-lower-cont"
           style={{
@@ -464,31 +365,6 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
             ...styleConfig?.Home?.Card,
           }}
         >
-          {/* search box  */}
-          {/* <div
-          className="q-helphub-tasks-search-cont"
-          style={{ ...styleConfig?.Tasks?.Searchbox }}
-        ></div> */}
-
-          {/* progress bar  */}
-          {/* <div className="q-helphub-tasks-progress-cont">
-          <div className="q-helphub-tasks-progress-per">
-            {Math.ceil(100 * (claimStatusTasks?.length / tasksData?.length)) ||
-              0}
-            %
-          </div>
-          <div className="q-helphub-tasks-progress-bar">
-            <div
-              style={{
-                width: `${
-                  100 * (claimStatusTasks?.length / tasksData?.length)
-                }%`,
-              }}
-            ></div>
-          </div>
-        </div> */}
-
-          
         </div>
       </div>
     </div>

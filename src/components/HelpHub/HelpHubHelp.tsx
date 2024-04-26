@@ -85,28 +85,21 @@ const HelpHubTasks = (props: HelpHubFaqTypes) => {
                   ...styleConfig?.Help?.Form,
                 }}
               >
-                {faqData?.length} Helps
+                {faqData?.length} FAQs
               </div>
             </div>
 
             <div className="q-helphub-help-total-faqs-cont">
               {filterData?.map(
-                (value: QuestCriteriaWithStatusType, index: number) => {                  
-                  return (value.type==="VIEW_ONLY_TEXT" &&
-                    <div
-                      // className={`q-helphub-help-single-faq-${
-                      //   faqIndex === index ? "open" : "close"
-                      // }`}
-                      className="q-helphub-help-single-faq"
-                      key={index}
-                      onClick={() => {
-                        index === faqIndex
-                          ? setFaqIndex(undefined)
-                          : setFaqIndex(index);
-                      }}
-                    >
+                (value: QuestCriteriaWithStatusType, index: number) => {
+                  return (
+                    value.type === "VIEW_ONLY_TEXT" && (
                       <div
-                        className="text"
+                        // className={`q-helphub-help-single-faq-${
+                        //   faqIndex === index ? "open" : "close"
+                        // }`}
+                        className="q-helphub-help-single-faq"
+                        key={index}
                         onClick={() => {
                           index === faqIndex
                             ? setFaqIndex(undefined)
@@ -114,32 +107,40 @@ const HelpHubTasks = (props: HelpHubFaqTypes) => {
                         }}
                       >
                         <div
-                          className="head"
-                          style={{
-                            color: themeConfig?.primaryColor,
-                            ...styleConfig?.Help?.Card?.Heading,
+                          className="text"
+                          onClick={() => {
+                            index === faqIndex
+                              ? setFaqIndex(undefined)
+                              : setFaqIndex(index);
                           }}
                         >
-                          {value?.question}
+                          <div
+                            className="head"
+                            style={{
+                              color: themeConfig?.primaryColor,
+                              ...styleConfig?.Help?.Card?.Heading,
+                            }}
+                          >
+                            {value?.question}
+                          </div>
+                          <div className="but">
+                            <img src={OpenSectionButton} alt="" />
+                          </div>
                         </div>
-                        <div className="but">
-                          <img src={OpenSectionButton} alt="" />
-                        </div>
-                      </div>
 
-                      <div
-                        className={`${
-                          faqIndex === index ? "ansOpen" : "ansClose"
-                        }`}
-                        style={{
-                          color: themeConfig?.secondaryColor,
-                          ...styleConfig?.Help?.Card?.SubHeading,
-                        }}
-                      >
-                        {value?.answer}
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus qui harum eius nesciunt sit repellat, itaque, quisquam odit modi reiciendis tenetur a est error fuga, magnam rem reprehenderit eos distinctio illum! Rem autem excepturi corporis quas quos, sint, eaque reiciendis mollitia dolorem ratione provident corrupti ipsam consequatur distinctio. Cumque, repellat! Deserunt vitae voluptas exercitationem eaque beatae iste rerum fuga recusandae atque illum omnis molestias perspiciatis, nisi dolorum dicta quia eius at animi dolorem ad sint? Quas sequi beatae obcaecati vitae dolore debitis nam quae alias maiores magni facilis dolorum rerum tempora voluptate consequatur facere amet doloremque fuga magnam, quaerat soluta!
+                        <div
+                          className={`${
+                            faqIndex === index ? "ansOpen" : "ansClose"
+                          }`}
+                          style={{
+                            color: themeConfig?.secondaryColor,
+                            ...styleConfig?.Help?.Card?.SubHeading,
+                          }}
+                        >
+                          {value?.answer}
+                        </div>
                       </div>
-                    </div>
+                    )
                   );
                 }
               )}

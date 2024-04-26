@@ -6,10 +6,10 @@ import { QuestCriteriaWithStatusType, QuestTypes } from "./HelpHub.type";
 // import Survey from './Survey';
 // import SurveyOffline from './OfflineComponent';
 
-export const apiKey = "k-e6ec8094-6eef-4e80-a804-112a63607bf5";
+export const apiKey = "k-036784ba-8308-44d1-80f5-c094c5b39767";
 export const apiSecret =
   "s-1719a62c-5ca6-418f-8d29-f1b2328936d2ff1db443-9ee5-4eee-99f0-3532bd2e7893";
-export const entityId = "e-5768fd26-d226-4ac1-81e6-3c99427f3fb3";
+export const entityId = "e-5a4a908f-47fb-4f73-93a5-3cfb962b5750";
 
 export default function HelpHubPreview({ online = true }) {
   const [state, setState] = useState([
@@ -86,10 +86,10 @@ export default function HelpHubPreview({ online = true }) {
     allowRepeatEntries: false,
     categories: [],
     childQuestIDs: [
-      "q-6958228a-5238-48f0-9394-6d146f540324",
-      "q-ecbd5453-8dee-45ee-9e09-312af325977b",
-      "q-9c7cefdf-41cb-4a66-81cd-00524ff3a4fc",
-      "q-98bf85f5-c135-48e0-bbab-1b5cc363ce6b",
+      "q-12a6240b-91af-4d9f-97fd-aec0f3d6880b",
+      "q-47fb257f-752f-4f11-a761-51e93d82b011",
+      "q-ce505afd-1239-4564-822b-32c195ab4f06",
+      "q-676666f4-60c7-4aff-81a1-7edca2e1c85a",
     ],
     conditionRelations: [],
     conditions: [],
@@ -123,164 +123,169 @@ export default function HelpHubPreview({ online = true }) {
   const [childQuest, setChildQuest] = useState<QuestCriteriaWithStatusType[][]>(
     [
       [
-          {
-            "type": "RATING",
-            "question": "How do you like our App?",
-            "description": "",
-            "options": [],
-            "criteriaId": "ec-9a22b6e1-4a46-4c2b-9b31-b7825561f290",
-            "required": true,
-            "linkTitle": "",
-            "linkUrl": "",
-            "manualInput": false,
-            "completed": true,
-            "answer": "",
-            "createdAt": "2024-03-20T19:20:56.996Z",
-            imageUrl: ""
-          }
+        {
+          type: "RATING",
+          question: "How do you like our App?",
+          description: "",
+          options: [],
+          criteriaId: "ec-9a22b6e1-4a46-4c2b-9b31-b7825561f290",
+          required: true,
+          linkTitle: "",
+          linkUrl: "",
+          manualInput: false,
+          completed: true,
+          answer: "",
+          createdAt: "2024-03-20T19:20:56.996Z",
+          imageUrl: "",
+        },
       ],
       [
-          {
-            "type": "VIEW_ONLY_TEXT",
-            "question": "How can I assist you tomorrow?",
-            "description": "",
-            "options": [],
-            "criteriaId": "ec-295f32f2-3a32-4437-ba33-b810ca760888",
-            "required": true,
-            "linkTitle": "",
-            "linkUrl": "",
-            "manualInput": false,
-            "completed": false,
-            "answer": "You can complete your user information details by sharing the details asked in the form",
-            "createdAt": "2024-03-20T19:20:57.017Z",
-            imageUrl: ""
-          },
-          {
-            "type": "VIEW_ONLY_TEXT",
-            "question": "How can I assist you day after tomorrow?",
-            "description": "",
-            "options": [],
-            "criteriaId": "ec-48b4fbee-2d3f-4788-93d7-36bfa760dc32",
-            "required": true,
-            "linkTitle": "",
-            "linkUrl": "",
-            "manualInput": false,
-            "completed": false,
-            "answer": "You can complete your user information details by sharing the details asked in the form",
-            "createdAt": "2024-03-20T19:20:57.017Z",
-            imageUrl: ""
-          },
-          {
-            "type": "VIEW_ONLY_TEXT",
-            "question": "How can I assist you today?",
-            "description": "",
-            "options": [],
-            "criteriaId": "ec-5a8b090d-852c-4892-adf8-7f7cf1915e74",
-            "required": true,
-            "linkTitle": "",
-            "linkUrl": "",
-            "manualInput": false,
-            "completed": false,
-            "answer": "You can complete your user information details by sharing the details asked in the form",
-            "createdAt": "2024-03-20T19:20:57.016Z",
-            imageUrl: ""
-          }
+        {
+          type: "VIEW_ONLY_TEXT",
+          question: "How can I assist you tomorrow?",
+          description: "",
+          options: [],
+          criteriaId: "ec-295f32f2-3a32-4437-ba33-b810ca760888",
+          required: true,
+          linkTitle: "",
+          linkUrl: "",
+          manualInput: false,
+          completed: false,
+          answer:
+            "You can complete your user information details by sharing the details asked in the form",
+          createdAt: "2024-03-20T19:20:57.017Z",
+          imageUrl: "",
+        },
+        {
+          type: "VIEW_ONLY_TEXT",
+          question: "How can I assist you day after tomorrow?",
+          description: "",
+          options: [],
+          criteriaId: "ec-48b4fbee-2d3f-4788-93d7-36bfa760dc32",
+          required: true,
+          linkTitle: "",
+          linkUrl: "",
+          manualInput: false,
+          completed: false,
+          answer:
+            "You can complete your user information details by sharing the details asked in the form",
+          createdAt: "2024-03-20T19:20:57.017Z",
+          imageUrl: "",
+        },
+        {
+          type: "VIEW_ONLY_TEXT",
+          question: "How can I assist you today?",
+          description: "",
+          options: [],
+          criteriaId: "ec-5a8b090d-852c-4892-adf8-7f7cf1915e74",
+          required: true,
+          linkTitle: "",
+          linkUrl: "",
+          manualInput: false,
+          completed: false,
+          answer:
+            "You can complete your user information details by sharing the details asked in the form",
+          createdAt: "2024-03-20T19:20:57.016Z",
+          imageUrl: "",
+        },
       ],
       [
-          {
-            "type": "LINK_OPEN_READ",
-            "question": "",
-            "description": "Conect with us to explore more",
-            "options": [],
-            "criteriaId": "ec-132ab04f-7fc7-40d7-b4bc-238c898b7b4a",
-            "required": true,
-            "linkTitle": "Updates3",
-            "linkUrl": "https://www.linkedin.com/company/questlabss/",
-            "manualInput": false,
-            "completed": true,
-            "answer": "",
-            "createdAt": "2024-03-20T19:20:57.040Z",
-            imageUrl: ""
-          },
-          {
-            "type": "LINK_OPEN_READ",
-            "question": "",
-            "description": "Play with our pre-made templates and create your frame",
-            "options": [],
-            "criteriaId": "ec-9f567862-dca8-4dea-9592-79459563ac66",
-            "required": true,
-            "linkTitle": "Update2",
-            "linkUrl": "https://main.d2h2uj2sjo2c2h.amplifyapp.com/",
-            "manualInput": false,
-            "completed": true,
-            "answer": "",
-            "createdAt": "2024-03-20T19:20:57.040Z",
-            imageUrl: ""
-          },
-          {
-            "type": "LINK_OPEN_READ",
-            "question": "",
-            "description": "AI-Powered User Experiences to Increase in-app Adoption, Engagement & Revenue ",
-            "options": [],
-            "criteriaId": "ec-c6b5bf80-71b7-412e-a157-7a4402b885cc",
-            "required": true,
-            "linkTitle": "Update1",
-            "linkUrl": "https://www.questlabs.ai/",
-            "manualInput": false,
-            "completed": true,
-            "answer": "",
-            "createdAt": "2024-03-20T19:20:57.039Z",
-            imageUrl: ""
-          }
+        {
+          type: "LINK_OPEN_READ",
+          question: "",
+          description: "Conect with us to explore more",
+          options: [],
+          criteriaId: "ec-132ab04f-7fc7-40d7-b4bc-238c898b7b4a",
+          required: true,
+          linkTitle: "Updates3",
+          linkUrl: "https://www.linkedin.com/company/questlabss/",
+          manualInput: false,
+          completed: true,
+          answer: "",
+          createdAt: "2024-03-20T19:20:57.040Z",
+          imageUrl: "",
+        },
+        {
+          type: "LINK_OPEN_READ",
+          question: "",
+          description: "Play with our pre-made templates and create your frame",
+          options: [],
+          criteriaId: "ec-9f567862-dca8-4dea-9592-79459563ac66",
+          required: true,
+          linkTitle: "Update2",
+          linkUrl: "https://main.d2h2uj2sjo2c2h.amplifyapp.com/",
+          manualInput: false,
+          completed: true,
+          answer: "",
+          createdAt: "2024-03-20T19:20:57.040Z",
+          imageUrl: "",
+        },
+        {
+          type: "LINK_OPEN_READ",
+          question: "",
+          description:
+            "AI-Powered User Experiences to Increase in-app Adoption, Engagement & Revenue ",
+          options: [],
+          criteriaId: "ec-c6b5bf80-71b7-412e-a157-7a4402b885cc",
+          required: true,
+          linkTitle: "Update1",
+          linkUrl: "https://www.questlabs.ai/",
+          manualInput: false,
+          completed: true,
+          answer: "",
+          createdAt: "2024-03-20T19:20:57.039Z",
+          imageUrl: "",
+        },
       ],
       [
-          {
-            "type": "LINK_OPEN_READ",
-            "question": "",
-            "description": "Play with our pre-made templates and create your frame",
-            "options": [],
-            "criteriaId": "ec-4ec721c0-159b-4062-b4f2-29c51803b2d1",
-            "required": true,
-            "linkTitle": "Tasks-React Playground",
-            "linkUrl": "https://main.d2h2uj2sjo2c2h.amplifyapp.com/",
-            "manualInput": false,
-            "completed": true,
-            "answer": "",
-            "createdAt": "2024-03-20T19:20:57.061Z",
-            imageUrl: ""
-          },
-          {
-            "type": "LINK_OPEN_READ",
-            "question": "",
-            "description": "Conect with us to explore more",
-            "options": [],
-            "criteriaId": "ec-848fcb3b-4b50-4711-b9bb-f4113611a435",
-            "required": true,
-            "linkTitle": "Tasks-Quest Linkedin",
-            "linkUrl": "https://www.linkedin.com/company/questlabss/",
-            "manualInput": false,
-            "completed": true,
-            "answer": "",
-            "createdAt": "2024-03-20T19:20:57.061Z",
-            imageUrl: ""
-          },
-          {
-            "type": "LINK_OPEN_READ",
-            "question": "",
-            "description": "AI-Powered User Experiences to Increase in-app Adoption, Engagement & Revenue ",
-            "options": [],
-            "criteriaId": "ec-d6ea445b-2095-4e41-8ea7-33f1da282b47",
-            "required": true,
-            "linkTitle": "Tasks-QuestLabs",
-            "linkUrl": "https://www.questlabs.ai/",
-            "manualInput": false,
-            "completed": true,
-            "answer": "",
-            "createdAt": "2024-03-20T19:20:57.061Z",
-            imageUrl: ""
-          }
-      ]
-  ]
+        {
+          type: "LINK_OPEN_READ",
+          question: "",
+          description: "Play with our pre-made templates and create your frame",
+          options: [],
+          criteriaId: "ec-4ec721c0-159b-4062-b4f2-29c51803b2d1",
+          required: true,
+          linkTitle: "Tasks-React Playground",
+          linkUrl: "https://main.d2h2uj2sjo2c2h.amplifyapp.com/",
+          manualInput: false,
+          completed: true,
+          answer: "",
+          createdAt: "2024-03-20T19:20:57.061Z",
+          imageUrl: "",
+        },
+        {
+          type: "LINK_OPEN_READ",
+          question: "",
+          description: "Conect with us to explore more",
+          options: [],
+          criteriaId: "ec-848fcb3b-4b50-4711-b9bb-f4113611a435",
+          required: true,
+          linkTitle: "Tasks-Quest Linkedin",
+          linkUrl: "https://www.linkedin.com/company/questlabss/",
+          manualInput: false,
+          completed: true,
+          answer: "",
+          createdAt: "2024-03-20T19:20:57.061Z",
+          imageUrl: "",
+        },
+        {
+          type: "LINK_OPEN_READ",
+          question: "",
+          description:
+            "AI-Powered User Experiences to Increase in-app Adoption, Engagement & Revenue ",
+          options: [],
+          criteriaId: "ec-d6ea445b-2095-4e41-8ea7-33f1da282b47",
+          required: true,
+          linkTitle: "Tasks-QuestLabs",
+          linkUrl: "https://www.questlabs.ai/",
+          manualInput: false,
+          completed: true,
+          answer: "",
+          createdAt: "2024-03-20T19:20:57.061Z",
+          imageUrl: "",
+        },
+      ],
+    ]
   );
 
   if (online) {
@@ -303,10 +308,11 @@ export default function HelpHubPreview({ online = true }) {
       >
         <HelpHub
           token={
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxMzc3MDU4MCwiZXhwIjoxNzE0Mzc1MzgwfQ.JxcNxIbyNIU_upYCE7l4i2REDoR72PjITCGMWWxrdZM"
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTRjYzUxMGE0LWU2NzAtNGVkMy1hYmUzLWMzNTFjMTliYjk5MiIsImlhdCI6MTcxMzcwOTIyMywiZXhwIjoxNzE0MzE0MDIzfQ.xhak66fFx5DZsS6PJ1YoPvRPB0L8ZkiC0I-gJjNUkUs"
           }
-          userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
-          onlineComponent={online}
+          userId="u-4cc510a4-e670-4ed3-abe3-c351c19bb992"
+          questId="q-bdc4b8e7-1c8b-45f8-96fe-a2ae3f17fad9"
+          // onlineComponent={online}
           // contentConfig={{
           //   Chat: {
           //     heading: "Chat heading",
@@ -504,7 +510,7 @@ export default function HelpHubPreview({ online = true }) {
         // ChildQuest={}
         styleConfig={{
           Main: {
-            height: "700px",
+            height: "500px",
             width: "400px",
           },
         }}

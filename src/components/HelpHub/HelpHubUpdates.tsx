@@ -27,7 +27,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
     onlineComponent,
     setShowBottomNavigation,
     showBottomNavigation,
-    entityImage
+    entityImage,
   } = props;
   const [filterData, setFilterData] = useState<QuestCriteriaWithStatusType[]>(
     []
@@ -47,7 +47,6 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
     });
     setFilterData(data);
   }, [updateData, searchData]);
-
 
   const getTimeDifference = (date: string) => {
     let dateGap = (new Date().getTime() - new Date(date).getTime()) / 86400000;
@@ -74,7 +73,8 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
   };
 
   const [showOneUpdate, setshowOneUpdate] = useState(false);
-  const [updateOneData, setUpdateOneData] = useState<QuestCriteriaWithStatusType>({});
+  const [updateOneData, setUpdateOneData] =
+    useState<QuestCriteriaWithStatusType>({});
 
   const [updateOneoutAnimation, setUpdateOneOutAnimation] = useState<
     boolean | null
@@ -97,8 +97,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
       setUpdateOneOutAnimation(false);
     }, 100);
   };
-  useEffect(() => {
-  }, [updateOneoutAnimation, updateOutAnimation]);
+  useEffect(() => {}, [updateOneoutAnimation, updateOutAnimation]);
 
   return (
     <>
@@ -170,10 +169,12 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                               flexShrink: "0",
                               borderRadius: "2.237px",
                               border: " 0.447px solid var(--Primary, #9035FF)",
-                              background: `url(${value?.imageUrl || entityImage}) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
-                              objectFit:"contain",
-                              backgroundSize:"cover",
-                              backgroundPosition:"center top"
+                              background: `url(${
+                                value?.imageUrl || entityImage
+                              }) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
+                              objectFit: "contain",
+                              backgroundSize: "cover",
+                              backgroundPosition: "center top",
                             }}
                           ></div>
                         </div>
@@ -236,7 +237,9 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                               flexShrink: "0",
                               borderRadius: "2.237px",
                               border: " 0.447px solid var(--Primary, #9035FF)",
-                              background: `url(${value?.imageUrl || entityImage}) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
+                              background: `url(${
+                                value?.imageUrl || entityImage
+                              }) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
                             }}
                           ></div>
                         </div>
@@ -335,8 +338,10 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
             <div className="update-one-img">
               <div
                 style={{
-                  background: `url(${updateOneData?.imageUrl || entityImage})  lightgray -10.312px -8.675px / 110.971% 102.745% no-repeat`,
-                  objectFit:"contain"
+                  background: `url(${
+                    updateOneData?.imageUrl || entityImage
+                  })  lightgray -10.312px -8.675px / 110.971% 102.745% no-repeat`,
+                  objectFit: "contain",
                 }}
               ></div>
             </div>
@@ -388,7 +393,6 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                 }}
               >
                 {updateOneData?.description}
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam dicta quaerat ratione, a ex iusto! Culpa, obcaecati. Esse voluptate accusamus optio, ullam modi rerum ipsa perferendis perspiciatis impedit nesciunt, assumenda nam consequuntur molestias omnis? Aliquam aspernatur porro odio eligendi amet corporis omnis nobis dolores. Et, aperiam repellat omnis placeat, vero consequatur voluptas ipsum nihil eveniet provident accusamus, quaerat ipsa molestias debitis similique numquam! Quae dolores, vel reprehenderit, ipsa maxime assumenda, corrupti dicta voluptate omnis veniam quasi blanditiis sint? Nisi molestias atque nostrum laudantium, dolorem error eligendi dicta asperiores at voluptatum repudiandae repellat vero neque esse sed maxime! Illum, qui perspiciatis non unde magni iure quam debitis recusandae quisquam nam quasi, quo culpa facilis animi, ab molestiae. Eveniet, quod obcaecati eaque saepe animi cumque ut explicabo quas architecto enim, vitae, fugiat labore? Minus distinctio rerum excepturi ex quam quisquam modi maiores nemo nobis, optio at, quasi vel odio dolore incidunt. Eum eius eveniet minima rerum, veritatis aut expedita, voluptatibus vero dolore ullam, saepe aspernatur ex. Harum odit minus qui molestiae mollitia consequuntur numquam facilis ullam corrupti autem. Ab iure quaerat omnis reprehenderit minima, praesentium blanditiis vel, doloribus rem provident optio excepturi quia! Labore voluptatum deserunt corrupti, eaque, sapiente repellat saepe enim nam ab aliquam commodi est consequuntur nobis asperiores vero, ducimus odio nostrum modi ullam dolore beatae laboriosam? Aperiam perspiciatis repellat in architecto, voluptate officiis maiores, tempora iusto totam sit reprehenderit, accusantium id doloribus omnis quod adipisci obcaecati sint blanditiis culpa rem animi! Ad velit quidem neque, minima aspernatur aliquid explicabo.
               </div>
             </div>
           </div>

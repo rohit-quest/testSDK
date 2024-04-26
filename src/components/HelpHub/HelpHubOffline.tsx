@@ -56,6 +56,7 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
     []
   );
   const [entityImage, setEntityImage]=useState<string>("");
+  const [entityName, setEntityName]=useState<string>("");
 
   useEffect(() => {
     setTaskStatus(
@@ -75,7 +76,8 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
       token,
       apiKey
     );
-    setEntityImage(data.imageUrl)
+    setEntityImage(data.imageUrl);
+    setEntityName(data.name);
   }
 
   useEffect(() => {
@@ -154,6 +156,7 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
                 showBottomNavigation={showBottomNavigation}
                 setShowBottomNavigation={setShowBottomNavigation}
                 entityImage={entityImage || entityLogo}
+                entityName={entityName}
               />
             ) : (
               ""
@@ -209,152 +212,10 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
 
             {/* bottom navigation */}
             <div className="helphubBottomCont">
-              {/* {showBottomNavigation && (
-                <div
-                  className="helphubSvgCont"
-                  style={{
-                    background: themeConfig?.backgroundColor || "#fff",
-                    ...styleConfig?.Footer,
-                  }}
-                >
-                
-                  <div onClick={() => setSelectedSection("Home")}>
-                    
-                    <HelphubSvg
-                      type={"home"}
-                      primaryColor={
-                        selectedSection == "Home" ? "#9035FF" : "#B9B9B9"
-                      }
-                      secondaryColor={
-                        selectedSection == "Home" ? "white" : "#B9B9B9"
-                      }
-                    />
-            
-                    <div
-                      style={{
-                        color:
-                          selectedSection == "Home" ? "#9035FF" : "#b9b9b9",
-                        fontWeight: selectedSection == "Home" ? "600" : "400",
-                      }}
-                      className="helphubSvgTitle"
-                    >
-                      Home
-                    </div>
-                  </div>
-
-          
-                  <div onClick={() => setSelectedSection("Chat")}>
-         
-                    <HelphubSvg
-                      type={"Chat"}
-                      primaryColor={
-                        selectedSection == "Chat" ? "#9035FF" : "#B9B9B9"
-                      }
-                      secondaryColor={
-                        selectedSection == "Chat" ? "white" : "#B9B9B9"
-                      }
-                    />
-        
-                    <div
-                      style={{
-                        color:
-                          selectedSection == "Chat" ? "#9035FF" : "#b9b9b9",
-                        fontWeight: selectedSection == "Chat" ? "600" : "400",
-                      }}
-                      className="helphubSvgTitle"
-                    >
-                      Chat
-                    </div>
-                  </div>
-
- 
-                  <div onClick={() => setSelectedSection("Help")}>
-        
-                    <HelphubSvg
-                      type={"Help"}
-                      primaryColor={
-                        selectedSection == "Help" ? "#9035FF" : "#B9B9B9"
-                      }
-                      secondaryColor={
-                        selectedSection == "Help" ? "white" : "#B9B9B9"
-                      }
-                    />
-         
-                    <div
-                      style={{
-                        color:
-                          selectedSection == "Help" ? "#9035FF" : "#b9b9b9",
-                        fontWeight: selectedSection == "Help" ? "600" : "400",
-                      }}
-                      className="helphubSvgTitle"
-                    >
-                      Help
-                    </div>
-                  </div>
-
-   
-                  <div onClick={() => setSelectedSection("Updates")}>
-         
-                    <HelphubSvg
-                      type={"Updates"}
-                      primaryColor={
-                        selectedSection == "Updates" ? "#9035FF" : "#B9B9B9"
-                      }
-                      secondaryColor={
-                        selectedSection == "Updates" ? "white" : "#B9B9B9"
-                      }
-                    />
-
-      
-                    <div
-                      style={{
-                        color:
-                          selectedSection == "Updates" ? "#9035FF" : "#b9b9b9",
-                        fontWeight:
-                          selectedSection == "Updates" ? "600" : "400",
-                      }}
-                      className="helphubSvgTitle"
-                    >
-                      Updates
-                    </div>
-                  </div>
-
-
-                  <div onClick={() => setSelectedSection("Tasks")}>
-              
-                    <HelphubSvg
-                      type={"Tasks"}
-                      primaryColor={
-                        selectedSection == "Tasks" ? "#9035FF" : "#B9B9B9"
-                      }
-                      secondaryColor={
-                        selectedSection == "Tasks" ? "white" : "#B9B9B9"
-                      }
-                    />
-            
-                    <div
-                      style={{
-                        color:
-                          selectedSection == "Tasks" ? "#9035FF" : "#b9b9b9",
-                        fontWeight: selectedSection == "Tasks" ? "600" : "400",
-                      }}
-                      className="helphubSvgTitle"
-                    >
-                      Tasks
-                    </div>
-                  </div>
-                </div>
-              )} */}
-
               <div
-                // className="helphubSvgCont"
                 className={`helphubSvgCont ${
                   showBottomNavigation ? "showNav" : "hideNav"
                 }`}
-                // style={{
-                //   background: themeConfig?.backgroundColor || "#fff",
-                //   ...styleConfig?.Footer,
-                // }}
               >
                 <div
                   className={`${showBottomNavigation ? "showNav" : "hideNav"}`}

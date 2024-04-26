@@ -320,10 +320,9 @@ export const getMessages = async (
       entityId,
       apikey,
     };
-    let request = !!conversationId ?
-    `${backend_url}api/entities/${entityId}/users/${userId}/conversation/user?conversationId=${conversationId}`
-    :
-    `${backend_url}api/entities/${entityId}/users/${userId}/conversation/user`;
+    let request = !!conversationId
+      ? `${backend_url}api/entities/${entityId}/users/${userId}/conversation/user?conversationId=${conversationId}`
+      : `${backend_url}api/entities/${entityId}/users/${userId}/conversation/user`;
 
     let response = await axios.get(request, { headers });
     return response.data;
@@ -353,11 +352,9 @@ export const sendMessage = async (
       message: message,
     };
     // console.log(entityId);
-    let request = 
-    conversationId ?
-    `${backend_url}api/entities/${entityId}/users/${userId}/conversation/user?conversationId=${conversationId}`
-    :
-    `${backend_url}api/entities/${entityId}/users/${userId}/conversation/user?new_conversation=true`;
+    let request = conversationId
+      ? `${backend_url}api/entities/${entityId}/users/${userId}/conversation/user?conversationId=${conversationId}`
+      : `${backend_url}api/entities/${entityId}/users/${userId}/conversation/user?new_conversation=true`;
 
     let response = await axios.post(request, body, { headers });
     // console.log("res", response);
@@ -386,13 +383,13 @@ export const satisfyOrNot = async (
       apikey,
     };
     let body = {
-      isSatisfied
+      isSatisfied,
     };
     // console.log(entityId);
-    let request = `${backend_url}api/entities/${entityId}/users/${userId}/user/satisfied?conversationId=${conversationId}`
+    let request = `${backend_url}api/entities/${entityId}/users/${userId}/user/satisfied?conversationId=${conversationId}`;
 
     let response = await axios.post(request, body, { headers });
-    
+
     return response.data;
   } catch (err) {
     return err?.response.data;

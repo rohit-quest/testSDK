@@ -35,7 +35,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
     onlineComponent,
     showFeedback = true,
     setShowFeedback,
-    entityImage
+    entityImage,
   } = props;
 
   const [allQuestsData, setAllQuestsData] = useState<
@@ -235,41 +235,6 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
               <img src={SendMessageAero} alt="" />
             </div>
           </div>
-
-          {/* sent message */}
-          {/* <div
-            className="q-helhub-Send-Cont"
-            onClick={() => setSelectedSection("Chat")}
-            style={{
-              background: themeConfig?.backgroundColor,
-              ...styleConfig?.Home?.Card,
-            }}
-          >
-            <div>
-              <div
-                className="q-helphub-send-msg"
-                style={{
-                  color: themeConfig?.primaryColor,
-                  ...styleConfig?.Home?.Heading,
-                }}
-              >
-                {contentConfig?.chatButton?.heading || "Send us a message"}
-              </div>
-              <div
-                className="q-helphub-send-desc"
-                style={{
-                  color: themeConfig?.secondaryColor,
-                  ...styleConfig?.Home?.SubHeading,
-                }}
-              >
-                {contentConfig?.chatButton?.subHeading ||
-                  "See how your customer service solution works"}
-              </div>
-            </div>
-            <div className="q-helhub-Send-Cont-aero">
-              <img src={OpenSectionButton} alt="" />
-            </div>
-          </div> */}
         </div>
 
         {/* community */}
@@ -376,7 +341,12 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
                     className="q-helphub-search-messege-cont"
                     key={index}
                     onClick={() => setSelectedSection("Help")}
-                    style={{borderBottom: allQuestsData[1]?.length - 1 == index ? "none" : "1px solid var(--Neutral-White-300, #efefef)"}}
+                    style={{
+                      borderBottom:
+                        allQuestsData[1]?.length - 1 == index
+                          ? "none"
+                          : "1px solid var(--Neutral-White-300, #efefef)",
+                    }}
                   >
                     <div
                       className="q-helphub-search-messege-title"
@@ -522,10 +492,6 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
             <div className="q-helphub-compProfile-progress-per">
               {taskStatus || 0}% Completed
             </div>
-            {/* <div>
-                            {Math.ceil(100 * (claimStatusTasks?.length / tasksData?.length)) || 0}%
-                        </div> */}
-            {/* progress bar container*/}
             <div className="q-helphub-compProfile-progress-bar-con">
               {/* progress bar */}
               <div

@@ -150,7 +150,7 @@ export interface HelpHubHomeTypes {
   onlineComponent?: boolean;
   showFeedback?: boolean;
   setShowFeedback?: Dispatch<SetStateAction<boolean>>;
-  entityImage?:string
+  entityImage?: string;
 }
 
 export interface HelpHubChatTypes {
@@ -163,7 +163,8 @@ export interface HelpHubChatTypes {
   contentConfig?: HelpHubOthersContentTypes;
   showBottomNavigation?: boolean;
   setShowBottomNavigation?: Dispatch<SetStateAction<boolean>>;
-  entityImage?:string
+  entityImage?: string;
+  entityName?: string;
 }
 
 export interface HelpHubFaqTypes {
@@ -184,7 +185,7 @@ export interface HelpHubUpdatesTypes {
   onlineComponent?: boolean;
   showBottomNavigation?: boolean;
   setShowBottomNavigation?: Dispatch<SetStateAction<boolean>>;
-  entityImage?:string
+  entityImage?: string;
 }
 
 export interface HelpHubTasksTypes {
@@ -227,19 +228,19 @@ export interface QuestCriteriaWithStatusType {
   // completed: boolean;
   // isLocked?: boolean;
   // data: QuestCriteriaType;
-  type: string,
-  question: string,
-  description: string,
-  options: string[],
-  criteriaId: string,
-  required: boolean,
-  linkTitle: string,
-  linkUrl: string,
-  manualInput: boolean | string,
-  completed: boolean,
-  answer: string,
-  createdAt: string,
-  imageUrl: string,
+  type: string;
+  question: string;
+  description: string;
+  options: string[];
+  criteriaId: string;
+  required: boolean;
+  linkTitle: string;
+  linkUrl: string;
+  manualInput: boolean | string;
+  completed: boolean;
+  answer: string;
+  createdAt: string;
+  imageUrl: string;
 }
 
 export interface QuestTypes {
@@ -275,7 +276,6 @@ export interface QuestTypes {
   __v: number;
 }
 
-
 type ConversationId = string;
 
 export type Conversation = {
@@ -284,7 +284,7 @@ export type Conversation = {
   senderId: string;
   content: string;
   timestamp: string;
-}
+};
 
 export interface MessageTypes {
   createdAt: string;
