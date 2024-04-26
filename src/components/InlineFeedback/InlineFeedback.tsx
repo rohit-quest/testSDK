@@ -1,5 +1,5 @@
 import { CSSProperties, useContext, useEffect, useRef, useState } from 'react'
-import styles from './style.module.css'
+import './style.css'
 import Numbering from './Numbering';
 import { FeedBackComponentProps, FeedbackProps, FeedbackType } from './types';
 import Emoji from './Emoji';
@@ -19,7 +19,7 @@ const componentMapping: {[key in FeedbackType]: (props: FeedBackComponentProps) 
     [FeedbackType.STAR]: Star,
 }
 
-export default function Feedback({
+export default function InlineFeedback({
     userId,
     token,
     questId,
@@ -107,7 +107,7 @@ export default function Feedback({
   }
 
   return questData && (
-    <div className={styles.feedbackContainer} style={{...styleConfig?.Form, ...themeConfigStyle}}>
+    <div className={`feedbackContainer`} data-type={type.toString()} style={{...styleConfig?.Form, ...themeConfigStyle}}>
         {
           showSuccess ? (
             <Success 
@@ -115,11 +115,11 @@ export default function Feedback({
             />
           ):(
             <>
-              <div className={styles.feedbackHeader}>
+              <div className={`feedbackHeader`}>
                   <h4 style={{...styleConfig?.Heading}}>{heading}</h4>
                   <p style={{...styleConfig?.Description}}>{description}</p>
               </div>
-              <section className={styles.feedbackSection}>
+              <section className={`feedbackSection`}>
                   <Component 
                       onChange={onDataChange}
                       count={count}
@@ -131,14 +131,14 @@ export default function Feedback({
                       initialState={initialState}
                   />
               </section>
-              <div className={styles.feedbackMessage}>
+              <div className={`feedbackMessage`}>
                   <span>Not satisfied</span>
                   <span>Very satisfied</span>
               </div>
             </>
           )
         }
-        <div className={styles.feedbackWatermark} style={{...styleConfig?.Footer}}>
+        <div className={`feedbackWatermark`} style={{...styleConfig?.Footer}}>
             <small>Powered by Quest Labs</small>
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 0V4L8 8V4H4V6.64083C4 7.39167 4.60833 8 5.35917 8H8L4 12C1.79083 12 0 10.2092 0 8V0H12Z" fill="#B9B9B9"/>

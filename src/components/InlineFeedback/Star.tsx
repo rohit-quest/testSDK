@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react'
-import styles from './style.module.css'
 import { FeedBackComponentProps } from './types'
 
 const StarSvg = (
@@ -24,10 +23,10 @@ export default function Star({
         onChange({total: emojies.length, rate: index + 1})
     }
     return (
-    <div className={styles.feedbackStarContainer} style={{...style}}>
+    <div className={`feedbackStarContainer`} style={{...style}}>
         {
             emojies.map((emoji, i) => (
-                <div key={i} className={selectedIndex >= i ? styles.feedbackStarSelected:null} onClick={() => updateSelected(i)} style={{...(selectedIndex == i ? selectedButtonStyle:buttonStyle)}}>
+                <div key={i} className={selectedIndex >= i ? `feedbackStarSelected`:undefined} onClick={() => updateSelected(i)} style={{...(selectedIndex == i ? selectedButtonStyle:buttonStyle)}}>
                     {emoji}
                 </div>
             ))

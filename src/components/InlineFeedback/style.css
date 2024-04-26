@@ -8,13 +8,26 @@
     border: 1px solid var(--borderColor, white);
     overflow: hidden;
 }
+.feedbackContainer[data-type=star] .feedbackHeader{
+    text-align: center;
+}
 .feedbackHeader{
     margin: 20px;
     color: var(--primaryColor, black);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+}
+.feedbackHeader h4{
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 30px;
+    letter-spacing: -0.4px;
 }
 .feedbackHeader p{
     font-size: .9rem;
     color: var(--secondaryColor, gray);
+    margin-top: 8px;
 }
 .feedbackMessage{
     display: flex;
@@ -88,6 +101,11 @@
     display: flex;
     gap: 20px;
     justify-content: space-between;
+}
+.feedbackStarContainer{
+    justify-content: center;
+    gap: 6.315px;
+    margin-top: 30px;
 }
 .feedbackEmojiContainer > div, 
 .feedbackStarContainer > div,

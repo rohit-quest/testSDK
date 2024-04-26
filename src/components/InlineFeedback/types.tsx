@@ -1,10 +1,10 @@
 import { CSSProperties } from 'react'
 
 export enum FeedbackType {
-    NUMBERING,
-    LIKE,
-    EMOJI,
-    STAR,
+    NUMBERING = 'numbering',
+    LIKE = 'like',
+    EMOJI = 'emoji',
+    STAR = 'star',
 }
 
 interface StyleConfig {

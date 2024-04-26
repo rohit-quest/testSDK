@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react'
-import styles from './style.module.css'
 import { FeedBackComponentProps } from './types'
 import { BigSmile, Happy, NeutralFace, Sarcastic, Smile } from './svg'
 
@@ -19,10 +18,10 @@ export default function Emoji({
         onChange({total: emojies.length, rate: index + 1})
     }
     return (
-    <div className={styles.feedbackEmojiContainer} style={{...style}}>
+    <div className={`feedbackEmojiContainer`} style={{...style}}>
         {
             emojies.map((emoji, i) => (
-                <div key={i} className={selectedIndex == i ? styles.feedbackEmojiSelected:null} onClick={() => updateSelected(i)} style={{...(selectedIndex == i ? selectedButtonStyle:buttonStyle)}}>
+                <div key={i} className={selectedIndex == i ? `feedbackEmojiSelected`:undefined} onClick={() => updateSelected(i)} style={{...(selectedIndex == i ? selectedButtonStyle:buttonStyle)}}>
                     {emoji}
                 </div>
             ))

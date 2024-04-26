@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react'
-import styles from './style.module.css'
 import { FeedBackComponentProps } from './types'
 
 export default function Numbering({
@@ -18,10 +17,10 @@ export default function Numbering({
         onChange({total: emojies.length, rate: index + 1})
     }
     return (
-    <div className={styles.feedbackNumberContainer} style={{...style}}>
+    <div className={`feedbackNumberContainer`} style={{...style}}>
         {
             emojies.map((n, i) => (
-                <div key={i} className={selectedIndex == i ? styles.feedbackNumberSelected:null} onClick={() => updateSelected(i)} style={{...(selectedIndex == i ? selectedButtonStyle:buttonStyle)}}>
+                <div key={i} className={selectedIndex == i ? `feedbackNumberSelected`:undefined} onClick={() => updateSelected(i)} style={{...(selectedIndex == i ? selectedButtonStyle:buttonStyle)}}>
                     {i + 1}
                 </div>
             ))
