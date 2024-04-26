@@ -397,10 +397,30 @@ function OnBoarding(props: QuestLoginProps) {
     }, [design, template])
 
     useEffect(() => {
-        let currentQuestions: any =
-            !!designState && designState.length > 0 && checkDesignCriteria()
-                ? designState[currentPage]
-                : formdata.map((e, i) => i + 1);
+        // let currentQuestions: any =
+        //     !!designState && designState.length > 0 && checkDesignCriteria()
+        //         ? designState[currentPage]
+        //         : formdata.map((e, i) => i + 1);
+
+        let currentQuestions: any;
+        if (template === "multi-question") {
+          currentQuestions = formdata.map((e, i) => {
+            return i + 1;
+          });
+          let temp = formdata.map((e, i) => {
+            if (designState[currentPage].includes(i + 1)) return i + 1;
+          });
+          let temp2 = temp.filter((e, i) => {
+            if (designState[currentPage].includes(i + 1)) return true;
+          });
+          currentQuestions = temp2;
+        } else {
+          currentQuestions = formdata.map((e, i) => {
+            return i + 1;
+          });
+          setDesign([[...currentQuestions]]);
+        }
+
         let c = 0;
         for (let i = 0; i < currentQuestions.length; i++) {
             if (formdata[currentQuestions[i] - 1].required == false || formdata[currentQuestions[i] - 1].type == "LINK_OPEN_READ") {
@@ -910,6 +930,9 @@ function OnBoarding(props: QuestLoginProps) {
     function returnAnswers() {
         GeneralFunctions.fireTrackingEvent("quest_onboarding_submit_btn_clicked", "onboarding");
 
+        if (currentPage < designState.length - 1) {
+            setCurrentPage((prev) => prev + 1);
+          } else {
         let crt: any = { ...answer };
         for (let i of Object.keys(crt)) {
             if (i.includes("/manual") && crt[i] != "") {
@@ -962,7 +985,7 @@ function OnBoarding(props: QuestLoginProps) {
         } catch (error) {
             GeneralFunctions.captureSentryException(error);
         }
-
+    }
     }
 
 
@@ -1009,8 +1032,10 @@ function OnBoarding(props: QuestLoginProps) {
 
                     <div className="q-onb-main-first">
                         {(template === "multi-question") && (formdata.length > 0) && (designState.length > 1) && (!!progress?.length) && (<ProgressBar />)}
-                        {!!designState && designState.length > 0 && checkDesignCriteria()
-                            ? designState[currentPage].map((num: number) =>
+
+                        {/* {!!designState && designState.length > 0 && checkDesignCriteria() */}
+                        {!!designState && designState.length > 0
+                        ? designState[currentPage].map((num: number) =>
                             (formdata[num - 1].type == "USER_INPUT_TEXT"
                                 ? normalInput(
                                     formdata[num - 1]?.question || "",
@@ -1158,8 +1183,9 @@ function OnBoarding(props: QuestLoginProps) {
                                                             : null
                             )}
                         {formdata.length > 0 &&
-                            (!!designState && designState.length > 1 &&
-                                checkDesignCriteria() ? (
+                            // (!!designState && designState.length > 1 &&
+                            //     checkDesignCriteria() ? (
+                            (!!designState && designState.length > 1  ? (
                                 controlBtnType == "Buttons" ?
                                     <div className="q-onb-main-criteria">
                                         {
@@ -1205,9 +1231,14 @@ function OnBoarding(props: QuestLoginProps) {
                                                 ...styleConfig?.PrimaryButton
                                             }}
                                         >
-                                            {currentPage == designState.length - 1
+                                            {/* {currentPage == designState.length - 1
                                                 ? (nextBtnText ? nextBtnText : "Submit")
-                                                : "Continue"}
+                                                : "Continue"} */}
+                                                {currentPage == designState.length - 1
+                        ? nextBtnText
+                          ? nextBtnText
+                          : "Submit"
+                        : "Continue"}
                                         </PrimaryButton>
                                     </div>
                                     :
