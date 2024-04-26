@@ -3283,7 +3283,7 @@ input[type="file"] {
   padding: 20px;
   box-sizing: border-box;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   border-radius: 12px;
   border: 1px solid #EBEBEB;
 }
@@ -3291,10 +3291,39 @@ input[type="file"] {
 .q-helphub-satisfied > p{
   color: var(--Neutral-Black-300, #4C4C4C);
   font-family: Figtree;
-  font-size: 14px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
+}
+
+.q-helphub-satisfied2{
+  display: flex;
+  /* flex-direction: column; */
+  padding: 20px;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-radius: 12px;
+  border: 1px solid #EBEBEB;
+  flex-wrap: wrap;
+}
+
+.q-helphub-satisfied2 > p{
+  color: var(--Neutral-Black-300, #4C4C4C);
+  font-family: Figtree;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  padding: 2px;
+  border-bottom: 1px solid #ebebeb00;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.q-helphub-satisfied2 > p:hover {
+  border-bottom: 1px solid #3f24a1;
 }
 
 .q-helphub-satisfied-icons{

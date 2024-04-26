@@ -106,7 +106,7 @@ export interface HelpHubProps {
     Tasks?: HelpHubOthersContentTypes;
   };
   showFooter?: boolean;
-  onlineComponent?: boolean;
+  // onlineComponent?: boolean;
   claimStatusUpdates?: string[] | [];
   setClaimStatusUpdates?: Dispatch<SetStateAction<string[]>>;
 }
@@ -131,7 +131,7 @@ export interface HelpHubPropsOffline {
   showFooter?: boolean;
   ParentQuest?: QuestTypes;
   ChildQuest?: QuestCriteriaWithStatusType[][];
-  onlineComponent?: boolean;
+  // onlineComponent?: boolean;
   claimStatusUpdates?: string[] | [];
   setClaimStatusUpdates?: Dispatch<SetStateAction<string[][]>>;
   entityLogo?: string;

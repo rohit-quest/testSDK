@@ -97,7 +97,6 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
       setUpdateOneOutAnimation(false);
     }, 100);
   };
-  useEffect(() => {}, [updateOneoutAnimation, updateOutAnimation]);
 
   return (
     <>

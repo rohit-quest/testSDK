@@ -28,7 +28,6 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
     styleConfig,
     contentConfig,
     showFooter,
-    onlineComponent,
     ChildQuest = [],
     ParentQuest,
     entityLogo
@@ -88,18 +87,18 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
     let arr = taskData
       ?.filter((ele: QuestCriteriaWithStatusType) => ele.completed === true)
       .map((ele: QuestCriteriaWithStatusType) => ele.criteriaId);
-    if (onlineComponent) {
-      setClaimStatusTasks(arr);
-    }
+    // if (onlineComponent) {
+    //   setClaimStatusTasks(arr);
+    // }
   }, [taskData]);
 
   useEffect(() => {
     let arr = updateData
       .filter((ele: QuestCriteriaWithStatusType) => ele.completed === true)
       .map((ele: QuestCriteriaWithStatusType) => ele.criteriaId);
-    if (onlineComponent) {
-      setClaimStatusUpdates(arr);
-    }
+    // if (onlineComponent) {
+    //   setClaimStatusUpdates(arr);
+    // }
   }, [updateData]);
 
   return (
@@ -136,7 +135,7 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
                 contentConfig={contentConfig?.Home}
                 claimStatusTasks={claimStatusTasks}
                 taskStatus={taskStatus}
-                onlineComponent={onlineComponent}
+                onlineComponent={false}
                 showFeedback={showFeedback}
                 setShowFeedback={setShowFeedback}
                 entityImage={entityImage || entityLogo}
@@ -184,7 +183,7 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
                 token={token}
                 claimStatusUpdates={claimStatusUpdates}
                 setClaimStatusUpdates={setClaimStatusUpdates}
-                onlineComponent={onlineComponent}
+                onlineComponent={false}
                 showBottomNavigation={showBottomNavigation}
                 setShowBottomNavigation={setShowBottomNavigation}
                 entityImage={entityImage}
@@ -204,7 +203,7 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
                 token={token}
                 claimStatusTasks={claimStatusTasks}
                 setClaimStatusTasks={setClaimStatusTasks}
-                onlineComponent={onlineComponent}
+                onlineComponent={false}
               />
             ) : (
               ""

@@ -489,6 +489,7 @@ export default function HelpHubPreview({ online = true }) {
           }}
           // claimStatusUpdates={claimStatusUpdates}
           // setClaimStatusUpdates={setClaimStatusUpdates}
+          onlineComponent
         />
       </QuestProvider>
     );

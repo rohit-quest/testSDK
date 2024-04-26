@@ -33,7 +33,6 @@ const HelpHub = (props: HelpHubProps) => {
     styleConfig,
     contentConfig,
     showFooter,
-    onlineComponent,
   } = props;
 
   const { apiKey, entityId, featureFlags, apiType, themeConfig } = useContext(
@@ -222,18 +221,18 @@ const HelpHub = (props: HelpHubProps) => {
     let arr = taskData
       ?.filter((ele: QuestCriteriaWithStatusType) => ele.completed === true)
       .map((ele: QuestCriteriaWithStatusType) => ele.criteriaId);
-    if (onlineComponent) {
+    // if (onlineComponent) {
       setClaimStatusTasks(arr);
-    }
+    // }
   }, [taskData]);
 
   useEffect(() => {
     let arr = updateData
       .filter((ele: QuestCriteriaWithStatusType) => ele.completed === true)
       .map((ele: QuestCriteriaWithStatusType) => ele.criteriaId);
-    if (onlineComponent) {
+    // if (onlineComponent) {
       setClaimStatusUpdates(arr);
-    }
+    // }
   }, [updateData]);
 
   useEffect(() => {
@@ -284,7 +283,7 @@ const HelpHub = (props: HelpHubProps) => {
               contentConfig={contentConfig?.Home}
               claimStatusTasks={claimStatusTasks}
               taskStatus={taskStatus}
-              onlineComponent={onlineComponent}
+              onlineComponent={true}
               showFeedback={showFeedback}
               setShowFeedback={setShowFeedback}
               entityImage={entityImage}
@@ -330,7 +329,7 @@ const HelpHub = (props: HelpHubProps) => {
               token={token}
               claimStatusUpdates={claimStatusUpdates}
               setClaimStatusUpdates={setClaimStatusUpdates}
-              onlineComponent={onlineComponent}
+              onlineComponent={true}
               showBottomNavigation={showBottomNavigation}
               setShowBottomNavigation={setShowBottomNavigation}
               entityImage={entityImage}
@@ -348,7 +347,7 @@ const HelpHub = (props: HelpHubProps) => {
               token={token}
               claimStatusTasks={claimStatusTasks}
               setClaimStatusTasks={setClaimStatusTasks}
-              onlineComponent={onlineComponent}
+              onlineComponent={true}
             />
           ) : (
             ""

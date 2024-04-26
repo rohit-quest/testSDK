@@ -1,7 +1,4 @@
 import CancelButton from "../../assets/images/CancelButton.svg";
-import SearchIcons from "../../assets/images/SearchIcons.svg";
-import TaskStatusDone from "../../assets/images/TaskStatusDone.svg";
-import TaskStatusPending from "../../assets/images/TaskStatusPending.svg";
 import { HelpHubTasksTypes, QuestCriteriaWithStatusType } from "./HelpHub.type";
 import QuestContext from "../QuestWrapper";
 import { useContext, useEffect, useState } from "react";
@@ -23,33 +20,14 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
     onlineComponent,
   } = props;
 
-  const [filterData, setFilterData] = useState<QuestCriteriaWithStatusType[]>(
-    []
-  );
-  // const [claimStatus, setClaimStatus] = useState<string[]>([]);
-  const [searchData, setSearchData] = useState<string | number>("");
   const { apiKey, entityId, apiType, themeConfig } = useContext(
     QuestContext.Context
   );
+  
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
-  useEffect(() => {
-    let data = tasksData.filter((value: QuestCriteriaWithStatusType) => {
-      return value?.linkTitle
-        ?.toLowerCase()
-        .includes(searchData?.toString().toLowerCase());
-    });
-    setFilterData(data);
-  }, [tasksData, searchData]);
 
-  // useEffect(() => {
-  //     // let arr = tasksData.filter((ele: QuestCriteriaWithStatusType) => ele.completed === true).map((ele: QuestCriteriaWithStatusType) => ele.data.criteriaId)
-  //     // if(onlineComponent){
-  //     //     setClaimStatusTasks(arr);
-  //     // }
-  // }, [tasksData])
-  // console.log(claimStatusTasks);
   const readUpdate = async (criteriaId: string, links?: string) => {
     window.open(links, "_blank");
     if (onlineComponent) {
@@ -63,11 +41,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
         criteriaId
       );
       if (claimResponse.success) {
-        let arr = claimStatusTasks.filter((item) =>
-          item !== criteriaId ? item : criteriaId
-        );
-        // setClaimStatusTasks([...claimStatusTasks, criteriaId]);
-        setClaimStatusTasks(arr);
+        setClaimStatusTasks([...claimStatusTasks, criteriaId]);
       }
     } else {
       if (!claimStatusTasks.includes(criteriaId)) {
@@ -129,40 +103,16 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
             }}
           >
             STEP {claimStatusTasks?.length}/{tasksData?.length}
-            {/* {Math.ceil(100 * (claimStatusTasks?.length / tasksData?.length)) ||
-              0} */}
           </div>
-          {/* <div className="q-helphub-tasks-progress-bar"> */}
-          {/* <div
-              style={{
-                width: `${
-                  100 * (claimStatusTasks?.length / tasksData?.length)
-                }%`,
-              }}
-            ></div> */}
-
-          {/* <div>
-              {tasksData?.map(() => (
-                <div>hi</div>
-              ))}
-            </div> */}
-          {/* </div> */}
 
           <div
             style={{
               display: "flex",
               width: "100%",
-              // background: "yellow",
               justifyContent: "space-between",
               gap: "8px",
             }}
           >
-            {/* <div
-              className="q-helphub-tasks-progress-bar"
-              style={{
-                width: `${Math.ceil(100 / tasksData.length)}%`,
-              }}
-            ></div> */}
 
             {onlineComponent &&
               tasksData?.map((value, index) => {
@@ -172,7 +122,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                     style={{
                       width: `${Math.ceil(100 / tasksData.length)}%`,
                       background: `${
-                        value.completed
+                        (value.completed || claimStatusTasks.includes(value?.criteriaId))
                           ? "var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%))"
                           : openTaskDiv === index
                           ? "var(--Primary-Grape-400, #A357FF)"
@@ -223,7 +173,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
           </div>
         </div>
         <div className="q-helphub-tasks-task-cont">
-          {filterData?.map(
+          {tasksData?.map(
             (ele: QuestCriteriaWithStatusType, index: number) => (
               <div
                 className={"q-helphub-tasks-single-task"}
@@ -285,7 +235,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                         : "180deg",
                     }}
                     src={
-                      claimStatusTasks?.includes(ele?.criteriaId)
+                      (ele.completed || claimStatusTasks?.includes(ele?.criteriaId))
                         ? TaskCompleted
                         : index === openTaskDiv
                         ? TaskUpButton
