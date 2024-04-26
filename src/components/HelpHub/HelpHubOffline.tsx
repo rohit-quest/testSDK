@@ -288,7 +288,7 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
                       }}
                       className="helphubSvgTitle"
                     >
-                      Help
+                      FAQs
                     </div>
                   </div>
 

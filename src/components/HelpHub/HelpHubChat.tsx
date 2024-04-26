@@ -180,10 +180,11 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
           newChat.conversations = sendMessageResponse?.data?.message;
           updateLastChat = [...updateLastChat, newChat];
         }
+        
 
-        if (sendMessageResponse?.data?.askSatisfaction) {
-          setAskSatisfaction(true);
-        }
+        // if (sendMessageResponse?.data?.askSatisfaction) {
+        //   setAskSatisfaction(true);
+        // }
       }
 
       setChat(updateLastChat);
@@ -602,7 +603,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
               </div>
             )}
 
-            <div className="chat-container" id="chatContainer">
+            <div className="hepuhub-chat-container" id="chatContainer">
               {data &&
                 data.map((message, index) => {
                   return (

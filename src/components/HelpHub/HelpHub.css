@@ -2047,6 +2047,10 @@
   font-style: normal;
   font-weight: 500;
   line-height: 24px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .q-helphub-updates-single-update-read
@@ -2122,6 +2126,10 @@
   font-style: normal;
   font-weight: 600;
   line-height: 24px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .q-helphub-updates-single-update-read .update-question {
@@ -2780,7 +2788,7 @@ input[type="file"] {
   border-radius: 50%;
 }
 
-.chat-container {
+.hepuhub-chat-container {
   padding: 20px;
   box-sizing: border-box;
   height: calc(100% - 400px);
@@ -2827,6 +2835,8 @@ input[type="file"] {
   height: 28px;
   border-radius: 28px;
   background-color: #EDDDFB;
+  padding: 4px;
+  box-sizing: border-box;
 }
 
 .chat-profile-img-receiver {
