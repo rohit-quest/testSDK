@@ -2,103 +2,99 @@ import { QuestProvider } from "../QuestWrapper";
 import FeedbackWorkflow from "./FeedbackOverview";
 
 import FeedbackWorkflowOffline from "./OfflineComponent.tsx";
-export const questId = "q-a8e16042-1831-46b4-875a-888c0ac8b1bc";
-export const apiKey = "k-fe5a805c-77ed-4cae-bd33-9591ebed2805";
+export const questId = "q-290aef93-4b20-45e2-b2f6-4bc19b5bd8ef";
+export const apiKey = "k-9986f82d-cbd0-4923-bf9a-ea01b4795fa1";
 export const apiSecret =
   "s-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42";
-export const entityId = "e-9850377b-f88f-4426-a2ac-56206c74655a";
+export const entityId = "e-ba6a2a04-546c-48d4-9369-64524756c0e8";
 export const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMzg1MjEyOSwiZXhwIjoxNzE0NDU2OTI5fQ.yxm1cgS6bRwzuIr6SycJmEv52gXsVYSS7xi2TNa8lC8";
-export const userId = "u-8268f5e1-f5a1-440c-a333-0f5578a73847";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTdiM2E2MzAxLTcxMWMtNGMwZC1hZTYzLWQ5M2RiZTJjZWVlOSIsImlhdCI6MTcxMzk0MzIzMywiZXhwIjoxNzE0NTQ4MDMzfQ.8iaRzlT62QUh7I8uihYuo7ywR0FP33kec-lSnbt3U4M";
+export const userId = "u-7b3a6301-711c-4c0d-ae63-d93dbe2ceee9";
 
-export default function FeedbackWorkflowPreview({
-  online = false,
-}: {
-  online?: boolean;
-}) {
+export default function FeedbackWorkflowPreview({ online = false }: { online?: boolean }) {
+
   if (online)
-    return (
-      <QuestProvider
-        apiKey={apiKey}
-        apiSecret="s-7462f377-2ce4-4593-a907-3a2a00cdf951be06358a-d95d-4576-b3b4-a07dda2dab36"
-        entityId={entityId}
-        featureFlags={{}}
-        apiType="STAGING"
-        themeConfig={
-          {
-            // primaryColor: "red",
-            // fontFamily:"cursive"
-            // backgroundColor:'red',
-            // primaryColor:'white'
-          }
-        }
-      >
-        <FeedbackWorkflow
-          userId={userId}
-          token={token}
-          showFooter={true}
-          questIds={[
-            "q-219cb87e-8425-44ad-8d46-15881ff73385",
-            "q-6a0a6c4d-ea66-4925-aea4-d3bcab9de457",
-            "q-a0e40f75-6ada-44ce-b18d-9db471d1cd5b",
-            "q-bc0a80b4-0b4c-4181-b460-cb23a88173c7",
-          ]}
-          GeneralFeedback={{
-            heading: "General Fee",
-            description: "Give general feedsdasdasdback on this page",
-            formHeading: "General Feedbackasddffd",
-            formDescription: "Welcome back,sdfsdf Please complete your details",
-            iconUrl:
-              "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
-          }}
-          RequestFeature={{
-            heading: "Request a Featureqwqewqewqe",
-            description: "How can we msdsfdsdfake it better",
-            formHeading: "Request a Feature",
-            iconUrl:
-              "https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg",
-          }}
-          ReportBug={{
-            heading: "Reportasdasd a Bug",
-            description: "Describazsdasde your issue",
-            formHeading: "Report wewea Bug",
-            formDescription: "Describe yosddffdur issue",
-            iconUrl:
-              "https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg",
-          }}
-          ContactUs={{
-            heading: "Contacasasdt us",
-            description: "Invite oasasdasdher admins and moderators",
-            iconUrl:
-              "https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg",
-          }}
-          contactUrl="https://calendly.com/sriya-persana/30min"
-          // showPoweredBy={false}
-          // styleConfig={{
-          //     Form: {
+    return (<QuestProvider
+      apiKey={apiKey}
+      apiSecret="s-7462f377-2ce4-4593-a907-3a2a00cdf951be06358a-d95d-4576-b3b4-a07dda2dab36"
+      entityId={entityId}
+      featureFlags={{}}
+      apiType="STAGING"
+      themeConfig={{
+        // primaryColor: "red",
+        // fontFamily:"cursive"
+        // backgroundColor:'red',
+        // primaryColor:'white'
+      }}
+    >
 
-          //     },
-          //     listHover :{
-          //         iconColor:'blue',
-          //         iconBackground:'grey',
-          //         background:'yellow',
-          //         Heading:'green',
-          //         Description:'red'
-          //     },
-          //     // ThanksPopUp:{backgroundColor:"red"}
-          //     // Description: { color: 'red' },
-          //     // listDescription:{color:'yellow'}
-          //     // Heading: { color: 'red' },
-          //     // listHeading: { color: 'blue' }
-          // }}
-          // // footerBackgroundColor='red'
-          // contactUrl="https://calendly.com/sriya-persana/30min"
-          isOpen={true}
-          // // onClose={() => setIsOpen(!isOpen)}
-          // uniqueUserId="soumitra.petbindhi+25@gmail.com"
-          // uniqueEmailId="soumitra.petbindhi+25@gmail.com"
-        />
-      </QuestProvider>
+      <FeedbackWorkflow
+        userId={userId}
+        token={token}
+        showFooter={true}
+        questIds={[
+          'q-general-feedback',
+          'q-report-a-bug',
+          'q-request-a-feature',
+          'q-contact-us',
+        ]}
+        GeneralFeedback={{
+          heading: "General Fee",
+          description: "Give general feedsdasdasdback on this page",
+          formHeading: "General Feedbackasddffd",
+          formDescription: "Welcome back,sdfsdf Please complete your details",
+          iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+        }}
+        RequestFeature={{
+          heading: "Request a Featureqwqewqewqe",
+          description: "How can we msdsfdsdfake it better",
+          formHeading: "Request a Feature",
+          iconUrl: 'https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg'
+        }}
+        ReportBug={{
+          heading: "Reportasdasd a Bug",
+          description: "Describazsdasde your issue",
+          formHeading: "Report wewea Bug",
+          formDescription: "Describe yosddffdur issue",
+          iconUrl: 'https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg'
+        }}
+        ContactUs={{
+          heading: "Contacasasdt us",
+          description: "Invite oasasdasdher admins and moderators",
+          iconUrl: 'https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg'
+        }}
+        contactUrl="https://calendly.com/sriya-persana/30min"
+
+        // showPoweredBy={false}
+        // styleConfig={{
+        //     Form: {
+
+        //     },
+        //     listHover :{
+        //         iconColor:'blue',
+        //         iconBackground:'grey',
+        //         background:'yellow',
+        //         Heading:'green',
+        //         Description:'red'
+        //     },
+        //     // ThanksPopUp:{backgroundColor:"red"}
+        //     // Description: { color: 'red' },
+        //     // listDescription:{color:'yellow'}
+        //     // Heading: { color: 'red' },
+        //     // listHeading: { color: 'blue' }
+        // }}
+        // // footerBackgroundColor='red'
+        // contactUrl="https://calendly.com/sriya-persana/30min"
+        isOpen={true}
+      // // onClose={() => setIsOpen(!isOpen)}
+      // uniqueUserId="soumitra.petbindhi+25@gmail.com"
+      // uniqueEmailId="soumitra.petbindhi+25@gmail.com"
+
+
+      />
+
+
+    </QuestProvider>
     );
 
   return (
@@ -173,6 +169,12 @@ export default function FeedbackWorkflowPreview({
             criteriaId: "ec-84192fef-c917-410f-9d4ace713aae",
             required: true,
           },
+          {
+            type: "USER_INPUT_IMAGE",
+            question: "",
+            criteriaId: "ec-e32b88d7-0e43-4254-9c94-44859ceedcdc",
+            required: true,
+          }
         ],
         [
           {
@@ -232,7 +234,7 @@ export default function FeedbackWorkflowPreview({
             question: "",
             criteriaId: "ec-e32b88d7-0e43-4254-9c94-44859ceedcdc",
             required: true,
-          },
+          }
         ],
       ]}
     ></FeedbackWorkflowOffline>
