@@ -1103,7 +1103,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
             QuestThemeData?.borderRadius ||
             BrandTheme?.borderRadius,
           height: styleConfig?.Form?.height || "auto",
-          fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+          fontFamily:BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
           ...styleConfig?.Form,
         }}
       >
