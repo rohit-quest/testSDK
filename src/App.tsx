@@ -169,7 +169,7 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-        {/* <OnBoardingPreview online={true} /> */}
+        <OnBoardingPreview online={false} />
 
 
         {/* <GetStartedPreview online={true} /> */}

@@ -384,10 +384,31 @@ function OnBoardingOffline(props: QuestLoginProps) {
   }, [design, template]);
 
   useEffect(() => {
-    let currentQuestions: any =
-      !!designState && designState.length > 0 && checkDesignCriteria()
-        ? designState[currentPage]
-        : offlineFormData.map((e, i) => i + 1);
+    // let currentQuestions: any =
+    //   !!designState && designState.length > 0 && checkDesignCriteria()
+    //     ? designState[currentPage]
+    //     : offlineFormData.map((e, i) => i + 1);
+
+    let currentQuestions: any;
+    if (template === "multi-question") {
+      currentQuestions = offlineFormData.map((e, i) => {
+        return i + 1;
+      });
+      let temp = offlineFormData.map((e, i) => {
+        if (designState[currentPage].includes(i + 1)) return i + 1;
+      });
+      let temp2 = temp.filter((e, i) => {
+        if (designState[currentPage].includes(i + 1)) return true;
+      });
+      currentQuestions = temp2;
+    } else {
+      currentQuestions = offlineFormData.map((e, i) => {
+        return i + 1;
+      });
+      setDesign([[...currentQuestions]]);
+    }
+
+
     let c = 0;
     for (let i = 0; i < currentQuestions.length; i++) {
       if (
@@ -996,19 +1017,39 @@ function OnBoardingOffline(props: QuestLoginProps) {
       "onboarding_offline"
     );
 
-    let crt: any = { ...answer };
-    for (let i of Object.keys(crt)) {
-      if (i.includes("/manual") && crt[i] != "") {
-        let id: string = i.split("/manual")[0];
-        let criteriaDetails: offlineFormData[] = offlineFormData.filter(
-          (item) => item.criteriaId == id
-        );
-        if (criteriaDetails[0].manualInput == crt[id]) {
-          crt[id] = crt[i];
+    
+    if (currentPage < designState.length - 1) {
+      console.log("no submit");
+      setCurrentPage((prev) => prev + 1);
+    } else {
+      let crt: any = { ...answer };
+      for (let i of Object.keys(crt)) {
+        if (i.includes("/manual") && crt[i] != "") {
+          let id: string = i.split("/manual")[0];
+          let criteriaDetails: offlineFormData[] = offlineFormData.filter(
+            (item) => item.criteriaId == id
+          );
+          if (criteriaDetails[0].manualInput == crt[id]) {
+            crt[id] = crt[i];
+          }
         }
       }
+      getAnswers && getAnswers(crt);
     }
-    getAnswers && getAnswers(crt);
+
+    // let crt: any = { ...answer };
+    // for (let i of Object.keys(crt)) {
+    //   if (i.includes("/manual") && crt[i] != "") {
+    //     let id: string = i.split("/manual")[0];
+    //     let criteriaDetails: offlineFormData[] = offlineFormData.filter(
+    //       (item) => item.criteriaId == id
+    //     );
+    //     if (criteriaDetails[0].manualInput == crt[id]) {
+    //       crt[id] = crt[i];
+    //     }
+    //   }
+    // }
+    // getAnswers && getAnswers(crt);
     // let ansArr: Answer[] = offlineofflineFormData.map((ans: offlineofflineFormData) => {
     //     return {
     //         question: ans?.question,
@@ -1151,7 +1192,9 @@ function OnBoardingOffline(props: QuestLoginProps) {
               offlineFormData.length > 0 &&
               designState.length > 1 &&
               !!progress?.length && <ProgressBar />}
-            {!!designState && designState.length > 0 && checkDesignCriteria()
+
+            {/* {!!designState && designState.length > 0 && checkDesignCriteria() */}
+            {!!designState && designState.length > 0 
               ? designState[currentPage].map((num: number) =>
                   offlineFormData[num - 1].type == "USER_INPUT_TEXT"
                     ? normalInput(
@@ -1309,10 +1352,12 @@ function OnBoardingOffline(props: QuestLoginProps) {
                         )
                     : null
                 )}
+
             {offlineFormData.length > 0 &&
               (!!designState &&
-              designState.length > 1 &&
-              checkDesignCriteria() ? (
+              // designState.length > 1 &&
+              // checkDesignCriteria() ? (
+              designState.length > 1 ? (
                 controlBtnType == "Buttons" ? (
                   <div className="q-onb-main-criteria">
                     {currentPage > 0 && (
