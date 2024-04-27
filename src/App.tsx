@@ -36,6 +36,7 @@ import OnBoarding from "./components/Onboarding/Onboarding";
 import DailyStreak from "./components/Streak/DailyStreak";
 import ChallengesPreview from "./components/Challenges/ChallengesPreview";
 import GamifiedQuizPreview from "./components/GamifiedQuiz/GamifiedQuizPreview";
+import Walkthrough, { Align, Position } from "./components/Walkthrough/WalkThrough";
 import showToast from "./components/toast/toastService";
 import Toast from "./components/toast2/Toast";
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
@@ -96,14 +97,15 @@ function App() {
   const [isOpen, setIsOpen] = useState(true);
   const [answer, setAnswer] = useState([]);
 
+  // const CSGetstarted = new 
   return (
     <div
     // style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
     >
       <QuestProvider
-        apiKey={"k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be"}
-        apiSecret={apiSecret}
-        entityId={"e-0000000000"}
+        apiKey={"k-ac38b717-eb62-41aa-83f4-7eef8d3ff9b5"}
+        apiSecret={''}
+        entityId={"e-e6cc0ded-bf40-4f1f-94a3-a9ba73be098f"}
         featureFlags={{}}
         apiType="STAGING"
         themeConfig={
@@ -227,7 +229,6 @@ function App() {
         <button onClick={() => { showToast.info({ duration: 100000, text: "This is a info message", template: 2, descritption: "INFO" }) }}>Info</button>
         <button onClick={() => { showToast.success({ duration: 100000, text: "This is a success message", template: 2, descritption: "SUCCESS" }) }}>Success</button> */}
 
-
         {/* <button onClick={() => Toast.success({ text: "This is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success message", position: 'top-right', autoClose: 100000, template: 2, description: "SUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESS" })}>Success</button>
         <button onClick={() => Toast.info({ text: "This is a info message", position: 'bottom-center', autoClose: 1000, template: 2, description: "INFO" })}>Info</button>
         <button onClick={() => Toast.error({ text: "This is a error message", position: 'bottom-center', autoClose: 1000, template: 2, description: "Error" })}>Error</button>
@@ -302,7 +303,37 @@ function App() {
 
         {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
         {/* <SreakPreview online /> */}
+
+        <Walkthrough
+            isOpen={isOpen}
+            id="app"
+            steps={[
+              {
+                selector: '.gs-single-card-dropDown',
+                data: {title: 'First Tab', description: 'Click on this'},
+                position: Position.RIGHT,
+                align: Align.END
+              },
+              {
+                selector: '.gs-heading-div',
+                data: {title: 'Second Tab', description: 'Click on this'},
+                align: Align.CENTER
+              }
+            ]}
+            styleConfig={{
+              Form: {background: 'green'},
+              Background: {background: 'red'}, 
+              Footer: {background: 'blue'}
+            }}
+            onComplete={() => {alert('Welcome to the page'); setIsOpen(false)}}
+            onRequestClose={() => setIsOpen(false)}
+            onAfterOpen={() => document.documentElement.style.overflow = 'hidden'}
+            onBeforeClose={() => document.documentElement.style.overflow = ''}
+        />
+
+
       </QuestProvider>
+      < div style={{height: 1999}}/>
     </div>
   );
 }

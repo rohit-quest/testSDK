@@ -162,6 +162,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
     titleColor: ""
 })
 
+  console.log(useContext(QuestContext.Context))
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
   const cookies = new Cookies();
@@ -229,7 +230,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
       "quest_get_started_loaded",
       "get_started"
     );
-
+    console.log(entityId)
     if (entityId) {
       const headers = {
         apiKey: apiKey,
