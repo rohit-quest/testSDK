@@ -156,21 +156,6 @@
     gap: 6.315px;
     align-self: stretch;
 }
-/* .feedbackEmojiContainer > div, 
-.feedbackStarContainer > div,
-.feedbackNumberContainer > div{
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    max-width: 50px;
-    border-radius: 3.159px;
-    border: 0.474px solid var(--borderColor, #FEB872);
-    background: var(--secondaryColor, #FFF2D1);
-    cursor: pointer;
-    filter: grayscale(100);
-    transition: all .5s;
-} */
 .feedbackNumberContainer{
     display: flex;
     justify-content: flex-end;
@@ -206,6 +191,14 @@
     gap: 94px;
     flex: 1 0 0;
     align-self: stretch;
+    border: 0.474px solid var(--borderColor, #FEB872);
+    background: var(--secondaryColor, #FFF2D1);
+    box-sizing: border-box;
+    border-radius: 3.159px;
+    cursor: pointer;
+    filter: grayscale(100);
+    transition: all .5s;
+    height: 53px;
 }
 .feedbackStarContainer > div{
     filter: grayscale(0);

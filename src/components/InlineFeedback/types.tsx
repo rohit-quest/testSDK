@@ -1,12 +1,5 @@
 import { CSSProperties } from 'react'
 
-export enum FeedbackType {
-    NUMBERING = 'numbering',
-    LIKE = 'like',
-    EMOJI = 'emoji',
-    STAR = 'star',
-}
-
 interface StyleConfig {
     Form?: CSSProperties;
     MainHeading?: CSSProperties;
@@ -23,7 +16,7 @@ interface StyleConfig {
 export interface FeedbackProps {
     heading?: string;
     description?: string;
-    type?: FeedbackType;
+    type?: 'numbering' | 'emoji' | 'like' | 'star';
     count?: number,
     styleConfig?: StyleConfig;
     onChange?: (data: object) => void;

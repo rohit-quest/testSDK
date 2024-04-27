@@ -1,7 +1,7 @@
 import { CSSProperties, useContext, useEffect, useRef, useState } from 'react'
 import './style.css'
 import Numbering from './Numbering';
-import { FeedBackComponentProps, FeedbackProps, FeedbackType } from './types';
+import { FeedBackComponentProps, FeedbackProps } from './types';
 import Emoji from './Emoji';
 import Star from './Star';
 import Like from './Like';
@@ -12,11 +12,11 @@ import Loader from '../Login/Loader';
 import { toast } from 'react-toastify';
 import Success from './Success';
 
-const componentMapping: {[key in FeedbackType]: (props: FeedBackComponentProps) => JSX.Element} = {
-    [FeedbackType.NUMBERING]: Numbering,
-    [FeedbackType.LIKE]: Like,
-    [FeedbackType.EMOJI]: Emoji,
-    [FeedbackType.STAR]: Star,
+const componentMapping: {[key in string]: (props: FeedBackComponentProps) => JSX.Element} = {
+    'numbering': Numbering,
+    'like': Like,
+    'emoji': Emoji,
+    'star': Star,
 }
 
 export default function InlineFeedback({
@@ -25,7 +25,7 @@ export default function InlineFeedback({
     questId,
     heading = 'Found it helpful',
     description = 'Your feedback help us improve search results!',
-    type = FeedbackType.NUMBERING,
+    type = 'numbering',
     count = 5,
     styleConfig,
     onChange,
@@ -88,7 +88,7 @@ export default function InlineFeedback({
 
       const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${headers.userId}`;
       const criteriaId = questData?.data?.eligibilityCriterias?.[0]
-      const answer = type == FeedbackType.LIKE ? (data?.like ? 'like':'dislike'):`${data.rate}/${data.total}`
+      const answer = type == 'like' ? (data?.like ? 'like':'dislike'):`${data.rate}/${data.total}`
       const jsonData = {criteriaId, answers: [answer]}
       const response = await axios.post(request, jsonData, {headers})
       if(response.data?.success){
