@@ -203,7 +203,7 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                       width: "100%",
                       borderRadius: "10px 0px 0px 10px",
                       border: "1px solid #ECECEC",
-                      background: "#FFFFFF",
+                      background: "transparent",
                       position: "relative",
                       cursor: "pointer",
                       padding: "10px",
@@ -223,7 +223,7 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                       borderRadius: "0px 10px 10px 0px",
                       border: "1px solid #ECECEC",
                       position: "relative",
-                      background: "#FFFFFF",
+                      background: "transparent",
                       padding: "10px",
                       opacity: file === null ? 1 : 0.5,
                     }} disabled={file !== null} >
