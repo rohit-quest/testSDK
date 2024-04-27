@@ -78,8 +78,34 @@ interface GeneralFeedbackContentProps {
       ShowFooter?: boolean;
       Icon?: React.CSSProperties;
     },
-  };
+  },
+  BrandTheme?: BrandTheme,
+  QuestThemeData?: QuestThemeData
 }
+
+type BrandTheme = {
+  accentColor?: string;
+  background?: string;
+  borderRadius?: string;
+  buttonColor?: string;
+  contentColor?: string;
+  fontFamily?: string;
+  logo?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  tertiaryColor?: string;
+  titleColor?: string;
+}
+
+interface QuestThemeData {
+  accentColor: string;
+  theme: string;
+  borderRadius: string;
+  buttonColor: string;
+  images: string[]
+
+}
+
 interface FileProp {
   name: string;
   size: number;
@@ -109,7 +135,9 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
   inputRef,
   file,
   setFile,
-  styleConfig
+  styleConfig,
+  BrandTheme,
+  QuestThemeData
 }) => {
   const [rating, setRating] = useState<number>(0);
   const handleRatingChange2 = (e: any, id: any, rating: number) => {
@@ -325,7 +353,7 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                           display: "flex",
                           alignItems: "center",
                           marginRight: "10px",
-                          color: styleConfig?.Input?.color || styleConfig?.Form?.color
+                          color: styleConfig?.Input?.color || styleConfig?.Form?.color || BrandTheme?.primaryColor || themeConfig.primaryColor
                         }}>
                           {screenshot.name}
                         </p>
@@ -359,7 +387,7 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                           display: "flex",
                           alignItems: "center",
                           overflow: "hidden",
-                          color: styleConfig?.Input?.color || styleConfig?.Form?.color
+                          color: styleConfig?.Input?.color || styleConfig?.Form?.color || BrandTheme?.primaryColor || themeConfig.primaryColor
                         }}>
                           {file.name}
                         </p>

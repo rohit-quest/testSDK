@@ -970,6 +970,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                           file={file}
                           setFile={setFile}
                           styleConfig={styleConfig}
+                          BrandTheme={BrandTheme}
+                          QuestThemeData={questThemeData}
                         />
                       )}
                       {selectedOption === "ReportBug" && (
