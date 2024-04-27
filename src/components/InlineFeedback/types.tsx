@@ -30,7 +30,7 @@ export interface FeedbackProps {
     userId: string;
     questId: string;
     token: string,
-    redirectUrl?: string;
+    onRequestClose?: () => void;
     initialState?: number
 }
 

@@ -17,9 +17,8 @@ export default function Preview() {
           userId='u-06d65461-7c5f-4737-946d-c8ab8c80eb25'
           token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTA2ZDY1NDYxLTdjNWYtNDczNy05NDZkLWM4YWI4YzgwZWIyNSIsImlhdCI6MTcxNDA1MDAxMSwiZXhwIjoxNzE0NjU0ODExfQ.EUgwEH6JwADsfZIBZlshixGKdugIW-VCba8NvWtN6_8'
           questId={'q-5944f1e4-48d0-499d-8219-f3823735fe55'}
-          type={FeedbackType.STAR}
+          type={FeedbackType.NUMBERING}
           styleConfig={{Form: {border: '1px solid whitesmoke'}}}
-          redirectUrl='/'
         />
     </QuestProvider>
   )

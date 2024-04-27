@@ -29,7 +29,7 @@ export default function InlineFeedback({
     count = 5,
     styleConfig,
     onChange,
-    redirectUrl,
+    onRequestClose,
     initialState
 }: FeedbackProps) {
   const [questData, setQuestData] = useState<any | null>(null)
@@ -78,7 +78,7 @@ export default function InlineFeedback({
 
   const handleRatingClick = async (data: any) => {
     try{
-      setLoading(true)
+      // setLoading(true)
       const headers = {
         apiKey: apiKey,
         apisecret: apiSecret,
@@ -97,7 +97,7 @@ export default function InlineFeedback({
     }catch(error){
       toast.error('Something went wrong, try again')
     }finally{
-      setLoading(false)
+      // setLoading(false)
     }
   }
   const onDataChange = (updatedData: object) => {
@@ -111,13 +111,18 @@ export default function InlineFeedback({
         {
           showSuccess ? (
             <Success 
-              redirectUrl={redirectUrl}
+              closeFeedback={() => setShowSuccess(false)}
             />
           ):(
             <>
               <div className={`feedbackHeader`}>
                   <h4 style={{...styleConfig?.Heading}}>{heading}</h4>
                   <p style={{...styleConfig?.Description}}>{description}</p>
+                  <div onClick={onRequestClose}>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4.50513 11.4957L8.00046 8.00032L11.4958 11.4957M11.4958 4.50499L7.99979 8.00032L4.50513 4.50499" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
               </div>
               <section className={`feedbackSection`}>
                   <Component 
@@ -130,16 +135,16 @@ export default function InlineFeedback({
                       selectedIconStyle={styleConfig?.SelectedIconStyle}
                       initialState={initialState}
                   />
+                  <div className={`feedbackMessage`}>
+                      <span>Not satisfied</span>
+                      <span>Very satisfied</span>
+                  </div>
               </section>
-              <div className={`feedbackMessage`}>
-                  <span>Not satisfied</span>
-                  <span>Very satisfied</span>
-              </div>
             </>
           )
         }
         <div className={`feedbackWatermark`} style={{...styleConfig?.Footer}}>
-            <small>Powered by Quest Labs</small>
+            <p>Powered by Quest Labs</p>
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 0V4L8 8V4H4V6.64083C4 7.39167 4.60833 8 5.35917 8H8L4 12C1.79083 12 0 10.2092 0 8V0H12Z" fill="#B9B9B9"/>
             <path d="M12 8L8 8L8 12H12V8Z" fill="#B9B9B9"/>
