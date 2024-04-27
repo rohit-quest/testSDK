@@ -384,10 +384,31 @@ function OnBoardingOffline(props: QuestLoginProps) {
   }, [design, template]);
 
   useEffect(() => {
-    let currentQuestions: any =
-      !!designState && designState.length > 0 && checkDesignCriteria()
-        ? designState[currentPage]
-        : offlineFormData.map((e, i) => i + 1);
+    // let currentQuestions: any =
+    //   !!designState && designState.length > 0 && checkDesignCriteria()
+    //     ? designState[currentPage]
+    //     : offlineFormData.map((e, i) => i + 1);
+
+    let currentQuestions: any;
+    if (template === "multi-question") {
+      currentQuestions = offlineFormData.map((e, i) => {
+        return i + 1;
+      });
+      let temp = offlineFormData.map((e, i) => {
+        if (designState[currentPage].includes(i + 1)) return i + 1;
+      });
+      let temp2 = temp.filter((e, i) => {
+        if (designState[currentPage].includes(i + 1)) return true;
+      });
+      currentQuestions = temp2;
+    } else {
+      currentQuestions = offlineFormData.map((e, i) => {
+        return i + 1;
+      });
+      setDesign([[...currentQuestions]]);
+    }
+
+
     let c = 0;
     for (let i = 0; i < currentQuestions.length; i++) {
       if (
@@ -472,36 +493,6 @@ function OnBoardingOffline(props: QuestLoginProps) {
 
   const [wd, setWd] = useState(0);
 
-  // const ProgressBarNew = () =>{
-  //     return ( <div className="q_onb_progress">
-  //     {progress?.map((text, i) => {
-  //         const isFilled = steps.includes(i);
-  //         const isActive = currentPage === i;
-  //         let color = isFilled ? '#098849' : isActive ? '#2C2C2C' : '#6E6E6E';
-  //         let border = `1px solid ${isFilled ? '#098849' : isActive ? '#2C2C2C' : '#6E6E6E'}`;
-
-  //       return (
-  //           <div
-  //               style={{
-  //                   width: `${100 / progress.length}%`,
-  //                   color,
-  //                   border,
-  //               }}
-  //               onClick={() => {
-  //                   if (isFilled && (i <= currentPage + 1)) {
-  //                       setCurrentPage(i);
-  //                   }
-  //               }
-  //               }
-  //               className="q_onb_progress_tab"
-  //               key={i}
-  //           >
-  //               {text}
-  //           </div>
-  //       );
-  //     })}
-  //   </div>)
-  // }
 
   const ProgressBar = () => {
     useEffect(() => {
@@ -996,19 +987,39 @@ function OnBoardingOffline(props: QuestLoginProps) {
       "onboarding_offline"
     );
 
-    let crt: any = { ...answer };
-    for (let i of Object.keys(crt)) {
-      if (i.includes("/manual") && crt[i] != "") {
-        let id: string = i.split("/manual")[0];
-        let criteriaDetails: offlineFormData[] = offlineFormData.filter(
-          (item) => item.criteriaId == id
-        );
-        if (criteriaDetails[0].manualInput == crt[id]) {
-          crt[id] = crt[i];
+    
+    if (currentPage < designState.length - 1) {
+      console.log("no submit");
+      setCurrentPage((prev) => prev + 1);
+    } else {
+      let crt: any = { ...answer };
+      for (let i of Object.keys(crt)) {
+        if (i.includes("/manual") && crt[i] != "") {
+          let id: string = i.split("/manual")[0];
+          let criteriaDetails: offlineFormData[] = offlineFormData.filter(
+            (item) => item.criteriaId == id
+          );
+          if (criteriaDetails[0].manualInput == crt[id]) {
+            crt[id] = crt[i];
+          }
         }
       }
+      getAnswers && getAnswers(crt);
     }
-    getAnswers && getAnswers(crt);
+
+    // let crt: any = { ...answer };
+    // for (let i of Object.keys(crt)) {
+    //   if (i.includes("/manual") && crt[i] != "") {
+    //     let id: string = i.split("/manual")[0];
+    //     let criteriaDetails: offlineFormData[] = offlineFormData.filter(
+    //       (item) => item.criteriaId == id
+    //     );
+    //     if (criteriaDetails[0].manualInput == crt[id]) {
+    //       crt[id] = crt[i];
+    //     }
+    //   }
+    // }
+    // getAnswers && getAnswers(crt);
     // let ansArr: Answer[] = offlineofflineFormData.map((ans: offlineofflineFormData) => {
     //     return {
     //         question: ans?.question,
@@ -1062,7 +1073,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
             QuestThemeData?.borderRadius ||
             BrandTheme?.borderRadius,
           height: styleConfig?.Form?.height || "auto",
-          fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+          fontFamily:BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
           ...styleConfig?.Form,
         }}
       >
@@ -1151,9 +1162,11 @@ function OnBoardingOffline(props: QuestLoginProps) {
               offlineFormData.length > 0 &&
               designState.length > 1 &&
               !!progress?.length && <ProgressBar />}
-            {!!designState && designState.length > 0 && checkDesignCriteria()
+
+            {/* {!!designState && designState.length > 0 && checkDesignCriteria() */}
+            {!!designState && designState.length > 0 
               ? designState[currentPage].map((num: number) =>
-                  offlineFormData[num - 1].type == "USER_INPUT_TEXT"
+                  offlineFormData[num - 1]?.type == "USER_INPUT_TEXT"
                     ? normalInput(
                         offlineFormData[num - 1]?.question || "",
                         offlineFormData[num - 1]?.required || false,
@@ -1164,7 +1177,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                           "",
                         "text"
                       )
-                    : offlineFormData[num - 1].type == "USER_INPUT_EMAIL"
+                    : offlineFormData[num - 1]?.type == "USER_INPUT_EMAIL"
                     ? normalInput(
                         offlineFormData[num - 1]?.question || "",
                         offlineFormData[num - 1]?.required || false,
@@ -1175,7 +1188,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                           "",
                         "email"
                       )
-                    : offlineFormData[num - 1].type == "USER_INPUT_PHONE"
+                    : offlineFormData[num - 1]?.type == "USER_INPUT_PHONE"
                     ? normalInput(
                         offlineFormData[num - 1]?.question || "",
                         offlineFormData[num - 1]?.required || false,
@@ -1186,7 +1199,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                           "",
                         "number"
                       )
-                    : offlineFormData[num - 1].type == "USER_INPUT_TEXTAREA"
+                    : offlineFormData[num - 1]?.type == "USER_INPUT_TEXTAREA"
                     ? textAreaInput(
                         offlineFormData[num - 1]?.question || "",
                         offlineFormData[num - 1]?.required || false,
@@ -1196,7 +1209,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                           offlineFormData[num - 1]?.question ||
                           ""
                       )
-                    : offlineFormData[num - 1].type == "USER_INPUT_DATE"
+                    : offlineFormData[num - 1]?.type == "USER_INPUT_DATE"
                     ? dateInput(
                         offlineFormData[num - 1]?.question || "",
                         offlineFormData[num - 1]?.required || false,
@@ -1206,7 +1219,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                           offlineFormData[num - 1]?.question ||
                           ""
                       )
-                    : offlineFormData[num - 1].type ==
+                    : offlineFormData[num - 1]?.type ==
                       "USER_INPUT_SINGLE_CHOICE"
                     ? !!singleChoose &&
                       singleChoiceTwo(
@@ -1218,17 +1231,17 @@ function OnBoardingOffline(props: QuestLoginProps) {
                         offlineFormData[num - 1]?.manualInput,
                         singleChoose
                       )
-                    : offlineFormData[num - 1].type == "USER_INPUT_MULTI_CHOICE"
+                    : offlineFormData[num - 1]?.type == "USER_INPUT_MULTI_CHOICE"
                     ? !!multiChoice && multiChoice == "modal2"
                       ? multiChoiceTwo(
-                          offlineFormData[num - 1].options || [],
+                          offlineFormData[num - 1]?.options || [],
                           offlineFormData[num - 1]?.question || "",
                           offlineFormData[num - 1]?.required || false,
                           offlineFormData[num - 1].criteriaId || "",
                           num - 1
                         )
                       : multiChoiceOne(
-                          offlineFormData[num - 1].options || [],
+                          offlineFormData[num - 1]?.options || [],
                           offlineFormData[num - 1]?.question || "",
                           offlineFormData[num - 1]?.required || false,
                           offlineFormData[num - 1].criteriaId || "",
@@ -1309,10 +1322,12 @@ function OnBoardingOffline(props: QuestLoginProps) {
                         )
                     : null
                 )}
+
             {offlineFormData.length > 0 &&
               (!!designState &&
-              designState.length > 1 &&
-              checkDesignCriteria() ? (
+              // designState.length > 1 &&
+              // checkDesignCriteria() ? (
+              designState.length > 1 ? (
                 controlBtnType == "Buttons" ? (
                   <div className="q-onb-main-criteria">
                     {currentPage > 0 && (
