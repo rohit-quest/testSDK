@@ -100,7 +100,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
   return (
     <FeedbackWorkflowOffline
       // contactUrl="https://calendly.com/sriya-persana/30min"
-    
+
       isOpen={true}
       // onClose={() => setIsOpen(!isOpen)}
       showFooter={true}
@@ -109,29 +109,34 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
         // Description: { color: 'red' },
         // listDescription:{color:'yellow'}
         Heading: { color: "red" },
+        PrimaryButton: {
+          color: "red"
+        },
+        Form: {
+          color: "red"
+        },
         // listHeading: { color: 'blue' },
-
       }}
-      QuestThemeData={{
-        accentColor: "blue",
-        theme: "light",
-        borderRadius: "16px",
-        buttonColor: "blue",
-        images: [],
-      }}
-      BrandTheme={{
-        accentColor: "blue",
-        background: "black",
-        borderRadius: "10px",
-        buttonColor: "yellow",
-        contentColor: "yellow",
-        fontFamily: "Cursive",
-        logo: "",
-        primaryColor: "white",
-        secondaryColor: "grey",
-        tertiaryColor: "white",
-        titleColor: "yellow",
-      }}  
+      // QuestThemeData={{
+      //   // accentColor: "blue",
+      //   // theme: "light",
+      //   // borderRadius: "16px",
+      //   // buttonColor: "blue",
+      //   // images: [],
+      // }}
+      // BrandTheme={{
+      //   // accentColor: "blue",
+      //   // background: "black",
+      //   // borderRadius: "10px",
+      //   // buttonColor: "yellow",
+      //   // contentColor: "yellow",
+      //   // fontFamily: "Cursive",
+      //   // logo: "",
+      //   // primaryColor: "white",
+      //   // secondaryColor: "grey",
+      //   // tertiaryColor: "white",
+      //   // titleColor: "yellow",
+      // }}  
 
       contactUrl="https://calendly.com/sriya-persana/30min"
       // GeneralFeedback={{
