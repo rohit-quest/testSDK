@@ -312,6 +312,7 @@ export default function HelpHubPreview({ online = true }) {
           }
           userId="u-4cc510a4-e670-4ed3-abe3-c351c19bb992"
           questId="q-bdc4b8e7-1c8b-45f8-96fe-a2ae3f17fad9"
+          // helphubPosition="USER_CHOICE"
           // onlineComponent={online}
           // contentConfig={{
           //   Chat: {
@@ -353,7 +354,7 @@ export default function HelpHubPreview({ online = true }) {
           styleConfig={{
             Main: {
               height: "700px",
-              width: "400px",
+              // width: "400px",
             },
             // Chat: {
             //   Card: {

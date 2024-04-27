@@ -69,9 +69,12 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   const [selectedConversationId, setSelectedConversationId] =
     useState<string>("");
   const [askSatisfaction, setAskSatisfaction] = useState<boolean>(false);
+  const [notSatisfiedQuestion, setNotSatisfiedQuestion] = useState<boolean>(false);
   const [onlyAdminReply, setOnlyAdminReply] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [fetchData, setFetchData] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>("");
+  const [adminMsg, setAdminMsg] = useState<boolean>(false);
 
   const storeLastChat = (chatHistory: MessageTypes[]) => {
     let lastSeenRecord: { [key: string]: string } = JSON.parse(
@@ -82,6 +85,29 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     });
     localStorage.setItem("lastSeenRecord", JSON.stringify(lastSeenRecord));
   };
+
+  const satisfiedDecision = (isSatisfied: boolean) => {
+    if (isSatisfied) {
+      handleSatisfied(true);
+    } else {
+      setNotSatisfiedQuestion(true);
+      setAskSatisfaction(false);
+    }
+  }
+
+  const ifNotSatisfied = (option: string) => {
+    if (option == "option1") {
+      sendMessageFunc("I need more details")
+      setNotSatisfiedQuestion(false);
+    } else {
+      handleSatisfied(false);
+      setNotSatisfiedQuestion(false);
+      setAdminMsg(true);
+      setTimeout(() => {
+        setAdminMsg(false);
+      }, 2500);
+    }
+  }
 
   const handleSatisfied = async (isSatisfied: boolean) => {
     let satisfiedResponse = await satisfyOrNot(
@@ -116,81 +142,112 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   };
 
   useEffect(() => {
-    let updateChat =
-      chat?.filter((ele) => ele.conversationId == selectedConversationId) || [];
+    let updateChat = chat?.filter((ele) => ele.conversationId == selectedConversationId) || [];
     if (updateChat?.length > 0) {
       setOnlyAdminReply(updateChat[0]?.onlyAdminReply);
     }
   }, [data]);
 
-  const handleSave = () => {
-    const sendMessageFunc = async (message: string) => {
-      setSenderMessageLoading(true);
-      let userChat: Conversation = {
-        senderRole: "USER",
-        _id: new Date().toISOString(),
-        senderId: userId || "",
-        content: message,
-        timestamp: new Date().toISOString(),
-      };
-      setData((data: Conversation[]) => [...data, userChat]);
-      let updateLastChat: MessageTypes[] | [] =
+  async function sendMessageFunc (message: string) {
+    setSenderMessageLoading(true);
+    let userChat: Conversation = {
+      senderRole: "USER",
+      _id: new Date().toISOString(),
+      senderId: userId || "",
+      content: message,
+      timestamp: new Date().toISOString(),
+    };
+    setData((data: Conversation[]) => [...data, userChat]);
+    let updateLastChat: MessageTypes[] | [] = chat || [];
+    if (selectedConversationId) {
+      updateLastChat = chat?.map((ele) => {
+        if (ele.conversationId == selectedConversationId) {
+          return {
+            ...ele,
+            conversations: userChat,
+          };
+        } else {
+          return ele;
+        }
+      }) || [];
+      setChat(updateLastChat);
+      storeLastChat(updateLastChat || []);
+    }
+
+    let sendMessageResponse = await sendMessage(
+      BACKEND_URL,
+      entityId,
+      userId,
+      token,
+      apiKey,
+      message,
+      selectedConversationId
+    );
+
+    if (sendMessageResponse?.data?.replied) {
+      if (!selectedConversationId) {
+        setSelectedConversationId(sendMessageResponse?.data?.conversationData?.conversationId);
+      }
+      let conId = selectedConversationId || sendMessageResponse?.data?.conversationData?.conversationId;
+      setData((data) => [...data, sendMessageResponse?.data?.message]);
+      let findData = false;
+      updateLastChat =
         chat?.map((ele) => {
-          if (ele.conversationId == selectedConversationId) {
+          if (ele.conversationId == conId) {
+            findData = true;
             return {
               ...ele,
-              conversations: userChat,
+              conversations: sendMessageResponse?.data?.message,
             };
           } else {
             return ele;
           }
         }) || [];
-      setChat(updateLastChat);
-      storeLastChat(updateLastChat || []);
 
-      let sendMessageResponse = await sendMessage(
-        BACKEND_URL,
-        entityId,
-        userId,
-        token,
-        apiKey,
-        message,
-        selectedConversationId
-      );
-
-      if (sendMessageResponse?.data?.replied) {
-        setData((data) => [...data, sendMessageResponse?.data?.message]);
-
-        let findData = false;
-        updateLastChat =
-          chat?.map((ele) => {
-            if (ele.conversationId == selectedConversationId) {
-              findData = true;
-              return {
-                ...ele,
-                conversations: sendMessageResponse?.data?.message,
-              };
-            } else {
-              return ele;
-            }
-          }) || [];
-
-        if (!findData) {
-          let newChat = sendMessageResponse?.data?.conversationData;
-          newChat.conversations = sendMessageResponse?.data?.message;
-          updateLastChat = [...updateLastChat, newChat];
-        }
-        
-
-        // if (sendMessageResponse?.data?.askSatisfaction) {
-        //   setAskSatisfaction(true);
-        // }
+      if (!findData) {
+        let newChat = sendMessageResponse?.data?.conversationData;
+        newChat.conversations = sendMessageResponse?.data?.message;
+        updateLastChat = [...updateLastChat, newChat];
       }
+    }
 
-      setChat(updateLastChat);
-      storeLastChat(updateLastChat || []);
-      setSenderMessageLoading((prev) => !prev);
-    };
+    if (!!sendMessageResponse?.data?.conversationData?.title && !title) {
+      setTitle(sendMessageResponse?.data?.conversationData?.title);
+      updateLastChat =
+        chat?.map((ele) => {
+          if (ele.conversationId == selectedConversationId) {
+            return {
+              ...ele,
+              title: sendMessageResponse?.data?.conversationData?.title,
+            };
+          } else {
+            return ele;
+          }
+        }) || [];
+    }
+
+    setChat(updateLastChat);
+    storeLastChat(updateLastChat || []);
+    setSenderMessageLoading((prev) => !prev);
+
+    let askSatisfaction: { [key: string]: number } = JSON.parse(
+      localStorage.getItem("askSatisfaction") || "{}"
+    );
+    
+    if (!askSatisfaction[selectedConversationId]) {
+      askSatisfaction[selectedConversationId] = 1;
+    } else {
+      askSatisfaction[selectedConversationId] += 1;
+    }
+
+    if (askSatisfaction[selectedConversationId] >= 3) {
+      setAskSatisfaction(true);
+      askSatisfaction[selectedConversationId] = 0;
+    }
+    localStorage.setItem("askSatisfaction", JSON.stringify(askSatisfaction));
+  };
+
+  const handleSave = () => {
 
     if (selectedFile) {
       const uploadFile = async () => {
@@ -217,8 +274,6 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     setMessage("");
   };
 
-  useEffect(() => {}, [selectedFile]);
-
   const inputFileChangeHandler = (event: any) => {
     if (event.target.files[0]) {
       setSelectedFile(event.target.files[0]);
@@ -230,7 +285,6 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     const headerElement = document.getElementById("helpHub");
     if (headerElement && scrollRef.current) {
       const headerHeight = headerElement.clientHeight;
-      // scrollRef.current.style.height = headerHeight - 228 + "px";
       scrollRef.current.style.height = headerHeight - 191 + "px";
     }
   };
@@ -252,7 +306,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     if (conversationId) {
       setLoading(true);
       setSelectedConversationId(conversationId);
-      let getResult: { data: { conversations: Conversation[] } } =
+      let getResult: { data: { conversations: Conversation[], title?: string } } =
         await getMessages(
           BACKEND_URL,
           entityId,
@@ -263,6 +317,9 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
         );
       setData(getResult?.data?.conversations);
       setLoading(false);
+      if (!!getResult?.data?.title && !title) {
+        setTitle(getResult?.data?.title);
+      }
     } else {
       setFetchData(true);
       let getResult: { data: MessageTypes[] } = await getMessages(
@@ -277,19 +334,14 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
       setFetchData(false);
     }
   };
+
   useEffect(() => {
     getMessagesHistory("");
   }, []);
-  const [updateOutAnimation, setUpdateOutAnimation] = useState<boolean | null>(
-    null
-  );
-  const [updateOneoutAnimation, setUpdateOneOutAnimation] = useState<
-    boolean | null
-  >(null);
 
-  const [updateOutTempAnimation, setUpdateOutTempAnimation] = useState<
-    boolean | null
-  >(null);
+  const [updateOutAnimation, setUpdateOutAnimation] = useState<boolean | null>(null);
+  const [updateOneoutAnimation, setUpdateOneOutAnimation] = useState<boolean | null>(null);
+  const [updateOutTempAnimation, setUpdateOutTempAnimation] = useState<boolean | null>(null);
 
   return (
     <>
@@ -370,36 +422,23 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                   <div className="q-helphub-chats-section">
                     {/* only one chat */}
 
-                    {chat?.map((value, index) => {
+                    {chat?.map((value: MessageTypes, index: number) => {
                       return (
                         <div
                           className="q-helphub-chat-detail"
-                          // onClick={() => {
-                          //   setShowBottomNavigation(false);
-                          //   setShowPersonalChat((prev) => !prev);
-                          //   setScrollWidthSet((prev) => !prev);
-
-                          // }}
+                          key={index}
                           onClick={() => {
-                            // setShowBottomNavigation(false);
-                            // setShowPersonalChat((prev) => !prev);
                             setUpdateOutAnimation(true);
                             setScrollWidthSet((prev) => !prev);
                             getMessagesHistory(value?.conversationId);
-                            // setUpdateOneData(value);
-
                             setTimeout(() => {
                               setShowPersonalChat((prev) => !prev);
-                              // setshowOneUpdate((prev) => !prev);
                               setShowBottomNavigation((prev) => !prev);
                               setUpdateOneOutAnimation(false);
                               setScrollWidthSet((prev) => !prev);
                             }, 100);
                           }}
                         >
-                          {/* <div className="q-helphub-chat-sender-profile">
-                        {value.profile}
-                      </div> */}
                           <img
                             src={entityImage || SenderImg}
                             alt=""
@@ -414,7 +453,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                                 ...styleConfig?.Chat?.Card?.Heading,
                               }}
                             >
-                              {entityName || "Chat with AI"}
+                              {value?.title || entityName || "Chat with AI"}
                             </div>
                             <div
                               className="q-helphub-chat-sender-message"
@@ -429,10 +468,6 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
 
                           <button
                             className="q-helphub-chat-btn"
-                            // onClick={() => {
-                            //   setShowBottomNavigation(false);
-                            //   setShowPersonalChat((prev) => !prev);
-                            // }}
                           >
                             <img src={OpenSectionButton} alt="" />
                           </button>
@@ -457,11 +492,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                 onClick={() => {
                   setUpdateOutAnimation(true);
                   setScrollWidthSet((prev) => !prev);
-
-                  // setUpdateOneData(value);
-
                   setTimeout(() => {
-                    // setshowOneUpdate((prev) => !prev);
                     setData([]);
                     setSelectedConversationId("");
                     setShowPersonalChat((prev) => !prev);
@@ -469,10 +500,6 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                     setUpdateOneOutAnimation(false);
                     setScrollWidthSet((prev) => !prev);
                   }, 100);
-
-                  // setShowBottomNavigation(false);
-                  // setShowPersonalChat(true);
-                  // setScrollWidthSet((prev) => !prev);
                 }}
                 style={{
                   background: themeConfig?.buttonColor,
@@ -481,28 +508,19 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                 <p
                   style={{
                     fontFamily: themeConfig?.fontFamily,
-                    // ...styleConfig?.Home?.Button,
                   }}
                 >
                   Send New Message
                 </p>
                 <img src={SendMessageAero} alt="" />
               </div>
-              {/* <div >
-                
-              </div> */}
             </div>
-
-            {/* personal chat one to one  */}
           </div>
         </div>
       )}
 
       {showPersonalChat && (
         <div
-          // className={`quest-personal-chat-cont ${
-          //   showPersonalChat ? "animatedComponentIn" : "animatedComponentOut"
-          // }`}
           className={`quest-personal-chat-cont ${
             !updateOneoutAnimation ? "updateOneIn" : "updateOneOut"
           }`}
@@ -513,24 +531,19 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
               <div
                 className="quest-back-btn"
                 style={{ cursor: "pointer" }}
-                // onClick={() => {
-                //   setShowBottomNavigation(true);
-                //   setShowPersonalChat(false);
-                //   setScrollWidthSet((prev) => !prev);
-                // }}
                 onClick={() => {
-                  // setShowBottomNavigation(true);
-                  // setShowPersonalChat(false);
                   setOnlyAdminReply(false);
                   setData([]);
                   setAskSatisfaction(false);
+                  setNotSatisfiedQuestion(false);
+                  setTitle("");
+                  setAdminMsg(false);
                   setScrollWidthSet((prev) => !prev);
                   setUpdateOneOutAnimation((prev) => !prev);
                   setUpdateOutTempAnimation(true);
                   setTimeout(() => {
                     setShowBottomNavigation(true);
                     setUpdateOutAnimation(false);
-                    // setScrollWidthSet((prev) => !prev);
                     setShowPersonalChat(false);
                   }, 250);
                 }}
@@ -542,10 +555,9 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                 style={{
                   fontFamily: themeConfig?.fontFamily,
                   color: themeConfig?.primaryColor,
-                  // ...styleConfig?.Tasks?.Card?.SubHeading,
                 }}
               >
-                Questlabs chats
+                {title || entityName}
               </div>
             </div>
             <img src={InfoButton} />
@@ -560,7 +572,6 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                     style={{
                       fontFamily: themeConfig?.fontFamily,
                       color: themeConfig?.primaryColor,
-                      // ...styleConfig?.Tasks?.Card?.SubHeading,
                     }}
                   >
                     How can we help?
@@ -570,7 +581,6 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                     style={{
                       fontFamily: themeConfig?.fontFamily,
                       color: themeConfig?.secondaryColor,
-                      // ...styleConfig?.Tasks?.Card?.SubHeading,
                     }}
                   >
                     Currently replying in under a minute
@@ -586,7 +596,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                   >
                     <img src={entityImage || QuestWhiteLogo} />
                   </div>
-                  <div
+                  {/* <div
                     className="q-chat-personal-container-body-icons-img1"
                     style={{ marginLeft: "-15px", zIndex: 2 }}
                   >
@@ -598,7 +608,8 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                     style={{ marginLeft: "-15px", zIndex: 1 }}
                   >
                     <img src={ChatWoman} />
-                  </div>
+                  </div> */}
+                  <p>AI</p>
                 </div>
               </div>
             )}
@@ -666,16 +677,31 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                     <img
                       src={likeImg}
                       alt=""
-                      onClick={() => handleSatisfied(true)}
+                      onClick={() => satisfiedDecision(true)}
                     />
                     <img
                       src={dislikeImg}
                       alt=""
-                      onClick={() => handleSatisfied(false)}
+                      onClick={() => satisfiedDecision(false)}
                     />
                   </div>
                 </div>
               )}
+              {
+                notSatisfiedQuestion &&
+                <div className="q-helphub-satisfied2">
+                  <p onClick={() => ifNotSatisfied("option1")}>Require more details?</p>
+                  <p onClick={() => ifNotSatisfied("option2")}>Prefer assistance from an admin?</p>
+                </div>
+              }
+              {
+                adminMsg &&
+                <div className="q-helphub-satisfied" id="q-helphub-satisfied-admin-reply">
+                  <p>
+                    Please wait, Admin will get back to you soon.
+                  </p>
+                </div>
+              }
               {senderMessageLoading && !onlyAdminReply && (
                 <div className="chat-bubble">
                   <div className="typing">
@@ -734,7 +760,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                         fontSize: "14px",
                         fontStyle: "normal",
                         fontWeight: 500,
-                        lineHeight: "20px" /* 142.857% */,
+                        lineHeight: "20px",
                         textDecorationLine: "underline",
                       }}
                     >
@@ -760,9 +786,6 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                     <img src={Mic} />
                   </div>
                 )}
-                {/* {selectedFileName ? "View" : <img src={SendMessageEmojiIcon} />}
-                {selectedFileName ? "|" : <img src={Mic} />} */}
-
                 <div className="attach-file">
                   {!selectedFileName ? (
                     <label htmlFor="profile-img">

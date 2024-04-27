@@ -3,7 +3,7 @@ import helpIcon from "../../assets/images/helphubMessge.svg";
 import "./HelpHub.css";
 import QuestContext from "../QuestWrapper";
 import HelphubSvg from "./HelphubSvg";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import HelpHubHome from "./HelpHubHome";
 import HelpHubChat from "./HelpHubChat";
 import HelpHubHelp from "./HelpHubHelp";
@@ -22,6 +22,8 @@ import {
 import config from "../../config";
 import messagesIcon from "../../assets/images/messages.svg";
 import addIcon from "../../assets/images/add.svg";
+import resize from "../../assets/images/resize.png";
+import resize2 from "../../assets/images/resize2.png";
 
 const HelpHub = (props: HelpHubProps) => {
   const {
@@ -33,6 +35,7 @@ const HelpHub = (props: HelpHubProps) => {
     styleConfig,
     contentConfig,
     showFooter,
+    helphubPosition = "USER_CHOICE",
   } = props;
 
   const { apiKey, entityId, featureFlags, apiType, themeConfig } = useContext(
@@ -43,7 +46,7 @@ const HelpHub = (props: HelpHubProps) => {
   const [selectedSection, setSelectedSection] = useState("Home");
   const [prevSelectedSection, setPrevSelectedSection] = useState("");
 
-  const [helpHub, setHelpHub] = useState(true);
+  const [helpHub, setHelpHub] = useState(false);
   const [parentQuest, setParentQuest] = useState<QuestTypes>();
   const [chieldQuestCriteria, setChieldQuestCriteria] = useState<
     QuestCriteriaWithStatusType[][]
@@ -60,6 +63,31 @@ const HelpHub = (props: HelpHubProps) => {
   );
   const [entityImage, setEntityImage] = useState<string>("");
   const [entityName, setEntityName] = useState<string>("");
+  const [position, setPosition] = useState<string>("SIDEBAR");
+
+
+  const getPositionInLocal = async () => {
+    let position = localStorage.getItem("helphubPosition");
+    if (position) {
+      setPosition(position);
+    } else {
+      setPosition("SIDEBAR");
+    }
+  }
+
+  const setPositionInLocal = (position: string) => {
+    localStorage.setItem("helphubPosition", position);
+    setPosition(position);
+  }
+
+  useEffect(() => {
+    if (helphubPosition != "USER_CHOICE") {
+      setPosition(helphubPosition)
+    } else {
+      getPositionInLocal();
+    }
+  }, [])
+
 
   useEffect(() => {
     setTaskStatus(
@@ -239,13 +267,29 @@ const HelpHub = (props: HelpHubProps) => {
     setPrevSelectedSection(selectedSection);
   }, [selectedSection]);
 
+  const box_ref = useRef<HTMLDivElement>(null);
+  const trigger_ref = useRef<HTMLDivElement>(null);
+  const closeModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    let target = e.target as Element;
+    if (box_ref.current?.contains(target) || trigger_ref.current?.contains(target)) {
+    } else {
+      setHelpHub(false);
+    }
+  };
+
   return (
     <div
       style={{
         fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+        width: (position == 'SIDEBAR' && helpHub) ? "100vw" : "",
+        height: (position == 'SIDEBAR' && helpHub) ? "100vh" : "",
+        position: (position == 'SIDEBAR' && helpHub) ? "fixed" : "static",
+        top: "0",
+        left: "0",
       }}
+      onClick={(e) => closeModal(e)}
     >
-      <div className={"helphubIconUpperCont"}>
+      <div className={"helphubIconUpperCont"} ref={trigger_ref}>
         {/* help button  */}
         <div
           className={"helhubIconCont"}
@@ -262,15 +306,21 @@ const HelpHub = (props: HelpHubProps) => {
             }`}
           />
         </div>
+        {helphubPosition == "USER_CHOICE" && 
+          // <div className="helphub-open-resizeIcon" onClick={() => setPositionInLocal(position == "POPUP" ? "SIDEBAR" : "POPUP")}>
+            <img src={position == "POPUP" ? resize2 : resize} alt="" className="helphub-open-resizeIcon" onClick={() => setPositionInLocal(position == "POPUP" ? "SIDEBAR" : "POPUP")}/>
+          // </div>
+        }
 
         {/* {helpHub && ( */}
         <div
           id="helpHub"
-          className={`helpHubMainCont ${helpHub ? "animated" : ""}`}
+          className={`${position == 'SIDEBAR' ? "helpHubMainCont-sidebar" : "helpHubMainCont"} ${helpHub ? "animated" : ""}`}
           style={{
-            height: styleConfig?.Main?.height,
+            height: position === "SIDEBAR" ? "100vh" : styleConfig?.Main?.height,
             width: styleConfig?.Main?.width,
           }}
+          ref={box_ref}
         >
           {selectedSection === "Home" ? (
             <HelpHubHome

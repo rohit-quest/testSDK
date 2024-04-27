@@ -17,17 +17,18 @@
   height: 64px;
   width: 64px;
   border-radius: 50%;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s cubic-bezier(1, -1.85, 0, 2.18);
   cursor: pointer;
   border-radius: 56px;
   background: var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%));
   box-shadow: -1px -1px 50.3px -1px rgba(144, 53, 255, 0.75);
   padding: 16px;
   box-sizing: border-box;
+  z-index: 1;
 }
 
 .helhubIconCont:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 .helphub-open-addIcon {
@@ -50,13 +51,34 @@
   transform: scale(1) rotate(0deg);
 }
 
+.helphub-open-resizeIcon {
+  position: absolute;
+  /* display: none; */
+  left: -35px;
+  bottom: 16px;
+  width: 42px;
+  height: 32px;
+  padding: 6px 15px 6px 7px;
+  box-sizing: border-box;
+  border-radius: 50px 0px 0px 50px;
+  background: var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%));
+  box-shadow: -1px -1px 50.3px -1px rgba(144, 53, 255, 0.75);
+  transform: translateX(38px);
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.helphubIconUpperCont:hover .helphub-open-resizeIcon {
+  transform: translateX(0px);
+}
+
 .helpHubMainCont {
   position: absolute;
   right: 10px;
   bottom: 80px;
   max-height: 760px;
   width: 400px;
-  height: calc(100vh - 100px);
+  height: calc(100vh - 150px);
   display: flex;
   flex-direction: column;
   border-radius: 12px;
@@ -66,6 +88,28 @@
   opacity: 0;
   transform: translateY(50%) translateX(50%) scale(0);
   transition: all 0.2s ease-in-out;
+  background: #fff;
+  z-index: 2;
+}
+
+.helpHubMainCont-sidebar{
+  position: fixed;
+  right: 0px;
+  bottom: 0px;
+  height: 100vh;
+  width: 450px;
+  /* height: calc(100vh - 100px); */
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  justify-content: space-between;
+  box-shadow: 0px 4px 20px 4px rgba(87, 87, 87, 0.08);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(0) translateX(100%) scale(1);
+  transition: all 0.2s ease-in-out;
+  background: #fff;
+  z-index: 2;
 }
 
 .animated {
@@ -1415,7 +1459,7 @@
 }
 
 .q-helphub-chat-sender-message {
-  height: 32px;
+  height: 16px;
   align-self: stretch;
   overflow: hidden;
   color: var(--Neutral-White-500, #b9b9b9);
@@ -1424,6 +1468,10 @@
   font-style: normal;
   font-weight: 400;
   line-height: 16px;
+}
+
+#q-helphub-satisfied-admin-reply{
+  justify-content: center;
 }
 
 .q-helphub-chat-btn {
@@ -2727,6 +2775,7 @@ input[type="file"] {
   box-sizing: border-box;
   align-self: stretch;
   border-bottom: 1px solid #efefef;
+  align-items: center;
 }
 
 .q-chat-personal-container-body > .text {
@@ -2757,14 +2806,26 @@ input[type="file"] {
 
 .q-chat-personal-container-body-icons {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
+}
+
+.q-chat-personal-container-body-icons > p {
+  font-family: Figtree;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  background: var(--Primary, linear-gradient(84deg, #9035ff 0.36%, #0065ff 100.36%));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .q-chat-personal-container-body-icons-img {
   display: flex;
-  width: var(--40, 40px);
-  height: var(--40, 40px);
+  width: var(--40, 30px);
+  height: var(--40, 30px);
   justify-content: center;
   align-items: center;
   gap: 8px;
@@ -2777,14 +2838,14 @@ input[type="file"] {
 }
 
 .q-chat-personal-container-body-icons-img1 {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
 }
 
 .q-chat-personal-container-body-icons-img1 img {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
 }
 
@@ -3310,7 +3371,7 @@ input[type="file"] {
 }
 
 .q-helphub-satisfied2 > p{
-  color: var(--Neutral-Black-300, #4C4C4C);
+  color: #9035FF;
   font-family: Figtree;
   font-size: 12px;
   font-style: normal;

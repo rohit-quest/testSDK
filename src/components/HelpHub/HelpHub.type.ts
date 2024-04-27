@@ -109,6 +109,7 @@ export interface HelpHubProps {
   // onlineComponent?: boolean;
   claimStatusUpdates?: string[] | [];
   setClaimStatusUpdates?: Dispatch<SetStateAction<string[]>>;
+  helphubPosition?: "SIDEBAR" | "POPUP" | "USER_CHOICE" ;
 }
 export interface HelpHubPropsOffline {
   Main?: {
@@ -288,6 +289,7 @@ export type Conversation = {
 
 export interface MessageTypes {
   createdAt: string;
+  title?: string;
   entityId: string;
   isArchived: boolean;
   isResolved: boolean;
