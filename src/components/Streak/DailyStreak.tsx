@@ -20,10 +20,13 @@ interface Props {
   uniqueEmailId?: string;
   styleConfig?: {
     Form?: React.CSSProperties;
+    Count?:React.CSSProperties;
     Heading?: React.CSSProperties;
     Description?: React.CSSProperties;
     Label?: React.CSSProperties;
     Footer?: React.CSSProperties;
+    IconBackground?:React.CSSProperties;
+    IconColor?:React.CSSProperties
   };
 }
 
@@ -41,7 +44,7 @@ export default function DailyStreak({
   metric = "",
   userId = "",
   token = "",
-  counter = 0,
+  counter = 5,
   stepDetails = defaultStepDetails,
   uniqueEmailId,
   uniqueUserId,
@@ -97,7 +100,15 @@ export default function DailyStreak({
     color: themeConfig.secondaryColor,
     ...(styleConfig?.Description || {}),
   };
-
+  const headingStyle = {
+    color:themeConfig.secondaryColor,
+    ...(styleConfig?.Heading || {})
+  }
+  const countStyle = {
+    color:themeConfig.secondaryColor,
+    ...(styleConfig?.Count || {color:"#9035ff"})
+  }
+  const iconColor = styleConfig?.IconColor || {};
   return (
     <div
       style={{
@@ -110,8 +121,8 @@ export default function DailyStreak({
         className="q_daily_streak"
       >
         <div className="q_steak_days_box">
-          <div className="q_streak_days">{days}</div>
-          <div className="q_steak_days_text" style={descriptionStyle}>
+          <div className="q_streak_days" style={countStyle}>{days}</div>
+          <div className="q_steak_days_text" style={headingStyle}>
             Streak days
           </div>
         </div>
@@ -120,16 +131,16 @@ export default function DailyStreak({
         </div>
         <div className="q_streak_steps">
           {stepDetails.map((step, i) => {
-            const sumOfRanges = stepDetails
-              .slice(0, i + 1)
-              .reduce((sum, s) => sum + s.range, 0);
+            const sumOfRanges = stepDetails.slice(0, i + 1).reduce((sum, s) => sum + s.range, 0);
             const isActive = sumOfRanges <= days;
             const imgSrc = isActive
-              ? filledStreakImg || streakIcon(true)
-              : pendingStreakImg || streakIcon(false);
+              ? filledStreakImg || streakIcon(true, iconColor||"") // Pass the color parameter
+              : pendingStreakImg || streakIcon(false, iconColor);
             return (
               <div key={i} className={"q_streak_step"}>
-                <div className={"q_img_cont " + (isActive ? "q_img_cont_active" : "q_img_cont_disable")}>
+                <div className={"q_img_cont "}
+                style={{background:isActive?styleConfig?.IconBackground?.background||"#f4ebff":"#fbfbfb"}}
+                >
                   <img src={imgSrc} alt="" />
                 </div>
                 <div
@@ -142,9 +153,9 @@ export default function DailyStreak({
                 </div>
                 <div
                   className={
-                    "q_streak_dot " +
-                    (isActive ? "q_streak_dot_active" : "q_streak_dot_disable")
+                    "q_streak_dot " 
                   }
+                  style={{background:isActive?styleConfig?.IconColor?.color||"#9035ff":"#b9b9b9"}}
                 ></div>
               </div>
             );
