@@ -1,6 +1,5 @@
 .feedbackContainer{
     font-family: var(--fontFamily, Figtree, sans-serif);
-    margin: auto;
     width: 100%;
     max-width: 376px;
     border-radius: 12px;
@@ -257,7 +256,7 @@
     width: 100%;
 }
 .feedbackSuccessContainer > center{
-    padding: 20px;
+    padding: 0px 20px;
 }
 .feedbackSuccessContainer > center h2{
     font-size: 20px;

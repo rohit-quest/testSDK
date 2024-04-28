@@ -1,7 +1,7 @@
 import { QuestProvider } from '../QuestWrapper'
 import InlineFeedback from './InlineFeedback'
 
-export default function Preview({type}: {type: 'numbering' | 'emoji' | 'like' | 'star'}) {
+export default function Preview() {
   return (
     <QuestProvider
         apiSecret={''}
@@ -17,7 +17,7 @@ export default function Preview({type}: {type: 'numbering' | 'emoji' | 'like' | 
           questId={'q-5944f1e4-48d0-499d-8219-f3823735fe55'}
           styleConfig={{Form: {border: '1px solid whitesmoke'}}}
           // type={type}
-          type='emoji'
+          type='like'
         />
     </QuestProvider>
   )
