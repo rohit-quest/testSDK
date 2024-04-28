@@ -201,7 +201,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
     if (showAnnouncement) return onLinkTrigger(url, id);
 
     const json = {
-      criteriaId: id,
+      criteriaId: id
     };
 
     const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${headers.userId}&getVariation=${enableVariation}`;
