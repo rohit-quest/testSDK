@@ -286,6 +286,7 @@ interface feedbackCompProps {
       Description?: string;
       IconSize?: string;
       Icon?: React.CSSProperties;
+      defaultIconBackground ?: string;
     };
     ThanksPopup?: {
       Style?: React.CSSProperties;
@@ -298,7 +299,7 @@ interface feedbackCompProps {
   enableVariation?: boolean
   offlineFormData: FormDataItem[][];
   BrandTheme?: BrandTheme;
-  QuestThemeData?: QuestThemeData;  
+  QuestThemeData?: QuestThemeData;
 }
 interface FormDataItem {
   type?: string;
@@ -335,8 +336,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   styleConfig = {},
   offlineFormData,
   showFooter = true,
-  BrandTheme ,
-  QuestThemeData 
+  BrandTheme,
+  QuestThemeData
 }) => {
   const [selectedOption, setSelectedOption] = useState<optionType | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
@@ -366,7 +367,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     }
   };
   const uploadFileToBackend: any = async (file: any) => {
-  
+
   }
 
   const ref = React.useRef<HTMLDivElement>(null);
@@ -432,7 +433,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   }, []);
 
   const handleOptionClick = (option: optionType) => {
-  
+
 
     if (option === "ContactUs" && contactUrl) {
       window.open(contactUrl, "_blank");
@@ -503,11 +504,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         <Label
           htmlFor={"normalInput"}
           children={question}
-          style={{color : styleConfig?.Label?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.Label}}
+          style={{ color: styleConfig?.Label?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.Label }}
         />
         <Input
           type="text"
-          style={{color: styleConfig?.Input?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.Input}}
+          style={{ color: styleConfig?.Input?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.Input }}
           placeholder={placeholder}
           value={answer[criteriaId]}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
@@ -525,11 +526,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         <Label
           htmlFor={"normalInput"}
           children={question}
-          style={{color : styleConfig?.Label?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.Label}}
+          style={{ color: styleConfig?.Label?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.Label }}
         />
         <Input
           type="email"
-          style={{color: styleConfig?.Input?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.Input}}
+          style={{ color: styleConfig?.Input?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.Input }}
           placeholder={placeholder}
           value={answer[criteriaId]}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
@@ -558,7 +559,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         <Label
           htmlFor={"normalInput"}
           children={question}
-          style={{color : styleConfig?.Label?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.Label}}
+          style={{ color: styleConfig?.Label?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor, ...styleConfig.Label }}
         />
         <TextArea
           onChange={(e) => handleUpdate(e, criteriaId, "")}
@@ -603,6 +604,9 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     }
   };
 
+
+  console.log(styleConfig ,'styleConfig');
+
   return (
     <div>
 
@@ -616,7 +620,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 className="q-fw-div"
                 style={{
                   background:
-                    styleConfig?.Form?.backgroundColor ||  BrandTheme?.background || themeConfig?.backgroundColor,
+                    styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor,
                   height: styleConfig?.Form?.height || "auto",
                   borderRadius: styleConfig?.Form?.borderRadius || QuestThemeData?.borderRadius || BrandTheme?.borderRadius,
                   fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
@@ -631,17 +635,17 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         topbarStyle: styleConfig?.TopBar,
                         headingStyle: {
                           color:
-                            styleConfig?.Heading?.color || 
-                      BrandTheme?.titleColor ||
-                      BrandTheme?.primaryColor ||
-                      themeConfig?.primaryColor,
+                            styleConfig?.Heading?.color ||
+                            BrandTheme?.titleColor ||
+                            BrandTheme?.primaryColor ||
+                            themeConfig?.primaryColor,
                           ...styleConfig?.Heading,
                         },
                         descriptionStyle: {
                           color:
                             styleConfig?.Description?.color ||
                             BrandTheme?.secondaryColor ||
-                      themeConfig?.secondaryColor,
+                            themeConfig?.secondaryColor,
                           ...styleConfig?.Description,
                         },
                       }}
@@ -683,7 +687,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                           handleRemove={handleRemove}
                           ratingStyle={ratingStyle}
                           iconColor={iconColor}
-                          buttonStyle={{background: styleConfig.PrimaryButton?.background || QuestThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor, ...styleConfig.PrimaryButton}}
+                          buttonStyle={{ background: styleConfig.PrimaryButton?.background || QuestThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor, ...styleConfig.PrimaryButton }}
                           PrimaryButtonText={PrimaryButtonText}
                           StarStyle={styleConfig?.Star}
                           labelStyle={styleConfig?.Label}
@@ -709,7 +713,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                           emailInput={emailInput}
                           handleRemove={handleRemove}
                           PrimaryButtonText={PrimaryButtonText}
-                          buttonStyle={{background: styleConfig.PrimaryButton?.background || QuestThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor, ...styleConfig.PrimaryButton}}
+                          buttonStyle={{ background: styleConfig.PrimaryButton?.background || QuestThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor, ...styleConfig.PrimaryButton }}
                         />
                       )}
                       {selectedOption === "RequestFeature" && (
@@ -723,7 +727,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                           answer={answer}
                           handleRemove={handleRemove}
                           PrimaryButtonText={PrimaryButtonText}
-                          buttonStyle={{background: styleConfig.PrimaryButton?.background || QuestThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor, ...styleConfig.PrimaryButton}}
+                          buttonStyle={{ background: styleConfig.PrimaryButton?.background || QuestThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor, ...styleConfig.PrimaryButton }}
                         />
                       )}
                       {selectedOption === "ContactUs" && <div></div>}
@@ -737,53 +741,135 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                     </div>
                     <div className="q-fw-content-box">
                       {/* {questIds[0] && ( */}
-      
+
                       <div
-                          onClick={() => {
-                            GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_general_feedback_clicked", "feedback_workflow_general_feedback");
-                            handleOptionClick("GeneralFeedback")
-                          }
-                          }
-                          className="q-hover q-fw-cards"
-                          onMouseEnter={() =>
-                            setCardHovered([true, false, false, false])
-                          }
-                          onMouseLeave={() =>
-                            setCardHovered([false, false, false, false])
-                          }
+                        onClick={() => {
+                          GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_general_feedback_clicked", "feedback_workflow_general_feedback");
+                          handleOptionClick("GeneralFeedback")
+                        }
+                        }
+                        className="q-hover q-fw-cards"
+                        onMouseEnter={() =>
+                          setCardHovered([true, false, false, false])
+                        }
+                        onMouseLeave={() =>
+                          setCardHovered([false, false, false, false])
+                        }
+                        style={{
+                          background: cardHovered[0]
+                            ? styleConfig.listHover?.background || "#FBFBFB"
+                            : "transparent",
+                          borderRadius: "8px",
+                          ...styleConfig?.Card,
+                        }}
+                      >
+
+                        <div
+                          className="q_feedback_icon"
                           style={{
                             background: cardHovered[0]
-                              ? styleConfig.listHover?.background || "#FBFBFB"
-                              : "transparent",
-                            borderRadius: "8px",
-                            ...styleConfig?.Card,
+                              ? styleConfig.listHover?.iconBackground || "#F4EBFF"
+                              : styleConfig?.listHover?.defaultIconBackground ||  "#FBFBFB",
+                            ...styleConfig?.listHover?.Icon,
                           }}
                         >
-      
-                    <div
-                            className="q_feedback_icon"
-                            style={{
-                              background: cardHovered[0]
-                                ? styleConfig.listHover?.iconBackground || "#F4EBFF"
-                                : "#FBFBFB",
-                              ...styleConfig?.listHover?.Icon,
-                            }}
-                          >
-                            {GeneralFeedback?.iconUrl ? <img className="q_feedback_icon_imgurl" src={GeneralFeedback?.iconUrl} /> : feedback(cardHovered[0]
-                              ? styleConfig.listHover?.iconColor || "#9035FF"
-                              : iconColor, styleConfig.listHover?.IconSize
-                            )}
-                            {/* {feedback(
+                          {GeneralFeedback?.iconUrl ? <img className="q_feedback_icon_imgurl" src={GeneralFeedback?.iconUrl} /> : feedback(cardHovered[0]
+                            ? styleConfig.listHover?.iconColor || "#9035FF"
+                            : styleConfig?.listHover?.Icon?.color || iconColor, styleConfig.listHover?.IconSize
+                          )}
+                          {/* {feedback(
                   cardHovered[0]
                     ? styleConfig.listHover?.iconColor || "#9035FF"
                     : iconColor
                 )} */}
+                        </div>
+                        <div>
+                          <div
+                            className="q-fw-tab-heading"
+                            style={{
+                              color: cardHovered[0]
+                                ? styleConfig?.listHover?.Heading ||
+                                styleConfig.listHeading?.color ||
+                                styleConfig?.Heading?.color ||
+                                BrandTheme?.primaryColor ||
+                                themeConfig?.primaryColor
+                                : styleConfig.listHeading?.color ||
+                                styleConfig?.Heading?.color ||
+                                BrandTheme?.primaryColor ||
+                                themeConfig?.primaryColor,
+                              ...styleConfig?.listHeading,
+                            }}
+                          >
+                            {GeneralFeedback?.heading || "General Feedback"}
                           </div>
+                          <div
+                            className="q-fw-tab-description"
+                            style={{
+                              color: cardHovered[0]
+                                ? styleConfig?.listHover?.Description ||
+                                styleConfig?.listDescription?.color ||
+                                styleConfig?.Description?.color ||
+                                BrandTheme?.secondaryColor ||
+                                themeConfig?.secondaryColor
+                                : styleConfig?.listDescription?.color ||
+                                styleConfig?.Description?.color ||
+                                BrandTheme?.secondaryColor ||
+                                themeConfig?.secondaryColor,
+                              ...styleConfig?.listDescription,
+                            }}
+                          >
+                            {GeneralFeedback?.description ||
+                              "Give general feedback on this page"}
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div
+                        onClick={() => {
+                          GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_report_bug_clicked", "feedback_workflow_report_bug");
+                          handleOptionClick("ReportBug")
+                        }}
+                        className="q-hover q-fw-cards"
+                        onMouseEnter={() =>
+                          setCardHovered([false, true, false, false])
+                        }
+                        onMouseLeave={() =>
+                          setCardHovered([false, false, false, false])
+                        }
+                        style={{
+                          background: cardHovered[1]
+                            ? styleConfig.listHover?.background || "#FBFBFB"
+                            : "transparent",
+                          borderRadius: "8px",
+                          ...styleConfig?.Card,
+                        }}
+                      >
+                        <div
+                          className="q_feedback_icon"
+                          style={{
+                            background: cardHovered[1]
+                              ? styleConfig.listHover?.iconBackground || "#F4EBFF"
+                              : styleConfig?.listHover?.defaultIconBackground ||  "#FBFBFB",
+                            ...styleConfig?.listHover?.Icon,
+                          }}
+                        >
+                          {ReportBug?.iconUrl ? <img className="q_feedback_icon_imgurl" src={ReportBug?.iconUrl} /> : bug(cardHovered[1]
+                            ? styleConfig.listHover?.iconColor || styleConfig?.listHover?.Icon?.color || "#9035FF"
+                            :   styleConfig?.listHover?.Icon?.color || iconColor, styleConfig.listHover?.IconSize)}
+
+                          {/* {bug(
+                  cardHovered[1]
+                    ? styleConfig.listHover?.iconColor || "#9035FF"
+                    : iconColor
+                )} */}
+                        </div>
+                        <div>
                           <div>
                             <div
                               className="q-fw-tab-heading"
                               style={{
-                                color: cardHovered[0]
+                                color: cardHovered[1]
                                   ? styleConfig?.listHover?.Heading ||
                                   styleConfig.listHeading?.color ||
                                   styleConfig?.Heading?.color ||
@@ -796,280 +882,199 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                                 ...styleConfig?.listHeading,
                               }}
                             >
-                              {GeneralFeedback?.heading || "General Feedback"}
+                              {ReportBug?.heading || "Report a Bug"}
                             </div>
+                          </div>
+                          <div>
                             <div
                               className="q-fw-tab-description"
                               style={{
-                                color: cardHovered[0]
+                                color: cardHovered[1]
                                   ? styleConfig?.listHover?.Description ||
                                   styleConfig?.listDescription?.color ||
                                   styleConfig?.Description?.color ||
                                   BrandTheme?.secondaryColor ||
-                            themeConfig?.secondaryColor
+                                  themeConfig?.secondaryColor
                                   : styleConfig?.listDescription?.color ||
                                   styleConfig?.Description?.color ||
                                   BrandTheme?.secondaryColor ||
-                            themeConfig?.secondaryColor,
+                                  themeConfig?.secondaryColor,
                                 ...styleConfig?.listDescription,
                               }}
                             >
-                              {GeneralFeedback?.description ||
-                                "Give general feedback on this page"}
+                              {ReportBug?.description || "Let us know what's broken"}
                             </div>
                           </div>
                         </div>
-                    
-      
-                  <div
-                          onClick={() => {
-                            GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_report_bug_clicked", "feedback_workflow_report_bug");
-                            handleOptionClick("ReportBug")
-                          }}
-                          className="q-hover q-fw-cards"
-                          onMouseEnter={() =>
-                            setCardHovered([false, true, false, false])
-                          }
-                          onMouseLeave={() =>
-                            setCardHovered([false, false, false, false])
-                          }
-                          style={{
-                            background: cardHovered[1]
-                              ? styleConfig.listHover?.background || "#FBFBFB"
-                              : "transparent",
-                            borderRadius: "8px",
-                            ...styleConfig?.Card,
-                          }}
-                        >
-                          <div
-                            className="q_feedback_icon"
-                            style={{
-                              background: cardHovered[1]
-                                ? styleConfig.listHover?.iconBackground || "#F4EBFF"
-                                : "#FBFBFB",
-                              ...styleConfig?.listHover?.Icon,
-                            }}
-                          >
-                            {ReportBug?.iconUrl ? <img className="q_feedback_icon_imgurl" src={ReportBug?.iconUrl} /> : bug(cardHovered[1]
-                              ? styleConfig.listHover?.iconColor || styleConfig?.listHover?.Icon?.color || "#9035FF"
-                              : iconColor, styleConfig.listHover?.IconSize)}
+                      </div>
 
-                            {/* {bug(
-                  cardHovered[1]
-                    ? styleConfig.listHover?.iconColor || "#9035FF"
-                    : iconColor
-                )} */}
-                          </div>
-                          <div>
-                            <div>
-                              <div
-                                className="q-fw-tab-heading"
-                                style={{
-                                  color: cardHovered[1]
-                                    ? styleConfig?.listHover?.Heading ||
-                                    styleConfig.listHeading?.color ||
-                                    styleConfig?.Heading?.color ||
-                                    BrandTheme?.primaryColor ||
-                              themeConfig?.primaryColor
-                                    : styleConfig.listHeading?.color ||
-                                    styleConfig?.Heading?.color ||
-                                    BrandTheme?.primaryColor ||
-                              themeConfig?.primaryColor,
-                                  ...styleConfig?.listHeading,
-                                }}
-                              >
-                                {ReportBug?.heading || "Report a Bug"}
-                              </div>
-                            </div>
-                            <div>
-                              <div
-                                className="q-fw-tab-description"
-                                style={{
-                                  color: cardHovered[1]
-                                    ? styleConfig?.listHover?.Description ||
-                                    styleConfig?.listDescription?.color ||
-                                    styleConfig?.Description?.color ||
-                                    BrandTheme?.secondaryColor ||
-                              themeConfig?.secondaryColor
-                                    : styleConfig?.listDescription?.color ||
-                                    styleConfig?.Description?.color ||
-                                    BrandTheme?.secondaryColor ||
-                              themeConfig?.secondaryColor,
-                                  ...styleConfig?.listDescription,
-                                }}
-                              >
-                                {ReportBug?.description || "Let us know what's broken"}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                 
+                      <div
+                        onClick={() => {
+                          GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_request_feature_clicked", "feedback_workflow_request_feature");
+                          handleOptionClick("RequestFeature")
+                        }
+                        }
+                        className="q-hover q-fw-cards"
+                        onMouseEnter={() =>
+                          setCardHovered([false, false, true, false])
+                        }
+                        onMouseLeave={() =>
+                          setCardHovered([false, false, false, false])
+                        }
+                        style={{
+                          background: cardHovered[2]
+                            ? styleConfig.listHover?.background || "#FBFBFB"
+                            : "transparent",
+                          borderRadius: "8px",
+                          ...styleConfig?.Card,
+                        }}
+                      >
                         <div
-                          onClick={() => {
-                            GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_request_feature_clicked", "feedback_workflow_request_feature");
-                            handleOptionClick("RequestFeature")
-                          }
-                          }
-                          className="q-hover q-fw-cards"
-                          onMouseEnter={() =>
-                            setCardHovered([false, false, true, false])
-                          }
-                          onMouseLeave={() =>
-                            setCardHovered([false, false, false, false])
-                          }
+                          className="q_feedback_icon"
                           style={{
                             background: cardHovered[2]
-                              ? styleConfig.listHover?.background || "#FBFBFB"
-                              : "transparent",
-                            borderRadius: "8px",
-                            ...styleConfig?.Card,
+                              ? styleConfig.listHover?.iconBackground || "#F4EBFF"
+                              : styleConfig?.listHover?.defaultIconBackground ||  "#FBFBFB",
+                            ...styleConfig?.listHover?.Icon,
                           }}
                         >
-                          <div
-                            className="q_feedback_icon"
-                            style={{
-                              background: cardHovered[2]
-                                ? styleConfig.listHover?.iconBackground || "#F4EBFF"
-                                : "#FBFBFB",
-                              ...styleConfig?.listHover?.Icon,
-                            }}
-                          >
-                            {RequestFeature?.iconUrl ? <img className="q_feedback_icon_imgurl" src={RequestFeature?.iconUrl} /> : feature(cardHovered[2]
-                              ? styleConfig.listHover?.iconColor || "#9035FF"
-                              : iconColor, styleConfig.listHover?.IconSize)}
-                            {/* {feature(
+                          {RequestFeature?.iconUrl ? <img className="q_feedback_icon_imgurl" src={RequestFeature?.iconUrl} /> : feature(cardHovered[2]
+                            ? styleConfig.listHover?.iconColor || "#9035FF"
+                            : styleConfig?.listHover?.Icon?.color || iconColor,
+                             styleConfig.listHover?.IconSize)}
+                          {/* {feature(
                   cardHovered[2]
                     ? styleConfig.listHover?.iconColor || "#9035FF"
                     : iconColor
                 )} */}
+                        </div>
+                        <div>
+                          <div>
+                            <div
+                              className="q-fw-tab-heading"
+                              style={{
+                                color: cardHovered[2]
+                                  ? styleConfig?.listHover?.Heading ||
+                                  styleConfig.listHeading?.color ||
+                                  styleConfig?.Heading?.color ||
+                                  themeConfig?.primaryColor ||
+                                  themeConfig?.primaryColor
+                                  : styleConfig.listHeading?.color ||
+                                  styleConfig?.Heading?.color ||
+                                  themeConfig?.primaryColor ||
+                                  themeConfig?.primaryColor,
+                                ...styleConfig?.listHeading,
+                              }}
+                            >
+                              {RequestFeature?.heading || "Request a Feature"}
+                            </div>
                           </div>
                           <div>
-                            <div>
-                              <div
-                                className="q-fw-tab-heading"
-                                style={{
-                                  color: cardHovered[2]
-                                    ? styleConfig?.listHover?.Heading ||
-                                    styleConfig.listHeading?.color ||
-                                    styleConfig?.Heading?.color ||
-                                    themeConfig?.primaryColor ||
-                              themeConfig?.primaryColor
-                                    : styleConfig.listHeading?.color ||
-                                    styleConfig?.Heading?.color ||
-                                    themeConfig?.primaryColor ||
-                              themeConfig?.primaryColor,
-                                  ...styleConfig?.listHeading,
-                                }}
-                              >
-                                {RequestFeature?.heading || "Request a Feature"}
-                              </div>
-                            </div>
-                            <div>
-                              <div
-                                className="q-fw-tab-description"
-                                style={{
-                                  color: cardHovered[2]
-                                    ? styleConfig?.listHover?.Description ||
-                                    styleConfig?.listDescription?.color ||
-                                    styleConfig?.Description?.color ||
-                                    BrandTheme?.secondaryColor ||
-                              themeConfig?.secondaryColor
-                                    : styleConfig?.listDescription?.color ||
-                                    styleConfig?.Description?.color ||
-                                    BrandTheme?.secondaryColor ||
-                              themeConfig?.secondaryColor,
-                                  ...styleConfig?.listDescription,
-                                }}
-                              >
-                                {RequestFeature?.description ||
-                                  "Tell us how we can improve"}
-                              </div>
+                            <div
+                              className="q-fw-tab-description"
+                              style={{
+                                color: cardHovered[2]
+                                  ? styleConfig?.listHover?.Description ||
+                                  styleConfig?.listDescription?.color ||
+                                  styleConfig?.Description?.color ||
+                                  BrandTheme?.secondaryColor ||
+                                  themeConfig?.secondaryColor
+                                  : styleConfig?.listDescription?.color ||
+                                  styleConfig?.Description?.color ||
+                                  BrandTheme?.secondaryColor ||
+                                  themeConfig?.secondaryColor,
+                                ...styleConfig?.listDescription,
+                              }}
+                            >
+                              {RequestFeature?.description ||
+                                "Tell us how we can improve"}
                             </div>
                           </div>
                         </div>
-                     
+                      </div>
+
+                      <div
+                        onClick={() => {
+                          GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_contactus_clicked", "feedback_workflow_contactus");
+                          handleOptionClick("ContactUs")
+                        }}
+                        className="q-hover q-fw-cards"
+                        onMouseEnter={() =>
+                          setCardHovered([false, false, false, true])
+                        }
+                        onMouseLeave={() =>
+                          setCardHovered([false, false, false, false])
+                        }
+                        style={{
+                          background: cardHovered[3]
+                            ? styleConfig.listHover?.background || "#FBFBFB"
+                            : "transparent",
+                          borderRadius: "8px",
+                          ...styleConfig?.Card,
+                        }}
+                      >
                         <div
-                          onClick={() => {
-                            GeneralFunctions.fireTrackingEvent("quest_feedback_workflow_contactus_clicked", "feedback_workflow_contactus");
-                            handleOptionClick("ContactUs")
-                          }}
-                          className="q-hover q-fw-cards"
-                          onMouseEnter={() =>
-                            setCardHovered([false, false, false, true])
-                          }
-                          onMouseLeave={() =>
-                            setCardHovered([false, false, false, false])
-                          }
+                          className="q_feedback_icon"
                           style={{
                             background: cardHovered[3]
-                              ? styleConfig.listHover?.background || "#FBFBFB"
-                              : "transparent",
-                            borderRadius: "8px",
-                            ...styleConfig?.Card,
+                              ? styleConfig.listHover?.iconBackground || "#F4EBFF" 
+                              : styleConfig?.listHover?.defaultIconBackground ||  "#FBFBFB",
+                            ...styleConfig?.listHover?.Icon,
                           }}
                         >
-                          <div
-                            className="q_feedback_icon"
-                            style={{
-                              background: cardHovered[3]
-                                ? styleConfig.listHover?.iconBackground || "#F4EBFF"
-                                : "#FBFBFB",
-                              ...styleConfig?.listHover?.Icon,
-                            }}
-                          >
-                            {ContactUs?.iconUrl ? <img className="q_feedback_icon_imgurl" src={ContactUs?.iconUrl} /> : contact(cardHovered[3]
-                              ? styleConfig.listHover?.iconColor || "#9035FF"
-                              : iconColor, styleConfig.listHover?.IconSize)}
-                            {/* {contact(
+                          {ContactUs?.iconUrl ? <img className="q_feedback_icon_imgurl" src={ContactUs?.iconUrl} /> : contact(cardHovered[3]
+                            ? styleConfig.listHover?.iconColor || "#9035FF"
+                             : styleConfig?.listHover?.Icon?.color || iconColor, styleConfig.listHover?.IconSize)}
+                          {/* {contact(
                   cardHovered[3]
                     ? styleConfig.listHover?.iconColor || "#9035FF"
                     : iconColor
                 )} */}
+                        </div>
+                        <div>
+                          <div>
+                            <div
+                              className="q-fw-tab-heading"
+                              style={{
+                                color: cardHovered[3]
+                                  ? styleConfig?.listHover?.Heading ||
+                                  styleConfig.listHeading?.color ||
+                                  styleConfig?.Heading?.color ||
+                                  BrandTheme?.primaryColor ||
+                                  themeConfig?.primaryColor
+                                  : styleConfig.listHeading?.color ||
+                                  styleConfig?.Heading?.color ||
+                                  BrandTheme?.primaryColor ||
+                                  themeConfig?.primaryColor,
+                                ...styleConfig?.listHeading,
+                              }}
+                            >
+                              {ContactUs?.heading || "Contact us"}
+                            </div>
                           </div>
                           <div>
-                            <div>
-                              <div
-                                className="q-fw-tab-heading"
-                                style={{
-                                  color: cardHovered[3]
-                                    ? styleConfig?.listHover?.Heading ||
-                                    styleConfig.listHeading?.color ||
-                                    styleConfig?.Heading?.color ||
-                                    BrandTheme?.primaryColor ||
-                              themeConfig?.primaryColor
-                                    : styleConfig.listHeading?.color ||
-                                    styleConfig?.Heading?.color ||
-                                    BrandTheme?.primaryColor ||
-                              themeConfig?.primaryColor,
-                                  ...styleConfig?.listHeading,
-                                }}
-                              >
-                                {ContactUs?.heading || "Contact us"}
-                              </div>
-                            </div>
-                            <div>
-                              <div
-                                style={{
-                                  color: cardHovered[3]
-                                    ? styleConfig?.listHover?.Description ||
-                                    styleConfig?.listDescription?.color ||
-                                    styleConfig?.Description?.color ||
-                                    BrandTheme?.secondaryColor ||
-                              themeConfig?.secondaryColor
-                                    : styleConfig?.listDescription?.color ||
-                                    styleConfig?.Description?.color ||
-                                    BrandTheme?.secondaryColor ||
-                              themeConfig?.secondaryColor,
-                                  ...styleConfig?.listDescription,
-                                }}
-                                className="q-fw-tab-description"
-                              >
-                                {ContactUs?.description || "Tell us how we can help"}
-                              </div>
+                            <div
+                              style={{
+                                color: cardHovered[3]
+                                  ? styleConfig?.listHover?.Description ||
+                                  styleConfig?.listDescription?.color ||
+                                  styleConfig?.Description?.color ||
+                                  BrandTheme?.secondaryColor ||
+                                  themeConfig?.secondaryColor
+                                  : styleConfig?.listDescription?.color ||
+                                  styleConfig?.Description?.color ||
+                                  BrandTheme?.secondaryColor ||
+                                  themeConfig?.secondaryColor,
+                                ...styleConfig?.listDescription,
+                              }}
+                              className="q-fw-tab-description"
+                            >
+                              {ContactUs?.description || "Tell us how we can help"}
                             </div>
                           </div>
                         </div>
-                    
+                      </div>
+
                     </div>
                     <div>{showFooter && <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />}</div>
                   </div>
@@ -1083,11 +1088,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 className="q-fw-div"
                 style={{
                   background:
-                    styleConfig?.ThanksPopup?.Style?.background ||  styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor,
+                    styleConfig?.ThanksPopup?.Style?.background || styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor,
                   height: styleConfig?.ThanksPopup?.Style?.height || styleConfig?.Form?.height || "auto",
                   fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
                   borderRadius: styleConfig?.Form?.borderRadius || QuestThemeData?.borderRadius || BrandTheme?.borderRadius,
-            ...styleConfig?.ThanksPopup?.Style,
+                  ...styleConfig?.ThanksPopup?.Style,
                 }}
                 id="disabledClick">
                 <div className="q_submit_cross_icon" onClick={handleThanks}>
@@ -1104,7 +1109,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                             color:
                               styleConfig?.Heading?.color ||
                               BrandTheme?.primaryColor ||
-                        themeConfig?.primaryColor,
+                              themeConfig?.primaryColor,
                             ...styleConfig?.ThanksPopup?.Heading,
                           }}
                         >
@@ -1116,7 +1121,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                             color:
                               styleConfig?.Description?.color ||
                               BrandTheme?.secondaryColor ||
-                        themeConfig?.secondaryColor,
+                              themeConfig?.secondaryColor,
                             ...styleConfig?.ThanksPopup?.Description,
                           }}
                         >
@@ -1127,7 +1132,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       <div className="q_fw_submit_back" style={{ ...styleConfig?.SecondaryButton }}>{SecondaryButtonText}</div>
                     </div>
                   </div>
-          </div>
+                </div>
                 {(styleConfig?.ThanksPopup?.ShowFooter || showFooter) && <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />}
               </div>
             }

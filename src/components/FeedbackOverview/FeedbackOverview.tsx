@@ -268,6 +268,7 @@ interface feedbackCompProps {
       Description?: string;
       IconSize?: string;
       Icon?: React.CSSProperties;
+      defaultIconBackground ?: string;
     };
     ThanksPopup?: {
       Style?: React.CSSProperties;
@@ -876,6 +877,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       }
     };
 
+
   return (
     <div>
 
@@ -1041,13 +1043,13 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                             style={{
                               background: cardHovered[0]
                                 ? styleConfig.listHover?.iconBackground || "#F4EBFF"
-                                : "#FBFBFB",
+                                : styleConfig?.listHover?.defaultIconBackground ||  "#FBFBFB",
                               ...styleConfig?.listHover?.Icon,
                             }}
                           >
                             {GeneralFeedback?.iconUrl ? <img className="q_feedback_icon_imgurl" src={GeneralFeedback?.iconUrl} /> : feedback(cardHovered[0]
                               ? styleConfig.listHover?.iconColor || "#9035FF"
-                              : iconColor, styleConfig.listHover?.IconSize
+                              : styleConfig?.listHover?.Icon?.color || iconColor, styleConfig.listHover?.IconSize
                             )}
                             {/* {feedback(
                   cardHovered[0]
@@ -1123,13 +1125,13 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                             style={{
                               background: cardHovered[1]
                                 ? styleConfig.listHover?.iconBackground || "#F4EBFF"
-                                : "#FBFBFB",
+                                : styleConfig?.listHover?.defaultIconBackground ||  "#FBFBFB",
                               ...styleConfig?.listHover?.Icon,
                             }}
                           >
                             {ReportBug?.iconUrl ? <img className="q_feedback_icon_imgurl" src={ReportBug?.iconUrl} /> : bug(cardHovered[1]
                               ? styleConfig.listHover?.iconColor || styleConfig?.listHover?.Icon?.color || "#9035FF"
-                              : iconColor, styleConfig.listHover?.IconSize)}
+                              : styleConfig?.listHover?.Icon?.color || iconColor, styleConfig.listHover?.IconSize)}
 
                             {/* {bug(
                   cardHovered[1]
@@ -1208,13 +1210,13 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                             style={{
                               background: cardHovered[2]
                                 ? styleConfig.listHover?.iconBackground || "#F4EBFF"
-                                : "#FBFBFB",
+                                : styleConfig?.listHover?.defaultIconBackground ||  "#FBFBFB",
                               ...styleConfig?.listHover?.Icon,
                             }}
                           >
                             {RequestFeature?.iconUrl ? <img className="q_feedback_icon_imgurl" src={RequestFeature?.iconUrl} /> : feature(cardHovered[2]
                               ? styleConfig.listHover?.iconColor || "#9035FF"
-                              : iconColor, styleConfig.listHover?.IconSize)}
+                              : styleConfig?.listHover?.Icon?.color || iconColor, styleConfig.listHover?.IconSize)}
                             {/* {feature(
                   cardHovered[2]
                     ? styleConfig.listHover?.iconColor || "#9035FF"
@@ -1292,13 +1294,13 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                             style={{
                               background: cardHovered[3]
                                 ? styleConfig.listHover?.iconBackground || "#F4EBFF"
-                                : "#FBFBFB",
+                                : styleConfig?.listHover?.defaultIconBackground ||  "#FBFBFB",
                               ...styleConfig?.listHover?.Icon,
                             }}
                           >
                             {ContactUs?.iconUrl ? <img className="q_feedback_icon_imgurl" src={ContactUs?.iconUrl} /> : contact(cardHovered[3]
                               ? styleConfig.listHover?.iconColor || "#9035FF"
-                              : iconColor, styleConfig.listHover?.IconSize)}
+                              : styleConfig?.listHover?.Icon?.color || iconColor, styleConfig.listHover?.IconSize)}
                             {/* {contact(
                   cardHovered[3]
                     ? styleConfig.listHover?.iconColor || "#9035FF"

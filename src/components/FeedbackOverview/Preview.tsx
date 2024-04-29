@@ -66,23 +66,24 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
         contactUrl="https://calendly.com/sriya-persana/30min"
 
         // showPoweredBy={false}
-        // styleConfig={{
-        //     Form: {
+        styleConfig={{
+            Form: {
 
-        //     },
-        //     listHover :{
-        //         iconColor:'blue',
-        //         iconBackground:'grey',
-        //         background:'yellow',
-        //         Heading:'green',
-        //         Description:'red'
-        //     },
-        //     // ThanksPopUp:{backgroundColor:"red"}
-        //     // Description: { color: 'red' },
-        //     // listDescription:{color:'yellow'}
-        //     // Heading: { color: 'red' },
-        //     // listHeading: { color: 'blue' }
-        // }}
+            },
+            listHover :{
+          
+                Icon:{
+                    color:'blue',
+                    background:'red'
+                },
+                iconBackground:'yellow'
+            },
+            // ThanksPopUp:{backgroundColor:"red"}
+            // Description: { color: 'red' },
+            // listDescription:{color:'yellow'}
+            // Heading: { color: 'red' },
+            // listHeading: { color: 'blue' }
+        }}
         // // footerBackgroundColor='red'
         // contactUrl="https://calendly.com/sriya-persana/30min"
         isOpen={true}
@@ -108,35 +109,44 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
       styleConfig={{
         // Description: { color: 'red' },
         // listDescription:{color:'yellow'}
-        Heading: { color: "red" },
+        // Heading: { color: "red" },
         PrimaryButton: {
-          color: "red"
+          // color: "red"
         },
         Form: {
           color: "red"
         },
+        listHover:{
+          Icon:{
+            color:'blue',
+            // background:'red'
+        },
+         iconBackground:'yellow',
+         defaultIconBackground:'pink',
+         iconColor:'black'
+        }
         // listHeading: { color: 'blue' },
       }}
-      QuestThemeData={{
-        accentColor: "blue",
-        theme: "light",
-        borderRadius: "16px",
-        buttonColor: "blue",
-        images: [],
-      }}
-      BrandTheme={{
-        accentColor: "blue",
-        background: "black",
-        borderRadius: "10px",
-        buttonColor: "yellow",
-        contentColor: "yellow",
-        fontFamily: "Cursive",
-        logo: "",
-        primaryColor: "white",
-        secondaryColor: "grey",
-        tertiaryColor: "white",
-        titleColor: "yellow",
-      }}  
+      // QuestThemeData={{
+      //   accentColor: "blue",
+      //   theme: "light",
+      //   borderRadius: "16px",
+      //   buttonColor: "blue",
+      //   images: [],
+      // }}
+      // BrandTheme={{
+      //   accentColor: "blue",
+      //   background: "black",
+      //   borderRadius: "10px",
+      //   buttonColor: "yellow",
+      //   contentColor: "yellow",
+      //   fontFamily: "Cursive",
+      //   logo: "",
+      //   primaryColor: "white",
+      //   secondaryColor: "grey",
+      //   tertiaryColor: "white",
+      //   titleColor: "yellow",
+      // }}  
 
       contactUrl="https://calendly.com/sriya-persana/30min"
       // GeneralFeedback={{
