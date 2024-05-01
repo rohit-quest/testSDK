@@ -75,6 +75,7 @@ import {ChallengesOffline} from './src/components/Challenges/OfflineComponent';
 import UserProfile from "./src/components/UserProfile/UserProfile";
 import GamifiedQuiz from "./src/components/GamifiedQuiz/GamifiedQuiz";
 import GamifiedQuizOffline from "./src/components/GamifiedQuiz/GamifiedQuizOffline";
+import HelpHubOffline from "./src/components/HelpHub/HelpHubOffline";
 export {
     QuestProvider,
     QuestLogin,
@@ -123,5 +124,6 @@ export {
     ChallengesOffline,
     UserProfile,
     GamifiedQuiz,
-    GamifiedQuizOffline
+    GamifiedQuizOffline,
+    HelpHubOffline,
 };

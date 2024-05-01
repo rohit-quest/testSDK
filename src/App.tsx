@@ -29,6 +29,9 @@ import FeedbackPreview from "./components/Feedback/Preview";
 import Survey from "./components/Feedback/Survey";
 import ModalPreview from "./components/Modals/Preview";
 import PreviewLeaderboard from "./components/Leaderboard/Preview";
+import HelpHub from "./components/HelpHub/HelpHub";
+import HelpHubPreview from "./components/HelpHub/Preview";
+
 import SurveyOffline from "./components/Feedback/OfflineComponent";
 import Modal from "./components/Modules/Modal";
 // import { NormalInput } from './components/Modules/Input'
@@ -36,11 +39,11 @@ import OnBoarding from "./components/Onboarding/Onboarding";
 import DailyStreak from "./components/Streak/DailyStreak";
 import ChallengesPreview from "./components/Challenges/ChallengesPreview";
 import GamifiedQuizPreview from "./components/GamifiedQuiz/GamifiedQuizPreview";
+import { HelpChat } from "./components/HelpCenter/HelpChat";
 import Walkthrough, { Align, Position } from "./components/Walkthrough/WalkThrough";
 import showToast from "./components/toast/toastService";
 import Toast from "./components/toast2/Toast";
 import InlineFeedbackPreview from './components/InlineFeedback/Preview'
-
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-9986f82d-cbd0-4923-bf9a-ea01b4795fa1";
 export const apiSecret =
@@ -83,6 +86,7 @@ const paymentBanefits = [
     notIncluded: [],
   },
 ];
+
 function App() {
   // Mocked function for getAnswers prop
 
@@ -105,9 +109,9 @@ function App() {
     // style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
     >
       <QuestProvider
-        apiKey={"k-ac38b717-eb62-41aa-83f4-7eef8d3ff9b5"}
-        apiSecret={''}
-        entityId={"e-e6cc0ded-bf40-4f1f-94a3-a9ba73be098f"}
+        apiKey={"k-fe5a805c-77ed-4cae-bd33-9591ebed2805"}
+        apiSecret={apiSecret}
+        entityId={"e-9850377b-f88f-4426-a2ac-56206c74655a"}
         featureFlags={{}}
         apiType="STAGING"
         themeConfig={
@@ -158,7 +162,15 @@ function App() {
           <button onClick={onDifferentTwo}>warning</button> */}
         {/* <ModalPreview/> */}
 
+        {/* <HelpHub
+          token={'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxMjIwMjIxMCwiZXhwIjoxNzEyODA3MDEwfQ.yCkWcD5yVykmqAmiRKrzdTmqVsptlfq2VPBO4eztNYY'} 
+          userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
+          /> */}
+
+        <HelpHubPreview online={true} />
+
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
+        {/* <GamifiedQuizPreview online={true} /> */}
         {/* <GamifiedQuizPreview online={true} /> */}
 
         {/* 
@@ -183,6 +195,7 @@ function App() {
         {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
 </Modal> */}
+        {/* <OnBoarding
         {/* <OnBoarding
   questId="q-daf9940a-c2fb-4762-adce-57b9b1fda08c"
   answer={answer}
