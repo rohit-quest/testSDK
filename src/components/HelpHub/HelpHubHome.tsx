@@ -36,6 +36,8 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
     showFeedback = true,
     setShowFeedback,
     entityImage,
+    uniqueUserId,
+    uniqueEmailId,
   } = props;
 
   const [allQuestsData, setAllQuestsData] = useState<
@@ -86,7 +88,10 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
         token || "",
         apiKey,
         allQuestsData[0][0]?.criteriaId,
-        [answer]
+        [answer],
+        uniqueUserId,
+        uniqueEmailId,
+        apiType
       );
       setFeedbackLoading(false);
       if (claimResponse?.success) {

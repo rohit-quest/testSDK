@@ -7,7 +7,7 @@ import QuestContext from "../QuestWrapper";
 import config from "../../config";
 
 const HelpHubTasks = (props: HelpHubFaqTypes) => {
-  const { faqData, contentConfig, styleConfig } = props;
+  const { faqData, contentConfig, styleConfig, setHelpHub } = props;
   const [faqIndex, setFaqIndex] = useState<number | undefined>(undefined);
   const [filterData, setFilterData] = useState<QuestCriteriaWithStatusType[]>(
     []
@@ -56,7 +56,7 @@ const HelpHubTasks = (props: HelpHubFaqTypes) => {
             </div>
           </div>
           <div className="q-helphub-help-upper-cont-text-button">
-            <img src={CancelButton} alt="" />
+            <img src={CancelButton} alt="" onClick={() => setHelpHub(false)}/>
           </div>
         </div>
       </div>

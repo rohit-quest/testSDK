@@ -1,13 +1,35 @@
 import axios from "axios";
+import General from "../../general";
 
 export const createDefaultQuest = async (
   backend_url: string,
   entityId: string,
   userId: string,
   token: string,
-  apikey: string
+  apikey: string,
+  uniqueUserId?: string,
+  uniqueEmailId?: string,
+  apiType?: string
 ) => {
   try {
+    if (uniqueUserId || uniqueEmailId) {
+      let generalFunction = new General("", apiType);
+      let userData = await generalFunction.getExternalLogin({
+        apiType: apiType,
+        uniqueUserId,
+        entityId,
+        userId,
+        apiKey: apikey,
+        apiSecret: "",
+        token,
+        uniqueEmailId,
+      });
+      if (userData?.userId) {
+        userId = userData?.userId;
+        token = userData?.token;
+      }
+    }
+
     const endsAtDate = new Date().setFullYear(new Date().getFullYear() + 2);
     let body = {
       defaultId: "q-default-helphub",
@@ -225,9 +247,30 @@ export const getDefaultQuest = async (
   questId: string,
   userId: string,
   token: string,
-  apikey: string
+  apikey: string,
+  uniqueUserId?: string,
+  uniqueEmailId?: string,
+  apiType?: string
 ) => {
   try {
+    if (uniqueUserId || uniqueEmailId) {
+      let generalFunction = new General("", apiType);
+      let userData = await generalFunction.getExternalLogin({
+        apiType: apiType,
+        uniqueUserId,
+        entityId,
+        userId,
+        apiKey: apikey,
+        apiSecret: "",
+        token,
+        uniqueEmailId,
+      });
+      if (userData?.userId) {
+        userId = userData?.userId;
+        token = userData?.token;
+      }
+    }
+
     let headers = {
       userId,
       token,
@@ -251,7 +294,10 @@ export const getEntityDetails = async (
   questId: string,
   userId: string,
   token: string,
-  apikey: string
+  apikey: string,
+  uniqueUserId?: string,
+  uniqueEmailId?: string,
+  apiType?: string
 ) => {
   try {
     let headers = {
@@ -279,9 +325,30 @@ export const claimQuest = async (
   token: string,
   apikey: string,
   criteriaId: string,
-  answer?: string[] | number[]
+  answer?: string[] | number[],
+  uniqueUserId?: string,
+  uniqueEmailId?: string,
+  apiType?: string
 ) => {
   try {
+    if (uniqueUserId || uniqueEmailId) {
+      let generalFunction = new General("", apiType);
+      let userData = await generalFunction.getExternalLogin({
+        apiType: apiType,
+        uniqueUserId,
+        entityId,
+        userId,
+        apiKey: apikey,
+        apiSecret: "",
+        token,
+        uniqueEmailId,
+      });
+      if (userData?.userId) {
+        userId = userData?.userId;
+        token = userData?.token;
+      }
+    }
+
     let headers = {
       userId,
       token,
@@ -309,11 +376,32 @@ export const getMessages = async (
   userId: string | undefined,
   token: string | undefined,
   apikey: string | undefined,
-  conversationId: string | undefined
+  conversationId: string | undefined,
+  uniqueUserId?: string,
+  uniqueEmailId?: string,
+  apiType?: string,
   //   criteriaId: string,
   //   answer?: string[] | number[]
 ) => {
   try {
+    if (uniqueUserId || uniqueEmailId) {
+      let generalFunction = new General("", apiType);
+      let userData = await generalFunction.getExternalLogin({
+        apiType: apiType,
+        uniqueUserId,
+        entityId,
+        userId,
+        apiKey: apikey,
+        apiSecret: "",
+        token,
+        uniqueEmailId,
+      });
+      if (userData?.userId) {
+        userId = userData?.userId;
+        token = userData?.token;
+      }
+    }
+
     let headers = {
       userId,
       token,
@@ -339,9 +427,30 @@ export const sendMessage = async (
   token: string | undefined,
   apikey: string | undefined,
   message: string,
-  conversationId: string
+  conversationId: string,
+  uniqueUserId?: string,
+  uniqueEmailId?: string,
+  apiType?: string
 ) => {
   try {
+    if (uniqueUserId || uniqueEmailId) {
+      let generalFunction = new General("", apiType);
+      let userData = await generalFunction.getExternalLogin({
+        apiType: apiType,
+        uniqueUserId,
+        entityId,
+        userId,
+        apiKey: apikey,
+        apiSecret: "",
+        token,
+        uniqueEmailId,
+      });
+      if (userData?.userId) {
+        userId = userData?.userId;
+        token = userData?.token;
+      }
+    }
+
     let headers = {
       userId,
       token,
@@ -373,9 +482,30 @@ export const satisfyOrNot = async (
   token: string | undefined,
   apikey: string | undefined,
   isSatisfied: boolean,
-  conversationId: string
+  conversationId: string,
+  uniqueUserId?: string,
+  uniqueEmailId?: string,
+  apiType?: string
 ) => {
   try {
+    if (uniqueUserId || uniqueEmailId) {
+      let generalFunction = new General("", apiType);
+      let userData = await generalFunction.getExternalLogin({
+        apiType: apiType,
+        uniqueUserId,
+        entityId,
+        userId,
+        apiKey: apikey,
+        apiSecret: "",
+        token,
+        uniqueEmailId,
+      });
+      if (userData?.userId) {
+        userId = userData?.userId;
+        token = userData?.token;
+      }
+    }
+
     let headers = {
       userId,
       token,

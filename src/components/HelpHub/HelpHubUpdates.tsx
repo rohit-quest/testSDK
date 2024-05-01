@@ -28,6 +28,9 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
     setShowBottomNavigation,
     showBottomNavigation,
     entityImage,
+    setHelpHub,
+    uniqueUserId,
+    uniqueEmailId,
   } = props;
   const [filterData, setFilterData] = useState<QuestCriteriaWithStatusType[]>(
     []
@@ -62,7 +65,11 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
         userId,
         token,
         apiKey,
-        criteriaId
+        criteriaId,
+        null,
+        uniqueUserId,
+        uniqueEmailId,
+        apiType
       );
       if (claimResponse.success) {
         setClaimStatusUpdates([...claimStatusUpdates, criteriaId]);
@@ -138,7 +145,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                 </div>
               </div>
               <div className="q-helphub-updates-upper-cont-text-button">
-                <img src={CancelButton} alt="" />
+                <img src={CancelButton} alt="" onClick={() => setHelpHub(false)} />
               </div>
             </div>
           </div>

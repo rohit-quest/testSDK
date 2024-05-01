@@ -18,6 +18,9 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
     claimStatusTasks = [],
     setClaimStatusTasks,
     onlineComponent,
+    setHelpHub,
+    uniqueUserId,
+    uniqueEmailId,
   } = props;
 
   const { apiKey, entityId, apiType, themeConfig } = useContext(
@@ -38,7 +41,11 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
         userId,
         token,
         apiKey,
-        criteriaId
+        criteriaId,
+        [],
+        uniqueUserId,
+        uniqueEmailId,
+        apiType
       );
       if (claimResponse.success) {
         setClaimStatusTasks([...claimStatusTasks, criteriaId]);
@@ -90,7 +97,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
           </div>
         </div>
         <div className="q-helphub-tasks-upper-cont-text-button">
-          <img src={CancelButton} alt="" />
+          <img src={CancelButton} alt="" onClick={() => setHelpHub(false)} />
         </div>
       </div>
 

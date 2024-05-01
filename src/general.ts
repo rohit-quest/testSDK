@@ -190,22 +190,29 @@ class General {
       entityId: entityId,
       email: uniqueEmailId,
     };
+
+    let questUserId = cookies.get("questUserId");
+    let questUserToken = cookies.get("questUserToken");
+    let externalUserId = cookies.get("externalUserId");
+
+    if (!!externalUserId && !!questUserId && !!questUserToken && (externalUserId == uniqueUserId || externalUserId == uniqueEmailId)) {
+      return { userId: questUserId, token: questUserToken };
+    }
+
     let BACKEND_URL =
       apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
-    await axios
-      .post(`${BACKEND_URL}api/users/external/login`, body, { headers })
-      .then((res) => {
-        let { userId, token } = res.data;
-        // let header = {...headers, ...{userId, token}}
-        const date = new Date();
-        date.setHours(date.getHours() + 12);
-        cookies.set("externalUserId", uniqueUserId, {
-          path: "/",
-          expires: date,
-        });
-        cookies.set("questUserId", userId, { path: "/", expires: date });
-        cookies.set("questUserToken", token, { path: "/", expires: date });
-      });
+    let externalLogin = await axios.post(`${BACKEND_URL}api/users/external/login`, body, { headers })
+    let { userId: q_userId, token: q_token } = externalLogin.data;
+    const date = new Date();
+    date.setHours(date.getHours() + 48);
+    cookies.set("externalUserId", uniqueUserId, {
+      path: "/",
+      expires: date,
+    });
+    cookies.set("questUserId", q_userId, { path: "/", expires: date });
+    cookies.set("questUserToken", q_token, { path: "/", expires: date });
+    cookies.set("externalUserId", uniqueUserId || uniqueEmailId, { path: "/", expires: date });
+    return { userId: q_userId, token: q_token };
   }
 
   captureSentryException(error: any) {

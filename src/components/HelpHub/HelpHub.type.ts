@@ -152,6 +152,8 @@ export interface HelpHubHomeTypes {
   showFeedback?: boolean;
   setShowFeedback?: Dispatch<SetStateAction<boolean>>;
   entityImage?: string;
+  uniqueUserId?: string;
+  uniqueEmailId?: string;
 }
 
 export interface HelpHubChatTypes {
@@ -166,12 +168,19 @@ export interface HelpHubChatTypes {
   setShowBottomNavigation?: Dispatch<SetStateAction<boolean>>;
   entityImage?: string;
   entityName?: string;
+  setHelpHub: Dispatch<SetStateAction<boolean>>;
+  uniqueUserId?: string;
+  uniqueEmailId?: string;
+  position?: string;
 }
 
 export interface HelpHubFaqTypes {
   faqData: QuestCriteriaWithStatusType[];
   styleConfig?: HelphubStyleConfig;
   contentConfig?: HelpHubOthersContentTypes;
+  setHelpHub: Dispatch<SetStateAction<boolean>>;
+  uniqueUserId?: string;
+  uniqueEmailId?: string;
 }
 
 export interface HelpHubUpdatesTypes {
@@ -187,6 +196,9 @@ export interface HelpHubUpdatesTypes {
   showBottomNavigation?: boolean;
   setShowBottomNavigation?: Dispatch<SetStateAction<boolean>>;
   entityImage?: string;
+  setHelpHub: Dispatch<SetStateAction<boolean>>;
+  uniqueUserId?: string;
+  uniqueEmailId?: string;
 }
 
 export interface HelpHubTasksTypes {
@@ -199,6 +211,9 @@ export interface HelpHubTasksTypes {
   claimStatusTasks?: string[] | [];
   setClaimStatusTasks?: Dispatch<SetStateAction<string[] | []>>;
   onlineComponent?: boolean;
+  setHelpHub: Dispatch<SetStateAction<boolean>>;
+  uniqueUserId?: string;
+  uniqueEmailId?: string;
 }
 
 interface Metadata {

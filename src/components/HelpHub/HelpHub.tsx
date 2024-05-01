@@ -109,7 +109,10 @@ const HelpHub = (props: HelpHubProps) => {
       qId,
       userId,
       token,
-      apiKey
+      apiKey,
+      uniqueUserId,
+      uniqueEmailId,
+      apiType
     );
     if (!getResult?.success) {
       let createQuest = await createDefaultQuest(
@@ -117,7 +120,10 @@ const HelpHub = (props: HelpHubProps) => {
         entityId,
         userId,
         token,
-        apiKey
+        apiKey,
+        uniqueUserId,
+        uniqueEmailId,
+        apiType
       );
       setParentQuest(createQuest?.parentQuest);
 
@@ -233,7 +239,10 @@ const HelpHub = (props: HelpHubProps) => {
       qId,
       userId,
       token,
-      apiKey
+      apiKey,
+      uniqueUserId,
+      uniqueEmailId,
+      apiType
     );
     setEntityImage(data.imageUrl);
     setEntityName(data.name);
@@ -337,6 +346,8 @@ const HelpHub = (props: HelpHubProps) => {
               showFeedback={showFeedback}
               setShowFeedback={setShowFeedback}
               entityImage={entityImage}
+              uniqueUserId={uniqueUserId}
+              uniqueEmailId={uniqueEmailId}
             />
           ) : (
             ""
@@ -354,6 +365,10 @@ const HelpHub = (props: HelpHubProps) => {
               setShowBottomNavigation={setShowBottomNavigation}
               entityImage={entityImage}
               entityName={entityName}
+              setHelpHub={setHelpHub}
+              uniqueUserId={uniqueUserId}
+              uniqueEmailId={uniqueEmailId}
+              position={position}
             />
           ) : (
             ""
@@ -365,6 +380,9 @@ const HelpHub = (props: HelpHubProps) => {
               }
               styleConfig={styleConfig}
               contentConfig={contentConfig?.Help}
+              setHelpHub={setHelpHub}
+              uniqueUserId={uniqueUserId}
+              uniqueEmailId={uniqueEmailId}
             />
           ) : (
             ""
@@ -383,6 +401,9 @@ const HelpHub = (props: HelpHubProps) => {
               showBottomNavigation={showBottomNavigation}
               setShowBottomNavigation={setShowBottomNavigation}
               entityImage={entityImage}
+              setHelpHub={setHelpHub}
+              uniqueUserId={uniqueUserId}
+              uniqueEmailId={uniqueEmailId}
             />
           ) : (
             ""
@@ -398,6 +419,9 @@ const HelpHub = (props: HelpHubProps) => {
               claimStatusTasks={claimStatusTasks}
               setClaimStatusTasks={setClaimStatusTasks}
               onlineComponent={true}
+              setHelpHub={setHelpHub}
+              uniqueUserId={uniqueUserId}
+              uniqueEmailId={uniqueEmailId}
             />
           ) : (
             ""

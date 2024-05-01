@@ -46,6 +46,10 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     setShowBottomNavigation,
     entityImage,
     entityName,
+    setHelpHub,
+    uniqueUserId,
+    uniqueEmailId,
+    position,
   } = props;
 
   const { themeConfig } = useContext(QuestContext.Context);
@@ -117,7 +121,10 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
       token,
       apiKey,
       isSatisfied,
-      selectedConversationId
+      selectedConversationId,
+      uniqueUserId,
+      uniqueEmailId,
+      apiType
     );
 
     if (satisfiedResponse?.success) {
@@ -181,7 +188,10 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
       token,
       apiKey,
       message,
-      selectedConversationId
+      selectedConversationId,
+      uniqueUserId,
+      uniqueEmailId,
+      apiType
     );
 
     if (sendMessageResponse?.data?.replied) {
@@ -284,7 +294,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   const resizeHandler = () => {
     const headerElement = document.getElementById("helpHub");
     if (headerElement && scrollRef.current) {
-      const headerHeight = headerElement.clientHeight;
+      const headerHeight = position == "POPUP" ? headerElement.clientHeight : window.innerHeight;
       scrollRef.current.style.height = headerHeight - 191 + "px";
     }
   };
@@ -294,7 +304,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
     resizeHandler();
-  }, [data, scrollWidthSet]);
+  }, [data, scrollWidthSet, position]);
 
   useEffect(() => {
     window.addEventListener("resize", resizeHandler);
@@ -313,7 +323,10 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
           userId,
           token,
           apiKey,
-          conversationId || ""
+          conversationId || "",
+          uniqueUserId,
+          uniqueEmailId,
+          apiType
         );
       setData(getResult?.data?.conversations);
       setLoading(false);
@@ -328,7 +341,10 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
         userId,
         token,
         apiKey,
-        conversationId || ""
+        conversationId || "",
+        uniqueUserId,
+        uniqueEmailId,
+        apiType
       );
       setChat(getResult?.data);
       setFetchData(false);
@@ -342,6 +358,11 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   const [updateOutAnimation, setUpdateOutAnimation] = useState<boolean | null>(null);
   const [updateOneoutAnimation, setUpdateOneOutAnimation] = useState<boolean | null>(null);
   const [updateOutTempAnimation, setUpdateOutTempAnimation] = useState<boolean | null>(null);
+
+  const formatMessage = (message: string) => {
+    const messageParagraphs = message.split('\n').map((line, index) => <p key={index}>{line}</p>);
+    return messageParagraphs;
+  }
 
   return (
     <>
@@ -389,7 +410,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
               </div>
 
               <div className="q-helphub-chatpage-btn-container">
-                <img src={CancelButton} alt="" />
+                <img src={CancelButton} alt="" onClick={() => setHelpHub(false)}/>
               </div>
             </div>
           </div>
@@ -658,7 +679,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                             <img src={message.content} alt="" />
                           </div>
                         ) : (
-                          message.content
+                          <>{formatMessage(message.content)}</>
                         )}
                       </div>
 
@@ -776,15 +797,16 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                     ></div>
                   </div>
                 ) : (
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "16px",
-                    }}
-                  >
-                    <img src={SendMessageEmojiIcon} />
-                    <img src={Mic} />
-                  </div>
+                  <></>
+                  // <div
+                  //   style={{
+                  //     display: "flex",
+                  //     gap: "16px",
+                  //   }}
+                  // >
+                  //   <img src={SendMessageEmojiIcon} />
+                  //   <img src={Mic} />
+                  // </div>
                 )}
                 <div className="attach-file">
                   {!selectedFileName ? (

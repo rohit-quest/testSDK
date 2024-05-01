@@ -308,10 +308,11 @@ export default function HelpHubPreview({ online = true }) {
       >
         <HelpHub
           token={
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTRjYzUxMGE0LWU2NzAtNGVkMy1hYmUzLWMzNTFjMTliYjk5MiIsImlhdCI6MTcxMzcwOTIyMywiZXhwIjoxNzE0MzE0MDIzfQ.xhak66fFx5DZsS6PJ1YoPvRPB0L8ZkiC0I-gJjNUkUs"
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTRjYzUxMGE0LWU2NzAtNGVkMy1hYmUzLWMzNTFjMTliYjk5MiIsImlhdCI6MTcxNDM5NDM0NywiZXhwIjoxNzE0OTk5MTQ3fQ.bGEQ-QSsY6DNx0rXu1WBDgRLYgFYu0778PJQJSR3Kks"
           }
           userId="u-4cc510a4-e670-4ed3-abe3-c351c19bb992"
           questId="q-bdc4b8e7-1c8b-45f8-96fe-a2ae3f17fad9"
+          // uniqueUserId="741852101"
           // helphubPosition="USER_CHOICE"
           // onlineComponent={online}
           // contentConfig={{

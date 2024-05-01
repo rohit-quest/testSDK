@@ -2728,6 +2728,12 @@ box-sizing: border-box;
   gap: 16px;
 }
 
+.attach-file {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .attach-file > label {
   display: flex;
   justify-content: center;
@@ -3131,7 +3137,7 @@ input[type="file"] {
 }
 
 .selected-file-div > p {
-  width: 189px;
+  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -3337,6 +3343,10 @@ input[type="file"] {
   align-self: stretch;
   overflow-y: scroll;
   box-sizing: border-box;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
 }
 
 .q-helphub-satisfied{
@@ -3347,6 +3357,7 @@ input[type="file"] {
   align-items: flex-start;
   border-radius: 12px;
   border: 1px solid #EBEBEB;
+  gap: 30px;
 }
 
 .q-helphub-satisfied > p{
