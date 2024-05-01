@@ -79,9 +79,14 @@ export default function SreakPreview({ online = true }) {
                 token={token}
                 userId={userId}
                 styleConfig={{
-                    // Description: { color: 'red' },
-                    // Form: { background: 'blue' }
-                }}
+                    // IconBackground:{background:"#facdcd"},
+                    // IconColor:{color:"red"},
+                    // Form:{borderRadius:"1px"},
+                    // Count:{color:"red"},
+                    // Heading:{color:"orange"},
+                    // Description:{color:"green"},
+                    // Footer:{}
+                  }}
                 stepDetails={[
                     {description:"This is the longest streak you’ve ever head1",title: "Confident reader",range: 3},
                     {description:"This is the longest streak you’ve ever head2",title: "Responsible reader",range: 2},

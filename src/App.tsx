@@ -115,8 +115,9 @@ function App() {
             // backgroundColor: "black",
             // borderColor: "blue",
             // buttonColor: "green",
-            // primaryColor: "green",
-            // secondaryColor: "blue",
+            //  primaryColor: "red",
+            // secondaryColor: "red",
+
             // fontFamily: "cursive"
           }
         }
@@ -173,8 +174,9 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-        {/* <OnBoardingPreview online={true} /> */}
 
+
+        {/* <OnBoardingPreview online={false} /> */}
 
         {/* <GetStartedPreview online={true} /> */}
 
@@ -286,6 +288,31 @@ function App() {
                       }
                     }}
                 ></QuestLogin> */}
+                    <DailyStreak
+                    token={token}
+                    userId={userId}
+                    metric='daily-visit'
+                    stepDetails={[
+                      {description:"This is the longest streak you’ve ever head1",title: "Confident reader",range: 3},
+                      {description:"This is the longest streak you’ve ever head2",title: "Responsible reader",range: 2},
+                      {description:"This is the longest streak you’ve ever head3",title: "Serious learner",range: 5},
+                      {description:"This is the longest streak you’ve ever head4",title: "Absolute reader",range: 3},
+                      {description:"This is the longest streak you’ve ever head5",title: "Professional reader",range: 1},
+                      
+                  ]} 
+                  // filledStreakImg=""
+                  styleConfig={{
+                    // IconBackground:{background:"#facdcd"},
+                    // IconColor:{color:"red"},
+                    // Form:{borderRadius:"1px"},
+                    // Count:{color:"red"},
+                    // Heading:{color:"orange"},
+                    // Description:{color:"green"},
+                    // Footer:{}
+                  }}
+                  
+                    />
+                    {/* <SreakPreview/> */}
 
         {/* <ShareArticle
                     bgColor=""
