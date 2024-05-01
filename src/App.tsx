@@ -40,14 +40,18 @@ import DailyStreak from "./components/Streak/DailyStreak";
 import ChallengesPreview from "./components/Challenges/ChallengesPreview";
 import GamifiedQuizPreview from "./components/GamifiedQuiz/GamifiedQuizPreview";
 import { HelpChat } from "./components/HelpCenter/HelpChat";
+import Walkthrough, { Align, Position } from "./components/Walkthrough/WalkThrough";
+import showToast from "./components/toast/toastService";
+import Toast from "./components/toast2/Toast";
+import InlineFeedbackPreview from './components/InlineFeedback/Preview'
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
-export const apiKey = "k-2aa597b4-341f-4c3c-a022-f56877a585c9";
+export const apiKey = "k-9986f82d-cbd0-4923-bf9a-ea01b4795fa1";
 export const apiSecret =
   "s-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42";
-export const entityId = "e-5684609d-cfd7-4b2f-8bcb-f7d2cb316c7e";
+export const entityId = "e-ba6a2a04-546c-48d4-9369-64524756c0e8";
 export const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LWUzYmVhMWQzLTE5MTctNGI5YS1iODU1LWYxM2Q0N2RmZTJlZCIsImlhdCI6MTY5NjY3MDA5OCwiZXhwIjoxNzI4MjI3Njk4fQ.E_hQ-o8E4jbAMmuJBqwwWFebr9_NoSIykGq_CavR7kE";
-export const userId = "u-e3bea1d3-1917-4b9a-b855-f13d47dfe2ed";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTdiM2E2MzAxLTcxMWMtNGMwZC1hZTYzLWQ5M2RiZTJjZWVlOSIsImlhdCI6MTcxMzk0MzIzMywiZXhwIjoxNzE0NTQ4MDMzfQ.8iaRzlT62QUh7I8uihYuo7ywR0FP33kec-lSnbt3U4M";
+export const userId = "u-7b3a6301-711c-4c0d-ae63-d93dbe2ceee9";
 
 const paymentBanefits = [
   {
@@ -99,6 +103,7 @@ function App() {
   const [isOpen, setIsOpen] = useState(true);
   const [answer, setAnswer] = useState([]);
 
+  // const CSGetstarted = new 
   return (
     <div
     // style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
@@ -114,13 +119,14 @@ function App() {
             // backgroundColor: "black",
             // borderColor: "blue",
             // buttonColor: "green",
-            //  primaryColor: "green",
-            // secondaryColor: "blue",
+            //  primaryColor: "red",
+            // secondaryColor: "red",
+
             // fontFamily: "cursive"
           }
         }
       >
-        {/* <TutorialPreview online={false} /> */}
+        {/* <TutorialPreview online={true} /> */}
 
         {/* <SpinTheWheel
                     userId={userId}
@@ -180,10 +186,11 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-        {/* <OnBoardingPreview online={true} /> */}
 
 
-        {/* <GetStartedPreview online={false} /> */}
+        {/* <OnBoardingPreview online={false} /> */}
+
+        {/* <GetStartedPreview online={true} /> */}
 
         {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
@@ -239,16 +246,12 @@ function App() {
         <button onClick={() => { showToast.info({ duration: 100000, text: "This is a info message", template: 2, descritption: "INFO" }) }}>Info</button>
         <button onClick={() => { showToast.success({ duration: 100000, text: "This is a success message", template: 2, descritption: "SUCCESS" }) }}>Success</button> */}
 
-
-        <button onClick={() => Toast.success({ text: "This is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success message", position: 'top-right', autoClose: 100000, template: 2, description: "SUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESS" })}>Success</button>
+        {/* <button onClick={() => Toast.success({ text: "This is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success message", position: 'top-right', autoClose: 100000, template: 2, description: "SUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESS" })}>Success</button>
         <button onClick={() => Toast.info({ text: "This is a info message", position: 'bottom-center', autoClose: 1000, template: 2, description: "INFO" })}>Info</button>
         <button onClick={() => Toast.error({ text: "This is a error message", position: 'bottom-center', autoClose: 1000, template: 2, description: "Error" })}>Error</button>
-        <button onClick={() => Toast.warning({ text: "This is a succes warning message", position: 'bottom-center', autoClose: 1000, template: 2, description: "WARNING" })}>Warning</button>
-        {/* <FeedbackWorkflowPreview online={true} /> */}
+        <button onClick={() => Toast.warning({ text: "This is a succes warning message", position: 'bottom-center', autoClose: 1000, template: 2, description: "WARNING" })}>Warning</button> */}
+        {/* <FeedbackWorkflowPreview online={false} /> */}
         {/* <ChallengesPreview online={true} /> */}
-
-
-        {/* <FeedbackPreview online={true} /> */}
 
         {/* <ReferEarnPreview/> */}
 
@@ -298,6 +301,31 @@ function App() {
                       }
                     }}
                 ></QuestLogin> */}
+                    <DailyStreak
+                    token={token}
+                    userId={userId}
+                    metric='daily-visit'
+                    stepDetails={[
+                      {description:"This is the longest streak you’ve ever head1",title: "Confident reader",range: 3},
+                      {description:"This is the longest streak you’ve ever head2",title: "Responsible reader",range: 2},
+                      {description:"This is the longest streak you’ve ever head3",title: "Serious learner",range: 5},
+                      {description:"This is the longest streak you’ve ever head4",title: "Absolute reader",range: 3},
+                      {description:"This is the longest streak you’ve ever head5",title: "Professional reader",range: 1},
+                      
+                  ]} 
+                  // filledStreakImg=""
+                  styleConfig={{
+                    // IconBackground:{background:"#facdcd"},
+                    // IconColor:{color:"red"},
+                    // Form:{borderRadius:"1px"},
+                    // Count:{color:"red"},
+                    // Heading:{color:"orange"},
+                    // Description:{color:"green"},
+                    // Footer:{}
+                  }}
+                  
+                    />
+                    {/* <SreakPreview/> */}
 
         {/* <ShareArticle
                     bgColor=""
@@ -313,7 +341,36 @@ function App() {
 
         {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
         {/* <SreakPreview online /> */}
+        <InlineFeedbackPreview />
+
+        {/* <Walkthrough
+            isOpen={isOpen}
+            id="app"
+            steps={[
+              {
+                selector: '.gs-single-card-dropDown',
+                data: {title: 'First Tab', description: 'Click on this'},
+                position: Position.RIGHT,
+                align: Align.END
+              },
+              {
+                selector: '.gs-heading-div',
+                data: {title: 'Second Tab', description: 'Click on this'},
+                align: Align.CENTER
+              }
+            ]}
+            styleConfig={{
+              Form: {background: 'green'},
+              Background: {background: 'red'}, 
+              Footer: {background: 'blue'}
+            }}
+            onComplete={() => {alert('Welcome to the page'); setIsOpen(false)}}
+            onRequestClose={() => setIsOpen(false)}
+            onAfterOpen={() => document.documentElement.style.overflow = 'hidden'}
+            onBeforeClose={() => document.documentElement.style.overflow = ''}
+        />*/}
       </QuestProvider>
+      {/* < div style={{height: 1999}}/> */}
     </div>
   );
 }

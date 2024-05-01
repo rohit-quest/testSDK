@@ -27,6 +27,7 @@ import "./src/components/HelpHub/HelpHub.css"
 import "./src/components/UserProfile/userProfile.css"
 import "./src/components/Challenges/challenges.css"
 import "./src/components/GamifiedQuiz/gamifiedQuiz.css"
+import "./src/components/Walkthrough/tourHelper.css"
 import QuestLogin from "./src/components/Login/Login";
 import OnBoarding from "./src/components/Onboarding/Onboarding";
 import { QuestProvider } from "./src/components/QuestWrapper";
@@ -49,7 +50,7 @@ import { HelpCenter } from "./src/components/HelpCenter/HelpCenter";
 import { confetti } from "./src/components/Confetti/confetti";
 import ShareArticle from "./src/components/Share/ShareArticle";
 import Search from "./src/components/Search/Search";
-import WalkThrough from './src/components/Tour/WalkThrough';
+import WalkThrough from './src/components/Walkthrough/Walkthrough';
 import SpinTheWheel from './src/components/SpinTheWheel/SpinTheWheel';
 import DailyStreak from './src/components/Streak/DailyStreak';
 import { CrossSelling } from "./src/components/expansion/CrossSelling"

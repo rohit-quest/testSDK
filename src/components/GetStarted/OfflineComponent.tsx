@@ -36,6 +36,27 @@ interface offlineData {
   imageUrl?: string;
 }
 
+type BrandTheme = {
+  accentColor?: string;
+  background?: string;
+  borderRadius?: string;
+  buttonColor?: string;
+  contentColor?: string;
+  fontFamily?: string;
+  logo?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  tertiaryColor?: string;
+  titleColor?: string;
+};
+interface QuestThemeData {
+  accentColor: string;
+  theme: string;
+  borderRadius: string;
+  buttonColor: string;
+  images: string[];
+}
+
 type offlineGetStartedProps = {
   cardBackground?: string;
   cardHeadingColor?: string;
@@ -57,6 +78,8 @@ type offlineGetStartedProps = {
   showFooter?: boolean;
   ButtonType?: "Arrow" | "Buttons";
   onLinkTrigger?: (url: string, index: number) => void;
+  BrandTheme?: BrandTheme;
+  QuestThemeData?: QuestThemeData;
   template?: 1 | 2;
   styleConfig?: {
     Heading?: CSSProperties;
@@ -90,6 +113,8 @@ type offlineGetStartedProps = {
   offlineData: offlineData[];
 };
 
+
+
 function OfflineGetStarted({
   iconUrls = [],
   headingText,
@@ -104,10 +129,10 @@ function OfflineGetStarted({
   styleConfig,
   offlineData,
   ButtonType = "Arrow",
-  onLinkTrigger = (url: string, index: number) => {
-    window.location.href = url;
-  },
-  isImageOpen,
+  BrandTheme,
+  QuestThemeData,
+  onLinkTrigger = (url: string, index: number) => { window.location.href = url },
+  isImageOpen = false,
 }: offlineGetStartedProps) {
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [allCriteriaCompleted, setAllCriteriaCompleted] =
@@ -150,9 +175,10 @@ function OfflineGetStarted({
     <div
       style={{
         background:
-          styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor,
+          styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor,
         height: styleConfig?.Form?.height || "auto",
-        fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+        borderRadius: styleConfig?.Form?.borderRadius || QuestThemeData?.borderRadius || BrandTheme?.borderRadius,
+        fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
         ...styleConfig?.Form,
       }}
       className="get_started_box"
@@ -163,7 +189,7 @@ function OfflineGetStarted({
           <div>
             <div
               style={{
-                color: styleConfig?.Heading?.color || themeConfig?.primaryColor,
+                color: styleConfig?.Heading?.color || BrandTheme?.titleColor || BrandTheme?.primaryColor || themeConfig?.primaryColor,
                 ...styleConfig?.Heading,
               }}
               className="gs-heading"
@@ -174,6 +200,7 @@ function OfflineGetStarted({
               style={{
                 color:
                   styleConfig?.Description?.color ||
+                  BrandTheme?.secondaryColor ||
                   themeConfig?.secondaryColor,
                 ...styleConfig?.Description,
               }}
@@ -270,6 +297,7 @@ function OfflineGetStarted({
                       style={{
                         color:
                           styleConfig?.Heading?.color ||
+                          BrandTheme?.primaryColor ||
                           themeConfig?.primaryColor,
                       }}
                       className="gs-card-head"
@@ -280,6 +308,7 @@ function OfflineGetStarted({
                       style={{
                         color:
                           styleConfig?.Description?.color ||
+                          BrandTheme?.secondaryColor ||
                           themeConfig?.secondaryColor,
                       }}
                       className="gs-card-desc"
@@ -380,6 +409,7 @@ function OfflineGetStarted({
                       style={{
                         color:
                           styleConfig?.Description?.color ||
+                          BrandTheme?.secondaryColor ||
                           themeConfig?.secondaryColor,
                       }}
                     >
@@ -404,6 +434,8 @@ function OfflineGetStarted({
                           width: "fit-content",
                           background:
                             styleConfig?.PrimaryButton?.background ||
+                            QuestThemeData?.buttonColor ||
+                            BrandTheme?.buttonColor ||
                             themeConfig?.buttonColor,
                           ...styleConfig?.PrimaryButton,
                         }}
@@ -469,6 +501,7 @@ function OfflineGetStarted({
                       style={{
                         color:
                           styleConfig?.Heading?.color ||
+                          BrandTheme?.primaryColor ||
                           themeConfig?.primaryColor,
                       }}
                       className="gs-card-head"
@@ -479,6 +512,7 @@ function OfflineGetStarted({
                       style={{
                         color:
                           styleConfig?.Description?.color ||
+                          BrandTheme?.secondaryColor ||
                           themeConfig?.secondaryColor,
                       }}
                       className="gs-card-desc"
@@ -526,6 +560,8 @@ function OfflineGetStarted({
                             width: "fit-content",
                             background:
                               styleConfig?.PrimaryButton?.background ||
+                              QuestThemeData?.buttonColor ||
+                              BrandTheme?.buttonColor ||
                               themeConfig?.buttonColor,
                             ...styleConfig?.PrimaryButton,
                           }}
@@ -588,7 +624,7 @@ function OfflineGetStarted({
       {showFooter &&
         (autoHide === true ? !!data.length && !allCriteriaCompleted : true) && (
           <div>
-            <QuestLabs style={styleConfig?.Footer} />
+            <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />
           </div>
         )}
     </div>
