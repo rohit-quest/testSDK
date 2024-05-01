@@ -26,6 +26,12 @@ interface Props {
     Label?: React.CSSProperties;
     Footer?: React.CSSProperties;
     IconBackground?:React.CSSProperties;
+    Icon?:{
+      ActiveBackGround?:string,
+      InactiveBackGround?:string,
+      ActiveColor?:string,
+      InactiveColor?:string
+    }
     IconColor?:React.CSSProperties
   };
 }
@@ -108,6 +114,8 @@ export default function DailyStreak({
     color:themeConfig.secondaryColor,
     ...(styleConfig?.Count || {color:"#9035ff"})
   }
+
+
   const iconColor = styleConfig?.IconColor || {};
   return (
     <div
@@ -134,12 +142,12 @@ export default function DailyStreak({
             const sumOfRanges = stepDetails.slice(0, i + 1).reduce((sum, s) => sum + s.range, 0);
             const isActive = sumOfRanges <= days;
             const imgSrc = isActive
-              ? filledStreakImg || streakIcon(true, iconColor||"") // Pass the color parameter
-              : pendingStreakImg || streakIcon(false, iconColor);
+              ? filledStreakImg || streakIcon(true, styleConfig?.Icon?.ActiveColor || "") // Pass the color parameter
+              : pendingStreakImg || streakIcon(false, styleConfig?.Icon?.InactiveColor || "");
             return (
               <div key={i} className={"q_streak_step"}>
                 <div className={"q_img_cont "}
-                style={{background:isActive?styleConfig?.IconBackground?.background||"#f4ebff":"#fbfbfb"}}
+                style={{ background:isActive?styleConfig?.Icon?.ActiveBackGround || "#f4ebff": styleConfig?.Icon?.InactiveBackGround || "#fbfbfb"}}
                 >
                   <img src={imgSrc} alt="" />
                 </div>
@@ -155,7 +163,7 @@ export default function DailyStreak({
                   className={
                     "q_streak_dot " 
                   }
-                  style={{background:isActive?styleConfig?.IconColor?.color||"#9035ff":"#b9b9b9"}}
+                  style={{background:isActive?  styleConfig?.Icon?.ActiveColor ||"#9035ff": styleConfig?.Icon?.InactiveColor ||"#b9b9b9"}}
                 ></div>
               </div>
             );
