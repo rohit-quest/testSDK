@@ -162,6 +162,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
     titleColor: ""
 })
 
+  console.log(useContext(QuestContext.Context))
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
   const cookies = new Cookies();
@@ -200,7 +201,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
     if (showAnnouncement) return onLinkTrigger(url, id);
 
     const json = {
-      criteriaId: id,
+      criteriaId: id
     };
 
     const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${headers.userId}&getVariation=${enableVariation}`;
@@ -229,7 +230,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
       "quest_get_started_loaded",
       "get_started"
     );
-
+    console.log(entityId)
     if (entityId) {
       const headers = {
         apiKey: apiKey,
