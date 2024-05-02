@@ -877,13 +877,17 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     };
 
   return (
-    <div>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose || (() => {})}
+      style={{ padding: 0, background: "transparent", ...styleConfig.Modal }}
+    >
 
       <ScreenCapture onEndCapture={handleScreenCapture} >
         {({ onStartCapture }: any) => (
           <div className="q_modal_overlay" onClick={(e) => closeModal(e)} style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", backgroundColor: !isVisible ? "transparent" : "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center", opacity: isVisible ? 1 : 0 }}>
 
-            <div className="q_modal" ref={ref} id='modal_box' style={{ padding: 0, background: "transparent", opacity: isVisible ? 1 : 0, ...styleConfig.Modal }}>
+            {!submit && (<div className="q_modal" ref={ref} id='modal_box' style={{ padding: 0, background: "transparent", opacity: isVisible ? 1 : 0, ...styleConfig.Modal }}>
               {showLoader && <Loader />}
               <div
                 className="q-fw-div"
@@ -959,7 +963,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                           buttonStyle={{background: styleConfig.PrimaryButton?.background || questThemeData?.buttonColor || BrandTheme?.buttonColor || themeConfig.buttonColor, ...styleConfig.PrimaryButton}}
                           PrimaryButtonText={PrimaryButtonText}
                           StarStyle={styleConfig?.Star}
-                          labelStyle={styleConfig?.Label}
+                          labelStyle={{...styleConfig?.Label, color:  styleConfig?.Label?.color || styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor}}
                           isVisible={isVisible}
                           setIsVisible={setIsVisible}
                           screenshot={screenshot}
@@ -1351,7 +1355,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   </div>
                 ) : ''}
               </div>
-            </div>
+            </div>)}
 
 
             {submit &&
@@ -1410,7 +1414,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           </div>
         )}
       </ScreenCapture>
-    </div>
+    </Modal>
   )
 };
 
