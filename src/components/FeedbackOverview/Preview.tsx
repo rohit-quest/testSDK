@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { QuestProvider } from "../QuestWrapper";
 import FeedbackWorkflow from "./FeedbackOverview";
 
@@ -12,7 +13,7 @@ export const token =
 export const userId = "u-7b3a6301-711c-4c0d-ae63-d93dbe2ceee9";
 
 export default function FeedbackWorkflowPreview({ online = false }: { online?: boolean }) {
-
+  const [isOpen, setIsOpen] = useState(true);
   if (online)
     return (<QuestProvider
       apiKey={apiKey}
@@ -86,7 +87,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
         // // footerBackgroundColor='red'
         // contactUrl="https://calendly.com/sriya-persana/30min"
         isOpen={true}
-      // // onClose={() => setIsOpen(!isOpen)}
+      onClose={() => setIsOpen(prev=>!prev)}
       // uniqueUserId="soumitra.petbindhi+25@gmail.com"
       // uniqueEmailId="soumitra.petbindhi+25@gmail.com"
 
@@ -101,8 +102,8 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
     <FeedbackWorkflowOffline
       // contactUrl="https://calendly.com/sriya-persana/30min"
     
-      isOpen={true}
-      // onClose={() => setIsOpen(!isOpen)}
+      isOpen={isOpen}
+      onClose={() => setIsOpen(prev=>!prev)}
       showFooter={true}
       SecondaryButtonText="red"
       styleConfig={{
