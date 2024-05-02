@@ -220,6 +220,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
                 }}
               />
             </div>
+            
             <div
               className={"SendMessageButton"}
               onClick={() => setSelectedSection("Chat")}
