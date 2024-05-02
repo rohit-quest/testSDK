@@ -48,7 +48,10 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
         apiType
       );
       if (claimResponse.success) {
-        setClaimStatusTasks([...claimStatusTasks, criteriaId]);
+        if(!claimStatusTasks.includes(criteriaId)){
+          setClaimStatusTasks([...claimStatusTasks, criteriaId]);
+        }
+        
       }
     } else {
       if (!claimStatusTasks.includes(criteriaId)) {

@@ -20,7 +20,10 @@
   transition: transform 0.3s cubic-bezier(1, -1.85, 0, 2.18);
   cursor: pointer;
   border-radius: 56px;
-  background: var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%));
+  background: var(
+    --Primary,
+    linear-gradient(84deg, #9035ff 0.36%, #0065ff 100.36%)
+  );
   box-shadow: -1px -1px 50.3px -1px rgba(144, 53, 255, 0.75);
   padding: 16px;
   box-sizing: border-box;
@@ -45,7 +48,7 @@
   transition: all 0.2s ease-in-out;
 }
 
-.show-icon{
+.show-icon {
   opacity: 1;
   position: relative;
   transform: scale(1) rotate(0deg);
@@ -61,7 +64,10 @@
   padding: 6px 15px 6px 7px;
   box-sizing: border-box;
   border-radius: 50px 0px 0px 50px;
-  background: var(--Primary, linear-gradient(84deg, #9035FF 0.36%, #0065FF 100.36%));
+  background: var(
+    --Primary,
+    linear-gradient(84deg, #9035ff 0.36%, #0065ff 100.36%)
+  );
   box-shadow: -1px -1px 50.3px -1px rgba(144, 53, 255, 0.75);
   transform: translateX(38px);
   transition: all 0.2s ease-in-out;
@@ -92,7 +98,7 @@
   z-index: 2;
 }
 
-.helpHubMainCont-sidebar{
+.helpHubMainCont-sidebar {
   position: fixed;
   right: 0px;
   bottom: 0px;
@@ -443,6 +449,7 @@
   font-weight: 400;
   line-height: 24px;
   background: transparent;
+  padding: 0;
 }
 
 .q-helphub-search-input:focus {
@@ -603,6 +610,7 @@
   gap: 6px;
   align-self: stretch;
   cursor: pointer;
+  /* background-color: red; */
 }
 .q-helphub-quest-community-desc > p {
   display: -webkit-box;
@@ -612,13 +620,11 @@
   overflow: hidden;
   color: var(--Neutral-Black-500, #0d0d0d);
   text-overflow: ellipsis;
-
-  /* Title sm/600 */
   font-family: Figtree;
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
-  line-height: 28px; /* 155.556% */
+  line-height: 28px;
   letter-spacing: -0.18px;
 }
 .q-helphub-quest-community-desc > img {
@@ -1392,16 +1398,6 @@
   box-sizing: border-box;
 }
 
-.q-helphub-search-input {
-  /* align-self: stretch; */
-  color: var(--Neutral-Black-100, #939393);
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 24px;
-  /* 150% */
-}
-
 .q-helphub-chats-section {
   display: flex;
   align-items: center;
@@ -1470,7 +1466,7 @@
   line-height: 16px;
 }
 
-#q-helphub-satisfied-admin-reply{
+#q-helphub-satisfied-admin-reply {
   justify-content: center;
 }
 
@@ -1663,7 +1659,7 @@
 }
 
 .q-helphub-help-search-cont input {
-  align-self: stretch;
+  /* align-self: stretch; */
   color: var(--Neutral-Black-100, #939393);
   font-size: 16px;
   font-style: normal;
@@ -2004,14 +2000,12 @@
   background: var(--Primary-Grape-100, #f4ebff);
   overflow: hidden;
   box-sizing: border-box;
-  
 }
-.q-helphub-updates-single-update-read > .update-img>div {
+.q-helphub-updates-single-update-read > .update-img > div {
   width: 60px;
   position: relative;
   /* object-fit: contain; */
   object-fit: cover;
-  
 }
 .q-helphub-updates-single-update-read > .update-img > img {
   width: 100%; /* Make the image width 100% of the container */
@@ -2292,9 +2286,9 @@
   /* max-height: calc(100% - 111px); */
   background: var(--Neutral-White-100, #fff);
   /* overflow-y: scroll; */
-height: 100%;
-height: calc(100% - 50px);
-box-sizing: border-box;
+  height: 100%;
+  height: calc(100% - 50px);
+  box-sizing: border-box;
   background-color: yellow;
   display: none;
 }
@@ -2592,7 +2586,8 @@ box-sizing: border-box;
   max-width: 176px;
   overflow: hidden;
   display: flex;
-  padding: var(--Size-0, 13px) var(--Size-0, 12px) var(--Size-0, 0px) var(--Size-0, 12px);
+  padding: var(--Size-0, 13px) var(--Size-0, 12px) var(--Size-0, 0px)
+    var(--Size-0, 12px);
   box-sizing: border-box;
   justify-content: center;
   align-items: start;
@@ -2822,7 +2817,10 @@ input[type="file"] {
   font-style: normal;
   font-weight: 500;
   line-height: 16px;
-  background: var(--Primary, linear-gradient(84deg, #9035ff 0.36%, #0065ff 100.36%));
+  background: var(
+    --Primary,
+    linear-gradient(84deg, #9035ff 0.36%, #0065ff 100.36%)
+  );
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -2901,7 +2899,7 @@ input[type="file"] {
   width: 28px;
   height: 28px;
   border-radius: 28px;
-  background-color: #EDDDFB;
+  background-color: #edddfb;
   padding: 4px;
   box-sizing: border-box;
 }
@@ -3334,9 +3332,9 @@ input[type="file"] {
   animation: dissolve 0.3s ease forwards;
 }
 
-
-.no-conversation{
-  display: flex;
+.no-conversation {
+  /* display: flex;
+  height: 100%;
   padding: 20px 0;
   box-sizing: border-box;
   justify-content: center;
@@ -3346,22 +3344,73 @@ input[type="file"] {
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px;
+  line-height: 20px; */
+  /* background-color: red; */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  flex: 1 0 0;
+  align-self: stretch;
 }
 
-.q-helphub-satisfied{
+.q-no-conversation-avail-text-cont {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.q-no-conversation-avail-text-cont > .q-no-conversation-avail-head {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  color: var(--Neutral-Black-400, #2c2c2c);
+  text-align: center;
+  text-overflow: ellipsis;
+
+  /* Body lg/600 */
+  font-family: Figtree;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px; /* 150% */
+}
+
+.q-no-conversation-avail-text-cont > .q-no-conversation-avail-desc{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  color: var(--Neutral-Black-300, #4c4c4c);
+  text-align: center;
+  text-overflow: ellipsis;
+
+  /* Body md/400 */
+  font-family: Figtree;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
+}
+
+.q-helphub-satisfied {
   display: flex;
   padding: 20px;
   box-sizing: border-box;
   justify-content: space-between;
   align-items: flex-start;
   border-radius: 12px;
-  border: 1px solid #EBEBEB;
+  border: 1px solid #ebebeb;
   gap: 30px;
 }
 
-.q-helphub-satisfied > p{
-  color: var(--Neutral-Black-300, #4C4C4C);
+.q-helphub-satisfied > p {
+  color: var(--Neutral-Black-300, #4c4c4c);
   font-family: Figtree;
   font-size: 12px;
   font-style: normal;
@@ -3369,7 +3418,7 @@ input[type="file"] {
   line-height: 20px;
 }
 
-.q-helphub-satisfied2{
+.q-helphub-satisfied2 {
   display: flex;
   /* flex-direction: column; */
   padding: 20px;
@@ -3377,12 +3426,12 @@ input[type="file"] {
   justify-content: space-between;
   align-items: flex-start;
   border-radius: 12px;
-  border: 1px solid #EBEBEB;
+  border: 1px solid #ebebeb;
   flex-wrap: wrap;
 }
 
-.q-helphub-satisfied2 > p{
-  color: #9035FF;
+.q-helphub-satisfied2 > p {
+  color: #9035ff;
   font-family: Figtree;
   font-size: 12px;
   font-style: normal;
@@ -3398,12 +3447,12 @@ input[type="file"] {
   border-bottom: 1px solid #3f24a1;
 }
 
-.q-helphub-satisfied-icons{
- display: flex;
- gap: 12px;
+.q-helphub-satisfied-icons {
+  display: flex;
+  gap: 12px;
 }
 
-.q-helphub-satisfied-icons > img{
+.q-helphub-satisfied-icons > img {
   border-radius: 8px;
   background: var(--lush-green-16, rgba(13, 194, 104, 0.16));
   padding: 8px;
@@ -3419,7 +3468,7 @@ input[type="file"] {
   right: 0;
 }
 
-.helphub-task-container{
+.helphub-task-container {
   display: flex;
   flex-direction: column;
   padding: 20px 0 0;

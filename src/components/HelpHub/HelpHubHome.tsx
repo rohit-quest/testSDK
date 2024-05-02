@@ -407,7 +407,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
                   fontSize: "18px",
                 }}
               >
-                Get Updates
+                <p>Get Updates</p>
               </div>
               <div className="q-helphub-updates-desc">
                 {!!allQuestsData?.length &&
