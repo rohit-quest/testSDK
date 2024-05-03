@@ -191,7 +191,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
               }}
             >
               {contentConfig?.chatButton?.subHeading ||
-                "Currently replying under a min"}
+                "Let us help with all your questions"}
             </p>
           </div>
 

@@ -618,7 +618,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                       color: themeConfig?.secondaryColor,
                     }}
                   >
-                    Currently replying in under a minute
+                    Let us help with all your questions
                   </div>
                 </div>
 
