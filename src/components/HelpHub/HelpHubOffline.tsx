@@ -10,12 +10,10 @@ import HelpHubHelp from "./HelpHubHelp";
 import HelpHubTasks from "./HelpHubTasks";
 import HelpHubUpdates from "./HelpHubUpdates";
 import {
-  HelpHubProps,
   HelpHubPropsOffline,
   QuestCriteriaWithStatusType,
-  QuestTypes,
 } from "./HelpHub.type";
-import { createDefaultQuest, getDefaultQuest, getEntityDetails } from "./Helphub.service";
+import { getEntityDetails } from "./Helphub.service";
 import config from "../../config";
 
 const HelpHubOffline = (props: HelpHubPropsOffline) => {
@@ -23,8 +21,6 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
     userId,
     token,
     questId,
-    uniqueUserId,
-    uniqueEmailId,
     styleConfig,
     contentConfig,
     showFooter,

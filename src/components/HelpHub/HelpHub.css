@@ -3490,3 +3490,21 @@ input[type="file"] {
   box-sizing: border-box;
   gap: 16px;
 }
+
+.q-helphub-satisfied-link{
+  color: #9035FF;
+  font-family: Figtree;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  padding: 2px;
+  border-bottom: 1px solid #ebebeb00;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.q-helphub-satisfied-link:hover {
+  border-bottom: 1px solid #3f24a1;
+}
+
