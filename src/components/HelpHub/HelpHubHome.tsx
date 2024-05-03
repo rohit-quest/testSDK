@@ -191,7 +191,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
               }}
             >
               {contentConfig?.chatButton?.subHeading ||
-                "Currently replying under a min"}
+                "Let us help with all your questions"}
             </p>
           </div>
 
@@ -220,6 +220,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
                 }}
               />
             </div>
+            
             <div
               className={"SendMessageButton"}
               onClick={() => setSelectedSection("Chat")}
@@ -406,7 +407,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
                   fontSize: "18px",
                 }}
               >
-                Get Updates
+                <p>Get Updates</p>
               </div>
               <div className="q-helphub-updates-desc">
                 {!!allQuestsData?.length &&
