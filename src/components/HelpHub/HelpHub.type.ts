@@ -312,4 +312,5 @@ export interface MessageTypes {
   userId: string;
   conversations: Conversation;
   conversationId: ConversationId;
+  isClosed: boolean;
 }

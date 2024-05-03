@@ -17,7 +17,7 @@ import Modal3 from "../../assets/images/HelpHubModal3.jpeg";
 import HelphubSvg from "./HelphubSvg";
 import { Conversation, HelpHubChatTypes, MessageTypes } from "./HelpHub.type";
 import QuestContext from "../QuestWrapper";
-import { getMessages, satisfyOrNot, sendMessage } from "./Helphub.service";
+import { closeChat, getMessages, satisfyOrNot, sendMessage } from "./Helphub.service";
 import config from "../../config";
 import { uploadImageToBackend } from "../../general";
 import likeImg from "../../assets/images/like_color.svg";
@@ -79,6 +79,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   const [fetchData, setFetchData] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
   const [adminMsg, setAdminMsg] = useState<boolean>(false);
+  const [ifSatisfied, setIfSatisfied] = useState<boolean>(false);
 
   const storeLastChat = (chatHistory: MessageTypes[]) => {
     let lastSeenRecord: { [key: string]: string } = JSON.parse(
@@ -93,6 +94,10 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   const satisfiedDecision = (isSatisfied: boolean) => {
     if (isSatisfied) {
       handleSatisfied(true);
+      setIfSatisfied(true);
+      // setTimeout(() => {
+      //   setIfSatisfied(false);
+      // }, 5000);
     } else {
       setNotSatisfiedQuestion(true);
       setAskSatisfaction(false);
@@ -110,6 +115,49 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
       setTimeout(() => {
         setAdminMsg(false);
       }, 2500);
+    }
+  }
+
+  const closeChatFunction = async() => {
+    let closeChatResponse = await closeChat(
+      BACKEND_URL,
+      entityId,
+      userId,
+      token,
+      apiKey,
+      selectedConversationId,
+      uniqueUserId,
+      uniqueEmailId,
+      apiType
+    );
+    if (closeChatResponse?.success) {
+      let updateChat =
+        chat?.map((ele) => {
+          if (ele.conversationId == selectedConversationId) {
+            return {
+              ...ele,
+              isClosed: true,
+            };
+          } else {
+            return ele;
+          }
+        }) || [];
+      setChat(updateChat);
+      setOnlyAdminReply(false);
+      setData([]);
+      setAskSatisfaction(false);
+      setNotSatisfiedQuestion(false);
+      setTitle("");
+      setAdminMsg(false);
+      setIfSatisfied(false);
+      setScrollWidthSet((prev) => !prev);
+      setUpdateOneOutAnimation((prev) => !prev);
+      setUpdateOutTempAnimation(true);
+      setTimeout(() => {
+        setShowBottomNavigation(true);
+        setUpdateOutAnimation(false);
+        setShowPersonalChat(false);
+      }, 250);
     }
   }
 
@@ -449,16 +497,21 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                           className="q-helphub-chat-detail"
                           key={index}
                           onClick={() => {
-                            setUpdateOutAnimation(true);
-                            setScrollWidthSet((prev) => !prev);
-                            getMessagesHistory(value?.conversationId);
-                            setTimeout(() => {
-                              setShowPersonalChat((prev) => !prev);
-                              setShowBottomNavigation((prev) => !prev);
-                              setUpdateOneOutAnimation(false);
+                            if (value?.isClosed == true) {
+                              return;
+                            } else {
+                              setUpdateOutAnimation(true);
                               setScrollWidthSet((prev) => !prev);
-                            }, 100);
+                              getMessagesHistory(value?.conversationId);
+                              setTimeout(() => {
+                                setShowPersonalChat((prev) => !prev);
+                                setShowBottomNavigation((prev) => !prev);
+                                setUpdateOneOutAnimation(false);
+                                setScrollWidthSet((prev) => !prev);
+                              }, 100);
+                            }
                           }}
+                          style={{cursor: value?.isClosed == true ? "not-allowed" : "pointer"}}
                         >
                           <img
                             src={entityImage || SenderImg}
@@ -713,6 +766,14 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                 <div className="q-helphub-satisfied2">
                   <p onClick={() => ifNotSatisfied("option1")}>Require more details?</p>
                   <p onClick={() => ifNotSatisfied("option2")}>Prefer assistance from an admin?</p>
+                </div>
+              }
+              {
+                ifSatisfied &&
+                <div className="q-helphub-satisfied" id="q-helphub-satisfied-user-reply">
+                  <p>
+                    Thank you for your feedback. Do you want to close this chat? <span className="q-helphub-satisfied-link" onClick={closeChatFunction}>click here</span>
+                  </p>
                 </div>
               }
               {

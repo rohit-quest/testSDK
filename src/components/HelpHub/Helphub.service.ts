@@ -525,3 +525,50 @@ export const satisfyOrNot = async (
     return err?.response.data;
   }
 };
+
+export const closeChat = async (
+  backend_url: string,
+  entityId: string | undefined,
+  userId: string | undefined,
+  token: string | undefined,
+  apikey: string | undefined,
+  conversationId: string,
+  uniqueUserId?: string,
+  uniqueEmailId?: string,
+  apiType?: string
+) => {
+  try {
+    if (uniqueUserId || uniqueEmailId) {
+      let generalFunction = new General("", apiType);
+      let userData = await generalFunction.getExternalLogin({
+        apiType: apiType,
+        uniqueUserId,
+        entityId,
+        userId,
+        apiKey: apikey,
+        apiSecret: "",
+        token,
+        uniqueEmailId,
+      });
+      if (userData?.userId) {
+        userId = userData?.userId;
+        token = userData?.token;
+      }
+    }
+
+    let headers = {
+      userId,
+      token,
+      entityId,
+      apikey,
+    };
+    
+    let request = `${backend_url}api/entities/${entityId}/users/${userId}/conversation/user/close?conversationId=${conversationId}`;
+
+    let response = await axios.post(request, {}, { headers });
+
+    return response.data;
+  } catch (err) {
+    return err?.response.data;
+  }
+};
