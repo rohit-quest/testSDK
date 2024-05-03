@@ -3406,12 +3406,14 @@ input[type="file"] {
   box-sizing: border-box;
   justify-content: space-between;
   align-items: flex-start;
+  align-items: center;
   border-radius: 12px;
   border: 1px solid #ebebeb;
   gap: 30px;
 }
 
 .q-helphub-satisfied > p {
+  max-width: calc(100% - 84px);
   color: var(--Neutral-Black-300, #4c4c4c);
   font-family: Figtree;
   font-size: 12px;
@@ -3452,6 +3454,7 @@ input[type="file"] {
 .q-helphub-satisfied-icons {
   display: flex;
   gap: 12px;
+  box-sizing: border-box;
 }
 
 .q-helphub-satisfied-icons > img {
