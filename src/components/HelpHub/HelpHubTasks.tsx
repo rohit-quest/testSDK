@@ -48,7 +48,10 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
         apiType
       );
       if (claimResponse.success) {
-        setClaimStatusTasks([...claimStatusTasks, criteriaId]);
+        if(!claimStatusTasks.includes(criteriaId)){
+          setClaimStatusTasks([...claimStatusTasks, criteriaId]);
+        }
+        
       }
     } else {
       if (!claimStatusTasks.includes(criteriaId)) {
@@ -271,6 +274,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                           fontFamily: themeConfig?.fontFamily,
                           color: themeConfig?.secondaryColor,
                           ...styleConfig?.Tasks?.Card?.SubHeading,
+                          fontSize:"12px"
                         }}
                       >
                         You can complete your user information details by

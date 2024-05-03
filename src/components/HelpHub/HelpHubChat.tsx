@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import OpenSectionButton from "../../assets/images/OpenSectionButton.svg";
 import InfoButton from "../../assets/images/InfoButton.svg";
+import NoConversation from "../../assets/images/NoConversation.png";
 import SendMessageEmojiIcon from "../../assets/images/SendMessageEmojiIcon.svg";
 import SendMessageAttachIcon from "../../assets/images/SendMessageAttachIcon.svg";
 import SendMessageSendIcon from "../../assets/images/SendMessageSendIcon.svg";
@@ -498,7 +499,20 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                   </div>
                 </div>
               ) : (
-                <div className="no-conversation">No Conversation Available</div>
+                <div className="no-conversation">
+                  <div>
+                    <img src={NoConversation} alt="" />
+                  </div>
+
+                  <div className="q-no-conversation-avail-text-cont">
+                    <p className="q-no-conversation-avail-head"> 
+                      No conversation is available
+                    </p>
+                    <p className="q-no-conversation-avail-desc">
+                      Start your new conversation
+                    </p>
+                  </div>
+                </div>
               ))}
 
             {/*send button container */}
@@ -604,7 +618,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                       color: themeConfig?.secondaryColor,
                     }}
                   >
-                    Currently replying in under a minute
+                    Let us help with all your questions
                   </div>
                 </div>
 
