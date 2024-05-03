@@ -2557,6 +2557,8 @@
   font-style: normal;
   font-weight: 400;
   line-height: 16px;
+  font-size: 12px;
+  
 }
 
 .single-task-close-div-text > button {
@@ -3381,7 +3383,7 @@ input[type="file"] {
   line-height: 24px; /* 150% */
 }
 
-.q-no-conversation-avail-text-cont > .q-no-conversation-avail-desc{
+.q-no-conversation-avail-text-cont > .q-no-conversation-avail-desc {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;

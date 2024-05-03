@@ -274,6 +274,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                           fontFamily: themeConfig?.fontFamily,
                           color: themeConfig?.secondaryColor,
                           ...styleConfig?.Tasks?.Card?.SubHeading,
+                          fontSize:"12px"
                         }}
                       >
                         You can complete your user information details by
