@@ -2950,7 +2950,7 @@ input[type="file"] {
 }
 
 /* typng indicators */
-.chat-bubble {
+.q-chat-bubble-sdk {
   background-color: #fbfbfb;
   padding: 16px 28px;
   box-sizing: border-box;
@@ -3432,7 +3432,7 @@ input[type="file"] {
   align-items: center;
   border-radius: 12px;
   border: 1px solid #ebebeb;
-  gap: 30px;
+  /* gap: 30px; */
 }
 
 .q-helphub-satisfied > p {

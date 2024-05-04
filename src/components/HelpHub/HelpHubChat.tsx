@@ -818,7 +818,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                 </div>
               }
               {senderMessageLoading && !onlyAdminReply && (
-                <div className="chat-bubble">
+                <div className="q-chat-bubble-sdk">
                   <div className="typing">
                     <div className="dot"></div>
                     <div className="dot"></div>
