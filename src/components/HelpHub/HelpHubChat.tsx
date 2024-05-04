@@ -417,13 +417,8 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     return messageParagraphs;
   }
 
-  useEffect(()=>{
-    console.log(searchData)
-  },[searchData]);
-
   useEffect(() => {
     let data = chat.filter((value: any) => {
-      console.log(value)
       return value?.question
         ?.toLowerCase()
         .includes(searchData?.toString().toLowerCase());
