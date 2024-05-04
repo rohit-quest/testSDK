@@ -65,7 +65,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
-  const [chat, setChat] = useState<MessageTypes[]>();
+  const [chat, setChat] = useState<MessageTypes[]>([]);
 
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
@@ -81,6 +81,8 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   const [title, setTitle] = useState<string>("");
   const [adminMsg, setAdminMsg] = useState<boolean>(false);
   const [ifSatisfied, setIfSatisfied] = useState<boolean>(false);
+  const [searchData, setSearchData] = useState<string | number>("");
+  const [disableSendMessageBtn,setDisableSendMessageBtn]=useState<boolean>(false);
 
   const storeLastChat = (chatHistory: MessageTypes[]) => {
     let lastSeenRecord: { [key: string]: string } = JSON.parse(
@@ -206,6 +208,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
 
   async function sendMessageFunc (message: string) {
     setSenderMessageLoading(true);
+    setDisableSendMessageBtn(true);
     let userChat: Conversation = {
       senderRole: "USER",
       _id: new Date().toISOString(),
@@ -288,6 +291,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     setChat(updateLastChat);
     storeLastChat(updateLastChat || []);
     setSenderMessageLoading((prev) => !prev);
+    setDisableSendMessageBtn((prev) => !prev);
 
     let askSatisfaction: { [key: string]: number } = JSON.parse(
       localStorage.getItem("askSatisfaction") || "{}"
@@ -413,6 +417,15 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     return messageParagraphs;
   }
 
+  useEffect(() => {
+    let data = chat.filter((value: any) => {
+      return value?.question
+        ?.toLowerCase()
+        .includes(searchData?.toString().toLowerCase());
+    });
+    // setFilterData(data);
+  }, [ searchData]);
+
   return (
     <>
       {!showPersonalChat && (
@@ -474,13 +487,14 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                   {/* search  */}
                   <div className="search-outer-div">
                     <div
-                      className="q-helphub-search-container"
+                      className="q-helphub-search-container-search"
                       style={{ ...styleConfig?.Chat?.Searchbox }}
                     >
                       <input
                         className="q-helphub-search-input"
                         type="text"
                         placeholder="Search for help..."
+                        onChange={(e)=>{setSearchData(e.target.value)}}
                       />
                       <div className="q-helphub-search-btn">
                         <img src={SearchIcons} alt="" />
@@ -733,7 +747,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                       <div
                         key={index}
                         className={`message ${
-                          message?.senderRole === "USER" ? "sender" : "receiver"
+                          message?.senderRole === "USER" ? "sender-role" : "receiver-role"
                         }`}
                       >
                         {message.content.includes(
@@ -799,7 +813,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                 </div>
               }
               {senderMessageLoading && !onlyAdminReply && (
-                <div className="chat-bubble">
+                <div className="q-chat-bubble-sdk">
                   <div className="typing">
                     <div className="dot"></div>
                     <div className="dot"></div>
@@ -821,7 +835,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
           </div>
 
           <div className="q-chat-personal-container-footer">
-            <div>
+            <div className={`${disableSendMessageBtn?"send-message-chat-btn-disable":""}`}>
               {selectedFileName ? (
                 <div className="selected-file-div">
                   <img src={ImageUploadIcon} alt="" />
@@ -829,7 +843,8 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                 </div>
               ) : (
                 <input
-                  className="q-chat-personal-container-footer-input"
+                  className={`${disableSendMessageBtn?"send-message-chat-btn-disable":""} q-chat-personal-container-footer-input`}
+                  disabled={disableSendMessageBtn}
                   onKeyUp={(e) => {
                     if (e.key === "Enter") {
                       handleSave();
@@ -842,35 +857,36 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
               )}
               <div className="q-chat-personal-container-footer-icons">
                 {selectedFileName ? (
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: "16px",
-                      alignItems: "center",
-                    }}
-                  >
-                    <p
-                      style={{
-                        color: "var(--Neutral-Black-200, #6E6E6E)",
-                        fontFamily: themeConfig?.fontFamily || "Figtree",
-                        fontSize: "14px",
-                        fontStyle: "normal",
-                        fontWeight: 500,
-                        lineHeight: "20px",
-                        textDecorationLine: "underline",
-                      }}
-                    >
-                      View
-                    </p>
+                  // <div
+                  //   style={{
+                  //     display: "flex",
+                  //     gap: "16px",
+                  //     alignItems: "center",
+                  //   }}
+                  // >
+                  //   <p
+                  //     style={{
+                  //       color: "var(--Neutral-Black-200, #6E6E6E)",
+                  //       fontFamily: themeConfig?.fontFamily || "Figtree",
+                  //       fontSize: "14px",
+                  //       fontStyle: "normal",
+                  //       fontWeight: 500,
+                  //       lineHeight: "20px",
+                  //       textDecorationLine: "underline",
+                  //     }}
+                  //   >
+                  //     View
+                  //   </p>
 
-                    <div
-                      style={{
-                        width: "1px",
-                        height: "18px",
-                        background: "var(--Neutral-White-400, #E0E0E0)",
-                      }}
-                    ></div>
-                  </div>
+                  //   <div
+                  //     style={{
+                  //       width: "1px",
+                  //       height: "18px",
+                  //       background: "var(--Neutral-White-400, #E0E0E0)",
+                  //     }}
+                  //   ></div>
+                  // </div>
+                  <></>
                 ) : (
                   <></>
                   // <div
@@ -886,7 +902,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                 <div className="attach-file">
                   {!selectedFileName ? (
                     <label htmlFor="profile-img">
-                      <img src={SendMessageAttachIcon} />
+                      <img src={SendMessageAttachIcon} className={`${disableSendMessageBtn?"send-message-aero-dsable":""}` }/>
                     </label>
                   ) : (
                     <img
@@ -905,12 +921,16 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                     id="profile-img"
                     type="file"
                     accept="image/*"
-                    className="hidden"
+                    // className=""
+                    disabled={disableSendMessageBtn}
+                    className={`${disableSendMessageBtn?"send-message-aero-dsable":""} hidden` }
                   />
                 </div>
 
-                <div className="sent-btn" onClick={handleSave}>
-                  <img src={SendMessageAero} />
+                <div className={`${disableSendMessageBtn?"send-message-aero-dsable":""} sent-btn`} onClick={handleSave} aria-disabled={disableSendMessageBtn} style={{
+                  cursor:disableSendMessageBtn?"no-drop":"pointer"
+                }}>
+                  <img src={SendMessageAero}  className={`${disableSendMessageBtn?"send-message-aero-dsable":""}` }/>
                 </div>
               </div>
             </div>
