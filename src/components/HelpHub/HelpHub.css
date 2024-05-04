@@ -450,6 +450,7 @@
   line-height: 24px;
   background: transparent;
   padding: 0;
+  height: 100%;
 }
 
 .q-helphub-search-input:focus {
@@ -1384,7 +1385,7 @@
   align-self: stretch;
 }
 
-.q-helphub-search-container {
+.q-helphub-search-container-search {
   display: flex;
   padding: 12px 16px;
   box-sizing: border-box;
@@ -1396,6 +1397,7 @@
   border: 1px solid var(--Neutral-White-400, #e0e0e0);
   background: var(--Neutral-White-100, #fff);
   box-sizing: border-box;
+  height: 48px;
 }
 
 .q-helphub-chats-section {
@@ -2558,7 +2560,6 @@
   font-weight: 400;
   line-height: 16px;
   font-size: 12px;
-  
 }
 
 .single-task-close-div-text > button {
@@ -2705,6 +2706,7 @@
   background: #fff;
   max-height: 98px;
   box-sizing: border-box;
+  
 }
 
 .q-chat-personal-container-footer > div {
@@ -2717,6 +2719,8 @@
   border-radius: 12px;
   border: 1px solid var(--Neutral-White-400, #e0e0e0);
   background: var(--Neutral-White-100, #fff);
+
+  /* background-color: red; */
 }
 
 .q-chat-personal-container-footer-icons {
@@ -2866,23 +2870,41 @@ input[type="file"] {
   box-sizing: border-box;
 }
 
-.sender {
+.sender-role {
   background-color: #f4ebff;
   margin-left: auto;
   width: fit-content;
   max-width: 70%;
   word-break: break-word;
   color: #58209c;
-  border-radius: 5px 5px 0 5px;
+  border-radius: 12px 12px 0 12px;
+
+  color: var(--Primary-Grape-700, #58209c);
+
+  /* Body md/400 */
+  font-family: Figtree;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
 }
 
-.receiver {
+.receiver-role {
   background-color: #fbfbfb;
   align-self: flex-start;
   max-width: 70%;
   width: fit-content;
   word-break: break-word;
-  border-radius: 5px 5px 5px 0;
+  border-radius: 12px 12px 12px 0;
+
+  color: var(--Neutral-Black-300, #4c4c4c);
+
+  /* Body md/400 */
+  font-family: Figtree;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; /* 142.857% */
 }
 
 .chat-profile-img-sender {
@@ -3129,7 +3151,8 @@ input[type="file"] {
 
 .selected-file-div {
   display: flex;
-  width: 215px;
+  /* width: 215px; */
+  max-width: calc(100% - 80px);
   height: 18px;
   gap: 8px;
   justify-content: center;
@@ -3491,8 +3514,8 @@ input[type="file"] {
   gap: 16px;
 }
 
-.q-helphub-satisfied-link{
-  color: #9035FF;
+.q-helphub-satisfied-link {
+  color: #9035ff;
   font-family: Figtree;
   font-size: 12px;
   font-style: normal;
@@ -3508,3 +3531,9 @@ input[type="file"] {
   border-bottom: 1px solid #3f24a1;
 }
 
+
+.send-message-chat-btn-disable,.send-message-aero-dsable{
+  opacity: 0.6;
+  filter: grayscale(100%);
+  cursor: no-drop;
+}

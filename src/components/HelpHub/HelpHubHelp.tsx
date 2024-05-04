@@ -85,7 +85,7 @@ const HelpHubTasks = (props: HelpHubFaqTypes) => {
                   ...styleConfig?.Help?.Form,
                 }}
               >
-                {faqData?.length} FAQs
+                {filterData?.length} FAQs
               </div>
             </div>
 
