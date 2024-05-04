@@ -57,7 +57,7 @@ export default function TutorialPreview({ online = true }) {
                     {
                         id: 0,
                         "title": "Quest Linkedin",
-                        "url": "https://www.linkedin.com/company/questlabss/",
+                        "url": "https://www.linkedin.com/company/questai/",
                         "subheading": "this is the description",
                         "criteriaId": "ec-b6d81257-1182-4e20-91e5-e6e7bc336f9b",
                         "status": false
