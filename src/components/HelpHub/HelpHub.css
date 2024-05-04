@@ -2961,6 +2961,7 @@ input[type="file"] {
   border-radius: 20px;
   border-bottom-left-radius: 2px;
   display: inline-block;
+  margin-top: 10px;
 }
 .typing {
   align-items: center;
@@ -3432,11 +3433,11 @@ input[type="file"] {
   align-items: center;
   border-radius: 12px;
   border: 1px solid #ebebeb;
-  /* gap: 30px; */
+  gap: 20px;
 }
 
 .q-helphub-satisfied > p {
-  max-width: calc(100% - 84px);
+  max-width: calc(100% - 104px);
   color: var(--Neutral-Black-300, #4c4c4c);
   font-family: Figtree;
   font-size: 12px;
