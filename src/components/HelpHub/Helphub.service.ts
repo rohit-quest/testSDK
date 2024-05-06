@@ -128,7 +128,7 @@ export const createDefaultQuest = async (
             source: "LINK",
             data: {
               linkActionName: "Updates3",
-              linkActionUrl: "https://www.linkedin.com/company/questlabss/",
+              linkActionUrl: "https://www.linkedin.com/company/questai/",
               effort: "E1",
               importance: "I1",
               xp: 10,
@@ -174,7 +174,7 @@ export const createDefaultQuest = async (
             source: "LINK",
             data: {
               linkActionName: "Tasks-Quest Linkedin",
-              linkActionUrl: "https://www.linkedin.com/company/questlabss/",
+              linkActionUrl: "https://www.linkedin.com/company/questai/",
               effort: "E1",
               importance: "I1",
               xp: 10,
