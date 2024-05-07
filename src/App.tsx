@@ -25,8 +25,8 @@ import CrossSellingPreview from "./components/expansion/CrossPreview";
 import SreakPreview from "./components/Streak/Preview";
 import TourPreview from "./components/Tour/Preview";
 import FeedbackWorkflowPreview from "./components/FeedbackOverview/Preview";
-import FeedbackPreview from "./components/Feedback/Preview";
-import Survey from "./components/Feedback/Survey";
+// import FeedbackPreview from "./components/Feedback/Preview";
+import SurveyPreview from "./components/Survey/Preview";
 import ModalPreview from "./components/Modals/Preview";
 import PreviewLeaderboard from "./components/Leaderboard/Preview";
 import HelpHub from "./components/HelpHub/HelpHub";
@@ -167,12 +167,12 @@ function App() {
           userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
           /> */}
 
-        <HelpHubPreview online={true} />
+        {/* <HelpHubPreview online={true} /> */}
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
         {/* <GamifiedQuizPreview online={true} /> */}
         {/* <GamifiedQuizPreview online={true} /> */}
-
+          <SurveyPreview online={false}/>
         {/* 
                 <HelpCenter
                     userId={userId}
