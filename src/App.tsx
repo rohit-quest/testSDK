@@ -40,10 +40,15 @@ import DailyStreak from "./components/Streak/DailyStreak";
 import ChallengesPreview from "./components/Challenges/ChallengesPreview";
 import GamifiedQuizPreview from "./components/GamifiedQuiz/GamifiedQuizPreview";
 import { HelpChat } from "./components/HelpCenter/HelpChat";
-import Walkthrough, { Align, Position } from "./components/Walkthrough/WalkThrough";
+import Walkthrough, {
+  Align,
+  Position,
+} from "./components/Walkthrough/WalkThrough";
 import showToast from "./components/toast/toastService";
 import Toast from "./components/toast2/Toast";
-import InlineFeedbackPreview from './components/InlineFeedback/Preview'
+import InlineFeedbackPreview from "./components/InlineFeedback/Preview";
+import ModularPreview from "./components/Modules/ModulePreview/Preview";
+
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-9986f82d-cbd0-4923-bf9a-ea01b4795fa1";
 export const apiSecret =
@@ -103,7 +108,7 @@ function App() {
   const [isOpen, setIsOpen] = useState(true);
   const [answer, setAnswer] = useState([]);
 
-  // const CSGetstarted = new 
+  // const CSGetstarted = new
   return (
     <div
     // style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
@@ -121,11 +126,12 @@ function App() {
             // buttonColor: "green",
             //  primaryColor: "red",
             // secondaryColor: "red",
-
             // fontFamily: "cursive"
           }
         }
       >
+        <ModularPreview />
+        
         {/* <TutorialPreview online={true} /> */}
 
         {/* <SpinTheWheel
@@ -167,7 +173,7 @@ function App() {
           userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
           /> */}
 
-        <HelpHubPreview online={true} />
+        {/* <HelpHubPreview online={true} /> */}
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
         {/* <GamifiedQuizPreview online={true} /> */}
@@ -186,7 +192,6 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-
 
         {/* <OnBoardingPreview online={false} /> */}
 
@@ -301,7 +306,7 @@ function App() {
                       }
                     }}
                 ></QuestLogin> */}
-                    {/* <DailyStreak
+        {/* <DailyStreak
                     token={token}
                     userId={userId}
                     metric='daily-visit'
@@ -325,7 +330,7 @@ function App() {
                   }}
                   
                     /> */}
-                    {/* <SreakPreview/> */}
+        {/* <SreakPreview/> */}
 
         {/* <ShareArticle
                     bgColor=""
