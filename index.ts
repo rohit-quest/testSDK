@@ -28,6 +28,7 @@ import "./src/components/UserProfile/userProfile.css"
 import "./src/components/Challenges/challenges.css"
 import "./src/components/GamifiedQuiz/gamifiedQuiz.css"
 import "./src/components/Walkthrough/tourHelper.css"
+import "./src/components/InlineFeedback/style.css"
 import QuestLogin from "./src/components/Login/Login";
 import OnBoarding from "./src/components/Onboarding/Onboarding";
 import { QuestProvider } from "./src/components/QuestWrapper";
@@ -76,6 +77,8 @@ import UserProfile from "./src/components/UserProfile/UserProfile";
 import GamifiedQuiz from "./src/components/GamifiedQuiz/GamifiedQuiz";
 import GamifiedQuizOffline from "./src/components/GamifiedQuiz/GamifiedQuizOffline";
 import HelpHubOffline from "./src/components/HelpHub/HelpHubOffline";
+import InlineFeedback from "./src/components/InlineFeedback/InlineFeedback";
+import InlineFeedbackOffline from "./src/components/InlineFeedback/InlineFeedbackOffline";
 export {
     QuestProvider,
     QuestLogin,
@@ -126,4 +129,6 @@ export {
     GamifiedQuiz,
     GamifiedQuizOffline,
     HelpHubOffline,
+    InlineFeedback,
+    InlineFeedbackOffline
 };
