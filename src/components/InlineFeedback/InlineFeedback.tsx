@@ -91,7 +91,7 @@ export default function InlineFeedback({
       const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${headers.userId}`;
       const criteriaId = questData?.data?.eligibilityCriterias?.[0]
       const answer = type == 'like' ? (data?.like ? 'like':'dislike'):`${data.rate}/${data.total}`
-      const jsonData = {criteriaId, answers: [answer]}
+      const jsonData = {criteriaId, answer: [answer]}
       const response = await axios.post(request, jsonData, {headers});
       
       if(response.data?.success){

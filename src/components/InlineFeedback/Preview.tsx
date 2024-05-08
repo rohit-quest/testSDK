@@ -14,13 +14,21 @@ export const questId = "q-a4f7a07a-8344-41af-bbea-01682480e609";
 
 export default function Preview({ online }: { online: boolean }) {
   // questData?.data?.eligibilityCriterias
-  const inlineFeedbackOffline = {
-    data: {
-      eligibilityCriterias: ["ec-85661bb7-9df4-4a22-8209-b3c6efb99240"],
+  const inlineFeedbackOffline = [
+    {
+      type: "RATING",
+      question: "First name",
+      options: [""],
+      criteriaId: "ec-85661bb7-9df4-4a22-8209-b3c6efb99240",
+      required: true,
+      linkTitle: "",
+      linkUrl: "",
+      manualInput: false,
+      placeholder: "",
     },
-  };
-  const [answer,setAnswer]=useState({});
-  console.log(answer)
+  ];
+  const [answer, setAnswer] = useState({});
+  // console.log(answer)
 
   if (online) {
     return (
@@ -37,44 +45,43 @@ export default function Preview({ online }: { online: boolean }) {
           token={token}
           questId={questId}
           styleConfig={{
-            ActionButton:{
+            ActionButton: {
               // background:"red",
               // color:'red',
               // border:"5px solid yellow"
             },
-            ActionContainer:{
+            ActionContainer: {
               // background:'yellow'
             },
-            ActionSelectedButton:{
+            ActionSelectedButton: {
               // background:'yellow',
               // border:"5px solid black"
             },
-            Description:{
+            Description: {
               // background:'red'
               // color:'red'
             },
-            Footer:{
+            Footer: {
               // background:'red'
               // color:'red'
             },
-            Form:{
+            Form: {
               // background:'red'
+              // width:"300px"
             },
-            Heading:{
+            Heading: {
               // background:'red'
               // color:"yellow"
             },
-            IconStyle:{
-              
-            },
-            MainHeading:{
+            IconStyle: {},
+            MainHeading: {
               //  background:'red'
             },
-            SelectedIconStyle:{
+            SelectedIconStyle: {
               // background:'red'
-            }
+            },
           }}
-          type="numbering"
+          type="emoji"
         />
       </QuestProvider>
     );
@@ -96,42 +103,40 @@ export default function Preview({ online }: { online: boolean }) {
         offlineFormData={inlineFeedbackOffline}
         setAnswer={setAnswer}
         styleConfig={{
-          ActionButton:{
+          ActionButton: {
             // background:"red",
             // color:'red',
             // border:"5px solid yellow"
           },
-          ActionContainer:{
+          ActionContainer: {
             // background:'yellow'
           },
-          ActionSelectedButton:{
+          ActionSelectedButton: {
             // background:'yellow',
             // border:"5px solid black"
           },
-          Description:{
+          Description: {
             // background:'red'
             // color:'red'
           },
-          Footer:{
+          Footer: {
             // background:'red'
             // color:'red'
           },
-          Form:{
+          Form: {
             // background:'red'
           },
-          Heading:{
+          Heading: {
             // background:'red'
             // color:"yellow"
           },
-          IconStyle:{
-            
-          },
-          MainHeading:{
+          IconStyle: {},
+          MainHeading: {
             //  background:'red'
           },
-          SelectedIconStyle:{
+          SelectedIconStyle: {
             // background:'red'
-          }
+          },
         }}
       />
     </QuestProvider>
