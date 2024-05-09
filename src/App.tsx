@@ -40,7 +40,7 @@ import DailyStreak from "./components/Streak/DailyStreak";
 import ChallengesPreview from "./components/Challenges/ChallengesPreview";
 import GamifiedQuizPreview from "./components/GamifiedQuiz/GamifiedQuizPreview";
 import { HelpChat } from "./components/HelpCenter/HelpChat";
-import Walkthrough  from "./components/Walkthrough/Walkthrough";
+import Walkthrough from "./components/Walkthrough/Walkthrough";
 import showToast from "./components/toast/toastService";
 import Toast from "./components/toast2/Toast";
 import InlineFeedbackPreview from "./components/InlineFeedback/Preview";
@@ -127,8 +127,8 @@ function App() {
           }
         }
       >
-        <ModularPreview />
-        
+        {/* <ModularPreview /> */}
+
         {/* <TutorialPreview online={true} /> */}
 
         {/* <SpinTheWheel
@@ -175,7 +175,7 @@ function App() {
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
         {/* <GamifiedQuizPreview online={true} /> */}
         {/* <GamifiedQuizPreview online={true} /> */}
-          <SurveyPreview online={true}/>
+        {/* <SurveyPreview online={true}/> */}
         {/* 
                 <HelpCenter
                     userId={userId}
@@ -190,7 +190,7 @@ function App() {
                 // descriptioin="this is descripiton"
                 /> */}
 
-        {/* <OnBoardingPreview online={false} /> */}
+        <OnBoardingPreview online={true} />
 
         {/* <GetStartedPreview online={true} /> */}
 
@@ -343,7 +343,7 @@ function App() {
 
         {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
         {/* <SreakPreview online /> */}
-        <InlineFeedbackPreview online={false} />
+        {/* <InlineFeedbackPreview online={false} /> */}
 
         {/* <Walkthrough
             isOpen={isOpen}
