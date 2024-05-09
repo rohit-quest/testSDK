@@ -7,8 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import "../Onboarding/onboarding.css";
 import "../FeedbackOverview/FeedbackOverview.css";
-import { textAreaIcon, crossLogoFeedback } from "../../assets/assetsSVG";
-import showToast from "../toast/toastService";
 import Rating from "../Rating/Rating";
 import QuestLabs from "../QuestLabs";
 import General from "../../general";
@@ -21,61 +19,9 @@ import TopBar from "../Modules/TopBar";
 import { MultiChoiceTwo } from "../Modules/MultiChoice";
 import Toast from "../toast2/Toast";
 import Cookies from "universal-cookie";
-import { Align } from "../Walkthrough/Walkthrough";
 import RadioInitial from "../../assets/images/RadioInitial.svg";
 import RadioSelected from "../../assets/images/RadioSelected.svg";
-
-const thanks = (
-  <svg
-    width="80"
-    height="80"
-    viewBox="0 0 80 80"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <g clipRule="url(#clip0_4046_146)">
-      <path
-        d="M40 80C62.0914 80 80 62.0914 80 40C80 17.9086 62.0914 0 40 0C17.9086 0 0 17.9086 0 40C0 62.0914 17.9086 80 40 80Z"
-        fill="url(#paint0_linear_4046_146)"
-      />
-      <path
-        d="M48.4167 79.0566C49.1837 78.9078 49.9463 78.7367 50.7033 78.5432C51.987 78.1844 53.2519 77.7617 54.4933 77.2766C55.7363 76.7955 56.9545 76.2526 58.1433 75.6499C59.3325 75.0449 60.4906 74.3807 61.6133 73.6599C62.7348 72.939 63.8195 72.1625 64.8633 71.3332C65.9091 70.5029 66.9125 69.6207 67.87 68.6899C68.8259 67.7614 69.7348 66.7858 70.5933 65.7666C71.4526 64.7465 72.2603 63.684 73.0133 62.5832C73.7662 61.4843 74.4638 60.3484 75.1033 59.1799C75.743 58.0097 76.3237 56.8082 76.8433 55.5799C77.3635 54.3514 77.8218 53.0976 78.2167 51.8232C78.5548 50.7075 78.8439 49.5776 79.0833 48.4366L55.3167 24.6732C53.3096 22.6573 50.9236 21.0581 48.2961 19.9677C45.6686 18.8774 42.8514 18.3174 40.0067 18.3199C37.1594 18.3168 34.3395 18.8765 31.7092 19.9668C29.0789 21.0572 26.6901 22.6566 24.68 24.6732C22.6649 26.6839 21.0661 29.0724 19.9753 31.7018C18.8845 34.3312 18.323 37.1499 18.323 39.9966C18.323 42.8433 18.8845 45.662 19.9753 48.2914C21.0661 50.9208 22.6649 53.3092 24.68 55.3199L48.4167 79.0566Z"
-        fill="url(#paint1_linear_4046_146)"
-      />
-      <path
-        d="M40.0033 18.3232C45.5433 18.3232 51.0833 20.4398 55.3233 24.6765C57.3384 26.6872 58.9372 29.0756 60.028 31.705C61.1188 34.3344 61.6803 37.1532 61.6803 39.9998C61.6803 42.8465 61.1188 45.6653 60.028 48.2947C58.9372 50.9241 57.3384 53.3125 55.3233 55.3232C53.3126 57.3383 50.9242 58.937 48.2948 60.0279C45.6654 61.1187 42.8467 61.6802 40 61.6802C37.1533 61.6802 34.3346 61.1187 31.7052 60.0279C29.0758 58.937 26.6873 57.3383 24.6767 55.3232C22.6615 53.3125 21.0628 50.9241 19.972 48.2947C18.8811 45.6653 18.3196 42.8465 18.3196 39.9998C18.3196 37.1532 18.8811 34.3344 19.972 31.705C21.0628 29.0756 22.6615 26.6872 24.6767 24.6765C26.6867 22.6599 29.0756 21.0604 31.7059 19.9701C34.3361 18.8798 37.156 18.3201 40.0033 18.3232ZM49.87 33.3298C49.5544 33.3601 49.2539 33.4791 49.0033 33.6732L36.8233 42.8065L31.18 37.1665C29.9566 35.8932 27.5467 38.2998 28.8233 39.5232L35.49 46.1898C35.779 46.4631 36.1536 46.6281 36.5504 46.6566C36.9471 46.6852 37.3415 46.5756 37.6667 46.3465L51 36.3465C52.12 35.5298 51.43 33.3532 50.0433 33.3332C49.9867 33.3303 49.9299 33.3303 49.8733 33.3332L49.87 33.3298Z"
-        fill="white"
-      />
-    </g>
-    <defs>
-      <linearGradient
-        id="paint0_linear_4046_146"
-        x1="0.320001"
-        y1="80"
-        x2="87.5968"
-        y2="71.0629"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stop-color="#9035FF" />
-        <stop offset="1" stop-color="#0065FF" />
-      </linearGradient>
-      <linearGradient
-        id="paint1_linear_4046_146"
-        x1="18.566"
-        y1="79.0566"
-        x2="84.8526"
-        y2="72.2662"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stop-color="#9035FF" />
-        <stop offset="1" stop-color="#0065FF" />
-      </linearGradient>
-      <clipPath id="clip0_4046_146">
-        <rect width="80" height="80" fill="white" />
-      </clipPath>
-    </defs>
-  </svg>
-);
+import { cross, thanksPopUpTick } from "../../assets/assetsSVG";
 
 interface FeedbackProps {
   heading?: string;
@@ -91,7 +37,6 @@ interface FeedbackProps {
   supportUrl?: string;
   onSubmit?: () => void;
   delay?: number;
-  isInline?: boolean;
   crossLogoForInput?: boolean;
   onCancel?: Function;
   itemsPerPage?: number;
@@ -182,7 +127,6 @@ const Survey: React.FC<FeedbackProps> = ({
   uniqueUserId,
   showFooter = true,
   styleConfig = {},
-  isInline = false,
   sections,
   enableVariation = false,
 }) => {
@@ -196,8 +140,6 @@ const Survey: React.FC<FeedbackProps> = ({
   }
 
   const [rating, setRating] = useState<number>(0);
-  const [comment, setComment] = useState<string>("");
-  const [likePopup, setLikePopup] = useState<boolean>(false);
   const [thanksPopup, setThanksPopup] = useState<boolean>(false);
   const [formdata, setFormdata] = useState<FormDataItem[]>([]);
   const [gradient, setGradient] = useState<boolean>(false);
@@ -207,7 +149,6 @@ const Survey: React.FC<FeedbackProps> = ({
   const [answer, setAnswer] = useState<any>({});
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [session, setSession] = useState<string>("");
-  const [isVisible, setIsVisible] = useState(true);
   const [page, setPage] = useState(0);
   const [data, setData] = useState<FormDataItem[]>([]);
   const [questThemeData, setQuestThemeData] = useState<QuestThemeData>({
@@ -237,32 +178,6 @@ const Survey: React.FC<FeedbackProps> = ({
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
   let GeneralFunctions = new General("mixpanel", apiType);
-
-  const cross = (color = "#AFAFAF") => (
-    <div
-      style={{
-        cursor: "pointer",
-        padding: "4px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        borderRadius: "4px",
-      }}
-    >
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 32 32"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M24.4003 7.61363C24.2769 7.49003 24.1304 7.39196 23.9691 7.32505C23.8078 7.25815 23.6349 7.22371 23.4603 7.22371C23.2857 7.22371 23.1128 7.25815 22.9515 7.32505C22.7902 7.39196 22.6436 7.49003 22.5203 7.61363L16.0003 14.1203L9.4803 7.6003C9.35686 7.47686 9.21031 7.37894 9.04902 7.31213C8.88774 7.24532 8.71487 7.21094 8.5403 7.21094C8.36572 7.21094 8.19286 7.24532 8.03157 7.31213C7.87029 7.37894 7.72374 7.47686 7.6003 7.6003C7.47686 7.72374 7.37894 7.87029 7.31213 8.03157C7.24532 8.19286 7.21094 8.36572 7.21094 8.5403C7.21094 8.71487 7.24532 8.88774 7.31213 9.04902C7.37894 9.21031 7.47686 9.35686 7.6003 9.4803L14.1203 16.0003L7.6003 22.5203C7.47686 22.6437 7.37894 22.7903 7.31213 22.9516C7.24532 23.1129 7.21094 23.2857 7.21094 23.4603C7.21094 23.6349 7.24532 23.8077 7.31213 23.969C7.37894 24.1303 7.47686 24.2769 7.6003 24.4003C7.72374 24.5237 7.87029 24.6217 8.03157 24.6885C8.19286 24.7553 8.36572 24.7897 8.5403 24.7897C8.71487 24.7897 8.88774 24.7553 9.04902 24.6885C9.21031 24.6217 9.35686 24.5237 9.4803 24.4003L16.0003 17.8803L22.5203 24.4003C22.6437 24.5237 22.7903 24.6217 22.9516 24.6885C23.1129 24.7553 23.2857 24.7897 23.4603 24.7897C23.6349 24.7897 23.8077 24.7553 23.969 24.6885C24.1303 24.6217 24.2769 24.5237 24.4003 24.4003C24.5237 24.2769 24.6217 24.1303 24.6885 23.969C24.7553 23.8077 24.7897 23.6349 24.7897 23.4603C24.7897 23.2857 24.7553 23.1129 24.6885 22.9516C24.6217 22.7903 24.5237 22.6437 24.4003 22.5203L17.8803 16.0003L24.4003 9.4803C24.907 8.97363 24.907 8.1203 24.4003 7.61363Z"
-          fill={color}
-        />
-      </svg>
-    </div>
-  );
 
   const handleRatingChange = (id: string, newRating: number) => {
     setRating(newRating);
@@ -666,7 +581,6 @@ const Survey: React.FC<FeedbackProps> = ({
     required: boolean,
     criteriaId: string
   ) => {
-    // options = ["sdas", "sdas", "dasd"]
     return (
       <div key={criteriaId}>
         <Label
@@ -724,12 +638,6 @@ const Survey: React.FC<FeedbackProps> = ({
   ) => {
     return (
       <div key={criteriaId}>
-        {/* {
-          (customComponentPositions == index + 1) &&
-          <div style={{ paddingBottom: "12px" }}>
-            {customComponents}
-          </div>
-        } */}
         <Label
           htmlFor="textAreaInput"
           style={{
@@ -780,12 +688,6 @@ const Survey: React.FC<FeedbackProps> = ({
   ) => {
     return (
       <div key={criteriaId}>
-        {/* {
-          (customComponentPositions == index + 1) &&
-          <div style={{ paddingBottom: "12px" }}>
-            {customComponents}
-          </div>
-        } */}
         <Label
           htmlFor="dateInput"
           style={{
@@ -1079,12 +981,18 @@ const Survey: React.FC<FeedbackProps> = ({
           )}
           {thanksPopup && (
             <div>
-              <div className="q_submit_cross_icon" onClick={handleThanks}>
+              <div
+                className="q_submit_cross_icon"
+                onClick={handleThanks}
+                style={{
+                  cursor: "pointer",
+                }}
+              >
                 {cross(iconColor)}
               </div>
               <div className="q-fw-thanks">
                 <div>
-                  <div className="q-svg-thanks">{thanks}</div>
+                  <div className="q-svg-thanks">{thanksPopUpTick()}</div>
                   <div className="q_fw_submit_box">
                     <div className="q_feedback_text_submitted">
                       <div
