@@ -191,7 +191,7 @@ export const Referral = ({
           <div className="q_refer_desc" style={{color : styleConfig?.Description?.color || themeConfig?.secondaryColor,...styleConfig?.Description}}>{description}</div>
         </div>
         {showReferralCode && <div className="q_refer_code_content">
-          <Label children={'Referal Code'} style={styleConfig?.Label} />
+          <Label children={'Referral Code'} style={styleConfig?.Label} />
           <div className="q_refer_code_box" style={{borderColor : themeConfig?.borderColor, ...styleConfig?.Input}}>
             <div className="q_refer_code" style={{color: styleConfig?.Input?.color || styleConfig?.Description?.color ||  themeConfig?.secondaryColor,...styleConfig?.Input}}>{shareCode}</div>
             <img className="q_refer_copy_icon" src={copy[0] ? tickIcon(styleConfig?.Icon?.color) : copyIcon(secondaryIconColor)} onClick={() => {
