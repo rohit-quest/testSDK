@@ -6,7 +6,7 @@ import { HelpCenter } from "./components/HelpCenter/HelpCenter";
 import { ReferEarn, ReferShare } from "./components/Refer/ReferEarn";
 // import { showToast } from "./components/toast/toastService";
 import { QuestForm } from "./components/QuestForm/index";
-import Feedback from "./components/Feedback/Feedback";
+import Feedback from "./components/Survey/Feedback";
 import FeedbackWorkflow from "./components/FeedbackOverview/FeedbackOverview";
 import Tutorial from "./components/TutorialScreen/TutorialScreen";
 import { confetti } from "./components/Confetti/confetti";
@@ -25,14 +25,14 @@ import CrossSellingPreview from "./components/expansion/CrossPreview";
 import SreakPreview from "./components/Streak/Preview";
 import TourPreview from "./components/Tour/Preview";
 import FeedbackWorkflowPreview from "./components/FeedbackOverview/Preview";
-import FeedbackPreview from "./components/Feedback/Preview";
-import Survey from "./components/Feedback/Survey";
+// import FeedbackPreview from "./components/Feedback/Preview";
+import SurveyPreview from "./components/Survey/Preview";
 import ModalPreview from "./components/Modals/Preview";
 import PreviewLeaderboard from "./components/Leaderboard/Preview";
 import HelpHub from "./components/HelpHub/HelpHub";
 import HelpHubPreview from "./components/HelpHub/Preview";
 
-import SurveyOffline from "./components/Feedback/OfflineComponent";
+import SurveyOffline from "./components/Survey/OfflineComponent";
 import Modal from "./components/Modules/Modal";
 // import { NormalInput } from './components/Modules/Input'
 import OnBoarding from "./components/Onboarding/Onboarding";
@@ -40,10 +40,7 @@ import DailyStreak from "./components/Streak/DailyStreak";
 import ChallengesPreview from "./components/Challenges/ChallengesPreview";
 import GamifiedQuizPreview from "./components/GamifiedQuiz/GamifiedQuizPreview";
 import { HelpChat } from "./components/HelpCenter/HelpChat";
-import Walkthrough, {
-  Align,
-  Position,
-} from "./components/Walkthrough/WalkThrough";
+import Walkthrough  from "./components/Walkthrough/Walkthrough";
 import showToast from "./components/toast/toastService";
 import Toast from "./components/toast2/Toast";
 import InlineFeedbackPreview from "./components/InlineFeedback/Preview";
@@ -178,7 +175,7 @@ function App() {
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
         {/* <GamifiedQuizPreview online={true} /> */}
         {/* <GamifiedQuizPreview online={true} /> */}
-
+          <SurveyPreview online={true}/>
         {/* 
                 <HelpCenter
                     userId={userId}
