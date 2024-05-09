@@ -238,7 +238,7 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                         top: 0,
                         left: 0,
                         cursor: file === null ? "pointer" : "no-drop"
-                      }} ref={inputRef} onChange={(e) => {
+                      }} className='file-input' ref={inputRef} onChange={(e) => {
                         if (e.target.files && e.target.files.length > 0) {
                           const selectedFile = e.target.files[0];
                           setFile(selectedFile);
