@@ -1,0 +1,11 @@
+.q_modular_textArea_word_counter {
+  align-self: stretch;
+  color: var(--Neutral-White-500, #b9b9b9);
+
+  /* Body sm/400 */
+  font-family: Figtree;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px; /* 133.333% */
+}

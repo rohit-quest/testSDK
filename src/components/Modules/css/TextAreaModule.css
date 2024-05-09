@@ -1,0 +1,24 @@
+.q_modular_input_textArea {
+  padding: 10px 16px 10px 16px;
+  border-radius: 10px;
+
+  color: black;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  resize: none;
+  display: flex;
+  align-items: center;
+  gap: var(--Units-8, 8px);
+  border: 1px solid var(--Neutral-Grey-100, #ececec);
+  overflow: auto;
+  /* overflow: hidden; */
+}
+
+.q_modular_input_textArea:focus {
+  outline: none;
+}
