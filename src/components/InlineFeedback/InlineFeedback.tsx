@@ -32,12 +32,14 @@ export default function InlineFeedback({
     onRequestClose,
     initialState
 }: FeedbackProps) {
+
   const [questData, setQuestData] = useState<any | null>(null)
   const [isLoading, setLoading] = useState<boolean>(true)
   const [showSuccess, setShowSuccess] = useState<boolean>(false)
 
   const { themeConfig, entityId, apiType, apiKey, apiSecret }  = useContext(QuestWrapper.Context)
   const data = useRef<object>()
+
   const Component: (props: FeedBackComponentProps) => JSX.Element = componentMapping[type]
 
   let BACKEND_URL =
@@ -89,8 +91,9 @@ export default function InlineFeedback({
       const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${headers.userId}`;
       const criteriaId = questData?.data?.eligibilityCriterias?.[0]
       const answer = type == 'like' ? (data?.like ? 'like':'dislike'):`${data.rate}/${data.total}`
-      const jsonData = {criteriaId, answers: [answer]}
-      const response = await axios.post(request, jsonData, {headers})
+      const jsonData = {criteriaId, answer: [answer]}
+      const response = await axios.post(request, jsonData, {headers});
+      
       if(response.data?.success){
         setShowSuccess(true)
       }
@@ -100,6 +103,7 @@ export default function InlineFeedback({
       // setLoading(false)
     }
   }
+  
   const onDataChange = (updatedData: object) => {
     data.current = updatedData
     handleRatingClick(updatedData)
@@ -124,6 +128,7 @@ export default function InlineFeedback({
                     </svg>
                   </div>
               </div>
+
               <section className={`feedbackSection`}>
                   <Component 
                       onChange={onDataChange}

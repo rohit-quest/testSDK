@@ -26,6 +26,21 @@ export interface FeedbackProps {
     onRequestClose?: () => void;
     initialState?: number
 }
+export interface FeedbackPropsOffline {
+    heading?: string;
+    description?: string;
+    type?: 'numbering' | 'emoji' | 'like' | 'star';
+    count?: number,
+    styleConfig?: StyleConfig;
+    onChange?: (data: object) => void;
+    userId: string;
+    questId: string;
+    token: string,
+    onRequestClose?: () => void;
+    initialState?: number
+    offlineFormData?:any
+    setAnswer?:any
+}
 
 export interface FeedBackComponentProps {
     onChange: (data: object) => void,

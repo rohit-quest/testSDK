@@ -16,7 +16,8 @@ function Like({
   
   const updateValue = (value: number) => {
     setIsLike(value)
-    onChange({like: isLike == 1})
+    // onChange({like: isLike == 1})
+    onChange({like: value == 1})
   }
 
   return (

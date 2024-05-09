@@ -346,7 +346,7 @@ function App() {
 
         {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
         {/* <SreakPreview online /> */}
-        {/* <InlineFeedbackPreview /> */}
+        <InlineFeedbackPreview online={false} />
 
         {/* <Walkthrough
             isOpen={isOpen}

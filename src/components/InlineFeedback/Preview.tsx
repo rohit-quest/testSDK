@@ -1,24 +1,144 @@
-import { QuestProvider } from '../QuestWrapper'
-import InlineFeedback from './InlineFeedback'
+import { useState } from "react";
+import { QuestProvider } from "../QuestWrapper";
+import InlineFeedback from "./InlineFeedback";
+import InlineFeedbackOffline from "./InlineFeedbackOffline";
 
-export default function Preview() {
-  return (
-    <QuestProvider
-        apiSecret={''}
-        apiKey="k-ac38b717-eb62-41aa-83f4-7eef8d3ff9b5"
-        entityId="e-e6cc0ded-bf40-4f1f-94a3-a9ba73be098f"
+export const apiKey = "k-e6ec8094-6eef-4e80-a804-112a63607bf5";
+export const apiSecret =
+  "s-9503fd7a-8f44-4e5a-bf37-f5a023510b03606feb6c-15cb-4640-88a1-0addfba3b2ef";
+export const entityId = "e-5768fd26-d226-4ac1-81e6-3c99427f3fb3";
+export const userId = "u-88350caa-4080-4505-a169-09f3f15e83b7";
+export const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxNTE0NzkxMywiZXhwIjoxNzE1NzUyNzEzfQ.102Im3ojxlgDCo4lOflzIvtFnZuEsTMN334ObhTSvEs";
+export const questId = "q-a4f7a07a-8344-41af-bbea-01682480e609";
+
+export default function Preview({ online }: { online: boolean }) {
+  // questData?.data?.eligibilityCriterias
+  const inlineFeedbackOffline = [
+    {
+      type: "RATING",
+      question: "First name",
+      options: [""],
+      criteriaId: "ec-85661bb7-9df4-4a22-8209-b3c6efb99240",
+      required: true,
+      linkTitle: "",
+      linkUrl: "",
+      manualInput: false,
+      placeholder: "",
+    },
+  ];
+  const [answer, setAnswer] = useState({});
+  // console.log(answer)
+
+  if (online) {
+    return (
+      <QuestProvider
+        apiSecret={""}
+        apiKey={apiKey}
+        entityId={entityId}
         featureFlags={{}}
         apiType="STAGING"
         themeConfig={undefined}
-    >
+      >
         <InlineFeedback
-          userId='u-06d65461-7c5f-4737-946d-c8ab8c80eb25'
-          token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTA2ZDY1NDYxLTdjNWYtNDczNy05NDZkLWM4YWI4YzgwZWIyNSIsImlhdCI6MTcxNDA1MDAxMSwiZXhwIjoxNzE0NjU0ODExfQ.EUgwEH6JwADsfZIBZlshixGKdugIW-VCba8NvWtN6_8'
-          questId={'q-5944f1e4-48d0-499d-8219-f3823735fe55'}
-          styleConfig={{Form: {border: '1px solid whitesmoke'}}}
-          // type={type}
-          type='like'
+          userId={userId}
+          token={token}
+          questId={questId}
+          styleConfig={{
+            ActionButton: {
+              // background:"red",
+              // color:'red',
+              // border:"5px solid yellow"
+            },
+            ActionContainer: {
+              // background:'yellow'
+            },
+            ActionSelectedButton: {
+              // background:'yellow',
+              // border:"5px solid black"
+            },
+            Description: {
+              // background:'red'
+              // color:'red'
+            },
+            Footer: {
+              // background:'red'
+              // color:'red'
+            },
+            Form: {
+              // background:'red'
+              // width:"300px"
+            },
+            Heading: {
+              // background:'red'
+              // color:"yellow"
+            },
+            IconStyle: {},
+            MainHeading: {
+              //  background:'red'
+            },
+            SelectedIconStyle: {
+              // background:'red'
+            },
+          }}
+          type="emoji"
         />
+      </QuestProvider>
+    );
+  }
+  return (
+    <QuestProvider
+      apiSecret={""}
+      apiKey={apiKey}
+      entityId={entityId}
+      featureFlags={{}}
+      apiType="STAGING"
+      themeConfig={undefined}
+    >
+      <InlineFeedbackOffline
+        userId={userId}
+        token={token}
+        questId={questId}
+        type="like"
+        offlineFormData={inlineFeedbackOffline}
+        setAnswer={setAnswer}
+        styleConfig={{
+          ActionButton: {
+            // background:"red",
+            // color:'red',
+            // border:"5px solid yellow"
+          },
+          ActionContainer: {
+            // background:'yellow'
+          },
+          ActionSelectedButton: {
+            // background:'yellow',
+            // border:"5px solid black"
+          },
+          Description: {
+            // background:'red'
+            // color:'red'
+          },
+          Footer: {
+            // background:'red'
+            // color:'red'
+          },
+          Form: {
+            // background:'red'
+          },
+          Heading: {
+            // background:'red'
+            // color:"yellow"
+          },
+          IconStyle: {},
+          MainHeading: {
+            //  background:'red'
+          },
+          SelectedIconStyle: {
+            // background:'red'
+          },
+        }}
+      />
     </QuestProvider>
-  )
+  );
 }
