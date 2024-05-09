@@ -3,14 +3,14 @@ import { QuestProvider } from "../QuestWrapper";
 import FeedbackWorkflow from "./FeedbackOverview";
 
 import FeedbackWorkflowOffline from "./OfflineComponent.tsx";
-export const questId = "q-ce583002-a614-40e3-bee0-00436b0f474d";
-export const apiKey = "k-fe5a805c-77ed-4cae-bd33-9591ebed2805";
+export const apiKey = "k-e6ec8094-6eef-4e80-a804-112a63607bf5";
 export const apiSecret =
-  "s-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42";
-export const entityId = "e-9850377b-f88f-4426-a2ac-56206c74655a";
-export const userId = "u-8268f5e1-f5a1-440c-a333-0f5578a73847";
+  "s-3c35ebcb-c752-4c3c-8ce3-e6460ebbc9d479a7e122-d06b-4243-bbfa-e0889987f6c0";
+export const entityId = "e-5768fd26-d226-4ac1-81e6-3c99427f3fb3";
+export const questId = "q-99be1d8e-d883-4f07-bfb8-f78b8b75fff9";
+export const userId = "u-88350caa-4080-4505-a169-09f3f15e83b7";
 export const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxNDYzMjcxNSwiZXhwIjoxNzE1MjM3NTE1fQ.zFJKcKV1d5Wx0nvVv6wvazJOXepWoZyRFK3wT3gFggo";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxNTI0ODQ4NSwiZXhwIjoxNzE1ODUzMjg1fQ.FDDKIDexH92mp6lrNBvlhsRn608URksj2FUDmPlkxVg";
 
 export default function FeedbackWorkflowPreview({
   online = false,
@@ -22,26 +22,28 @@ export default function FeedbackWorkflowPreview({
     return (
       <QuestProvider
         apiKey={apiKey}
-        apiSecret="s-7462f377-2ce4-4593-a907-3a2a00cdf951be06358a-d95d-4576-b3b4-a07dda2dab36"
+        apiSecret={apiSecret}
         entityId={entityId}
         featureFlags={{}}
         apiType="STAGING"
-        themeConfig={{
-          // primaryColor: "red",
-          // fontFamily:"cursive"
-          // backgroundColor:'red',
-          // primaryColor:'white'
-        }}
+        themeConfig={
+          {
+            // primaryColor: "red",
+            // fontFamily:"cursive"
+            // backgroundColor:'red',
+            // primaryColor:'white'
+          }
+        }
       >
         <FeedbackWorkflow
           userId={userId}
           token={token}
           showFooter={true}
           questIds={[
-            "q-7c7656e8-73b4-4d1d-ac50-1638eda9a286",
-            "q-3a2acdc9-1578-4c26-b93b-89779f28d244",
-            "q-e6e53cbd-2b77-40a2-861f-242476c6c88c",
-            "q-a4dac25f-4d48-45fc-ba5a-0b88cb750c1f",
+            "q-59529bc6-f5f2-490d-a554-429bcc2bcb1e",
+            "q-dd6075fb-cc35-4900-bfa2-cd9f2f266ffc",
+            "q-139a8bad-c46f-49fb-b416-75ea14f26ce9",
+            "q-2993a5eb-4a84-4513-8acc-0b798a917e80",
           ]}
           GeneralFeedback={{
             heading: "General Fee",
