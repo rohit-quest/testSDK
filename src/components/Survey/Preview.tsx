@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import Feedback from "./Feedback";
+import { useState } from "react";
 import { QuestProvider } from "../QuestWrapper";
 import Survey from "./Survey";
 import SurveyOffline from "./OfflineComponent";
@@ -79,11 +78,6 @@ export default function SurveyPreview({ online = true }) {
       placeholder: "Enter your Name",
     },
   ]);
-  // setIntervals(() => {
-  //     state.pop();
-  //     setState([...state]);
-  //     // console.log(state)
-  // }, 2000);
 
   if (online)
     return (

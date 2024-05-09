@@ -21,7 +21,7 @@ export const userLogo = (iconColor: string) => {
   );
 };
 
-export const crossLogo = (id, handleRemove) => {
+export const crossLogo = (id:any, handleRemove:any) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +51,7 @@ export const crossLogo = (id, handleRemove) => {
   );
 };
 
-export const crossLogoFeedback = (setComment) => {
+export const crossLogoFeedback = (setComment:any) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
