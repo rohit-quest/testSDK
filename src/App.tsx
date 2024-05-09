@@ -43,7 +43,9 @@ import { HelpChat } from "./components/HelpCenter/HelpChat";
 import Walkthrough  from "./components/Walkthrough/Walkthrough";
 import showToast from "./components/toast/toastService";
 import Toast from "./components/toast2/Toast";
-import InlineFeedbackPreview from './components/InlineFeedback/Preview'
+import InlineFeedbackPreview from "./components/InlineFeedback/Preview";
+import ModularPreview from "./components/Modules/ModulePreview/Preview";
+
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-9986f82d-cbd0-4923-bf9a-ea01b4795fa1";
 export const apiSecret =
@@ -103,7 +105,7 @@ function App() {
   const [isOpen, setIsOpen] = useState(true);
   const [answer, setAnswer] = useState([]);
 
-  // const CSGetstarted = new 
+  // const CSGetstarted = new
   return (
     <div
     // style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
@@ -121,11 +123,12 @@ function App() {
             // buttonColor: "green",
             //  primaryColor: "red",
             // secondaryColor: "red",
-
             // fontFamily: "cursive"
           }
         }
       >
+        <ModularPreview />
+        
         {/* <TutorialPreview online={true} /> */}
 
         {/* <SpinTheWheel
@@ -186,7 +189,6 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-
 
         {/* <OnBoardingPreview online={false} /> */}
 
@@ -301,7 +303,7 @@ function App() {
                       }
                     }}
                 ></QuestLogin> */}
-                    {/* <DailyStreak
+        {/* <DailyStreak
                     token={token}
                     userId={userId}
                     metric='daily-visit'
@@ -325,7 +327,7 @@ function App() {
                   }}
                   
                     /> */}
-                    {/* <SreakPreview/> */}
+        {/* <SreakPreview/> */}
 
         {/* <ShareArticle
                     bgColor=""
@@ -341,7 +343,7 @@ function App() {
 
         {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
         {/* <SreakPreview online /> */}
-        {/* <InlineFeedbackPreview /> */}
+        <InlineFeedbackPreview online={false} />
 
         {/* <Walkthrough
             isOpen={isOpen}

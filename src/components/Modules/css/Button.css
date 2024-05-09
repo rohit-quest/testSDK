@@ -1,0 +1,26 @@
+.sdk-module-button-main-cont {
+  color: #fff;
+  display: flex;
+  padding: 10px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  align-self: stretch;
+  border-radius: 10px;
+  border: 1.5px solid #D1ACFF;
+  background: linear-gradient(84deg, #9035ff 0.36%, #0065ff 100.36%);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.sdk-module-button-main-cont:disabled {
+  opacity: 0.6;
+  filter: grayscale(100%);
+  cursor: no-drop;
+}
+
+

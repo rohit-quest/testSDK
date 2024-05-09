@@ -1,0 +1,10 @@
+.sdk-module-component-body {
+  display: flex;
+  width: 100%;
+  padding: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  background: var(--Neutral-White-100, #fff);
+  box-sizing: border-box;
+}
