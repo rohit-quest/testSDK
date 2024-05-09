@@ -31,6 +31,8 @@ import { MultiChoiceTwo } from "../Modules/MultiChoice";
 import General from "../../general";
 import { SecondaryButton } from "../Modules/SecondaryButton";
 import { PrimaryButton } from "../Modules/PrimaryButton";
+import RadioInitial from "../../assets/images/RadioInitial.svg";
+import RadioSelected from "../../assets/images/RadioSelected.svg";
 
 const thanks = (
   <svg
@@ -520,35 +522,84 @@ const SurveyOffline = ({
             <div
               className="q_onb_singlehoiceOne_lebel"
               key={id}
-              onClick={(e) => handleUpdate(e, criteriaId, option,"radio")}
+              onClick={(e) => handleUpdate(e, criteriaId, option, "radio")}
               style={{
                 border:
                   answer[criteriaId] == option
-                    ? "1px solid var(--Primary-Grape-300, #bf8aff)"
+                    ? // ? "1px solid var(--Primary-Grape-300, #bf8aff)"
+                      // : "1px solid var(--Neutral-White-300, #ececec)",
+                      "1px solid var(--Primary-Grape-300, #bf8aff)"
                     : "1px solid var(--Neutral-White-300, #ececec)",
               }}
             >
-              <input
-                id={`sct${criteriaId + id}`}
-                type="radio"
-                value={option}
-                checked={answer[criteriaId] == option}
-                name={`default-radio${criteriaId}`}
-                className="q-onb-singleChoiceOne-inp"
+              <img
+                src={
+                  answer[criteriaId] == option ? RadioSelected : RadioInitial
+                }
+                alt=""
               />
-              <label
-                // htmlFor={`sct${criteriaId + id}`}
-                className="q-onb-singleChoiceOne-lebel3"
-                style={{ cursor: "pointer" }}
-              >
-                {option}
-              </label>
+              <p className="q-onb-singleChoiceOne-lebel3">{option}</p>
             </div>
           ))}
         </div>
       </div>
     );
   };
+  // const singleChoiceOne = (
+  //   options: string[],
+  //   question: string,
+  //   required: boolean,
+  //   criteriaId: string
+  // ) => {
+  //   // options = ["sdas", "sdas", "dasd"]
+  //   return (
+  //     <div key={criteriaId}>
+  //       <Label
+  //         className="q-onb-singleChoiceOne-lebel"
+  //         children={`${question}${required === true ? "*" : ""}`}
+  //         style={{
+  //           color:
+  //             styleConfig?.Label?.color ||
+  //             BrandTheme?.primaryColor ||
+  //             themeConfig?.primaryColor,
+  //           ...styleConfig?.Label,
+  //         }}
+  //       />
+
+  //       <div className="q-onb-singleChoiceOne-optDiv">
+  //         {options.map((option: string, id: number) => (
+  //           <div
+  //             className="q_onb_singlehoiceOne_lebel"
+  //             key={id}
+  //             onClick={(e) => handleUpdate(e, criteriaId, option,"radio")}
+  //             style={{
+  //               border:
+  //                 answer[criteriaId] == option
+  //                   ? "1px solid var(--Primary-Grape-300, #bf8aff)"
+  //                   : "1px solid var(--Neutral-White-300, #ececec)",
+  //             }}
+  //           >
+  //             <input
+  //               id={`sct${criteriaId + id}`}
+  //               type="radio"
+  //               value={option}
+  //               checked={answer[criteriaId] == option}
+  //               name={`default-radio${criteriaId}`}
+  //               className="q-onb-singleChoiceOne-inp"
+  //             />
+  //             <label
+  //               // htmlFor={`sct${criteriaId + id}`}
+  //               className="q-onb-singleChoiceOne-lebel3"
+  //               style={{ cursor: "pointer" }}
+  //             >
+  //               {option}
+  //             </label>
+  //           </div>
+  //         ))}
+  //       </div>
+  //     </div>
+  //   );
+  // };
 
   const multiChoiceTwo = (
     options: string[] | [],
@@ -580,7 +631,7 @@ const SurveyOffline = ({
         <MultiChoiceTwo
           options={options}
           checked={!!answer[criteriaId] && answer[criteriaId]}
-          onChange={(e) => handleUpdate(e, criteriaId,"", "check")}
+          onChange={(e) => handleUpdate(e, criteriaId, "", "check")}
           style={{
             borderColor:
               styleConfig?.MultiChoice?.style?.borderColor ||
@@ -675,7 +726,7 @@ const SurveyOffline = ({
         }
       }
     }
-  }, [answer, offlineFormData, page, answer,check]);
+  }, [answer, offlineFormData, page, answer, check]);
 
   const handleThanks = () => {
     setThanksPopup(false);

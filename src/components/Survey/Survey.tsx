@@ -22,6 +22,8 @@ import { MultiChoiceTwo } from "../Modules/MultiChoice";
 import Toast from "../toast2/Toast";
 import Cookies from "universal-cookie";
 import { Align } from "../Walkthrough/Walkthrough";
+import RadioInitial from "../../assets/images/RadioInitial.svg";
+import RadioSelected from "../../assets/images/RadioSelected.svg";
 
 const thanks = (
   <svg
@@ -345,8 +347,8 @@ const Survey: React.FC<FeedbackProps> = ({
     }
   }, []);
 
-  const [check,setCheck]=useState(false);
-  
+  const [check, setCheck] = useState(false);
+
   const handleUpdate = (
     e: any,
     id: string,
@@ -354,7 +356,7 @@ const Survey: React.FC<FeedbackProps> = ({
     type?: string,
     k?: number
   ) => {
-    setCheck(prev=>!prev);
+    setCheck((prev) => !prev);
     if (type === "check") {
       if (answer[id]?.length > 0) {
         if (answer[id]?.includes(e.target.value)) {
@@ -396,13 +398,11 @@ const Survey: React.FC<FeedbackProps> = ({
           [id]: j,
         });
       } else {
-
         setAnswer({
           ...answer,
           [id]: e.target.value,
         });
-        setCheck(prev=>!prev);
-
+        setCheck((prev) => !prev);
       }
     }
 
@@ -690,25 +690,19 @@ const Survey: React.FC<FeedbackProps> = ({
               style={{
                 border:
                   answer[criteriaId] == option
-                    ? "1px solid var(--Primary-Grape-300, #bf8aff)"
+                    ? // ? "1px solid var(--Primary-Grape-300, #bf8aff)"
+                      // : "1px solid var(--Neutral-White-300, #ececec)",
+                      "1px solid var(--Primary-Grape-300, #bf8aff)"
                     : "1px solid var(--Neutral-White-300, #ececec)",
               }}
             >
-              <input
-                id={`sct${criteriaId + id}`}
-                type="radio"
-                value={option}
-                checked={answer[criteriaId] == option}
-                name={`default-radio${criteriaId}`}
-                className="q-onb-singleChoiceOne-inp"
+              <img
+                src={
+                  answer[criteriaId] == option ? RadioSelected : RadioInitial
+                }
+                alt=""
               />
-              <label
-                // htmlFor={`sct${criteriaId + id}`}
-                className="q-onb-singleChoiceOne-lebel3"
-                style={{ cursor: "pointer" }}
-              >
-                {option}
-              </label>
+              <p className="q-onb-singleChoiceOne-lebel3">{option}</p>
             </div>
           ))}
         </div>
@@ -848,7 +842,7 @@ const Survey: React.FC<FeedbackProps> = ({
         }
       }
     }
-  }, [answer, formdata, data, page, answer,check]);
+  }, [answer, formdata, data, page, answer, check]);
 
   const handleNext = () => {
     const totalPages = Math.ceil(data.length / itemsPerPage);
