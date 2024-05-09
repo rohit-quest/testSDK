@@ -6,7 +6,7 @@ import QuestContext from "../QuestWrapper";
 import { toast } from "react-toastify";
 import Loader from "../Login/Loader";
 import Cookies from "universal-cookie";
-import { greenCheck, gsTick, questLogo } from "../../assets/images";
+import { questLogo } from "../../assets/images";
 import GetStartedSvgs from "./Svgs";
 import QuestLabs from "../QuestLabs";
 import { PrimaryButton } from "../Modules/PrimaryButton";
@@ -55,11 +55,11 @@ type GetStartedProps = {
     CardContainer?: CSSProperties;
     Icon?: CSSProperties;
     Arrow?: {
-      Background?: string,
-      IconColor?: string,
-      CompletedBackground?: string,
-      CompletedIconColor?: string
-    }
+      Background?: string;
+      IconColor?: string;
+      CompletedBackground?: string;
+      CompletedIconColor?: string;
+    };
     IsImageOpen?: {
       ContainerDiv?: CSSProperties;
       ImageContainer?: {
@@ -71,6 +71,7 @@ type GetStartedProps = {
 
   enableVariation?: boolean;
 };
+
 type BrandTheme = {
   accentColor?: string;
   background?: string;
@@ -83,7 +84,7 @@ type BrandTheme = {
   secondaryColor?: string;
   tertiaryColor?: string;
   titleColor?: string;
-}
+};
 interface TutorialStep {
   id: number;
   title: string;
@@ -103,8 +104,7 @@ interface QuestThemeData {
   theme: string;
   borderRadius: string;
   buttonColor: string;
-  images: string[]
-
+  images: string[];
 }
 
 function GetStarted({
@@ -146,9 +146,9 @@ function GetStarted({
     theme: "",
     borderRadius: "",
     buttonColor: "",
-    images: []
-})
-const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
+    images: [],
+  });
+  const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
     accentColor: "",
     background: "",
     borderRadius: "",
@@ -159,10 +159,9 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
     primaryColor: "",
     secondaryColor: "",
     tertiaryColor: "",
-    titleColor: ""
-})
+    titleColor: "",
+  });
 
-  console.log(useContext(QuestContext.Context))
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
   const cookies = new Cookies();
@@ -175,21 +174,19 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
 
   let GeneralFunctions = new General("mixpanel", apiType);
 
-
-
-
   const getTheme = async (theme: string) => {
     try {
-        const request = `${BACKEND_URL}api/entities/${entityId}?userId=${userId}`;
-        const response = await axios.get(request, { headers: { apiKey, userId, token } })
-        setBrandTheme(response.data.data.theme.BrandTheme[theme])
+      const request = `${BACKEND_URL}api/entities/${entityId}?userId=${userId}`;
+      const response = await axios.get(request, {
+        headers: { apiKey, userId, token },
+      });
+      setBrandTheme(response.data.data.theme.BrandTheme[theme]);
     } catch (error) {
-        GeneralFunctions.captureSentryException(error);
+      GeneralFunctions.captureSentryException(error);
     }
-}
+  };
 
   const handleCriteriaClick = (id: any, url: string) => {
-    // clg
     if (showLoader) return;
     const headers = {
       apiKey: apiKey,
@@ -201,7 +198,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
     if (showAnnouncement) return onLinkTrigger(url, id);
 
     const json = {
-      criteriaId: id
+      criteriaId: id,
     };
 
     const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${headers.userId}&getVariation=${enableVariation}`;
@@ -230,7 +227,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
       "quest_get_started_loaded",
       "get_started"
     );
-    console.log(entityId)
+
     if (entityId) {
       const headers = {
         apiKey: apiKey,
@@ -286,11 +283,11 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
           .then((res) => {
             let response = res.data;
             if (response.data.uiProps?.questThemeData) {
-            setQuestThemeData(response?.data?.uiProps?.questThemeData)
-            if (response.data.uiProps?.questThemeData.theme) {
+              setQuestThemeData(response?.data?.uiProps?.questThemeData);
+              if (response.data.uiProps?.questThemeData.theme) {
                 // getTheme(response.data.uiProps.questThemeData.theme) disabled for now
+              }
             }
-        }
             let criterias = response?.eligibilityData?.map((criteria: any) => {
               return {
                 type: criteria?.data?.criteriaType,
@@ -413,25 +410,51 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
     return <Loader />;
   }
   return (
-    formdata.length > 0 &&
-    <div
-      style={{
-        background: styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", borderRadius: styleConfig?.Form?.borderRadius || questThemeData?.borderRadius || BrandTheme?.borderRadius, ...styleConfig?.Form
-      }}
-      className="get_started_box"
-    >
-
-      {(autoHide === true
-        ? !!formdata.length && !allCriteriaCompleted
-        : true) && (
-          <div className="gs-heading-div" style={{...styleConfig?.Topbar}}>
+    formdata.length > 0 && (
+      <div
+        style={{
+          background:
+            styleConfig?.Form?.backgroundColor ||
+            BrandTheme?.background ||
+            themeConfig?.backgroundColor,
+          height: styleConfig?.Form?.height || "auto",
+          fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+          borderRadius:
+            styleConfig?.Form?.borderRadius ||
+            questThemeData?.borderRadius ||
+            BrandTheme?.borderRadius,
+          ...styleConfig?.Form,
+        }}
+        className="get_started_box"
+      >
+        {(autoHide === true
+          ? !!formdata.length && !allCriteriaCompleted
+          : true) && (
+          <div className="gs-heading-div" style={{ ...styleConfig?.Topbar }}>
             <div>
-              <div style={{ color: styleConfig?.Heading?.color || BrandTheme?.titleColor || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Heading }} className="gs-heading">
+              <div
+                style={{
+                  color:
+                    styleConfig?.Heading?.color ||
+                    BrandTheme?.titleColor ||
+                    BrandTheme?.primaryColor ||
+                    themeConfig?.primaryColor,
+                  ...styleConfig?.Heading,
+                }}
+                className="gs-heading"
+              >
                 {headingText || "Quickstart Guide"}
               </div>
-              <div style={{ color: styleConfig?.Description?.color || BrandTheme?.secondaryColor || themeConfig?.secondaryColor, ...styleConfig?.Description }} className="gs-subheading">
-
-
+              <div
+                style={{
+                  color:
+                    styleConfig?.Description?.color ||
+                    BrandTheme?.secondaryColor ||
+                    themeConfig?.secondaryColor,
+                  ...styleConfig?.Description,
+                }}
+                className="gs-subheading"
+              >
                 {descriptionText ||
                   "Get started with Quest and explore how Quest can take your customer engagement to the next level"}
               </div>
@@ -451,7 +474,6 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                 }}
               >
                 {Math.floor(completedPercentage) || 0}% Completed
-
               </div>
               <div
                 className="q_gt_progress_bar"
@@ -484,8 +506,6 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                 <div
                   key={i}
                   style={{
-                    // background: cardBackground,
-                    // borderBottom: `1px solid ${cardBorderColor}`,
                     ...styleConfig?.Card,
                   }}
                   onClick={(e) => {
@@ -627,7 +647,6 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                                 ?.ImageContainerProperties,
                             }}
                           >
-                            {/* <img src={e.imageUrl} alt="" /> */}
                             <img
                               src={
                                 e.imageUrl ||
@@ -643,9 +662,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                                   ?.Image,
                               }}
                             />
-                            {/* hi */}
                           </div>
-                          {/* hi */}
                         </div>
                       )}
                       <div
@@ -678,7 +695,8 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                             width: "fit-content",
                             background:
                               styleConfig?.PrimaryButton?.background ||
-                              questThemeData?.buttonColor || BrandTheme?.buttonColor ||
+                              questThemeData?.buttonColor ||
+                              BrandTheme?.buttonColor ||
                               themeConfig?.buttonColor,
                             ...styleConfig?.PrimaryButton,
                           }}
@@ -756,7 +774,6 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                         {e.description}
                       </div>
                     </div>
-                    {/* <div className="gs-card-btn-container"> */}
                     {ButtonType === "Buttons" &&
                       (!e.completed ? (
                         <div className="gs_drop_btns">
@@ -796,7 +813,8 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                               width: "fit-content",
                               background:
                                 styleConfig?.PrimaryButton?.background ||
-                                questThemeData?.buttonColor || BrandTheme?.buttonColor ||
+                                questThemeData?.buttonColor ||
+                                BrandTheme?.buttonColor ||
                                 themeConfig?.buttonColor,
                               ...styleConfig?.PrimaryButton,
                             }}
@@ -858,7 +876,6 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                     )}
                   </div>
                 </div>
-                // </div>
               )
             )}
         </div>
@@ -867,10 +884,21 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
             ? !!formdata.length && !allCriteriaCompleted
             : true) && (
             <div>
-             <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />
+              <QuestLabs
+                style={{
+                  background:
+                    styleConfig?.Footer?.backgroundColor ||
+                    styleConfig?.Form?.backgroundColor ||
+                    BrandTheme?.background ||
+                    styleConfig?.Form?.background ||
+                    themeConfig?.backgroundColor,
+                  ...styleConfig?.Footer,
+                }}
+              />
             </div>
           )}
       </div>
+    )
   );
 }
 
