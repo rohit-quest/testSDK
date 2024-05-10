@@ -4,6 +4,8 @@
     box-shadow: 0 0 3px #14141463;
     width: 376px;
     box-sizing: border-box;
+
+    /* background-color: red; */
 }
 
 .q_article_div {}
@@ -14,7 +16,10 @@
     gap: 8px;
     padding: 20px;
 }
-
+.q-referShare-content-social-img-x{
+    height: 24px;
+    width: 24px;
+}
 .q_article_head {
     color: var(--grey-4, #141414);
     font-family: 'Figtree';

@@ -12,6 +12,7 @@ import Tutorial from "./components/TutorialScreen/TutorialScreen";
 import { confetti } from "./components/Confetti/confetti";
 import GetStarted from "./components/GetStarted/GetStarted";
 import ShareArticle from "./components/Share/ShareArticle";
+import ShareArticlePreview from "./components/Share/ShareArticlePreview";
 import { ChatIcon, LinkIcon } from "./components/HelpCenter/Svg";
 import Payment from "./components/Payment/Payment";
 import OnBoardingPreview from "./components/Onboarding/Preview";
@@ -190,7 +191,7 @@ function App() {
                 // descriptioin="this is descripiton"
                 /> */}
 
-        <OnBoardingPreview online={true} />
+        {/* <OnBoardingPreview online={true} /> */}
 
         {/* <GetStartedPreview online={true} /> */}
 
@@ -328,7 +329,7 @@ function App() {
                   
                     /> */}
         {/* <SreakPreview/> */}
-
+        <ShareArticlePreview />
         {/* <ShareArticle
                     bgColor=""
                     // description=""
