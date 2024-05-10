@@ -11,6 +11,7 @@ interface StyleConfig {
     Footer?: CSSProperties,
     IconStyle?: CSSProperties;
     SelectedIconStyle?: CSSProperties
+    closeIconColor?: string
 }
 
 export interface FeedbackProps {
@@ -40,6 +41,7 @@ export interface FeedbackPropsOffline {
     initialState?: number
     offlineFormData?:any
     setAnswer?:any
+    closeIconColor?:string
 }
 
 export interface FeedBackComponentProps {

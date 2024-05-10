@@ -44,6 +44,7 @@ export default function Preview({ online }: { online: boolean }) {
           userId={userId}
           token={token}
           questId={questId}
+          
           styleConfig={{
             ActionButton: {
               // background:"red",
@@ -80,6 +81,7 @@ export default function Preview({ online }: { online: boolean }) {
             SelectedIconStyle: {
               // background:'red'
             },
+            closeIconColor:"red"
           }}
           type="like"
         />
@@ -137,6 +139,7 @@ export default function Preview({ online }: { online: boolean }) {
           SelectedIconStyle: {
             // background:'red'
           },
+          closeIconColor:'red'
         }}
       />
     </QuestProvider>

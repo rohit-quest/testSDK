@@ -7,10 +7,10 @@ import Star from "./Star";
 import Like from "./Like";
 import QuestWrapper from "../QuestWrapper";
 import config from "../../config";
-import axios from "axios";
 import Loader from "../Login/Loader";
 import { toast } from "react-toastify";
 import Success from "./Success";
+import { cross } from "../../assets/assetsSVG";
 
 const componentMapping: {
   [key in string]: (props: FeedBackComponentProps) => JSX.Element;
@@ -35,6 +35,7 @@ export default function InlineFeedback({
   initialState,
   offlineFormData,
   setAnswer,
+  closeIconColor
 }: FeedbackPropsOffline) {
   const [questData, setQuestData] = useState<any | null>(null);
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -136,24 +137,20 @@ export default function InlineFeedback({
         ) : (
           <>
             <div className={`feedbackHeader`}>
-              <h4 style={{ ...styleConfig?.Heading }}>{heading}</h4>
-              <p style={{ ...styleConfig?.Description }}>{description}</p>
-              <div onClick={onRequestClose}>
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+              <div className="inline-text-cont" style={{background:'transparent'}}>
+                <div
+                  style={{
+                    color: styleConfig?.Heading?.color || "#2c2c2c",
+                    ...styleConfig?.Heading,
+                  }}
+                  className="inline-head"
                 >
-                  <path
-                    d="M4.50513 11.4957L8.00046 8.00032L11.4958 11.4957M11.4958 4.50499L7.99979 8.00032L4.50513 4.50499"
-                    stroke="#939393"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
+                  {heading}
+                </div>
+                <div style={{ ...styleConfig?.Description }} className="inline-desc">{description}</div>
+              </div>
+              <div onClick={onRequestClose} className="inline-cross-btn">
+                {cross(styleConfig?.closeIconColor)}
               </div>
             </div>
 

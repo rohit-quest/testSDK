@@ -13,19 +13,26 @@
   text-align: center;
 }
 .feedbackHeader {
-  padding: 20px;
-  color: var(--primaryColor, black);
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  position: relative;
   width: 100%;
+  padding: 20px;
+  align-items: flex-start;
+  gap: 20px;
+  background: var(--Neutral-White-100, #fff);
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-self: stretch;
   box-sizing: border-box;
 }
-.feedbackHeader h4 {
+.inline-text-cont {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
+  flex: 1 0 0;
+}
+.inline-head {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
@@ -33,8 +40,6 @@
   overflow: hidden;
   color: var(--Neutral-Black-400, #2c2c2c);
   text-overflow: ellipsis;
-
-  /* Title md/600 */
   font-family: Figtree;
   font-size: 20px;
   font-style: normal;
@@ -42,7 +47,17 @@
   line-height: 30px; /* 150% */
   letter-spacing: -0.4px;
 }
-.feedbackHeader p {
+.inline-cross-btn {
+  height: 100%;
+  display: flex;
+  padding: 4px;
+  align-items: flex-start;
+  gap: 8px;
+  border-radius: 4px;
+  background: var(--Neutral-White-200, #fbfbfb);
+}
+
+.feedbackHeader > .inline-text-cont > .inline-desc {
   align-self: stretch;
   color: var(--Neutral-Black-100, #939393);
 
@@ -54,10 +69,6 @@
   line-height: 16px; /* 133.333% */
 }
 .feedbackHeader > div {
-  padding: 4px;
-  position: absolute;
-  right: 20px;
-  top: 20px;
   cursor: pointer;
 }
 .feedbackMessage {
