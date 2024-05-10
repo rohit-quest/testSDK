@@ -1,6 +1,7 @@
 .feedbackContainer {
   font-family: var(--fontFamily, Figtree, sans-serif);
   width: 100%;
+  width: 376px;
   max-width: 376px;
   border-radius: 12px;
   background-color: var(--backgroundColor, white);
@@ -25,6 +26,16 @@
   box-sizing: border-box;
 }
 .feedbackHeader h4 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  align-self: stretch;
+  overflow: hidden;
+  color: var(--Neutral-Black-400, #2c2c2c);
+  text-overflow: ellipsis;
+
+  /* Title md/600 */
+  font-family: Figtree;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -32,11 +43,15 @@
   letter-spacing: -0.4px;
 }
 .feedbackHeader p {
+  align-self: stretch;
+  color: var(--Neutral-Black-100, #939393);
+
+  /* Body sm/400 */
+  font-family: Figtree;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: 16px; /* 133.333% */
-  color: var(--secondaryColor, gray);
 }
 .feedbackHeader > div {
   padding: 4px;
@@ -270,7 +285,7 @@
 .feedbackSuccessContainer > center {
   padding: 0px 20px;
 }
-.sdk-thanks-inline-head{
+.sdk-thanks-inline-head {
   font-size: 20px;
   font-style: normal;
   font-weight: 600;

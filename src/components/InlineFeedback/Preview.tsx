@@ -81,7 +81,7 @@ export default function Preview({ online }: { online: boolean }) {
               // background:'red'
             },
           }}
-          type="emoji"
+          type="like"
         />
       </QuestProvider>
     );
