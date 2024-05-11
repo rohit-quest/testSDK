@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { CSSProperties, useContext, useEffect, useState } from "react";
 import "./sharearticle.css";
 import { telegramPng, twitterSvg, whatsappSvg } from "../../assets/images";
 import { shareOnPlatform } from "../Refer/Response";
@@ -12,13 +12,15 @@ import X from './x.png'
 export interface articleProps {
   heading?: string;
   description?: String;
-  bgColor?: string;
-  headingColor?: string;
-  textColor?: string;
   token: string;
   questId: string;
   userId: string;
   enableVariation?: boolean;
+  styleConfig?:{
+    Form?: CSSProperties;
+    Heading?: CSSProperties;
+    Description?: CSSProperties;
+  }
 }
 
 type CustomHeaders = {
@@ -51,15 +53,13 @@ async function getResponse(
 }
 
 const ShareArticle: React.FC<articleProps> = ({
-  bgColor = "",
   description = "If you like this article share it with your friends",
   heading = "Share this article",
-  headingColor = "",
-  textColor = "",
   questId = "",
   token = "",
   userId = "",
   enableVariation = false,
+  styleConfig
 }: articleProps) => {
   const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } =
     useContext(QuestContext.Context);
@@ -90,8 +90,8 @@ const ShareArticle: React.FC<articleProps> = ({
     <div
       className="q_share_article"
       style={{
-        background: bgColor || themeConfig?.backgroundColor,
-        color: textColor,
+        background: styleConfig?.Form?.background || themeConfig?.backgroundColor,
+        ...styleConfig
       }}
     >
       <div className="q_article_div">
@@ -99,8 +99,9 @@ const ShareArticle: React.FC<articleProps> = ({
           <div
             className="q_article_head"
             style={{
-              color: headingColor || themeConfig?.primaryColor,
+              color: styleConfig?.Heading?.color || themeConfig?.primaryColor,
               fontFamily: themeConfig?.fontFamily,
+              ...styleConfig?.Heading
             }}
           >
             {heading}
@@ -108,8 +109,9 @@ const ShareArticle: React.FC<articleProps> = ({
           <div
             className="q_article_desc"
             style={{
-              color: textColor || themeConfig?.secondaryColor,
+              color: styleConfig?.Description?.color || themeConfig?.secondaryColor,
               fontFamily: themeConfig?.fontFamily,
+              ...styleConfig?.Description
             }}
           >
             {description}
@@ -118,7 +120,7 @@ const ShareArticle: React.FC<articleProps> = ({
         <div className="q_article_dn">
           <div
             className="q_article_wit"
-            style={{ color: textColor, fontFamily: themeConfig?.fontFamily }}
+            style={{ color: styleConfig?.Description?.color, fontFamily: themeConfig?.fontFamily }}
           >
             Share with
           </div>

@@ -79,6 +79,7 @@ import GamifiedQuizOffline from "./src/components/GamifiedQuiz/GamifiedQuizOffli
 import HelpHubOffline from "./src/components/HelpHub/HelpHubOffline";
 import InlineFeedback from "./src/components/InlineFeedback/InlineFeedback";
 import InlineFeedbackOffline from "./src/components/InlineFeedback/InlineFeedbackOffline";
+import ShareArticleOffline from "./src/components/Share/ShareArticleOffline";
 export {
     QuestProvider,
     QuestLogin,
@@ -130,5 +131,6 @@ export {
     GamifiedQuizOffline,
     HelpHubOffline,
     InlineFeedback,
-    InlineFeedbackOffline
+    InlineFeedbackOffline,
+    ShareArticleOffline
 };

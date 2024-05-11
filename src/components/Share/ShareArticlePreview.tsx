@@ -35,13 +35,22 @@ export default function ShareArticlePreview({ online }: { online: boolean }) {
           userId={userId}
           questId={questId}
           token={token}
-          // bgColor="red"
           description={"My Desc"}
           enableVariation
-          // heading="My Head"
-          // headingColor="blue"
           key={""}
-          // textColor="pink"
+          heading=""
+          styleConfig={{
+            Description: {
+              color: "white",
+            },
+            Form: {
+              background: "red",
+              color: "yellow",
+            },
+            Heading: {
+              color: "yellow",
+            },
+          }}
         />
       </QuestProvider>
     );
@@ -74,9 +83,28 @@ export default function ShareArticlePreview({ online }: { online: boolean }) {
         // heading="My Head"
         // headingColor="blue"
         key={""}
-        metadata={{
-          linkActionName: "QuestLabs",
-          linkActionUrl: "https://youtube.com/",
+        offlineFormData={[
+          {
+            type: "LINK_OPEN_READ",
+            linkUrl: "https://www.questasdfasdfaslabs.ai/",
+            question: "",
+            options: [],
+            criteriaId: "ec-e32b88d7-0e43-4254-9c94-44859ceedcdc",
+            required: true,
+            linkTitle: "QuestLabs",
+          },
+        ]}
+        styleConfig={{
+          Description: {
+            color: "white",
+          },
+          Form: {
+            background: "red",
+            color: "yellow",
+          },
+          Heading: {
+            color: "yellow",
+          },
         }}
         // textColor="pink"
       />

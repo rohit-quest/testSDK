@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { CSSProperties, useContext, useEffect, useState } from "react";
 import "./sharearticle.css";
 import { telegramPng, twitterSvg, whatsappSvg } from "../../assets/images";
 import { shareOnPlatform } from "../Refer/Response";
 import axios from "axios";
-import config from "../../config";
 import QuestContext from "../QuestWrapper.tsx";
 import { QuestArray, Metadata } from "../HelpCenter/Svg.tsx";
 import General from "../../general.ts";
@@ -19,17 +18,12 @@ export interface articleProps {
   questId: string;
   userId: string;
   enableVariation?: boolean;
-  metadata?: {
-    description?: string;
-    effort?: string;
-    frequency?: string;
-    imageUrl?: string;
-    importance?: string;
-    isRequired?: boolean;
-    linkActionName?: string;
-    linkActionUrl?: string;
-    question?: string;
-    xp?: number;
+  linkActionUrl?: string;
+  offlineFormData?: any;
+  styleConfig?: {
+    Form?: CSSProperties;
+    Heading?: CSSProperties;
+    Description?: CSSProperties;
   };
 }
 
@@ -72,43 +66,31 @@ const ShareArticleOffline: React.FC<articleProps> = ({
   token = "",
   userId = "",
   enableVariation = false,
-  metadata = {
-    linkActionName: "",
-    linkActionUrl: "",
-  },
+  linkActionUrl,
+  offlineFormData,
+  styleConfig,
 }: articleProps) => {
-  const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } =
-    useContext(QuestContext.Context);
-  const [shareLink, setLink] = useState<string>("");
-  // const { apiKey, apiSecret, entityId ,apiType} = useContext(QuestContext.Context);
-  let BACKEND_URL =
-    apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
+  const { apiType, themeConfig } = useContext(QuestContext.Context);
+  const [shareLink, setLink] = useState<string | undefined>("");
+
   let GeneralFunctions = new General("mixpanel", apiType);
   useEffect(() => {
     GeneralFunctions.fireTrackingEvent(
-      "quest_share_article_loaded",
-      "share_article"
+      "quest_share_article_offline_loaded",
+      "share_article_offline"
     );
-
-    // getResponse(
-    //   { apiKey, apisecret: apiSecret, token, userId },
-    //   entityId,
-    //   questId,
-    //   apiType,
-    //   enableVariation,
-    //   BACKEND_URL
-    // ).then((response) => {
-    //   setLink(response.metadata.linkActionUrl);
-    // });
-    setLink(metadata?.linkActionUrl || "https://www.questlabs.ai/");
+    // setLink(linkActionUrl);
   }, []);
+
+  //   useEffect(())
 
   return (
     <div
       className="q_share_article"
       style={{
-        background: bgColor || themeConfig?.backgroundColor,
-        color: textColor,
+        background:
+          styleConfig?.Form?.background || themeConfig?.backgroundColor,
+        ...styleConfig,
       }}
     >
       <div className="q_article_div">
@@ -116,8 +98,9 @@ const ShareArticleOffline: React.FC<articleProps> = ({
           <div
             className="q_article_head"
             style={{
-              color: headingColor || themeConfig?.primaryColor,
+              color: styleConfig?.Heading?.color || themeConfig?.primaryColor,
               fontFamily: themeConfig?.fontFamily,
+              ...styleConfig?.Heading,
             }}
           >
             {heading}
@@ -125,8 +108,10 @@ const ShareArticleOffline: React.FC<articleProps> = ({
           <div
             className="q_article_desc"
             style={{
-              color: textColor || themeConfig?.secondaryColor,
+              color:
+                styleConfig?.Description?.color || themeConfig?.secondaryColor,
               fontFamily: themeConfig?.fontFamily,
+              ...styleConfig?.Description,
             }}
           >
             {description}
@@ -135,7 +120,10 @@ const ShareArticleOffline: React.FC<articleProps> = ({
         <div className="q_article_dn">
           <div
             className="q_article_wit"
-            style={{ color: textColor, fontFamily: themeConfig?.fontFamily }}
+            style={{
+              color: styleConfig?.Description?.color,
+              fontFamily: themeConfig?.fontFamily,
+            }}
           >
             Share with
           </div>
@@ -147,7 +135,7 @@ const ShareArticleOffline: React.FC<articleProps> = ({
                   "quest_share_article_twitter_clicked",
                   "share_article"
                 );
-                shareOnPlatform(shareLink, "twitter");
+                shareOnPlatform(offlineFormData[0]?.linkUrl, "twitter");
               }}
               src={X}
               alt="Twitter"
@@ -160,7 +148,7 @@ const ShareArticleOffline: React.FC<articleProps> = ({
                   "quest_share_article_whatsapp_clicked",
                   "share_article"
                 );
-                shareOnPlatform(shareLink, "whatsapp");
+                shareOnPlatform(offlineFormData[0]?.linkUrl, "whatsapp");
               }}
               alt="Whatsapp"
             />
@@ -171,7 +159,7 @@ const ShareArticleOffline: React.FC<articleProps> = ({
                   "quest_share_article_telegram_clicked",
                   "share_article"
                 );
-                shareOnPlatform(shareLink, "telegram");
+                shareOnPlatform(offlineFormData[0]?.linkUrl, "telegram");
               }}
               src={telegramPng}
               width="24px"
