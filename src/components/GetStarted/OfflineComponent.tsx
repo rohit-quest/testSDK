@@ -447,7 +447,7 @@ function OfflineGetStarted({
                             "quest_get_started_offline_secondary_button_clicked",
                             "get_started_offline"
                           );
-                          window.open(e.url);
+                          window.open(e.btn1Link);
                         }}
                         className="gs_visit_btn"
                         children={e.btn1 || "Visit Website"}
