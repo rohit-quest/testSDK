@@ -41,14 +41,14 @@ export default function ShareArticlePreview({ online }: { online: boolean }) {
           heading=""
           styleConfig={{
             Description: {
-              color: "white",
+              // color: "white",
             },
             Form: {
-              background: "red",
-              color: "yellow",
+              // background: "red",
+              // color: "yellow",
             },
             Heading: {
-              color: "yellow",
+              // color: "yellow",
             },
           }}
         />
@@ -96,14 +96,14 @@ export default function ShareArticlePreview({ online }: { online: boolean }) {
         ]}
         styleConfig={{
           Description: {
-            color: "white",
+            // color: "white",
           },
           Form: {
-            background: "red",
-            color: "yellow",
+            // background: "red",
+            // color: "yellow",
           },
           Heading: {
-            color: "yellow",
+            // color: "yellow",
           },
         }}
         // textColor="pink"
