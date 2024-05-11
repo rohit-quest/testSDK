@@ -329,7 +329,7 @@ function App() {
                   
                     /> */}
         {/* <SreakPreview/> */}
-        <ShareArticlePreview />
+        <ShareArticlePreview online={false}/>
         {/* <ShareArticle
                     bgColor=""
                     // description=""

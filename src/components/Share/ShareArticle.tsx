@@ -63,7 +63,7 @@ const ShareArticle: React.FC<articleProps> = ({
 }: articleProps) => {
   const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } =
     useContext(QuestContext.Context);
-  const [shareLink, setLink] = useState("https://www.questlabs.ai/");
+  const [shareLink, setLink] = useState("");
   // const { apiKey, apiSecret, entityId ,apiType} = useContext(QuestContext.Context);
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
