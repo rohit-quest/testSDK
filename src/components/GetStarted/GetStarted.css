@@ -125,7 +125,7 @@
 .q_progress_bar_completed {
   height: 6px;
   border-radius: 8px;
-  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.12);
+  background: #9035FF;
   flex-shrink: 0;
 }
 
