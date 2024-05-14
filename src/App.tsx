@@ -346,7 +346,7 @@ function App() {
         {/* <SreakPreview online /> */}
         {/* <InlineFeedbackPreview online={false} /> */}
 
-        <Walkthrough
+        {/* <Walkthrough
             isOpen={isOpen}
             id="app"
             steps={[
@@ -372,7 +372,7 @@ function App() {
             onAfterOpen={() => document.documentElement.style.overflow = 'hidden'}
             onBeforeClose={() => document.documentElement.style.overflow = ''}
 
-        /> */}
+        />  */}
 
       </QuestProvider>
       {/* < div style={{height: 1999}}/> */}
