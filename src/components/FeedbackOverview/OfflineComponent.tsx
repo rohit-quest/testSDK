@@ -268,7 +268,11 @@ interface feedbackCompProps {
     PrimaryButton?: React.CSSProperties;
     SecondaryButton?: React.CSSProperties;
     Modal?: React.CSSProperties;
-    Footer?: React.CSSProperties;
+    Footer?: {
+      FooterStyle?: React.CSSProperties;
+      FooterText?: React.CSSProperties;
+      FooterIcon?: React.CSSProperties;
+    };
     listHeading?: React.CSSProperties;
     listDescription?: React.CSSProperties;
     Card?: React.CSSProperties;
@@ -772,18 +776,22 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         {selectedOption === "ContactUs" && <div></div>}
                       </div>
                       {showFooter && (
-                        <QuestLabs
-                          style={{
-                            background:
-                              styleConfig?.Footer?.backgroundColor ||
-                              styleConfig?.Form?.backgroundColor ||
-                              BrandTheme?.background ||
-                              styleConfig?.Form?.background ||
-                              themeConfig?.backgroundColor,
-                            ...styleConfig?.Footer,
-                          }}
-                        />
-                      )}
+                         <QuestLabs
+                         style={{
+                         ...{
+                           background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                             styleConfig?.Form?.backgroundColor || 
+                             styleConfig?.Form?.background ||
+                             BrandTheme?.background ||
+                             themeConfig?.backgroundColor,
+                         },
+                         ...styleConfig?.Footer?.FooterStyle,
+           
+                         }}
+                         textStyle={styleConfig?.Footer?.FooterText}
+                         iconStyle={styleConfig?.Footer?.FooterIcon}
+                       />
+                     )}
                     </div>
                   ) : !submit ? (
                     <div>
@@ -1164,18 +1172,22 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                       </div>
                       <div>
                         {showFooter && (
-                          <QuestLabs
-                            style={{
-                              background:
-                                styleConfig?.Footer?.backgroundColor ||
-                                styleConfig?.Form?.backgroundColor ||
-                                BrandTheme?.background ||
-                                styleConfig?.Form?.background ||
-                                themeConfig?.backgroundColor,
-                              ...styleConfig?.Footer,
-                            }}
-                          />
-                        )}
+                           <QuestLabs
+                           style={{
+                           ...{
+                             background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                               styleConfig?.Form?.backgroundColor || 
+                               styleConfig?.Form?.background ||
+                               BrandTheme?.background ||
+                               themeConfig?.backgroundColor,
+                           },
+                           ...styleConfig?.Footer?.FooterStyle,
+             
+                           }}
+                           textStyle={styleConfig?.Footer?.FooterText}
+                           iconStyle={styleConfig?.Footer?.FooterIcon}
+                         />
+                       )}
                       </div>
                     </div>
                   ) : (
@@ -1253,17 +1265,21 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 </div>
                 {(styleConfig?.ThanksPopup?.ShowFooter || showFooter) && (
                   <QuestLabs
-                    style={{
-                      background:
-                        styleConfig?.Footer?.backgroundColor ||
-                        styleConfig?.Form?.backgroundColor ||
-                        BrandTheme?.background ||
-                        styleConfig?.Form?.background ||
-                        themeConfig?.backgroundColor,
-                      ...styleConfig?.Footer,
-                    }}
-                  />
-                )}
+                  style={{
+                  ...{
+                    background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                      styleConfig?.Form?.backgroundColor || 
+                      styleConfig?.Form?.background ||
+                      BrandTheme?.background ||
+                      themeConfig?.backgroundColor,
+                  },
+                  ...styleConfig?.Footer?.FooterStyle,
+    
+                  }}
+                  textStyle={styleConfig?.Footer?.FooterText}
+                  iconStyle={styleConfig?.Footer?.FooterIcon}
+                />
+              )}
               </div>
             )}
           </div>

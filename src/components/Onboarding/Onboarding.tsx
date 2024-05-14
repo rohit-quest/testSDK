@@ -86,7 +86,11 @@ interface QuestLoginProps {
       pendingTabColor?: string;
     };
 
-    Footer?: CSSProperties;
+    Footer?: {
+      FooterStyle?: CSSProperties;
+      FooterText?: CSSProperties;
+      FooterIcon?: CSSProperties;
+    };
   };
   enableVariation?: boolean;
 }
@@ -1448,24 +1452,18 @@ function OnBoarding(props: QuestLoginProps) {
           {formdata && showFooter && (
             <QuestLabs
               style={{
-                background:
-                  styleConfig?.Footer?.backgroundColor ||
-                  styleConfig?.Form?.backgroundColor ||
-                  BrandTheme?.background ||
+              ...{
+                background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                  styleConfig?.Form?.backgroundColor || 
                   styleConfig?.Form?.background ||
+                  BrandTheme?.background ||
                   themeConfig?.backgroundColor,
-                borderBottomLeftRadius:
-                  styleConfig?.Footer?.borderTopStyle ||
-                  styleConfig?.Form?.borderTopStyle ||
-                  questThemeData?.borderRadius ||
-                  BrandTheme?.borderRadius,
-                borderBottomRightRadius:
-                  styleConfig?.Footer?.borderTopStyle ||
-                  styleConfig?.Form?.borderTopStyle ||
-                  questThemeData?.borderRadius ||
-                  BrandTheme?.borderRadius,
-                ...styleConfig?.Footer,
+              },
+              ...styleConfig?.Footer?.FooterStyle,
+
               }}
+              textStyle={styleConfig?.Footer?.FooterText}
+              iconStyle={styleConfig?.Footer?.FooterIcon}
             />
           )}
         </div>

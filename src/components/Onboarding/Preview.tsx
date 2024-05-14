@@ -173,7 +173,7 @@ export default function OnBoardingPreview({
           getAnswers={printAnswer}
           // screenHeight=""
           // progressBarType="modal1"
-          styleConfig={{ Form: {} }}
+          styleConfig={{ Form: {background:'red'}, Footer: {FooterStyle:{background: 'blue'},FooterIcon:{color: 'green'},FooterText:{color: 'yellow'}} }}
         />
       </QuestProvider>
     );

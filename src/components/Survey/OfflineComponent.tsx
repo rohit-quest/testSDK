@@ -72,7 +72,11 @@ interface FeedbackProps {
     PrimaryButton?: React.CSSProperties;
     SecondaryButton?: React.CSSProperties;
     Modal?: React.CSSProperties;
-    Footer?: React.CSSProperties;
+    Footer?: {
+      FooterStyle?: React.CSSProperties;
+      FooterText?: React.CSSProperties;
+      FooterIcon?: React.CSSProperties;
+    };
     EmailError?: {
       text?: string;
       errorStyle?: React.CSSProperties;
@@ -114,7 +118,7 @@ const SurveyOffline = ({
   delay = 1000,
   isInline = false,
   crossLogoForInput = false,
-  onCancel = () => {},
+  onCancel = () => { },
   itemsPerPage = 5,
   iconColor = "#939393",
   ratingType = "number",
@@ -170,7 +174,7 @@ const SurveyOffline = ({
     if (bgColor) {
       setGradient(
         bgColor?.includes("linear-gradient") ||
-          bgColor?.includes("radial-gradient")
+        bgColor?.includes("radial-gradient")
       );
     }
   }, []);
@@ -385,8 +389,8 @@ const SurveyOffline = ({
                 border:
                   answer[criteriaId] == option
                     ? // ? "1px solid var(--Primary-Grape-300, #bf8aff)"
-                      // : "1px solid var(--Neutral-White-300, #ececec)",
-                      "1px solid var(--Primary-Grape-300, #bf8aff)"
+                    // : "1px solid var(--Neutral-White-300, #ececec)",
+                    "1px solid var(--Primary-Grape-300, #bf8aff)"
                     : "1px solid var(--Neutral-White-300, #ececec)",
               }}
             >
@@ -630,9 +634,8 @@ const SurveyOffline = ({
                               ...styleConfig?.Label,
                             }}
                           >
-                            {`${
-                              data.question ? data.question : "Rating Scale"
-                            }${data.required === true ? "*" : ""} `}
+                            {`${data.question ? data.question : "Rating Scale"
+                              }${data.required === true ? "*" : ""} `}
                           </Label>
                           <div
                             style={{
@@ -711,11 +714,10 @@ const SurveyOffline = ({
                         "survey"
                       );
                     }}
-                    children={`${
-                      offlineFormData.length / itemsPerPage <= page + 1
+                    children={`${offlineFormData.length / itemsPerPage <= page + 1
                         ? "Submit"
                         : "Next"
-                    }`}
+                      }`}
                     type="submit"
                     disabled={!goToNextSection}
                   />
@@ -724,14 +726,18 @@ const SurveyOffline = ({
               {showFooter && (
                 <QuestLabs
                   style={{
-                    background:
-                      styleConfig?.Footer?.backgroundColor ||
-                      styleConfig?.Form?.backgroundColor ||
-                      BrandTheme?.background ||
-                      styleConfig?.Form?.background ||
-                      themeConfig?.backgroundColor,
-                    ...styleConfig?.Footer,
+                    ...{
+                      background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                        styleConfig?.Form?.backgroundColor ||
+                        styleConfig?.Form?.background ||
+                        BrandTheme?.background ||
+                        themeConfig?.backgroundColor,
+                    },
+                    ...styleConfig?.Footer?.FooterStyle,
+
                   }}
+                  textStyle={styleConfig?.Footer?.FooterText}
+                  iconStyle={styleConfig?.Footer?.FooterIcon}
                 />
               )}
             </div>
@@ -796,14 +802,18 @@ const SurveyOffline = ({
               {showFooter && (
                 <QuestLabs
                   style={{
-                    background:
-                      styleConfig?.Footer?.backgroundColor ||
-                      styleConfig?.Form?.backgroundColor ||
-                      BrandTheme?.background ||
-                      styleConfig?.Form?.background ||
-                      themeConfig?.backgroundColor,
-                    ...styleConfig?.Footer,
+                    ...{
+                      background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                        styleConfig?.Form?.backgroundColor ||
+                        styleConfig?.Form?.background ||
+                        BrandTheme?.background ||
+                        themeConfig?.backgroundColor,
+                    },
+                    ...styleConfig?.Footer?.FooterStyle,
+
                   }}
+                  textStyle={styleConfig?.Footer?.FooterText}
+                  iconStyle={styleConfig?.Footer?.FooterIcon}
                 />
               )}
             </div>
