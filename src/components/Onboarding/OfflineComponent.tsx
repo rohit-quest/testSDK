@@ -68,7 +68,7 @@ interface QuestLoginProps {
   nextBtnText?: string;
   progressBarMultiLine?: boolean;
   controlBtnType?: "Arrow" | "Buttons";
-  template?: "multi-question" | "single-question";
+  template?: "multi-question" | "single-question" | 'single-page';
   BrandTheme?: BrandTheme;
   QuestThemeData?: QuestThemeData;
   showFooter?: boolean;
@@ -159,18 +159,39 @@ function OnBoardingOffline(props: QuestLoginProps) {
   const templateDesign = () => {
     switch (template) {
       case "multi-question": {
-        setDesign([...design]);
+        if(design.length > 0){
+          setDesign([...design]);
+        }
         break;
       }
       case "single-question": {
         let arr = [];
         for (let i = 1; i <= offlineFormData.length; i++) {
-          arr.push([i]);
+          let newArr = [i];
+          arr.push(newArr);
         }
-        setDesign([...arr]);
+        setDesign(arr);
+        break;
+      }
+      case 'single-page': {
+       let arr = [];
+        for (let i = 1; i <= offlineFormData.length; i++) {
+          arr.push(i);
+        }
+        console.log(arr)
+        setDesign([arr]);
+        break;
+      }
+      default: {
+        let arr = [];
+        for (let i = 1; i <= offlineFormData.length; i++) {
+          arr.push(i);
+        }
+        setDesign([arr]);
         break;
       }
     }
+   
   };
 
   useEffect(() => {
@@ -264,12 +285,12 @@ function OnBoardingOffline(props: QuestLoginProps) {
   }, []);
 
   useEffect(() => {
-    if (!!design.length) {
-      templateDesign();
-    }
-  }, [design, template]);
+    templateDesign();
+  }, [template, offlineFormData]);
 
   useEffect(() => {
+    if (!offlineFormData.length) return;
+
     let currentQuestions: any;
     if (template === "multi-question") {
       currentQuestions = offlineFormData.map((e, i) => {
@@ -282,11 +303,13 @@ function OnBoardingOffline(props: QuestLoginProps) {
         if (designState[currentPage].includes(i + 1)) return true;
       });
       currentQuestions = temp2;
+    } else if (template === "single-question") {
+      currentQuestions = [currentPage + 1];
     } else {
-      currentQuestions = offlineFormData.map((e, i) => {
+      let current = offlineFormData.map((e, i) => {
         return i + 1;
       });
-      setDesign([[...currentQuestions]]);
+      currentQuestions = [...current];
     }
 
     let c = 0;
