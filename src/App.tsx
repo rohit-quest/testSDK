@@ -304,7 +304,7 @@ function App() {
         {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
         {/* <SreakPreview online /> */}
 
-        <Walkthrough
+        {/* <Walkthrough
             isOpen={isOpen}
             id="app"
             steps={[
@@ -329,7 +329,7 @@ function App() {
             onRequestClose={() => setIsOpen(false)}
             onAfterOpen={() => document.documentElement.style.overflow = 'hidden'}
             onBeforeClose={() => document.documentElement.style.overflow = ''}
-        />
+        /> */}
 
 
       </QuestProvider>
