@@ -56,7 +56,7 @@ interface QuestLoginProps {
   nextBtnText?: string;
   progressBarMultiLine?: boolean;
   controlBtnType?: "Arrow" | "Buttons";
-  template?: "multi-question" | "single-question";
+  template?: "multi-question" | "single-question" | 'single-page';
   showFooter?: false | true;
   styleConfig?: {
     Form?: CSSProperties;
@@ -181,19 +181,41 @@ function OnBoarding(props: QuestLoginProps) {
   const templateDesign = () => {
     switch (template) {
       case "multi-question": {
-        setDesign([...design]);
+        if(design.length > 0){
+          setDesign([...design]);
+        }
         break;
       }
       case "single-question": {
         let arr = [];
         for (let i = 1; i <= formdata.length; i++) {
-          arr.push([i]);
+          let newArr = [i];
+          arr.push(newArr);
         }
-        setDesign([...arr]);
+        setDesign(arr);
+        break;
+      }
+      case 'single-page': {
+       let arr = [];
+        for (let i = 1; i <= formdata.length; i++) {
+          arr.push(i);
+        }
+        console.log(arr)
+        setDesign([arr]);
+        break;
+      }
+      default: {
+        let arr = [];
+        for (let i = 1; i <= formdata.length; i++) {
+          arr.push(i);
+        }
+        setDesign([arr]);
         break;
       }
     }
+   
   };
+
 
   const getTheme = async (theme: string) => {
     try {
@@ -341,12 +363,13 @@ function OnBoarding(props: QuestLoginProps) {
   }, []);
 
   useEffect(() => {
-    if (!!design.length) {
-      templateDesign();
-    }
-  }, [design, template]);
+    templateDesign();
+  }, [template, formdata]);
 
   useEffect(() => {
+
+    if (!formdata.length) return;
+
     let currentQuestions: any;
     if (template === "multi-question") {
       currentQuestions = formdata.map((e, i) => {
@@ -359,11 +382,13 @@ function OnBoarding(props: QuestLoginProps) {
         if (designState[currentPage].includes(i + 1)) return true;
       });
       currentQuestions = temp2;
+    } else if (template === "single-question") {
+      currentQuestions = [currentPage + 1];
     } else {
-      currentQuestions = formdata.map((e, i) => {
+      let current = formdata.map((e, i) => {
         return i + 1;
       });
-      setDesign([[...currentQuestions]]);
+      currentQuestions = [...current];
     }
 
     let c = 0;
@@ -453,12 +478,6 @@ function OnBoarding(props: QuestLoginProps) {
     }
   };
 
-  const handleRemove = (id: string) => {
-    setAnswer({
-      ...answer,
-      [id]: "",
-    });
-  };
 
   const [wd, setWd] = useState(0);
 

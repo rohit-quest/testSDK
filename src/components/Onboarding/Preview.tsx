@@ -146,7 +146,7 @@ export default function OnBoardingPreview({
           // btnSize="200px"
           // inputBgColor=""
           // inputBorder="1px solid #6525B3"
-          progress={["person", "persn 2", "person 3"]}
+          progress={["person", "persn 2", "person 3", "person 4"]}
           headingScreen={[
             {
               name: "Identity Insights",
@@ -160,9 +160,13 @@ export default function OnBoardingPreview({
               name: "Professional Details",
               desc: "Tell us more about your company",
             },
+            {
+              name: "Professional Details",
+              desc: "Tell us more about your company",
+            },
           ]}
-          // template='multi-question'
-          template="single-question"
+          template='multi-question'
+          // template="single-question"
           singleChoose="modal3"
           multiChoice="modal2"
           design={[[8, 7, 6], [5], [4, 3], [2, 1]]}
@@ -198,15 +202,15 @@ export default function OnBoardingPreview({
       // btnSize="200px"
       // inputBgColor=""
       // inputBorder="1px solid #6525B3"
-      // template='multi-question'
-      template="multi-question"
+      template='single-page'
+      // template="multi-question"
       singleChoose="modal1"
       multiChoice="modal1"
-      design={[
-        [6, 1, 2, 3],
-        [3, 4],
-        [5, 6],
-      ]}
+      // design={[
+      //   [6, 1, 2, 3],
+      //   [3, 4],
+      //   [5, 6],
+      // ]}
       headingScreen={[
         { name: "Tell us about yourself", desc: "this is description" },
         {
