@@ -308,10 +308,11 @@ export default function HelpHubPreview({ online = true }) {
       >
         <HelpHub
           token={
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTRjYzUxMGE0LWU2NzAtNGVkMy1hYmUzLWMzNTFjMTliYjk5MiIsImlhdCI6MTcxNDM5NDM0NywiZXhwIjoxNzE0OTk5MTQ3fQ.bGEQ-QSsY6DNx0rXu1WBDgRLYgFYu0778PJQJSR3Kks"
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTRjYzUxMGE0LWU2NzAtNGVkMy1hYmUzLWMzNTFjMTliYjk5MiIsImlhdCI6MTcxNTA2MDg2OCwiZXhwIjoxNzE1NjY1NjY4fQ.yfSNn9DVE6MIBlc53pMboKGhy_-e7wcBadvkxDy497I"
           }
           userId="u-4cc510a4-e670-4ed3-abe3-c351c19bb992"
           questId="q-bdc4b8e7-1c8b-45f8-96fe-a2ae3f17fad9"
+          
           // uniqueUserId="741852101"
           // helphubPosition="USER_CHOICE"
           // onlineComponent={online}
@@ -356,6 +357,7 @@ export default function HelpHubPreview({ online = true }) {
             Main: {
               height: "700px",
               // width: "400px",
+              boxShadow: "0px 0px 48px 0px rgba(34, 34, 34, 0.20)"
             },
             // Chat: {
             //   Card: {
@@ -491,7 +493,6 @@ export default function HelpHubPreview({ online = true }) {
           }}
           // claimStatusUpdates={claimStatusUpdates}
           // setClaimStatusUpdates={setClaimStatusUpdates}
-          onlineComponent
         />
       </QuestProvider>
     );
@@ -506,9 +507,9 @@ export default function HelpHubPreview({ online = true }) {
     >
       <HelpHubOffline
         token={
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxMzE2NDEzOCwiZXhwIjoxNzEzNzY4OTM4fQ.tZENNsLVFUkWOMcmoOqKEVvAx97PLBZKDZGzhARP_tc"
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTRjYzUxMGE0LWU2NzAtNGVkMy1hYmUzLWMzNTFjMTliYjk5MiIsImlhdCI6MTcxNTA2MDg2OCwiZXhwIjoxNzE1NjY1NjY4fQ.yfSNn9DVE6MIBlc53pMboKGhy_-e7wcBadvkxDy497I"
         }
-        userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
+        userId="u-4cc510a4-e670-4ed3-abe3-c351c19bb992"
         // ParentQuest={}
         // ChildQuest={}
         styleConfig={{

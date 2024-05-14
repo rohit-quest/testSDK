@@ -1,10 +1,7 @@
 import { CSSProperties, Dispatch, SetStateAction } from "react";
 
 type HelphubStyleConfig = {
-  Main?: {
-    height?: string;
-    width?: string;
-  };
+  Main?: CSSProperties;
   Home?: {
     Form?: CSSProperties;
     BannerText?: CSSProperties;

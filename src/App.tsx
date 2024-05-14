@@ -170,7 +170,7 @@ function App() {
           userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
           /> */}
 
-        {/* <HelpHubPreview online={true} /> */}
+        <HelpHubPreview online={true} />
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
         {/* <GamifiedQuizPreview online={true} /> */}
@@ -190,7 +190,7 @@ function App() {
                 // descriptioin="this is descripiton"
                 /> */}
 
-        <OnBoardingPreview online={true} />
+        {/* <OnBoardingPreview online={true} /> */}
 
         {/* <GetStartedPreview online={true} /> */}
 

@@ -317,13 +317,13 @@
 
 .SendMessageButton {
   display: flex;
+  width: 100%;
   padding: var(--Size-12, 12px) 20px;
   box-sizing: border-box;
   justify-content: center;
   align-items: center;
   gap: 8px;
   border-radius: var(--Size-10, 10px);
-  border: 1px solid #d1acff;
   background: var(
     --Primary,
     linear-gradient(84deg, #9035ff 0.36%, #0065ff 100.36%)
@@ -773,7 +773,7 @@
   align-items: center;
   gap: 4px;
   border-radius: 10px;
-  border: 1.5px solid #d1acff;
+  border: 1.5px solid transparent;
   background: var(
     --Primary,
     linear-gradient(84deg, #9035ff 0.36%, #0065ff 100.36%)
@@ -1420,7 +1420,6 @@
   gap: var(--Size-12, 12px);
   align-self: stretch;
   border-bottom: 1px solid var(--Neutral-White-300, #efefef);
-
   cursor: pointer;
 }
 
@@ -1537,7 +1536,6 @@
   gap: var(--Size-12, 12px);
   align-self: stretch;
   border-radius: var(--Size-10, 10px);
-  border: 1px solid #d1acff;
   background: var(
     --Primary,
     linear-gradient(84deg, #9035ff 0.36%, #0065ff 100.36%)
@@ -2570,7 +2568,7 @@
   align-items: center;
   gap: 4px;
   border-radius: 10px;
-  border: 1.5px solid #d1acff;
+  border: 1.5px solid transparent;
   background: linear-gradient(84deg, #9035ff 0.36%, #0065ff 100.36%);
 }
 
@@ -2875,36 +2873,46 @@ input[type="file"] {
   margin-left: auto;
   width: fit-content;
   max-width: 70%;
-  word-break: break-word;
-  color: #58209c;
   border-radius: 12px 12px 0 12px;
+}
 
+.sender-role > p {
   color: var(--Primary-Grape-700, #58209c);
-
-  /* Body md/400 */
   font-family: Figtree;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px; /* 142.857% */
+  line-height: 20px;
+  word-break: break-word;
+  color: #58209c;
 }
 
 .receiver-role {
-  background-color: #fbfbfb;
+  background-color: #F7F7F7;
   align-self: flex-start;
   max-width: 70%;
   width: fit-content;
-  word-break: break-word;
   border-radius: 12px 12px 12px 0;
+}
 
+.receiver-role > p {
   color: var(--Neutral-Black-300, #4c4c4c);
-
-  /* Body md/400 */
   font-family: Figtree;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px; /* 142.857% */
+  line-height: 20px;
+  word-break: break-word;
+}
+
+.sender-time {
+  color: var(--Mine-Shaft-550, #696969);
+  text-align: right;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  background-color: transparent;
 }
 
 .chat-profile-img-sender {
@@ -3437,7 +3445,7 @@ input[type="file"] {
 }
 
 .q-helphub-satisfied > p {
-  max-width: calc(100% - 104px);
+  /* max-width: calc(100% - 104px); */
   color: var(--Neutral-Black-300, #4c4c4c);
   font-family: Figtree;
   font-size: 12px;
@@ -3537,4 +3545,16 @@ input[type="file"] {
   opacity: 0.6;
   filter: grayscale(100%);
   cursor: no-drop;
+}
+
+.q-helphub-closed-chat {
+  color: var(--Mine-Shaft-750, #3E3E3E);
+  font-family: Figtree;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  padding: 6px 10px;
+  border-radius: 48px;
+  background: #F2F2F2;
 }
