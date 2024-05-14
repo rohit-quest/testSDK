@@ -1,6 +1,5 @@
 import { CSSProperties, useEffect, useRef, useState } from "react";
 import config from "../../config";
-import axios from "axios";
 import { useContext } from "react";
 import QuestContext from "../QuestWrapper";
 import "./onboarding.css";
@@ -10,17 +9,7 @@ import discord from "../../assets/images/discord-color.png";
 import twitter from "../../assets/images/twitter-color.png";
 import slack from "../../assets/images/slack.png";
 import link from "../../assets/images/links.png";
-import Select, { StylesConfig } from "react-select";
-import {
-  userLogo,
-  crossLogo,
-  leftArrow,
-  rightArrow,
-  calenderIcon,
-  textAreaIcon,
-  phoneLogo,
-  emailLogo,
-} from "../../assets/assetsSVG.tsx";
+import { leftArrow, rightArrow } from "../../assets/assetsSVG.tsx";
 import { Input, logoType } from "../Modules/Input.tsx";
 import { MultiChoice, MultiChoiceTwo } from "../Modules/MultiChoice.tsx";
 import Label from "../Modules/Label.tsx";
@@ -30,55 +19,6 @@ import { SecondaryButton } from "../Modules/SecondaryButton.tsx";
 import { PrimaryButton } from "../Modules/PrimaryButton.tsx";
 import QuestLabs from "../QuestLabs.tsx";
 import General from "../../general.ts";
-
-const Tick = ({
-  fillColor = "#6525B3",
-  isActive = false,
-  borderColor = "#B9B9B9",
-}) =>
-  isActive ? (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g clipPath="url(#clip0_12303_10092)">
-        <path
-          d="M12 0C13.1016 0 14.1641 0.140625 15.1875 0.421875C16.2109 0.703125 17.1641 1.10938 18.0469 1.64062C18.9297 2.17188 19.7383 2.79688 20.4727 3.51562C21.207 4.23438 21.8359 5.04297 22.3594 5.94141C22.8828 6.83984 23.2852 7.79688 23.5664 8.8125C23.8477 9.82812 23.9922 10.8906 24 12C24 13.1016 23.8594 14.1641 23.5781 15.1875C23.2969 16.2109 22.8906 17.1641 22.3594 18.0469C21.8281 18.9297 21.2031 19.7383 20.4844 20.4727C19.7656 21.207 18.957 21.8359 18.0586 22.3594C17.1602 22.8828 16.2031 23.2852 15.1875 23.5664C14.1719 23.8477 13.1094 23.9922 12 24C10.8984 24 9.83594 23.8594 8.8125 23.5781C7.78906 23.2969 6.83594 22.8906 5.95312 22.3594C5.07031 21.8281 4.26172 21.2031 3.52734 20.4844C2.79297 19.7656 2.16406 18.957 1.64062 18.0586C1.11719 17.1602 0.714844 16.2031 0.433594 15.1875C0.152344 14.1719 0.0078125 13.1094 0 12C0 10.8984 0.140625 9.83594 0.421875 8.8125C0.703125 7.78906 1.10938 6.83594 1.64062 5.95312C2.17188 5.07031 2.79688 4.26172 3.51562 3.52734C4.23438 2.79297 5.04297 2.16406 5.94141 1.64062C6.83984 1.11719 7.79688 0.714844 8.8125 0.433594C9.82812 0.152344 10.8906 0.0078125 12 0ZM19.0664 8.02734L17.4727 6.43359L9.75 14.1562L6.52734 10.9336L4.93359 12.5273L9.75 17.3438L19.0664 8.02734Z"
-          fill={fillColor}
-        />
-      </g>
-      <defs>
-        <clipPath id="clip0_12303_10092">
-          <rect width="24" height="24" fill={borderColor} />
-        </clipPath>
-      </defs>
-    </svg>
-  ) : (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g clipPath="url(#clip0_3420_804)">
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M8.00001 0.833313C4.04197 0.833313 0.833344 4.04194 0.833344 7.99998C0.833344 11.958 4.04197 15.1666 8.00001 15.1666C11.9581 15.1666 15.1667 11.958 15.1667 7.99998C15.1667 4.04194 11.9581 0.833313 8.00001 0.833313ZM1.83334 7.99998C1.83334 4.59422 4.59425 1.83331 8.00001 1.83331C11.4058 1.83331 14.1667 4.59422 14.1667 7.99998C14.1667 11.4057 11.4058 14.1666 8.00001 14.1666C4.59425 14.1666 1.83334 11.4057 1.83334 7.99998Z"
-          fill="#B9B9B9"
-        />
-      </g>
-      <defs>
-        <clipPath id="clip0_3420_804">
-          <rect width="16" height="16" fill="white" />
-        </clipPath>
-      </defs>
-    </svg>
-  );
 
 type HeadingScreen = {
   name: string;
@@ -98,6 +38,7 @@ type BrandTheme = {
   tertiaryColor?: string;
   titleColor?: string;
 };
+
 interface QuestThemeData {
   accentColor: string;
   theme: string;
@@ -113,42 +54,20 @@ interface QuestLoginProps {
   uniqueUserId?: string;
   uniqueEmailId?: string;
   design?: Array<Array<number>> | undefined;
-  // color?: string;
-  // bgColor?: string;
-  // btnColor?: string;
-  // inputBgColor?: string;
   headingScreen?: HeadingScreen | HeadingScreen[] | any;
   singleChoose?: "modal1" | "modal2" | "modal3";
   multiChoice?: "modal1" | "modal2";
-  // screenHeight?: string;
   getAnswers: Function | undefined;
   answer: any;
   setAnswer: React.Dispatch<React.SetStateAction<any>>;
   customComponents?: React.JSX.Element;
   customComponentPositions?: number;
-  // inputBorder?: string;
-  // btnSize?: string;
-  // headingSize?: string;
-  // descSize?: string;
-  // inputFieldType?: { [key: string]: string };
-  // defaultFont?: boolean;
   progress?: string[];
   loadingTracker?: boolean;
   setLoading?: Function;
-  // linksLogoWidth?: string;
-  // previousBtnText?: string;
   nextBtnText?: string;
-  // progressbarColor?: string;
   progressBarMultiLine?: boolean;
-  // progressBartabHeight?: string;
-  // headingAlignment?: "left" | "right" | "center";
-  // questionFontSize?: string;
-  // answerFontSize?: string;
-  // gap?: string;
   controlBtnType?: "Arrow" | "Buttons";
-  // progressBarType?: "modal1"|"modal2";
-  // choiceColor?: string;
-  // textInputModal?: "modal1"|"modal2";
   template?: "multi-question" | "single-question";
   BrandTheme?: BrandTheme;
   QuestThemeData?: QuestThemeData;
@@ -183,7 +102,6 @@ interface QuestLoginProps {
     };
   };
   offlineFormData: offlineFormData[] | [];
-
 }
 
 interface offlineFormData {
@@ -198,54 +116,27 @@ interface offlineFormData {
   manualInput: string | boolean;
 }
 
-interface Answer {
-  question?: string;
-  answer?: string[] | string;
-}
-
 function OnBoardingOffline(props: QuestLoginProps) {
   const {
-    // color,
-    // bgColor,
-    // inputBgColor,
-    // inputBorder,
-    // btnSize,
-    // btnColor,
-    // headingSize,
-    // descSize,
     headingScreen,
     singleChoose,
     multiChoice = "modal1",
-    // screenHeight,
     progress,
     getAnswers,
     answer,
     setAnswer,
     customComponents,
     customComponentPositions,
-    // inputFieldType,
-    // defaultFont,
     userId,
     token,
     questId,
     loadingTracker,
     setLoading = () => {},
-    // linksLogoWidth,
-    // previousBtnText,
     nextBtnText,
-    // progressbarColor,
     progressBarMultiLine,
-    // progressBartabHeight,
-    // headingAlignment,
-    // questionFontSize,
-    // answerFontSize,
-    // gap,
     controlBtnType,
     uniqueUserId,
     uniqueEmailId,
-    // progressBarType="modal2",
-    // choiceColor="#6525B3",
-    // textInputModal = "modal1",
     BrandTheme,
     QuestThemeData,
     template,
@@ -260,12 +151,8 @@ function OnBoardingOffline(props: QuestLoginProps) {
   const [steps, setSteps] = useState<number[]>([]);
   const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } =
     useContext(QuestContext.Context);
-  const cookies = new Cookies();
   const progressRef = useRef<HTMLDivElement>(null);
   const [designState, setDesign] = useState(design || []);
-
-  let BACKEND_URL =
-    apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
   let GeneralFunctions = new General("mixpanel", apiType);
 
@@ -280,7 +167,6 @@ function OnBoardingOffline(props: QuestLoginProps) {
         for (let i = 1; i <= offlineFormData.length; i++) {
           arr.push([i]);
         }
-        // let design = arr;
         setDesign([...arr]);
         break;
       }
@@ -384,11 +270,6 @@ function OnBoardingOffline(props: QuestLoginProps) {
   }, [design, template]);
 
   useEffect(() => {
-    // let currentQuestions: any =
-    //   !!designState && designState.length > 0 && checkDesignCriteria()
-    //     ? designState[currentPage]
-    //     : offlineFormData.map((e, i) => i + 1);
-
     let currentQuestions: any;
     if (template === "multi-question") {
       currentQuestions = offlineFormData.map((e, i) => {
@@ -408,7 +289,6 @@ function OnBoardingOffline(props: QuestLoginProps) {
       setDesign([[...currentQuestions]]);
     }
 
-
     let c = 0;
     for (let i = 0; i < currentQuestions.length; i++) {
       if (
@@ -427,19 +307,6 @@ function OnBoardingOffline(props: QuestLoginProps) {
     }
 
     if (currentQuestions.length > 0 && c == currentQuestions.length) {
-      // let questUserId = cookies.get("questUserId");
-      // let questUserToken = cookies.get("questUserToken");
-
-      // let headers = {
-      //     apikey: apiKey,
-      //     apisecret: apiSecret,
-      //     userId: questUserId,
-      //     token: questUserToken
-      // }
-      // if (!!designState && Number(currentPage) + 1 != designState?.length) {
-      //     // axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-complete-page-${Number(currentPage) + 1}?userId=${questUserId}&questId=${questId}`, {count: 1}, {headers})
-      // }
-
       setButtonFlag(true);
     } else {
       setButtonFlag(false);
@@ -492,37 +359,6 @@ function OnBoardingOffline(props: QuestLoginProps) {
   };
 
   const [wd, setWd] = useState(0);
-
-  // const ProgressBarNew = () =>{
-  //     return ( <div className="q_onb_progress">
-  //     {progress?.map((text, i) => {
-  //         const isFilled = steps.includes(i);
-  //         const isActive = currentPage === i;
-  //         let color = isFilled ? '#098849' : isActive ? '#2C2C2C' : '#6E6E6E';
-  //         let border = `1px solid ${isFilled ? '#098849' : isActive ? '#2C2C2C' : '#6E6E6E'}`;
-
-  //       return (
-  //           <div
-  //               style={{
-  //                   width: `${100 / progress.length}%`,
-  //                   color,
-  //                   border,
-  //               }}
-  //               onClick={() => {
-  //                   if (isFilled && (i <= currentPage + 1)) {
-  //                       setCurrentPage(i);
-  //                   }
-  //               }
-  //               }
-  //               className="q_onb_progress_tab"
-  //               key={i}
-  //           >
-  //               {text}
-  //           </div>
-  //       );
-  //     })}
-  //   </div>)
-  // }
 
   const ProgressBar = () => {
     useEffect(() => {
@@ -678,7 +514,10 @@ function OnBoardingOffline(props: QuestLoginProps) {
         <Label
           htmlFor="normalInput"
           style={{
-            color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
+            color:
+              styleConfig?.Label?.color ||
+              BrandTheme?.primaryColor ||
+              themeConfig?.primaryColor,
             ...styleConfig?.Label,
           }}
         >
@@ -689,13 +528,19 @@ function OnBoardingOffline(props: QuestLoginProps) {
           placeholder={placeholder}
           value={answer[criteriaId]}
           iconColor={
-            styleConfig?.Input?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor || "#B9B9B9"
+            styleConfig?.Input?.color ||
+            BrandTheme?.primaryColor ||
+            themeConfig?.primaryColor ||
+            "#B9B9B9"
           }
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           style={{
             borderColor:
               styleConfig?.Input?.borderColor || themeConfig?.borderColor,
-            color: styleConfig?.Input?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
+            color:
+              styleConfig?.Input?.color ||
+              BrandTheme?.primaryColor ||
+              themeConfig?.primaryColor,
             ...styleConfig?.Input,
           }}
           emailtext={
@@ -724,7 +569,10 @@ function OnBoardingOffline(props: QuestLoginProps) {
         <Label
           htmlFor="dateInput"
           style={{
-            color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
+            color:
+              styleConfig?.Label?.color ||
+              BrandTheme?.primaryColor ||
+              themeConfig?.primaryColor,
             ...styleConfig?.Label,
           }}
         >
@@ -738,7 +586,10 @@ function OnBoardingOffline(props: QuestLoginProps) {
           style={{
             borderColor:
               styleConfig?.Input?.borderColor || themeConfig?.borderColor,
-            color: styleConfig?.Input?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
+            color:
+              styleConfig?.Input?.color ||
+              BrandTheme?.primaryColor ||
+              themeConfig?.primaryColor,
             ...styleConfig?.Input,
           }}
         />
@@ -761,7 +612,10 @@ function OnBoardingOffline(props: QuestLoginProps) {
         <Label
           htmlFor="textAreaInput"
           style={{
-            color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
+            color:
+              styleConfig?.Label?.color ||
+              BrandTheme?.primaryColor ||
+              themeConfig?.primaryColor,
             ...styleConfig?.Label,
           }}
         >
@@ -774,13 +628,17 @@ function OnBoardingOffline(props: QuestLoginProps) {
           style={{
             borderColor:
               styleConfig?.TextArea?.borderColor || themeConfig?.borderColor,
-            color: styleConfig?.TextArea?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
+            color:
+              styleConfig?.TextArea?.color ||
+              BrandTheme?.primaryColor ||
+              themeConfig?.primaryColor,
             ...styleConfig?.TextArea,
           }}
         />
       </div>
     );
   };
+
   const singleChoiceTwo = (
     options: string[] | [],
     question: string,
@@ -825,7 +683,9 @@ function OnBoardingOffline(props: QuestLoginProps) {
           }}
           selectedStyle={{
             accentColor:
-              styleConfig?.SingleChoice?.selectedStyle?.accentColor || QuestThemeData?.accentColor || BrandTheme?.primaryColor ||
+              styleConfig?.SingleChoice?.selectedStyle?.accentColor ||
+              QuestThemeData?.accentColor ||
+              BrandTheme?.primaryColor ||
               themeConfig?.primaryColor,
             ...styleConfig?.SingleChoice?.selectedStyle,
           }}
@@ -838,8 +698,11 @@ function OnBoardingOffline(props: QuestLoginProps) {
             placeholder="Please fill manually"
             style={{
               borderColor:
-                styleConfig?.Input?.borderColor ||  themeConfig?.borderColor,
-              color: styleConfig?.Input?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
+                styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+              color:
+                styleConfig?.Input?.color ||
+                BrandTheme?.primaryColor ||
+                themeConfig?.primaryColor,
               ...styleConfig?.Input,
             }}
           />
@@ -863,7 +726,10 @@ function OnBoardingOffline(props: QuestLoginProps) {
         <Label
           htmlFor="textAreaInput"
           style={{
-            color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
+            color:
+              styleConfig?.Label?.color ||
+              BrandTheme?.primaryColor ||
+              themeConfig?.primaryColor,
             ...styleConfig?.Label,
           }}
         >
@@ -910,7 +776,10 @@ function OnBoardingOffline(props: QuestLoginProps) {
         <Label
           htmlFor="textAreaInput"
           style={{
-            color: styleConfig?.Label?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
+            color:
+              styleConfig?.Label?.color ||
+              BrandTheme?.primaryColor ||
+              themeConfig?.primaryColor,
             ...styleConfig?.Label,
           }}
         >
@@ -956,35 +825,6 @@ function OnBoardingOffline(props: QuestLoginProps) {
     }
   };
 
-  // const linksCriteria = (
-  //     linkTitle: string,
-  //     criteriaId: string,
-  //     linkUrl: string,
-  //     index: number,
-  // ) => {
-  //     return (
-  //         <div key={criteriaId}>
-  //             {
-  //                 (customComponentPositions == index + 1) &&
-  //                 <div style={{ paddingBottom: "12px" }}>
-  //                     {customComponents}
-  //                 </div>
-  //             }
-  //             <a href={linkUrl} target="_blank" style={{ textDecoration: "none" }}>
-  //                 <div className="q-onb-link-div">
-  //                     <img src={chooseLogo(linkUrl)} style={{ width: linksLogoWidth }} />
-  //                     <div className="q-onb-link-div-ch">
-  //                         <div style={{ color: color ? color : "black" }}>{linkTitle}</div>
-  //                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-  //                             <path d="M2 11H14.2L8.6 16.6L10 18L18 10L10 2L8.6 3.4L14.2 9H2V11Z" className="q-onb-arrow" />
-  //                         </svg>
-  //                     </div>
-  //                 </div>
-  //             </a>
-  //         </div>
-  //     );
-  // };
-
   function checkDesignCriteria() {
     if (!designState?.length) return;
 
@@ -1017,7 +857,6 @@ function OnBoardingOffline(props: QuestLoginProps) {
       "onboarding_offline"
     );
 
-    
     if (currentPage < designState.length - 1) {
       console.log("no submit");
       setCurrentPage((prev) => prev + 1);
@@ -1036,50 +875,6 @@ function OnBoardingOffline(props: QuestLoginProps) {
       }
       getAnswers && getAnswers(crt);
     }
-
-    // let crt: any = { ...answer };
-    // for (let i of Object.keys(crt)) {
-    //   if (i.includes("/manual") && crt[i] != "") {
-    //     let id: string = i.split("/manual")[0];
-    //     let criteriaDetails: offlineFormData[] = offlineFormData.filter(
-    //       (item) => item.criteriaId == id
-    //     );
-    //     if (criteriaDetails[0].manualInput == crt[id]) {
-    //       crt[id] = crt[i];
-    //     }
-    //   }
-    // }
-    // getAnswers && getAnswers(crt);
-    // let ansArr: Answer[] = offlineofflineFormData.map((ans: offlineofflineFormData) => {
-    //     return {
-    //         question: ans?.question,
-    //         answer: crt[ans?.criteriaId] || "",
-    //     };
-    // });
-
-    // let criterias = Object.keys(crt)
-    //     .filter((key: string) => !key.includes("/manual"))
-    //     .map((key: string) => ({
-    //         criteriaId: key,
-    //         answer: typeof crt[key] === "object" ? crt[key] : [crt[key]],
-    //         question: offlineFormData[offlineFormData.findIndex(ele => ele.criteriaId == key)]?.question
-    //     }));
-
-    // let questUserId = cookies.get("questUserId");
-    // let questUserToken = cookies.get("questUserToken");
-
-    // let headers = {
-    //     apikey: apiKey,
-    //     apisecret: apiSecret,
-    //     userId: questUserId ? questUserId : userId,
-    //     token: questUserToken ? questUserToken : token
-    // }
-
-    // getAnswers && getAnswers(crt);
-
-    // axios.post(`${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`, {criterias, userId: headers.userId}, {headers})
-
-    // axios.post(`${BACKEND_URL}api/entities/${entityId}/users/${headers.userId}/metrics/onboarding-complete?userId=${headers.userId}&questId=${questId}`, {count: 1}, {headers})
   }
 
   if (
@@ -1103,7 +898,10 @@ function OnBoardingOffline(props: QuestLoginProps) {
             QuestThemeData?.borderRadius ||
             BrandTheme?.borderRadius,
           height: styleConfig?.Form?.height || "auto",
-          fontFamily:BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
+          fontFamily:
+            BrandTheme?.fontFamily ||
+            themeConfig.fontFamily ||
+            "'Figtree', sans-serif",
           ...styleConfig?.Form,
         }}
       >
@@ -1116,7 +914,10 @@ function OnBoardingOffline(props: QuestLoginProps) {
                   className="q-onb-main-h3"
                   style={{
                     color:
-                      styleConfig?.Heading?.color || BrandTheme?.titleColor || BrandTheme?.primaryColor || themeConfig?.primaryColor,
+                      styleConfig?.Heading?.color ||
+                      BrandTheme?.titleColor ||
+                      BrandTheme?.primaryColor ||
+                      themeConfig?.primaryColor,
                     ...styleConfig?.Heading,
                   }}
                 >
@@ -1141,7 +942,10 @@ function OnBoardingOffline(props: QuestLoginProps) {
                   className="q-onb-main-h3"
                   style={{
                     color:
-                      styleConfig?.Heading?.color || BrandTheme?.titleColor ||  BrandTheme?.primaryColor || themeConfig?.primaryColor,
+                      styleConfig?.Heading?.color ||
+                      BrandTheme?.titleColor ||
+                      BrandTheme?.primaryColor ||
+                      themeConfig?.primaryColor,
                     ...styleConfig?.Heading,
                   }}
                 >
@@ -1166,7 +970,9 @@ function OnBoardingOffline(props: QuestLoginProps) {
                   className="q-onb-main-h3"
                   style={{
                     color:
-                      styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
+                      styleConfig?.Heading?.color ||
+                      BrandTheme?.primaryColor ||
+                      themeConfig?.primaryColor,
                     ...styleConfig?.Heading,
                   }}
                 >
@@ -1192,11 +998,9 @@ function OnBoardingOffline(props: QuestLoginProps) {
               offlineFormData.length > 0 &&
               designState.length > 1 &&
               !!progress?.length && <ProgressBar />}
-
-            {/* {!!designState && designState.length > 0 && checkDesignCriteria() */}
-            {!!designState && designState.length > 0 
+            {!!designState && designState.length > 0
               ? designState[currentPage].map((num: number) =>
-                  offlineFormData[num - 1].type == "USER_INPUT_TEXT"
+                  offlineFormData[num - 1]?.type == "USER_INPUT_TEXT"
                     ? normalInput(
                         offlineFormData[num - 1]?.question || "",
                         offlineFormData[num - 1]?.required || false,
@@ -1207,7 +1011,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                           "",
                         "text"
                       )
-                    : offlineFormData[num - 1].type == "USER_INPUT_EMAIL"
+                    : offlineFormData[num - 1]?.type == "USER_INPUT_EMAIL"
                     ? normalInput(
                         offlineFormData[num - 1]?.question || "",
                         offlineFormData[num - 1]?.required || false,
@@ -1218,7 +1022,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                           "",
                         "email"
                       )
-                    : offlineFormData[num - 1].type == "USER_INPUT_PHONE"
+                    : offlineFormData[num - 1]?.type == "USER_INPUT_PHONE"
                     ? normalInput(
                         offlineFormData[num - 1]?.question || "",
                         offlineFormData[num - 1]?.required || false,
@@ -1229,7 +1033,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                           "",
                         "number"
                       )
-                    : offlineFormData[num - 1].type == "USER_INPUT_TEXTAREA"
+                    : offlineFormData[num - 1]?.type == "USER_INPUT_TEXTAREA"
                     ? textAreaInput(
                         offlineFormData[num - 1]?.question || "",
                         offlineFormData[num - 1]?.required || false,
@@ -1239,7 +1043,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                           offlineFormData[num - 1]?.question ||
                           ""
                       )
-                    : offlineFormData[num - 1].type == "USER_INPUT_DATE"
+                    : offlineFormData[num - 1]?.type == "USER_INPUT_DATE"
                     ? dateInput(
                         offlineFormData[num - 1]?.question || "",
                         offlineFormData[num - 1]?.required || false,
@@ -1249,7 +1053,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                           offlineFormData[num - 1]?.question ||
                           ""
                       )
-                    : offlineFormData[num - 1].type ==
+                    : offlineFormData[num - 1]?.type ==
                       "USER_INPUT_SINGLE_CHOICE"
                     ? !!singleChoose &&
                       singleChoiceTwo(
@@ -1261,17 +1065,18 @@ function OnBoardingOffline(props: QuestLoginProps) {
                         offlineFormData[num - 1]?.manualInput,
                         singleChoose
                       )
-                    : offlineFormData[num - 1].type == "USER_INPUT_MULTI_CHOICE"
+                    : offlineFormData[num - 1]?.type ==
+                      "USER_INPUT_MULTI_CHOICE"
                     ? !!multiChoice && multiChoice == "modal2"
                       ? multiChoiceTwo(
-                          offlineFormData[num - 1].options || [],
+                          offlineFormData[num - 1]?.options || [],
                           offlineFormData[num - 1]?.question || "",
                           offlineFormData[num - 1]?.required || false,
                           offlineFormData[num - 1].criteriaId || "",
                           num - 1
                         )
                       : multiChoiceOne(
-                          offlineFormData[num - 1].options || [],
+                          offlineFormData[num - 1]?.options || [],
                           offlineFormData[num - 1]?.question || "",
                           offlineFormData[num - 1]?.required || false,
                           offlineFormData[num - 1].criteriaId || "",
@@ -1354,10 +1159,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                 )}
 
             {offlineFormData.length > 0 &&
-              (!!designState &&
-              // designState.length > 1 &&
-              // checkDesignCriteria() ? (
-              designState.length > 1 ? (
+              (!!designState && designState.length > 1 ? (
                 controlBtnType == "Buttons" ? (
                   <div className="q-onb-main-criteria">
                     {currentPage > 0 && (
@@ -1370,7 +1172,6 @@ function OnBoardingOffline(props: QuestLoginProps) {
                             themeConfig?.borderColor,
                           background:
                             styleConfig?.SecondaryButton?.backgroundColor ||
-                           
                             themeConfig?.backgroundColor,
                           color:
                             styleConfig?.SecondaryButton?.color ||
@@ -1480,7 +1281,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
                         background:
                           styleConfig?.PrimaryButton?.background ||
                           QuestThemeData?.buttonColor ||
-                          BrandTheme?.buttonColor || 
+                          BrandTheme?.buttonColor ||
                           themeConfig?.buttonColor,
                         ...styleConfig?.PrimaryButton,
                       }}
@@ -1519,10 +1320,27 @@ function OnBoardingOffline(props: QuestLoginProps) {
               ))}
           </div>
           {offlineFormData && showFooter && (
-           <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, 
-            borderBottomLeftRadius: styleConfig?.Footer?.borderTopStyle || styleConfig?.Form?.borderTopStyle || QuestThemeData?.borderRadius || BrandTheme?.borderRadius,
-            borderBottomRightRadius: styleConfig?.Footer?.borderTopStyle || styleConfig?.Form?.borderTopStyle || QuestThemeData?.borderRadius || BrandTheme?.borderRadius,
-            ...styleConfig?.Footer }} />
+            <QuestLabs
+              style={{
+                background:
+                  styleConfig?.Footer?.backgroundColor ||
+                  styleConfig?.Form?.backgroundColor ||
+                  BrandTheme?.background ||
+                  styleConfig?.Form?.background ||
+                  themeConfig?.backgroundColor,
+                borderBottomLeftRadius:
+                  styleConfig?.Footer?.borderTopStyle ||
+                  styleConfig?.Form?.borderTopStyle ||
+                  QuestThemeData?.borderRadius ||
+                  BrandTheme?.borderRadius,
+                borderBottomRightRadius:
+                  styleConfig?.Footer?.borderTopStyle ||
+                  styleConfig?.Form?.borderTopStyle ||
+                  QuestThemeData?.borderRadius ||
+                  BrandTheme?.borderRadius,
+                ...styleConfig?.Footer,
+              }}
+            />
           )}
         </div>
       </div>

@@ -1,0 +1,181 @@
+.q_modular_input_cont {
+  display: flex;
+  padding: 10px 16px;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 10px;
+  border: 1px solid #ececec;
+  position: relative;
+}
+
+.q_input_cont {
+  display: flex;
+  padding: 10px 16px;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 10px;
+  border: 1px solid #ececec;
+  position: relative;
+}
+
+.q_modular_input_main_cont {
+  flex: 1;
+  border: none;
+  color: #2c2c2c;
+  /* font-family: Figtree; */
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  height: 100%;
+  background-color: transparent;
+}
+
+.q_modular_input_cont > input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.q_modular_input_cont > input[type="number"]::-webkit-inner-spin-button,
+.q_modular_input_cont > input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.q_modular_input_main_cont:focus {
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+.q_modular_input_custom_datePicker {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 30px;
+  border: 0;
+  top: -6px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.q_modular_input_custom_datePicker::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: -150%;
+  left: -150%;
+  width: 300%;
+  height: 300%;
+  cursor: pointer;
+}
+
+.q_modular_input_custom_datePicker:hover + button {
+  background-color: transparent;
+}
+
+.q_modular_input_custom_datePicker_label {
+  display: inline-block;
+  position: relative;
+  line-height: 0;
+  width: 100%;
+  flex: 1;
+  border: none;
+  color: black;
+  /* font-family: Figtree; */
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  height: 100%;
+  background-color: transparent;
+  padding: 9.5px 2px;
+}
+
+.q_modal_box {
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 1000;
+  position: fixed;
+}
+
+.q_modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.q_modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  animation: modal-animation 0.3s ease-out;
+}
+
+.q_close_button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+@keyframes modal-animation {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.q_input_textArea {
+  display: flex;
+  padding: 10px 16px;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 10px;
+  border: 1px solid #ececec;
+  resize: none;
+  color: black;
+  /* font-family: Figtree; */
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  min-height: 94px;
+  scrollbar-width: thin;
+  background: transparent;
+}
+
+.q_input_textArea:focus {
+  border: 1px solid #ececec;
+}
+
+.q_input_textArea:hover {
+  border: 1px solid #ececec;
+}
+
+.q_module_lebels {
+  display: block;
+  color: #4c4c4c;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px;
+  margin-bottom: 6px;
+}
+
+.q-modular-input-error-message {
+  font-size: 12px;
+  color: red;
+  margin-top: 4px;
+}

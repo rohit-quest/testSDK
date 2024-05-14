@@ -6,7 +6,7 @@ import { HelpCenter } from "./components/HelpCenter/HelpCenter";
 import { ReferEarn, ReferShare } from "./components/Refer/ReferEarn";
 // import { showToast } from "./components/toast/toastService";
 import { QuestForm } from "./components/QuestForm/index";
-import Feedback from "./components/Feedback/Feedback";
+import Feedback from "./components/Survey/Feedback";
 import FeedbackWorkflow from "./components/FeedbackOverview/FeedbackOverview";
 import Tutorial from "./components/TutorialScreen/TutorialScreen";
 import { confetti } from "./components/Confetti/confetti";
@@ -25,20 +25,27 @@ import CrossSellingPreview from "./components/expansion/CrossPreview";
 import SreakPreview from "./components/Streak/Preview";
 import TourPreview from "./components/Tour/Preview";
 import FeedbackWorkflowPreview from "./components/FeedbackOverview/Preview";
-import FeedbackPreview from "./components/Feedback/Preview";
-import Survey from "./components/Feedback/Survey";
+// import FeedbackPreview from "./components/Feedback/Preview";
+import SurveyPreview from "./components/Survey/Preview";
 import ModalPreview from "./components/Modals/Preview";
 import PreviewLeaderboard from "./components/Leaderboard/Preview";
-import SurveyOffline from "./components/Feedback/OfflineComponent";
+import HelpHub from "./components/HelpHub/HelpHub";
+import HelpHubPreview from "./components/HelpHub/Preview";
+
+import SurveyOffline from "./components/Survey/OfflineComponent";
 import Modal from "./components/Modules/Modal";
 // import { NormalInput } from './components/Modules/Input'
 import OnBoarding from "./components/Onboarding/Onboarding";
 import DailyStreak from "./components/Streak/DailyStreak";
 import ChallengesPreview from "./components/Challenges/ChallengesPreview";
 import GamifiedQuizPreview from "./components/GamifiedQuiz/GamifiedQuizPreview";
-import Walkthrough, { Align, Position } from "./components/Walkthrough/WalkThrough";
+import { HelpChat } from "./components/HelpCenter/HelpChat";
+import Walkthrough from "./components/Walkthrough/Walkthrough";
 import showToast from "./components/toast/toastService";
 import Toast from "./components/toast2/Toast";
+import InlineFeedbackPreview from "./components/InlineFeedback/Preview";
+import ModularPreview from "./components/Modules/ModulePreview/Preview";
+
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-9986f82d-cbd0-4923-bf9a-ea01b4795fa1";
 export const apiSecret =
@@ -81,6 +88,7 @@ const paymentBanefits = [
     notIncluded: [],
   },
 ];
+
 function App() {
   // Mocked function for getAnswers prop
 
@@ -97,15 +105,15 @@ function App() {
   const [isOpen, setIsOpen] = useState(true);
   const [answer, setAnswer] = useState([]);
 
-  // const CSGetstarted = new 
+  // const CSGetstarted = new
   return (
     <div
     // style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
     >
       <QuestProvider
-        apiKey={"k-ac38b717-eb62-41aa-83f4-7eef8d3ff9b5"}
-        apiSecret={''}
-        entityId={"e-e6cc0ded-bf40-4f1f-94a3-a9ba73be098f"}
+        apiKey={"k-fe5a805c-77ed-4cae-bd33-9591ebed2805"}
+        apiSecret={apiSecret}
+        entityId={"e-9850377b-f88f-4426-a2ac-56206c74655a"}
         featureFlags={{}}
         apiType="STAGING"
         themeConfig={
@@ -113,12 +121,14 @@ function App() {
             // backgroundColor: "black",
             // borderColor: "blue",
             // buttonColor: "green",
-            //  primaryColor: "green",
-            // secondaryColor: "blue",
+            //  primaryColor: "red",
+            // secondaryColor: "red",
             // fontFamily: "cursive"
           }
         }
       >
+        {/* <ModularPreview /> */}
+
         {/* <TutorialPreview online={true} /> */}
 
         {/* <SpinTheWheel
@@ -155,9 +165,17 @@ function App() {
           <button onClick={onDifferentTwo}>warning</button> */}
         {/* <ModalPreview/> */}
 
+        {/* <HelpHub
+          token={'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxMjIwMjIxMCwiZXhwIjoxNzEyODA3MDEwfQ.yCkWcD5yVykmqAmiRKrzdTmqVsptlfq2VPBO4eztNYY'} 
+          userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
+          /> */}
+
+        <HelpHubPreview online={true} />
+
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
         {/* <GamifiedQuizPreview online={true} /> */}
-
+        {/* <GamifiedQuizPreview online={true} /> */}
+        {/* <SurveyPreview online={true}/> */}
         {/* 
                 <HelpCenter
                     userId={userId}
@@ -171,14 +189,15 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-        <OnBoardingPreview online={true} />
 
+        {/* <OnBoardingPreview online={true} /> */}
 
         {/* <GetStartedPreview online={true} /> */}
 
         {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
 </Modal> */}
+        {/* <OnBoarding
         {/* <OnBoarding
   questId="q-daf9940a-c2fb-4762-adce-57b9b1fda08c"
   answer={answer}
@@ -233,12 +252,8 @@ function App() {
         <button onClick={() => Toast.info({ text: "This is a info message", position: 'bottom-center', autoClose: 1000, template: 2, description: "INFO" })}>Info</button>
         <button onClick={() => Toast.error({ text: "This is a error message", position: 'bottom-center', autoClose: 1000, template: 2, description: "Error" })}>Error</button>
         <button onClick={() => Toast.warning({ text: "This is a succes warning message", position: 'bottom-center', autoClose: 1000, template: 2, description: "WARNING" })}>Warning</button> */}
-        <FeedbackWorkflowPreview online={false} />
+        {/* <FeedbackWorkflowPreview online={true} /> */}
         {/* <ChallengesPreview online={true} /> */}
-
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus nam, ut modi reprehenderit architecto vero quasi debitis, praesentium nihil hic voluptatem, fugit assumenda. A suscipit natus pariatur nisi consectetur nulla voluptates corrupti voluptatem officiis alias eveniet doloribus eos veritatis, quam dolorem praesentium, velit assumenda iusto rerum totam repellendus laudantium ratione est illum. Dolorum qui ut beatae esse odit rerum! Culpa reiciendis facilis consequuntur harum nesciunt, veritatis consectetur incidunt in exercitationem velit, modi natus doloribus ipsa numquam aut. Quo, ipsam fuga consectetur doloremque nesciunt ullam quam expedita accusantium minima sed eum repellendus reprehenderit eos laborum voluptatum itaque numquam maxime quae exercitationem.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti vel iusto, perferendis voluptatum aliquid eaque temporibus similique commodi saepe quidem, obcaecati, fugit quisquam placeat a quos doloremque reiciendis ipsum perspiciatis cupiditate impedit nisi animi beatae nemo. Laboriosam rerum recusandae dignissimos minus? Sed perferendis dolor illo veritatis recusandae, nesciunt quo minima asperiores harum eaque, doloribus ipsum repellendus distinctio sequi delectus saepe magnam similique, omnis voluptatibus! Debitis nam eveniet doloremque perspiciatis sint numquam ipsum sunt aspernatur quam quas, deserunt iure deleniti aliquid minus culpa recusandae praesentium aliquam voluptates at inventore placeat in, corporis dolore! Optio tempora iusto obcaecati unde sequi excepturi dolorem, quae qui hic eaque esse assumenda, at error. Suscipit asperiores cum, corrupti adipisci vero minus laboriosam alias nobis mollitia? Neque, fuga dignissimos asperiores sequi, aut laudantium modi quae vel rerum ad optio, magnam ea alias tenetur ipsa obcaecati facilis nihil. Architecto, ad quo tempora sapiente distinctio non laboriosam laudantium numquam accusantium est neque maiores perferendis quia accusamus facere, reprehenderit mollitia provident? Voluptas accusamus quas laudantium qui, enim voluptates corporis fugiat ullam possimus magnam quo repellendus corrupti saepe eum repellat mollitia est sint nulla? Similique repellat laudantium vero soluta quaerat facilis consequatur quasi quis esse atque officia beatae tempora odit voluptas, nam architecto dolore, aperiam explicabo ducimus? Nulla laboriosam autem dolor eveniet atque error distinctio inventore earum, optio repellendus corporis laudantium animi suscipit voluptatibus ex nobis saepe veritatis ut modi natus enim culpa soluta commodi. Incidunt fugit officiis animi, saepe, alias ipsa a molestiae voluptates laborum commodi explicabo earum vel optio rem harum cupiditate voluptate, provident ducimus asperiores dignissimos illo sapiente. Repellendus nihil qui necessitatibus doloribus labore beatae. Quas iusto quisquam molestiae, accusamus dolorum tenetur obcaecati aliquid soluta nostrum placeat mollitia aliquam provident asperiores nisi nulla saepe eum rerum culpa repellendus! Id aut eaque maiores quam omnis maxime est consectetur ad, nemo sapiente, sit nesciunt corrupti porro iste nulla esse autem tempora facilis, aliquid doloribus? Necessitatibus sequi debitis totam quae consequatur rerum nam odio nemo autem, optio libero sint! Repellat pariatur nostrum, fugit dignissimos qui alias voluptatibus adipisci placeat sunt quibusdam nobis iste quae doloremque delectus itaque ex similique aliquid fugiat at, neque quaerat quas. Nam veniam velit, non quis repellendus aspernatur possimus voluptates esse eum facere quia fugiat iure repudiandae consectetur aperiam error laborum dicta laboriosam a at aliquam tempora tempore quibusdam dolorum! Tempora aliquam harum eos est blanditiis repellat rem quidem corporis mollitia nisi nihil, asperiores rerum natus? Consectetur dolores sunt iste magnam repellendus expedita voluptatum cumque, debitis atque autem. Accusamus debitis natus labore expedita excepturi, eius unde, optio architecto tenetur inventore dolor libero reprehenderit amet accusantium. Porro et delectus natus facilis dolore, deserunt, doloremque pariatur saepe praesentium doloribus modi rem mollitia? Vitae consectetur accusamus soluta quisquam, autem exercitationem, ea culpa deserunt, tempora commodi impedit officiis atque voluptates aliquid laborum expedita rem debitis quibusdam magni facere? Quo quia animi ex, magnam nostrum reprehenderit pariatur delectus at ipsam esse? Consectetur, quis magni illo voluptas qui totam veniam culpa iure fugiat harum voluptates repudiandae! Maiores consectetur aliquam rerum fugiat illum debitis!
-        {/* <FeedbackPreview online={false} /> */}
 
         {/* <ReferEarnPreview/> */}
 
@@ -288,6 +303,31 @@ function App() {
                       }
                     }}
                 ></QuestLogin> */}
+        {/* <DailyStreak
+                    token={token}
+                    userId={userId}
+                    metric='daily-visit'
+                    stepDetails={[
+                      {description:"This is the longest streak you’ve ever head1",title: "Confident reader",range: 3},
+                      {description:"This is the longest streak you’ve ever head2",title: "Responsible reader",range: 2},
+                      {description:"This is the longest streak you’ve ever head3",title: "Serious learner",range: 5},
+                      {description:"This is the longest streak you’ve ever head4",title: "Absolute reader",range: 3},
+                      {description:"This is the longest streak you’ve ever head5",title: "Professional reader",range: 1},
+                      
+                  ]} 
+                  // filledStreakImg=""
+                  styleConfig={{
+                    // IconBackground:{background:"#facdcd"},
+                    // IconColor:{color:"red"},
+                    // Form:{borderRadius:"1px"},
+                    // Count:{color:"red"},
+                    // Heading:{color:"orange"},
+                    // Description:{color:"green"},
+                    // Footer:{}
+                  }}
+                  
+                    /> */}
+        {/* <SreakPreview/> */}
 
         {/* <ShareArticle
                     bgColor=""
@@ -303,6 +343,7 @@ function App() {
 
         {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
         {/* <SreakPreview online /> */}
+        {/* <InlineFeedbackPreview online={false} /> */}
 
         {/* <Walkthrough
             isOpen={isOpen}
@@ -332,8 +373,9 @@ function App() {
         /> */}
 
 
+
       </QuestProvider>
-      < div style={{height: 1999}}/>
+      {/* < div style={{height: 1999}}/> */}
     </div>
   );
 }

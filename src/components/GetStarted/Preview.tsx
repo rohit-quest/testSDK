@@ -2,19 +2,13 @@ import { useState } from "react";
 import { QuestProvider } from "../QuestWrapper";
 import GetStarted from "./GetStarted";
 import GetStartedOff from "./OfflineComponent";
-// export const questId = 'q-6db8b881-faad-4860-acfa-c9b59f42a9bf';
-// export const apiKey = 'k-e6ec8094-6eef-4e80-a804-112a63607bf5'
-// export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
-// export const entityId = 'e-5768fd26-d226-4ac1-81e6-3c99427f3fb3'
-// export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxMjIwMjIxMCwiZXhwIjoxNzEyODA3MDEwfQ.yCkWcD5yVykmqAmiRKrzdTmqVsptlfq2VPBO4eztNYY'
-// export const userId = 'u-88350caa-4080-4505-a169-09f3f15e83b7'
 
-export const questId = 'q-ce583002-a614-40e3-bee0-00436b0f474d';
-export const apiKey = 'k-fe5a805c-77ed-4cae-bd33-9591ebed2805'
-export const apiSecret = 's-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42'
-export const entityId = 'e-9850377b-f88f-4426-a2ac-56206c74655a'
-export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMzg1MjEyOSwiZXhwIjoxNzE0NDU2OTI5fQ.yxm1cgS6bRwzuIr6SycJmEv52gXsVYSS7xi2TNa8lC8'
-export const userId = 'u-8268f5e1-f5a1-440c-a333-0f5578a73847'
+export const questId = 'q-9b0238cb-c673-421e-9790-63051d64f95f';
+export const apiKey = "k-e6ec8094-6eef-4e80-a804-112a63607bf5";
+export const apiSecret = "s-9503fd7a-8f44-4e5a-bf37-f5a023510b03606feb6c-15cb-4640-88a1-0addfba3b2ef";
+export const entityId = "e-5768fd26-d226-4ac1-81e6-3c99427f3fb3";
+export const userId = "u-88350caa-4080-4505-a169-09f3f15e83b7";
+export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxNTIyMTcyOSwiZXhwIjoxNzE1ODI2NTI5fQ.Pk5uMZsrn34PCabjZSOj5Kg-t-xdaZCLDnFb8hbJVNs'
 
 export default function GetStartedPreview({
   online = true,

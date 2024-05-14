@@ -43,7 +43,8 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    color: rgba(0, 0, 0, 0.74);
+    /* color: rgba(0, 0, 0, 0.74); */
+    color: var(--Neutral-Black-100, #939393);
     /* font-family: Figtree; */
     font-size: 12px;
     font-style: normal;
@@ -53,7 +54,7 @@
 
 .q_mult_choice_option_2_select {
     border-radius: 15px;
-    padding: 5px 16px;
+    padding: 2px 16px;
     display: flex;
     justify-content: center;
     align-items: center;

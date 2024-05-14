@@ -78,7 +78,23 @@ const HelphubSvg = (props: any) => {
             </svg>
           );
         }
-
+      case "BackButton":
+        return (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M12.9067 3.6921C13.1688 3.91674 13.1992 4.3113 12.9745 4.57338L8.32317 9.99997L12.9745 15.4266C13.1992 15.6886 13.1688 16.0832 12.9067 16.3078C12.6447 16.5325 12.2501 16.5021 12.0255 16.24L7.02546 10.4067C6.82485 10.1727 6.82485 9.82728 7.02546 9.59323L12.0255 3.75989C12.2501 3.49781 12.6447 3.46746 12.9067 3.6921Z"
+              fill="#B9B9B9"
+            />
+          </svg>
+        );
       case "Help":
         if (props.primaryColor !== "#9035FF") {
           return (
