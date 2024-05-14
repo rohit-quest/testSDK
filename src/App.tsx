@@ -170,12 +170,12 @@ function App() {
           userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
           /> */}
 
-        <HelpHubPreview online={true} />
+        {/* <HelpHubPreview online={true} /> */}
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
         {/* <GamifiedQuizPreview online={true} /> */}
         {/* <GamifiedQuizPreview online={true} /> */}
-        {/* <SurveyPreview online={true}/> */}
+        {/* <SurveyPreview online={false}/> */}
         {/* 
                 <HelpCenter
                     userId={userId}
@@ -190,7 +190,7 @@ function App() {
                 // descriptioin="this is descripiton"
                 /> */}
 
-        {/* <OnBoardingPreview online={true} /> */}
+         {/* <OnBoardingPreview online={false} />  */}
 
         {/* <GetStartedPreview online={true} /> */}
 
@@ -345,20 +345,20 @@ function App() {
         {/* <SreakPreview online /> */}
         {/* <InlineFeedbackPreview online={false} /> */}
 
-        {/* <Walkthrough
+        <Walkthrough
             isOpen={isOpen}
             id="app"
             steps={[
               {
                 selector: '.gs-single-card-dropDown',
                 data: {title: 'First Tab', description: 'Click on this'},
-                position: Position.RIGHT,
-                align: Align.END
+                // position: Position.RIGHT,
+                // align: Align.END
               },
               {
                 selector: '.gs-heading-div',
                 data: {title: 'Second Tab', description: 'Click on this'},
-                align: Align.CENTER
+                // align: Align.CENTER
               }
             ]}
             styleConfig={{
@@ -370,7 +370,7 @@ function App() {
             onRequestClose={() => setIsOpen(false)}
             onAfterOpen={() => document.documentElement.style.overflow = 'hidden'}
             onBeforeClose={() => document.documentElement.style.overflow = ''}
-        />*/}
+        />
       </QuestProvider>
       {/* < div style={{height: 1999}}/> */}
     </div>

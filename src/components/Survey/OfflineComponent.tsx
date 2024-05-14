@@ -381,14 +381,13 @@ const SurveyOffline = ({
               className="q_onb_singlehoiceOne_lebel"
               key={id}
               onClick={(e) => handleUpdate(e, criteriaId, option, "radio")}
-              style={{
-                border:
-                  answer[criteriaId] == option
-                    ? // ? "1px solid var(--Primary-Grape-300, #bf8aff)"
-                      // : "1px solid var(--Neutral-White-300, #ececec)",
-                      "1px solid var(--Primary-Grape-300, #bf8aff)"
-                    : "1px solid var(--Neutral-White-300, #ececec)",
-              }}
+              // style={{
+              //   border:
+              //     answer[criteriaId] == option
+              //       ? 
+              //         "1px solid var(--Primary-Grape-300, #bf8aff)"
+              //       : "1px solid var(--Neutral-White-300, #ececec)",
+              // }}
             >
               <img
                 src={
