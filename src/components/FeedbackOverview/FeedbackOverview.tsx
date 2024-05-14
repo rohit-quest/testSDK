@@ -176,13 +176,6 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   ContactUs,
   PrimaryButtonText = "Submit",
   SecondaryButtonText = "Go to home!",
-  StarSize = 32,
-  descriptions = {
-    "General Feedback": "Welcome back, Please complete your details",
-    "Report a Bug": "Describe your issue",
-    "Contact us": "Invite other admins and moderators",
-    "Request a Feature": "How can we make it better",
-  },
   iconColor = "#939393",
   styleConfig = {},
   showFooter = true,
@@ -312,9 +305,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     let externalUserId = cookies.get("externalUserId");
     let questUserId = cookies.get("questUserId");
     let questUserToken = cookies.get("questUserToken");
-    let personalUserId = JSON.parse(
-      localStorage.getItem("persana-user") || "{}"
-    );
+    
     if (
       !!externalUserId &&
       !!questUserId &&
