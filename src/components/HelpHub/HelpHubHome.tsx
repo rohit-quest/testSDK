@@ -196,7 +196,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
           </div>
 
           <div className={"SendMessageButtonCont"}>
-            <div className={"SendMessageButtonImagesCont"}>
+            {/* <div className={"SendMessageButtonImagesCont"}>
               <img src={Man1} alt="" />
               <img
                 src={Woman1}
@@ -219,7 +219,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
                   marginLeft: "-14px",
                 }}
               />
-            </div>
+            </div> */}
             
             <div
               className={"SendMessageButton"}

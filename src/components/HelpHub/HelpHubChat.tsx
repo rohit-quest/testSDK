@@ -66,7 +66,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
   const [chat, setChat] = useState<MessageTypes[]>([]);
-
+  const [filterChat, setFilterChat] = useState<MessageTypes[]>([]);
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState<string>("");
@@ -83,6 +83,12 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   const [ifSatisfied, setIfSatisfied] = useState<boolean>(false);
   const [searchData, setSearchData] = useState<string | number>("");
   const [disableSendMessageBtn,setDisableSendMessageBtn]=useState<boolean>(false);
+  const messageInputRef = useRef<HTMLInputElement>(null);
+
+
+  useEffect(() => {
+    messageInputRef.current?.focus();
+  }, [chat, disableSendMessageBtn])
 
   const storeLastChat = (chatHistory: MessageTypes[]) => {
     let lastSeenRecord: { [key: string]: string } = JSON.parse(
@@ -121,6 +127,14 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     }
   }
 
+  const filterByLastMessage = (chatData: MessageTypes[]) => {
+    let data = chatData.sort((a, b) => {
+      return new Date(b?.conversations?.timestamp).getTime() - new Date(a?.conversations?.timestamp).getTime();
+    });
+
+    return data;
+  }
+
   const closeChatFunction = async() => {
     let closeChatResponse = await closeChat(
       BACKEND_URL,
@@ -145,7 +159,8 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
             return ele;
           }
         }) || [];
-      setChat(updateChat);
+      setChat(filterByLastMessage(updateChat));
+      setFilterChat(filterByLastMessage(updateChat));
       setOnlyAdminReply(false);
       setData([]);
       setAskSatisfaction(false);
@@ -193,7 +208,8 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
               return ele;
             }
           }) || [];
-        setChat(updateChat);
+        setChat(filterByLastMessage(updateChat));
+        setFilterChat(filterByLastMessage(updateChat));
         setOnlyAdminReply(true);
       }
     }
@@ -209,6 +225,10 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   async function sendMessageFunc (message: string) {
     setSenderMessageLoading(true);
     setDisableSendMessageBtn(true);
+    setAskSatisfaction(false);
+    setNotSatisfiedQuestion(false);
+    setAdminMsg(false);
+    setIfSatisfied(false);
     let userChat: Conversation = {
       senderRole: "USER",
       _id: new Date().toISOString(),
@@ -229,7 +249,8 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
           return ele;
         }
       }) || [];
-      setChat(updateLastChat);
+      setChat(filterByLastMessage(updateLastChat));
+      setFilterChat(filterByLastMessage(updateLastChat));
       storeLastChat(updateLastChat || []);
     }
 
@@ -260,12 +281,16 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
             return {
               ...ele,
               conversations: sendMessageResponse?.data?.message,
+              ...(!!sendMessageResponse?.data?.conversationData?.title && !title && {
+                title: sendMessageResponse?.data?.conversationData?.title,
+              })
             };
           } else {
             return ele;
           }
         }) || [];
 
+      
       if (!findData) {
         let newChat = sendMessageResponse?.data?.conversationData;
         newChat.conversations = sendMessageResponse?.data?.message;
@@ -273,22 +298,23 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
       }
     }
 
-    if (!!sendMessageResponse?.data?.conversationData?.title && !title) {
-      setTitle(sendMessageResponse?.data?.conversationData?.title);
-      updateLastChat =
-        chat?.map((ele) => {
-          if (ele.conversationId == selectedConversationId) {
-            return {
-              ...ele,
-              title: sendMessageResponse?.data?.conversationData?.title,
-            };
-          } else {
-            return ele;
-          }
-        }) || [];
-    }
+    // if (!!sendMessageResponse?.data?.conversationData?.title && !title) {
+    //   setTitle(sendMessageResponse?.data?.conversationData?.title);
+    //   updateLastChat =
+    //     chat?.map((ele) => {
+    //       if (ele.conversationId == selectedConversationId) {
+    //         return {
+    //           ...ele,
+    //           title: sendMessageResponse?.data?.conversationData?.title,
+    //         };
+    //       } else {
+    //         return ele;
+    //       }
+    //     }) || [];
+    // }
 
-    setChat(updateLastChat);
+    setChat(filterByLastMessage(updateLastChat));
+    setFilterChat(filterByLastMessage(updateLastChat));
     storeLastChat(updateLastChat || []);
     setSenderMessageLoading((prev) => !prev);
     setDisableSendMessageBtn((prev) => !prev);
@@ -297,17 +323,19 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
       localStorage.getItem("askSatisfaction") || "{}"
     );
     
-    if (!askSatisfaction[selectedConversationId]) {
-      askSatisfaction[selectedConversationId] = 1;
-    } else {
-      askSatisfaction[selectedConversationId] += 1;
-    }
+    if (selectedConversationId != "") {
+      if (!askSatisfaction[selectedConversationId]) {
+        askSatisfaction[selectedConversationId] = 1;
+      } else {
+        askSatisfaction[selectedConversationId] += 1;
+      }
 
-    if (askSatisfaction[selectedConversationId] >= 3) {
-      setAskSatisfaction(true);
-      askSatisfaction[selectedConversationId] = 0;
+      if (askSatisfaction[selectedConversationId] >= 3) {
+        setAskSatisfaction(true);
+        askSatisfaction[selectedConversationId] = 0;
+      }
+      localStorage.setItem("askSatisfaction", JSON.stringify(askSatisfaction));
     }
-    localStorage.setItem("askSatisfaction", JSON.stringify(askSatisfaction));
   };
 
   const handleSave = () => {
@@ -399,7 +427,8 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
         uniqueEmailId,
         apiType
       );
-      setChat(getResult?.data);
+      setChat(filterByLastMessage(getResult?.data));
+      setFilterChat(filterByLastMessage(getResult?.data));
       setFetchData(false);
     }
   };
@@ -419,12 +448,20 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
 
   useEffect(() => {
     let data = chat.filter((value: any) => {
-      return value?.question
+      return value?.title
         ?.toLowerCase()
         .includes(searchData?.toString().toLowerCase());
     });
-    // setFilterData(data);
-  }, [ searchData]);
+    setFilterChat(filterByLastMessage(data));
+  }, [searchData]);
+
+  function formatDate(dateString: string) {
+    const options: { [key: string]: string } = { month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+    const date = new Date(dateString);
+    const formattedDate = date.toLocaleDateString('en-US', options);
+    const formattedTime = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    return formattedDate;
+  }
 
   return (
     <>
@@ -506,7 +543,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                   <div className="q-helphub-chats-section">
                     {/* only one chat */}
 
-                    {chat?.map((value: MessageTypes, index: number) => {
+                    {filterChat?.map((value: MessageTypes, index: number) => {
                       return (
                         <div
                           className="q-helphub-chat-detail"
@@ -532,9 +569,10 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                             src={entityImage || SenderImg}
                             alt=""
                             className="q-helphub-chat-sender-profile"
+                            style={{opacity: value?.isClosed == true ? 0.5 : 1}}
                           />
 
-                          <div className="q-helphub-chat-message">
+                          <div className="q-helphub-chat-message" style={{opacity: value?.isClosed == true ? 0.5 : 1}}>
                             <div
                               className="q-helphub-chat-sender-name"
                               style={{
@@ -554,9 +592,12 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                               {value?.conversations?.content}
                             </div>
                           </div>
-
+                          { value?.isClosed == true &&
+                            <p className="q-helphub-closed-chat">CLOSED</p>
+                          }
                           <button
                             className="q-helphub-chat-btn"
+                            style={{opacity: value?.isClosed == true ? 0.5 : 1}}
                           >
                             <img src={OpenSectionButton} alt="" />
                           </button>
@@ -726,6 +767,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                         gap: "8px",
                         marginBottom: "12px",
                       }}
+                      key={index}
                     >
                       {message?.senderRole === "ASSISTANT" && (
                         <div className="chat-profile-img-receiver">
@@ -746,22 +788,33 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
 
                       <div
                         key={index}
-                        className={`message ${
-                          message?.senderRole === "USER" ? "sender-role" : "receiver-role"
-                        }`}
+                        style={{width: "100%"}}
                       >
-                        {message.content.includes(
-                          "https://quest-media-storage-bucket"
-                        ) ||
-                        message.content.includes(
-                          "https://pin.questprotocol.xyz/ipfs"
-                        ) ? (
-                          <div className="chat-coversion-img">
-                            <img src={message.content} alt="" />
-                          </div>
-                        ) : (
-                          <>{formatMessage(message.content)}</>
-                        )}
+                        <div
+                          className={`message ${
+                            message?.senderRole === "USER" ? "sender-role" : "receiver-role"
+                          }`}
+                        >
+                          {message.content.includes(
+                            "https://quest-media-storage-bucket"
+                          ) ||
+                          message.content.includes(
+                            "https://pin.questprotocol.xyz/ipfs"
+                          ) ? (
+                            <div className="chat-coversion-img">
+                              <img src={message.content} alt="" />
+                            </div>
+                          ) : (
+                            <>{formatMessage(message.content)}</>
+                          )}
+                        </div>
+                        <div
+                          className={`message ${
+                            message?.senderRole === "USER" ? "sender-role sender-time" : "receiver-role sender-time"
+                          }`}
+                        >
+                          {formatDate(message.timestamp)}
+                        </div>
                       </div>
 
                       {message?.senderRole === "USER" && (
@@ -845,6 +898,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                 <input
                   className={`${disableSendMessageBtn?"send-message-chat-btn-disable":""} q-chat-personal-container-footer-input`}
                   disabled={disableSendMessageBtn}
+                  ref={messageInputRef}
                   onKeyUp={(e) => {
                     if (e.key === "Enter") {
                       handleSave();

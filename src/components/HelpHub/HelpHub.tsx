@@ -328,6 +328,7 @@ const HelpHub = (props: HelpHubProps) => {
           style={{
             height: position === "SIDEBAR" ? "100vh" : styleConfig?.Main?.height,
             width: styleConfig?.Main?.width,
+            boxShadow: styleConfig?.Main?.boxShadow,
           }}
           ref={box_ref}
         >
