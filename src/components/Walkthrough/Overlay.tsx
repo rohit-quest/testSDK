@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react'
+import { CSSProperties } from 'react'
 import { ClientBoundingRect } from 'tour-navigator/lib/TourNavigator/types';
 
 interface OverlayProps extends ClientBoundingRect{
