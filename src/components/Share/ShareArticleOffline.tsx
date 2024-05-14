@@ -3,24 +3,28 @@ import "./sharearticle.css";
 import { telegramPng, twitterSvg, whatsappSvg } from "../../assets/images";
 import { shareOnPlatform } from "../Refer/Response";
 import axios from "axios";
-import config from "../../config";
 import QuestContext from "../QuestWrapper.tsx";
 import { QuestArray, Metadata } from "../HelpCenter/Svg.tsx";
 import General from "../../general.ts";
-import X from './x.png'
+import X from "./x.png";
 
 export interface articleProps {
   heading?: string;
   description?: String;
+  bgColor?: string;
+  headingColor?: string;
+  textColor?: string;
   token: string;
   questId: string;
   userId: string;
   enableVariation?: boolean;
-  styleConfig?:{
+  linkActionUrl?: string;
+  offlineFormData?: any;
+  styleConfig?: {
     Form?: CSSProperties;
     Heading?: CSSProperties;
     Description?: CSSProperties;
-  }
+  };
 }
 
 type CustomHeaders = {
@@ -52,46 +56,41 @@ async function getResponse(
   }
 }
 
-const ShareArticle: React.FC<articleProps> = ({
+const ShareArticleOffline: React.FC<articleProps> = ({
+  bgColor = "",
   description = "If you like this article share it with your friends",
   heading = "Share this article",
+  headingColor = "",
+  textColor = "",
   questId = "",
   token = "",
   userId = "",
   enableVariation = false,
-  styleConfig
+  linkActionUrl,
+  offlineFormData,
+  styleConfig,
 }: articleProps) => {
-  const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } =
-    useContext(QuestContext.Context);
-  const [shareLink, setLink] = useState("");
-  // const { apiKey, apiSecret, entityId ,apiType} = useContext(QuestContext.Context);
-  let BACKEND_URL =
-    apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
+  const { apiType, themeConfig } = useContext(QuestContext.Context);
+  const [shareLink, setLink] = useState<string | undefined>("");
+
   let GeneralFunctions = new General("mixpanel", apiType);
   useEffect(() => {
     GeneralFunctions.fireTrackingEvent(
-      "quest_share_article_loaded",
-      "share_article"
+      "quest_share_article_offline_loaded",
+      "share_article_offline"
     );
-
-    getResponse(
-      { apiKey, apisecret: apiSecret, token, userId },
-      entityId,
-      questId,
-      apiType,
-      enableVariation,
-      BACKEND_URL
-    ).then((response) => {
-      setLink(response.metadata.linkActionUrl);
-    });
+    // setLink(linkActionUrl);
   }, []);
+
+  //   useEffect(())
 
   return (
     <div
       className="q_share_article"
       style={{
-        background: styleConfig?.Form?.background || themeConfig?.backgroundColor,
-        ...styleConfig
+        background:
+          styleConfig?.Form?.background || themeConfig?.backgroundColor,
+        ...styleConfig,
       }}
     >
       <div className="q_article_div">
@@ -101,7 +100,7 @@ const ShareArticle: React.FC<articleProps> = ({
             style={{
               color: styleConfig?.Heading?.color || themeConfig?.primaryColor,
               fontFamily: themeConfig?.fontFamily,
-              ...styleConfig?.Heading
+              ...styleConfig?.Heading,
             }}
           >
             {heading}
@@ -109,9 +108,10 @@ const ShareArticle: React.FC<articleProps> = ({
           <div
             className="q_article_desc"
             style={{
-              color: styleConfig?.Description?.color || themeConfig?.secondaryColor,
+              color:
+                styleConfig?.Description?.color || themeConfig?.secondaryColor,
               fontFamily: themeConfig?.fontFamily,
-              ...styleConfig?.Description
+              ...styleConfig?.Description,
             }}
           >
             {description}
@@ -120,7 +120,10 @@ const ShareArticle: React.FC<articleProps> = ({
         <div className="q_article_dn">
           <div
             className="q_article_wit"
-            style={{ color: styleConfig?.Description?.color, fontFamily: themeConfig?.fontFamily }}
+            style={{
+              color: styleConfig?.Description?.color,
+              fontFamily: themeConfig?.fontFamily,
+            }}
           >
             Share with
           </div>
@@ -132,7 +135,7 @@ const ShareArticle: React.FC<articleProps> = ({
                   "quest_share_article_twitter_clicked",
                   "share_article"
                 );
-                shareOnPlatform(shareLink, "twitter");
+                shareOnPlatform(offlineFormData[0]?.linkUrl, "twitter");
               }}
               src={X}
               alt="Twitter"
@@ -145,7 +148,7 @@ const ShareArticle: React.FC<articleProps> = ({
                   "quest_share_article_whatsapp_clicked",
                   "share_article"
                 );
-                shareOnPlatform(shareLink, "whatsapp");
+                shareOnPlatform(offlineFormData[0]?.linkUrl, "whatsapp");
               }}
               alt="Whatsapp"
             />
@@ -156,7 +159,7 @@ const ShareArticle: React.FC<articleProps> = ({
                   "quest_share_article_telegram_clicked",
                   "share_article"
                 );
-                shareOnPlatform(shareLink, "telegram");
+                shareOnPlatform(offlineFormData[0]?.linkUrl, "telegram");
               }}
               src={telegramPng}
               width="24px"
@@ -169,4 +172,4 @@ const ShareArticle: React.FC<articleProps> = ({
   );
 };
 
-export default ShareArticle;
+export default ShareArticleOffline;

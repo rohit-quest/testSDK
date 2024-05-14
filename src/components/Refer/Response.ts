@@ -17,7 +17,7 @@ export interface referProp {
 }
 
 
-export const shareOnPlatform = (text: string, platform: "twitter" | "telegram" | "whatsapp"): void => {
+export const shareOnPlatform = (text: string | undefined, platform: "twitter" | "telegram" | "whatsapp"): void => {
     const platforms = {
         twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,
         telegram: `https://t.me/share/url?url=${encodeURIComponent(text)}`,
