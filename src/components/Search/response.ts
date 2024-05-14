@@ -40,14 +40,15 @@ interface Quest {
 }
 
 export type QuestArray = Quest[];
-export async function getResponse(headers: CustomHeaders, entityId: string, questId: string,BACKEND_URL): Promise<any> {
-    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${headers.userId}`;
+export async function getResponse(headers: CustomHeaders, entityId: string, questId: string,BACKEND_URL, enableVariation: boolean): Promise<any> {
+    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${headers.userId}&getVariation=${enableVariation}`;
 
     return axios.get(request, { headers: { ...headers } })
         .then((res) => {
             if (!!res.data.eligibilityData) {
                 const data = res.data.eligibilityData as QuestArray
                 const formatData = data.map(e => ({
+
                     text: e.data.metadata.linkActionName,
                     link: e.data.metadata.linkActionUrl,
                     description: e.data.metadata.discription || "Provide the required information",
@@ -56,7 +57,7 @@ export async function getResponse(headers: CustomHeaders, entityId: string, ques
                     longDescription: e.data.metadata.longDescription || "No more digging through Dropbox and Google Drive. Always know where to find “the latest,” so you can stay in your design flow."
                 }))
                 // return [...formatData.map(e=>({...e,resultType: "action"})),...formatData.map(e=>({...e,resultType: "command"}))]
-                return formatData;
+                return {formatData, questThemeData:res?.data?.data?.uiProps?.questThemeData};
             }
             return []
         })

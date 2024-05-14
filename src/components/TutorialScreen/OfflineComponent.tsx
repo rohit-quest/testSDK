@@ -26,6 +26,27 @@ interface TutorialStep {
   status?: boolean
 }
 
+
+type BrandTheme = {
+  accentColor?: string;
+  background?: string;
+  borderRadius?: string;
+  buttonColor?: string;
+  contentColor?: string;
+  fontFamily?: string;
+  logo?: string;
+  primaryColor?: string;
+  secondaryColor?: string;
+  tertiaryColor?: string;
+  titleColor?: string;
+};
+interface QuestThemeData {
+  accentColor: string;
+  theme: string;
+  borderRadius: string;
+  buttonColor: string;
+  images: string[];
+}
 interface TutorialProps {
   heading: string;
   subheading: string;
@@ -42,6 +63,8 @@ interface TutorialProps {
   // uniqueEmailId?: string;
   iconColor?: string;
   onLinkTrigger?: (link: string) => void
+  QuestThemeData?: QuestThemeData;
+  BrandTheme?: BrandTheme;
   offlineFormatData?: TutorialStep[];
   styleConfig?: {
     Form?: CSSProperties,
@@ -70,6 +93,8 @@ const OfflineComponent: React.FC<TutorialProps> = ({
   onLinkTrigger = link => { window.open(link, 'smallWindow', 'width=500,height=500'); },
   styleConfig,
   offlineFormatData = [],
+  QuestThemeData,
+  BrandTheme,
   showFooter = true
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -205,7 +230,7 @@ const OfflineComponent: React.FC<TutorialProps> = ({
   return (
     <div className="q-tutorial-cont"
       style={{
-        background: styleConfig?.Form?.backgroundColor || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", ...styleConfig?.Form
+        background: styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif", borderRadius: styleConfig?.Form?.borderRadius || QuestThemeData?.borderRadius || BrandTheme?.borderRadius, ...styleConfig?.Form
       }}
     >
       <TopBar
@@ -214,8 +239,8 @@ const OfflineComponent: React.FC<TutorialProps> = ({
         onClose={() => { }}
         description={subheading}
         style={{
-          headingStyle: { color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading },
-          descriptionStyle: { color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description },
+          headingStyle: { color: styleConfig?.Heading?.color ||   BrandTheme?.titleColor || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Heading },
+          descriptionStyle: { color: styleConfig?.Description?.color || BrandTheme?.secondaryColor || themeConfig?.secondaryColor, ...styleConfig?.Description },
           topbarStyle: styleConfig?.TopBar
         }}
       />
@@ -257,15 +282,15 @@ const OfflineComponent: React.FC<TutorialProps> = ({
               className="q_tutorial_box_content"
               ref={(ref) => ref && handleStepLoad(index, ref.offsetHeight)}
             >
-              <div className="q_tut_step" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>STEP {index + 1}</div>
-              <div className="q_tut_box_head" style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor }}>{step.title}</div>
-              <div className="q_tut_box_desc" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor }}>{step.subheading}</div>
+              <div className="q_tut_step" style={{ color: styleConfig?.Description?.color || BrandTheme?.secondaryColor || themeConfig?.secondaryColor }}>STEP {index + 1}</div>
+              <div className="q_tut_box_head" style={{ color: styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor }}>{step.title}</div>
+              <div className="q_tut_box_desc" style={{ color: styleConfig?.Description?.color || BrandTheme?.secondaryColor || themeConfig?.secondaryColor }}>{step.subheading}</div>
             </div>
           </div>
         ))}
         </div>
       {/* </div> */}
-      {showFooter &&   <QuestLabs style={styleConfig?.Footer} />}
+      {showFooter &&     <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />}
     </div>
   );
 };
