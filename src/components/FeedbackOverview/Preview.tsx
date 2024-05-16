@@ -138,31 +138,31 @@ export default function FeedbackWorkflowPreview({
         titleColor: "",
       }}
       contactUrl="https://calendly.com/sriya-persana/30min"
-      // GeneralFeedback={{
-      //     heading: "General Fee",
-      //     description: "Give general feedsdasdasdback on this page",
-      //     formHeading: "General Feedbackasddffd",
-      //     formDescription: "Welcome back,sdfsdf Please complete your details",
-      //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
-      // }}
-      // RequestFeature={{
-      //     heading: "Request a Featureqwqewqewqe",
-      //     description: "How can we msdsfdsdfake it better",
-      //     formHeading: "Request a Feature",
-      //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
-      // }}
-      // ReportBug={{
-      //     heading: "Reportasdasd a Bug",
-      //     description: "Describazsdasde your issue",
-      //     formHeading: "Report wewea Bug",
-      //     formDescription: "Describe yosddffdur issue",
-      //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
-      // }}
-      // ContactUs={{
-      //     heading: "Contacasasdt us",
-      //     description: "Invite oasasdasdher admins and moderators",
-      //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
-      // }}
+      GeneralFeedback={{
+          heading: "General Fee",
+          description: "Give general feedsdasdasdback on this page",
+          formHeading: "General Feedbackasddffd",
+          formDescription: "Welcome back,sdfsdf Please complete your details",
+          // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+      }}
+      RequestFeature={{
+          heading: "Request a Featureqwqewqewqe",
+          description: "How can we msdsfdsdfake it better",
+          formHeading: "Request a Feature",
+          // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+      }}
+      ReportBug={{
+          heading: "Reportasdasd a Bug",
+          description: "Describazsdasde your issue",
+          formHeading: "Report wewea Bug",
+          formDescription: "Describe yosddffdur issue",
+          // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+      }}
+      ContactUs={{
+          heading: "Contacasasdt us",
+          description: "Invite oasasdasdher admins and moderators",
+          // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+      }}
       offlineFormData={[
         [
           {

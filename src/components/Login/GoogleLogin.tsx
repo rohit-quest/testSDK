@@ -33,7 +33,11 @@ interface GoogleLoginProps {
     PrimaryButton?: CSSProperties;
     SecondaryButton?: CSSProperties;
     Form?: CSSProperties;
-    Footer?: CSSProperties;
+    Footer?: {
+      FooterStyle?: CSSProperties;
+      FooterText?: CSSProperties;
+      FooterIcon?: CSSProperties;
+    };
     IconStyle?: {
       BorderColor?: string
       Background?: string;
