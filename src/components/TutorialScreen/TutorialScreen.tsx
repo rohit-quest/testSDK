@@ -13,7 +13,7 @@ interface TutorialStep {
   title: string;
   url: string;
   subheading?: string;
-  criteriaId?: string;
+  actionId?: string;
   status?: boolean
 }
 
@@ -31,7 +31,7 @@ interface TutorialProps {
   isOpen?: boolean;
   onClose?: Function;
   showFooter?: boolean;
-  enableVariation?: boolean;
+  variation?: string;
 }
 
 const Tutorial: React.FC<TutorialProps> = ({
@@ -47,7 +47,7 @@ const Tutorial: React.FC<TutorialProps> = ({
   textColor,
   isOpen = true,
   showFooter = true,
-  enableVariation = false,
+  variation,
   onClose = () => { }
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -56,6 +56,7 @@ const Tutorial: React.FC<TutorialProps> = ({
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
   const [gradient, setGradient] = useState<boolean>(false);
   const [showLoader, setShowLoader] = useState<boolean>(false);
+  const [campaignVariationId, setCampaignVariationId] = useState('')
   const [hoverStates, setHoverStates] = useState(
     Array(formdata.length).fill(true)
   );
@@ -69,10 +70,17 @@ const Tutorial: React.FC<TutorialProps> = ({
       token: token,
     };
 
+
     const json = {
-      criteriaId: id,
-    };
-    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}&getVariation=${enableVariation}`;
+      actions: [
+        {
+          answers: [],
+          actionId: id
+        }
+      ],
+      campaignVariationId
+    }
+    const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${questId}/verify`;
 
     setShowLoader(true);
     axios
@@ -81,7 +89,7 @@ const Tutorial: React.FC<TutorialProps> = ({
         if (response.data.success) {
           window.open(url, 'smallWindow', 'width=500,height=500');
           const filterData = formdata.map((item) => {
-            if (!item.status && item.criteriaId == id) {
+            if (!item.status && item.actionId == id) {
               item['status'] = true
               setCompletedSteps((prevSteps) => [...prevSteps, currentStep]);
             }
@@ -147,26 +155,31 @@ const Tutorial: React.FC<TutorialProps> = ({
       );
     }
     if (entityId) {
+      let params = new URLSearchParams()
+      params.set('platform', 'REACT')
+      if(variation) params.set('variation', variation)
+
       const headers = {
         apiKey: apiKey,
         apisecret: apiSecret,
         userId: userId,
         token: token,
       };
-      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}&getVariation=${enableVariation}`;
+      const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${questId}?${params.toString()}`;
 
       axios.get(request, { headers: headers }).then((res) => {
-        let response = res.data;
-        let criterias = response?.eligibilityData?.map((criteria: any) => {
+        let response = res.data.data;
+        let actions = response?.actions?.map((action: any) => {
           return {
-            type: criteria?.data?.criteriaType,
-            title: criteria?.data?.metadata?.linkActionName,
-            url: criteria?.data?.metadata?.linkActionUrl,
-            criteriaId: criteria?.data?.criteriaId,
+            type: action?.actionType,
+            title: action?.title,
+            url: action?.metadata?.link,
+            actionId: action?.actionId,
           };
         });
-        criterias = Array.isArray(criterias) ? criterias : [];
-        setFormdata([...criterias]);
+        actions = Array.isArray(actions) ? actions : [];
+        setFormdata([...actions]);
+        setCampaignVariationId(response.campaignVariationId)
       });
     }
   }, []);
@@ -321,7 +334,7 @@ const Tutorial: React.FC<TutorialProps> = ({
                       )}
                     </div>
                     <div
-                      onClick={() => handleNextStep(step.criteriaId, step.url)}
+                      onClick={() => handleNextStep(step.actionId, step.url)}
                       onMouseEnter={() => handleHover(index, true)}
                       onMouseLeave={() => handleHover(index, false)}
                       className="q-tut-step"

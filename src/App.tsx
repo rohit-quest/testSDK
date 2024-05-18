@@ -3,12 +3,13 @@ import { QuestProvider } from "./components/QuestWrapper";
 import QuestLogin from "./components/Login/Login";
 import { answer } from "./components/QuestForm/response";
 import { HelpCenter } from "./components/HelpCenter/HelpCenter";
-import { ReferEarn, ReferShare } from "./components/Refer/ReferEarn";
+import { ReferEarn as ReferEarn_, ReferShare } from "./components/Refer/ReferEarn";
 // import { showToast } from "./components/toast/toastService";
 import { QuestForm } from "./components/QuestForm/index";
 import Feedback from "./components/Survey/Feedback";
 import FeedbackWorkflow from "./components/FeedbackOverview/FeedbackOverview";
-import Tutorial from "./components/TutorialScreen/TutorialScreen";
+import Tutorial_ from "./components/TutorialScreen/TutorialScreen";
+import Tutorial from "./components/TutorialScreen/Tutorial";
 import { confetti } from "./components/Confetti/confetti";
 import GetStarted from "./components/GetStarted/GetStarted";
 import ShareArticle from "./components/Share/ShareArticle";
@@ -50,6 +51,9 @@ import Survey from "./components/Survey/Survey";
 import Search from "./components/Search/Search";
 import InlineFeedback from "./components/InlineFeedback/InlineFeedback";
 import LeaderBoard from "./components/Leaderboard/LeaderBoard";
+import { Referral } from './components/expansion/ReferEarn'
+import GamifiedQuiz from "./components/GamifiedQuiz/GamifiedQuiz";
+import { CrossSelling } from "./components/expansion/CrossSelling";
 
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-9986f82d-cbd0-4923-bf9a-ea01b4795fa1";
@@ -109,6 +113,7 @@ function App() {
   const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const [answer, setAnswer] = useState([]);
+  const [questions, setQuestions] = useState(0)
 
   // const CSGetstarted = new
 
@@ -135,6 +140,8 @@ function App() {
           }
         }
       >
+        
+        {/* ------------------- API v2 Test Started -------------------  */}
         {/* <Survey
           questId="c-91e2258c-a3e0-4ea1-97d0-184a74153547"
           token={token}
@@ -376,7 +383,7 @@ function App() {
             ProgressBarColor: {},
           }}
         /> */}
-        {/* <ReferEarn
+        {/* <ReferEarn_
           questId="c-3a4276f6-fb60-47e8-9e60-092329c23b2e"
           token={token}
           userId={userId}
@@ -384,14 +391,206 @@ function App() {
           isOpen={isOpen}
           heading="Copy"
       /> */}
-
-      <ShareArticle
+      {/* <Referral
+        questId="c-3a4276f6-fb60-47e8-9e60-092329c23b2e"
+        token={token}
+        userId={userId}
+        showFooter={true}
+        styleConfig={{
+          Form: {},
+          Heading: {},
+          Description: {},
+          Input: {},
+          Label: {},
+          TextArea: {},
+          PrimaryButton: {},
+          SecondaryButton: {},
+          Modal: {},
+          Footer: {},
+          Icon: {},
+        }}
+      /> */}
+      {/* <ShareArticle
           questId="c-b0578d03-a8ab-49a4-a234-110eae19f305"
           token={token}
           userId={userId}
           description="If you like this article share it with your friends"
           heading="Share this article"
+        /> */}
+
+        {/* <GetStarted
+          userId={userId}
+          token={token}
+          questId="c-f43d309e-f6ed-483c-8872-bdb7b41548fd"
+          template={1}
+          headingText="Quickstart Guide"
+          descriptionText="Get started with Quest and explore how Quest can take you to the next level"
+          showProgressBar={true}
+          arrowColor=""
+          showFooter={true}
+          ButtonType="Arrow"
+          styleConfig={{
+            Form: {},
+            Heading: {},
+            Description: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            Footer: {},
+            Card: {},
+            ProgressBar: { barColor: '', barParentColor: '' },
+            CardContainer: {},
+            Icon: {},
+            Arrow: {
+              Background: '',
+              IconColor: '',
+              CompletedBackground: '',
+              CompletedIconColor: '',
+            },
+          }}
+        /> */}
+
+      {/* <OnBoarding
+          questId="c-e3fbaae2-16ca-423f-8cec-69689a17934f"
+          userId={userId}
+          token={token}
+          progress={['Personal Details', 'Professional Details']}
+          controlBtnType="Buttons"
+          headingScreen={[
+            { name: 'Identity Insights', desc: 'Revealing dimensions beyond words' },
+            { name: 'Professional Details', desc: 'Tell us more about your company' },
+          ]}
+          template="multi-question"
+          design={[
+            [1, 2, 3],
+            [4, 5, 6],
+          ]}
+          singleChoose="modal1"
+          multiChoice="modal2"
+          styleConfig={{
+            Form: {},
+            Topbar: {},
+            Heading: {},
+            Description: {},
+            Input: {},
+            Label: {},
+            TextArea: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            SingleChoice: { style: {}, selectedStyle: {} },
+            MultiChoice: { style: {}, selectedStyle: {} },
+            ProgressBar: {
+              completeTabColor: '',
+              currentTabColor: '',
+              pendingTabColor: '',
+            },
+            Footer: {},
+          }}
+          getAnswers={() => {}}
+          setAnswer={setAnswer}
+          answer={answer}
+        /> */}
+
+      {/* <OnBoarding
+          questId="c-056d8d29-2623-41c6-b2c1-2db4375d644e"
+          userId={userId}
+          token={token}
+          controlBtnType="Buttons"
+          headingScreen={[
+            {
+              name: 'Identity Insightssss',
+              desc: 'Revealing dimensions beyond words',
+            },
+          ]}
+          singleChoose="modal1"
+          multiChoice="modal2"
+          styleConfig={{
+            Form: {},
+            Topbar: {},
+            Heading: {},
+            Description: {},
+            Input: {},
+            Label: {},
+            TextArea: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            SingleChoice: { style: {}, selectedStyle: {} },
+            MultiChoice: { style: {}, selectedStyle: {} },
+            ProgressBar: {
+              completeTabColor: '',
+              currentTabColor: '',
+              pendingTabColor: '',
+            },
+            Footer: {},
+          }}
+          getAnswers={() => {}}
+          setAnswer={setAnswer}
+          answer={answer}
+        /> */}
+
+      {/* <Tutorial
+          userId={userId}
+          token={token}
+          questId="c-88a2b4bf-2a0e-4956-8cf8-04a7c0e1bd78"
+          heading="Quest List"
+          subheading="Discover our key features"
+          styleConfig={{
+            Form: {},
+            TopBar: {},
+            Heading: {},
+            Description: {},
+            Footer: {},
+          }}
+        /> */}
+
+      {/* <GamifiedQuiz
+          questId="c-c17a650f-c0e0-44da-985f-f2278a015be7"
+          userId={userId}
+          token={token}
+          questionsPerSection={2}
+          sectionSubHeading={['', 'Fill the details']}
+          sectionHeading={['Fill the details', 'Fill the details']}
+          showFooter={true}
+          thanksPopUpFooter={true}
+          styleConfig={{
+            Heading: {},
+            Input: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            Footer: {},
+            FormContainer: {},
+            Question: {},
+            ThanksPopup: {},
+            ThanksPopupHeading: {},
+            ThanksPopupDescription: {},
+            OptionsSelectedColor: {},
+          }}
+          gamifiedQuiz={true}
+          questions={questions}
+          setQuestions={setQuestions}
+          functionOnSubmit={() => alert('submited')}
+        /> */}
+        
+        <CrossSelling
+          questId="c-80398e9e-fbcf-492d-9fdb-c0e0cdda642d"
+          token={token}
+          userId={userId}
+          expiryDate={0}
+          showDays
+          showFooter={true}
+          gradientBackground={true}
+          styleConfig={{
+            BackgroundWrapper: {},
+            Description: {},
+            Footer: {},
+            Form: {},
+            Heading: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            Timer: { backgroundColor: '', primaryColor: '', secondaryColor: '' },
+          }}
         />
+
+        {/* ------------------- API v2 Test Ended -------------------  */}
 
         {/* <ModularPreview /> */}
 

@@ -49,7 +49,7 @@ interface TutorialProps {
   };
   footerBackgroundColor?: string;
   showFooter?: boolean;
-  enableVariation?: boolean
+  variation?: string
 }
 
 interface QuestThemeData {
@@ -90,7 +90,7 @@ const TutorialScreen: React.FC<TutorialProps> = ({
   },
   styleConfig,
   showFooter = true,
-  enableVariation = false
+  variation
 
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -101,6 +101,7 @@ const TutorialScreen: React.FC<TutorialProps> = ({
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
   const [gradient, setGradient] = useState<boolean>(false);
   const [showLoader, setShowLoader] = useState<boolean>(false);
+  const [campaignVariationId, setCampaignVariationId] = useState('')
   const [hoverStates, setHoverStates] = useState(
     Array(formdata.length).fill(true)
   );
@@ -154,9 +155,15 @@ const TutorialScreen: React.FC<TutorialProps> = ({
     };
 
     const json = {
-      criteriaId: id,
-    };
-    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}&getVariation=${enableVariation}`;
+      actions: [
+        {
+          answers: [],
+          actionId: id
+        }
+      ],
+      campaignVariationId
+    }
+    const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${questId}/verify`;
 
     setShowLoader(true);
     axios
@@ -238,30 +245,35 @@ const TutorialScreen: React.FC<TutorialProps> = ({
       }
 
       function fetchData(header: any) {
-        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}&getVariation=${enableVariation}`;
+        let params = new URLSearchParams()
+        params.set('platform', 'REACT')
+        if(variation) params.set('variation', variation)
+
+        const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${questId}?${params.toString()}`;
         axios
           .get(request, { headers: header })
           .then((res) => {
-            let response = res.data;
-            if (response.data.uiProps?.questThemeData) {
-              setQuestThemeData(response?.data?.uiProps?.questThemeData)
-              if (response.data.uiProps?.questThemeData.theme) {
+            let response = res.data.data;
+            if (response?.sdkConfig?.uiProps?.questThemeData) {
+              setQuestThemeData(response.sdkConfig.uiProps.questThemeData)
+              if (response.sdkConfig.uiProps?.questThemeData.theme) {
                 // getTheme(response.data.uiProps.questThemeData.theme) disabled for now
               }
             }
-            let criterias = response?.eligibilityData?.map((criteria: any) => {
+            let actions = response?.actions?.map((action: any) => {
               return {
-                type: criteria?.data?.criteriaType,
-                title: criteria?.data?.metadata?.linkActionName,
-                url: criteria?.data?.metadata?.linkActionUrl,
+                type: action.actionType,
+                title: action.title,
+                url: action?.metadata?.link,
                 subheading:
-                  criteria?.data?.metadata?.description ||
+                action?.description ||
                   "this is the description",
-                id: criteria?.data?.criteriaId,
-                status: criteria?.completed,
+                id: action.actionId,
+                status: action?.isCompleted,
               };
             });
-            setFormdata(criterias);
+            setFormdata(actions);
+            setCampaignVariationId(response.campaignVariationId)
           })
           .catch((error) => {
             console.error("Error:", error);

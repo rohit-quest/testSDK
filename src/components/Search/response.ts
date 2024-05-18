@@ -8,6 +8,7 @@ interface CustomHeaders {
 
 export async function getResponse(headers: CustomHeaders, entityId: string, campaignId: string, BACKEND_URL, variation?: string): Promise<any> {
     const params = new URLSearchParams()
+    params.set('platform', 'REACT')
     if(variation) params.set('variation', variation)
 
     const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}?${params.toString()}`;
