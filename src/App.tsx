@@ -12,7 +12,6 @@ import Tutorial from "./components/TutorialScreen/TutorialScreen";
 import { confetti } from "./components/Confetti/confetti";
 import GetStarted from "./components/GetStarted/GetStarted";
 import ShareArticle from "./components/Share/ShareArticle";
-import ShareArticlePreview from "./components/Share/ShareArticlePreview";
 import { ChatIcon, LinkIcon } from "./components/HelpCenter/Svg";
 import Payment from "./components/Payment/Payment";
 import OnBoardingPreview from "./components/Onboarding/Preview";
@@ -41,11 +40,16 @@ import DailyStreak from "./components/Streak/DailyStreak";
 import ChallengesPreview from "./components/Challenges/ChallengesPreview";
 import GamifiedQuizPreview from "./components/GamifiedQuiz/GamifiedQuizPreview";
 import { HelpChat } from "./components/HelpCenter/HelpChat";
-import Walkthrough from "./components/Walkthrough/Walkthrough";
+import Walkthrough, { Align, Position } from "./components/Walkthrough/Walkthrough";
 import showToast from "./components/toast/toastService";
 import Toast from "./components/toast2/Toast";
 import InlineFeedbackPreview from "./components/InlineFeedback/Preview";
 import ModularPreview from "./components/Modules/ModulePreview/Preview";
+import { Challenges } from "./components/Challenges/Challenges";
+import Survey from "./components/Survey/Survey";
+import Search from "./components/Search/Search";
+import InlineFeedback from "./components/InlineFeedback/InlineFeedback";
+import LeaderBoard from "./components/Leaderboard/LeaderBoard";
 
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-9986f82d-cbd0-4923-bf9a-ea01b4795fa1";
@@ -107,14 +111,17 @@ function App() {
   const [answer, setAnswer] = useState([]);
 
   // const CSGetstarted = new
+
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTA2ZDY1NDYxLTdjNWYtNDczNy05NDZkLWM4YWI4YzgwZWIyNSIsImlhdCI6MTcxNjAxMTc3MiwiZXhwIjoxNzE2NjE2NTcyfQ.Y83uP_5fvAxF0wwOMd6EbhhnhqvpmQeTz1sxC1a3Rjc'
+  const userId = 'u-06d65461-7c5f-4737-946d-c8ab8c80eb25'
   return (
     <div
     // style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
     >
       <QuestProvider
-        apiKey={"k-fe5a805c-77ed-4cae-bd33-9591ebed2805"}
-        apiSecret={apiSecret}
-        entityId={"e-9850377b-f88f-4426-a2ac-56206c74655a"}
+        apiKey={"k-ac38b717-eb62-41aa-83f4-7eef8d3ff9b5"}
+        apiSecret={''}
+        entityId={"e-e6cc0ded-bf40-4f1f-94a3-a9ba73be098f"}
         featureFlags={{}}
         apiType="STAGING"
         themeConfig={
@@ -128,6 +135,264 @@ function App() {
           }
         }
       >
+        {/* <Survey
+          questId="c-91e2258c-a3e0-4ea1-97d0-184a74153547"
+          token={token}
+          userId={userId}
+          heading="How was your experience?"
+          subHeading="Welcome back, Please complete your details"
+          itemsPerPage={2}
+          ratingType="emoji"
+          showFooter={true}
+          styleConfig={{
+            Heading: {},
+            Description: {},
+            Form: {},
+            Label: {},
+            Input: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            Footer: {},
+            TopBar: {},
+            Rating: { LeftRatingText: '', RightRatingText: '' },
+            EmailError: { text: '' },
+            MultiChoice: { style: {}, selectedStyle: {} },
+          }}
+        /> */}
+        {/* <Survey
+          questId="c-885da464-9539-48ad-9aca-ddadfc8a3ee6"
+          token={token}
+          userId={userId}
+          bgColor="white"
+          heading="How was your experience?"
+          subHeading="Welcome back, Please complete your details"
+          itemsPerPage={2}
+          ratingType="number"
+          showFooter={true}
+          styleConfig={{
+            Heading: {},
+            Description: {},
+            Form: {},
+            Label: {},
+            Input: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            Footer: {},
+            TopBar: {},
+            Rating: {
+              RatingContainer: {},
+              SingleRating: {},
+              RatingText: {},
+              Hover: {},
+              LeftRatingText: '',
+              RightRatingText: '',
+            },
+            EmailError: { text: '', errorStyle: {} },
+            MultiChoice: { style: {}, selectedStyle: {} },
+          }}
+        /> */}
+          {/* <Survey
+            questId="c-0855c2a2-0bb1-4ab4-8e4e-299f074af2c1"
+            token={token}
+            userId={userId}
+            heading="How was your experience?"
+            subHeading="Welcome back, Please complete your details"
+            itemsPerPage={2}
+            ratingType="colored"
+            showFooter={true}
+            styleConfig={{
+              Heading: {},
+              Description: {},
+              Form: {},
+              Label: {},
+              Input: {},
+              PrimaryButton: {},
+              SecondaryButton: {},
+              Footer: {},
+              TopBar: {},
+              Rating: { LeftRatingText: '', RightRatingText: '' },
+              EmailError: { text: '' },
+              MultiChoice: { style: {}, selectedStyle: {} },
+            }}
+        /> */}
+          {/* <Survey
+            questId="c-244b0ae9-bf87-4bd6-a980-8235b5041a2b"
+            token={token}
+            userId={userId}
+            heading="How was your experience?"
+            subHeading="Welcome back, Please complete your details"
+            itemsPerPage={5}
+            ratingType="star"
+            showFooter={true}
+            styleConfig={{
+              Heading: {},
+              Description: {},
+              Form: {},
+              Label: {},
+              Input: {},
+              PrimaryButton: {},
+              SecondaryButton: {},
+              Footer: {},
+              TopBar: {},
+              Rating: { LeftRatingText: '', RightRatingText: '' },
+              EmailError: { text: '' },
+              MultiChoice: { style: {}, selectedStyle: {} },
+            }}
+          /> */}
+
+          {/* <Survey
+            questId="c-348f74bf-0392-46ab-8dd3-9dfc1d0d0f73"
+            token={token}
+            userId={userId}
+            heading="How was your experience?"
+            subHeading="Welcome back, Please complete your details"
+            itemsPerPage={2}
+            ratingType="star"
+            showFooter={true}
+            styleConfig={{
+              Heading: {},
+              Description: {},
+              Form: {},
+              Label: {},
+              Input: {},
+              PrimaryButton: {},
+              SecondaryButton: {},
+              Footer: {},
+              TopBar: {},
+              Rating: { LeftRatingText: '', RightRatingText: '' },
+              EmailError: { text: '' },
+              MultiChoice: { style: {}, selectedStyle: {} },
+            }}
+          /> */}
+          {/* <Search
+            userId={userId}
+            token={token}
+            questId="c-3b63adc6-4778-4dc9-8279-faa3c6ebba3d"
+            open={true}
+            showFooter={true}
+            styleConfig={{
+              Form: {},
+              Heading: {},
+              Description: {},
+              Input: {},
+              Label: {},
+              Footer: {},
+              Icon: {},
+              listHover: {
+                background: '',
+                iconBackground: '',
+                Heading: '',
+                Description: '',
+              },
+            }}
+          /> */}
+
+        {/* <InlineFeedback
+            questId="c-80b9ed47-b008-46f5-bbe6-2f556fcee503"
+            userId={userId}
+            token={token}
+            type="emoji"
+            styleConfig={{
+              ActionButton: {},
+              ActionContainer: {},
+              ActionSelectedButton: {},
+              Description: {},
+              Footer: {},
+              Form: {},
+              Heading: {},
+              IconStyle: {},
+              MainHeading: {},
+              SelectedIconStyle: {},
+            }}
+          /> */}
+          {/* <Survey
+            questId="c-73a6117c-ea29-4e25-8ea8-7ab38238e9d1"
+            userId={userId}
+            token={token}
+            heading="Interactive Feedback Hub"
+            subHeading="Empowering Seamless Communication"
+            itemsPerPage={4}
+            ratingType="star"
+            showFooter={true}
+            styleConfig={{
+              Heading: {},
+              Description: {},
+              Form: {},
+              Label: {},
+              Input: {},
+              PrimaryButton: {},
+              SecondaryButton: {},
+              Footer: {},
+              TopBar: {},
+              Rating: { LeftRatingText: '', RightRatingText: '' },
+              EmailError: { text: '' },
+              MultiChoice: { style: {}, selectedStyle: {} },
+            }}
+          /> */}
+          {/* <DailyStreak
+            userId={userId}
+            token={token}
+            pendingStreakImg=""
+            filledStreakImg=""
+            styleConfig={{ Heading: {}, Description: {}, Footer: {} }}
+            stepDetails={[
+              {
+                  description: 'This is the longest streak you’ve ever head1',
+                  title: 'Confident reader',
+                  range: 3,
+              },
+              {
+                  description: 'This is the longest streak you’ve ever head2',
+                  title: 'Responsible reader',
+                  range: 2,
+              },
+              {
+                  description: 'This is the longest streak you’ve ever head3',
+                  title: 'Serious learner',
+                  range: 5,
+              },
+              {
+                  description: 'This is the longest streak you’ve ever head4',
+                  title: 'Absolute reader',
+                  range: 3,
+              },
+            ]}
+        /> */}
+        {/* <LeaderBoard
+          token={token}
+          userId={userId}
+          styleConfig={{
+            Description: {},
+            Footer: {},
+            Form: {},
+            Heading: {},
+            IconStyle: {},
+            IndexBackground: {},
+            IndexColor: {},
+            InnerBackground: {},
+            MainHeading: {},
+            PointsBackground: {},
+            PointsColor: {},
+            ProgressBarColor: {},
+          }}
+        /> */}
+        {/* <ReferEarn
+          questId="c-3a4276f6-fb60-47e8-9e60-092329c23b2e"
+          token={token}
+          userId={userId}
+          // To run below props run on the local react app
+          isOpen={isOpen}
+          heading="Copy"
+      /> */}
+
+      <ShareArticle
+          questId="c-b0578d03-a8ab-49a4-a234-110eae19f305"
+          token={token}
+          userId={userId}
+          description="If you like this article share it with your friends"
+          heading="Share this article"
+        />
+
         {/* <ModularPreview /> */}
 
         {/* <TutorialPreview online={true} /> */}
@@ -176,7 +441,7 @@ function App() {
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
         {/* <GamifiedQuizPreview online={true} /> */}
         {/* <GamifiedQuizPreview online={true} /> */}
-        {/* <SurveyPreview online={false}/> */}
+        {/* <SurveyPreview online={true}/> */}
         {/* 
                 <HelpCenter
                     userId={userId}
@@ -191,7 +456,7 @@ function App() {
                 // descriptioin="this is descripiton"
                 /> */}
 
-         {/* <OnBoardingPreview online={false} />  */}
+        {/* <OnBoardingPreview online={true} /> */}
 
         {/* <GetStartedPreview online={true} /> */}
 
@@ -253,7 +518,7 @@ function App() {
         <button onClick={() => Toast.info({ text: "This is a info message", position: 'bottom-center', autoClose: 1000, template: 2, description: "INFO" })}>Info</button>
         <button onClick={() => Toast.error({ text: "This is a error message", position: 'bottom-center', autoClose: 1000, template: 2, description: "Error" })}>Error</button>
         <button onClick={() => Toast.warning({ text: "This is a succes warning message", position: 'bottom-center', autoClose: 1000, template: 2, description: "WARNING" })}>Warning</button> */}
-        <FeedbackWorkflowPreview online={true} />
+        {/* <FeedbackWorkflowPreview online={true} /> */}
         {/* <ChallengesPreview online={true} /> */}
 
         {/* <ReferEarnPreview/> */}
@@ -271,7 +536,7 @@ function App() {
                     // color="blue"
                     // isArticle={true}
             /> */}
-        {/* <PreviewLeaderboard online={true}/> */}
+        {/* <PreviewLeaderboard online={false}/> */}
         {/* <QuestLogin
                     // questId=""
                     textColor=""
@@ -329,7 +594,7 @@ function App() {
                   
                     /> */}
         {/* <SreakPreview/> */}
-        <ShareArticlePreview online={false}/>
+
         {/* <ShareArticle
                     bgColor=""
                     // description=""
@@ -346,20 +611,17 @@ function App() {
         {/* <SreakPreview online /> */}
         {/* <InlineFeedbackPreview online={false} /> */}
 
-        <Walkthrough
+        {/* <Walkthrough
             isOpen={isOpen}
             id="app"
             steps={[
               {
                 selector: '.gs-single-card-dropDown',
                 data: {title: 'First Tab', description: 'Click on this'},
-                // position: Position.RIGHT,
-                // align: Align.END
               },
               {
                 selector: '.gs-heading-div',
                 data: {title: 'Second Tab', description: 'Click on this'},
-                // align: Align.CENTER
               }
             ]}
             styleConfig={{
@@ -371,8 +633,9 @@ function App() {
             onRequestClose={() => setIsOpen(false)}
             onAfterOpen={() => document.documentElement.style.overflow = 'hidden'}
             onBeforeClose={() => document.documentElement.style.overflow = ''}
-
         /> */}
+
+
 
       </QuestProvider>
       {/* < div style={{height: 1999}}/> */}

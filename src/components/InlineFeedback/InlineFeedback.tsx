@@ -25,7 +25,7 @@ const componentMapping: {
 export default function InlineFeedback({
   userId,
   token,
-  questId,
+  questId: campaignId,
   heading = "Found it helpful",
   description = "Your feedback help us improve search results!",
   type = "numbering",
@@ -68,7 +68,7 @@ export default function InlineFeedback({
     };
     async function fetchData() {
       try {
-        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}`;
+        const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}`;
         const response = await axios.get(request, { headers });
         if (response.status != 200) throw new Error("Invalid quest request");
         setQuestData(response.data);
@@ -91,15 +91,15 @@ export default function InlineFeedback({
         token,
       };
 
-      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${headers.userId}`;
-      const criteriaId = questData?.data?.eligibilityCriterias?.[0];
+      const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}/verify`;
+      const actionId = questData?.data?.actions?.[0].actionId;
       const answer =
         type == "like"
           ? data?.like
             ? "like"
             : "dislike"
-          : `${data.rate}/${data.total}`;
-      const jsonData = { criteriaId, answer: [answer] };
+          : `${data.rate}`;
+      const jsonData = {actions: [{ actionId, answers: [answer] }], campaignVariationId: questData?.data.campaignVariationId};
       const response = await axios.post(request, jsonData, { headers });
 
       if (response.data?.success) {

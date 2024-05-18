@@ -83,7 +83,7 @@ interface FeedbackProps {
     };
   };
   showFooter?: boolean;
-  enableVariation?: boolean;
+  variation?: string;
 }
 
 interface QuestThemeData {
@@ -113,7 +113,7 @@ const Survey: React.FC<FeedbackProps> = ({
   subHeading = "Please share your feedback",
   userId,
   token,
-  questId,
+  questId: campaignId,
   textColor,
   font,
   bgColor,
@@ -128,19 +128,20 @@ const Survey: React.FC<FeedbackProps> = ({
   showFooter = true,
   styleConfig = {},
   sections,
-  enableVariation = false,
+  variation,
 }) => {
   interface FormDataItem {
     type?: string;
     question?: string;
     options?: [string];
-    criteriaId?: any;
+    actionId?: any;
     required?: boolean;
     placeholder?: string;
   }
 
   const [rating, setRating] = useState<number>(0);
   const [thanksPopup, setThanksPopup] = useState<boolean>(false);
+  const [questData, setQuestData] = useState<any>()
   const [formdata, setFormdata] = useState<FormDataItem[]>([]);
   const [gradient, setGradient] = useState<boolean>(false);
   const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(
@@ -148,7 +149,6 @@ const Survey: React.FC<FeedbackProps> = ({
   );
   const [answer, setAnswer] = useState<any>({});
   const [showLoader, setShowLoader] = useState<boolean>(false);
-  const [session, setSession] = useState<string>("");
   const [page, setPage] = useState(0);
   const [data, setData] = useState<FormDataItem[]>([]);
   const [questThemeData, setQuestThemeData] = useState<QuestThemeData>({
@@ -200,6 +200,10 @@ const Survey: React.FC<FeedbackProps> = ({
   };
 
   useEffect(() => {
+    const params = new URLSearchParams()
+    params.set('platform', 'REACT')
+    if(variation) params.set('variation', variation)
+
     GeneralFunctions.fireTrackingEvent("quest_survey_loaded", "survey");
     if (bgColor) {
       setGradient(
@@ -214,32 +218,32 @@ const Survey: React.FC<FeedbackProps> = ({
         userId: userId,
         token: token,
       };
-      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${userId}&getVariation=${enableVariation}`;
+      const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}?${params.toString()}`;
 
       axios
         .get(request, { headers: headers })
         .then((res) => {
-          let response = res.data;
-          if (response.data.uiProps?.questThemeData) {
-            setQuestThemeData(response?.data?.uiProps?.questThemeData);
-            if (response.data.uiProps?.questThemeData.theme) {
+          let response = res.data.data;
+          setQuestData(response)
+          if (response.sdkConfig.uiProps?.questThemeData) {
+            setQuestThemeData(response?.sdkConfig?.uiProps?.questThemeData);
+            if (response.sdkConfig.uiProps?.questThemeData.theme) {
               // getTheme(response.data.uiProps.questThemeData.theme) disabled for now
             }
           }
-          setSession(response.session);
-          let criterias = response?.eligibilityData?.map((criteria: any) => {
+          let actions = response?.actions?.map((action: any) => {
             return {
-              type: criteria?.data?.criteriaType,
-              question: criteria?.data?.metadata?.title,
-              options: criteria?.data?.metadata?.options || [],
-              criteriaId: criteria?.data?.criteriaId,
-              required: criteria?.data?.metadata?.isRequired,
-              placeholder: criteria?.data?.metadata?.placeholder,
+              type: action?.actionType,
+              question: action?.title,
+              options: action?.options || [],
+              actionId: action?.actionId,
+              required: action?.isRequired,
+              placeholder: action?.metadata?.placeholder,
             };
           });
-          criterias = Array.isArray(criterias) ? criterias : [];
-          setFormdata([...criterias]);
-          setData([...criterias]);
+          actions = Array.isArray(actions) ? actions : [];
+          setFormdata([...actions]);
+          setData([...actions]);
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -359,8 +363,8 @@ const Survey: React.FC<FeedbackProps> = ({
     for (let i = 0; i < formdata.length; i++) {
       if (!formdata[i].required) {
       } else if (
-        (formdata[i].required && answer[formdata[i]?.criteriaId]?.length > 0) ||
-        (formdata[i].required && answer[formdata[i]?.criteriaId] > 0)
+        (formdata[i].required && answer[formdata[i]?.actionId]?.length > 0) ||
+        (formdata[i].required && answer[formdata[i]?.actionId] > 0)
       ) {
         callApi = true;
       } else {
@@ -406,17 +410,16 @@ const Survey: React.FC<FeedbackProps> = ({
     //   return
     // };
 
+
     if (callApi) {
       const ansArr = formdata.map((ans: any) => ({
-        question: ans?.question || "",
-        answer: [answer[ans?.criteriaId] || ""],
-        criteriaId: ans?.criteriaId || "",
+        answers: [answer[ans?.actionId] || ""].map(ans => String(ans)),
+        actionId: ans?.actionId || "",
       }));
-      const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}&getVariation=${enableVariation}`;
+      const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}/verify`;
       const requestData = {
-        criterias: ansArr,
-        userId: headers.userId,
-        session,
+        actions: ansArr,
+        campaignVariationId: questData.campaignVariationId,
       };
       setShowLoader(true);
       axios
@@ -443,13 +446,13 @@ const Survey: React.FC<FeedbackProps> = ({
 
   const normalInput = (
     question: string,
-    criteriaId: string,
+    actionId: string,
     type: "number" | "text",
     required: boolean,
     placeholder?: string
   ) => {
     return (
-      <div className="" key={criteriaId}>
+      <div className="" key={actionId}>
         <Label
           htmlFor="normalInput"
           children={`${question}${required === true ? "*" : ""}`}
@@ -472,8 +475,8 @@ const Survey: React.FC<FeedbackProps> = ({
               themeConfig?.primaryColor,
             ...styleConfig?.Input,
           }}
-          onChange={(e) => handleUpdate(e, criteriaId, "")}
-          value={answer[criteriaId]}
+          onChange={(e) => handleUpdate(e, actionId, "")}
+          value={answer[actionId]}
           placeholder={placeholder}
         />
       </div>
@@ -481,12 +484,12 @@ const Survey: React.FC<FeedbackProps> = ({
   };
   const emailInput = (
     question: string,
-    criteriaId: string,
+    actionId: string,
     required: boolean,
     placeholder?: string
   ) => {
     return (
-      <div className="" key={criteriaId}>
+      <div className="" key={actionId}>
         <Label
           htmlFor="normalInput"
           children={`${question}${required === true ? "*" : ""}`}
@@ -509,8 +512,8 @@ const Survey: React.FC<FeedbackProps> = ({
               themeConfig?.primaryColor,
             ...styleConfig?.Input,
           }}
-          onChange={(e) => handleUpdate(e, criteriaId, "")}
-          value={answer[criteriaId]}
+          onChange={(e) => handleUpdate(e, actionId, "")}
+          value={answer[actionId]}
           placeholder={placeholder}
           emailtext={
             styleConfig?.EmailError?.text == undefined
@@ -525,12 +528,12 @@ const Survey: React.FC<FeedbackProps> = ({
 
   const normalInput2 = (
     question: string,
-    criteriaId: string,
+    actionId: string,
     required: boolean,
     placeholder?: string
   ) => {
     return (
-      <div className="" key={criteriaId}>
+      <div className="" key={actionId}>
         <Label
           htmlFor="normalInput"
           children={`${question}${required === true ? "*" : ""}`}
@@ -552,8 +555,8 @@ const Survey: React.FC<FeedbackProps> = ({
               themeConfig?.primaryColor,
             ...styleConfig?.TextArea,
           }}
-          onChange={(e) => handleUpdate(e, criteriaId, "")}
-          value={answer[criteriaId]}
+          onChange={(e) => handleUpdate(e, actionId, "")}
+          value={answer[actionId]}
           placeholder={(sections && sections[page].placeholder) || placeholder}
           maxLength={sections && sections[page].showWordCount ? 120 : undefined}
         />
@@ -568,7 +571,7 @@ const Survey: React.FC<FeedbackProps> = ({
               lineHeight: "16px",
             }}
           >
-            {answer[criteriaId]?.length || 0}/120 characters
+            {answer[actionId]?.length || 0}/120 characters
           </p>
         )}
       </div>
@@ -579,10 +582,10 @@ const Survey: React.FC<FeedbackProps> = ({
     options: string[],
     question: string,
     required: boolean,
-    criteriaId: string
+    actionId: string
   ) => {
     return (
-      <div key={criteriaId}>
+      <div key={actionId}>
         <Label
           className="q-onb-singleChoiceOne-lebel"
           children={`${question}${required === true ? "*" : ""}`}
@@ -600,10 +603,10 @@ const Survey: React.FC<FeedbackProps> = ({
             <div
               className="q_onb_singlehoiceOne_lebel"
               key={id}
-              onClick={(e) => handleUpdate(e, criteriaId, option, "radio")}
+              onClick={(e) => handleUpdate(e, actionId, option, "radio")}
               style={{
                 border:
-                  answer[criteriaId] == option
+                  answer[actionId] == option
                     ? // ? "1px solid var(--Primary-Grape-300, #bf8aff)"
                       // : "1px solid var(--Neutral-White-300, #ececec)",
                       "1px solid var(--Primary-Grape-300, #bf8aff)"
@@ -612,7 +615,7 @@ const Survey: React.FC<FeedbackProps> = ({
             >
               <img
                 src={
-                  answer[criteriaId] == option ? RadioSelected : RadioInitial
+                  answer[actionId] == option ? RadioSelected : RadioInitial
                 }
                 alt=""
               />
@@ -633,11 +636,11 @@ const Survey: React.FC<FeedbackProps> = ({
     options: string[] | [],
     question: string,
     required: boolean,
-    criteriaId: string,
+    actionId: string,
     index?: number
   ) => {
     return (
-      <div key={criteriaId}>
+      <div key={actionId}>
         <Label
           htmlFor="textAreaInput"
           style={{
@@ -652,9 +655,9 @@ const Survey: React.FC<FeedbackProps> = ({
         </Label>
         <MultiChoiceTwo
           options={options}
-          checked={!!answer[criteriaId] && answer[criteriaId]}
+          checked={!!answer[actionId] && answer[actionId]}
           onChange={(e) => {
-            handleUpdate(e, criteriaId, "", "check");
+            handleUpdate(e, actionId, "", "check");
           }}
           style={{
             borderColor:
@@ -682,12 +685,12 @@ const Survey: React.FC<FeedbackProps> = ({
   const dateInput = (
     question: string,
     required: boolean,
-    criteriaId: string,
+    actionId: string,
     placeholder: string,
     index?: number
   ) => {
     return (
-      <div key={criteriaId}>
+      <div key={actionId}>
         <Label
           htmlFor="dateInput"
           style={{
@@ -703,8 +706,8 @@ const Survey: React.FC<FeedbackProps> = ({
         <Input
           type={"date"}
           placeholder={placeholder}
-          value={answer[criteriaId]}
-          onChange={(e) => handleUpdate(e, criteriaId, "")}
+          value={answer[actionId]}
+          onChange={(e) => handleUpdate(e, actionId, "")}
           style={{
             borderColor:
               styleConfig?.Input?.borderColor || themeConfig?.borderColor,
@@ -728,14 +731,14 @@ const Survey: React.FC<FeedbackProps> = ({
         if (
           formdata[questionNo]?.type === "RATING" &&
           formdata[questionNo]?.required &&
-          answer[formdata[questionNo]?.criteriaId] > 0
+          answer[formdata[questionNo]?.actionId] > 0
         ) {
           setGoToNextSection(true);
         } else if (!formdata[questionNo]?.required) {
           setGoToNextSection(true);
         } else if (
           formdata[questionNo]?.required &&
-          answer[formdata[questionNo]?.criteriaId]?.length > 0
+          answer[formdata[questionNo]?.actionId]?.length > 0
         ) {
           setGoToNextSection(true);
         } else {
@@ -825,7 +828,7 @@ const Survey: React.FC<FeedbackProps> = ({
                     if (data.type === "USER_INPUT_TEXT") {
                       return normalInput(
                         data.question || "",
-                        data.criteriaId || "",
+                        data.actionId || "",
                         "text",
                         data.required || false,
                         data.placeholder || sections?.[page]?.placeholder || ""
@@ -833,7 +836,7 @@ const Survey: React.FC<FeedbackProps> = ({
                     } else if (data.type === "USER_INPUT_EMAIL") {
                       return emailInput(
                         data.question || "",
-                        data.criteriaId || "",
+                        data.actionId || "",
                         data.required || false,
                         data.placeholder || sections?.[page]?.placeholder || ""
                       );
@@ -842,12 +845,12 @@ const Survey: React.FC<FeedbackProps> = ({
                         data.options || [],
                         data?.question || "",
                         data?.required || false,
-                        data.criteriaId || ""
+                        data.actionId || ""
                       );
                     } else if (data.type === "USER_INPUT_TEXTAREA") {
                       return normalInput2(
                         data.question || "",
-                        data.criteriaId || "",
+                        data.actionId || "",
                         data.required || false,
                         data.placeholder || sections?.[page]?.placeholder || ""
                       );
@@ -877,7 +880,7 @@ const Survey: React.FC<FeedbackProps> = ({
                             <Rating
                               count={5}
                               getCurrentRating={(item) =>
-                                handleRatingChange(data.criteriaId, item)
+                                handleRatingChange(data.actionId, item)
                               }
                               //  defaultRating={Number(answer[0])}
                               RatingStyle={styleConfig?.Rating}
@@ -891,19 +894,19 @@ const Survey: React.FC<FeedbackProps> = ({
                         data.options || [],
                         data.question || "",
                         data.required || false,
-                        data.criteriaId || ""
+                        data.actionId || ""
                       );
                     } else if (data.type === "USER_INPUT_DATE") {
                       return dateInput(
                         data.question || "",
                         data.required || false,
-                        data.criteriaId || "",
+                        data.actionId || "",
                         data.placeholder || "Choose Date"
                       );
                     } else if (data.type === "USER_INPUT_PHONE") {
                       return normalInput(
                         data.question || "",
-                        data.criteriaId || "",
+                        data.actionId || "",
                         "number",
                         data.required || false,
                         data.placeholder || undefined

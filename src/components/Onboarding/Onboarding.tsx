@@ -139,6 +139,7 @@ function OnBoarding(props: QuestLoginProps) {
     enableVariation = false,
   } = props;
 
+
   const [formdata, setFormdata] = useState<FormData[] | []>([]);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [btnFlag, setButtonFlag] = useState<boolean>(false);

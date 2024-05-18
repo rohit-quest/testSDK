@@ -45,6 +45,8 @@ export const response = async (questId = "", headers: {
     let GeneralFunctions = new General('mixpanel', headers.apiType);
     try {
         const request = `${config.BACKEND_URL}api/entities/${headers.entityId}/quests/${questId}/users/${headers.userid}/referralcode`;
+        console.log(request)
+        
         const { data }: { data: { success: boolean, referralCode?: string } } = await axios.get(request, { headers })
         return data;
     } catch (error) {

@@ -15,7 +15,7 @@ export interface articleProps {
   token: string;
   questId: string;
   userId: string;
-  enableVariation?: boolean;
+  variation?: string;
   styleConfig?:{
     Form?: CSSProperties;
     Heading?: CSSProperties;
@@ -33,22 +33,26 @@ type CustomHeaders = {
 async function getResponse(
   headers: CustomHeaders,
   entityId: string,
-  questId: string,
+  campaignId: string,
   apiType: string,
-  enableVariation: boolean,
+  variation: string | undefined,
   BACKEND_URL: string
-): Promise<{ metadata: Metadata }> {
-  const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${headers.userId}&getVariation=${enableVariation}`;
+): Promise<any> {
+
+  let params = new URLSearchParams()
+  params.set('platform', 'REACT')
+  if(variation) params.set('variation', variation)
+
+  const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}?${params.toString()}`;
 
   let GeneralFunctions = new General("mixpanel", apiType);
   try {
     const res = await axios.get(request, { headers });
-    const response = res.data.eligibilityData as QuestArray;
-    return { metadata: response[0].data.metadata };
+    const response = res.data.data;
+    return response;
   } catch (error) {
-    console.log(error);
     GeneralFunctions.captureSentryException(error);
-    return { metadata: {} as Metadata };
+    return {};
   }
 }
 
@@ -58,7 +62,7 @@ const ShareArticle: React.FC<articleProps> = ({
   questId = "",
   token = "",
   userId = "",
-  enableVariation = false,
+  variation,
   styleConfig
 }: articleProps) => {
   const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } =
@@ -79,10 +83,11 @@ const ShareArticle: React.FC<articleProps> = ({
       entityId,
       questId,
       apiType,
-      enableVariation,
+      variation,
       BACKEND_URL
     ).then((response) => {
-      setLink(response.metadata.linkActionUrl);
+      let [action] = response.actions
+      setLink(action?.metadata?.link)
     });
   }, []);
 
