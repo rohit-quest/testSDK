@@ -86,7 +86,11 @@ interface QuestLoginProps {
     TextArea?: CSSProperties;
     PrimaryButton?: CSSProperties;
     SecondaryButton?: CSSProperties;
-    Footer?: CSSProperties;
+    Footer?:{
+      FooterStyle?: CSSProperties;
+      FooterText?: CSSProperties;
+      FooterIcon?: CSSProperties;
+    };
     SingleChoice?: {
       style?: CSSProperties;
       selectedStyle?: CSSProperties;
@@ -100,6 +104,7 @@ interface QuestLoginProps {
       currentTabColor?: string;
       pendingTabColor?: string;
     };
+
   };
   offlineFormData: offlineFormData[] | [];
 }
@@ -1344,27 +1349,21 @@ function OnBoardingOffline(props: QuestLoginProps) {
           </div>
           {offlineFormData && showFooter && (
             <QuestLabs
-              style={{
-                background:
-                  styleConfig?.Footer?.backgroundColor ||
-                  styleConfig?.Form?.backgroundColor ||
-                  BrandTheme?.background ||
-                  styleConfig?.Form?.background ||
-                  themeConfig?.backgroundColor,
-                borderBottomLeftRadius:
-                  styleConfig?.Footer?.borderTopStyle ||
-                  styleConfig?.Form?.borderTopStyle ||
-                  QuestThemeData?.borderRadius ||
-                  BrandTheme?.borderRadius,
-                borderBottomRightRadius:
-                  styleConfig?.Footer?.borderTopStyle ||
-                  styleConfig?.Form?.borderTopStyle ||
-                  QuestThemeData?.borderRadius ||
-                  BrandTheme?.borderRadius,
-                ...styleConfig?.Footer,
-              }}
-            />
-          )}
+            style={{
+            ...{
+              background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                styleConfig?.Form?.backgroundColor || 
+                styleConfig?.Form?.background ||
+                BrandTheme?.background ||
+                themeConfig?.backgroundColor,
+            },
+            ...styleConfig?.Footer?.FooterStyle,
+
+            }}
+            textStyle={styleConfig?.Footer?.FooterText}
+            iconStyle={styleConfig?.Footer?.FooterIcon}
+          />
+        )}
         </div>
       </div>
     )

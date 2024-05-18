@@ -44,7 +44,21 @@ const ChallengesShow: React.FC<Props> = ({
         />
       </div>
       <div className="q_footer_challenges">
-        <QuestLabs style={styleConfig?.Footer} />
+        <QuestLabs
+          style={{
+            ...{
+              background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                styleConfig?.Form?.backgroundColor ||
+                styleConfig?.Form?.background ||
+                themeConfig?.backgroundColor,
+            },
+            ...styleConfig?.Footer?.FooterStyle,
+
+          }}
+          textStyle={styleConfig?.Footer?.FooterText}
+          iconStyle={styleConfig?.Footer?.FooterIcon}
+        />
+
       </div>
     </div >
   );

@@ -19,7 +19,6 @@ type data = {
   longDescription?: string;
 }[];
 
-
 type BrandTheme = {
   accentColor?: string;
   background?: string;
@@ -40,7 +39,6 @@ interface QuestThemeData {
   buttonColor: string;
   images: string[];
 }
-
 
 interface propType {
   data?: data;
@@ -67,7 +65,11 @@ interface propType {
     Description?: CSSProperties;
     Input?: CSSProperties;
     Label?: CSSProperties;
-    Footer?: CSSProperties;
+    Footer?: {
+      FooterStyle?: CSSProperties;
+      FooterText?: CSSProperties;
+      FooterIcon?: CSSProperties;
+    };
     listHover?: {
       background?: string;
       iconBackground?: string;
@@ -75,7 +77,7 @@ interface propType {
       Description?: string;
     };
     Topbar?: CSSProperties;
-    CommandButton?:CSSProperties
+    CommandButton?: CSSProperties;
   };
   showFooter?: boolean;
   BrandTheme?: BrandTheme;
@@ -87,7 +89,7 @@ export default function SearchOffline(prop: propType): JSX.Element {
     wholerScreen = true,
     defaultResult = [],
     defulatResultLength = 10,
-    onSearch = (str: string) => {},
+    onSearch = (str: string) => { },
     questId = "",
     token = "",
     userId = "",
@@ -103,10 +105,10 @@ export default function SearchOffline(prop: propType): JSX.Element {
   const [searchResults, setResults] = useState<data>(defaultResult);
   const [isOpen, setOpen] = useState(false);
   const [selectedResultIndex, setSelectedResultIndex] = useState<number>(0);
-  const { themeConfig,apiType } = useContext(QuestContext.Context);
+  const { themeConfig, apiType } = useContext(QuestContext.Context);
   const [data, setData] = useState<data>([]);
 
-  let GeneralFunctions = new General('mixpanel', apiType);
+  let GeneralFunctions = new General("mixpanel", apiType);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (isOpen && searchResults.length > 0) {
@@ -129,7 +131,10 @@ export default function SearchOffline(prop: propType): JSX.Element {
   const handleKeyPress = (event: KeyboardEvent) => {
     const isCtrlPressed = (event.ctrlKey || event.metaKey) && !event.altKey;
     if (isCtrlPressed && event.key === "k") {
-      GeneralFunctions.fireTrackingEvent("quest_spotlight_search_offline_ctrl_k_pressed", "spotlight_search_offline");
+      GeneralFunctions.fireTrackingEvent(
+        "quest_spotlight_search_offline_ctrl_k_pressed",
+        "spotlight_search_offline"
+      );
       event.preventDefault();
       setOpen((prev) => !prev);
     } else if (event.key == "Escape") setOpen(false);
@@ -164,22 +169,33 @@ export default function SearchOffline(prop: propType): JSX.Element {
   };
 
   useEffect(() => {
-    GeneralFunctions.fireTrackingEvent("quest_spotlight_search_offline_loaded", "spotlight_search_offline");
-  }, [])
+    GeneralFunctions.fireTrackingEvent(
+      "quest_spotlight_search_offline_loaded",
+      "spotlight_search_offline"
+    );
+  }, []);
 
   const jsx = (
     <div
       className="q_search_bar"
       style={{
         background:
-          styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor,
+          styleConfig?.Form?.backgroundColor ||
+          BrandTheme?.background ||
+          themeConfig?.backgroundColor,
         height: styleConfig?.Form?.height || "auto",
-        fontFamily: themeConfig.fontFamily || BrandTheme?.fontFamily || "'Figtree', sans-serif",
-        borderRadius: styleConfig?.Form?.borderRadius || QuestThemeData?.borderRadius || BrandTheme?.borderRadius,
+        fontFamily:
+          themeConfig.fontFamily ||
+          BrandTheme?.fontFamily ||
+          "'Figtree', sans-serif",
+        borderRadius:
+          styleConfig?.Form?.borderRadius ||
+          QuestThemeData?.borderRadius ||
+          BrandTheme?.borderRadius,
         ...styleConfig?.Form,
       }}
     >
-      <div className="q_search_box" style={{...styleConfig?.Topbar}}>
+      <div className="q_search_box" style={{ ...styleConfig?.Topbar }}>
         <img
           className="q_search_bar_icon"
           src={searchIcon(prop.iconColor)}
@@ -187,10 +203,11 @@ export default function SearchOffline(prop: propType): JSX.Element {
         />
 
         <div className="q_searchBox_input_cont">
-        <div
+          <div
             className="q_input_cont"
             style={{
-              borderColor:styleConfig?.Input?.borderColor ||  themeConfig?.borderColor,
+              borderColor:
+                styleConfig?.Input?.borderColor || themeConfig?.borderColor,
               padding: "0px",
             }}
           >
@@ -204,16 +221,24 @@ export default function SearchOffline(prop: propType): JSX.Element {
                 handleSearch(e.target.value);
               }}
               style={{
-                color:styleConfig?.Input?.color || BrandTheme?.primaryColor ||  themeConfig.primaryColor,
-                ...styleConfig?.Input
+                color:
+                  styleConfig?.Input?.color ||
+                  BrandTheme?.primaryColor ||
+                  themeConfig.primaryColor,
+                ...styleConfig?.Input,
               }}
               className="q_input_main_cont"
             />
-
           </div>
         </div>
-        <div className="q_search_command_key" style={{...styleConfig?.CommandButton}}>
-          <img src={commandkeyIcon(styleConfig?.CommandButton?.color || iconColor)} alt="" />
+        <div
+          className="q_search_command_key"
+          style={{ ...styleConfig?.CommandButton }}
+        >
+          <img
+            src={commandkeyIcon(styleConfig?.CommandButton?.color || iconColor)}
+            alt=""
+          />
         </div>
       </div>
       <div className="q_flex_box">
@@ -232,7 +257,10 @@ export default function SearchOffline(prop: propType): JSX.Element {
                     : "transparent",
               }}
               onClick={() => {
-                GeneralFunctions.fireTrackingEvent("quest_spotlight_search_offline_link_clicked", "spotlight_search_offline");
+                GeneralFunctions.fireTrackingEvent(
+                  "quest_spotlight_search_offline_link_clicked",
+                  "spotlight_search_offline"
+                );
                 onResultClick(link);
               }}
               onMouseEnter={() => setSelectedResultIndex(i)}
@@ -262,12 +290,12 @@ export default function SearchOffline(prop: propType): JSX.Element {
                     color:
                       i === selectedResultIndex
                         ? styleConfig?.listHover?.Heading ||
-                          BrandTheme?.primaryColor ||
-                          themeConfig?.primaryColor ||
-                          styleConfig?.Heading?.color
+                        BrandTheme?.primaryColor ||
+                        themeConfig?.primaryColor ||
+                        styleConfig?.Heading?.color
                         : styleConfig?.Heading?.color ||
-                          BrandTheme?.primaryColor ||
-                          themeConfig?.primaryColor,
+                        BrandTheme?.primaryColor ||
+                        themeConfig?.primaryColor,
                     ...styleConfig?.Heading,
                   }}
                   className="q_search_result_head"
@@ -279,12 +307,12 @@ export default function SearchOffline(prop: propType): JSX.Element {
                     color:
                       i === selectedResultIndex
                         ? styleConfig?.listHover?.Description ||
-                          styleConfig?.Description?.color ||
-                          BrandTheme?.secondaryColor ||
-                          themeConfig?.secondaryColor
+                        styleConfig?.Description?.color ||
+                        BrandTheme?.secondaryColor ||
+                        themeConfig?.secondaryColor
                         : styleConfig?.Description?.color ||
-                          BrandTheme?.secondaryColor ||
-                          themeConfig?.secondaryColor,
+                        BrandTheme?.secondaryColor ||
+                        themeConfig?.secondaryColor,
                     ...styleConfig?.Description,
                   }}
                   className="q_search_result_desc"
@@ -303,7 +331,10 @@ export default function SearchOffline(prop: propType): JSX.Element {
             />
             <div
               style={{
-                color: styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig.primaryColor,
+                color:
+                  styleConfig?.Heading?.color ||
+                  BrandTheme?.primaryColor ||
+                  themeConfig.primaryColor,
                 ...styleConfig?.Heading,
               }}
               className="q_search_details_head"
@@ -312,7 +343,10 @@ export default function SearchOffline(prop: propType): JSX.Element {
             </div>
             <div
               style={{
-                color: styleConfig?.Description?.color || BrandTheme?.secondaryColor || themeConfig.secondaryColor,
+                color:
+                  styleConfig?.Description?.color ||
+                  BrandTheme?.secondaryColor ||
+                  themeConfig.secondaryColor,
                 ...styleConfig?.Description,
               }}
               className="q_search_result_desc"
@@ -327,23 +361,40 @@ export default function SearchOffline(prop: propType): JSX.Element {
           </div>
         )}
       </div>
-      {showFooter &&  <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />}
+      {showFooter && (
+        <QuestLabs
+          style={{
+            ...{
+              background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                styleConfig?.Form?.backgroundColor ||
+                styleConfig?.Form?.background ||
+                BrandTheme?.background ||
+                themeConfig?.backgroundColor,
+            },
+            ...styleConfig?.Footer?.FooterStyle,
+
+          }}
+          textStyle={styleConfig?.Footer?.FooterText}
+          iconStyle={styleConfig?.Footer?.FooterIcon}
+        />
+      )}
     </div>
   );
 
   const sectionsJsx = (
     <div className="q_search_bar">
-      <div className="q_search_box" style={{...styleConfig?.Topbar}}>
+      <div className="q_search_box" style={{ ...styleConfig?.Topbar }}>
         <img
           className="q_search_bar_icon"
           src={searchIcon(themeConfig.secondaryColor)}
           alt=""
         />
-      <div className="q_searchBox_input_cont">
-        <div
+        <div className="q_searchBox_input_cont">
+          <div
             className="q_input_cont"
             style={{
-              borderColor:styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+              borderColor:
+                styleConfig?.Input?.borderColor || themeConfig?.borderColor,
               padding: "0px",
             }}
           >
@@ -357,16 +408,24 @@ export default function SearchOffline(prop: propType): JSX.Element {
                 handleSearch(e.target.value);
               }}
               style={{
-                color:styleConfig?.Input?.color || BrandTheme?.primaryColor || themeConfig.primaryColor,
-                ...styleConfig?.Input
+                color:
+                  styleConfig?.Input?.color ||
+                  BrandTheme?.primaryColor ||
+                  themeConfig.primaryColor,
+                ...styleConfig?.Input,
               }}
               className="q_input_main_cont"
             />
-
           </div>
         </div>
-        <div className="q_search_command_key" style={{...styleConfig?.CommandButton}}>
-          <img src={commandkeyIcon(styleConfig?.CommandButton?.color || iconColor)} alt="" />
+        <div
+          className="q_search_command_key"
+          style={{ ...styleConfig?.CommandButton }}
+        >
+          <img
+            src={commandkeyIcon(styleConfig?.CommandButton?.color || iconColor)}
+            alt=""
+          />
         </div>
       </div>
       <div className="q_flex_box">
@@ -411,12 +470,12 @@ export default function SearchOffline(prop: propType): JSX.Element {
                           color:
                             i === selectedResultIndex
                               ? styleConfig?.listHover?.Heading ||
-                                styleConfig?.Heading?.color ||
-                                BrandTheme?.primaryColor ||
-                                themeConfig?.primaryColor
+                              styleConfig?.Heading?.color ||
+                              BrandTheme?.primaryColor ||
+                              themeConfig?.primaryColor
                               : styleConfig?.Heading?.color ||
-                                BrandTheme?.primaryColor ||
-                                themeConfig?.primaryColor,
+                              BrandTheme?.primaryColor ||
+                              themeConfig?.primaryColor,
                           ...styleConfig?.Heading,
                         }}
                         className="q_search_result_head"
@@ -428,12 +487,12 @@ export default function SearchOffline(prop: propType): JSX.Element {
                           color:
                             i === selectedResultIndex
                               ? styleConfig?.listHover?.Description ||
-                                styleConfig?.Description?.color ||
-                                BrandTheme?.secondaryColor ||
-                                themeConfig?.secondaryColor
+                              styleConfig?.Description?.color ||
+                              BrandTheme?.secondaryColor ||
+                              themeConfig?.secondaryColor
                               : styleConfig?.Description?.color ||
-                                BrandTheme?.secondaryColor ||
-                                themeConfig?.secondaryColor,
+                              BrandTheme?.secondaryColor ||
+                              themeConfig?.secondaryColor,
                           ...styleConfig?.Description,
                         }}
                         // style={{ color: themeConfig.secondaryColor, ...styleConfig?.Description }}
@@ -484,12 +543,12 @@ export default function SearchOffline(prop: propType): JSX.Element {
                           color:
                             i === selectedResultIndex
                               ? styleConfig?.listHover?.Heading ||
-                                styleConfig?.Heading?.color ||
-                                BrandTheme?.primaryColor ||
-                                themeConfig?.primaryColor
+                              styleConfig?.Heading?.color ||
+                              BrandTheme?.primaryColor ||
+                              themeConfig?.primaryColor
                               : styleConfig?.Heading?.color ||
-                                BrandTheme?.primaryColor ||
-                                themeConfig?.primaryColor,
+                              BrandTheme?.primaryColor ||
+                              themeConfig?.primaryColor,
                           ...styleConfig?.Heading,
                         }}
                         className="q_search_result_head"
@@ -501,11 +560,11 @@ export default function SearchOffline(prop: propType): JSX.Element {
                           color:
                             i === selectedResultIndex
                               ? styleConfig?.listHover?.Description ||
-                                styleConfig?.Description?.color ||
-                                BrandTheme?.secondaryColor ||
-                                themeConfig?.secondaryColor
+                              styleConfig?.Description?.color ||
+                              BrandTheme?.secondaryColor ||
+                              themeConfig?.secondaryColor
                               : styleConfig?.Description?.color ||
-                                themeConfig?.secondaryColor,
+                              themeConfig?.secondaryColor,
                           ...styleConfig?.Description,
                         }}
                         className="q_search_result_desc"
@@ -539,7 +598,23 @@ export default function SearchOffline(prop: propType): JSX.Element {
           </div>
         )}
       </div>
-      {showFooter &&  <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />}
+      {showFooter && (
+        <QuestLabs
+          style={{
+            ...{
+              background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                styleConfig?.Form?.backgroundColor ||
+                styleConfig?.Form?.background ||
+                BrandTheme?.background ||
+                themeConfig?.backgroundColor,
+            },
+            ...styleConfig?.Footer?.FooterStyle,
+
+          }}
+          textStyle={styleConfig?.Footer?.FooterText}
+          iconStyle={styleConfig?.Footer?.FooterIcon}
+        />
+      )}
     </div>
   );
 

@@ -177,7 +177,7 @@ export default function OnBoardingPreview({
           getAnswers={printAnswer}
           // screenHeight=""
           // progressBarType="modal1"
-          styleConfig={{ Form: {} }}
+          styleConfig={{ Form: {background:'red'}, Footer: {FooterStyle:{background: 'blue'},FooterIcon:{color: 'green'},FooterText:{color: 'yellow'}} }}
         />
       </QuestProvider>
     );
@@ -202,15 +202,15 @@ export default function OnBoardingPreview({
       // btnSize="200px"
       // inputBgColor=""
       // inputBorder="1px solid #6525B3"
-      template='single-page'
+      template='multi-question'
       // template="multi-question"
       singleChoose="modal1"
       multiChoice="modal1"
-      // design={[
-      //   [6, 1, 2, 3],
-      //   [3, 4],
-      //   [5, 6],
-      // ]}
+      design={[
+        [1, 2],
+        [3, 4],
+        [5, 6],
+      ]}
       headingScreen={[
         { name: "Tell us about yourself", desc: "this is description" },
         {
@@ -227,7 +227,16 @@ export default function OnBoardingPreview({
       // screenHeight=""
       // progressBarType="modal1"
       offlineFormData={state.offlineFormData}
-      styleConfig={{}}
+      styleConfig={{
+        Form: {
+          backgroundColor: "red"
+        },
+        ProgressBar: {
+          completeTabColor: "red",
+          currentTabColor: "green",
+          pendingTabColor: "blue",
+        },
+      }}
     />
   );
 }
