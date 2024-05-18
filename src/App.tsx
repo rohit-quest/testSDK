@@ -142,7 +142,7 @@ function App() {
                     maxSpins={10}
                     wheelImage={'https://quest-media-storage-bucket.s3.us-east-2.amazonaws.com/1706540110821-wrapit2.png'} /> */}
 
-        {/* <SearchPreview online={false}/> */}
+        <SearchPreview online={false}/>
 
         {/* <SreakPreview/> */}
         {/* <TutorialPreview online={false}/> */}
@@ -191,7 +191,7 @@ function App() {
                 // descriptioin="this is descripiton"
                 /> */}
 
-        {/* <OnBoardingPreview online={true} /> */}
+        <OnBoardingPreview online={false} />
 
         {/* <GetStartedPreview online={true} /> */}
 
@@ -253,7 +253,7 @@ function App() {
         <button onClick={() => Toast.info({ text: "This is a info message", position: 'bottom-center', autoClose: 1000, template: 2, description: "INFO" })}>Info</button>
         <button onClick={() => Toast.error({ text: "This is a error message", position: 'bottom-center', autoClose: 1000, template: 2, description: "Error" })}>Error</button>
         <button onClick={() => Toast.warning({ text: "This is a succes warning message", position: 'bottom-center', autoClose: 1000, template: 2, description: "WARNING" })}>Warning</button> */}
-        <FeedbackWorkflowPreview online={false} />
+        {/* <FeedbackWorkflowPreview online={false} /> */}
         {/* <ChallengesPreview online={true} /> */}
 
         {/* <ReferEarnPreview/> */}
@@ -329,7 +329,7 @@ function App() {
                   
                     /> */}
         {/* <SreakPreview/> */}
-        <ShareArticlePreview online={false}/>
+        {/* <ShareArticlePreview online={false}/> */}
         {/* <ShareArticle
                     bgColor=""
                     // description=""
