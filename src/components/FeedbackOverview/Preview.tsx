@@ -3,14 +3,14 @@ import { QuestProvider } from "../QuestWrapper";
 import FeedbackWorkflow from "./FeedbackOverview";
 
 import FeedbackWorkflowOffline from "./OfflineComponent.tsx";
-export const apiKey = "k-e6ec8094-6eef-4e80-a804-112a63607bf5";
+export const apiKey = "k-fe5a805c-77ed-4cae-bd33-9591ebed2805";
 export const apiSecret =
   "s-3c35ebcb-c752-4c3c-8ce3-e6460ebbc9d479a7e122-d06b-4243-bbfa-e0889987f6c0";
-export const entityId = "e-5768fd26-d226-4ac1-81e6-3c99427f3fb3";
+export const entityId = "e-9850377b-f88f-4426-a2ac-56206c74655a";
 export const questId = "q-99be1d8e-d883-4f07-bfb8-f78b8b75fff9";
-export const userId = "u-88350caa-4080-4505-a169-09f3f15e83b7";
+export const userId = "u-8268f5e1-f5a1-440c-a333-0f5578a73847";
 export const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxNTI0ODQ4NSwiZXhwIjoxNzE1ODUzMjg1fQ.FDDKIDexH92mp6lrNBvlhsRn608URksj2FUDmPlkxVg";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxNjEzOTUxMywiZXhwIjoxNzE2NzQ0MzEzfQ.BTDYjjzcQGxOa4H9pb26AQ5_2WnOBTTaMabMRDMl7JQ";
 
 export default function FeedbackWorkflowPreview({
   online = false,
@@ -40,10 +40,10 @@ export default function FeedbackWorkflowPreview({
           token={token}
           showFooter={true}
           questIds={[
-            "q-59529bc6-f5f2-490d-a554-429bcc2bcb1e",
-            "q-dd6075fb-cc35-4900-bfa2-cd9f2f266ffc",
-            "q-139a8bad-c46f-49fb-b416-75ea14f26ce9",
-            "q-2993a5eb-4a84-4513-8acc-0b798a917e80",
+            "q-73756612-c8de-4a4b-970f-ddf52154aaa8",
+            "q-f7ae5826-5b21-4ae7-beb4-f96264fe53cc",
+            "q-d23f7bb0-479e-4620-926f-0f52d429afb8",
+            "q-f1fe2a65-d2d1-4863-87f8-755b90283364",
           ]}
           GeneralFeedback={{
             heading: "General Fee",
@@ -139,29 +139,29 @@ export default function FeedbackWorkflowPreview({
       }}
       contactUrl="https://calendly.com/sriya-persana/30min"
       GeneralFeedback={{
-          heading: "General Fee",
-          description: "Give general feedsdasdasdback on this page",
-          formHeading: "General Feedbackasddffd",
-          formDescription: "Welcome back,sdfsdf Please complete your details",
-          // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+        heading: "General Fee",
+        description: "Give general feedsdasdasdback on this page",
+        formHeading: "General Feedbackasddffd",
+        formDescription: "Welcome back,sdfsdf Please complete your details",
+        // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
       }}
       RequestFeature={{
-          heading: "Request a Featureqwqewqewqe",
-          description: "How can we msdsfdsdfake it better",
-          formHeading: "Request a Feature",
-          // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+        heading: "Request a Featureqwqewqewqe",
+        description: "How can we msdsfdsdfake it better",
+        formHeading: "Request a Feature",
+        // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
       }}
       ReportBug={{
-          heading: "Reportasdasd a Bug",
-          description: "Describazsdasde your issue",
-          formHeading: "Report wewea Bug",
-          formDescription: "Describe yosddffdur issue",
-          // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+        heading: "Reportasdasd a Bug",
+        description: "Describazsdasde your issue",
+        formHeading: "Report wewea Bug",
+        formDescription: "Describe yosddffdur issue",
+        // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
       }}
       ContactUs={{
-          heading: "Contacasasdt us",
-          description: "Invite oasasdasdher admins and moderators",
-          // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+        heading: "Contacasasdt us",
+        description: "Invite oasasdasdher admins and moderators",
+        // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
       }}
       offlineFormData={[
         [
@@ -177,7 +177,7 @@ export default function FeedbackWorkflowPreview({
             question: "Enter your Email",
             options: [""],
             criteriaId: "ec-84192fef-c917-410f-4ace713aae",
-            required: true,
+            required: false,
           },
           {
             type: "USER_INPUT_TEXTAREA",

@@ -26,10 +26,12 @@ interface PropType {
   ref?: RefObject<HTMLInputElement>
   emailErrorStyle?:CSSProperties | undefined;
   emailtext?:string;
+  required?:boolean
 }
 
-export const Input = ({ placeholder, type, style, onChange, iconColor, value, onKeyUp, onKeyDown, ref, logoPosition = 'right', emailErrorStyle,emailtext }: PropType) => {
+export const Input = ({ placeholder, type, style, onChange, iconColor, value, onKeyUp, onKeyDown, ref, logoPosition = 'right', emailErrorStyle,emailtext, required }: PropType) => {
   const { themeConfig } = useContext(QuestContext.Context);
+
   
   const [isValidEmail, setIsValidEmail] = useState(true);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -38,6 +40,9 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value, on
     const inputValue = e.target.value;
     if (type === 'email') {
       setIsValidEmail(emailRegex.test(inputValue));
+      if(!inputValue){
+        setIsValidEmail(true)
+      }
     }
     if (onChange) {
       onChange(e);
@@ -56,6 +61,7 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value, on
               className="q_input_main_cont q_input_custom_datePicker"
               onChange={onChange}
               value={value}
+              required={required}
             />
             {value ? <div style={{ display: "inline", marginTop: "2px", color: style?.color, fontSize: style?.fontSize }} >{value}</div> : <div style={{ display: "inline", color: "#8E8E8E", marginTop: "2px", fontSize: style?.fontSize }}>{placeholder}</div>}
           </label>
@@ -81,6 +87,7 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value, on
                 color: style?.color || themeConfig.primaryColor
               }
             }
+            required={required}
           />
           {(logoPosition == 'right' || logoPosition == 'both') && (LogoType[type])(iconColor || '#B9B9B9')}
         </div>
