@@ -435,13 +435,14 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   const normalInput = (
     question: string,
     criteriaId: string,
-    placeholder?: string
+    placeholder?: string,
+    required?: boolean
   ) => {
     return (
       <div className="" key={criteriaId}>
         <Label
           htmlFor={"normalInput"}
-          children={question}
+          children={`${question}${required === true ? "*" : ""}`}
           style={{
             color:
               styleConfig?.Label?.color ||
@@ -471,13 +472,14 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   const emailInput = (
     question: string,
     criteriaId: string,
-    placeholder?: string
+    placeholder?: string,
+    required?: boolean
   ) => {
     return (
       <div className="" key={criteriaId}>
         <Label
           htmlFor={"normalInput"}
-          children={question}
+          children={`${question}${required === true ? "*" : ""}`}
           style={{
             color:
               styleConfig?.Label?.color ||
@@ -506,6 +508,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               : styleConfig?.EmailError?.text
           }
           emailErrorStyle={styleConfig?.EmailError?.errorStyle}
+          required={required}
         />
 
         {/* {isValidEmail(answer[criteriaId]) && (
@@ -518,13 +521,14 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   const normalInput2 = (
     question: string,
     criteriaId: string,
-    placeholder?: string
+    placeholder?: string,
+    required?: boolean
   ) => {
     return (
       <div className="" key={criteriaId}>
         <Label
           htmlFor={"normalInput"}
-          children={question}
+          children={`${question}${required === true ? "*" : ""}`}
           style={{
             color:
               styleConfig?.Label?.color ||

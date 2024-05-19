@@ -521,6 +521,8 @@ const Survey: React.FC<FeedbackProps> = ({
               ? "This is not a valid email"
               : styleConfig?.EmailError?.text
           }
+          required={required}
+          
           emailErrorStyle={styleConfig?.EmailError?.errorStyle}
         />
       </div>
