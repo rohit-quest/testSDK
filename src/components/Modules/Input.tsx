@@ -32,7 +32,6 @@ interface PropType {
 export const Input = ({ placeholder, type, style, onChange, iconColor, value, onKeyUp, onKeyDown, ref, logoPosition = 'right', emailErrorStyle,emailtext, required }: PropType) => {
   const { themeConfig } = useContext(QuestContext.Context);
 
-  console.log(required,type,value,'rest')
   
   const [isValidEmail, setIsValidEmail] = useState(true);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
