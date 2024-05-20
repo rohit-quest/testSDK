@@ -4,7 +4,7 @@ interface ContactProps {
   btnTextColor?: string;
   textColor?: string;
   formdata: Array<{ [key: string]: any }>;
-  handleSubmit?: (e: any) => void;
+  handleSubmit: () => void
   handleUpdate: (e: any, id: string, j: string, k?: number) => void;
 }
 

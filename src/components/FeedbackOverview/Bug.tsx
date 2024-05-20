@@ -6,7 +6,7 @@ import { blackStar, whiteStar } from './SVG';
 
 interface BugContentProps {
   formdata: Array<{ [key: string]: any }>;
-  handleSubmit?: (e: any) => void;
+  handleSubmit: () => void
   handleUpdate: (e: any, id: string, j: string, k?: number) => void;
   answer: any;
   handleRemove: (e: any) => void;
@@ -46,8 +46,13 @@ const BugContent: React.FC<BugContentProps> = ({
   };
 
 
+  const handlingSubmission = (e: any) => {
+    e.preventDefault();
+    handleSubmit();
+  };
+
   return (
-    <form className='q-fdov-ch-boxes' onSubmit={handleSubmit}>
+    <form className='q-fdov-ch-boxes' onSubmit={handlingSubmission}>
       {formdata?.length > 0 ? (
         <>
           {formdata.map((data: any) => {
