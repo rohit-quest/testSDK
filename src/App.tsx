@@ -176,7 +176,7 @@ function App() {
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
         {/* <GamifiedQuizPreview online={true} /> */}
         {/* <GamifiedQuizPreview online={true} /> */}
-        <SurveyPreview online={false}/>
+        {/* <SurveyPreview online={false}/> */}
         {/* 
                 <HelpCenter
                     userId={userId}
