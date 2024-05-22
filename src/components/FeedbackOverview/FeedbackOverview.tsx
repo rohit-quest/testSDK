@@ -430,7 +430,6 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           .post(request, requestData, { headers: headers })
           .then((response) => {
             if (response.data.success) {
-              showToast.success({ text: "Thank you for your feedback" });
               setSubmit(true);
               setTimeout(() => {
                 setSubmit(false);
@@ -442,7 +441,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                 { headers: headers }
               );
             } else {
-              showToast.error({ text: response.data.error });
+              console.log(response.data.error)
             }
           })
           .catch((error) => {
@@ -719,6 +718,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               themeConfig.primaryColor,
             ...styleConfig.TextArea,
           }}
+          required={required}
         />
       </div>
     );

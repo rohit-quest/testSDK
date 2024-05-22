@@ -6,7 +6,7 @@ import { blackStar, whiteStar } from './SVG';
 
 interface FeatureContentProps {
   formdata: Array<{ [key: string]: any }>;
-  handleSubmit?: (e: any) => void;
+  handleSubmit: () => void
   handleUpdate: (e: any, id: string, j: string, k?: number) => void;
   answer: any;
   handleRemove: (e: any) => void;
@@ -44,10 +44,14 @@ const FeatureContent: React.FC<FeatureContentProps> = ({
     handleUpdate(e, id, '', rating);
   };
 
+  const handlingSubmission = (e: any) => {
+    e.preventDefault();
+    handleSubmit();
+  };
 
 
   return (
-    <form className='q-fdov-ch-boxes' onSubmit={handleSubmit}>
+    <form className='q-fdov-ch-boxes' onSubmit={handlingSubmission}>
       {formdata?.length > 0 ? (
         <>
           {formdata.map((data: any) => {
