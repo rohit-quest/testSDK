@@ -94,6 +94,7 @@
   align-self: stretch;
   font-size: 10px;
   box-sizing: border-box;
+  cursor: pointer;
 }
 .feedbackWatermark p {
   font-size: 10px;
