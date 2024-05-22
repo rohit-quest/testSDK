@@ -165,7 +165,7 @@ export default function InlineFeedback({
             </section>
           </>
         )}
-        <div className={`feedbackWatermark`} style={{ ...styleConfig?.Footer }}>
+        <div className={`feedbackWatermark`} onClick={()=> window.open('https://www.questlabs.ai/')} style={{ ...styleConfig?.Footer }}>
           <p>Powered by Quest Labs</p>
           <svg
             width="12"
