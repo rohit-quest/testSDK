@@ -549,7 +549,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
             ...styleConfig?.Label,
           }}
         >
-          {`${question} ${!!required && "*"}`}
+          {`${question} ${required ? "*" : ''}`}
         </Label>
         <Input
           type={inputType}
@@ -604,7 +604,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
             ...styleConfig?.Label,
           }}
         >
-          {`${question} ${!!required && "*"}`}
+          {`${question} ${required ? "*" : ''}`}
         </Label>
         <Input
           type={"date"}
@@ -647,7 +647,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
             ...styleConfig?.Label,
           }}
         >
-          {`${question} ${!!required && "*"}`}
+          {`${question} ${required ? "*" : ''}`}
         </Label>
         <TextArea
           onChange={(e) => handleUpdate(e, criteriaId, "")}
@@ -688,7 +688,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
             ...styleConfig?.Label,
           }}
         >
-          {`${question} ${!!required && "*"}`}
+         {`${question} ${required ? "*" : ''}`}
         </Label>
         <SingleChoice
           options={options}
@@ -761,7 +761,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
             ...styleConfig?.Label,
           }}
         >
-          {`${question} ${!!required && "*"}`}
+          {`${question} ${required ? "*" : ''}`}
         </Label>
         <MultiChoice
           options={options}
@@ -811,7 +811,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
             ...styleConfig?.Label,
           }}
         >
-          {`${question} ${!!required && "*"}`}
+         {`${question} ${required ? "*" : ''}`}
         </Label>
         <MultiChoiceTwo
           options={options}
