@@ -642,14 +642,14 @@ function App() {
           variation="test"
         /> */}
 
-    <HelpHub
+    {/* <HelpHub
       userId={userId}
       token={token}
       questId="c-a2b5782e-f3a1-4a33-bbca-8c6601a8ca62"
       styleConfig={{
       }}
       variation="test"
-    />
+    /> */}
 
         {/* ------------------- API v2 Test Ended -------------------  */}
 
