@@ -101,7 +101,7 @@ export default function Preview({ online }: { online: boolean }) {
         userId={userId}
         token={token}
         questId={questId}
-        type="like"
+        type="emoji"
         offlineFormData={inlineFeedbackOffline}
         setAnswer={setAnswer}
         styleConfig={{

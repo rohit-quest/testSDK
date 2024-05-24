@@ -111,7 +111,7 @@ export default function InlineFeedback({
       //   }
       setAnswer(jsonData);
       setTimeout(() => {
-        setShowSuccess(true);
+        // setShowSuccess(true);
       }, 1000);
     } catch (error) {
       toast.error("Something went wrong, try again");
