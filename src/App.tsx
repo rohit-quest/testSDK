@@ -117,8 +117,9 @@ function App() {
 
   // const CSGetstarted = new
 
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTA2ZDY1NDYxLTdjNWYtNDczNy05NDZkLWM4YWI4YzgwZWIyNSIsImlhdCI6MTcxNjAxMTc3MiwiZXhwIjoxNzE2NjE2NTcyfQ.Y83uP_5fvAxF0wwOMd6EbhhnhqvpmQeTz1sxC1a3Rjc'
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTA2ZDY1NDYxLTdjNWYtNDczNy05NDZkLWM4YWI4YzgwZWIyNSIsImlhdCI6MTcxNjUyNzYzOCwiZXhwIjoxNzE3MTMyNDM4fQ.q3wCTjwiRaNmtSIUhOY-hvm9T2Zm_q4Y7Xq0aPKQf_o'
   const userId = 'u-06d65461-7c5f-4737-946d-c8ab8c80eb25'
+
   return (
     <div
     // style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
@@ -453,16 +454,14 @@ function App() {
           questId="c-e3fbaae2-16ca-423f-8cec-69689a17934f"
           userId={userId}
           token={token}
-          progress={['Personal Details', 'Professional Details']}
+          progress={['Personal Details']}
           controlBtnType="Buttons"
           headingScreen={[
             { name: 'Identity Insights', desc: 'Revealing dimensions beyond words' },
-            { name: 'Professional Details', desc: 'Tell us more about your company' },
           ]}
-          template="multi-question"
+          template="single-page"
           design={[
             [1, 2, 3],
-            [4, 5, 6],
           ]}
           singleChoose="modal1"
           multiChoice="modal2"
@@ -488,6 +487,7 @@ function App() {
           getAnswers={() => {}}
           setAnswer={setAnswer}
           answer={answer}
+          nextBtnText="Submit"
         /> */}
 
       {/* <OnBoarding
@@ -570,7 +570,7 @@ function App() {
           functionOnSubmit={() => alert('submited')}
         /> */}
         
-        <CrossSelling
+        {/* <CrossSelling
           questId="c-80398e9e-fbcf-492d-9fdb-c0e0cdda642d"
           token={token}
           userId={userId}
@@ -588,7 +588,68 @@ function App() {
             SecondaryButton: {},
             Timer: { backgroundColor: '', primaryColor: '', secondaryColor: '' },
           }}
-        />
+        /> */}
+
+      {/* <FeedbackWorkflow
+          isOpen
+          userId={userId}
+          token={token}
+          questId='c-4004eb02-cc56-4c02-bb5a-3c4d42c8f432'
+          questIds={['c-8c8c51cb-6b48-40ff-99bb-9e349c716154','c-95dec57f-6b97-4f24-9a94-1b0170b1f453','c-ba4ee085-1ad1-46a5-b91b-4c690d5dbdf0','c-9920d93c-c3db-4897-be6d-4ac7c37d9203']}
+          GeneralFeedback={{
+            heading: '',
+            description: '',
+            formHeading: '',
+            formDescription: '',
+          }}
+          ReportBug={{
+            heading: '',
+            description: '',
+            formHeading: '',
+            formDescription: '',
+          }}
+          RequestFeature={{
+            heading: '',
+            description: '',
+            formHeading: '',
+            formDescription: '',
+          }}
+          ContactUs={{ heading: '', description: '', iconUrl: '' }}
+          styleConfig={{
+            Heading: {},
+            Description: {},
+            Form: { },
+            Label: {},
+            Input: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            Footer: {},
+            listHeading: {},
+            listDescription: {},
+            Card: {},
+            EmailError: { text: '' },
+            listHover: {
+              background: '',
+              iconBackground: '',
+              iconColor: '',
+              Heading: '',
+              Description: '',
+              IconSize: '16px',
+            },
+            ThanksPopup: { ShowFooter: true },
+          }}
+          contactUrl="https://calendly.com/shubham-quest/chat"
+          variation="test"
+        /> */}
+
+    <HelpHub
+      userId={userId}
+      token={token}
+      questId="c-a2b5782e-f3a1-4a33-bbca-8c6601a8ca62"
+      styleConfig={{
+      }}
+      variation="test"
+    />
 
         {/* ------------------- API v2 Test Ended -------------------  */}
 

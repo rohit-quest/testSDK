@@ -21,6 +21,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
     setHelpHub,
     uniqueUserId,
     uniqueEmailId,
+    campaignVariationId
   } = props;
 
   const { apiKey, entityId, apiType, themeConfig } = useContext(
@@ -42,6 +43,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
         token,
         apiKey,
         criteriaId,
+        campaignVariationId,
         [],
         uniqueUserId,
         uniqueEmailId,

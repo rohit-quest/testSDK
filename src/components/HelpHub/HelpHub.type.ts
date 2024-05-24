@@ -107,6 +107,7 @@ export interface HelpHubProps {
   claimStatusUpdates?: string[] | [];
   setClaimStatusUpdates?: Dispatch<SetStateAction<string[]>>;
   helphubPosition?: "SIDEBAR" | "POPUP" | "USER_CHOICE" ;
+  variation?: string
 }
 export interface HelpHubPropsOffline {
   Main?: {
@@ -139,7 +140,7 @@ export interface HelpHubHomeTypes {
   taskStatus?: number;
   questsData: QuestCriteriaWithStatusType[][];
   setSelectedSection: (section: string) => void;
-  parentQuest?: QuestTypes;
+  parentQuest?: any;
   userId?: string;
   token?: string;
   styleConfig?: HelphubStyleConfig;
@@ -183,6 +184,7 @@ export interface HelpHubFaqTypes {
 export interface HelpHubUpdatesTypes {
   updateData: QuestCriteriaWithStatusType[];
   questId: string;
+  campaignVariationId: string;
   userId: string;
   token: string;
   contentConfig?: HelpHubOthersContentTypes;
@@ -201,6 +203,7 @@ export interface HelpHubUpdatesTypes {
 export interface HelpHubTasksTypes {
   tasksData: QuestCriteriaWithStatusType[];
   questId: string;
+  campaignVariationId: string;
   userId: string;
   token: string;
   contentConfig?: HelpHubOthersContentTypes;

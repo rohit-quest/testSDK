@@ -36,6 +36,7 @@ const HelpHub = (props: HelpHubProps) => {
     contentConfig,
     showFooter,
     helphubPosition = "USER_CHOICE",
+    variation
   } = props;
 
   const { apiKey, entityId, featureFlags, apiType, themeConfig } = useContext(
@@ -47,7 +48,7 @@ const HelpHub = (props: HelpHubProps) => {
   const [prevSelectedSection, setPrevSelectedSection] = useState("");
 
   const [helpHub, setHelpHub] = useState(false);
-  const [parentQuest, setParentQuest] = useState<QuestTypes>();
+  const [parentQuest, setParentQuest] = useState<any>();
   const [chieldQuestCriteria, setChieldQuestCriteria] = useState<
     QuestCriteriaWithStatusType[][]
   >([]);
@@ -112,119 +113,96 @@ const HelpHub = (props: HelpHubProps) => {
       apiKey,
       uniqueUserId,
       uniqueEmailId,
-      apiType
+      apiType,
+      variation
     );
+
     if (!getResult?.success) {
-      let createQuest = await createDefaultQuest(
-        BACKEND_URL,
-        entityId,
-        userId,
-        token,
-        apiKey,
-        uniqueUserId,
-        uniqueEmailId,
-        apiType
-      );
-      setParentQuest(createQuest?.parentQuest);
+      // let createQuest = await createDefaultQuest(
+      //   BACKEND_URL,
+      //   entityId,
+      //   userId,
+      //   token,
+      //   apiKey,
+      //   uniqueUserId,
+      //   uniqueEmailId,
+      //   apiType
+      // );
+      // setParentQuest(createQuest?.parentQuest);
 
-      let criterias = getResult?.eligibilityCriterias?.map(
-        (criteriaData: any) =>
-          criteriaData?.map(
-            (criteria: {
-              data: {
-                createdAt: string;
-                criteriaType: string;
-                metadata: {
-                  imageUrl: string;
-                  description: string;
-                  question: string;
-                  answer: string;
-                  title: string;
-                  options: string[];
-                  isOptional: string;
-                  placeholder: string;
-                  linkActionName: string;
-                  linkActionUrl: string;
-                  manualInput: string;
-                };
-                criteriaId: string;
-              };
-              userAnswer: [];
-              completed: boolean;
-            }) => {
-              return {
-                type: criteria?.data?.criteriaType,
-                question:
-                  criteria?.data?.metadata?.title ||
-                  criteria?.data?.metadata?.question ||
-                  "",
-                description: criteria?.data?.metadata?.description || "",
-                options: criteria?.data?.metadata?.options || [],
-                criteriaId: criteria?.data?.criteriaId || "",
-                required: !criteria?.data?.metadata?.isOptional,
-                linkTitle: criteria?.data?.metadata?.linkActionName || "",
-                linkUrl: criteria?.data?.metadata?.linkActionUrl || "",
-                manualInput: criteria?.data?.metadata?.manualInput || false,
-                completed:
-                  !!criteria?.userAnswer?.length || criteria?.completed,
-                answer: criteria?.data?.metadata?.answer || "",
-                createdAt: criteria?.data?.createdAt || "",
-                imageUrl: criteria?.data?.metadata?.imageUrl || "",
-              };
-            }
-          )
-      );
+      // let criterias = getResult?.eligibilityCriterias?.map(
+      //   (criteriaData: any) =>
+      //     criteriaData?.map(
+      //       (criteria: {
+      //         data: {
+      //           createdAt: string;
+      //           criteriaType: string;
+      //           metadata: {
+      //             imageUrl: string;
+      //             description: string;
+      //             question: string;
+      //             answer: string;
+      //             title: string;
+      //             options: string[];
+      //             isOptional: string;
+      //             placeholder: string;
+      //             linkActionName: string;
+      //             linkActionUrl: string;
+      //             manualInput: string;
+      //           };
+      //           criteriaId: string;
+      //         };
+      //         userAnswer: [];
+      //         completed: boolean;
+      //       }) => {
+      //         return {
+      //           type: criteria?.data?.criteriaType,
+      //           question:
+      //             criteria?.data?.metadata?.title ||
+      //             criteria?.data?.metadata?.question ||
+      //             "",
+      //           description: criteria?.data?.metadata?.description || "",
+      //           options: criteria?.data?.metadata?.options || [],
+      //           criteriaId: criteria?.data?.criteriaId || "",
+      //           required: !criteria?.data?.metadata?.isOptional,
+      //           linkTitle: criteria?.data?.metadata?.linkActionName || "",
+      //           linkUrl: criteria?.data?.metadata?.linkActionUrl || "",
+      //           manualInput: criteria?.data?.metadata?.manualInput || false,
+      //           completed:
+      //             !!criteria?.userAnswer?.length || criteria?.completed,
+      //           answer: criteria?.data?.metadata?.answer || "",
+      //           createdAt: criteria?.data?.createdAt || "",
+      //           imageUrl: criteria?.data?.metadata?.imageUrl || "",
+      //         };
+      //       }
+      //     )
+      // );
 
-      setChieldQuestCriteria(criterias);
+      // setChieldQuestCriteria(criterias);
     } else {
-      let criterias = getResult?.eligibilityCriterias?.map(
-        (criteriaData: any) =>
-          criteriaData?.map(
-            (criteria: {
-              data: {
-                createdAt: string;
-                criteriaType: string;
-                metadata: {
-                  imageUrl: string;
-                  description: string;
-                  question: string;
-                  answer: string;
-                  title: string;
-                  options: string[];
-                  isOptional: string;
-                  placeholder: string;
-                  linkActionName: string;
-                  linkActionUrl: string;
-                  manualInput: string;
-                };
-                criteriaId: string;
-              };
-              userAnswer: [];
-              completed: boolean;
-            }) => {
+      let criterias = getResult?.data.childCampaignActions?.map(
+        ({actions}: any) =>
+          actions?.map(
+            (action: any) => {
               return {
-                type: criteria?.data?.criteriaType,
-                question:
-                  criteria?.data?.metadata?.title ||
-                  criteria?.data?.metadata?.question ||
-                  "",
-                description: criteria?.data?.metadata?.description || "",
-                options: criteria?.data?.metadata?.options || [],
-                criteriaId: criteria?.data?.criteriaId || "",
-                required: !criteria?.data?.metadata?.isOptional,
-                linkTitle: criteria?.data?.metadata?.linkActionName || "",
-                linkUrl: criteria?.data?.metadata?.linkActionUrl || "",
-                manualInput: criteria?.data?.metadata?.manualInput || false,
-                completed:
-                  !!criteria?.userAnswer?.length || criteria?.completed,
-                answer: criteria?.data?.metadata?.answer || "",
-                createdAt: criteria?.data?.createdAt || "",
-                imageUrl: criteria?.data?.metadata?.imageUrl || "",
+                type: action.actionType,
+                question: action.title || '',
+                description: action.description || '',
+                options: action.options || [],
+                criteriaId: action.actionId,
+                required: action.isRequired,
+                linkTitle: action.metadata?.linkActionName || action.title || "",
+                linkUrl: action.metadata?.link || "",
+                manualInput: false,
+                completed: Boolean(action.isCompleted),
+                answer: action.metadata?.answer || "",
+                createdAt: action.createdAt || "",
+                imageUrl: action.metadata?.imageUrl || "",
               };
             }
           )
       );
-      setParentQuest(getResult?.parentQuest);
+      setParentQuest(getResult?.data);
       setTaskData(criterias[3]);
       setUpdateData(criterias[2]);
       setChieldQuestCriteria(criterias);
@@ -393,7 +371,8 @@ const HelpHub = (props: HelpHubProps) => {
               updateData={!!chieldQuestCriteria?.length ? updateData : []}
               contentConfig={contentConfig?.Updates}
               styleConfig={styleConfig}
-              questId={parentQuest?.childQuestIDs[2] || ""}
+              questId={parentQuest?.childCampaignActions[2].campaignId || ""}
+              campaignVariationId={parentQuest?.childCampaignActions[2].campaignVariationId || ""}
               userId={userId}
               token={token}
               claimStatusUpdates={claimStatusUpdates}
@@ -414,7 +393,8 @@ const HelpHub = (props: HelpHubProps) => {
               tasksData={!!chieldQuestCriteria?.length ? taskData : []}
               contentConfig={contentConfig?.Tasks}
               styleConfig={styleConfig}
-              questId={parentQuest?.childQuestIDs[3] || ""}
+              questId={parentQuest?.childCampaignActions[3].campaignId || ""}
+              campaignVariationId={parentQuest?.childCampaignActions[3].campaignVariationId || ""}
               userId={userId}
               token={token}
               claimStatusTasks={claimStatusTasks}
