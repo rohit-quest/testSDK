@@ -125,9 +125,9 @@ export default function InlineFeedback({
         data-type={type.toString()}
         style={{ ...styleConfig?.Form, ...themeConfigStyle }}
       >
-        {/* {showSuccess ? (
+        {showSuccess ? (
           <Success closeFeedback={() => setShowSuccess(false)} />
-        ) : ( */}
+        ) : (
           <>
             <div className={`feedbackHeader`}>
               <div className="inline-text-cont" style={{background:'transparent'}}>
@@ -164,7 +164,7 @@ export default function InlineFeedback({
               </div>
             </section>
           </>
-        {/* )} */}
+        )} 
         <div className={`feedbackWatermark`} onClick={()=> window.open('https://www.questlabs.ai/')} style={{ ...styleConfig?.Footer }}>
           <p>Powered by Quest Labs</p>
           <svg
