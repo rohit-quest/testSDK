@@ -191,7 +191,7 @@ function App() {
                 // descriptioin="this is descripiton"
                 /> */}
 
-        <OnBoardingPreview online={false} />
+        <OnBoardingPreview online={true} />
 
         {/* <GetStartedPreview online={true} /> */}
 

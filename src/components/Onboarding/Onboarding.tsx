@@ -75,6 +75,7 @@ interface QuestLoginProps {
     SingleChoice?: {
       style?: CSSProperties;
       selectedStyle?: CSSProperties;
+      hoverBackground?:string
     };
     MultiChoice?: {
       style?: CSSProperties;
@@ -791,6 +792,7 @@ function OnBoarding(props: QuestLoginProps) {
               themeConfig?.secondaryColor,
             ...styleConfig?.SingleChoice?.style,
           }}
+          hoverBackground={styleConfig?.SingleChoice?.hoverBackground}
           selectedStyle={{
             accentColor:
               styleConfig?.SingleChoice?.selectedStyle?.accentColor ||

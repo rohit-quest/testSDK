@@ -94,6 +94,7 @@ interface QuestLoginProps {
     SingleChoice?: {
       style?: CSSProperties;
       selectedStyle?: CSSProperties;
+      hoverBackground?:string
     };
     MultiChoice?: {
       style?: CSSProperties;
@@ -708,7 +709,9 @@ function OnBoardingOffline(props: QuestLoginProps) {
               BrandTheme?.primaryColor ||
               themeConfig?.secondaryColor,
             ...styleConfig?.SingleChoice?.style,
+          
           }}
+          hoverBackground={styleConfig?.SingleChoice?.hoverBackground}
           selectedStyle={{
             accentColor:
               styleConfig?.SingleChoice?.selectedStyle?.accentColor ||
@@ -716,6 +719,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
               BrandTheme?.primaryColor ||
               themeConfig?.primaryColor,
             ...styleConfig?.SingleChoice?.selectedStyle,
+            
           }}
         />
         {manualInput != false && answer[criteriaId] == manualInput && (

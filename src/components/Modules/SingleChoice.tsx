@@ -16,6 +16,7 @@ interface SingleChoiceProps {
   style?: CSSProperties;
   selectedStyle?: SelectedStyle;
   type?: "modal1" | "modal2" | "modal3";
+  hoverBackground?:string;
 }
 
 const SingleChoice: React.FC<SingleChoiceProps> = ({
@@ -25,6 +26,7 @@ const SingleChoice: React.FC<SingleChoiceProps> = ({
   style,
   selectedStyle = {accentColor: "#6525B3"},
   type,
+  hoverBackground
 }) => {
 
   const { themeConfig } = useContext(QuestContext.Context);
@@ -49,7 +51,7 @@ const SingleChoice: React.FC<SingleChoiceProps> = ({
     }),
     option: (styles, { isFocused }) => ({
       ...styles,
-      backgroundColor: isFocused ? "#ADD8E6" : (containerStyle?.background || containerStyle?.backgroundColor || "#f9fafb") as string,
+      backgroundColor: isFocused ? hoverBackground|| "#ADD8E6" : (containerStyle?.background || containerStyle?.backgroundColor || "#f9fafb") as string,
       color: containerStyle?.color || "black",
       fontSize: containerStyle?.fontSize || "14px",
       fontFamily: containerStyle?.fontFamily || themeConfig?.fontFamily || "'Figtree', sans-serif",
