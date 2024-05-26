@@ -125,7 +125,18 @@ const ShareArticle: React.FC<articleProps> = ({
             Share with
           </div>
           <div className="q_article_img">
-            {xLogo()}
+            <div
+              className="q-referShare-content-social-img-x"
+              onClick={() => {
+                GeneralFunctions.fireTrackingEvent(
+                  "quest_share_article_twitter_clicked",
+                  "share_article"
+                );
+                shareOnPlatform(shareLink, "twitter");
+              }}
+            >
+              {xLogo()}
+            </div>
             <img
               className="q-referShare-content-social-img"
               src={whatsappSvg}

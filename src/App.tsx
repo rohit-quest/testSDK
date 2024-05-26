@@ -191,7 +191,7 @@ function App() {
                 // descriptioin="this is descripiton"
                 /> */}
 
-        <OnBoardingPreview online={true} />
+        {/* <OnBoardingPreview online={true} /> */}
 
         {/* <GetStartedPreview online={true} /> */}
 
@@ -329,7 +329,7 @@ function App() {
                   
                     /> */}
         {/* <SreakPreview/> */}
-        {/* <ShareArticlePreview online={false}/> */}
+        <ShareArticlePreview online={false}/>
         {/* <ShareArticle
                     bgColor=""
                     // description=""
