@@ -7,6 +7,7 @@ import QuestContext from "../QuestWrapper.tsx";
 import { QuestArray, Metadata } from "../HelpCenter/Svg.tsx";
 import General from "../../general.ts";
 import X from "./x.png";
+import { xLogo } from "../FeedbackOverview/SVG.tsx";
 
 export interface articleProps {
   heading?: string;
@@ -128,18 +129,7 @@ const ShareArticleOffline: React.FC<articleProps> = ({
             Share with
           </div>
           <div className="q_article_img">
-            <img
-              className="q-referShare-content-social-img-x"
-              onClick={() => {
-                GeneralFunctions.fireTrackingEvent(
-                  "quest_share_article_twitter_clicked",
-                  "share_article"
-                );
-                shareOnPlatform(offlineFormData[0]?.linkUrl, "twitter");
-              }}
-              src={X}
-              alt="Twitter"
-            />
+            {xLogo()}
             <img
               className="q-referShare-content-social-img"
               src={whatsappSvg}
