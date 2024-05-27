@@ -553,7 +553,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               themeConfig.primaryColor,
             ...styleConfig.Input,
           }}
-          placeholder={placeholder}
+          placeholder={placeholder || question}
           value={answer[criteriaId]}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           required={required}
@@ -591,7 +591,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               themeConfig.primaryColor,
             ...styleConfig.Input,
           }}
-          placeholder={placeholder}
+          placeholder={placeholder || question}
           value={answer[criteriaId]}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           emailtext={
@@ -616,8 +616,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       <div className="" key={criteriaId}>
         <Label
           htmlFor={"normalInput"}
-          children={`${question}${required === true ? "*" : ""}`}
-          style={{
+          children={`${question}${required === true ? "*" : ""}`}          style={{
             color:
               styleConfig?.Label?.color ||
               styleConfig?.Heading?.color ||
@@ -629,7 +628,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         <TextArea
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           value={answer[criteriaId]}
-          placeholder={placeholder}
+          placeholder={placeholder || question}
           style={{
             borderColor: themeConfig.borderColor,
             color:
@@ -676,6 +675,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       console.error("An error occurred while fetching the image:", error);
     }
   };
+  console.log(formdata,'formdata')
 
   return (
     <Modal

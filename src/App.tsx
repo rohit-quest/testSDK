@@ -366,7 +366,7 @@ function App() {
               },
             ]}
         /> */}
-        <LeaderBoard
+        {/* <LeaderBoard
           token={token}
           userId={userId}
           styleConfig={{
@@ -383,7 +383,7 @@ function App() {
             PointsColor: {},
             ProgressBarColor: {},
           }}
-        />
+        /> */}
         {/* <ReferEarn_
           questId="c-3a4276f6-fb60-47e8-9e60-092329c23b2e"
           token={token}
@@ -779,7 +779,7 @@ function App() {
         <button onClick={() => Toast.error({ text: "This is a error message", position: 'bottom-center', autoClose: 1000, template: 2, description: "Error" })}>Error</button>
         <button onClick={() => Toast.warning({ text: "This is a succes warning message", position: 'bottom-center', autoClose: 1000, template: 2, description: "WARNING" })}>Warning</button> */}
 
-        {/* <FeedbackWorkflowPreview online={true} /> */}
+        <FeedbackWorkflowPreview online={true} />
         {/* <ChallengesPreview online={true} /> */}
 
         {/* <ReferEarnPreview/> */}
