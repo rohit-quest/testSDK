@@ -44,6 +44,17 @@ export default function OnBoardingPreview({
         placeholder: "",
       },
       {
+        type: "USER_INPUT_SINGLE_CHOICE",
+        question: "Your hobbies?",
+        options: ["Playing", "Coding", "Gaming"],
+        criteriaId: "ec-87fb0e54-c0e3-4fad-a865-37da2f9d68fb",
+        required: false,
+        linkTitle: "",
+        linkUrl: "",
+        manualInput: false,
+        placeholder: "",
+      },
+      {
         type: "USER_INPUT_TEXT",
         question: "Last name",
         options: [""],
@@ -76,17 +87,7 @@ export default function OnBoardingPreview({
         manualInput: false,
         placeholder: "",
       },
-      {
-        type: "USER_INPUT_SINGLE_CHOICE",
-        question: "Your hobbies?",
-        options: ["Playing", "Coding", "Gaming"],
-        criteriaId: "ec-87fb0e54-c0e3-4fad-a865-37da2f9d68fb",
-        required: false,
-        linkTitle: "",
-        linkUrl: "",
-        manualInput: false,
-        placeholder: "",
-      },
+     
       {
         type: "USER_INPUT_TEXT",
         question: "What is your role in the company?",
@@ -205,7 +206,7 @@ export default function OnBoardingPreview({
       // inputBorder="1px solid #6525B3"
       template='multi-question'
       // template="multi-question"
-      singleChoose="modal1"
+      singleChoose="modal3"
       multiChoice="modal1"
       design={[
         [1, 2],
@@ -228,16 +229,13 @@ export default function OnBoardingPreview({
       // screenHeight=""
       // progressBarType="modal1"
       offlineFormData={state.offlineFormData}
-      // styleConfig={{
-      //   Form: {
-      //     backgroundColor: "red"
-      //   },
-      //   ProgressBar: {
-      //     completeTabColor: "red",
-      //     currentTabColor: "green",
-      //     pendingTabColor: "blue",
-      //   },
-      // }}
+      styleConfig={{
+      
+        SingleChoice:{
+          selectedStyle:{background:'blue'},
+          hoverBackground:'grey'
+        }
+      }}
     />
   );
 }

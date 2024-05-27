@@ -636,6 +636,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           placeholder={placeholder}
           value={answer[criteriaId]}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
+          required={required}
         />
       </div>
     );

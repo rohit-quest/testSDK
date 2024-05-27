@@ -465,6 +465,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           placeholder={placeholder}
           value={answer[criteriaId]}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
+          required={required}
         />
       </div>
     );
@@ -551,6 +552,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               themeConfig.primaryColor,
             ...styleConfig.TextArea,
           }}
+          required={required}
         />
       </div>
     );

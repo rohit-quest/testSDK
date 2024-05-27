@@ -36,18 +36,34 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value, on
   const [isValidEmail, setIsValidEmail] = useState(true);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+
+  const validateEmail = (inputValue: string) => {
+    if (inputValue) {
+      setIsValidEmail(emailRegex.test(inputValue));
+    } else {
+      setIsValidEmail(true);
+    }
+  };
+
+
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     if (type === 'email') {
-      setIsValidEmail(emailRegex.test(inputValue));
-      if(!inputValue){
-        setIsValidEmail(true)
-      }
+      validateEmail(inputValue); 
     }
     if (onChange) {
       onChange(e);
     }
   };
+
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    if (type === 'email') {
+      validateEmail(inputValue); // Validate email on blur
+    }
+  };
+
 
   return (
     <>
@@ -80,6 +96,7 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value, on
             onKeyDown={onKeyDown}
             value={value}
             ref={ref}
+            onBlur={handleInputBlur}
             onWheel={event => { event.currentTarget.blur(); }}
             style={
               {
@@ -88,6 +105,7 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value, on
               }
             }
             required={required}
+            pattern={type === 'email' ? emailRegex.source : undefined}
           />
           {(logoPosition == 'right' || logoPosition == 'both') && (LogoType[type])(iconColor || '#B9B9B9')}
         </div>
