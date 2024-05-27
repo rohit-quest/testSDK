@@ -366,7 +366,7 @@ function App() {
               },
             ]}
         /> */}
-        {/* <LeaderBoard
+        <LeaderBoard
           token={token}
           userId={userId}
           styleConfig={{
@@ -383,7 +383,7 @@ function App() {
             PointsColor: {},
             ProgressBarColor: {},
           }}
-        /> */}
+        />
         {/* <ReferEarn_
           questId="c-3a4276f6-fb60-47e8-9e60-092329c23b2e"
           token={token}

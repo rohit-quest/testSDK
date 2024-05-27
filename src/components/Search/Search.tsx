@@ -214,7 +214,6 @@ export default function Search(prop: propType): JSX.Element {
         if(response.questThemeData?.theme){
           // getTheme(response.questThemeData?.theme) disabled for now
         }
-      }
     });
     if (prop.open === true) setOpen(true);
     inputElement.current?.focus();
