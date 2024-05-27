@@ -60,6 +60,8 @@
 .q_article_img {
     display: flex;
     gap: 14px;
+    align-items: center;
+    justify-content: center;
 }
 
 .q_article_img{

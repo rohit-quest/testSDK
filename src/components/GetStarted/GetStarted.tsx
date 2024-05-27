@@ -44,7 +44,11 @@ type GetStartedProps = {
     PrimaryButton?: CSSProperties;
     SecondaryButton?: CSSProperties;
     Form?: CSSProperties;
-    Footer?: CSSProperties;
+    Footer?: {
+      FooterStyle?: CSSProperties;
+      FooterText?: CSSProperties;
+      FooterIcon?: CSSProperties;
+    };
     Card?: CSSProperties;
     Topbar?: CSSProperties;
     ProgressBar?: {
@@ -442,37 +446,37 @@ function GetStarted({
         {(autoHide === true
           ? !!formdata.length && !allActionCompleted
           : true) && (
-          <div className="gs-heading-div" style={{ ...styleConfig?.Topbar }}>
-            <div>
-              <div
-                style={{
-                  color:
-                    styleConfig?.Heading?.color ||
-                    BrandTheme?.titleColor ||
-                    BrandTheme?.primaryColor ||
-                    themeConfig?.primaryColor,
-                  ...styleConfig?.Heading,
-                }}
-                className="gs-heading"
-              >
-                {headingText || "Quickstart Guide"}
-              </div>
-              <div
-                style={{
-                  color:
-                    styleConfig?.Description?.color ||
-                    BrandTheme?.secondaryColor ||
-                    themeConfig?.secondaryColor,
-                  ...styleConfig?.Description,
-                }}
-                className="gs-subheading"
-              >
-                {descriptionText ||
-                  "Get started with Quest and explore how Quest can take your customer engagement to the next level"}
+            <div className="gs-heading-div" style={{ ...styleConfig?.Topbar }}>
+              <div>
+                <div
+                  style={{
+                    color:
+                      styleConfig?.Heading?.color ||
+                      BrandTheme?.titleColor ||
+                      BrandTheme?.primaryColor ||
+                      themeConfig?.primaryColor,
+                    ...styleConfig?.Heading,
+                  }}
+                  className="gs-heading"
+                >
+                  {headingText || "Quickstart Guide"}
+                </div>
+                <div
+                  style={{
+                    color:
+                      styleConfig?.Description?.color ||
+                      BrandTheme?.secondaryColor ||
+                      themeConfig?.secondaryColor,
+                    ...styleConfig?.Description,
+                  }}
+                  className="gs-subheading"
+                >
+                  {descriptionText ||
+                    "Get started with Quest and explore how Quest can take your customer engagement to the next level"}
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
         {(autoHide === true
           ? !!formdata.length && !allActionCompleted
           : true) &&
@@ -898,14 +902,18 @@ function GetStarted({
             <div>
               <QuestLabs
                 style={{
-                  background:
-                    styleConfig?.Footer?.backgroundColor ||
-                    styleConfig?.Form?.backgroundColor ||
-                    BrandTheme?.background ||
-                    styleConfig?.Form?.background ||
-                    themeConfig?.backgroundColor,
-                  ...styleConfig?.Footer,
+                  ...{
+                    background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                      styleConfig?.Form?.backgroundColor ||
+                      styleConfig?.Form?.background ||
+                      BrandTheme?.background ||
+                      themeConfig?.backgroundColor,
+                  },
+                  ...styleConfig?.Footer?.FooterStyle,
+
                 }}
+                textStyle={styleConfig?.Footer?.FooterText}
+                iconStyle={styleConfig?.Footer?.FooterIcon}
               />
             </div>
           )}

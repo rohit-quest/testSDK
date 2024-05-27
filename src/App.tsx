@@ -778,6 +778,7 @@ function App() {
         <button onClick={() => Toast.info({ text: "This is a info message", position: 'bottom-center', autoClose: 1000, template: 2, description: "INFO" })}>Info</button>
         <button onClick={() => Toast.error({ text: "This is a error message", position: 'bottom-center', autoClose: 1000, template: 2, description: "Error" })}>Error</button>
         <button onClick={() => Toast.warning({ text: "This is a succes warning message", position: 'bottom-center', autoClose: 1000, template: 2, description: "WARNING" })}>Warning</button> */}
+
         {/* <FeedbackWorkflowPreview online={true} /> */}
         {/* <ChallengesPreview online={true} /> */}
 
@@ -854,7 +855,7 @@ function App() {
                   
                     /> */}
         {/* <SreakPreview/> */}
-
+        {/* <ShareArticlePreview online={false}/> */}
         {/* <ShareArticle
                     bgColor=""
                     // description=""

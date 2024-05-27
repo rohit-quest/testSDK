@@ -86,10 +86,15 @@ interface QuestLoginProps {
     TextArea?: CSSProperties;
     PrimaryButton?: CSSProperties;
     SecondaryButton?: CSSProperties;
-    Footer?: CSSProperties;
+    Footer?:{
+      FooterStyle?: CSSProperties;
+      FooterText?: CSSProperties;
+      FooterIcon?: CSSProperties;
+    };
     SingleChoice?: {
       style?: CSSProperties;
       selectedStyle?: CSSProperties;
+      hoverBackground?:string
     };
     MultiChoice?: {
       style?: CSSProperties;
@@ -100,6 +105,7 @@ interface QuestLoginProps {
       currentTabColor?: string;
       pendingTabColor?: string;
     };
+
   };
   offlineFormData: offlineFormData[] | [];
 }
@@ -544,7 +550,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
             ...styleConfig?.Label,
           }}
         >
-          {`${question} ${!!required && "*"}`}
+          {`${question} ${required ? "*" : ''}`}
         </Label>
         <Input
           type={inputType}
@@ -599,7 +605,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
             ...styleConfig?.Label,
           }}
         >
-          {`${question} ${!!required && "*"}`}
+          {`${question} ${required ? "*" : ''}`}
         </Label>
         <Input
           type={"date"}
@@ -642,7 +648,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
             ...styleConfig?.Label,
           }}
         >
-          {`${question} ${!!required && "*"}`}
+          {`${question} ${required ? "*" : ''}`}
         </Label>
         <TextArea
           onChange={(e) => handleUpdate(e, criteriaId, "")}
@@ -683,7 +689,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
             ...styleConfig?.Label,
           }}
         >
-          {`${question} ${!!required && "*"}`}
+         {`${question} ${required ? "*" : ''}`}
         </Label>
         <SingleChoice
           options={options}
@@ -703,7 +709,9 @@ function OnBoardingOffline(props: QuestLoginProps) {
               BrandTheme?.primaryColor ||
               themeConfig?.secondaryColor,
             ...styleConfig?.SingleChoice?.style,
+          
           }}
+          hoverBackground={styleConfig?.SingleChoice?.hoverBackground}
           selectedStyle={{
             accentColor:
               styleConfig?.SingleChoice?.selectedStyle?.accentColor ||
@@ -711,6 +719,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
               BrandTheme?.primaryColor ||
               themeConfig?.primaryColor,
             ...styleConfig?.SingleChoice?.selectedStyle,
+            
           }}
         />
         {manualInput != false && answer[criteriaId] == manualInput && (
@@ -756,7 +765,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
             ...styleConfig?.Label,
           }}
         >
-          {`${question} ${!!required && "*"}`}
+          {`${question} ${required ? "*" : ''}`}
         </Label>
         <MultiChoice
           options={options}
@@ -806,7 +815,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
             ...styleConfig?.Label,
           }}
         >
-          {`${question} ${!!required && "*"}`}
+         {`${question} ${required ? "*" : ''}`}
         </Label>
         <MultiChoiceTwo
           options={options}
@@ -899,6 +908,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
       getAnswers && getAnswers(crt);
     }
   }
+
 
   if (
     featureFlags[config.FLAG_CONSTRAINTS.OnboardingFlag]?.isEnabled == false
@@ -1344,27 +1354,21 @@ function OnBoardingOffline(props: QuestLoginProps) {
           </div>
           {offlineFormData && showFooter && (
             <QuestLabs
-              style={{
-                background:
-                  styleConfig?.Footer?.backgroundColor ||
-                  styleConfig?.Form?.backgroundColor ||
-                  BrandTheme?.background ||
-                  styleConfig?.Form?.background ||
-                  themeConfig?.backgroundColor,
-                borderBottomLeftRadius:
-                  styleConfig?.Footer?.borderTopStyle ||
-                  styleConfig?.Form?.borderTopStyle ||
-                  QuestThemeData?.borderRadius ||
-                  BrandTheme?.borderRadius,
-                borderBottomRightRadius:
-                  styleConfig?.Footer?.borderTopStyle ||
-                  styleConfig?.Form?.borderTopStyle ||
-                  QuestThemeData?.borderRadius ||
-                  BrandTheme?.borderRadius,
-                ...styleConfig?.Footer,
-              }}
-            />
-          )}
+            style={{
+            ...{
+              background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                styleConfig?.Form?.backgroundColor || 
+                styleConfig?.Form?.background ||
+                BrandTheme?.background ||
+                themeConfig?.backgroundColor,
+            },
+            ...styleConfig?.Footer?.FooterStyle,
+
+            }}
+            textStyle={styleConfig?.Footer?.FooterText}
+            iconStyle={styleConfig?.Footer?.FooterIcon}
+          />
+        )}
         </div>
       </div>
     )

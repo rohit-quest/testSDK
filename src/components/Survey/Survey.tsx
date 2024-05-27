@@ -63,7 +63,11 @@ interface FeedbackProps {
     PrimaryButton?: React.CSSProperties;
     SecondaryButton?: React.CSSProperties;
     Modal?: React.CSSProperties;
-    Footer?: React.CSSProperties;
+    Footer?:{
+      FooterStyle?: React.CSSProperties;
+      FooterText?: React.CSSProperties;
+      FooterIcon?: React.CSSProperties;
+    };
     TopBar?: React.CSSProperties;
     Rating?: {
       RatingContainer?: React.CSSProperties;
@@ -120,7 +124,7 @@ const Survey: React.FC<FeedbackProps> = ({
   supportUrl,
   onSubmit,
   ratingType = "number",
-  onCancel = () => {},
+  onCancel = () => { },
   itemsPerPage = 5,
   iconColor = "#939393",
   uniqueEmailId,
@@ -208,7 +212,7 @@ const Survey: React.FC<FeedbackProps> = ({
     if (bgColor) {
       setGradient(
         bgColor?.includes("linear-gradient") ||
-          bgColor?.includes("radial-gradient")
+        bgColor?.includes("radial-gradient")
       );
     }
     if (entityId) {
@@ -382,16 +386,16 @@ const Survey: React.FC<FeedbackProps> = ({
       apisecret: apiSecret,
       userId:
         !!externalUserId &&
-        !!questUserId &&
-        !!questUserToken &&
-        externalUserId == uniqueUserId
+          !!questUserId &&
+          !!questUserToken &&
+          externalUserId == uniqueUserId
           ? questUserId
           : userId,
       token:
         !!externalUserId &&
-        !!questUserId &&
-        !!questUserToken &&
-        externalUserId == uniqueUserId
+          !!questUserId &&
+          !!questUserToken &&
+          externalUserId == uniqueUserId
           ? questUserToken
           : token,
     };
@@ -520,6 +524,8 @@ const Survey: React.FC<FeedbackProps> = ({
               ? "This is not a valid email"
               : styleConfig?.EmailError?.text
           }
+          required={required}
+          
           emailErrorStyle={styleConfig?.EmailError?.errorStyle}
         />
       </div>
@@ -608,8 +614,8 @@ const Survey: React.FC<FeedbackProps> = ({
                 border:
                   answer[actionId] == option
                     ? // ? "1px solid var(--Primary-Grape-300, #bf8aff)"
-                      // : "1px solid var(--Neutral-White-300, #ececec)",
-                      "1px solid var(--Primary-Grape-300, #bf8aff)"
+                    // : "1px solid var(--Neutral-White-300, #ececec)",
+                    "1px solid var(--Primary-Grape-300, #bf8aff)"
                     : "1px solid var(--Neutral-White-300, #ececec)",
               }}
             >
@@ -867,9 +873,8 @@ const Survey: React.FC<FeedbackProps> = ({
                               ...styleConfig?.Label,
                             }}
                           >
-                            {`${
-                              data.question ? data.question : "Rating Scale"
-                            }${data.required === true ? "*" : ""} `}
+                            {`${data.question ? data.question : "Rating Scale"
+                              }${data.required === true ? "*" : ""} `}
                           </Label>
                           <div
                             style={{
@@ -919,8 +924,8 @@ const Survey: React.FC<FeedbackProps> = ({
                       sections && sections[page]?.button1Text
                         ? sections[page].button1Text
                         : 0 == page
-                        ? "Cancel"
-                        : "Previous"
+                          ? "Cancel"
+                          : "Previous"
                     }
                     onClick={(e) => {
                       GeneralFunctions.fireTrackingEvent(
@@ -959,8 +964,8 @@ const Survey: React.FC<FeedbackProps> = ({
                       sections && sections[page]?.button2Text
                         ? sections[page].button2Text
                         : data.length / itemsPerPage <= page + 1
-                        ? "Submit"
-                        : "Next"
+                          ? "Submit"
+                          : "Next"
                     }
                     type="submit"
                     disabled={!goToNextSection}
@@ -970,14 +975,18 @@ const Survey: React.FC<FeedbackProps> = ({
               {showFooter && (
                 <QuestLabs
                   style={{
-                    background:
-                      styleConfig?.Footer?.backgroundColor ||
-                      styleConfig?.Form?.backgroundColor ||
-                      BrandTheme?.background ||
-                      styleConfig?.Form?.background ||
-                      themeConfig?.backgroundColor,
-                    ...styleConfig?.Footer,
+                    ...{
+                      background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                        styleConfig?.Form?.backgroundColor ||
+                        styleConfig?.Form?.background ||
+                        BrandTheme?.background ||
+                        themeConfig?.backgroundColor,
+                    },
+                    ...styleConfig?.Footer?.FooterStyle,
+
                   }}
+                  textStyle={styleConfig?.Footer?.FooterText}
+                  iconStyle={styleConfig?.Footer?.FooterIcon}
                 />
               )}
             </div>
@@ -1040,18 +1049,22 @@ const Survey: React.FC<FeedbackProps> = ({
                 </div>
               </div>
               {showFooter && (
-                <QuestLabs
-                  style={{
-                    background:
-                      styleConfig?.Footer?.backgroundColor ||
-                      styleConfig?.Form?.backgroundColor ||
-                      BrandTheme?.background ||
-                      styleConfig?.Form?.background ||
-                      themeConfig?.backgroundColor,
-                    ...styleConfig?.Footer,
-                  }}
-                />
-              )}
+                 <QuestLabs
+                 style={{
+                 ...{
+                   background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                     styleConfig?.Form?.backgroundColor || 
+                     styleConfig?.Form?.background ||
+                     BrandTheme?.background ||
+                     themeConfig?.backgroundColor,
+                 },
+                 ...styleConfig?.Footer?.FooterStyle,
+   
+                 }}
+                 textStyle={styleConfig?.Footer?.FooterText}
+                 iconStyle={styleConfig?.Footer?.FooterIcon}
+               />
+             )}
             </div>
           )}
         </>

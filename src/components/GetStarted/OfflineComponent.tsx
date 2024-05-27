@@ -74,7 +74,11 @@ type offlineGetStartedProps = {
     PrimaryButton?: CSSProperties;
     SecondaryButton?: CSSProperties;
     Form?: CSSProperties;
-    Footer?: CSSProperties;
+    Footer?: {
+      FooterStyle?: CSSProperties;
+      FooterText?: CSSProperties;
+      FooterIcon?: CSSProperties;
+    };
     Card?: CSSProperties;
     Topbar?: CSSProperties;
     ProgressBar?: {
@@ -131,7 +135,7 @@ function OfflineGetStarted({
 
   const completedPercentage = data?.length
     ? (data?.reduce((a, b) => a + (b.completed ? 1 : 0), 0) * 100) /
-      data?.length
+    data?.length
     : 0;
   useEffect(() => {
     offlineData?.length && setData(offlineData);
@@ -620,15 +624,20 @@ function OfflineGetStarted({
           <div>
             <QuestLabs
               style={{
-                background:
-                  styleConfig?.Footer?.backgroundColor ||
-                  styleConfig?.Form?.backgroundColor ||
-                  BrandTheme?.background ||
-                  styleConfig?.Form?.background ||
-                  themeConfig?.backgroundColor,
-                ...styleConfig?.Footer,
+                ...{
+                  background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                    styleConfig?.Form?.backgroundColor ||
+                    styleConfig?.Form?.background ||
+                    BrandTheme?.background ||
+                    themeConfig?.backgroundColor,
+                },
+                ...styleConfig?.Footer?.FooterStyle,
+
               }}
+              textStyle={styleConfig?.Footer?.FooterText}
+              iconStyle={styleConfig?.Footer?.FooterIcon}
             />
+
           </div>
         )}
     </div>

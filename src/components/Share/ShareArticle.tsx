@@ -7,7 +7,7 @@ import config from "../../config";
 import QuestContext from "../QuestWrapper.tsx";
 import { QuestArray, Metadata } from "../HelpCenter/Svg.tsx";
 import General from "../../general.ts";
-import X from './x.png'
+import { xLogo } from "../FeedbackOverview/SVG.tsx";
 
 export interface articleProps {
   heading?: string;
@@ -130,7 +130,7 @@ const ShareArticle: React.FC<articleProps> = ({
             Share with
           </div>
           <div className="q_article_img">
-            <img
+            <div
               className="q-referShare-content-social-img-x"
               onClick={() => {
                 GeneralFunctions.fireTrackingEvent(
@@ -139,9 +139,9 @@ const ShareArticle: React.FC<articleProps> = ({
                 );
                 shareOnPlatform(shareLink, "twitter");
               }}
-              src={X}
-              alt="Twitter"
-            />
+            >
+              {xLogo()}
+            </div>
             <img
               className="q-referShare-content-social-img"
               src={whatsappSvg}

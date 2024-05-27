@@ -6,13 +6,13 @@ import { blackStar, whiteStar } from './SVG';
 
 interface BugContentProps {
   formdata: Array<{ [key: string]: any }>;
-  handleSubmit?: (e: any) => void;
+  handleSubmit: () => void
   handleUpdate: (e: any, id: string, j: string, k?: number) => void;
   answer: any;
   handleRemove: (e: any) => void;
-  normalInput: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
-  emailInput: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
-  normalInput2: (question: string, criteriaId: string, placeholder?:string) => JSX.Element,
+  normalInput: (question: string, criteriaId: string, placeholder?:string , required?:boolean) => JSX.Element,
+  emailInput: (question: string, criteriaId: string, placeholder?:string, required?:boolean) => JSX.Element,
+  normalInput2: (question: string, criteriaId: string, placeholder?:string, required?:boolean) => JSX.Element,
   buttonStyle?: CSSProperties;
   PrimaryButtonText?: string;
   labelStyle?: CSSProperties,
@@ -46,8 +46,13 @@ const BugContent: React.FC<BugContentProps> = ({
   };
 
 
+  const handlingSubmission = (e: any) => {
+    e.preventDefault();
+    handleSubmit();
+  };
+
   return (
-    <div className='q-fdov-ch-boxes'>
+    <form className='q-fdov-ch-boxes' onSubmit={handlingSubmission}>
       {formdata?.length > 0 ? (
         <>
           {formdata.map((data: any) => {
@@ -55,15 +60,17 @@ const BugContent: React.FC<BugContentProps> = ({
               return normalInput(
                 data.question || '',
                 data.criteriaId || '',
-                data.placeholder || ''
+                data.placeholder || '',
+                data.required || false
               );
             } else if (data.type === 'USER_INPUT_EMAIL') {
-              return emailInput(data.question || '', data.criteriaId || '', data.placeholder || '');
+              return emailInput(data.question || '', data.criteriaId || '', data.placeholder || '', data.required || false);
             } else if (data.type === 'USER_INPUT_TEXTAREA') {
               return normalInput2(
                 data.question || '',
                 data.criteriaId || '',
-                data.placeholder || ''
+                data.placeholder || '',
+                data.required || false
               );
             }
             else if (data.type === 'RATING') {
@@ -133,14 +140,14 @@ const BugContent: React.FC<BugContentProps> = ({
               );
             }
           })}
-          <PrimaryButton children={PrimaryButtonText || 'Submit'} className='q-fdov-btn-continue' onClick={handleSubmit} style={buttonStyle} />
+          <PrimaryButton children={PrimaryButtonText || 'Submit'} className='q-fdov-btn-continue' type='submit' style={buttonStyle} />
         </>
       ) : (
         <div className="q-center">
           No data Found
         </div>
       )}
-    </div>
+    </form>
   );
 };
 

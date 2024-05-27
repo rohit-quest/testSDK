@@ -72,11 +72,22 @@ export default function SearchPreview({ online = false }) {
                     color:'blue',
                     borderColor:'blue',
                     // fontSize:'20px'
+                },
+                Footer:{
+                    FooterStyle:{
+                        backgroundColor:'blue'
+                    },
+                    FooterText:{
+                        color:'yellow'
+                    },
+                    FooterIcon:{
+                        color:'green'
+                    }
                 }
             }}
             
             defulatResultLength={5}
-            showFooter={false}
+            showFooter={true}
             offlineFormatData={[
                 {
                     icon: 'Layers',

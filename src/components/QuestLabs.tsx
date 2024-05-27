@@ -12,15 +12,17 @@ const questPowered = (color: string = "#B9B9B9") => createUrl(`<svg width="12" h
 interface QuestLabsProps {
     style?: CSSProperties | undefined;
     icon?: boolean;
+    textStyle?: CSSProperties | undefined;
+    iconStyle?: CSSProperties | undefined;
 }
 
-export default function QuestLabs({ style, icon = true }: QuestLabsProps) {
+export default function QuestLabs({ style, textStyle, iconStyle, icon = true }: QuestLabsProps) {
     const { themeConfig } = useContext(QuestContext.Context)
     return (
         <div style={{ color: themeConfig.secondaryColor, ...style }} onClick={() => { window.open("https://www.questlabs.ai/", "_blank") }} className='powered_by_quest'>
-            <div style={{ color: themeConfig.secondaryColor || style?.color }}>Powered by Quest Labs</div>
-            {icon && <div style={{ width: "12px", height: "12px", boxSizing:'content-box' }}>
-                <img src={questPowered(style?.color || themeConfig.secondaryColor)} alt="" />
+            <div style={{ color:  textStyle?.color || themeConfig.secondaryColor , ...textStyle }}>Powered by Quest Labs</div>
+            {icon && <div style={{ width: iconStyle?.width || "12px", height: iconStyle?.height || "12px", boxSizing:'content-box' }}>
+                <img src={questPowered(iconStyle?.color || '#B9B9B9'  )} style={{ ...iconStyle }} alt="" />
             </div>}
         </div>
     )

@@ -44,10 +44,13 @@ interface TutorialProps {
     Form?: CSSProperties;
     Heading?: CSSProperties;
     Description?: CSSProperties;
-    Footer?: CSSProperties;
+    Footer?: {
+      FooterStyle?: React.CSSProperties;
+      FooterText?: React.CSSProperties;
+      FooterIcon?: React.CSSProperties;
+    };
     TopBar?: CSSProperties;
   };
-  footerBackgroundColor?: string;
   showFooter?: boolean;
   variation?: string
 }
@@ -58,7 +61,6 @@ interface QuestThemeData {
   borderRadius: string;
   buttonColor: string;
   images: string[];
-
 }
 
 type BrandTheme = {
@@ -91,7 +93,6 @@ const TutorialScreen: React.FC<TutorialProps> = ({
   styleConfig,
   showFooter = true,
   variation
-
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
@@ -134,12 +135,14 @@ const TutorialScreen: React.FC<TutorialProps> = ({
   const getTheme = async (theme: string) => {
     try {
       const request = `${BACKEND_URL}api/entities/${entityId}?userId=${userId}`;
-      const response = await axios.get(request, { headers: { apiKey, userId, token } })
-      setBrandTheme(response.data.data.theme.BrandTheme[theme])
+      const response = await axios.get(request, {
+        headers: { apiKey, userId, token },
+      });
+      setBrandTheme(response.data.data.theme.BrandTheme[theme]);
     } catch (error) {
       GeneralFunctions.captureSentryException(error);
     }
-  }
+  };
 
   const handleNextStep = (id: any, url: string) => {
     GeneralFunctions.fireTrackingEvent(
@@ -283,7 +286,6 @@ const TutorialScreen: React.FC<TutorialProps> = ({
     }
   }, []);
 
-
   const handleStepLoad = (index: number, height: number) => {
     const connector = document.querySelector(
       `#q_tutorial_progress_connector_${index}`
@@ -311,26 +313,39 @@ const TutorialScreen: React.FC<TutorialProps> = ({
       className="q-tutorial-cont"
       style={{
         background:
-          styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor,
+          styleConfig?.Form?.backgroundColor ||
+          BrandTheme?.background ||
+          themeConfig?.backgroundColor,
         height: styleConfig?.Form?.height || "auto",
-        borderRadius: styleConfig?.Form?.borderRadius || questThemeData?.borderRadius || BrandTheme?.borderRadius,
-        fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
+        borderRadius:
+          styleConfig?.Form?.borderRadius ||
+          questThemeData?.borderRadius ||
+          BrandTheme?.borderRadius,
+        fontFamily:
+          BrandTheme?.fontFamily ||
+          themeConfig.fontFamily ||
+          "'Figtree', sans-serif",
         ...styleConfig?.Form,
       }}
     >
       <TopBar
         heading={heading}
         iconColor={iconColor}
-        onClose={() => { }}
+        onClose={() => {}}
         description={subheading}
         style={{
           headingStyle: {
-            color: styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor,
+            color:
+              styleConfig?.Heading?.color ||
+              BrandTheme?.primaryColor ||
+              themeConfig?.primaryColor,
             ...styleConfig?.Heading,
           },
           descriptionStyle: {
             color:
-              styleConfig?.Description?.color || BrandTheme?.secondaryColor || themeConfig?.secondaryColor,
+              styleConfig?.Description?.color ||
+              BrandTheme?.secondaryColor ||
+              themeConfig?.secondaryColor,
             ...styleConfig?.Description,
           },
           topbarStyle: styleConfig?.TopBar,
@@ -414,8 +429,23 @@ const TutorialScreen: React.FC<TutorialProps> = ({
         ))}
         {/* </div> */}
       </div>
-      {showFooter && <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />
-      }
+      {showFooter && (
+       <QuestLabs
+       style={{
+         ...{
+           background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+             styleConfig?.Form?.backgroundColor ||
+             styleConfig?.Form?.background ||
+             BrandTheme?.background ||
+             themeConfig?.backgroundColor,
+         },
+         ...styleConfig?.Footer?.FooterStyle,
+
+       }}
+       textStyle={styleConfig?.Footer?.FooterText}
+       iconStyle={styleConfig?.Footer?.FooterIcon}
+     />
+   )}
     </div>
   );
 };

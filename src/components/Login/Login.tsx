@@ -36,7 +36,11 @@ export interface QuestLoginProps {
     PrimaryButton?: CSSProperties;
     SecondaryButton?: CSSProperties;
     Form?: CSSProperties;
-    Footer?: CSSProperties;
+    Footer?: {
+      FooterStyle?: CSSProperties;
+      FooterText?: CSSProperties;
+      FooterIcon?: CSSProperties;
+    };
     IconStyle?: {
       BorderColor?: string
       Background?: string;
@@ -268,7 +272,22 @@ const QuestLogin: React.FC<QuestLoginProps> = ({
 
         </div>
         <div className="quest_footer">
-          {showFooter && <QuestLabs style={styleConfig?.Footer} />}
+          {showFooter && 
+         <QuestLabs
+         style={{
+           ...{
+             background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+               styleConfig?.Form?.backgroundColor ||
+               styleConfig?.Form?.background ||
+               themeConfig?.backgroundColor,
+           },
+           ...styleConfig?.Footer?.FooterStyle,
+
+         }}
+         textStyle={styleConfig?.Footer?.FooterText}
+         iconStyle={styleConfig?.Footer?.FooterIcon}
+       />
+        }
         </div>
       </div>
       {/* </div>

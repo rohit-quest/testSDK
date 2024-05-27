@@ -20,7 +20,11 @@ export interface StyleConfig {
     background?: string,
     color?: string
   }
-  Footer?: CSSProperties;
+  Footer?: {
+    FooterStyle?: CSSProperties;
+    FooterText?: CSSProperties;
+    FooterIcon?: CSSProperties;
+  };
 }
 
 export interface Props {
