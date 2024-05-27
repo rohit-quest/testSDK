@@ -31,186 +31,158 @@ export const createDefaultQuest = async (
     }
 
     const endsAtDate = new Date().setFullYear(new Date().getFullYear() + 2);
-    let body = {
-      defaultId: "q-default-helphub",
+
+    let parentCampaign = {
+      campaignId: 'q-default-helphub',
+      defaultId: 'q-default-helphub',
       title: "Helphub",
       description: "Helphub",
       endsAt: endsAtDate,
-      eligibilityCriteriaArray: [
-        [
+      rewards: [{ rewardType: "REWARD_XP", xp: 10 }],
+      sdkConfig: {
+        platform: 'REACT',
+        type: 'HELP_HUB',
+        category: 'USER_ASSISTANCE'
+      },
+      userTargeting: {
+        isEnabled: false,
+        properties: [],
+        propertyRelations: []
+      }
+    }
+    let childCampaigns = [
+      {
+        title: "Helphub Feedback",
+        description: "Helphub Feedback",
+        endsAt: endsAtDate,
+        sdkConfig: parentCampaign.sdkConfig,
+        actions: [
           {
-            type: "RATING",
-            source: "USER_INPUT",
-            data: {
-              title: "How do you like our App?",
-              effort: "E1",
-              importance: "I1",
-              xp: 10,
-              frequency: "ONCE",
-              isRequired: true,
-            },
-          },
-        ],
-        [
+            title: "How do you like our App?",
+            description: '',
+            xp: 10,
+            frequency: 'ONCE',
+            isRequired: true,
+            actionType: 'RATING'
+          }
+        ]
+      },
+      {
+        title: "Helphub FAQ",
+        description: "Helphub FAQ",
+        endsAt: endsAtDate,
+        sdkConfig: parentCampaign.sdkConfig,
+        actions: [
           {
-            type: "VIEW_ONLY_TEXT",
-            source: "VIEW_ONLY",
-            data: {
-              question: "How can I assist you today?",
-              answer:
-                "You can complete your user information details by sharing the details asked in the form",
-              effort: "E1",
-              importance: "I1",
-              xp: 10,
-              frequency: "ONCE",
-            },
-          },
-          {
-            type: "VIEW_ONLY_TEXT",
-            source: "VIEW_ONLY",
-            data: {
-              question: "How can I assist you tomorrow?",
-              answer:
-                "You can complete your user information details by sharing the details asked in the form",
-              effort: "E1",
-              importance: "I1",
-              xp: 10,
-              frequency: "ONCE",
-            },
-          },
-          {
-            type: "VIEW_ONLY_TEXT",
-            source: "VIEW_ONLY",
-            data: {
-              question: "How can I assist you day after tomorrow?",
-              answer:
-                "You can complete your user information details by sharing the details asked in the form",
-              effort: "E1",
-              importance: "I1",
-              xp: 10,
-              frequency: "ONCE",
-            },
-          },
-        ],
-        [
-          {
-            type: "LINK_OPEN_READ",
-            source: "LINK",
-            data: {
-              linkActionName: "Update1",
-              linkActionUrl: "https://www.questlabs.ai/",
-              effort: "E1",
-              importance: "I1",
-              xp: 10,
-              frequency: "ONCE",
-              isRequired: true,
-              description:
-                "AI-Powered User Experiences to Increase in-app Adoption, Engagement & Revenue ",
-            },
+            title: "How can I assist you today?",
+            description: 'You can complete your user information details by sharing the details asked in the form',
+            xp: 10,
+            frequency: 'ONCE',
+            isRequired: true,
+            actionType: 'VIEW_ONLY_TEXT'
           },
           {
-            type: "LINK_OPEN_READ",
-            source: "LINK",
-            data: {
-              linkActionName: "Update2",
-              linkActionUrl: "https://main.d2h2uj2sjo2c2h.amplifyapp.com/",
-              effort: "E1",
-              importance: "I1",
-              xp: 10,
-              frequency: "ONCE",
-              isRequired: true,
-              description:
-                "Play with our pre-made templates and create your frame",
-            },
+            title: "How can I assist you tomorrow?",
+            description: 'You can complete your user information details by sharing the details asked in the form',
+            xp: 10,
+            frequency: 'ONCE',
+            isRequired: true,
+            actionType: 'VIEW_ONLY_TEXT'
           },
           {
-            type: "LINK_OPEN_READ",
-            source: "LINK",
-            data: {
-              linkActionName: "Updates3",
-              linkActionUrl: "https://www.linkedin.com/company/questai/",
-              effort: "E1",
-              importance: "I1",
-              xp: 10,
-              frequency: "ONCE",
-              isRequired: true,
-              description: "Conect with us to explore more",
-            },
+            title: "How can I assist you day after tomorrow?",
+            description: 'You can complete your user information details by sharing the details asked in the form',
+            xp: 10,
+            frequency: 'ONCE',
+            isRequired: true,
+            actionType: 'VIEW_ONLY_TEXT'
           },
-        ],
-        [
+        ]
+      },
+      {
+        title: "Helphub Updates",
+        description: "Helphub Updates",
+        endsAt: endsAtDate,
+        sdkConfig: parentCampaign.sdkConfig,
+        actions: [
           {
-            type: "LINK_OPEN_READ",
-            source: "LINK",
-            data: {
-              linkActionName: "Tasks-QuestLabs",
-              linkActionUrl: "https://www.questlabs.ai/",
-              effort: "E1",
-              importance: "I1",
-              xp: 10,
-              frequency: "ONCE",
-              isRequired: true,
-              description:
-                "AI-Powered User Experiences to Increase in-app Adoption, Engagement & Revenue ",
-            },
+            title: "Update1",
+            description: 'AI-Powered User Experiences to Increase in-app Adoption, Engagement & Revenue ',
+            xp: 10,
+            frequency: 'ONCE',
+            isRequired: true,
+            actionType: 'LINK_OPEN_READ',
+            metadata: {
+              link: 'https://www.questlabs.ai/'
+            }
           },
           {
-            type: "LINK_OPEN_READ",
-            source: "LINK",
-            data: {
-              linkActionName: "Tasks-React Playground",
-              linkActionUrl: "https://main.d2h2uj2sjo2c2h.amplifyapp.com/",
-              effort: "E1",
-              importance: "I1",
-              xp: 10,
-              frequency: "ONCE",
-              isRequired: true,
-              description:
-                "Play with our pre-made templates and create your frame",
-            },
+            title: "Update2",
+            description: 'Play with our pre-made templates and create your frame',
+            xp: 10,
+            frequency: 'ONCE',
+            isRequired: true,
+            actionType: 'LINK_OPEN_READ',
+            metadata: {
+              link: 'https://main.d2h2uj2sjo2c2h.amplifyapp.com/'
+            }
           },
           {
-            type: "LINK_OPEN_READ",
-            source: "LINK",
-            data: {
-              linkActionName: "Tasks-Quest Linkedin",
-              linkActionUrl: "https://www.linkedin.com/company/questai/",
-              effort: "E1",
-              importance: "I1",
-              xp: 10,
-              frequency: "ONCE",
-              isRequired: true,
-              description: "Conect with us to explore more",
-            },
+            title: "Updates3",
+            description: 'Conect with us to explore more',
+            xp: 10,
+            frequency: 'ONCE',
+            isRequired: true,
+            actionType: 'LINK_OPEN_READ',
+            metadata: {
+              link: 'https://www.linkedin.com/company/questai/'
+            }
           },
-        ],
-      ],
-      rewards: [{ type: "REWARD_XP", xp: 10 }],
-      eligibilityCriteriaIdsToDelete: [],
-      type: "HELPHUB",
-      questDetails: [
-        {
-          title: "Helphub Feedback",
-          description: "Helphub Feedback",
-          endsAt: endsAtDate,
-        },
-        {
-          title: "Helphub FAQ",
-          description: "Helphub FAQ",
-          endsAt: endsAtDate,
-        },
-        {
-          title: "Helphub Updates",
-          description: "Helphub Updates",
-          endsAt: endsAtDate,
-        },
-        {
-          title: "Helphub Tasks",
-          description: "Helphub Tasks",
-          endsAt: endsAtDate,
-        },
-      ],
-    };
+        ]
+      },
+      {
+        title: "Helphub Tasks",
+        description: "Helphub Tasks",
+        endsAt: endsAtDate,
+        sdkConfig: parentCampaign.sdkConfig,
+        actions: [
+          {
+            title: "Tasks-QuestLabs",
+            description: 'AI-Powered User Experiences to Increase in-app Adoption, Engagement & Revenue ',
+            xp: 10,
+            frequency: 'ONCE',
+            isRequired: true,
+            actionType: 'LINK_OPEN_READ',
+            metadata: {
+              link: 'https://www.questlabs.ai/'
+            }
+          },
+          {
+            title: "Tasks-React Playground",
+            description: 'Play with our pre-made templates and create your frame',
+            xp: 10,
+            frequency: 'ONCE',
+            isRequired: true,
+            actionType: 'LINK_OPEN_READ',
+            metadata: {
+              link: 'https://main.d2h2uj2sjo2c2h.amplifyapp.com/'
+            }
+          },
+          {
+            title: "Tasks-Quest Linkedin",
+            description: 'Conect with us to explore more',
+            xp: 10,
+            frequency: 'ONCE',
+            isRequired: true,
+            actionType: 'LINK_OPEN_READ',
+            metadata: {
+              link: 'https://www.linkedin.com/company/questai/'
+            }
+          },
+        ]
+      }
+    ]
+    let body = {parentCampaign, childCampaigns}
 
     let headers = {
       userId,
@@ -219,7 +191,7 @@ export const createDefaultQuest = async (
       apikey,
     };
 
-    let request = `${backend_url}api/entities/${entityId}/quests/parent?userId=${userId}`;
+    let request = `${backend_url}api/v2/entities/${entityId}/campaigns/parent`;
 
     let response = await axios.post(request, body, { headers });
 
@@ -250,7 +222,8 @@ export const getDefaultQuest = async (
   apikey: string,
   uniqueUserId?: string,
   uniqueEmailId?: string,
-  apiType?: string
+  apiType?: string,
+  variation?: string
 ) => {
   try {
     if (uniqueUserId || uniqueEmailId) {
@@ -278,7 +251,10 @@ export const getDefaultQuest = async (
       apikey,
     };
 
-    let request = `${backend_url}api/entities/${entityId}/quests/${questId}/parent?userId=${userId}&detailedData=true`;
+    const params = new URLSearchParams()
+    if(variation) params.set('variation', variation)
+
+    let request = `${backend_url}api/v2/entities/${entityId}/campaigns/${questId}/parent?${params.toString()}`;
 
     let response = await axios(request, { headers });
 
@@ -325,10 +301,11 @@ export const claimQuest = async (
   token: string,
   apikey: string,
   criteriaId: string,
+  campaignVariationId: string,
   answer?: string[] | number[],
   uniqueUserId?: string,
   uniqueEmailId?: string,
-  apiType?: string
+  apiType?: string,
 ) => {
   try {
     if (uniqueUserId || uniqueEmailId) {
@@ -356,11 +333,16 @@ export const claimQuest = async (
       apikey,
     };
 
-    let request = `${backend_url}api/entities/${entityId}/quests/${questId}/verify?userId=${userId}`;
+    let request = `${backend_url}api/v2/entities/${entityId}/campaigns/${questId}/verify`;
 
     let response = await axios.post(
       request,
-      { criteriaId, ...(answer && { answer }) },
+      { 
+        campaignVariationId,
+        actions: [
+          {actionId: criteriaId, answers: answer.map(answer => String(answer))}
+        ]
+      },
       { headers }
     );
     return response.data;

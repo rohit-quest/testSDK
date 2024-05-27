@@ -89,8 +89,8 @@ export interface referProp {
             errorStyle?: CSSProperties
         }
     };
-    showFooter?: boolean,
-    enableVariation?: boolean
+    showFooter?:boolean,
+    variation?:string
 
 }
 
@@ -114,7 +114,7 @@ export const CrossSelling = ({
     BrandTheme,
     QuestThemeData,
     showFooter = true,
-    enableVariation = false,
+    variation,
     Icon = 'gift'
 }: referProp) => {
     const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(QuestContext.Context);
@@ -180,11 +180,13 @@ export const CrossSelling = ({
         getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL)
             .then((r) => {
                 if (isMounted && r) {
-                    if (r.uiProps?.questThemeData) {
-                        setQuestThemeData(r.uiProps?.questThemeData)
+                    if(r.sdkConfig?.uiProps?.questThemeData){
+                        setQuestThemeData(r.sdkConfig?.uiProps?.questThemeData)
                         // getTheme(r.uiProps?.questThemeData.theme) // disable for now
                     }
-                    requestRef.current = +r.endsAt;
+
+                    console.log(Date.parse(r.endsAt))
+                    requestRef.current =  +(Date.parse(r.endsAt) || r.endsAt);
 
                     animate();
                 } else {

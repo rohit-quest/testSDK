@@ -60,7 +60,7 @@ interface propType {
     CommandButton?: CSSProperties;
   };
   showFooter?: boolean;
-  enableVariation?: boolean;
+  variation?: string
 }
 
 type BrandTheme = {
@@ -99,7 +99,7 @@ export default function Search(prop: propType): JSX.Element {
     styleConfig,
     showFooter = true,
     iconColor,
-    enableVariation = false,
+    variation
   } = prop;
   const inputElement = useRef<HTMLInputElement>(null);
   const [searchResults, setResults] = useState<data>(defaultResult);
@@ -206,18 +206,14 @@ export default function Search(prop: propType): JSX.Element {
   };
 
   useEffect(() => {
-    getResponse(
-      { apiKey, token, userId },
-      entityId,
-      questId,
-      BACKEND_URL,
-      enableVariation
-    ).then((response) => {
-      setQuestThemeData(response.questThemeData);
-      setData([...response.formatData].splice(0, defulatResultLength));
-      setResults([...response.formatData].splice(0, defulatResultLength));
-      if (response.questThemeData?.theme) {
-        // getTheme(response.questThemeData?.theme) disabled for now
+    getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL, variation).then(
+      (response) => {
+        setQuestThemeData(response.questThemeData)
+        setData([...response.formatData].splice(0, defulatResultLength));
+        setResults([...response.formatData].splice(0, defulatResultLength));
+        if(response.questThemeData?.theme){
+          // getTheme(response.questThemeData?.theme) disabled for now
+        }
       }
     });
     if (prop.open === true) setOpen(true);

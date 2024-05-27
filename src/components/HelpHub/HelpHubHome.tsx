@@ -83,11 +83,12 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
       let claimResponse = await claimQuest(
         BACKEND_URL,
         entityId,
-        parentQuest?.childQuestIDs[0] || "",
+        parentQuest?.childCampaignActions[0].campaignId || "",
         userId || "",
         token || "",
         apiKey,
         allQuestsData[0][0]?.criteriaId,
+        parentQuest?.childCampaignActions[0].campaignVariationId,
         [answer],
         uniqueUserId,
         uniqueEmailId,

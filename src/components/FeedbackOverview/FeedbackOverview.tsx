@@ -29,6 +29,7 @@ type optionType =
 interface feedbackCompProps {
   userId: string;
   token: string;
+  questId: string;
   questIds: string[];
   answer?: any;
   setAnswer?: any;
@@ -123,7 +124,7 @@ interface feedbackCompProps {
       Icon?: React.CSSProperties;
     };
   };
-  enableVariation?: boolean;
+  variation?: string;
 }
 interface FormDataItem {
   type?: string;
@@ -165,6 +166,7 @@ interface QuestThemeData {
 const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   userId,
   token,
+  questId,
   questIds,
   contactUrl,
   isOpen,
@@ -183,10 +185,11 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   iconColor = "#939393",
   styleConfig = {},
   showFooter = true,
-  enableVariation = false,
+  variation,
 }) => {
   const [selectedOption, setSelectedOption] = useState<optionType | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
+  const [campaignVariationIds, setCampaignVariationIds] = useState<any>({});
   const [formdata, setFormdata] = useState<{ [key: number]: [FormDataItem] }>(
     {}
   );
@@ -196,7 +199,6 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     useContext(QuestContext.Context);
   const [answer, setAnswer] = useState<Record<string, string>>({});
   const [cardHovered, setCardHovered] = useState([false, false, false, false]);
-  const [session, setSession] = useState<{ [key: string]: string }>({});
   const [questThemeData, setQuestThemeData] = useState<QuestThemeData>({
     accentColor: "",
     theme: "",
@@ -284,18 +286,6 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   const ref = React.useRef<HTMLDivElement>(null);
 
   let GeneralFunctions = new General("mixpanel", apiType);
-
-  const getTheme = async (theme: string) => {
-    try {
-      const request = `${BACKEND_URL}api/entities/${entityId}?userId=${userId}`;
-      const response = await axios.get(request, {
-        headers: { apiKey, userId, token },
-      });
-      setBrandTheme(response.data.data.theme.BrandTheme[theme]);
-    } catch (error) {
-      GeneralFunctions.captureSentryException(error);
-    }
-  };
 
   useEffect(() => {
     GeneralFunctions.fireTrackingEvent(
@@ -397,9 +387,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     let questUserToken = cookies.get("questUserToken");
     if (Object.keys(answer).length !== 0) {
       const ansArr = formdata[index].map((ans: any) => ({
-        question: ans?.question || "",
-        answer: [answer[ans?.criteriaId] || ""],
-        criteriaId: ans?.criteriaId || "",
+        answers: [String(answer[ans?.criteriaId]) || ""],
+        actionId: ans?.criteriaId || "",
       }));
       if (
         !!externalUserId &&
@@ -419,11 +408,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       }
 
       function setResult(headers: { userId?: string }, userId: string) {
-        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${selectedQuest}/verify-all?userId=${userId}&getVariation=${enableVariation}`;
+        const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${selectedQuest}/verify`;
         const requestData = {
-          criterias: ansArr,
-          userId: headers?.userId,
-          session: session[selectedQuest ?? ""],
+          actions: ansArr,
+          campaignVariationId: campaignVariationIds[selectedQuest || '']
         };
         setShowLoader(true);
         axios
@@ -465,120 +453,52 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     setSelectedOption(null);
   };
 
-  function isDefaultQuestId(questId: string): boolean {
-    const defaultIdPattern = [
-      "q-general-feedback",
-      "q-report-a-bug",
-      "q-request-a-feature",
-      "q-contact-us",
-    ].includes(questId);
-    // /^q-[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
-    // /^q-[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
-    return defaultIdPattern;
-  }
-
-  const getParentQuestData = async (questId: string) => {
-    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/parent?userId=${userId}`;
-    await axios
-      .get(request, {
-        headers: {
-          apiKey: apiKey,
-          apisecret: apiSecret,
-          userId: userId,
-          token: token,
-        },
-      })
-      .then((res) => {
-        let response = res.data;
-        if (response?.parentQuest?.uiProps?.questThemeData) {
-          setQuestThemeData(response?.parentQuest?.uiProps?.questThemeData);
-          if (response?.parentQuest?.uiProps?.questThemeData.theme) {
-            // getTheme(response?.parentQuest?.uiProps.questThemeData.theme) disabled for now
-          }
-        }
-      });
-  };
-
   useEffect(() => {
-    const headers = {
-      apiKey: apiKey,
-      apisecret: apiSecret,
-      userId: userId,
-      token: token,
-    };
-    let request;
-    let count = 0;
-    {
-      questIds.map((id, index) => {
-        const isDefault = isDefaultQuestId(id);
-        if (isDefault) {
-          request = `${BACKEND_URL}api/entities/${entityId}/default-quest/?userId=${userId}&defaultId=${id}`;
-          axios
-            .post(request, {}, { headers: headers })
-            .then((res) => {
-              let response = res.data.data;
-              setSession((prev) => ({ ...prev, [id]: response.session }));
-              let criterias = response?.eligibilityData?.map(
-                (criteria: any) => {
-                  return {
-                    type: criteria?.data?.criteriaType,
-                    question: criteria?.data?.metadata?.title,
-                    options: criteria?.data?.metadata?.options || [],
-                    criteriaId: criteria?.data?.criteriaId,
-                    required: !criteria?.data?.metadata?.isOptional,
-                    placeholder: criteria?.data?.metadata?.placeholder,
-                  };
-                }
-              );
-              criterias = Array.isArray(criterias) ? criterias : [];
-              setFormdata((prevFormdata) => {
-                const updatedFormdata = { ...prevFormdata };
-                updatedFormdata[index] = criterias;
-                return updatedFormdata;
-              });
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              GeneralFunctions.captureSentryException(error);
-            });
-        } else {
-          request = `${BACKEND_URL}api/entities/${entityId}/quests/${id}?userId=${userId}&getVariation=${enableVariation}`;
-          axios
-            .get(request, { headers: headers })
-            .then((res) => {
-              let response = res.data;
-              if (count == 0 && response?.data?.parentQuestId) {
-                getParentQuestData(response?.data?.parentQuestId);
-                count++;
-              }
-              setSession((prev) => ({ ...prev, [id]: response.session }));
-              let criterias = response?.eligibilityData?.map(
-                (criteria: any) => {
-                  return {
-                    type: criteria?.data?.criteriaType,
-                    question: criteria?.data?.metadata?.title,
-                    options: criteria?.data?.metadata?.options || [],
-                    criteriaId: criteria?.data?.criteriaId,
-                    required: !criteria?.data?.metadata?.isOptional,
-                    placeholder: criteria?.data?.metadata?.placeholder,
-                  };
-                }
-              );
-              criterias = Array.isArray(criterias) ? criterias : [];
-              setFormdata((prevFormdata) => {
-                const updatedFormdata = { ...prevFormdata };
-                updatedFormdata[index] = criterias;
-                return updatedFormdata;
-              });
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              GeneralFunctions.captureSentryException(error);
-            });
-        }
-      });
+    const fetchCampaign = async () => {
+      const params = new URLSearchParams
+      if(variation) params.set('variation', variation)
+
+      const headers = {
+        apiKey: apiKey,
+        apisecret: apiSecret,
+        userId: userId,
+        token: token,
+      };
+
+      try {
+        let request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${questId}/parent?${params.toString()}`;
+        let response = await axios.get(request, { headers: headers })
+        let questData = response.data.data
+
+        setCampaignVariationIds(questData?.childCampaignActions?.reduce((acc: any, cur: any) => {
+          acc[cur.campaignId] = cur.campaignVariationId
+          return acc
+        }, {}))
+
+        setQuestThemeData(questData?.sdkConfig?.uiProps?.questThemeData);
+
+        let actions = questData?.childCampaignActions?.map((childQuest: any) => (
+          childQuest.actions.map((action: any) => ({
+            type: action.actionType,
+            question: action.title,
+            options: action.options,
+            criteriaId: action.actionId,
+            required: action.isRequired,
+            placeholder: action?.metadata?.placeholder
+          }))
+        ))
+
+        setFormdata(actions)
+      } catch (error) {
+        console.error("Error:", error);
+        GeneralFunctions.captureSentryException(error);
+      }
+
+
     }
-  }, [questIds]);
+
+    fetchCampaign()
+  }, [questId])
 
   const handleUpdate = (e: any, id: string, j: string, k?: number) => {
     setAnswer({

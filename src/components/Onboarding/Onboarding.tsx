@@ -93,14 +93,14 @@ interface QuestLoginProps {
       FooterIcon?: CSSProperties;
     };
   };
-  enableVariation?: boolean;
+  variation?: string;
 }
 
 interface FormData {
   type: string;
   question: string;
   options: Array<string>;
-  criteriaId: string;
+  actionId: string;
   required: boolean;
   placeholder: string;
   linkTitle: string;
@@ -129,7 +129,7 @@ function OnBoarding(props: QuestLoginProps) {
     customComponentPositions,
     userId,
     token,
-    questId,
+    questId: campaignId,
     loadingTracker,
     setLoading = () => {},
     nextBtnText,
@@ -141,7 +141,7 @@ function OnBoarding(props: QuestLoginProps) {
     design = [],
     styleConfig,
     showFooter = true,
-    enableVariation = false,
+    variation,
   } = props;
 
   const [formdata, setFormdata] = useState<FormData[] | []>([]);
@@ -160,6 +160,8 @@ function OnBoarding(props: QuestLoginProps) {
     buttonColor: "",
     images: [],
   });
+  const [campaignVariationId, setCampaignVariationId] = useState("");
+
   const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
     accentColor: "",
     background: "",
@@ -262,7 +264,7 @@ function OnBoarding(props: QuestLoginProps) {
       ) {
         let header = { ...headers, ...{ questUserId, questUserToken } };
         axios.post(
-          `${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&questId=${questId}`,
+          `${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&campaignId=${campaignId}`,
           { count: 1 },
           { headers: header }
         );
@@ -283,7 +285,7 @@ function OnBoarding(props: QuestLoginProps) {
             cookies.set("questUserToken", token, { path: "/", expires: date });
             try {
               axios.post(
-                `${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/onboarding-view?userId=${userId}&questId=${questId}`,
+                `${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/onboarding-view?userId=${userId}&campaignId=${campaignId}`,
                 { count: 1 },
                 { headers: header }
               );
@@ -297,58 +299,55 @@ function OnBoarding(props: QuestLoginProps) {
           });
       }
 
+      // API updated to v2
       async function getQuestData(userId: string, headers: object) {
         loadingTracker && setLoading(true);
-        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/criterias?userId=${userId}&getVariation=${enableVariation}`;
+        const params = new URLSearchParams();
+        params.set('platform', 'REACT')
+        if(variation) params.set('variation', variation)
+
+        const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}?${params.toString()}`;
         await axios
           .get(request, { headers: headers })
           .then((res) => {
             let response = res.data;
 
-            if (response.data.uiProps?.questThemeData) {
-              setQuestThemeData(response?.data?.uiProps?.questThemeData);
-              if (response.data.uiProps?.questThemeData.theme) {
+            if (response.data.sdkConfig?.uiProps?.questThemeData) {
+              setQuestThemeData(response?.data?.sdkConfig?.uiProps?.questThemeData);
+              if (response.data.sdkConfig?.uiProps?.questThemeData.theme) {
                 // getTheme(response.data.uiProps.questThemeData.theme) disabled for now
               }
             }
-            let criterias = response?.data?.eligibilityData?.map(
-              (criteria: {
-                criteriaType: string;
-                metadata: {
-                  title: string;
-                  options: string[];
-                  isOptional: string;
-                  placeholder: string;
-                  linkActionName: string;
-                  linkActionUrl: string;
-                  manualInput: string;
-                };
-                criteriaId: string;
-              }) => {
+
+            setCampaignVariationId(response?.data?.campaignVariationId)
+            let actions = response?.data?.actions?.map(
+              (action: any) => {
                 return {
-                  type: criteria?.criteriaType,
-                  question: criteria?.metadata?.title,
-                  options: criteria?.metadata?.options || [],
-                  criteriaId: criteria?.criteriaId,
-                  required: !criteria?.metadata?.isOptional,
-                  placeholder: criteria?.metadata?.placeholder,
-                  linkTitle: criteria?.metadata?.linkActionName || "",
-                  linkUrl: criteria?.metadata?.linkActionUrl || "",
-                  manualInput: criteria?.metadata?.manualInput || false,
+                  type: action?.actionType,
+                  question: action?.title,
+                  options: action?.options || [],
+                  actionId: action?.actionId,
+                  campaignVariationId: action?.campaignVariationId,
+                  required: action?.isRequired,
+                  placeholder: action?.metadata?.placeholder,
+                  linkTitle: action?.title || "",
+                  linkUrl: action?.metadata?.link || "",
+                  manualInput: Boolean(action?.metadata?.manualInput),
                 };
               }
             );
-            setFormdata([...criterias]);
+
+            setFormdata([...actions]);
             let ansArray: any = {};
-            criterias.forEach((criteria: any) => {
-              if (criteria.type == "USER_INPUT_MULTI_CHOICE") {
-                if (!answer[criteria.criteriaId]) {
-                  ansArray[criteria.criteriaId] = [];
+            actions.forEach((action: any) => {
+              if (action.type == "USER_INPUT_MULTI_CHOICE") {
+                if (!answer[action.actionId]) {
+                  ansArray[action.actionId] = [];
                 }
                 return;
               } else {
-                if (!answer[criteria.criteriaId]) {
-                  ansArray[criteria.criteriaId] = "";
+                if (!answer[action.actionId]) {
+                  ansArray[action.actionId] = "";
                 }
                 return;
               }
@@ -401,8 +400,8 @@ function OnBoarding(props: QuestLoginProps) {
         c++;
       } else {
         if (
-          !!answer[formdata[currentQuestions[i] - 1].criteriaId] &&
-          answer[formdata[currentQuestions[i] - 1].criteriaId].length > 0
+          !!answer[formdata[currentQuestions[i] - 1].actionId] &&
+          answer[formdata[currentQuestions[i] - 1].actionId].length > 0
         ) {
           c++;
         }
@@ -426,7 +425,7 @@ function OnBoarding(props: QuestLoginProps) {
               headers.userId
             }/metrics/onboarding-complete-page-${
               Number(currentPage) + 1
-            }?userId=${headers.userId}&questId=${questId}`,
+            }?userId=${headers.userId}&campaignId=${campaignId}`,
             { count: 1 },
             { headers }
           );
@@ -609,13 +608,13 @@ function OnBoarding(props: QuestLoginProps) {
   const normalInput = (
     question: string,
     required: boolean,
-    criteriaId: string,
+    actionId: string,
     index: number,
     placeholder: string,
     inputType: logoType
   ) => {
     return (
-      <div key={criteriaId}>
+      <div key={actionId}>
         {customComponentPositions == index + 1 && (
           <div style={{ paddingBottom: "12px" }}>{customComponents}</div>
         )}
@@ -634,14 +633,14 @@ function OnBoarding(props: QuestLoginProps) {
         <Input
           type={inputType}
           placeholder={placeholder}
-          value={answer[criteriaId]}
+          value={answer[actionId]}
           iconColor={
             styleConfig?.Input?.color ||
             BrandTheme?.primaryColor ||
             themeConfig?.primaryColor ||
             "#B9B9B9"
           }
-          onChange={(e) => handleUpdate(e, criteriaId, "")}
+          onChange={(e) => handleUpdate(e, actionId, "")}
           style={{
             borderColor:
               styleConfig?.Input?.borderColor || themeConfig?.borderColor,
@@ -665,12 +664,12 @@ function OnBoarding(props: QuestLoginProps) {
   const dateInput = (
     question: string,
     required: boolean,
-    criteriaId: string,
+    actionId: string,
     index: number,
     placeholder: string
   ) => {
     return (
-      <div key={criteriaId}>
+      <div key={actionId}>
         {customComponentPositions == index + 1 && (
           <div style={{ paddingBottom: "12px" }}>{customComponents}</div>
         )}
@@ -689,8 +688,8 @@ function OnBoarding(props: QuestLoginProps) {
         <Input
           type={"date"}
           placeholder={placeholder}
-          value={answer[criteriaId]}
-          onChange={(e) => handleUpdate(e, criteriaId, "")}
+          value={answer[actionId]}
+          onChange={(e) => handleUpdate(e, actionId, "")}
           style={{
             borderColor:
               styleConfig?.Input?.borderColor || themeConfig?.borderColor,
@@ -708,12 +707,12 @@ function OnBoarding(props: QuestLoginProps) {
   const textAreaInput = (
     question: string,
     required: boolean,
-    criteriaId: string,
+    actionId: string,
     index: number,
     placeholder: string
   ) => {
     return (
-      <div key={criteriaId}>
+      <div key={actionId}>
         {customComponentPositions == index + 1 && (
           <div style={{ paddingBottom: "12px" }}>{customComponents}</div>
         )}
@@ -730,9 +729,9 @@ function OnBoarding(props: QuestLoginProps) {
           {`${question} ${!!required ? "*" : ""}`}
         </Label>
         <TextArea
-          onChange={(e) => handleUpdate(e, criteriaId, "")}
+          onChange={(e) => handleUpdate(e, actionId, "")}
           placeholder={placeholder}
-          value={answer[criteriaId]}
+          value={answer[actionId]}
           style={{
             borderColor:
               styleConfig?.TextArea?.borderColor || themeConfig?.borderColor,
@@ -751,13 +750,13 @@ function OnBoarding(props: QuestLoginProps) {
     options: string[] | [],
     question: string,
     required: boolean,
-    criteriaId: string,
+    actionId: string,
     index: number,
     manualInput: string | boolean,
     singleChoose: "modal1" | "modal2" | "modal3"
   ) => {
     return (
-      <div key={criteriaId}>
+      <div key={actionId}>
         {customComponentPositions == index + 1 && (
           <div style={{ paddingBottom: "12px" }}>{customComponents}</div>
         )}
@@ -778,10 +777,10 @@ function OnBoarding(props: QuestLoginProps) {
           type={singleChoose}
           onChange={(e) =>
             singleChoose == "modal3"
-              ? handleUpdate({ target: e }, criteriaId, "")
-              : handleUpdate(e, criteriaId, "radio")
+              ? handleUpdate({ target: e }, actionId, "")
+              : handleUpdate(e, actionId, "radio")
           }
-          checked={answer[criteriaId]}
+          checked={answer[actionId]}
           style={{
             borderColor:
               styleConfig?.SingleChoice?.style?.borderColor ||
@@ -802,11 +801,11 @@ function OnBoarding(props: QuestLoginProps) {
             ...styleConfig?.SingleChoice?.selectedStyle,
           }}
         />
-        {manualInput != false && answer[criteriaId] == manualInput && (
+        {manualInput != false && answer[actionId] == manualInput && (
           <Input
             type="text"
-            onChange={(e) => handleUpdate(e, criteriaId + "/manual", "")}
-            value={answer[criteriaId + "/manual"]}
+            onChange={(e) => handleUpdate(e, actionId + "/manual", "")}
+            value={answer[actionId + "/manual"]}
             placeholder="Please fill manually"
             style={{
               borderColor:
@@ -827,11 +826,11 @@ function OnBoarding(props: QuestLoginProps) {
     options: string[] | [],
     question: string,
     required: boolean,
-    criteriaId: string,
+    actionId: string,
     index: number
   ) => {
     return (
-      <div key={criteriaId}>
+      <div key={actionId}>
         {customComponentPositions == index + 1 && (
           <div style={{ paddingBottom: "12px" }}>{customComponents}</div>
         )}
@@ -846,8 +845,8 @@ function OnBoarding(props: QuestLoginProps) {
         </Label>
         <MultiChoice
           options={options}
-          checked={answer[criteriaId]}
-          onChange={(e) => handleUpdate(e, criteriaId, "check")}
+          checked={answer[actionId]}
+          onChange={(e) => handleUpdate(e, actionId, "check")}
           style={{
             borderColor:
               styleConfig?.MultiChoice?.style?.borderColor ||
@@ -875,11 +874,11 @@ function OnBoarding(props: QuestLoginProps) {
     options: string[] | [],
     question: string,
     required: boolean,
-    criteriaId: string,
+    actionId: string,
     index: number
   ) => {
     return (
-      <div key={criteriaId}>
+      <div key={actionId}>
         {customComponentPositions == index + 1 && (
           <div style={{ paddingBottom: "12px" }}>{customComponents}</div>
         )}
@@ -897,8 +896,8 @@ function OnBoarding(props: QuestLoginProps) {
         </Label>
         <MultiChoiceTwo
           options={options}
-          checked={!!answer[criteriaId] && answer[criteriaId]}
-          onChange={(e) => handleUpdate(e, criteriaId, "check")}
+          checked={!!answer[actionId] && answer[actionId]}
+          onChange={(e) => handleUpdate(e, actionId, "check")}
           style={{
             borderColor:
               styleConfig?.MultiChoice?.style?.borderColor ||
@@ -964,7 +963,7 @@ function OnBoarding(props: QuestLoginProps) {
         if (i.includes("/manual") && crt[i] != "") {
           let id: string = i.split("/manual")[0];
           let criteriaDetails: FormData[] = formdata.filter(
-            (item) => item.criteriaId == id
+            (item) => item.actionId == id
           );
           if (criteriaDetails[0].manualInput == crt[id]) {
             crt[id] = crt[i];
@@ -972,14 +971,11 @@ function OnBoarding(props: QuestLoginProps) {
         }
       }
 
-      let criterias = Object.keys(crt)
+      let actions = Object.keys(crt)
         .filter((key: string) => !key.includes("/manual"))
         .map((key: string) => ({
-          criteriaId: key,
-          answer: typeof crt[key] === "object" ? crt[key] : [crt[key]],
-          question:
-            formdata[formdata.findIndex((ele) => ele.criteriaId == key)]
-              .question,
+          actionId: key,
+          answers: typeof crt[key] === "object" ? crt[key] : [crt[key]]
         }));
 
       let questUserId = cookies.get("questUserId");
@@ -1007,10 +1003,11 @@ function OnBoarding(props: QuestLoginProps) {
 
       getAnswers && getAnswers(crt);
 
+
       try {
         axios.post(
-          `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}&getVariation=${enableVariation}`,
-          { criterias, userId: headers.userId },
+          `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}/verify`,
+          { actions, campaignVariationId },
           { headers }
         );
       } catch (error) {
@@ -1019,7 +1016,7 @@ function OnBoarding(props: QuestLoginProps) {
 
       try {
         axios.post(
-          `${BACKEND_URL}api/entities/${entityId}/users/${headers.userId}/metrics/onboarding-complete?userId=${headers.userId}&questId=${questId}`,
+          `${BACKEND_URL}api/entities/${entityId}/users/${headers.userId}/metrics/onboarding-complete?userId=${headers.userId}&campaignId=${campaignId}`,
           { count: 1 },
           { headers }
         );
@@ -1157,7 +1154,7 @@ function OnBoarding(props: QuestLoginProps) {
                     ? normalInput(
                         formdata[num - 1]?.question || "",
                         formdata[num - 1]?.required || false,
-                        formdata[num - 1].criteriaId || "",
+                        formdata[num - 1].actionId || "",
                         num - 1,
                         formdata[num - 1]?.placeholder ||
                           formdata[num - 1]?.question ||
@@ -1168,7 +1165,7 @@ function OnBoarding(props: QuestLoginProps) {
                     ? normalInput(
                         formdata[num - 1]?.question || "",
                         formdata[num - 1]?.required || false,
-                        formdata[num - 1].criteriaId || "",
+                        formdata[num - 1].actionId || "",
                         num - 1,
                         formdata[num - 1]?.placeholder ||
                           formdata[num - 1]?.question ||
@@ -1179,7 +1176,7 @@ function OnBoarding(props: QuestLoginProps) {
                     ? normalInput(
                         formdata[num - 1]?.question || "",
                         formdata[num - 1]?.required || false,
-                        formdata[num - 1].criteriaId || "",
+                        formdata[num - 1].actionId || "",
                         num - 1,
                         formdata[num - 1]?.placeholder ||
                           formdata[num - 1]?.question ||
@@ -1190,7 +1187,7 @@ function OnBoarding(props: QuestLoginProps) {
                     ? textAreaInput(
                         formdata[num - 1]?.question || "",
                         formdata[num - 1]?.required || false,
-                        formdata[num - 1].criteriaId || "",
+                        formdata[num - 1].actionId || "",
                         num - 1,
                         formdata[num - 1]?.placeholder ||
                           formdata[num - 1]?.question ||
@@ -1200,7 +1197,7 @@ function OnBoarding(props: QuestLoginProps) {
                     ? dateInput(
                         formdata[num - 1]?.question || "",
                         formdata[num - 1]?.required || false,
-                        formdata[num - 1].criteriaId || "",
+                        formdata[num - 1].actionId || "",
                         num - 1,
                         formdata[num - 1]?.placeholder ||
                           formdata[num - 1]?.question ||
@@ -1212,7 +1209,7 @@ function OnBoarding(props: QuestLoginProps) {
                         formdata[num - 1].options || [],
                         formdata[num - 1]?.question || "",
                         formdata[num - 1]?.required || false,
-                        formdata[num - 1].criteriaId || "",
+                        formdata[num - 1].actionId || "",
                         num - 1,
                         formdata[num - 1]?.manualInput,
                         singleChoose
@@ -1223,14 +1220,14 @@ function OnBoarding(props: QuestLoginProps) {
                           formdata[num - 1].options || [],
                           formdata[num - 1]?.question || "",
                           formdata[num - 1]?.required || false,
-                          formdata[num - 1].criteriaId || "",
+                          formdata[num - 1].actionId || "",
                           num - 1
                         )
                       : multiChoiceOne(
                           formdata[num - 1].options || [],
                           formdata[num - 1]?.question || "",
                           formdata[num - 1]?.required || false,
-                          formdata[num - 1].criteriaId || "",
+                          formdata[num - 1].actionId || "",
                           num - 1
                         )
                     : null
@@ -1240,7 +1237,7 @@ function OnBoarding(props: QuestLoginProps) {
                     ? normalInput(
                         data?.question || "",
                         data?.required || false,
-                        data.criteriaId || "",
+                        data.actionId || "",
                         index,
                         data?.placeholder || data?.question || "",
                         "text"
@@ -1249,7 +1246,7 @@ function OnBoarding(props: QuestLoginProps) {
                     ? normalInput(
                         data?.question || "",
                         data?.required || false,
-                        data.criteriaId || "",
+                        data.actionId || "",
                         index,
                         data?.placeholder || data?.question || "",
                         "email"
@@ -1258,7 +1255,7 @@ function OnBoarding(props: QuestLoginProps) {
                     ? normalInput(
                         data?.question || "",
                         data?.required || false,
-                        data.criteriaId || "",
+                        data.actionId || "",
                         index,
                         data?.placeholder || data?.question || "",
                         "number"
@@ -1267,7 +1264,7 @@ function OnBoarding(props: QuestLoginProps) {
                     ? textAreaInput(
                         data?.question || "",
                         data?.required || false,
-                        data.criteriaId || "",
+                        data.actionId || "",
                         index,
                         data?.placeholder || data?.question || ""
                       )
@@ -1275,7 +1272,7 @@ function OnBoarding(props: QuestLoginProps) {
                     ? dateInput(
                         data?.question || "",
                         data?.required || false,
-                        data.criteriaId || "",
+                        data.actionId || "",
                         index,
                         data?.placeholder || data?.question || ""
                       )
@@ -1285,7 +1282,7 @@ function OnBoarding(props: QuestLoginProps) {
                         data.options || [],
                         data?.question || "",
                         data?.required || false,
-                        data.criteriaId || "",
+                        data.actionId || "",
                         index,
                         data?.manualInput,
                         singleChoose
@@ -1296,14 +1293,14 @@ function OnBoarding(props: QuestLoginProps) {
                           data.options || [],
                           data?.question || "",
                           data?.required || false,
-                          data.criteriaId || "",
+                          data.actionId || "",
                           index
                         )
                       : multiChoiceOne(
                           data.options || [],
                           data?.question || "",
                           data?.required || false,
-                          data.criteriaId || "",
+                          data.actionId || "",
                           index
                         )
                     : null

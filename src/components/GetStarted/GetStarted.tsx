@@ -73,7 +73,7 @@ type GetStartedProps = {
     };
   };
 
-  enableVariation?: boolean;
+  variation?: string;
 };
 
 type BrandTheme = {
@@ -134,14 +134,14 @@ function GetStarted({
   },
   showFooter = true,
   styleConfig,
-  enableVariation = false,
   isImageOpen = false,
+  variation
 }: GetStartedProps) {
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
   const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } =
     useContext(QuestContext.Context);
   const [showLoader, setShowLoader] = useState<boolean>(false);
-  const [allCriteriaCompleted, setAllCriteriaCompleted] =
+  const [allActionCompleted, setAllActionCompleted] =
     useState<boolean>(false);
   const [criteriaSubmit, setCriteriaSubmit] = useState<string[]>([]);
   const [dropdowns, setDropdown] = useState<Array<boolean>>([]);
@@ -165,6 +165,8 @@ function GetStarted({
     tertiaryColor: "",
     titleColor: "",
   });
+  const [campaignVariationId, setCampaignVariationId] = useState("");
+
 
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
@@ -199,20 +201,23 @@ function GetStarted({
       token: uniqueUserId ? questUserToken : token,
     };
 
-    if (showAnnouncement) return onLinkTrigger(url, id);
+    if (showAnnouncement) return onLinkTrigger(url, id.actionId);
+    let action = []
+    action.push(id) // id here is an action object
 
     const json = {
-      criteriaId: id,
+      actions: action,
+      campaignVariationId
     };
 
-    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${headers.userId}&getVariation=${enableVariation}`;
+    const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${questId}/verify`;
     setShowLoader(true);
     axios
       .post(request, json, { headers: headers })
       .then((response) => {
         if (response.data.success) {
-          setCriteriaSubmit([...criteriaSubmit, id]);
-          onLinkTrigger(url, id);
+          setCriteriaSubmit([...criteriaSubmit, id.actionId]);
+          onLinkTrigger(url, id.actionId);
         } else {
           toast.error(response.data.error);
         }
@@ -281,44 +286,50 @@ function GetStarted({
       }
 
       function fetchData(header: any) {
-        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}&getVariation=${enableVariation}`;
+        const params = new URLSearchParams()
+        params.set('platform', 'REACT')
+        if(variation) params.set('variation', variation)
+
+        const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${questId}?${params.toString()}`;
         axios
           .get(request, { headers: header })
           .then((res) => {
             let response = res.data;
-            if (response.data.uiProps?.questThemeData) {
-              setQuestThemeData(response?.data?.uiProps?.questThemeData);
-              if (response.data.uiProps?.questThemeData.theme) {
+            if (response.data?.sdkConfig?.uiProps?.questThemeData) {
+              setQuestThemeData(response?.data?.sdkConfig?.uiProps?.questThemeData);
+              if (response?.data?.sdkConfig?.uiProps?.questThemeData.theme) {
                 // getTheme(response.data.uiProps.questThemeData.theme) disabled for now
               }
             }
-            let criterias = response?.eligibilityData?.map((criteria: any) => {
+            setCampaignVariationId(response?.data?.campaignVariationId)
+
+            let actions = response?.data?.actions.map((action: any) => {
               return {
-                type: criteria?.data?.criteriaType,
-                title: criteria?.data?.metadata?.linkActionName,
-                url: criteria?.data?.metadata?.linkActionUrl,
-                description: criteria?.data?.metadata?.description,
-                btn1: criteria?.data?.metadata?.btn1,
-                btn2: criteria?.data?.metadata?.btn2,
-                btn1Link: criteria?.data?.metadata?.btn1Link,
-                criteriaId: criteria?.data?.criteriaId,
-                completed: criteria?.completed,
+                type: action?.actionType,
+                title: action?.title,
+                url: action?.metadata?.link,
+                description: action?.description,
+                btn1: action?.metadata?.secondaryTitle || '',
+                btn2: action?.metadata?.buttonTitle,
+                btn1Link: action?.metadata?.secondaryLink,
+                actionId: action?.actionId,
+                completed: action?.isCompleted,
                 longDescription:
-                  criteria?.data?.metadata?.longDescription ||
+                action?.description ||
                   "Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users",
-                imageUrl: criteria?.data?.metadata?.imageUrl,
+                imageUrl: action?.metadata?.imageUrl,
               };
             });
-            const allCriteriasCompleted = criterias.every(
-              (criteria: any) => criteria.completed === true
+            const allActionsCompleted = actions.every(
+              (action: any) => action.completed === true
             );
-            if (allCriteriasCompleted) {
-              setAllCriteriaCompleted(true);
+            if (allActionsCompleted) {
+              setAllActionCompleted(true);
             }
-            criterias = Array.isArray(criterias) ? criterias : [];
+            actions = Array.isArray(actions) ? actions : [];
             if (!dropdowns.length)
-              setDropdown(new Array(criterias.length).fill(false));
-            setFormdata([...criterias]);
+              setDropdown(new Array(actions.length).fill(false));
+            setFormdata([...actions]);
           })
           .catch((error) => {
             GeneralFunctions.captureSentryException(error);
@@ -328,7 +339,7 @@ function GetStarted({
   }, [criteriaSubmit]);
 
   useEffect(() => {
-    if (allCriteriaCompleted) {
+    if (allActionCompleted) {
       const headers = {
         apiKey: apiKey,
         apisecret: apiSecret,
@@ -379,8 +390,9 @@ function GetStarted({
       function fetchData(header: any) {
         const json = {
           userId: header.userId,
+          campaignVariationId,
         };
-        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/claim?userId=${header.userId}&getVariation=${enableVariation}`;
+        const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${questId}/claim`;
         setShowLoader(true);
         axios
           .post(request, json, { headers: header })
@@ -403,7 +415,7 @@ function GetStarted({
           });
       }
     }
-  }, [allCriteriaCompleted]);
+  }, [allActionCompleted]);
 
   if (
     featureFlags[config.FLAG_CONSTRAINTS.GetStartedFlag]?.isEnabled == false
@@ -432,7 +444,7 @@ function GetStarted({
         className="get_started_box"
       >
         {(autoHide === true
-          ? !!formdata.length && !allCriteriaCompleted
+          ? !!formdata.length && !allActionCompleted
           : true) && (
             <div className="gs-heading-div" style={{ ...styleConfig?.Topbar }}>
               <div>
@@ -466,7 +478,7 @@ function GetStarted({
             </div>
           )}
         {(autoHide === true
-          ? !!formdata.length && !allCriteriaCompleted
+          ? !!formdata.length && !allActionCompleted
           : true) &&
           showProgressBar && (
             <div className="q_gt_progress">
@@ -504,7 +516,7 @@ function GetStarted({
             ...styleConfig?.CardContainer,
           }}
         >
-          {(autoHide === true ? !allCriteriaCompleted : true) &&
+          {(autoHide === true ? !allActionCompleted : true) &&
             formdata.map((e, i) =>
               template == 2 ? (
                 <div
@@ -513,10 +525,10 @@ function GetStarted({
                     ...styleConfig?.Card,
                   }}
                   onClick={(e) => {
-                    GeneralFunctions.fireTrackingEvent(
-                      "quest_get_started_link_clicked",
-                      "get_started"
-                    );
+                    // GeneralFunctions.fireTrackingEvent(
+                    //   "quest_get_started_link_clicked",
+                    //   "get_started"
+                    // );
 
                     setDropdown((prev) =>
                       prev.map((e, index) => (i === index ? !e : e))
@@ -691,7 +703,7 @@ function GetStarted({
                             );
                             event.stopPropagation();
                             !(!allowMultiClick && e.completed) &&
-                              handleCriteriaClick(e.criteriaId, e.url);
+                              handleCriteriaClick(e, e.url);
                           }}
                           disabled={!allowMultiClick && e.completed}
                           style={{
@@ -731,7 +743,7 @@ function GetStarted({
                   className="gs-single-card"
                   onClick={() => {
                     !(!allowMultiClick && e.completed) &&
-                      handleCriteriaClick(e.criteriaId, e.url);
+                      handleCriteriaClick(e, e.url);
                   }}
                 >
                   <div
@@ -809,7 +821,7 @@ function GetStarted({
                               );
                               event.stopPropagation();
                               !(!allowMultiClick && e.completed) &&
-                                handleCriteriaClick(e.criteriaId, e.url);
+                                handleCriteriaClick(e, e.url);
                             }}
                             disabled={!allowMultiClick && e.completed}
                             style={{
@@ -885,7 +897,7 @@ function GetStarted({
         </div>
         {showFooter &&
           (autoHide === true
-            ? !!formdata.length && !allCriteriaCompleted
+            ? !!formdata.length && !allActionCompleted
             : true) && (
             <div>
               <QuestLabs

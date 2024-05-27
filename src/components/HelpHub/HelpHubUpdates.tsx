@@ -31,6 +31,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
     setHelpHub,
     uniqueUserId,
     uniqueEmailId,
+    campaignVariationId
   } = props;
   const [filterData, setFilterData] = useState<QuestCriteriaWithStatusType[]>(
     []
@@ -66,7 +67,8 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
         token,
         apiKey,
         criteriaId,
-        null,
+        campaignVariationId,
+        [],
         uniqueUserId,
         uniqueEmailId,
         apiType

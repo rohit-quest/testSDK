@@ -1,60 +1,29 @@
-import axios, { AxiosHeaders } from "axios";
-import config from "../../config";
+import axios from "axios";
+
 interface CustomHeaders {
     apiKey: string;
     userId: string;
     token: string;
 }
-export interface Metadata {
-    linkActionName: string;
-    linkActionUrl: string;
-    discription: string;
-    effort: string;
-    importance: string;
-    xp: number;
-    frequency: string;
-    imageUrl: string;
-    icon: string;
-    resultType: "command" | "action" | undefined;
-    longDescription: string;
-    linkActionImage: string;
-}
 
-interface Data {
-    xp: number;
-    dependentCriterias: any[]; // You can define a more specific type if needed
-    frequency: string;
-    criteriaType: string;
-    createdAt: string;
-    criteriaId: string;
-    questId: string;
-    metadata: Metadata;
-    requiresApproval: boolean;
-}
+export async function getResponse(headers: CustomHeaders, entityId: string, campaignId: string, BACKEND_URL, variation?: string): Promise<any> {
+    const params = new URLSearchParams()
+    params.set('platform', 'REACT')
+    if(variation) params.set('variation', variation)
 
-interface Quest {
-    data: Data;
-    completed: boolean;
-    isLocked: boolean;
-    unfinishedCriteriaIds: string[];
-}
-
-export type QuestArray = Quest[];
-export async function getResponse(headers: CustomHeaders, entityId: string, questId: string,BACKEND_URL, enableVariation: boolean): Promise<any> {
-    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${headers.userId}&getVariation=${enableVariation}`;
+    const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}?${params.toString()}`;
 
     return axios.get(request, { headers: { ...headers } })
         .then((res) => {
-            if (!!res.data.eligibilityData) {
-                const data = res.data.eligibilityData as QuestArray
+            if (!!res.data.data.actions) {
+                const data = res.data.data.actions
                 const formatData = data.map(e => ({
-
-                    text: e.data.metadata.linkActionName,
-                    link: e.data.metadata.linkActionUrl,
-                    description: e.data.metadata.discription || "Provide the required information",
-                    icon: e.data.metadata.imageUrl || e.data.metadata.icon || e.data.metadata.linkActionImage,
-                    resultType: e.data.metadata.resultType,
-                    longDescription: e.data.metadata.longDescription || "No more digging through Dropbox and Google Drive. Always know where to find “the latest,” so you can stay in your design flow."
+                    text: e.title || '',
+                    link: e?.metadata.link || '',
+                    description: e.discription || "Provide the required information",
+                    icon: e?.metadata.imageUrl || '',
+                    resultType: e?.metadata?.resultType,
+                    longDescription: e.discription || "No more digging through Dropbox and Google Drive. Always know where to find “the latest,” so you can stay in your design flow."
                 }))
                 // return [...formatData.map(e=>({...e,resultType: "action"})),...formatData.map(e=>({...e,resultType: "command"}))]
                 return {formatData, questThemeData:res?.data?.data?.uiProps?.questThemeData};

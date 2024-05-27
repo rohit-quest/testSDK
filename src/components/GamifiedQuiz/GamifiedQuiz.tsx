@@ -72,14 +72,14 @@ interface GamifiedQuizProps {
   questions?: number;
   setQuestions?: any;
   questionsPerSection?: number;
-  enableVariation?: boolean
+  variation?: string
 }
 
 interface FormData {
   type: string;
   question: string;
   options: Array<string>;
-  criteriaId: string;
+  actionId: string;
   required: boolean;
   placeholder: string;
   linkTitle: string;
@@ -90,7 +90,7 @@ interface FormData {
 const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
   userId,
   token,
-  questId,
+  questId: campaignId,
   uniqueUserId,
   uniqueEmailId,
   heading,
@@ -106,7 +106,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
   questionsPerSection = 2,
   functionOnSubmit,
   feedbackContent,
-  enableVariation = false,
+  variation
 }) => {
   const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(
     QuestContext.Context
@@ -117,6 +117,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
   const [answer, setAnswer] = useState<Record<string, string | Array<string>>>(
     {}
   );
+  const [campaignVariationId, setCampaignVariationId] = useState('')
   const [totalSectionsPerSectionQuestion, setTotalSectionsPerSectionQuestion] =
     useState<number>(0);
   const [currentSection, setCurrentSection] = useState<number>(0);
@@ -161,7 +162,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
         let header = { ...headers, ...{ questUserId, questUserToken } };
         try {
           axios.post(
-            `${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&questId=${questId}`,
+            `${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&campaignId=${campaignId}`,
             { count: 1 },
             { headers: header }
           );
@@ -185,7 +186,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
             cookies.set("questUserToken", token, { path: "/", expires: date });
             try {
               axios.post(
-                `${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/onboarding-view?userId=${userId}&questId=${questId}`,
+                `${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/onboarding-view?userId=${userId}&campaignId=${campaignId}`,
                 { count: 1 },
                 { headers: header }
               );
@@ -202,34 +203,26 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
         userId: string,
         headers: object
       ) {
-        const url = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/criterias?userId=${userId}&getVariation=${enableVariation}`;
+        let params = new URLSearchParams()
+        params.set('platform', 'REACT')
+        if(variation) params.set('variation', variation)
+
+        const url = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}?${params.toString()}`;
 
         try {
           const { data } = await axios.get(url, { headers: headers });
 
-          setQuestions(data.data.eligibilityCriterias.length);
+          setQuestions(data.data.actions.length);
 
-          let criterias = data?.data?.eligibilityData.map(
-            (criteria: {
-              criteriaType: string;
-              metadata: {
-                title: string;
-                options: string[];
-                isRequired: string;
-                placeholder: string;
-                linkActionName: string;
-                linkActionUrl: string;
-                manualInput: string;
-              };
-              criteriaId: string;
-            }) => {
+          let actions = data?.data?.actions.map(
+            (action: any) => {
               return {
-                type: criteria?.criteriaType,
-                question: criteria?.metadata?.title,
-                options: criteria?.metadata?.options || [],
-                criteriaId: criteria?.criteriaId,
-                required: criteria?.metadata?.isRequired,
-                placeholder: criteria?.metadata?.placeholder,
+                type: action?.actionType,
+                question: action?.title,
+                options: action?.options || [],
+                actionId: action?.actionId,
+                required: action?.isRequired,
+                placeholder: action?.metadata?.placeholder,
               };
             }
           );
@@ -237,17 +230,19 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           if (questionsPerSection > 0) {
             setTotalSectionsPerSectionQuestion(
               Math.ceil(
-                data.data.eligibilityCriterias.length / questionsPerSection
+                data.data.actions.length / questionsPerSection
               )
             );
           }
 
-          if (criterias?.length > 0) {
-            setFormdata([...criterias]);
+          if (actions?.length > 0) {
+            setFormdata([...actions]);
           } else {
             setFormdata([]);
           }
+          setCampaignVariationId(data.data.campaignVariationId)
         } catch (error) {
+          console.log(error)
           GeneralFunctions.captureSentryException(error);
         }
       };
@@ -262,33 +257,33 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
   const [change, setChange] = useState(true);
   const [checkChange, setCheckChange] = useState(true);
 
-  const handleCheckboxChange = (option: string, criteriaId: string): void => {
-    if (selectedOptions[criteriaId]?.includes(option)) {
+  const handleCheckboxChange = (option: string, actionId: string): void => {
+    if (selectedOptions[actionId]?.includes(option)) {
       setSelectedOptions((prev) => {
         return {
           ...prev,
-          [criteriaId]: prev[criteriaId].filter((e) => e != option),
+          [actionId]: prev[actionId].filter((e) => e != option),
         };
       });
     } else {
-      if (Array.isArray(selectedOptions[criteriaId])) {
-        selectedOptions[criteriaId] = [...selectedOptions[criteriaId], option];
+      if (Array.isArray(selectedOptions[actionId])) {
+        selectedOptions[actionId] = [...selectedOptions[actionId], option];
       } else {
-        selectedOptions[criteriaId] = [];
-        selectedOptions[criteriaId] = [...selectedOptions[criteriaId], option];
+        selectedOptions[actionId] = [];
+        selectedOptions[actionId] = [...selectedOptions[actionId], option];
       }
     }
     setCheckChange((prev) => !prev);
   };
 
-  const handleRadioChange = (option: string, criteriaId: string): void => {
-    if (answer[criteriaId]?.includes(option)) {
+  const handleRadioChange = (option: string, actionId: string): void => {
+    if (answer[actionId]?.includes(option)) {
       setAnswer((prev) => {
-        return { ...prev, [criteriaId]: (prev[criteriaId] = []) };
+        return { ...prev, [actionId]: (prev[actionId] = []) };
       });
     } else {
-      answer[criteriaId] = [];
-      answer[criteriaId] = [...answer[criteriaId], option];
+      answer[actionId] = [];
+      answer[actionId] = [...answer[actionId], option];
     }
     setChange((prev) => !prev);
   };
@@ -304,7 +299,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
         ) {
           const ansOptions =
             selectedOptions[
-              formdata[questionSections[sectionNo][i] - 1]?.criteriaId
+              formdata[questionSections[sectionNo][i] - 1]?.actionId
             ];
           if (!formdata[questionSections[sectionNo][i] - 1]?.required) {
           } else if (
@@ -318,7 +313,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           }
         } else if (!formdata[questionSections[sectionNo][i] - 1]?.required) {
         } else if (
-          answer[formdata[questionSections[sectionNo][i] - 1]?.criteriaId]
+          answer[formdata[questionSections[sectionNo][i] - 1]?.actionId]
             ?.length > 0 &&
           formdata[questionSections[sectionNo][i] - 1]?.required
         ) {
@@ -332,7 +327,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
       for (let i = 0; i < questionsPerSection; i++) {
         let queNo = currentSection * questionsPerSection + i;
         if (formdata[queNo]?.type === "USER_INPUT_MULTI_CHOICE") {
-          const ansOptions = selectedOptions[formdata[queNo]?.criteriaId];
+          const ansOptions = selectedOptions[formdata[queNo]?.actionId];
           if (!formdata[queNo]?.required) {
           } else if (ansOptions?.length > 0 && formdata[queNo]?.required) {
             setGoToNextSection(true);
@@ -342,7 +337,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           }
         } else if (!formdata[queNo]?.required) {
         } else if (
-          answer[formdata[queNo]?.criteriaId]?.length > 0 &&
+          answer[formdata[queNo]?.actionId]?.length > 0 &&
           formdata[queNo]?.required
         ) {
           setGoToNextSection(true);
@@ -377,26 +372,26 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           return (
             <div
               key={index}
-              onClick={() => handleCheckboxChange(option, value.criteriaId)}
+              onClick={() => handleCheckboxChange(option, value.actionId)}
               className={`${
-                selectedOptions[value?.criteriaId]?.includes(option)
+                selectedOptions[value?.actionId]?.includes(option)
                   ? "selected-option"
                   : "not-selected"
               }`}
               style={
-                selectedOptions[value?.criteriaId]?.includes(option)
+                selectedOptions[value?.actionId]?.includes(option)
                   ? SelectedBorder
                   : { borderColor: themeConfig?.borderColor }
               }
             >
-              {selectedOptions[value?.criteriaId]?.includes(option)
+              {selectedOptions[value?.actionId]?.includes(option)
                 ? MultiChoiceSelectedSVG(
                     styleConfig?.OptionsSelectedColor?.color
                   )
                 : MultiChoiceSVG(themeConfig?.borderColor)}
               <p
                 style={
-                  selectedOptions[value?.criteriaId]?.includes(option)
+                  selectedOptions[value?.actionId]?.includes(option)
                     ? SelectedOptionColor
                     : {
                         color: themeConfig?.primaryColor,
@@ -428,28 +423,28 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           return (
             <div
               key={index}
-              onClick={() => handleRadioChange(option, value.criteriaId)}
+              onClick={() => handleRadioChange(option, value.actionId)}
               className={`${
-                answer[value?.criteriaId]?.includes(option)
+                answer[value?.actionId]?.includes(option)
                   ? "selected-option"
                   : "not-selected"
               }`}
               style={
-                answer[value?.criteriaId]?.includes(option)
+                answer[value?.actionId]?.includes(option)
                   ? SelectedBorder
                   : {
                       borderColor: themeConfig?.borderColor,
                     }
               }
             >
-              {answer[value?.criteriaId]?.includes(option)
+              {answer[value?.actionId]?.includes(option)
                 ? SingleChoiceSelectedSVG(
                     styleConfig?.OptionsSelectedColor?.color
                   )
                 : SingleChoiceSVG(themeConfig?.borderColor)}
               <p
                 style={
-                  answer[value?.criteriaId]?.includes(option)
+                  answer[value?.actionId]?.includes(option)
                     ? SelectedOptionColor
                     : {
                         color: themeConfig?.primaryColor,
@@ -483,11 +478,9 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
         answer[key] = selectedOptions[key];
       }
     }
-    let criterias = Object.keys(answer).map((key: string) => ({
-      criteriaId: key,
-      answer: typeof answer[key] === "object" ? answer[key] : [answer[key]],
-      question:
-        formdata[formdata.findIndex((ele) => ele.criteriaId == key)].question,
+    let actions = Object.keys(answer).map((key: string) => ({
+      actionId: key,
+      answers: Array.isArray(answer[key]) ? answer[key]:[answer[key]],
     }));
 
     let headers = {
@@ -499,12 +492,12 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
 
     const data = axios
       .post(
-        `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}`,
-        { criterias, userId: headers.userId },
+        `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}/verify`,
+        { actions, campaignVariationId },
         { headers }
       )
       .then((res) => {
-        functionOnSubmit();
+        functionOnSubmit?.();
         setThanksPopup(res.data.success);
         if (res.data.success) {
           setThanksPopup(res.data.success);
@@ -520,22 +513,22 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
       });
   };
 
-  const handleUpdate = (e: any, criteriaId: string, j: string) => {
+  const handleUpdate = (e: any, actionId: string, j: string) => {
     setAnswer((prev) => {
-      return { ...prev, [criteriaId]: e.target.value };
+      return { ...prev, [actionId]: e.target.value };
     });
   };
 
   const normalInput = (
     question: string,
     required: boolean,
-    criteriaId: string,
+    actionId: string,
     index: number,
     placeholder: string,
     inputType: logoType
   ) => {
     return (
-      <div key={criteriaId}>
+      <div key={actionId}>
         <p
           className="label-inputs"
           style={{
@@ -547,9 +540,9 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
         <Input
           type={inputType}
           placeholder={placeholder}
-          value={answer[criteriaId] as string}
+          value={answer[actionId] as string}
           iconColor={styleConfig?.IconColor?.color}
-          onChange={(e) => handleUpdate(e, criteriaId, "")}
+          onChange={(e) => handleUpdate(e, actionId, "")}
           style={{
             borderColor:
               styleConfig?.Input?.borderColor || themeConfig?.borderColor,
@@ -573,12 +566,12 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
   const dateInput = (
     question: string,
     required: boolean,
-    criteriaId: string,
+    actionId: string,
     index: number,
     placeholder: string
   ) => {
     return (
-      <div key={criteriaId}>
+      <div key={actionId}>
         <p
           className="label-inputs"
           style={{
@@ -589,8 +582,8 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
         <Input
           type={"date"}
           placeholder={placeholder}
-          value={answer[criteriaId] as string}
-          onChange={(e) => handleUpdate(e, criteriaId, "")}
+          value={answer[actionId] as string}
+          onChange={(e) => handleUpdate(e, actionId, "")}
           iconColor={styleConfig?.IconColor?.color}
           style={{
             borderColor:
@@ -607,12 +600,12 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
   const textAreaInput = (
     question: string,
     required: boolean,
-    criteriaId: string,
+    actionId: string,
     index: number,
     placeholder: string
   ) => {
     return (
-      <div key={criteriaId}>
+      <div key={actionId}>
         <p
           className="label-inputs"
           style={{
@@ -621,9 +614,9 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           }}
         >{`${question}${required ? "*" : ""}`}</p>
         <TextArea
-          onChange={(e) => handleUpdate(e, criteriaId, "")}
+          onChange={(e) => handleUpdate(e, actionId, "")}
           placeholder={placeholder}
-          value={answer[criteriaId] as string}
+          value={answer[actionId] as string}
           style={{
             borderColor:
               styleConfig?.TextArea?.borderColor || themeConfig?.borderColor,
@@ -645,7 +638,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
     let index = question;
 
     QuestionArray.push(
-      <div className="gamified-quiz-criteria-div" key={index}>
+      <div className="gamified-quiz-action-div" key={index}>
         <div className="gamified-quiz-header-ques-title-cont">
           <div className="question-input-cont">
             {formdata[question]?.type === "USER_INPUT_SINGLE_CHOICE" ||
@@ -668,7 +661,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               normalInput(
                 value.question,
                 value.required || false,
-                value.criteriaId,
+                value.actionId,
                 index,
                 value.placeholder || value.question,
                 "text"
@@ -677,7 +670,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               normalInput(
                 value.question,
                 value.required || false,
-                value.criteriaId,
+                value.actionId,
                 index,
                 value.placeholder || value.question,
                 "email"
@@ -686,7 +679,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               normalInput(
                 value.question,
                 value.required || false,
-                value.criteriaId,
+                value.actionId,
                 index,
                 value.placeholder || value.question,
                 "number"
@@ -695,7 +688,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               dateInput(
                 value.question,
                 value.required || false,
-                value.criteriaId,
+                value.actionId,
                 index,
                 value.placeholder || value.question
               )
@@ -703,7 +696,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               textAreaInput(
                 value.question,
                 value.required || false,
-                value.criteriaId,
+                value.actionId,
                 index,
                 value.placeholder || value.question
               )
@@ -915,7 +908,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
 
                           return (
                             <div
-                              className="gamified-quiz-criteria-div"
+                              className="gamified-quiz-action-div"
                               key={index}
                             >
                               <div className="gamified-quiz-header-ques-title-cont">
@@ -945,7 +938,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                                     normalInput(
                                       value.question,
                                       value.required || false,
-                                      value.criteriaId,
+                                      value.actionId,
                                       index,
                                       value.placeholder || value.question,
                                       "text"
@@ -955,7 +948,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                                     normalInput(
                                       value.question,
                                       value.required || false,
-                                      value.criteriaId,
+                                      value.actionId,
                                       index,
                                       value.placeholder || value.question,
                                       "email"
@@ -965,7 +958,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                                     normalInput(
                                       value.question,
                                       value.required || false,
-                                      value.criteriaId,
+                                      value.actionId,
                                       index,
                                       value.placeholder || value.question,
                                       "number"
@@ -975,7 +968,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                                     dateInput(
                                       value.question,
                                       value.required || false,
-                                      value.criteriaId,
+                                      value.actionId,
                                       index,
                                       value.placeholder || value.question
                                     )
@@ -984,7 +977,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                                     textAreaInput(
                                       value.question,
                                       value.required || false,
-                                      value.criteriaId,
+                                      value.actionId,
                                       index,
                                       value.placeholder || value.question
                                     )
