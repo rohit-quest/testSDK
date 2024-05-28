@@ -233,7 +233,7 @@ export default function OnBoardingPreview({
       
         SingleChoice:{
           selectedStyle:{background:'blue'},
-          hoverBackground:'grey'
+          hoverBackground:'red'
         }
       }}
     />
