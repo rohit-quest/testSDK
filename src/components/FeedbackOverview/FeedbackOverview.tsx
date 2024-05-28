@@ -30,7 +30,7 @@ interface feedbackCompProps {
   userId: string;
   token: string;
   questId: string;
-  questIds: string[];
+  // questIds: string[];
   answer?: any;
   setAnswer?: any;
   getAnswers?: any;
@@ -167,7 +167,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   userId,
   token,
   questId,
-  questIds,
+  // questIds,
   contactUrl,
   isOpen,
   onClose,
@@ -193,6 +193,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   const [formdata, setFormdata] = useState<{ [key: number]: [FormDataItem] }>(
     {}
   );
+  const [questIds,setQuestIds] = useState<string[]>(['1','2','3','4'])
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [submit, setSubmit] = useState<boolean>(false);
   const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } =
@@ -476,19 +477,22 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         }, {}))
 
         setQuestThemeData(questData?.sdkConfig?.uiProps?.questThemeData);
+        console.log(questData,'480')
 
-        let actions = questData?.childCampaignActions?.map((childQuest: any) => (
-          childQuest.actions.map((action: any) => ({
+        const newQuestIds:string[] = [];
+        let actions = questData?.childCampaignActions?.map((childQuest: any) => {
+          newQuestIds.push(childQuest?.campaignId);
+          return childQuest.actions.map((action: any) => ({
             type: action.actionType,
             question: action.title,
             options: action.options,
             criteriaId: action.actionId,
             required: action.isRequired,
-            placeholder: action?.metadata?.placeholder
-          }))
-        ))
-
+            placeholder: action?.metadata?.placeholder,
+          }));
+        });
         setFormdata(actions)
+        setQuestIds(newQuestIds)
       } catch (error) {
         console.error("Error:", error);
         GeneralFunctions.captureSentryException(error);
@@ -616,7 +620,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       <div className="" key={criteriaId}>
         <Label
           htmlFor={"normalInput"}
-          children={`${question}${required === true ? "*" : ""}`}          style={{
+          children={`${question}${required === true ? "*" : ""}`}         
+           style={{
             color:
               styleConfig?.Label?.color ||
               styleConfig?.Heading?.color ||
@@ -1174,7 +1179,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                             </div>
                           </div>
                         )}
-                        {questIds[3] && (
+                        {/* {questIds[3] && ( */}
                           <div
                             onClick={() => {
                               GeneralFunctions.fireTrackingEvent(
@@ -1267,7 +1272,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               </div>
                             </div>
                           </div>
-                        )}
+                        {/* )} */}
                       </div>
                       <div>
                         {showFooter && (
