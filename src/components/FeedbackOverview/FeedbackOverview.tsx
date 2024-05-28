@@ -30,7 +30,7 @@ interface feedbackCompProps {
   userId: string;
   token: string;
   questId: string;
-  questIds: string[];
+  // questIds: string[];
   answer?: any;
   setAnswer?: any;
   getAnswers?: any;
@@ -167,7 +167,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   userId,
   token,
   questId,
-  questIds,
+  // questIds,
   contactUrl,
   isOpen,
   onClose,
@@ -193,6 +193,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   const [formdata, setFormdata] = useState<{ [key: number]: [FormDataItem] }>(
     {}
   );
+  const [questIds,setQuestIds] = useState<string[]>([])
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [submit, setSubmit] = useState<boolean>(false);
   const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } =
@@ -227,6 +228,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [file, setFile] = useState<FileProp | null>(null);
+
 
   const closeModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     let target = e.target as Element;
@@ -294,7 +296,24 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     );
   }, []);
 
+  useEffect(() => {
+    
+  if(questIds.length > 0){
+    setSelectedQuest(selectedOption == 'GeneralFeedback'? questIds[0]: selectedOption == 'ReportBug'? questIds[1]: questIds[2])
+  }
+
+  }, [questIds,selectedOption])
+
   const handleOptionClick = (option: optionType, quest: string) => {
+    if(!quest){
+
+      option === "ContactUs" && contactUrl
+        ? window.open(contactUrl, "_blank")
+        : setSelectedOption(null);
+      setSelectedOption(option)
+
+      return
+    }
     let cookies = new Cookies();
     let externalUserId = cookies.get("externalUserId");
     let questUserId = cookies.get("questUserId");
@@ -477,18 +496,19 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
 
         setQuestThemeData(questData?.sdkConfig?.uiProps?.questThemeData);
 
-        let actions = questData?.childCampaignActions?.map((childQuest: any) => (
-          childQuest.actions.map((action: any) => ({
+        let actions = questData?.childCampaignActions?.map((childQuest: any) => {
+          questIds.push(childQuest?.campaignId);
+          return childQuest.actions.map((action: any) => ({
             type: action.actionType,
             question: action.title,
             options: action.options,
             criteriaId: action.actionId,
             required: action.isRequired,
-            placeholder: action?.metadata?.placeholder
-          }))
-        ))
-
+            placeholder: action?.metadata?.placeholder,
+          }));
+        });
         setFormdata(actions)
+        setQuestIds((prev) => [...prev, ...questIds])
       } catch (error) {
         console.error("Error:", error);
         GeneralFunctions.captureSentryException(error);
@@ -553,7 +573,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               themeConfig.primaryColor,
             ...styleConfig.Input,
           }}
-          placeholder={placeholder}
+          placeholder={placeholder || question}
           value={answer[criteriaId]}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           required={required}
@@ -591,7 +611,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
               themeConfig.primaryColor,
             ...styleConfig.Input,
           }}
-          placeholder={placeholder}
+          placeholder={placeholder || question}
           value={answer[criteriaId]}
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           emailtext={
@@ -616,8 +636,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       <div className="" key={criteriaId}>
         <Label
           htmlFor={"normalInput"}
-          children={`${question}${required === true ? "*" : ""}`}
-          style={{
+          children={`${question}${required === true ? "*" : ""}`}         
+           style={{
             color:
               styleConfig?.Label?.color ||
               styleConfig?.Heading?.color ||
@@ -629,7 +649,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
         <TextArea
           onChange={(e) => handleUpdate(e, criteriaId, "")}
           value={answer[criteriaId]}
-          placeholder={placeholder}
+          placeholder={placeholder || question}
           style={{
             borderColor: themeConfig.borderColor,
             color:
@@ -644,6 +664,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       </div>
     );
   };
+
 
   if (
     featureFlags[config.FLAG_CONSTRAINTS.FeedbackWorkflowFlag]?.isEnabled ==
@@ -676,6 +697,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       console.error("An error occurred while fetching the image:", error);
     }
   };
+
 
   return (
     <Modal
@@ -894,14 +916,14 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                         </div>
                       </div>
                       <div className="q-fw-content-box">
-                        {questIds[0] && (
+                        {/* {questIds[0] && ( */}
                           <div
                             onClick={() => {
                               GeneralFunctions.fireTrackingEvent(
                                 "quest_feedback_workflow_general_feedback_clicked",
                                 "feedback_workflow_general_feedback"
                               );
-                              handleOptionClick("GeneralFeedback", questIds[0]);
+                              handleOptionClick("GeneralFeedback", questIds[0],);
                             }}
                             className="q-hover q-fw-cards"
                             onMouseEnter={() =>
@@ -983,8 +1005,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               </div>
                             </div>
                           </div>
-                        )}
-                        {questIds[1] && (
+                        {/* )} */}
+                        {/* {questIds[1] && ( */}
                           <div
                             onClick={() => {
                               GeneralFunctions.fireTrackingEvent(
@@ -1078,8 +1100,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               </div>
                             </div>
                           </div>
-                        )}
-                        {questIds[2] && (
+                        {/* )} */}
+                        {/* {questIds[2] && ( */}
                           <div
                             onClick={() => {
                               GeneralFunctions.fireTrackingEvent(
@@ -1173,8 +1195,8 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               </div>
                             </div>
                           </div>
-                        )}
-                        {questIds[3] && (
+                        {/* )} */}
+                        {/* {questIds[3] && ( */}
                           <div
                             onClick={() => {
                               GeneralFunctions.fireTrackingEvent(
@@ -1267,7 +1289,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                               </div>
                             </div>
                           </div>
-                        )}
+                        {/* )} */}
                       </div>
                       <div>
                         {showFooter && (
