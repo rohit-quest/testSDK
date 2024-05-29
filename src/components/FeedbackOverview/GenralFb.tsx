@@ -301,6 +301,7 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                           top: 0,
                           left: 0,
                           cursor: file === null ? "pointer" : "no-drop",
+                          display: "block"
                         }}
                         className="file-input"
                         ref={inputRef}
