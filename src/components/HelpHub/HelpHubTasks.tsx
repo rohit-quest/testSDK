@@ -302,17 +302,7 @@ const HelpHubTasks = (props: HelpHubTasksTypes) => {
                     </div>
                     {ele?.imageUrl && (
                       <div className="single-task-close-div-image-cont">
-                        <div
-                          style={{
-                            width: "100%",
-                            height: "255px",
-                            borderRadius: "5px",
-                            border: "1px solid var(--Primary, #9035FF)",
-                            background: `url(${
-                              ele?.imageUrl || UpdatesImage
-                            }) lightgray -5.338px -7px / 110.971% 102.745% no-repeat`,
-                          }}
-                        ></div>
+                        <img src={ele?.imageUrl || UpdatesImage} alt="" />
                       </div>
                     )}
                   </div>

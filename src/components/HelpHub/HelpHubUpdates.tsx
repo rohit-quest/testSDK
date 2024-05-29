@@ -179,7 +179,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                               border: " 0.447px solid var(--Primary, #9035FF)",
                               background: `url(${
                                 value?.imageUrl || entityImage
-                              }) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
+                              }) aliceblue -3.73px -3.132px / 110.971% 102.745% no-repeat`,
                               objectFit: "contain",
                               backgroundSize: "cover",
                               backgroundPosition: "center top",
@@ -247,7 +247,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                               border: " 0.447px solid var(--Primary, #9035FF)",
                               background: `url(${
                                 value?.imageUrl || entityImage
-                              }) lightgray -3.73px -3.132px / 110.971% 102.745% no-repeat`,
+                              }) aliceblue -3.73px -3.132px / 110.971% 102.745% no-repeat`,
                             }}
                           ></div>
                         </div>
@@ -348,7 +348,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                 style={{
                   background: `url(${
                     updateOneData?.imageUrl || entityImage
-                  })  lightgray -10.312px -8.675px / 110.971% 102.745% no-repeat`,
+                  })  aliceblue -10.312px -8.675px / 110.971% 102.745% no-repeat`,
                   objectFit: "contain",
                 }}
               ></div>
