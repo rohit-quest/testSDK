@@ -54,6 +54,7 @@ import LeaderBoard from "./components/Leaderboard/LeaderBoard";
 import { Referral } from './components/expansion/ReferEarn'
 import GamifiedQuiz from "./components/GamifiedQuiz/GamifiedQuiz";
 import { CrossSelling } from "./components/expansion/CrossSelling";
+import Test from './Test'
 
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-9986f82d-cbd0-4923-bf9a-ea01b4795fa1";
@@ -141,6 +142,7 @@ function App() {
           }
         }
       >
+        <Test />
         
         {/* ------------------- API v2 Test Started -------------------  */}
         {/* <Survey
@@ -779,7 +781,7 @@ function App() {
         <button onClick={() => Toast.error({ text: "This is a error message", position: 'bottom-center', autoClose: 1000, template: 2, description: "Error" })}>Error</button>
         <button onClick={() => Toast.warning({ text: "This is a succes warning message", position: 'bottom-center', autoClose: 1000, template: 2, description: "WARNING" })}>Warning</button> */}
 
-        <FeedbackWorkflowPreview online={true} />
+        {/* <FeedbackWorkflowPreview online={true} /> */}
         {/* <ChallengesPreview online={true} /> */}
 
         {/* <ReferEarnPreview/> */}
