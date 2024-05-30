@@ -323,13 +323,13 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                           >
                             {star <= rating
                               ? blackStar(
-                                  StarStyle?.Size,
-                                  StarStyle?.PrimaryColor
-                                )
+                                StarStyle?.Size,
+                                StarStyle?.PrimaryColor
+                              )
                               : whiteStar(
-                                  StarStyle?.Size,
-                                  StarStyle?.SecondaryColor
-                                )}
+                                StarStyle?.Size,
+                                StarStyle?.SecondaryColor
+                              )}
                           </div>
                         ))}
                       </div>
@@ -375,7 +375,8 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                         position: "absolute",
                         top: 0,
                         left: 0,
-                        cursor: file === null ? "pointer" : "no-drop"
+                        cursor: file === null ? "pointer" : "no-drop",
+                        display: "block"
                       }} ref={inputRef} onChange={(e) => {
                         if (e.target.files && e.target.files.length > 0) {
                           const selectedFile = e.target.files[0];
@@ -446,12 +447,12 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                           background: "transparent",
                           cursor: "pointer",
                         }}
-                        onClick={() => {
-                          setFile(null);
-                          if (inputRef.current) {
-                            inputRef.current.value = "";
-                          }
-                        }}>
+                          onClick={() => {
+                            setFile(null);
+                            if (inputRef.current) {
+                              inputRef.current.value = "";
+                            }
+                          }}>
                           {deleteSvg(styleConfig?.Form?.color)}
                         </button>
                       </div>
