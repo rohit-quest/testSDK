@@ -26,23 +26,44 @@ interface PropType {
   ref?: RefObject<HTMLInputElement>
   emailErrorStyle?:CSSProperties | undefined;
   emailtext?:string;
+  required?:boolean
 }
 
-export const Input = ({ placeholder, type, style, onChange, iconColor, value, onKeyUp, onKeyDown, ref, logoPosition = 'right', emailErrorStyle,emailtext }: PropType) => {
+export const Input = ({ placeholder, type, style, onChange, iconColor, value, onKeyUp, onKeyDown, ref, logoPosition = 'right', emailErrorStyle,emailtext, required }: PropType) => {
   const { themeConfig } = useContext(QuestContext.Context);
+
   
   const [isValidEmail, setIsValidEmail] = useState(true);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+
+  const validateEmail = (inputValue: string) => {
+    if (inputValue) {
+      setIsValidEmail(emailRegex.test(inputValue));
+    } else {
+      setIsValidEmail(true);
+    }
+  };
+
+
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     if (type === 'email') {
-      setIsValidEmail(emailRegex.test(inputValue));
+      validateEmail(inputValue); 
     }
     if (onChange) {
       onChange(e);
     }
   };
+
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    if (type === 'email') {
+      validateEmail(inputValue); // Validate email on blur
+    }
+  };
+
 
   return (
     <>
@@ -56,6 +77,7 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value, on
               className="q_input_main_cont q_input_custom_datePicker"
               onChange={onChange}
               value={value}
+              required={required}
             />
             {value ? <div style={{ display: "inline", marginTop: "2px", color: style?.color, fontSize: style?.fontSize }} >{value}</div> : <div style={{ display: "inline", color: "#8E8E8E", marginTop: "2px", fontSize: style?.fontSize }}>{placeholder}</div>}
           </label>
@@ -74,6 +96,7 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value, on
             onKeyDown={onKeyDown}
             value={value}
             ref={ref}
+            onBlur={handleInputBlur}
             onWheel={event => { event.currentTarget.blur(); }}
             style={
               {
@@ -81,6 +104,8 @@ export const Input = ({ placeholder, type, style, onChange, iconColor, value, on
                 color: style?.color || themeConfig.primaryColor
               }
             }
+            required={required}
+            pattern={type === 'email' ? emailRegex.source : undefined}
           />
           {(logoPosition == 'right' || logoPosition == 'both') && (LogoType[type])(iconColor || '#B9B9B9')}
         </div>

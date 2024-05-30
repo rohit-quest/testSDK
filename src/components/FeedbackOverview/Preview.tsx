@@ -1,179 +1,167 @@
+import { useState } from "react";
 import { QuestProvider } from "../QuestWrapper";
 import FeedbackWorkflow from "./FeedbackOverview";
 
 import FeedbackWorkflowOffline from "./OfflineComponent.tsx";
-export const questId = "q-290aef93-4b20-45e2-b2f6-4bc19b5bd8ef";
-export const apiKey = "k-9986f82d-cbd0-4923-bf9a-ea01b4795fa1";
+export const apiKey = "k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be";
 export const apiSecret =
-  "s-5bafb222-c5bd-4c14-9dfe-9d72fb5e275b9cacf740-3c56-44e9-afe3-b1c0aa6a8a42";
-export const entityId = "e-ba6a2a04-546c-48d4-9369-64524756c0e8";
+  "s-3c35ebcb-c752-4c3c-8ce3-e6460ebbc9d479a7e122-d06b-4243-bbfa-e0889987f6c0";
+export const entityId = "e-0000000000";
+export const questId =  "c-edc00cdf-9cb9-4fb1-896e-bc6ab7518c04";
+export const userId = "u-8268f5e1-f5a1-440c-a333-0f5578a73847";
 export const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTdiM2E2MzAxLTcxMWMtNGMwZC1hZTYzLWQ5M2RiZTJjZWVlOSIsImlhdCI6MTcxMzk0MzIzMywiZXhwIjoxNzE0NTQ4MDMzfQ.8iaRzlT62QUh7I8uihYuo7ywR0FP33kec-lSnbt3U4M";
-export const userId = "u-7b3a6301-711c-4c0d-ae63-d93dbe2ceee9";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxNjcxODQ5MCwiZXhwIjoxNzE3MzIzMjkwfQ.7hnsMvPAbAWaC2JTSoMJ5jtOWXxFJaPlNgw0juQPqsA";
 
-export default function FeedbackWorkflowPreview({ online = false }: { online?: boolean }) {
-
+export default function FeedbackWorkflowPreview({
+  online = false,
+}: {
+  online?: boolean;
+}) {
+  const [isOpen, setIsOpen] = useState(true);
   if (online)
-    return (<QuestProvider
-      apiKey={apiKey}
-      apiSecret="s-7462f377-2ce4-4593-a907-3a2a00cdf951be06358a-d95d-4576-b3b4-a07dda2dab36"
-      entityId={entityId}
-      featureFlags={{}}
-      apiType="STAGING"
-      themeConfig={{
-        // primaryColor: "red",
-        // fontFamily:"cursive"
-        // backgroundColor:'red',
-        // primaryColor:'white'
-      }}
-    >
-
-      <FeedbackWorkflow
-        userId={userId}
-        token={token}
-        showFooter={true}
-        questIds={[
-          'q-general-feedback',
-          'q-report-a-bug',
-          'q-request-a-feature',
-          'q-contact-us',
-        ]}
-        GeneralFeedback={{
-          heading: "General Fee",
-          description: "Give general feedsdasdasdback on this page",
-          formHeading: "General Feedbackasddffd",
-          formDescription: "Welcome back,sdfsdf Please complete your details",
-          iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
-        }}
-        RequestFeature={{
-          heading: "Request a Featureqwqewqewqe",
-          description: "How can we msdsfdsdfake it better",
-          formHeading: "Request a Feature",
-          iconUrl: 'https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg'
-        }}
-        ReportBug={{
-          heading: "Reportasdasd a Bug",
-          description: "Describazsdasde your issue",
-          formHeading: "Report wewea Bug",
-          formDescription: "Describe yosddffdur issue",
-          iconUrl: 'https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg'
-        }}
-        ContactUs={{
-          heading: "Contacasasdt us",
-          description: "Invite oasasdasdher admins and moderators",
-          iconUrl: 'https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg'
-        }}
-        contactUrl="https://calendly.com/sriya-persana/30min"
-
-        // showPoweredBy={false}
-        styleConfig={{
-            Form: {
-
+    return (
+      <QuestProvider
+        apiKey={apiKey}
+        apiSecret={apiSecret}
+        entityId={entityId}
+        featureFlags={{}}
+        apiType="STAGING"
+        themeConfig={
+          {
+            // primaryColor: "red",
+            // fontFamily:"cursive"
+            // backgroundColor:'red',
+            // primaryColor:'white'
+          }
+        }
+      >
+        <FeedbackWorkflow
+          userId={userId}
+          token={token}
+          showFooter={true}
+          // questIds={[
+          //   'c-e840fb8f-7e8f-4a4f-938e-b6104068071e','c-17a9c049-dad6-4178-afba-ef07728906c7','c-c6077469-e457-4b23-8799-953409d326eb','c-09413b00-7f94-4353-b22b-1c7f9d43d8ce'
+          // ]}
+          questId={questId}
+          // questIds={}
+          GeneralFeedback={{
+            heading: "General Fee",
+            description: "Give general feedback on this page",
+            formHeading: "General Feedback",
+            formDescription: "Welcome back,sdfsdf Please complete your details",
+            iconUrl:
+              "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+          }}
+          RequestFeature={{
+            heading: "Request a Featureqwqewqewqe",
+            description: "How can we msdsfdsdfake it better",
+            formHeading: "Request a Feature",
+            iconUrl:
+              "https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg",
+          }}
+          ReportBug={{
+            heading: "Reportasdasd a Bug",
+            description: "Describazsdasde your issue",
+            formHeading: "Report wewea Bug",
+            formDescription: "Describe yosddffdur issue",
+            iconUrl:
+              "https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg",
+          }}
+          ContactUs={{
+            heading: "Contacasasdt us",
+            description: "Invite oasasdasdher admins and moderators",
+            iconUrl:
+              "https://cdn.pixabay.com/photo/2012/03/01/00/55/flowers-19830_640.jpg",
+          }}
+          contactUrl="https://calendly.com/sriya-persana/30min"
+          // showPoweredBy={false}
+          styleConfig={{
+            Form: {},
+            listHover: {
+              // iconColor:'blue',
+              // iconBackground:'grey',
+              // background:'yellow',
+              // Heading:'green',
+              // Description:'red'
             },
-            listHover :{
-          
-                Icon:{
-                    color:'blue',
-                    background:'red'
-                },
-                iconBackground:'yellow'
-            },
-            // ThanksPopUp:{backgroundColor:"red"}
+            //  ThanksPopup:{Icon:{backgroundColor:'red'}},
             // Description: { color: 'red' },
             // listDescription:{color:'yellow'}
             // Heading: { color: 'red' },
             // listHeading: { color: 'blue' }
-        }}
-        // // footerBackgroundColor='red'
-        // contactUrl="https://calendly.com/sriya-persana/30min"
-        isOpen={true}
-      // // onClose={() => setIsOpen(!isOpen)}
-      // uniqueUserId="soumitra.petbindhi+25@gmail.com"
-      // uniqueEmailId="soumitra.petbindhi+25@gmail.com"
-
-
-      />
-
-
-    </QuestProvider>
+          }}
+          // // footerBackgroundColor='red'
+          // contactUrl="https://calendly.com/sriya-persana/30min"
+          isOpen={true}
+          onClose={() => setIsOpen((prev) => !prev)}
+          // uniqueUserId="soumitra.petbindhi+25@gmail.com"
+          // uniqueEmailId="soumitra.petbindhi+25@gmail.com"
+        />
+      </QuestProvider>
     );
 
   return (
     <FeedbackWorkflowOffline
       // contactUrl="https://calendly.com/sriya-persana/30min"
 
-      isOpen={true}
-      // onClose={() => setIsOpen(!isOpen)}
+      isOpen={isOpen}
+      onClose={() => setIsOpen((prev) => !prev)}
       showFooter={true}
       SecondaryButtonText="red"
-      styleConfig={{
-        // Description: { color: 'red' },
-        // listDescription:{color:'yellow'}
-        // Heading: { color: "red" },
-        PrimaryButton: {
-          // color: "red"
-        },
-        Form: {
-          color: "red"
-        },
-        listHover:{
-          Icon:{
-            color:'blue',
-            // background:'red'
-        },
-         iconBackground:'yellow',
-         defaultIconBackground:'pink',
-         iconColor:'black'
+      styleConfig={
+        {
+          // Description: { color: 'red' },
+          // listDescription:{color:'yellow'}
+          // Heading: { color: "blue" },
+          // listHeading: { color: 'blue' },
         }
-        // listHeading: { color: 'blue' },
+      }
+      QuestThemeData={{
+        accentColor: "",
+        theme: "",
+        borderRadius: "",
+        buttonColor: "",
+        images: [],
       }}
-      // QuestThemeData={{
-      //   accentColor: "blue",
-      //   theme: "light",
-      //   borderRadius: "16px",
-      //   buttonColor: "blue",
-      //   images: [],
-      // }}
-      // BrandTheme={{
-      //   accentColor: "blue",
-      //   background: "black",
-      //   borderRadius: "10px",
-      //   buttonColor: "yellow",
-      //   contentColor: "yellow",
-      //   fontFamily: "Cursive",
-      //   logo: "",
-      //   primaryColor: "white",
-      //   secondaryColor: "grey",
-      //   tertiaryColor: "white",
-      //   titleColor: "yellow",
-      // }}  
-
+      BrandTheme={{
+        accentColor: "",
+        background: "",
+        borderRadius: "",
+        buttonColor: "",
+        contentColor: "",
+        fontFamily: "",
+        logo: "",
+        primaryColor: "",
+        secondaryColor: "",
+        tertiaryColor: "",
+        titleColor: "",
+      }}
       contactUrl="https://calendly.com/sriya-persana/30min"
-      // GeneralFeedback={{
-      //     heading: "General Fee",
-      //     description: "Give general feedsdasdasdback on this page",
-      //     formHeading: "General Feedbackasddffd",
-      //     formDescription: "Welcome back,sdfsdf Please complete your details",
-      //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
-      // }}
-      // RequestFeature={{
-      //     heading: "Request a Featureqwqewqewqe",
-      //     description: "How can we msdsfdsdfake it better",
-      //     formHeading: "Request a Feature",
-      //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
-      // }}
-      // ReportBug={{
-      //     heading: "Reportasdasd a Bug",
-      //     description: "Describazsdasde your issue",
-      //     formHeading: "Report wewea Bug",
-      //     formDescription: "Describe yosddffdur issue",
-      //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
-      // }}
-      // ContactUs={{
-      //     heading: "Contacasasdt us",
-      //     description: "Invite oasasdasdher admins and moderators",
-      //     iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
-      // }}
+      GeneralFeedback={{
+        heading: "General Fee",
+        description: "Give general feedsdasdasdback on this page",
+        formHeading: "General Feedbackasddffd",
+        formDescription: "Welcome back,sdfsdf Please complete your details",
+        // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+      }}
+      RequestFeature={{
+        heading: "Request a Featureqwqewqewqe",
+        description: "How can we msdsfdsdfake it better",
+        formHeading: "Request a Feature",
+        // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+      }}
+      ReportBug={{
+        heading: "Reportasdasd a Bug",
+        description: "Describazsdasde your issue",
+        formHeading: "Report wewea Bug",
+        formDescription: "Describe yosddffdur issue",
+        // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+      }}
+      ContactUs={{
+        heading: "Contacasasdt us",
+        description: "Invite oasasdasdher admins and moderators",
+        // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+      }}
       offlineFormData={[
         [
           {
@@ -188,7 +176,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
             question: "Enter your Email",
             options: [""],
             criteriaId: "ec-84192fef-c917-410f-4ace713aae",
-            required: true,
+            required: false,
           },
           {
             type: "USER_INPUT_TEXTAREA",
@@ -202,7 +190,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
             question: "",
             criteriaId: "ec-e32b88d7-0e43-4254-9c94-44859ceedcdc",
             required: true,
-          }
+          },
         ],
         [
           {
@@ -262,7 +250,7 @@ export default function FeedbackWorkflowPreview({ online = false }: { online?: b
             question: "",
             criteriaId: "ec-e32b88d7-0e43-4254-9c94-44859ceedcdc",
             required: true,
-          }
+          },
         ],
       ]}
     ></FeedbackWorkflowOffline>

@@ -9,7 +9,6 @@ import config from "../../config.ts";
 import General from "../../general.ts";
 import axios from "axios";
 
-
 type data = {
   text: string;
   icon: string;
@@ -45,7 +44,11 @@ interface propType {
     Description?: CSSProperties;
     Input?: CSSProperties;
     Label?: CSSProperties;
-    Footer?: CSSProperties;
+    Footer?: {
+      FooterStyle?: CSSProperties;
+      FooterText?: CSSProperties;
+      FooterIcon?: CSSProperties;
+    };
     Icon?: CSSProperties;
     listHover?: {
       background?: string;
@@ -57,7 +60,7 @@ interface propType {
     CommandButton?: CSSProperties;
   };
   showFooter?: boolean;
-  enableVariation?: boolean
+  variation?: string
 }
 
 type BrandTheme = {
@@ -72,14 +75,13 @@ type BrandTheme = {
   secondaryColor?: string;
   tertiaryColor?: string;
   titleColor?: string;
-}
+};
 interface QuestThemeData {
   accentColor: string;
   theme: string;
   borderRadius: string;
   buttonColor: string;
-  images: string[]
-
+  images: string[];
 }
 
 export default function Search(prop: propType): JSX.Element {
@@ -97,7 +99,7 @@ export default function Search(prop: propType): JSX.Element {
     styleConfig,
     showFooter = true,
     iconColor,
-    enableVariation = false
+    variation
   } = prop;
   const inputElement = useRef<HTMLInputElement>(null);
   const [searchResults, setResults] = useState<data>(defaultResult);
@@ -112,9 +114,9 @@ export default function Search(prop: propType): JSX.Element {
     theme: "",
     borderRadius: "",
     buttonColor: "",
-    images: []
-})
-const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
+    images: [],
+  });
+  const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
     accentColor: "",
     background: "",
     borderRadius: "",
@@ -125,10 +127,10 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
     primaryColor: "",
     secondaryColor: "",
     tertiaryColor: "",
-    titleColor: ""
-})
+    titleColor: "",
+  });
 
-  let GeneralFunctions = new General('mixpanel', apiType);
+  let GeneralFunctions = new General("mixpanel", apiType);
 
   const [data, setData] = useState<data>([]);
   let BACKEND_URL =
@@ -153,7 +155,10 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
   };
 
   useEffect(() => {
-    GeneralFunctions.fireTrackingEvent("quest_spotlight_search_loaded", "spotlight_search");
+    GeneralFunctions.fireTrackingEvent(
+      "quest_spotlight_search_loaded",
+      "spotlight_search"
+    );
 
     if (entityId && uniqueUserId) {
       const functions = new General("");
@@ -173,7 +178,10 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
   const handleKeyPress = (event: KeyboardEvent) => {
     const isCtrlPressed = (event.ctrlKey || event.metaKey) && !event.altKey;
     if (isCtrlPressed && event.key === "k") {
-      GeneralFunctions.fireTrackingEvent("quest_spotlight_search_ctrl_k_pressed", "spotlight_search");
+      GeneralFunctions.fireTrackingEvent(
+        "quest_spotlight_search_ctrl_k_pressed",
+        "spotlight_search"
+      );
       event.preventDefault();
       setOpen((prev) => !prev);
     } else if (event.key == "Escape") setOpen(false);
@@ -187,16 +195,18 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
 
   const getTheme = async (theme: string) => {
     try {
-        const request = `${BACKEND_URL}api/entities/${entityId}?userId=${userId}`;
-        const response = await axios.get(request, { headers: { apiKey, userId, token } })
-        setBrandTheme(response.data.data.theme.BrandTheme[theme])
+      const request = `${BACKEND_URL}api/entities/${entityId}?userId=${userId}`;
+      const response = await axios.get(request, {
+        headers: { apiKey, userId, token },
+      });
+      setBrandTheme(response.data.data.theme.BrandTheme[theme]);
     } catch (error) {
-        GeneralFunctions.captureSentryException(error);
+      GeneralFunctions.captureSentryException(error);
     }
-}
+  };
 
   useEffect(() => {
-    getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL, enableVariation).then(
+    getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL, variation).then(
       (response) => {
         setQuestThemeData(response.questThemeData)
         setData([...response.formatData].splice(0, defulatResultLength));
@@ -204,8 +214,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
         if(response.questThemeData?.theme){
           // getTheme(response.questThemeData?.theme) disabled for now
         }
-      }
-    );
+    });
     if (prop.open === true) setOpen(true);
     inputElement.current?.focus();
     window.addEventListener("keydown", handleKeyPress);
@@ -227,14 +236,22 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
       className="q_search_bar"
       style={{
         background:
-          styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor,
+          styleConfig?.Form?.backgroundColor ||
+          BrandTheme?.background ||
+          themeConfig?.backgroundColor,
         height: styleConfig?.Form?.height || "auto",
-        borderRadius: styleConfig?.Form?.borderRadius || BrandTheme?.borderRadius || questThemeData?.borderRadius,
-        fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
+        borderRadius:
+          styleConfig?.Form?.borderRadius ||
+          BrandTheme?.borderRadius ||
+          questThemeData?.borderRadius,
+        fontFamily:
+          BrandTheme?.fontFamily ||
+          themeConfig.fontFamily ||
+          "'Figtree', sans-serif",
         ...styleConfig?.Form,
       }}
     >
-      <div className="q_search_box" style={{...styleConfig?.Topbar}}>
+      <div className="q_search_box" style={{ ...styleConfig?.Topbar }}>
         <img
           className="q_search_bar_icon"
           src={searchIcon(prop.iconColor)}
@@ -245,7 +262,8 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
           <div
             className="q_input_cont"
             style={{
-              borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+              borderColor:
+                styleConfig?.Input?.borderColor || themeConfig?.borderColor,
               padding: "0px",
             }}
           >
@@ -259,17 +277,28 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                 handleSearch(e.target.value);
               }}
               style={{
-                fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
-                color: styleConfig?.Input?.color ||  BrandTheme?.primaryColor || themeConfig.primaryColor,
-                ...styleConfig?.Input
+                fontFamily:
+                  BrandTheme?.fontFamily ||
+                  themeConfig.fontFamily ||
+                  "'Figtree', sans-serif",
+                color:
+                  styleConfig?.Input?.color ||
+                  BrandTheme?.primaryColor ||
+                  themeConfig.primaryColor,
+                ...styleConfig?.Input,
               }}
               className="q_input_main_cont"
             />
-
           </div>
         </div>
-        <div className="q_search_command_key" style={{...styleConfig?.CommandButton}}>
-          <img src={commandkeyIcon(styleConfig?.CommandButton?.color || iconColor)} alt="" />
+        <div
+          className="q_search_command_key"
+          style={{ ...styleConfig?.CommandButton }}
+        >
+          <img
+            src={commandkeyIcon(styleConfig?.CommandButton?.color || iconColor)}
+            alt=""
+          />
         </div>
       </div>
       <div className="q_flex_box">
@@ -282,7 +311,10 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                 (i === selectedResultIndex && "q_heilight_search")
               }
               onClick={() => {
-                GeneralFunctions.fireTrackingEvent("quest_spotlight_search_link_clicked", "spotlight_search");
+                GeneralFunctions.fireTrackingEvent(
+                  "quest_spotlight_search_link_clicked",
+                  "spotlight_search"
+                );
                 onResultClick(link);
               }}
               onMouseEnter={() => setSelectedResultIndex(i)}
@@ -317,11 +349,11 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                   style={{
                     color:
                       i === selectedResultIndex
-                        ? styleConfig?.listHover?.Heading || 
+                        ? styleConfig?.listHover?.Heading ||
                         BrandTheme?.primaryColor ||
                         styleConfig?.Heading?.color ||
                         themeConfig?.primaryColor
-                        : styleConfig?.Heading?.color || 
+                        : styleConfig?.Heading?.color ||
                         BrandTheme?.primaryColor ||
                         themeConfig?.primaryColor,
                     ...styleConfig?.Heading,
@@ -383,24 +415,42 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
           </div>
         )}
       </div>
-      {showFooter &&  <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />
-}
+      {showFooter && (
+        <QuestLabs
+          style={{
+            ...{
+              background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                styleConfig?.Form?.backgroundColor ||
+                styleConfig?.Form?.background ||
+                BrandTheme?.background ||
+                themeConfig?.backgroundColor,
+            },
+            ...styleConfig?.Footer?.FooterStyle,
+
+          }}
+          textStyle={styleConfig?.Footer?.FooterText}
+          iconStyle={styleConfig?.Footer?.FooterIcon}
+        />
+      )}
     </div>
   );
 
   const sectionsJsx = (
     <div className="q_search_bar">
-      <div className="q_search_box" style={{...styleConfig?.Topbar}}>
+      <div className="q_search_box" style={{ ...styleConfig?.Topbar }}>
         <img
           className="q_search_bar_icon"
-          src={searchIcon(BrandTheme?.secondaryColor || themeConfig.secondaryColor)}
+          src={searchIcon(
+            BrandTheme?.secondaryColor || themeConfig.secondaryColor
+          )}
           alt=""
         />
         <div className="q_searchBox_input_cont">
           <div
             className="q_input_cont"
             style={{
-              borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
+              borderColor:
+                styleConfig?.Input?.borderColor || themeConfig?.borderColor,
               padding: "0px",
             }}
           >
@@ -414,17 +464,28 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                 handleSearch(e.target.value);
               }}
               style={{
-                fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
-                color: styleConfig?.Input?.color || BrandTheme?.primaryColor || themeConfig.primaryColor,
-                ...styleConfig?.Input
+                fontFamily:
+                  BrandTheme?.fontFamily ||
+                  themeConfig.fontFamily ||
+                  "'Figtree', sans-serif",
+                color:
+                  styleConfig?.Input?.color ||
+                  BrandTheme?.primaryColor ||
+                  themeConfig.primaryColor,
+                ...styleConfig?.Input,
               }}
               className="q_input_main_cont"
             />
-
           </div>
         </div>
-        <div className="q_search_command_key" style={{...styleConfig?.CommandButton}}>
-          <img src={commandkeyIcon(styleConfig?.CommandButton?.color || iconColor)} alt="" />
+        <div
+          className="q_search_command_key"
+          style={{ ...styleConfig?.CommandButton }}
+        >
+          <img
+            src={commandkeyIcon(styleConfig?.CommandButton?.color || iconColor)}
+            alt=""
+          />
         </div>
       </div>
       <div className="q_flex_box">
@@ -595,8 +656,23 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
           </div>
         )}
       </div>
-      {showFooter &&  <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />
-}
+      {showFooter && (
+       <QuestLabs
+       style={{
+         ...{
+           background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+             styleConfig?.Form?.backgroundColor ||
+             styleConfig?.Form?.background ||
+             BrandTheme?.background ||
+             themeConfig?.backgroundColor,
+         },
+         ...styleConfig?.Footer?.FooterStyle,
+
+       }}
+       textStyle={styleConfig?.Footer?.FooterText}
+       iconStyle={styleConfig?.Footer?.FooterIcon}
+     />
+   )}
     </div>
   );
 

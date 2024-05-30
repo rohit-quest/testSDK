@@ -17,7 +17,7 @@ export interface referProp {
 }
 
 
-export const shareOnPlatform = (text: string, platform: "twitter" | "telegram" | "whatsapp"): void => {
+export const shareOnPlatform = (text: string | undefined, platform: "twitter" | "telegram" | "whatsapp"): void => {
     const platforms = {
         twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,
         telegram: `https://t.me/share/url?url=${encodeURIComponent(text)}`,
@@ -45,6 +45,8 @@ export const response = async (questId = "", headers: {
     let GeneralFunctions = new General('mixpanel', headers.apiType);
     try {
         const request = `${config.BACKEND_URL}api/entities/${headers.entityId}/quests/${questId}/users/${headers.userid}/referralcode`;
+        console.log(request)
+        
         const { data }: { data: { success: boolean, referralCode?: string } } = await axios.get(request, { headers })
         return data;
     } catch (error) {

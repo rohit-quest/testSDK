@@ -46,7 +46,11 @@ export interface referProp {
     PrimaryButton?: React.CSSProperties,
     SecondaryButton?: React.CSSProperties,
     Modal?: React.CSSProperties,
-    Footer?: React.CSSProperties,
+    Footer?: {
+      FooterStyle?: React.CSSProperties,
+      FooterText?: React.CSSProperties,
+      FooterIcon?: React.CSSProperties,
+    },
     Icon?: React.CSSProperties,
 
   }
@@ -187,13 +191,13 @@ export const Referral = ({
       }
       <div className="q_refer_content" >
         <div className="refer_content_box" >
-          <div className="q_refer_heading" style={{color : styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading}}>{heading}</div>
-          <div className="q_refer_desc" style={{color : styleConfig?.Description?.color || themeConfig?.secondaryColor,...styleConfig?.Description}}>{description}</div>
+          <div className="q_refer_heading" style={{ color: styleConfig?.Heading?.color || themeConfig?.primaryColor, ...styleConfig?.Heading }}>{heading}</div>
+          <div className="q_refer_desc" style={{ color: styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Description }}>{description}</div>
         </div>
         {showReferralCode && <div className="q_refer_code_content">
-          <Label children={'Referal Code'} style={styleConfig?.Label} />
-          <div className="q_refer_code_box" style={{borderColor : themeConfig?.borderColor, ...styleConfig?.Input}}>
-            <div className="q_refer_code" style={{color: styleConfig?.Input?.color || styleConfig?.Description?.color ||  themeConfig?.secondaryColor,...styleConfig?.Input}}>{shareCode}</div>
+          <Label children={'Referral Code'} style={styleConfig?.Label} />
+          <div className="q_refer_code_box" style={{ borderColor: themeConfig?.borderColor, ...styleConfig?.Input }}>
+            <div className="q_refer_code" style={{ color: styleConfig?.Input?.color || styleConfig?.Description?.color || themeConfig?.secondaryColor, ...styleConfig?.Input }}>{shareCode}</div>
             <img className="q_refer_copy_icon" src={copy[0] ? tickIcon(styleConfig?.Icon?.color) : copyIcon(secondaryIconColor)} onClick={() => {
               GeneralFunctions.fireTrackingEvent("quest_referral_refer_code_copy_btn_clicked", "referral");
               handleCopy(0)
@@ -202,8 +206,8 @@ export const Referral = ({
         </div>}
         {referralLink && <div className="q_refer_code_content">
           <Label children={'Invitation Link'} style={styleConfig?.Label} />
-          <div className="q_refer_code_box" style={{borderColor : themeConfig?.borderColor, ...styleConfig?.Input}}>
-            <div className="q_refer_code" style={{color: styleConfig?.Description?.color || styleConfig?.Input?.color || themeConfig?.secondaryColor,...styleConfig?.Input}}>{referralLink}{shareCode}</div>
+          <div className="q_refer_code_box" style={{ borderColor: themeConfig?.borderColor, ...styleConfig?.Input }}>
+            <div className="q_refer_code" style={{ color: styleConfig?.Description?.color || styleConfig?.Input?.color || themeConfig?.secondaryColor, ...styleConfig?.Input }}>{referralLink}{shareCode}</div>
             <img className="q_refer_copy_icon" src={copy[1] ? tickIcon(styleConfig?.Icon?.color) : copyIcon(secondaryIconColor)} onClick={() => {
               GeneralFunctions.fireTrackingEvent("quest_referral_invitation_link_btn_clicked", "referral");
               handleCopy(1)
@@ -227,7 +231,7 @@ export const Referral = ({
             shareOnPlatform(referralLink + shareCode, "linkedin")
           }} src={linkedInIcon(styleConfig?.Icon?.color)} alt="" />
           <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => {
-           GeneralFunctions.fireTrackingEvent("quest_referral_facebook_btn_clicked", "referral");
+            GeneralFunctions.fireTrackingEvent("quest_referral_facebook_btn_clicked", "referral");
             shareOnPlatform(referralLink + shareCode, "facebook")
           }} src={faceBookIcon(styleConfig?.Icon?.color)} alt="" />
           <img className="q_social_link_icon" style={styleConfig?.Icon} onClick={() => {
@@ -236,7 +240,22 @@ export const Referral = ({
           }} src={twitterIcon(styleConfig?.Icon?.color)} alt="" />
         </div>
       </div>
-      {(!gradientBackground && showFooter) && <QuestLabs style={styleConfig?.Footer} />
+      {(!gradientBackground && showFooter) &&
+        <QuestLabs
+          style={{
+            ...{
+              background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                styleConfig?.Form?.backgroundColor ||
+                styleConfig?.Form?.background ||
+                themeConfig?.backgroundColor,
+            },
+            ...styleConfig?.Footer?.FooterStyle,
+
+          }}
+          textStyle={styleConfig?.Footer?.FooterText}
+          iconStyle={styleConfig?.Footer?.FooterIcon}
+        />
+
       }
     </div>
   );
@@ -250,7 +269,21 @@ export const Referral = ({
     </div>
     {jsx}
     <div className="q_gradient_quest_powered">
-      {showFooter && <QuestLabs style={styleConfig?.Footer} />
+      {showFooter && <QuestLabs
+                  style={{
+                    ...{
+                      background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                        styleConfig?.Form?.backgroundColor ||
+                        styleConfig?.Form?.background ||
+                        themeConfig?.backgroundColor,
+                    },
+                    ...styleConfig?.Footer?.FooterStyle,
+
+                  }}
+                  textStyle={styleConfig?.Footer?.FooterText}
+                  iconStyle={styleConfig?.Footer?.FooterIcon}
+                />
+            
       }
     </div>
   </div>

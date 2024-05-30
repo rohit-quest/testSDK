@@ -1,9 +1,10 @@
-import { CSSProperties, useContext, useState } from 'react';
-import './FeedbackOverview.css';
-import Label from '../Modules/Label';
-import { PrimaryButton } from '../Modules/PrimaryButton'
-import QuestContext from '../QuestWrapper';
-import QuestLabs from '../QuestLabs';
+import { CSSProperties, useContext, useState } from "react";
+import "./FeedbackOverview.css";
+import Label from "../Modules/Label";
+import { PrimaryButton } from "../Modules/PrimaryButton";
+import QuestContext from "../QuestWrapper";
+import QuestLabs from "../QuestLabs";
+import { blackStar, whiteStar } from "./SVG";
 
 interface GeneralFeedbackContentProps {
   starColor?: string;
@@ -15,11 +16,26 @@ interface GeneralFeedbackContentProps {
   answer: any;
   handleRemove?: (e: any) => void;
   ratingStyle?: "Star" | "Numbers" | "Smiles";
-  labelStyle?: CSSProperties,
-  normalInput: (question: string, criteriaId: string, placeholder?: string) => JSX.Element,
-  emailInput: (question: string, criteriaId: string, placeholder?: string) => JSX.Element,
-  normalInput2: (question: string, criteriaId: string, placeholder?: string) => JSX.Element,
-  iconColor?: string
+  labelStyle?: CSSProperties;
+  normalInput: (
+    question: string,
+    criteriaId: string,
+    placeholder?: string,
+    required?: boolean
+  ) => JSX.Element;
+  emailInput: (
+    question: string,
+    criteriaId: string,
+    placeholder?: string,
+    required?: boolean
+  ) => JSX.Element;
+  normalInput2: (
+    question: string,
+    criteriaId: string,
+    placeholder?: string,
+    required?: boolean
+  ) => JSX.Element;
+  iconColor?: string;
   buttonStyle?: CSSProperties;
   PrimaryButtonText?: string;
   StarStyle?: {
@@ -27,7 +43,7 @@ interface GeneralFeedbackContentProps {
     PrimaryColor?: string;
     SecondaryColor?: string;
     Size?: number;
-  }
+  };
   isVisible: boolean;
   setIsVisible: (isVisible: boolean) => void;
   screenshot: FileProp | null;
@@ -142,7 +158,7 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
   const [rating, setRating] = useState<number>(0);
   const handleRatingChange2 = (e: any, id: any, rating: number) => {
     setRating(rating);
-    handleUpdate(e, id, '', rating);
+    handleUpdate(e, id, "", rating);
   };
 
   const whiteStar = (size: number = 32, color: string = "#E2E2E2") => (
@@ -193,7 +209,8 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
 
   const { themeConfig } = useContext(QuestContext.Context);
 
-  const handleUploadImages = () => {
+  const handleUploadImages = (e: any) => {
+    e.preventDefault();
     let urlArr = [];
     if (file !== null) {
       urlArr.push(uploadFileToBackend(file));
@@ -208,34 +225,53 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
       }
     }
     handleSubmit();
-  }
-
+  };
 
   return (
-    <div className='q-fdov-ch-boxes'>
+    <form className="q-fdov-ch-boxes" onSubmit={handleUploadImages}>
       {formdata?.length > 0 ? (
         <>
           {formdata.map((data: any) => {
-            if (data.type === 'USER_INPUT_TEXT') {
-              return normalInput(data.question || '', data.criteriaId || '', data.placeholder || '');
-            } else if (data.type === 'USER_INPUT_EMAIL') {
-              return emailInput(data.question || '', data.criteriaId || '', data.placeholder || '');
-            } else if (data.type === 'USER_INPUT_TEXTAREA') {
-              return normalInput2(data.question || '', data.criteriaId || '', data.placeholder || '');
-            } else if (data.type === 'RATING') {
+            if (data.type === "USER_INPUT_TEXT") {
+              return normalInput(
+                data.question || "",
+                data.criteriaId || "",
+                data.placeholder || "",
+                data.required || false
+              );
+            } else if (data.type === "USER_INPUT_EMAIL") {
+              return emailInput(
+                data.question || "",
+                data.criteriaId || "",
+                data.placeholder || "",
+                data.required || false
+              );
+            } else if (data.type === "USER_INPUT_TEXTAREA") {
+              return normalInput2(
+                data.question || "",
+                data.criteriaId || "",
+                data.placeholder || "",
+                data.required || false
+              );
+            } else if (data.type === "RATING") {
               return (
                 <div key={data.criteriaId}>
-                  <Label htmlFor={'normalInput'}
-                    children={data.question ? data.question : 'How would you rate your experience ?'}
+                  <Label
+                    htmlFor={"normalInput"}
+                    children={
+                      data.question
+                        ? data.question
+                        : "How would you rate your experience ?"
+                    }
                     style={labelStyle}
                   />
                   <div>
-                    {ratingStyle == "Numbers" ?
+                    {ratingStyle == "Numbers" ? (
                       <div
                         style={{
                           display: "grid",
                           gridTemplateColumns: "repeat(5, 1fr)",
-                          gap: "4px"
+                          gap: "4px",
                         }}
                       >
                         {[1, 2, 3, 4, 5].map((num) => (
@@ -245,12 +281,15 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                               fontWeight: "400",
                               color: num <= rating ? "#FFF" : "#8E8E8E",
                               borderRadius: "10px",
-                              border: num <= rating ? "2px solid var(--neutral-grey-100, #000)" : "2px solid var(--neutral-grey-100, #ECECEC)",
+                              border:
+                                num <= rating
+                                  ? "2px solid var(--neutral-grey-100, #000)"
+                                  : "2px solid var(--neutral-grey-100, #ECECEC)",
                               background: num <= rating ? "#000" : "#fff",
                               padding: "10px 12px",
                               textAlign: "center",
                               cursor: "pointer",
-                              boxSizing: "content-box"
+                              boxSizing: "content-box",
                             }}
                             key={num}
                             onClick={(e) =>
@@ -261,33 +300,44 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                           </div>
                         ))}
                       </div>
-                      :
-                      <div style={{ display: "flex", gap: "8px", ...StarStyle?.Style }} >
-                        {
-                          [1, 2, 3, 4, 5].map((star) => (
-                            <div
-                              style={{
-                                width: `${StarStyle?.Size}px` || '32px',
-                                height: `${StarStyle?.Size}px` || '32px',
-                                lineHeight: `${StarStyle?.Size}px` || '32px',
-                                cursor: 'pointer',
-
-                              }}
-                              key={star}
-                              onClick={(e) =>
-                                handleRatingChange2(e, data.criteriaId, star)
-                              }
-                            >
-                              {star <= rating ? blackStar(StarStyle?.Size, StarStyle?.PrimaryColor,) : whiteStar(StarStyle?.Size, StarStyle?.SecondaryColor)}
-                            </div>
-                          ))
-                        }
+                    ) : (
+                      <div
+                        style={{
+                          display: "flex",
+                          gap: "8px",
+                          ...StarStyle?.Style,
+                        }}
+                      >
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <div
+                            style={{
+                              width: `${StarStyle?.Size}px` || "32px",
+                              height: `${StarStyle?.Size}px` || "32px",
+                              lineHeight: `${StarStyle?.Size}px` || "32px",
+                              cursor: "pointer",
+                            }}
+                            key={star}
+                            onClick={(e) =>
+                              handleRatingChange2(e, data.criteriaId, star)
+                            }
+                          >
+                            {star <= rating
+                              ? blackStar(
+                                  StarStyle?.Size,
+                                  StarStyle?.PrimaryColor
+                                )
+                              : whiteStar(
+                                  StarStyle?.Size,
+                                  StarStyle?.SecondaryColor
+                                )}
+                          </div>
+                        ))}
                       </div>
-                    }
+                    )}
                   </div>
                 </div>
               );
-            } else if (data.type === 'USER_INPUT_IMAGE') {
+            } else if (data.type === "USER_INPUT_IMAGE") {
               return (
                 <div style={{ position: "relative" }} >
                   <div style={{ display: "flex", justifyContent: "center", borderRadius: "10px", overflow: "hidden" }}>
@@ -333,7 +383,6 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                         }
                       }} disabled={file !== null} accept='image/*' />
                     </button>
-
                   </div>
                   {screenshot !== null &&
                     (
@@ -395,11 +444,12 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                           width: "fit-content",
                           border: "none",
                           background: "transparent",
-                          cursor: "pointer"
-                        }} onClick={() => {
+                          cursor: "pointer",
+                        }}
+                        onClick={() => {
                           setFile(null);
                           if (inputRef.current) {
-                            inputRef.current.value = '';
+                            inputRef.current.value = "";
                           }
                         }}>
                           {deleteSvg(styleConfig?.Form?.color)}
@@ -408,22 +458,20 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                     )
                   }
                 </div>
-              )
+              );
             }
           })}
           <PrimaryButton
             children={PrimaryButtonText}
-            onClick={handleUploadImages}
             style={buttonStyle}
-            className='q-fdov-btn-continue'
+            className="q-fdov-btn-continue"
+            type="submit"
           />
         </>
       ) : (
-        <div className="q-center">
-          No data Found
-        </div>
+        <div className="q-center">No data Found</div>
       )}
-    </div>
+    </form>
   );
 };
 

@@ -9,7 +9,7 @@ import './src/components/Payment/payment.css';
 import './src/components/Analytics/analytics.css';
 import './src/components/Login/Login.css';
 import './src/components/CheckInCredit/creditCheck.css';
-import './src/components/Feedback/Feedback.css';
+import './src/components/Survey/Feedback.css';
 import './src/components/Onboarding/onboarding.css';
 import './src/components/Badge/Badge.css';
 import './src/components/TutorialScreen/TutorialScreen.css';
@@ -27,10 +27,12 @@ import "./src/components/HelpHub/HelpHub.css"
 import "./src/components/UserProfile/userProfile.css"
 import "./src/components/Challenges/challenges.css"
 import "./src/components/GamifiedQuiz/gamifiedQuiz.css"
+import "./src/components/Walkthrough/tourHelper.css"
+import "./src/components/InlineFeedback/style.css"
 import QuestLogin from "./src/components/Login/Login";
 import OnBoarding from "./src/components/Onboarding/Onboarding";
 import { QuestProvider } from "./src/components/QuestWrapper";
-import Feedback from "./src/components/Feedback/Feedback";
+import Feedback from "./src/components/Survey/Feedback";
 import Badge from "./src/components/Badge/Badge";
 import CreditsPopupCheck from "./src/components/CheckInCredit/CreditsPopupCheck";
 import VisitStreak from "./src/components/Streak/VisitStreak";
@@ -49,7 +51,7 @@ import { HelpCenter } from "./src/components/HelpCenter/HelpCenter";
 import { confetti } from "./src/components/Confetti/confetti";
 import ShareArticle from "./src/components/Share/ShareArticle";
 import Search from "./src/components/Search/Search";
-import WalkThrough from './src/components/Tour/WalkThrough';
+import WalkThrough from './src/components/Walkthrough/Walkthrough';
 import SpinTheWheel from './src/components/SpinTheWheel/SpinTheWheel';
 import DailyStreak from './src/components/Streak/DailyStreak';
 import { CrossSelling } from "./src/components/expansion/CrossSelling"
@@ -62,8 +64,8 @@ import OnBoardingOffline from "./src/components/Onboarding/OfflineComponent";
 import GetStartedOffline from "./src/components/GetStarted/OfflineComponent";
 import SearchOffline from "./src/components/Search/OfflineComponent";
 import QuestMOdalOffline from './src/components/Modals/OflineComponent';
-import SurveyOffline from "./src/components/Feedback/OfflineComponent";
-import Survey from "./src/components/Feedback/Survey";
+import SurveyOffline from "./src/components/Survey/OfflineComponent";
+import Survey from "./src/components/Survey/Survey";
 import FeedbackWorkflowOffline from './src/components/FeedbackOverview/OfflineComponent';
 import LeaderBoard from "./src/components/Leaderboard/LeaderBoard";
 import LeaderBoardOffline from "./src/components/Leaderboard/LeaderBoardOffline";
@@ -74,6 +76,10 @@ import {ChallengesOffline} from './src/components/Challenges/OfflineComponent';
 import UserProfile from "./src/components/UserProfile/UserProfile";
 import GamifiedQuiz from "./src/components/GamifiedQuiz/GamifiedQuiz";
 import GamifiedQuizOffline from "./src/components/GamifiedQuiz/GamifiedQuizOffline";
+import HelpHubOffline from "./src/components/HelpHub/HelpHubOffline";
+import InlineFeedback from "./src/components/InlineFeedback/InlineFeedback";
+import InlineFeedbackOffline from "./src/components/InlineFeedback/InlineFeedbackOffline";
+import ShareArticleOffline from "./src/components/Share/ShareArticleOffline";
 export {
     QuestProvider,
     QuestLogin,
@@ -122,5 +128,9 @@ export {
     ChallengesOffline,
     UserProfile,
     GamifiedQuiz,
-    GamifiedQuizOffline
+    GamifiedQuizOffline,
+    HelpHubOffline,
+    InlineFeedback,
+    InlineFeedbackOffline,
+    ShareArticleOffline
 };

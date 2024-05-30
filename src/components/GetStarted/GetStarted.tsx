@@ -6,7 +6,7 @@ import QuestContext from "../QuestWrapper";
 import { toast } from "react-toastify";
 import Loader from "../Login/Loader";
 import Cookies from "universal-cookie";
-import { greenCheck, gsTick, questLogo } from "../../assets/images";
+import { questLogo } from "../../assets/images";
 import GetStartedSvgs from "./Svgs";
 import QuestLabs from "../QuestLabs";
 import { PrimaryButton } from "../Modules/PrimaryButton";
@@ -44,7 +44,11 @@ type GetStartedProps = {
     PrimaryButton?: CSSProperties;
     SecondaryButton?: CSSProperties;
     Form?: CSSProperties;
-    Footer?: CSSProperties;
+    Footer?: {
+      FooterStyle?: CSSProperties;
+      FooterText?: CSSProperties;
+      FooterIcon?: CSSProperties;
+    };
     Card?: CSSProperties;
     Topbar?: CSSProperties;
     ProgressBar?: {
@@ -55,11 +59,11 @@ type GetStartedProps = {
     CardContainer?: CSSProperties;
     Icon?: CSSProperties;
     Arrow?: {
-      Background?: string,
-      IconColor?: string,
-      CompletedBackground?: string,
-      CompletedIconColor?: string
-    }
+      Background?: string;
+      IconColor?: string;
+      CompletedBackground?: string;
+      CompletedIconColor?: string;
+    };
     IsImageOpen?: {
       ContainerDiv?: CSSProperties;
       ImageContainer?: {
@@ -69,8 +73,9 @@ type GetStartedProps = {
     };
   };
 
-  enableVariation?: boolean;
+  variation?: string;
 };
+
 type BrandTheme = {
   accentColor?: string;
   background?: string;
@@ -83,7 +88,7 @@ type BrandTheme = {
   secondaryColor?: string;
   tertiaryColor?: string;
   titleColor?: string;
-}
+};
 interface TutorialStep {
   id: number;
   title: string;
@@ -103,8 +108,7 @@ interface QuestThemeData {
   theme: string;
   borderRadius: string;
   buttonColor: string;
-  images: string[]
-
+  images: string[];
 }
 
 function GetStarted({
@@ -130,14 +134,14 @@ function GetStarted({
   },
   showFooter = true,
   styleConfig,
-  enableVariation = false,
   isImageOpen = false,
+  variation
 }: GetStartedProps) {
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
   const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } =
     useContext(QuestContext.Context);
   const [showLoader, setShowLoader] = useState<boolean>(false);
-  const [allCriteriaCompleted, setAllCriteriaCompleted] =
+  const [allActionCompleted, setAllActionCompleted] =
     useState<boolean>(false);
   const [criteriaSubmit, setCriteriaSubmit] = useState<string[]>([]);
   const [dropdowns, setDropdown] = useState<Array<boolean>>([]);
@@ -146,9 +150,9 @@ function GetStarted({
     theme: "",
     borderRadius: "",
     buttonColor: "",
-    images: []
-})
-const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
+    images: [],
+  });
+  const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
     accentColor: "",
     background: "",
     borderRadius: "",
@@ -159,8 +163,10 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
     primaryColor: "",
     secondaryColor: "",
     tertiaryColor: "",
-    titleColor: ""
-})
+    titleColor: "",
+  });
+  const [campaignVariationId, setCampaignVariationId] = useState("");
+
 
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
@@ -174,21 +180,19 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
 
   let GeneralFunctions = new General("mixpanel", apiType);
 
-
-
-
   const getTheme = async (theme: string) => {
     try {
-        const request = `${BACKEND_URL}api/entities/${entityId}?userId=${userId}`;
-        const response = await axios.get(request, { headers: { apiKey, userId, token } })
-        setBrandTheme(response.data.data.theme.BrandTheme[theme])
+      const request = `${BACKEND_URL}api/entities/${entityId}?userId=${userId}`;
+      const response = await axios.get(request, {
+        headers: { apiKey, userId, token },
+      });
+      setBrandTheme(response.data.data.theme.BrandTheme[theme]);
     } catch (error) {
-        GeneralFunctions.captureSentryException(error);
+      GeneralFunctions.captureSentryException(error);
     }
-}
+  };
 
   const handleCriteriaClick = (id: any, url: string) => {
-    // clg
     if (showLoader) return;
     const headers = {
       apiKey: apiKey,
@@ -197,20 +201,23 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
       token: uniqueUserId ? questUserToken : token,
     };
 
-    if (showAnnouncement) return onLinkTrigger(url, id);
+    if (showAnnouncement) return onLinkTrigger(url, id.actionId);
+    let action = []
+    action.push(id) // id here is an action object
 
     const json = {
-      criteriaId: id,
+      actions: action,
+      campaignVariationId
     };
 
-    const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify?userId=${headers.userId}&getVariation=${enableVariation}`;
+    const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${questId}/verify`;
     setShowLoader(true);
     axios
       .post(request, json, { headers: headers })
       .then((response) => {
         if (response.data.success) {
-          setCriteriaSubmit([...criteriaSubmit, id]);
-          onLinkTrigger(url, id);
+          setCriteriaSubmit([...criteriaSubmit, id.actionId]);
+          onLinkTrigger(url, id.actionId);
         } else {
           toast.error(response.data.error);
         }
@@ -279,44 +286,50 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
       }
 
       function fetchData(header: any) {
-        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}?userId=${header.userId}&getVariation=${enableVariation}`;
+        const params = new URLSearchParams()
+        params.set('platform', 'REACT')
+        if(variation) params.set('variation', variation)
+
+        const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${questId}?${params.toString()}`;
         axios
           .get(request, { headers: header })
           .then((res) => {
             let response = res.data;
-            if (response.data.uiProps?.questThemeData) {
-            setQuestThemeData(response?.data?.uiProps?.questThemeData)
-            if (response.data.uiProps?.questThemeData.theme) {
+            if (response.data?.sdkConfig?.uiProps?.questThemeData) {
+              setQuestThemeData(response?.data?.sdkConfig?.uiProps?.questThemeData);
+              if (response?.data?.sdkConfig?.uiProps?.questThemeData.theme) {
                 // getTheme(response.data.uiProps.questThemeData.theme) disabled for now
+              }
             }
-        }
-            let criterias = response?.eligibilityData?.map((criteria: any) => {
+            setCampaignVariationId(response?.data?.campaignVariationId)
+
+            let actions = response?.data?.actions.map((action: any) => {
               return {
-                type: criteria?.data?.criteriaType,
-                title: criteria?.data?.metadata?.linkActionName,
-                url: criteria?.data?.metadata?.linkActionUrl,
-                description: criteria?.data?.metadata?.description,
-                btn1: criteria?.data?.metadata?.btn1,
-                btn2: criteria?.data?.metadata?.btn2,
-                btn1Link: criteria?.data?.metadata?.btn1Link,
-                criteriaId: criteria?.data?.criteriaId,
-                completed: criteria?.completed,
+                type: action?.actionType,
+                title: action?.title,
+                url: action?.metadata?.link,
+                description: action?.description,
+                btn1: action?.metadata?.secondaryTitle || '',
+                btn2: action?.metadata?.buttonTitle,
+                btn1Link: action?.metadata?.secondaryLink,
+                actionId: action?.actionId,
+                completed: action?.isCompleted,
                 longDescription:
-                  criteria?.data?.metadata?.longDescription ||
+                action?.description ||
                   "Be sure to check out the Quest labs community for support, plus tips & tricks from Quest users",
-                imageUrl: criteria?.data?.metadata?.imageUrl,
+                imageUrl: action?.metadata?.imageUrl,
               };
             });
-            const allCriteriasCompleted = criterias.every(
-              (criteria: any) => criteria.completed === true
+            const allActionsCompleted = actions.every(
+              (action: any) => action.completed === true
             );
-            if (allCriteriasCompleted) {
-              setAllCriteriaCompleted(true);
+            if (allActionsCompleted) {
+              setAllActionCompleted(true);
             }
-            criterias = Array.isArray(criterias) ? criterias : [];
+            actions = Array.isArray(actions) ? actions : [];
             if (!dropdowns.length)
-              setDropdown(new Array(criterias.length).fill(false));
-            setFormdata([...criterias]);
+              setDropdown(new Array(actions.length).fill(false));
+            setFormdata([...actions]);
           })
           .catch((error) => {
             GeneralFunctions.captureSentryException(error);
@@ -326,7 +339,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
   }, [criteriaSubmit]);
 
   useEffect(() => {
-    if (allCriteriaCompleted) {
+    if (allActionCompleted) {
       const headers = {
         apiKey: apiKey,
         apisecret: apiSecret,
@@ -377,8 +390,9 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
       function fetchData(header: any) {
         const json = {
           userId: header.userId,
+          campaignVariationId,
         };
-        const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/claim?userId=${header.userId}&getVariation=${enableVariation}`;
+        const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${questId}/claim`;
         setShowLoader(true);
         axios
           .post(request, json, { headers: header })
@@ -401,7 +415,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
           });
       }
     }
-  }, [allCriteriaCompleted]);
+  }, [allActionCompleted]);
 
   if (
     featureFlags[config.FLAG_CONSTRAINTS.GetStartedFlag]?.isEnabled == false
@@ -412,33 +426,59 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
     return <Loader />;
   }
   return (
-    formdata.length > 0 &&
-    <div
-      style={{
-        background: styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor, height: styleConfig?.Form?.height || "auto", fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", borderRadius: styleConfig?.Form?.borderRadius || questThemeData?.borderRadius || BrandTheme?.borderRadius, ...styleConfig?.Form
-      }}
-      className="get_started_box"
-    >
-
-      {(autoHide === true
-        ? !!formdata.length && !allCriteriaCompleted
-        : true) && (
-          <div className="gs-heading-div" style={{...styleConfig?.Topbar}}>
-            <div>
-              <div style={{ color: styleConfig?.Heading?.color || BrandTheme?.titleColor || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Heading }} className="gs-heading">
-                {headingText || "Quickstart Guide"}
-              </div>
-              <div style={{ color: styleConfig?.Description?.color || BrandTheme?.secondaryColor || themeConfig?.secondaryColor, ...styleConfig?.Description }} className="gs-subheading">
-
-
-                {descriptionText ||
-                  "Get started with Quest and explore how Quest can take your customer engagement to the next level"}
+    formdata.length > 0 && (
+      <div
+        style={{
+          background:
+            styleConfig?.Form?.backgroundColor ||
+            BrandTheme?.background ||
+            themeConfig?.backgroundColor,
+          height: styleConfig?.Form?.height || "auto",
+          fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+          borderRadius:
+            styleConfig?.Form?.borderRadius ||
+            questThemeData?.borderRadius ||
+            BrandTheme?.borderRadius,
+          ...styleConfig?.Form,
+        }}
+        className="get_started_box"
+      >
+        {(autoHide === true
+          ? !!formdata.length && !allActionCompleted
+          : true) && (
+            <div className="gs-heading-div" style={{ ...styleConfig?.Topbar }}>
+              <div>
+                <div
+                  style={{
+                    color:
+                      styleConfig?.Heading?.color ||
+                      BrandTheme?.titleColor ||
+                      BrandTheme?.primaryColor ||
+                      themeConfig?.primaryColor,
+                    ...styleConfig?.Heading,
+                  }}
+                  className="gs-heading"
+                >
+                  {headingText || "Quickstart Guide"}
+                </div>
+                <div
+                  style={{
+                    color:
+                      styleConfig?.Description?.color ||
+                      BrandTheme?.secondaryColor ||
+                      themeConfig?.secondaryColor,
+                    ...styleConfig?.Description,
+                  }}
+                  className="gs-subheading"
+                >
+                  {descriptionText ||
+                    "Get started with Quest and explore how Quest can take your customer engagement to the next level"}
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          )}
         {(autoHide === true
-          ? !!formdata.length && !allCriteriaCompleted
+          ? !!formdata.length && !allActionCompleted
           : true) &&
           showProgressBar && (
             <div className="q_gt_progress">
@@ -450,7 +490,6 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                 }}
               >
                 {Math.floor(completedPercentage) || 0}% Completed
-
               </div>
               <div
                 className="q_gt_progress_bar"
@@ -477,21 +516,19 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
             ...styleConfig?.CardContainer,
           }}
         >
-          {(autoHide === true ? !allCriteriaCompleted : true) &&
+          {(autoHide === true ? !allActionCompleted : true) &&
             formdata.map((e, i) =>
               template == 2 ? (
                 <div
                   key={i}
                   style={{
-                    // background: cardBackground,
-                    // borderBottom: `1px solid ${cardBorderColor}`,
                     ...styleConfig?.Card,
                   }}
                   onClick={(e) => {
-                    GeneralFunctions.fireTrackingEvent(
-                      "quest_get_started_link_clicked",
-                      "get_started"
-                    );
+                    // GeneralFunctions.fireTrackingEvent(
+                    //   "quest_get_started_link_clicked",
+                    //   "get_started"
+                    // );
 
                     setDropdown((prev) =>
                       prev.map((e, index) => (i === index ? !e : e))
@@ -626,7 +663,6 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                                 ?.ImageContainerProperties,
                             }}
                           >
-                            {/* <img src={e.imageUrl} alt="" /> */}
                             <img
                               src={
                                 e.imageUrl ||
@@ -642,9 +678,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                                   ?.Image,
                               }}
                             />
-                            {/* hi */}
                           </div>
-                          {/* hi */}
                         </div>
                       )}
                       <div
@@ -669,7 +703,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                             );
                             event.stopPropagation();
                             !(!allowMultiClick && e.completed) &&
-                              handleCriteriaClick(e.criteriaId, e.url);
+                              handleCriteriaClick(e, e.url);
                           }}
                           disabled={!allowMultiClick && e.completed}
                           style={{
@@ -677,7 +711,8 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                             width: "fit-content",
                             background:
                               styleConfig?.PrimaryButton?.background ||
-                              questThemeData?.buttonColor || BrandTheme?.buttonColor ||
+                              questThemeData?.buttonColor ||
+                              BrandTheme?.buttonColor ||
                               themeConfig?.buttonColor,
                             ...styleConfig?.PrimaryButton,
                           }}
@@ -708,7 +743,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                   className="gs-single-card"
                   onClick={() => {
                     !(!allowMultiClick && e.completed) &&
-                      handleCriteriaClick(e.criteriaId, e.url);
+                      handleCriteriaClick(e, e.url);
                   }}
                 >
                   <div
@@ -755,7 +790,6 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                         {e.description}
                       </div>
                     </div>
-                    {/* <div className="gs-card-btn-container"> */}
                     {ButtonType === "Buttons" &&
                       (!e.completed ? (
                         <div className="gs_drop_btns">
@@ -787,7 +821,7 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                               );
                               event.stopPropagation();
                               !(!allowMultiClick && e.completed) &&
-                                handleCriteriaClick(e.criteriaId, e.url);
+                                handleCriteriaClick(e, e.url);
                             }}
                             disabled={!allowMultiClick && e.completed}
                             style={{
@@ -795,7 +829,8 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                               width: "fit-content",
                               background:
                                 styleConfig?.PrimaryButton?.background ||
-                                questThemeData?.buttonColor || BrandTheme?.buttonColor ||
+                                questThemeData?.buttonColor ||
+                                BrandTheme?.buttonColor ||
                                 themeConfig?.buttonColor,
                               ...styleConfig?.PrimaryButton,
                             }}
@@ -857,19 +892,33 @@ const [BrandTheme, setBrandTheme] = useState<BrandTheme>({
                     )}
                   </div>
                 </div>
-                // </div>
               )
             )}
         </div>
         {showFooter &&
           (autoHide === true
-            ? !!formdata.length && !allCriteriaCompleted
+            ? !!formdata.length && !allActionCompleted
             : true) && (
             <div>
-             <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />
+              <QuestLabs
+                style={{
+                  ...{
+                    background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                      styleConfig?.Form?.backgroundColor ||
+                      styleConfig?.Form?.background ||
+                      BrandTheme?.background ||
+                      themeConfig?.backgroundColor,
+                  },
+                  ...styleConfig?.Footer?.FooterStyle,
+
+                }}
+                textStyle={styleConfig?.Footer?.FooterText}
+                iconStyle={styleConfig?.Footer?.FooterIcon}
+              />
             </div>
           )}
       </div>
+    )
   );
 }
 

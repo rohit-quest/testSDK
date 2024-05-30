@@ -77,7 +77,11 @@ export interface referProp {
             backgroundColor?: string,
             TimerCard?: CSSProperties
         },
-        Footer?: CSSProperties
+        Footer?: {
+            FooterStyle?: CSSProperties,
+            FooterText?: CSSProperties,
+            FooterIcon?: CSSProperties
+        }
         Icon?: CSSProperties,
         Label?: CSSProperties,
         EmailError?: {
@@ -86,7 +90,7 @@ export interface referProp {
         }
     };
     showFooter?:boolean,
-    enableVariation?:boolean
+    variation?:string
 
 }
 
@@ -110,20 +114,20 @@ export const CrossSelling = ({
     BrandTheme,
     QuestThemeData,
     showFooter = true,
-    enableVariation = false,
+    variation,
     Icon = 'gift'
 }: referProp) => {
     const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(QuestContext.Context);
     const BACKEND_URL = apiType === "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
-     const [email, setEmail] = useState("");
-    const [questThemeData, setQuestThemeData] = useState<QuestThemeData>( QuestThemeData || {
+    const [email, setEmail] = useState("");
+    const [questThemeData, setQuestThemeData] = useState<QuestThemeData>(QuestThemeData || {
         accentColor: "",
         theme: "",
         borderRadius: "",
         buttonColor: "",
         images: []
     })
-    const [brandTheme, setBrandTheme] = useState<BrandTheme>( BrandTheme  || {
+    const [brandTheme, setBrandTheme] = useState<BrandTheme>(BrandTheme || {
         accentColor: "",
         background: "",
         borderRadius: "",
@@ -176,11 +180,13 @@ export const CrossSelling = ({
         getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL)
             .then((r) => {
                 if (isMounted && r) {
-                    if(r.uiProps?.questThemeData){
-                        setQuestThemeData(r.uiProps?.questThemeData)
+                    if(r.sdkConfig?.uiProps?.questThemeData){
+                        setQuestThemeData(r.sdkConfig?.uiProps?.questThemeData)
                         // getTheme(r.uiProps?.questThemeData.theme) // disable for now
                     }
-                    requestRef.current = +r.endsAt;
+
+                    console.log(Date.parse(r.endsAt))
+                    requestRef.current =  +(Date.parse(r.endsAt) || r.endsAt);
 
                     animate();
                 } else {
@@ -222,16 +228,16 @@ export const CrossSelling = ({
             <div className="q_refer_content">
                 <div className="refer_content_box">
                     <div className="q_refer_heading" style={{ color: styleConfig?.Heading?.color || BrandTheme?.primaryColor || themeConfig?.primaryColor, ...styleConfig?.Heading }}>{heading}</div>
-                    <div className="q_refer_desc" style={{ color: styleConfig?.Description?.color || BrandTheme?.secondaryColor || themeConfig?.secondaryColor, ...styleConfig?.Description }}>{description}</div> 
+                    <div className="q_refer_desc" style={{ color: styleConfig?.Description?.color || BrandTheme?.secondaryColor || themeConfig?.secondaryColor, ...styleConfig?.Description }}>{description}</div>
                 </div>
                 <div className="q_time_left">
                     {showDays && !!timeLeft.days && (<div className="q_hours_left" style={{ background: styleConfig?.Timer?.backgroundColor, ...styleConfig?.Timer?.TimerCard }}>
                         <div style={{ color: styleConfig?.Timer?.primaryColor || BrandTheme?.primaryColor }}>{timeLeft.days}</div>
-                        <div className="q_time_left_text" style={{ color:  styleConfig?.Timer?.secondaryColor || BrandTheme?.secondaryColor }}>Days</div>
+                        <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor || BrandTheme?.secondaryColor }}>Days</div>
                     </div>)}
                     <div className="q_hours_left" style={{ background: styleConfig?.Timer?.backgroundColor, ...styleConfig?.Timer?.TimerCard }}>
                         <div style={{ color: styleConfig?.Timer?.primaryColor || BrandTheme?.primaryColor }}>{timeLeft.hours < 10 ? 0 : ""}{timeLeft.hours}</div>
-                        <div className="q_time_left_text" style={{ color:  styleConfig?.Timer?.secondaryColor || BrandTheme?.secondaryColor }}>Hours</div>
+                        <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor || BrandTheme?.secondaryColor }}>Hours</div>
                     </div>
                     <div className="q_minutes_left" style={{ background: styleConfig?.Timer?.backgroundColor, ...styleConfig?.Timer?.TimerCard }}>
                         <div style={{ color: styleConfig?.Timer?.primaryColor || BrandTheme?.primaryColor }}>{timeLeft.minutes < 10 ? 0 : ""}{timeLeft.minutes}</div>
@@ -242,22 +248,22 @@ export const CrossSelling = ({
                         <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor || BrandTheme?.secondaryColor }}>Seconds</div>
                     </div>
                 </div>
-                <div style={{width: "100%"}}>
-                <Label
-                     htmlFor={"normalInput"}
-                    children={'Email Address'}
-                    style={styleConfig?.Label}
-                />
-                <Input
-                    type="email"
-                    style={styleConfig?.Input}
-                    placeholder={'Enter your email address'}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    emailtext={styleConfig?.EmailError?.text == undefined ? "This is not a valid email" : styleConfig?.EmailError?.text}
-                    emailErrorStyle={styleConfig?.EmailError?.errorStyle}
-                    
-                />
+                <div style={{ width: "100%" }}>
+                    <Label
+                        htmlFor={"normalInput"}
+                        children={'Email Address'}
+                        style={styleConfig?.Label}
+                    />
+                    <Input
+                        type="email"
+                        style={styleConfig?.Input}
+                        placeholder={'Enter your email address'}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        emailtext={styleConfig?.EmailError?.text == undefined ? "This is not a valid email" : styleConfig?.EmailError?.text}
+                        emailErrorStyle={styleConfig?.EmailError?.errorStyle}
+
+                    />
                 </div>
                 <PrimaryButton
                     style={{
@@ -289,7 +295,25 @@ export const CrossSelling = ({
                     Go to home
                 </SecondaryButton>
             </div>
-            {(!gradientBackground && showFooter) &&  <QuestLabs style={{ background:  styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || styleConfig?.Form?.background || brandTheme?.background  || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />}
+            {(!gradientBackground && showFooter) &&
+
+                <QuestLabs
+                    style={{
+                        ...{
+                            background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                                styleConfig?.Form?.backgroundColor ||
+                                styleConfig?.Form?.background ||
+                                BrandTheme?.background ||
+                                themeConfig?.backgroundColor,
+                        },
+                        ...styleConfig?.Footer?.FooterStyle,
+
+                    }}
+                    textStyle={styleConfig?.Footer?.FooterText}
+                    iconStyle={styleConfig?.Footer?.FooterIcon}
+                />
+
+            }
         </div>
     );
 
@@ -303,7 +327,23 @@ export const CrossSelling = ({
         </div>
         {jsx}
         <div className="q_gradient_quest_powered">
-            {showFooter && <QuestLabs style={styleConfig?.Footer} />}
+            {showFooter &&
+                <QuestLabs
+                    style={{
+                        ...{
+                            background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                                styleConfig?.Form?.backgroundColor ||
+                                styleConfig?.Form?.background ||
+                                BrandTheme?.background ||
+                                themeConfig?.backgroundColor,
+                        },
+                        ...styleConfig?.Footer?.FooterStyle,
+
+                    }}
+                    textStyle={styleConfig?.Footer?.FooterText}
+                    iconStyle={styleConfig?.Footer?.FooterIcon}
+                />
+            }
         </div>
     </div>
     return jsx;

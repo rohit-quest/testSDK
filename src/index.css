@@ -398,3 +398,7 @@ input[data-autocompleted] {
   border: 1px solid #abcdf1;
   background: #e5effa;
 }
+
+#canvas{
+  pointer-events: none;
+}

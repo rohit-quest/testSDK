@@ -1,21 +1,8 @@
-import React, {
-  CSSProperties,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { CSSProperties, useContext, useEffect, useState } from "react";
 import "./GetStarted.css";
-// import config from '../../config';
 import QuestContext from "../QuestWrapper";
 import Loader from "../Login/Loader";
-import {
-  greenCheck,
-  gsTick,
-  helpCenter1,
-  questLogo,
-} from "../../assets/images";
+import { questLogo } from "../../assets/images";
 import QuestLabs from "../QuestLabs";
 import { SecondaryButton } from "../Modules/SecondaryButton";
 import { PrimaryButton } from "../Modules/PrimaryButton";
@@ -87,7 +74,11 @@ type offlineGetStartedProps = {
     PrimaryButton?: CSSProperties;
     SecondaryButton?: CSSProperties;
     Form?: CSSProperties;
-    Footer?: CSSProperties;
+    Footer?: {
+      FooterStyle?: CSSProperties;
+      FooterText?: CSSProperties;
+      FooterIcon?: CSSProperties;
+    };
     Card?: CSSProperties;
     Topbar?: CSSProperties;
     ProgressBar?: {
@@ -113,8 +104,6 @@ type offlineGetStartedProps = {
   offlineData: offlineData[];
 };
 
-
-
 function OfflineGetStarted({
   iconUrls = [],
   headingText,
@@ -131,7 +120,9 @@ function OfflineGetStarted({
   ButtonType = "Arrow",
   BrandTheme,
   QuestThemeData,
-  onLinkTrigger = (url: string, index: number) => { window.location.href = url },
+  onLinkTrigger = (url: string, index: number) => {
+    window.location.href = url;
+  },
   isImageOpen = false,
 }: offlineGetStartedProps) {
   const [showLoader, setShowLoader] = useState<boolean>(false);
@@ -144,7 +135,7 @@ function OfflineGetStarted({
 
   const completedPercentage = data?.length
     ? (data?.reduce((a, b) => a + (b.completed ? 1 : 0), 0) * 100) /
-      data?.length
+    data?.length
     : 0;
   useEffect(() => {
     offlineData?.length && setData(offlineData);
@@ -175,10 +166,18 @@ function OfflineGetStarted({
     <div
       style={{
         background:
-          styleConfig?.Form?.backgroundColor || BrandTheme?.background || themeConfig?.backgroundColor,
+          styleConfig?.Form?.backgroundColor ||
+          BrandTheme?.background ||
+          themeConfig?.backgroundColor,
         height: styleConfig?.Form?.height || "auto",
-        borderRadius: styleConfig?.Form?.borderRadius || QuestThemeData?.borderRadius || BrandTheme?.borderRadius,
-        fontFamily: BrandTheme?.fontFamily || themeConfig.fontFamily || "'Figtree', sans-serif",
+        borderRadius:
+          styleConfig?.Form?.borderRadius ||
+          QuestThemeData?.borderRadius ||
+          BrandTheme?.borderRadius,
+        fontFamily:
+          BrandTheme?.fontFamily ||
+          themeConfig.fontFamily ||
+          "'Figtree', sans-serif",
         ...styleConfig?.Form,
       }}
       className="get_started_box"
@@ -189,7 +188,11 @@ function OfflineGetStarted({
           <div>
             <div
               style={{
-                color: styleConfig?.Heading?.color || BrandTheme?.titleColor || BrandTheme?.primaryColor || themeConfig?.primaryColor,
+                color:
+                  styleConfig?.Heading?.color ||
+                  BrandTheme?.titleColor ||
+                  BrandTheme?.primaryColor ||
+                  themeConfig?.primaryColor,
                 ...styleConfig?.Heading,
               }}
               className="gs-heading"
@@ -386,7 +389,6 @@ function OfflineGetStarted({
                               ?.ImageContainerProperties,
                           }}
                         >
-                          {/* <img src={e.imageUrl} alt="" /> */}
                           <img
                             src={
                               e.imageUrl ||
@@ -399,9 +401,7 @@ function OfflineGetStarted({
                                 ?.Image,
                             }}
                           />
-                          {/* hi */}
                         </div>
-                        {/* hi */}
                       </div>
                     )}
                     <div
@@ -451,7 +451,7 @@ function OfflineGetStarted({
                             "quest_get_started_offline_secondary_button_clicked",
                             "get_started_offline"
                           );
-                          window.open(e.url);
+                          window.open(e.btn1Link);
                         }}
                         className="gs_visit_btn"
                         children={e.btn1 || "Visit Website"}
@@ -476,8 +476,6 @@ function OfflineGetStarted({
                 <div
                   className="gs_card_body"
                   style={{
-                    // background: cardBackground,
-                    // border: `1px solid ${cardBorderColor}`,
                     ...styleConfig?.Card,
                   }}
                 >
@@ -624,7 +622,22 @@ function OfflineGetStarted({
       {showFooter &&
         (autoHide === true ? !!data.length && !allCriteriaCompleted : true) && (
           <div>
-            <QuestLabs style={{ background: styleConfig?.Footer?.backgroundColor || styleConfig?.Form?.backgroundColor || BrandTheme?.background || styleConfig?.Form?.background || themeConfig?.backgroundColor, ...styleConfig?.Footer }} />
+            <QuestLabs
+              style={{
+                ...{
+                  background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                    styleConfig?.Form?.backgroundColor ||
+                    styleConfig?.Form?.background ||
+                    BrandTheme?.background ||
+                    themeConfig?.backgroundColor,
+                },
+                ...styleConfig?.Footer?.FooterStyle,
+
+              }}
+              textStyle={styleConfig?.Footer?.FooterText}
+              iconStyle={styleConfig?.Footer?.FooterIcon}
+            />
+
           </div>
         )}
     </div>

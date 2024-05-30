@@ -1,0 +1,14 @@
+.q_modular_label {
+    /* display: flex; */
+    color: var(--Neutral-Black-300, #4C4C4C);
+    font-family: Figtree;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+    /* line-height: px; */
+    /* height: 300px; */
+    /* width: 100%; */
+    /* background: red; */
+    /* font-size: 55px; */
+}

@@ -300,18 +300,18 @@ align-items: flex-end;
 gap: 20px;
 }
 
-input[type="file"]::-webkit-file-upload-button {
+.file-input::-webkit-file-upload-button {
   display: none;
 }
 
-input[type="file"]::-webkit-file-upload-button {
+.file-input::-webkit-file-upload-button {
   display: none;
 }
 
-input[type="file"]::-ms-browse {
+.file-input::-ms-browse {
   display: none;
 }
 
-input[type="file"]::file-selector-button {
+.file-input::file-selector-button {
   display: none;
 }

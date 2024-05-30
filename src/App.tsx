@@ -3,12 +3,13 @@ import { QuestProvider } from "./components/QuestWrapper";
 import QuestLogin from "./components/Login/Login";
 import { answer } from "./components/QuestForm/response";
 import { HelpCenter } from "./components/HelpCenter/HelpCenter";
-import { ReferEarn, ReferShare } from "./components/Refer/ReferEarn";
+import { ReferEarn as ReferEarn_, ReferShare } from "./components/Refer/ReferEarn";
 // import { showToast } from "./components/toast/toastService";
 import { QuestForm } from "./components/QuestForm/index";
-import Feedback from "./components/Feedback/Feedback";
+import Feedback from "./components/Survey/Feedback";
 import FeedbackWorkflow from "./components/FeedbackOverview/FeedbackOverview";
-import Tutorial from "./components/TutorialScreen/TutorialScreen";
+import Tutorial_ from "./components/TutorialScreen/TutorialScreen";
+import Tutorial from "./components/TutorialScreen/Tutorial";
 import { confetti } from "./components/Confetti/confetti";
 import GetStarted from "./components/GetStarted/GetStarted";
 import ShareArticle from "./components/Share/ShareArticle";
@@ -25,19 +26,35 @@ import CrossSellingPreview from "./components/expansion/CrossPreview";
 import SreakPreview from "./components/Streak/Preview";
 import TourPreview from "./components/Tour/Preview";
 import FeedbackWorkflowPreview from "./components/FeedbackOverview/Preview";
-import FeedbackPreview from "./components/Feedback/Preview";
-import Survey from "./components/Feedback/Survey";
+// import FeedbackPreview from "./components/Feedback/Preview";
+import SurveyPreview from "./components/Survey/Preview";
 import ModalPreview from "./components/Modals/Preview";
 import PreviewLeaderboard from "./components/Leaderboard/Preview";
-import SurveyOffline from "./components/Feedback/OfflineComponent";
+import HelpHub from "./components/HelpHub/HelpHub";
+import HelpHubPreview from "./components/HelpHub/Preview";
+
+import SurveyOffline from "./components/Survey/OfflineComponent";
 import Modal from "./components/Modules/Modal";
 // import { NormalInput } from './components/Modules/Input'
 import OnBoarding from "./components/Onboarding/Onboarding";
 import DailyStreak from "./components/Streak/DailyStreak";
 import ChallengesPreview from "./components/Challenges/ChallengesPreview";
 import GamifiedQuizPreview from "./components/GamifiedQuiz/GamifiedQuizPreview";
+import { HelpChat } from "./components/HelpCenter/HelpChat";
+import Walkthrough, { Align, Position } from "./components/Walkthrough/Walkthrough";
 import showToast from "./components/toast/toastService";
 import Toast from "./components/toast2/Toast";
+import InlineFeedbackPreview from "./components/InlineFeedback/Preview";
+import ModularPreview from "./components/Modules/ModulePreview/Preview";
+import { Challenges } from "./components/Challenges/Challenges";
+import Survey from "./components/Survey/Survey";
+import Search from "./components/Search/Search";
+import InlineFeedback from "./components/InlineFeedback/InlineFeedback";
+import LeaderBoard from "./components/Leaderboard/LeaderBoard";
+import { Referral } from './components/expansion/ReferEarn'
+import GamifiedQuiz from "./components/GamifiedQuiz/GamifiedQuiz";
+import { CrossSelling } from "./components/expansion/CrossSelling";
+
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-9986f82d-cbd0-4923-bf9a-ea01b4795fa1";
 export const apiSecret =
@@ -80,6 +97,7 @@ const paymentBanefits = [
     notIncluded: [],
   },
 ];
+
 function App() {
   // Mocked function for getAnswers prop
 
@@ -95,15 +113,21 @@ function App() {
   const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const [answer, setAnswer] = useState([]);
+  const [questions, setQuestions] = useState(0)
+
+  // const CSGetstarted = new
+
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTA2ZDY1NDYxLTdjNWYtNDczNy05NDZkLWM4YWI4YzgwZWIyNSIsImlhdCI6MTcxNjUyNzYzOCwiZXhwIjoxNzE3MTMyNDM4fQ.q3wCTjwiRaNmtSIUhOY-hvm9T2Zm_q4Y7Xq0aPKQf_o'
+  const userId = 'u-06d65461-7c5f-4737-946d-c8ab8c80eb25'
 
   return (
     <div
     // style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
     >
       <QuestProvider
-        apiKey={"k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be"}
-        apiSecret={apiSecret}
-        entityId={"e-0000000000"}
+        apiKey={"k-ac38b717-eb62-41aa-83f4-7eef8d3ff9b5"}
+        apiSecret={''}
+        entityId={"e-e6cc0ded-bf40-4f1f-94a3-a9ba73be098f"}
         featureFlags={{}}
         apiType="STAGING"
         themeConfig={
@@ -111,12 +135,526 @@ function App() {
             // backgroundColor: "black",
             // borderColor: "blue",
             // buttonColor: "green",
-            //  primaryColor: "green",
-            // secondaryColor: "blue",
+            //  primaryColor: "red",
+            // secondaryColor: "red",
             // fontFamily: "cursive"
           }
         }
       >
+        
+        {/* ------------------- API v2 Test Started -------------------  */}
+        {/* <Survey
+          questId="c-91e2258c-a3e0-4ea1-97d0-184a74153547"
+          token={token}
+          userId={userId}
+          heading="How was your experience?"
+          subHeading="Welcome back, Please complete your details"
+          itemsPerPage={2}
+          ratingType="emoji"
+          showFooter={true}
+          styleConfig={{
+            Heading: {},
+            Description: {},
+            Form: {},
+            Label: {},
+            Input: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            Footer: {},
+            TopBar: {},
+            Rating: { LeftRatingText: '', RightRatingText: '' },
+            EmailError: { text: '' },
+            MultiChoice: { style: {}, selectedStyle: {} },
+          }}
+        /> */}
+        {/* <Survey
+          questId="c-885da464-9539-48ad-9aca-ddadfc8a3ee6"
+          token={token}
+          userId={userId}
+          bgColor="white"
+          heading="How was your experience?"
+          subHeading="Welcome back, Please complete your details"
+          itemsPerPage={2}
+          ratingType="number"
+          showFooter={true}
+          styleConfig={{
+            Heading: {},
+            Description: {},
+            Form: {},
+            Label: {},
+            Input: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            Footer: {},
+            TopBar: {},
+            Rating: {
+              RatingContainer: {},
+              SingleRating: {},
+              RatingText: {},
+              Hover: {},
+              LeftRatingText: '',
+              RightRatingText: '',
+            },
+            EmailError: { text: '', errorStyle: {} },
+            MultiChoice: { style: {}, selectedStyle: {} },
+          }}
+        /> */}
+          {/* <Survey
+            questId="c-0855c2a2-0bb1-4ab4-8e4e-299f074af2c1"
+            token={token}
+            userId={userId}
+            heading="How was your experience?"
+            subHeading="Welcome back, Please complete your details"
+            itemsPerPage={2}
+            ratingType="colored"
+            showFooter={true}
+            styleConfig={{
+              Heading: {},
+              Description: {},
+              Form: {},
+              Label: {},
+              Input: {},
+              PrimaryButton: {},
+              SecondaryButton: {},
+              Footer: {},
+              TopBar: {},
+              Rating: { LeftRatingText: '', RightRatingText: '' },
+              EmailError: { text: '' },
+              MultiChoice: { style: {}, selectedStyle: {} },
+            }}
+        /> */}
+          {/* <Survey
+            questId="c-244b0ae9-bf87-4bd6-a980-8235b5041a2b"
+            token={token}
+            userId={userId}
+            heading="How was your experience?"
+            subHeading="Welcome back, Please complete your details"
+            itemsPerPage={5}
+            ratingType="star"
+            showFooter={true}
+            styleConfig={{
+              Heading: {},
+              Description: {},
+              Form: {},
+              Label: {},
+              Input: {},
+              PrimaryButton: {},
+              SecondaryButton: {},
+              Footer: {},
+              TopBar: {},
+              Rating: { LeftRatingText: '', RightRatingText: '' },
+              EmailError: { text: '' },
+              MultiChoice: { style: {}, selectedStyle: {} },
+            }}
+          /> */}
+
+          {/* <Survey
+            questId="c-348f74bf-0392-46ab-8dd3-9dfc1d0d0f73"
+            token={token}
+            userId={userId}
+            heading="How was your experience?"
+            subHeading="Welcome back, Please complete your details"
+            itemsPerPage={2}
+            ratingType="star"
+            showFooter={true}
+            styleConfig={{
+              Heading: {},
+              Description: {},
+              Form: {},
+              Label: {},
+              Input: {},
+              PrimaryButton: {},
+              SecondaryButton: {},
+              Footer: {},
+              TopBar: {},
+              Rating: { LeftRatingText: '', RightRatingText: '' },
+              EmailError: { text: '' },
+              MultiChoice: { style: {}, selectedStyle: {} },
+            }}
+          /> */}
+          {/* <Search
+            userId={userId}
+            token={token}
+            questId="c-3b63adc6-4778-4dc9-8279-faa3c6ebba3d"
+            open={true}
+            showFooter={true}
+            styleConfig={{
+              Form: {},
+              Heading: {},
+              Description: {},
+              Input: {},
+              Label: {},
+              Footer: {},
+              Icon: {},
+              listHover: {
+                background: '',
+                iconBackground: '',
+                Heading: '',
+                Description: '',
+              },
+            }}
+          /> */}
+
+        {/* <InlineFeedback
+            questId="c-80b9ed47-b008-46f5-bbe6-2f556fcee503"
+            userId={userId}
+            token={token}
+            type="emoji"
+            styleConfig={{
+              ActionButton: {},
+              ActionContainer: {},
+              ActionSelectedButton: {},
+              Description: {},
+              Footer: {},
+              Form: {},
+              Heading: {},
+              IconStyle: {},
+              MainHeading: {},
+              SelectedIconStyle: {},
+            }}
+          /> */}
+          {/* <Survey
+            questId="c-73a6117c-ea29-4e25-8ea8-7ab38238e9d1"
+            userId={userId}
+            token={token}
+            heading="Interactive Feedback Hub"
+            subHeading="Empowering Seamless Communication"
+            itemsPerPage={4}
+            ratingType="star"
+            showFooter={true}
+            styleConfig={{
+              Heading: {},
+              Description: {},
+              Form: {},
+              Label: {},
+              Input: {},
+              PrimaryButton: {},
+              SecondaryButton: {},
+              Footer: {},
+              TopBar: {},
+              Rating: { LeftRatingText: '', RightRatingText: '' },
+              EmailError: { text: '' },
+              MultiChoice: { style: {}, selectedStyle: {} },
+            }}
+          /> */}
+          {/* <DailyStreak
+            userId={userId}
+            token={token}
+            pendingStreakImg=""
+            filledStreakImg=""
+            styleConfig={{ Heading: {}, Description: {}, Footer: {} }}
+            stepDetails={[
+              {
+                  description: 'This is the longest streak you’ve ever head1',
+                  title: 'Confident reader',
+                  range: 3,
+              },
+              {
+                  description: 'This is the longest streak you’ve ever head2',
+                  title: 'Responsible reader',
+                  range: 2,
+              },
+              {
+                  description: 'This is the longest streak you’ve ever head3',
+                  title: 'Serious learner',
+                  range: 5,
+              },
+              {
+                  description: 'This is the longest streak you’ve ever head4',
+                  title: 'Absolute reader',
+                  range: 3,
+              },
+            ]}
+        /> */}
+        {/* <LeaderBoard
+          token={token}
+          userId={userId}
+          styleConfig={{
+            Description: {},
+            Footer: {},
+            Form: {},
+            Heading: {},
+            IconStyle: {},
+            IndexBackground: {},
+            IndexColor: {},
+            InnerBackground: {},
+            MainHeading: {},
+            PointsBackground: {},
+            PointsColor: {},
+            ProgressBarColor: {},
+          }}
+        /> */}
+        {/* <ReferEarn_
+          questId="c-3a4276f6-fb60-47e8-9e60-092329c23b2e"
+          token={token}
+          userId={userId}
+          // To run below props run on the local react app
+          isOpen={isOpen}
+          heading="Copy"
+      /> */}
+      {/* <Referral
+        questId="c-3a4276f6-fb60-47e8-9e60-092329c23b2e"
+        token={token}
+        userId={userId}
+        showFooter={true}
+        styleConfig={{
+          Form: {},
+          Heading: {},
+          Description: {},
+          Input: {},
+          Label: {},
+          TextArea: {},
+          PrimaryButton: {},
+          SecondaryButton: {},
+          Modal: {},
+          Footer: {},
+          Icon: {},
+        }}
+      /> */}
+      {/* <ShareArticle
+          questId="c-b0578d03-a8ab-49a4-a234-110eae19f305"
+          token={token}
+          userId={userId}
+          description="If you like this article share it with your friends"
+          heading="Share this article"
+        /> */}
+
+        {/* <GetStarted
+          userId={userId}
+          token={token}
+          questId="c-f43d309e-f6ed-483c-8872-bdb7b41548fd"
+          template={1}
+          headingText="Quickstart Guide"
+          descriptionText="Get started with Quest and explore how Quest can take you to the next level"
+          showProgressBar={true}
+          arrowColor=""
+          showFooter={true}
+          ButtonType="Arrow"
+          styleConfig={{
+            Form: {},
+            Heading: {},
+            Description: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            Footer: {},
+            Card: {},
+            ProgressBar: { barColor: '', barParentColor: '' },
+            CardContainer: {},
+            Icon: {},
+            Arrow: {
+              Background: '',
+              IconColor: '',
+              CompletedBackground: '',
+              CompletedIconColor: '',
+            },
+          }}
+        /> */}
+
+      {/* <OnBoarding
+          questId="c-e3fbaae2-16ca-423f-8cec-69689a17934f"
+          userId={userId}
+          token={token}
+          progress={['Personal Details']}
+          controlBtnType="Buttons"
+          headingScreen={[
+            { name: 'Identity Insights', desc: 'Revealing dimensions beyond words' },
+          ]}
+          template="single-page"
+          design={[
+            [1, 2, 3],
+          ]}
+          singleChoose="modal1"
+          multiChoice="modal2"
+          styleConfig={{
+            Form: {},
+            Topbar: {},
+            Heading: {},
+            Description: {},
+            Input: {},
+            Label: {},
+            TextArea: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            SingleChoice: { style: {}, selectedStyle: {} },
+            MultiChoice: { style: {}, selectedStyle: {} },
+            ProgressBar: {
+              completeTabColor: '',
+              currentTabColor: '',
+              pendingTabColor: '',
+            },
+            Footer: {},
+          }}
+          getAnswers={() => {}}
+          setAnswer={setAnswer}
+          answer={answer}
+          nextBtnText="Submit"
+        /> */}
+
+      {/* <OnBoarding
+          questId="c-056d8d29-2623-41c6-b2c1-2db4375d644e"
+          userId={userId}
+          token={token}
+          controlBtnType="Buttons"
+          headingScreen={[
+            {
+              name: 'Identity Insightssss',
+              desc: 'Revealing dimensions beyond words',
+            },
+          ]}
+          singleChoose="modal1"
+          multiChoice="modal2"
+          styleConfig={{
+            Form: {},
+            Topbar: {},
+            Heading: {},
+            Description: {},
+            Input: {},
+            Label: {},
+            TextArea: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            SingleChoice: { style: {}, selectedStyle: {} },
+            MultiChoice: { style: {}, selectedStyle: {} },
+            ProgressBar: {
+              completeTabColor: '',
+              currentTabColor: '',
+              pendingTabColor: '',
+            },
+            Footer: {},
+          }}
+          getAnswers={() => {}}
+          setAnswer={setAnswer}
+          answer={answer}
+        /> */}
+
+      {/* <Tutorial
+          userId={userId}
+          token={token}
+          questId="c-88a2b4bf-2a0e-4956-8cf8-04a7c0e1bd78"
+          heading="Quest List"
+          subheading="Discover our key features"
+          styleConfig={{
+            Form: {},
+            TopBar: {},
+            Heading: {},
+            Description: {},
+            Footer: {},
+          }}
+        /> */}
+
+      {/* <GamifiedQuiz
+          questId="c-c17a650f-c0e0-44da-985f-f2278a015be7"
+          userId={userId}
+          token={token}
+          questionsPerSection={2}
+          sectionSubHeading={['', 'Fill the details']}
+          sectionHeading={['Fill the details', 'Fill the details']}
+          showFooter={true}
+          thanksPopUpFooter={true}
+          styleConfig={{
+            Heading: {},
+            Input: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            Footer: {},
+            FormContainer: {},
+            Question: {},
+            ThanksPopup: {},
+            ThanksPopupHeading: {},
+            ThanksPopupDescription: {},
+            OptionsSelectedColor: {},
+          }}
+          gamifiedQuiz={true}
+          questions={questions}
+          setQuestions={setQuestions}
+          functionOnSubmit={() => alert('submited')}
+        /> */}
+        
+        {/* <CrossSelling
+          questId="c-80398e9e-fbcf-492d-9fdb-c0e0cdda642d"
+          token={token}
+          userId={userId}
+          expiryDate={0}
+          showDays
+          showFooter={true}
+          gradientBackground={true}
+          styleConfig={{
+            BackgroundWrapper: {},
+            Description: {},
+            Footer: {},
+            Form: {},
+            Heading: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            Timer: { backgroundColor: '', primaryColor: '', secondaryColor: '' },
+          }}
+        /> */}
+
+      {/* <FeedbackWorkflow
+          isOpen
+          userId={userId}
+          token={token}
+          questId='c-4004eb02-cc56-4c02-bb5a-3c4d42c8f432'
+          questIds={['c-8c8c51cb-6b48-40ff-99bb-9e349c716154','c-95dec57f-6b97-4f24-9a94-1b0170b1f453','c-ba4ee085-1ad1-46a5-b91b-4c690d5dbdf0','c-9920d93c-c3db-4897-be6d-4ac7c37d9203']}
+          GeneralFeedback={{
+            heading: '',
+            description: '',
+            formHeading: '',
+            formDescription: '',
+          }}
+          ReportBug={{
+            heading: '',
+            description: '',
+            formHeading: '',
+            formDescription: '',
+          }}
+          RequestFeature={{
+            heading: '',
+            description: '',
+            formHeading: '',
+            formDescription: '',
+          }}
+          ContactUs={{ heading: '', description: '', iconUrl: '' }}
+          styleConfig={{
+            Heading: {},
+            Description: {},
+            Form: { },
+            Label: {},
+            Input: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            Footer: {},
+            listHeading: {},
+            listDescription: {},
+            Card: {},
+            EmailError: { text: '' },
+            listHover: {
+              background: '',
+              iconBackground: '',
+              iconColor: '',
+              Heading: '',
+              Description: '',
+              IconSize: '16px',
+            },
+            ThanksPopup: { ShowFooter: true },
+          }}
+          contactUrl="https://calendly.com/shubham-quest/chat"
+          variation="test"
+        /> */}
+
+    {/* <HelpHub
+      userId={userId}
+      token={token}
+      questId="c-a2b5782e-f3a1-4a33-bbca-8c6601a8ca62"
+      styleConfig={{
+      }}
+      variation="test"
+    /> */}
+
+        {/* ------------------- API v2 Test Ended -------------------  */}
+
+        {/* <ModularPreview /> */}
+
         {/* <TutorialPreview online={true} /> */}
 
         {/* <SpinTheWheel
@@ -153,9 +691,17 @@ function App() {
           <button onClick={onDifferentTwo}>warning</button> */}
         {/* <ModalPreview/> */}
 
+        {/* <HelpHub
+          token={'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxMjIwMjIxMCwiZXhwIjoxNzEyODA3MDEwfQ.yCkWcD5yVykmqAmiRKrzdTmqVsptlfq2VPBO4eztNYY'} 
+          userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
+          /> */}
+
+        {/* <HelpHubPreview online={true} /> */}
+
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
         {/* <GamifiedQuizPreview online={true} /> */}
-
+        {/* <GamifiedQuizPreview online={true} /> */}
+        {/* <SurveyPreview online={true}/> */}
         {/* 
                 <HelpCenter
                     userId={userId}
@@ -169,14 +715,15 @@ function App() {
                 // headColor="yellow"
                 // descriptioin="this is descripiton"
                 /> */}
-        <OnBoardingPreview online={true} />
 
+        {/* <OnBoardingPreview online={true} /> */}
 
         {/* <GetStartedPreview online={true} /> */}
 
         {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
 </Modal> */}
+        {/* <OnBoarding
         {/* <OnBoarding
   questId="q-daf9940a-c2fb-4762-adce-57b9b1fda08c"
   answer={answer}
@@ -227,17 +774,13 @@ function App() {
         <button onClick={() => { showToast.info({ duration: 100000, text: "This is a info message", template: 2, descritption: "INFO" }) }}>Info</button>
         <button onClick={() => { showToast.success({ duration: 100000, text: "This is a success message", template: 2, descritption: "SUCCESS" }) }}>Success</button> */}
 
-
         {/* <button onClick={() => Toast.success({ text: "This is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success messageThis is a success message", position: 'top-right', autoClose: 100000, template: 2, description: "SUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESSSUCCESS" })}>Success</button>
         <button onClick={() => Toast.info({ text: "This is a info message", position: 'bottom-center', autoClose: 1000, template: 2, description: "INFO" })}>Info</button>
         <button onClick={() => Toast.error({ text: "This is a error message", position: 'bottom-center', autoClose: 1000, template: 2, description: "Error" })}>Error</button>
         <button onClick={() => Toast.warning({ text: "This is a succes warning message", position: 'bottom-center', autoClose: 1000, template: 2, description: "WARNING" })}>Warning</button> */}
-        <FeedbackWorkflowPreview online={false} />
-        {/* <ChallengesPreview online={true} /> */}
 
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus nam, ut modi reprehenderit architecto vero quasi debitis, praesentium nihil hic voluptatem, fugit assumenda. A suscipit natus pariatur nisi consectetur nulla voluptates corrupti voluptatem officiis alias eveniet doloribus eos veritatis, quam dolorem praesentium, velit assumenda iusto rerum totam repellendus laudantium ratione est illum. Dolorum qui ut beatae esse odit rerum! Culpa reiciendis facilis consequuntur harum nesciunt, veritatis consectetur incidunt in exercitationem velit, modi natus doloribus ipsa numquam aut. Quo, ipsam fuga consectetur doloremque nesciunt ullam quam expedita accusantium minima sed eum repellendus reprehenderit eos laborum voluptatum itaque numquam maxime quae exercitationem.
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti vel iusto, perferendis voluptatum aliquid eaque temporibus similique commodi saepe quidem, obcaecati, fugit quisquam placeat a quos doloremque reiciendis ipsum perspiciatis cupiditate impedit nisi animi beatae nemo. Laboriosam rerum recusandae dignissimos minus? Sed perferendis dolor illo veritatis recusandae, nesciunt quo minima asperiores harum eaque, doloribus ipsum repellendus distinctio sequi delectus saepe magnam similique, omnis voluptatibus! Debitis nam eveniet doloremque perspiciatis sint numquam ipsum sunt aspernatur quam quas, deserunt iure deleniti aliquid minus culpa recusandae praesentium aliquam voluptates at inventore placeat in, corporis dolore! Optio tempora iusto obcaecati unde sequi excepturi dolorem, quae qui hic eaque esse assumenda, at error. Suscipit asperiores cum, corrupti adipisci vero minus laboriosam alias nobis mollitia? Neque, fuga dignissimos asperiores sequi, aut laudantium modi quae vel rerum ad optio, magnam ea alias tenetur ipsa obcaecati facilis nihil. Architecto, ad quo tempora sapiente distinctio non laboriosam laudantium numquam accusantium est neque maiores perferendis quia accusamus facere, reprehenderit mollitia provident? Voluptas accusamus quas laudantium qui, enim voluptates corporis fugiat ullam possimus magnam quo repellendus corrupti saepe eum repellat mollitia est sint nulla? Similique repellat laudantium vero soluta quaerat facilis consequatur quasi quis esse atque officia beatae tempora odit voluptas, nam architecto dolore, aperiam explicabo ducimus? Nulla laboriosam autem dolor eveniet atque error distinctio inventore earum, optio repellendus corporis laudantium animi suscipit voluptatibus ex nobis saepe veritatis ut modi natus enim culpa soluta commodi. Incidunt fugit officiis animi, saepe, alias ipsa a molestiae voluptates laborum commodi explicabo earum vel optio rem harum cupiditate voluptate, provident ducimus asperiores dignissimos illo sapiente. Repellendus nihil qui necessitatibus doloribus labore beatae. Quas iusto quisquam molestiae, accusamus dolorum tenetur obcaecati aliquid soluta nostrum placeat mollitia aliquam provident asperiores nisi nulla saepe eum rerum culpa repellendus! Id aut eaque maiores quam omnis maxime est consectetur ad, nemo sapiente, sit nesciunt corrupti porro iste nulla esse autem tempora facilis, aliquid doloribus? Necessitatibus sequi debitis totam quae consequatur rerum nam odio nemo autem, optio libero sint! Repellat pariatur nostrum, fugit dignissimos qui alias voluptatibus adipisci placeat sunt quibusdam nobis iste quae doloremque delectus itaque ex similique aliquid fugiat at, neque quaerat quas. Nam veniam velit, non quis repellendus aspernatur possimus voluptates esse eum facere quia fugiat iure repudiandae consectetur aperiam error laborum dicta laboriosam a at aliquam tempora tempore quibusdam dolorum! Tempora aliquam harum eos est blanditiis repellat rem quidem corporis mollitia nisi nihil, asperiores rerum natus? Consectetur dolores sunt iste magnam repellendus expedita voluptatum cumque, debitis atque autem. Accusamus debitis natus labore expedita excepturi, eius unde, optio architecto tenetur inventore dolor libero reprehenderit amet accusantium. Porro et delectus natus facilis dolore, deserunt, doloremque pariatur saepe praesentium doloribus modi rem mollitia? Vitae consectetur accusamus soluta quisquam, autem exercitationem, ea culpa deserunt, tempora commodi impedit officiis atque voluptates aliquid laborum expedita rem debitis quibusdam magni facere? Quo quia animi ex, magnam nostrum reprehenderit pariatur delectus at ipsam esse? Consectetur, quis magni illo voluptas qui totam veniam culpa iure fugiat harum voluptates repudiandae! Maiores consectetur aliquam rerum fugiat illum debitis!
-        {/* <FeedbackPreview online={false} /> */}
+        <FeedbackWorkflowPreview online={true} />
+        {/* <ChallengesPreview online={true} /> */}
 
         {/* <ReferEarnPreview/> */}
 
@@ -254,7 +797,7 @@ function App() {
                     // color="blue"
                     // isArticle={true}
             /> */}
-        {/* <PreviewLeaderboard online={true}/> */}
+        {/* <PreviewLeaderboard online={false}/> */}
         {/* <QuestLogin
                     // questId=""
                     textColor=""
@@ -287,7 +830,32 @@ function App() {
                       }
                     }}
                 ></QuestLogin> */}
-
+        {/* <DailyStreak
+                    token={token}
+                    userId={userId}
+                    metric='daily-visit'
+                    stepDetails={[
+                      {description:"This is the longest streak you’ve ever head1",title: "Confident reader",range: 3},
+                      {description:"This is the longest streak you’ve ever head2",title: "Responsible reader",range: 2},
+                      {description:"This is the longest streak you’ve ever head3",title: "Serious learner",range: 5},
+                      {description:"This is the longest streak you’ve ever head4",title: "Absolute reader",range: 3},
+                      {description:"This is the longest streak you’ve ever head5",title: "Professional reader",range: 1},
+                      
+                  ]} 
+                  // filledStreakImg=""
+                  styleConfig={{
+                    // IconBackground:{background:"#facdcd"},
+                    // IconColor:{color:"red"},
+                    // Form:{borderRadius:"1px"},
+                    // Count:{color:"red"},
+                    // Heading:{color:"orange"},
+                    // Description:{color:"green"},
+                    // Footer:{}
+                  }}
+                  
+                    /> */}
+        {/* <SreakPreview/> */}
+        {/* <ShareArticlePreview online={false}/> */}
         {/* <ShareArticle
                     bgColor=""
                     // description=""
@@ -302,7 +870,36 @@ function App() {
 
         {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
         {/* <SreakPreview online /> */}
+        {/* <InlineFeedbackPreview online={false} /> */}
+
+        {/* <Walkthrough
+            isOpen={isOpen}
+            id="app"
+            steps={[
+              {
+                selector: '.gs-single-card-dropDown',
+                data: {title: 'First Tab', description: 'Click on this'},
+              },
+              {
+                selector: '.gs-heading-div',
+                data: {title: 'Second Tab', description: 'Click on this'},
+              }
+            ]}
+            styleConfig={{
+              Form: {background: 'green'},
+              Background: {background: 'red'}, 
+              Footer: {background: 'blue'}
+            }}
+            onComplete={() => {alert('Welcome to the page'); setIsOpen(false)}}
+            onRequestClose={() => setIsOpen(false)}
+            onAfterOpen={() => document.documentElement.style.overflow = 'hidden'}
+            onBeforeClose={() => document.documentElement.style.overflow = ''}
+        /> */}
+
+
+
       </QuestProvider>
+      {/* < div style={{height: 1999}}/> */}
     </div>
   );
 }
