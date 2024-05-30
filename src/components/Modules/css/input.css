@@ -100,7 +100,7 @@
 .q_modal {
   background-color: white;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 16px;
   animation: modal-animation 0.3s ease-out;
 }
 
