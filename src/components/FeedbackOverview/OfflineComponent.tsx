@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import GeneralFeedbackContent from "./GenralFb";
+import GeneralFeedbackContent, { GeneralFeedbackContentProps, GeneralFeedbackContentStyleConfig } from "./GenralFb";
 import BugContent from "./Bug";
 import FeatureContent from "./Feature";
 import { useContext } from "react";
@@ -222,6 +222,7 @@ interface feedbackCompProps {
     formHeading?: string;
     formDescription?: string;
     iconUrl?: string;
+    styleConfig?: GeneralFeedbackContentStyleConfig
   };
   ReportBug?: {
     heading?: string;
@@ -742,6 +743,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                             inputRef={inputRef}
                             file={file}
                             setFile={setFile}
+                            styleConfig={GeneralFeedback?.styleConfig}
                           />
                         )}
                         {selectedOption === "ReportBug" && (

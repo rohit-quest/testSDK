@@ -6,7 +6,49 @@ import QuestContext from "../QuestWrapper";
 import QuestLabs from "../QuestLabs";
 import { blackStar, deleteSvg, fileSvg, screenshotSvg, whiteStar } from "./SVG";
 
-interface GeneralFeedbackContentProps {
+export interface GeneralFeedbackContentStyleConfig{
+  Form?: React.CSSProperties;
+  Heading?: React.CSSProperties;
+  Description?: React.CSSProperties;
+  Input?: React.CSSProperties;
+  Label?: React.CSSProperties;
+  EmailError?: {
+    text?: string,
+    errorStyle?: React.CSSProperties
+  },
+  TopBar?: React.CSSProperties;
+  TextArea?: React.CSSProperties;
+  PrimaryButton?: React.CSSProperties;
+  SecondaryButton?: React.CSSProperties;
+  Modal?: React.CSSProperties;
+  Footer?: React.CSSProperties;
+  listHeading?: React.CSSProperties;
+  listDescription?: React.CSSProperties;
+  Card?: React.CSSProperties;
+  Star?: {
+    Style?: React.CSSProperties;
+    PrimaryColor?: string;
+    SecondaryColor?: string;
+    Size?: number;
+  }
+  listHover?: {
+    background?: string;
+    iconBackground?: string;
+    iconColor?: string;
+    Heading?: string;
+    Description?: string;
+    IconSize?: string;
+    Icon?: React.CSSProperties;
+  };
+  ThanksPopup?: {
+    Style?: React.CSSProperties;
+    Heading?: React.CSSProperties;
+    Description?: React.CSSProperties;
+    ShowFooter?: boolean;
+    Icon?: React.CSSProperties;
+  },
+}
+export interface GeneralFeedbackContentProps {
   starColor?: string;
   btnTextColor?: string;
   starBorderColor?: string;
@@ -53,48 +95,7 @@ interface GeneralFeedbackContentProps {
   inputRef: React.MutableRefObject<HTMLInputElement | null>;
   file: FileProp | null;
   setFile: (file: FileProp | null) => any;
-  styleConfig?: {
-    Form?: React.CSSProperties;
-    Heading?: React.CSSProperties;
-    Description?: React.CSSProperties;
-    Input?: React.CSSProperties;
-    Label?: React.CSSProperties;
-    EmailError?: {
-      text?: string,
-      errorStyle?: React.CSSProperties
-    },
-    TopBar?: React.CSSProperties;
-    TextArea?: React.CSSProperties;
-    PrimaryButton?: React.CSSProperties;
-    SecondaryButton?: React.CSSProperties;
-    Modal?: React.CSSProperties;
-    Footer?: React.CSSProperties;
-    listHeading?: React.CSSProperties;
-    listDescription?: React.CSSProperties;
-    Card?: React.CSSProperties;
-    Star?: {
-      Style?: React.CSSProperties;
-      PrimaryColor?: string;
-      SecondaryColor?: string;
-      Size?: number;
-    }
-    listHover?: {
-      background?: string;
-      iconBackground?: string;
-      iconColor?: string;
-      Heading?: string;
-      Description?: string;
-      IconSize?: string;
-      Icon?: React.CSSProperties;
-    };
-    ThanksPopup?: {
-      Style?: React.CSSProperties;
-      Heading?: React.CSSProperties;
-      Description?: React.CSSProperties;
-      ShowFooter?: boolean;
-      Icon?: React.CSSProperties;
-    },
-  },
+  styleConfig?: GeneralFeedbackContentStyleConfig,
   BrandTheme?: BrandTheme,
   QuestThemeData?: QuestThemeData
 }
@@ -153,8 +154,10 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
   setFile,
   styleConfig,
   BrandTheme,
-  QuestThemeData
+  QuestThemeData,
+  starBorderColor
 }) => {
+  console.log(starBorderColor)
   const [rating, setRating] = useState<number>(0);
   const handleRatingChange2 = (e: any, id: any, rating: number) => {
     setRating(rating);
@@ -278,11 +281,13 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                             {star <= rating
                               ? blackStar(
                                 StarStyle?.Size,
-                                StarStyle?.PrimaryColor
+                                StarStyle?.PrimaryColor,
+                                starBorderColor
                               )
                               : whiteStar(
                                 StarStyle?.Size,
-                                StarStyle?.SecondaryColor
+                                StarStyle?.SecondaryColor,
+                                starBorderColor
                               )}
                           </div>
                         ))}
