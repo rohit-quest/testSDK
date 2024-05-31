@@ -592,8 +592,6 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   };
 
 
-  console.log(styleConfig ,'styleConfig');
-
   return (
     <Modal
       isOpen={isOpen}
