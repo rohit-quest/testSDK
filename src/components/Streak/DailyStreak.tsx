@@ -151,14 +151,14 @@ export default function DailyStreak({
                 >
                   <img src={imgSrc} alt="" />
                 </div>
-                <div
+                <p
                   className={
                     "q_streak_step_title " +
                     (isActive ? "q_streak_step_active" : "q_streak_step_disable")
                   }
                 >
                   {step.title}
-                </div>
+                </p>
                 <div
                   className={
                     "q_streak_dot " 

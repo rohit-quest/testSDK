@@ -733,6 +733,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   background: "transparent",
                   opacity: isVisible ? 1 : 0,
                   ...styleConfig.Modal,
+                  borderRadius:
+                    styleConfig?.Form?.borderRadius ||
+                    questThemeData?.borderRadius ||
+                    BrandTheme?.borderRadius,
                 }}
               >
                 {showLoader && <Loader />}
