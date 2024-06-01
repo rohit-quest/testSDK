@@ -306,7 +306,7 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                     <button style={{
                       width: "100%",
                       borderRadius: "10px 0px 0px 10px",
-                      border: "1px solid #ECECEC",
+                      border: styleConfig?.Input?.border || "1px solid #ECECEC",
                       background: "transparent",
                       position: "relative",
                       cursor: "pointer",
@@ -323,7 +323,7 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                       width: "100%",
                       height: "100%",
                       borderRadius: "0px 10px 10px 0px",
-                      border: "1px solid #ECECEC",
+                      border: styleConfig?.Input?.border || "1px solid #ECECEC",
                       position: "relative",
                       background: "transparent",
                       padding: "10px",
@@ -350,13 +350,13 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                   {screenshot !== null &&
                     (
                       <div className="q-fdov-file-name" style={{
-                        display: "flex", justifyContent: "space-between", alignItems: "center", border: "1px solid #ECECEC", borderRadius: "10px", padding: "10px 10px", marginTop: "10px", gap: "5px"
+                        display: "flex", justifyContent: "space-between", alignItems: "center", border: styleConfig?.Input?.border || "1px solid #ECECEC", borderRadius: "10px", padding: "10px 10px", marginTop: "10px", gap: "5px"
                       }}>
                         <div style={{
                           display: "flex",
                           alignItems: "center"
                         }}>
-                          {screenshotSvg(styleConfig?.Form?.color)}
+                          {screenshotSvg(styleConfig?.PrimaryButton?.color)}
                         </div>
                         <p style={{
                           fontSize: "14px",
@@ -377,20 +377,20 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                         }} onClick={() => {
                           setScreenshot(null)
                         }}>
-                          {deleteSvg(styleConfig?.Form?.color)}
+                          {deleteSvg(styleConfig?.PrimaryButton?.color)}
                         </button>
                       </div>
                     )}
                   {
                     file && (
                       <div className="q-fdov-file-name" style={{
-                        display: "flex", justifyContent: "space-between", alignItems: "center", border: "1px solid #ECECEC", borderRadius: "10px", padding: "10px 10px", marginTop: "10px", gap: "5px"
+                        display: "flex", justifyContent: "space-between", alignItems: "center", border: styleConfig?.Input?.border || "1px solid #ECECEC", borderRadius: "10px", padding: "10px 10px", marginTop: "10px", gap: "5px"
                       }}>
                         <div style={{
                           display: "flex",
-                          alignItems: "center"
+                          alignItems: "center",
                         }}>
-                          {fileSvg(styleConfig?.Form?.color)}
+                          {fileSvg(styleConfig?.PrimaryButton?.color)}
                         </div>
                         <p style={{
                           fontSize: "14px",
@@ -415,7 +415,7 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
                               inputRef.current.value = "";
                             }
                           }}>
-                          {deleteSvg(styleConfig?.Form?.color)}
+                          {deleteSvg(styleConfig?.PrimaryButton?.color)}
                         </button>
                       </div>
                     )

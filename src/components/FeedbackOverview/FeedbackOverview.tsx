@@ -240,6 +240,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     }
   };
   const uploadFileToBackend: any = async (file: any) => {
+    setShowLoader(true);
     if (file?.size > 1000000) {
       try {
         // Resize the image to below 1MB
@@ -250,7 +251,6 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           initialQuality: 1,
         });
 
-        // Call the uploadImageToBackend function recursively with the compressed image
         return await uploadFileToBackend(compressedImage);
       } catch (error) {
         return null;
@@ -280,10 +280,14 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       ) {
         console.log(null);
       } else {
+        setShowLoader(false);
         return res.data.imageUrl;
       }
+
+      setShowLoader(false);
     } catch (error) {
       console.log(error);
+      setShowLoader(false);
     }
   };
 
