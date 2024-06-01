@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import GeneralFeedbackContent from "./GenralFb";
+import GeneralFeedbackContent, { GeneralFeedbackContentProps, GeneralFeedbackContentStyleConfig } from "./GenralFb";
 import BugContent from "./Bug";
 import FeatureContent from "./Feature";
 import { useContext } from "react";
@@ -222,6 +222,7 @@ interface feedbackCompProps {
     formHeading?: string;
     formDescription?: string;
     iconUrl?: string;
+    styleConfig?: GeneralFeedbackContentStyleConfig
   };
   ReportBug?: {
     heading?: string;
@@ -290,6 +291,7 @@ interface feedbackCompProps {
       Description?: string;
       IconSize?: string;
       Icon?: React.CSSProperties;
+      defaultIconBackground ?: string;
     };
     ThanksPopup?: {
       Style?: React.CSSProperties;
@@ -340,7 +342,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   offlineFormData,
   showFooter = true,
   BrandTheme,
-  QuestThemeData,
+  QuestThemeData
 }) => {
   const [selectedOption, setSelectedOption] = useState<optionType | null>(null);
 
@@ -590,6 +592,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     }
   };
 
+
   return (
     <Modal
       isOpen={isOpen}
@@ -740,6 +743,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                             inputRef={inputRef}
                             file={file}
                             setFile={setFile}
+                            styleConfig={GeneralFeedback?.styleConfig}
                           />
                         )}
                         {selectedOption === "ReportBug" && (

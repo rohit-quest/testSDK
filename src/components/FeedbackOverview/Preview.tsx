@@ -142,6 +142,12 @@ export default function FeedbackWorkflowPreview({
         description: "Give general feedsdasdasdback on this page",
         formHeading: "General Feedbackasddffd",
         formDescription: "Welcome back,sdfsdf Please complete your details",
+        styleConfig: {
+          Form: {
+            color: 'red',
+            background: 'blue'
+          }
+        }
         // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
       }}
       RequestFeature={{
@@ -162,6 +168,7 @@ export default function FeedbackWorkflowPreview({
         description: "Invite oasasdasdher admins and moderators",
         // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
       }}
+      starBorderColor="red"
       offlineFormData={[
         [
           {
