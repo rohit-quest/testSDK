@@ -6,7 +6,7 @@ import QuestContext from "../QuestWrapper";
 import QuestLabs from "../QuestLabs";
 import { blackStar, deleteSvg, fileSvg, screenshotSvg, whiteStar } from "./SVG";
 
-export interface GeneralFeedbackContentStyleConfig{
+export interface GeneralFeedbackContentStyleConfig {
   Form?: React.CSSProperties;
   Heading?: React.CSSProperties;
   Description?: React.CSSProperties;
@@ -157,7 +157,6 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
   QuestThemeData,
   starBorderColor
 }) => {
-  console.log(starBorderColor)
   const [rating, setRating] = useState<number>(0);
   const handleRatingChange2 = (e: any, id: any, rating: number) => {
     setRating(rating);
@@ -166,22 +165,26 @@ const GeneralFeedbackContent: React.FC<GeneralFeedbackContentProps> = ({
 
   const { themeConfig } = useContext(QuestContext.Context);
 
-  const handleUploadImages = (e: any) => {
+  const handleUploadImages = async (e: any) => {
     e.preventDefault();
     let urlArr = [];
     if (file !== null) {
-      urlArr.push(uploadFileToBackend(file));
+      let URL = await uploadFileToBackend(file);
+      urlArr.push(URL);
     }
     if (screenshot !== null) {
-      urlArr.push(uploadFileToBackend(screenshot));
+      let URL = await uploadFileToBackend(screenshot);
+      urlArr.push(URL);
     }
     for (let i = 0; i < formdata.length; i++) {
       if (formdata[i].type === "USER_INPUT_IMAGE") {
-        answer[formdata[i].criteriaId] = [urlArr];
+        answer[formdata[i].criteriaId] = urlArr;
         break;
       }
     }
     handleSubmit();
+    setFile(null);
+    setScreenshot(null);
   };
 
   return (

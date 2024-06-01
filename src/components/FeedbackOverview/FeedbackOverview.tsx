@@ -408,7 +408,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     let questUserToken = cookies.get("questUserToken");
     if (Object.keys(answer).length !== 0) {
       const ansArr = formdata[index].map((ans: any) => ({
-        answers: [String(answer[ans?.criteriaId]) || ""],
+        answers: Array.isArray(answer[ans?.criteriaId]) ? answer[ans?.criteriaId] : [String(answer[ans?.criteriaId]) || ""],
         actionId: ans?.criteriaId || "",
       }));
       if (
