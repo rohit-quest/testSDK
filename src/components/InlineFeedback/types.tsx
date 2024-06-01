@@ -25,7 +25,8 @@ export interface FeedbackProps {
     questId: string;
     token: string,
     onRequestClose?: () => void;
-    initialState?: number
+    initialState?: number,
+    variation?: string
 }
 export interface FeedbackPropsOffline {
     heading?: string;
