@@ -107,7 +107,10 @@ export interface HelpHubProps {
   claimStatusUpdates?: string[] | [];
   setClaimStatusUpdates?: Dispatch<SetStateAction<string[]>>;
   helphubPosition?: "SIDEBAR" | "POPUP" | "USER_CHOICE" ;
-  variation?: string
+  variation?: string;
+  entityLogo?: string;
+  defaultAutoPopupMessages? : string[];
+  popupOpenDelay?: number;
 }
 export interface HelpHubPropsOffline {
   Main?: {
@@ -170,6 +173,14 @@ export interface HelpHubChatTypes {
   uniqueUserId?: string;
   uniqueEmailId?: string;
   position?: string;
+  sendAutoMessage?: string;
+  setSendAutoMessage?: Dispatch<SetStateAction<string>>;
+  chat?: MessageTypes[];
+  setChat?: Dispatch<SetStateAction<MessageTypes[]>>;
+  filterChat?: MessageTypes[];
+  setFilterChat?: Dispatch<SetStateAction<MessageTypes[]>>;
+  fetchData?: boolean;
+  setFetchData?: Dispatch<SetStateAction<boolean>>;
 }
 
 export interface HelpHubFaqTypes {

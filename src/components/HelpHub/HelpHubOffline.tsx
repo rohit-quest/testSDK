@@ -134,7 +134,7 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
                 onlineComponent={false}
                 showFeedback={showFeedback}
                 setShowFeedback={setShowFeedback}
-                entityImage={entityImage || entityLogo}
+                entityImage={entityLogo || entityImage}
               />
             ) : (
               ""

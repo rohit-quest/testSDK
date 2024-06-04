@@ -3,16 +3,16 @@ import { QuestProvider } from "./components/QuestWrapper";
 import QuestLogin from "./components/Login/Login";
 import { answer } from "./components/QuestForm/response";
 import { HelpCenter } from "./components/HelpCenter/HelpCenter";
-import { ReferEarn as ReferEarn_, ReferShare } from "./components/Refer/ReferEarn";
+import { ReferEarn, ReferShare } from "./components/Refer/ReferEarn";
 // import { showToast } from "./components/toast/toastService";
 import { QuestForm } from "./components/QuestForm/index";
 import Feedback from "./components/Survey/Feedback";
 import FeedbackWorkflow from "./components/FeedbackOverview/FeedbackOverview";
-import Tutorial_ from "./components/TutorialScreen/TutorialScreen";
-import Tutorial from "./components/TutorialScreen/Tutorial";
+import Tutorial from "./components/TutorialScreen/TutorialScreen";
 import { confetti } from "./components/Confetti/confetti";
 import GetStarted from "./components/GetStarted/GetStarted";
 import ShareArticle from "./components/Share/ShareArticle";
+import ShareArticlePreview from "./components/Share/ShareArticlePreview";
 import { ChatIcon, LinkIcon } from "./components/HelpCenter/Svg";
 import Payment from "./components/Payment/Payment";
 import OnBoardingPreview from "./components/Onboarding/Preview";
@@ -41,7 +41,7 @@ import DailyStreak from "./components/Streak/DailyStreak";
 import ChallengesPreview from "./components/Challenges/ChallengesPreview";
 import GamifiedQuizPreview from "./components/GamifiedQuiz/GamifiedQuizPreview";
 import { HelpChat } from "./components/HelpCenter/HelpChat";
-import Walkthrough, { Align, Position } from "./components/Walkthrough/Walkthrough";
+import Walkthrough from "./components/Walkthrough/Walkthrough";
 import showToast from "./components/toast/toastService";
 import Toast from "./components/toast2/Toast";
 import InlineFeedbackPreview from "./components/InlineFeedback/Preview";
@@ -114,7 +114,6 @@ function App() {
   const [data, setData] = useState([]);
   const [isOpen, setIsOpen] = useState(true);
   const [answer, setAnswer] = useState([]);
-  const [questions, setQuestions] = useState(0)
 
   // const CSGetstarted = new
 
@@ -126,9 +125,9 @@ function App() {
     // style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
     >
       <QuestProvider
-        apiKey={"k-ac38b717-eb62-41aa-83f4-7eef8d3ff9b5"}
-        apiSecret={''}
-        entityId={"e-e6cc0ded-bf40-4f1f-94a3-a9ba73be098f"}
+        apiKey={"k-fe5a805c-77ed-4cae-bd33-9591ebed2805"}
+        apiSecret={apiSecret}
+        entityId={"e-9850377b-f88f-4426-a2ac-56206c74655a"}
         featureFlags={{}}
         apiType="STAGING"
         themeConfig={
@@ -698,12 +697,12 @@ function App() {
           userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
           /> */}
 
-        {/* <HelpHubPreview online={true} /> */}
+        <HelpHubPreview online={true} />
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
         {/* <GamifiedQuizPreview online={true} /> */}
         {/* <GamifiedQuizPreview online={true} /> */}
-        {/* <SurveyPreview online={true}/> */}
+        {/* <SurveyPreview online={false}/> */}
         {/* 
                 <HelpCenter
                     userId={userId}
@@ -718,7 +717,7 @@ function App() {
                 // descriptioin="this is descripiton"
                 /> */}
 
-        {/* <OnBoardingPreview online={true} /> */}
+        {/* <OnBoardingPreview online={false} /> */}
 
         {/* <GetStartedPreview online={true} /> */}
 
@@ -780,7 +779,6 @@ function App() {
         <button onClick={() => Toast.info({ text: "This is a info message", position: 'bottom-center', autoClose: 1000, template: 2, description: "INFO" })}>Info</button>
         <button onClick={() => Toast.error({ text: "This is a error message", position: 'bottom-center', autoClose: 1000, template: 2, description: "Error" })}>Error</button>
         <button onClick={() => Toast.warning({ text: "This is a succes warning message", position: 'bottom-center', autoClose: 1000, template: 2, description: "WARNING" })}>Warning</button> */}
-
         {/* <FeedbackWorkflowPreview online={true} /> */}
         {/* <ChallengesPreview online={true} /> */}
 
@@ -799,7 +797,7 @@ function App() {
                     // color="blue"
                     // isArticle={true}
             /> */}
-        {/* <PreviewLeaderboard online={false}/> */}
+        {/* <PreviewLeaderboard online={true}/> */}
         {/* <QuestLogin
                     // questId=""
                     textColor=""
@@ -881,10 +879,13 @@ function App() {
               {
                 selector: '.gs-single-card-dropDown',
                 data: {title: 'First Tab', description: 'Click on this'},
+                // position: Position.RIGHT,
+                // align: Align.END
               },
               {
                 selector: '.gs-heading-div',
                 data: {title: 'Second Tab', description: 'Click on this'},
+                // align: Align.CENTER
               }
             ]}
             styleConfig={{
@@ -896,9 +897,8 @@ function App() {
             onRequestClose={() => setIsOpen(false)}
             onAfterOpen={() => document.documentElement.style.overflow = 'hidden'}
             onBeforeClose={() => document.documentElement.style.overflow = ''}
-        /> */}
 
-
+        />  */}
 
       </QuestProvider>
       {/* < div style={{height: 1999}}/> */}

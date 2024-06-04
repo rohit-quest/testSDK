@@ -308,11 +308,11 @@ export default function HelpHubPreview({ online = true }) {
       >
         <HelpHub
           token={
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTRjYzUxMGE0LWU2NzAtNGVkMy1hYmUzLWMzNTFjMTliYjk5MiIsImlhdCI6MTcxNTA2MDg2OCwiZXhwIjoxNzE1NjY1NjY4fQ.yfSNn9DVE6MIBlc53pMboKGhy_-e7wcBadvkxDy497I"
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTRjYzUxMGE0LWU2NzAtNGVkMy1hYmUzLWMzNTFjMTliYjk5MiIsImlhdCI6MTcxNjM3ODc4NiwiZXhwIjoxNzE2OTgzNTg2fQ.erYh8kpMpdoOxftIdvglRAzMNKh3Qyg9DwSZQ8aWqkE"
           }
           userId="u-4cc510a4-e670-4ed3-abe3-c351c19bb992"
-          questId="q-bdc4b8e7-1c8b-45f8-96fe-a2ae3f17fad9"
-          
+          questId="c-13cd83b3-59df-4a5d-9765-9fb9d5aa1981"
+          uniqueUserId="741852101s@gmail.com"
           // uniqueUserId="741852101"
           // helphubPosition="USER_CHOICE"
           // onlineComponent={online}
@@ -507,7 +507,7 @@ export default function HelpHubPreview({ online = true }) {
     >
       <HelpHubOffline
         token={
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTRjYzUxMGE0LWU2NzAtNGVkMy1hYmUzLWMzNTFjMTliYjk5MiIsImlhdCI6MTcxNTA2MDg2OCwiZXhwIjoxNzE1NjY1NjY4fQ.yfSNn9DVE6MIBlc53pMboKGhy_-e7wcBadvkxDy497I"
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTRjYzUxMGE0LWU2NzAtNGVkMy1hYmUzLWMzNTFjMTliYjk5MiIsImlhdCI6MTcxNjM3ODc4NiwiZXhwIjoxNzE2OTgzNTg2fQ.erYh8kpMpdoOxftIdvglRAzMNKh3Qyg9DwSZQ8aWqkE"
         }
         userId="u-4cc510a4-e670-4ed3-abe3-c351c19bb992"
         // ParentQuest={}
@@ -520,7 +520,6 @@ export default function HelpHubPreview({ online = true }) {
         }}
         ParentQuest={parentQuest}
         ChildQuest={childQuest}
-        onlineComponent={online}
         // claimStatusUpdates={claimStatusUpdates}
         // setClaimStatusUpdates={setClaimStatusUpdates}
       />

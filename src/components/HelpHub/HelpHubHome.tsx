@@ -315,19 +315,19 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
                   viewBox="0 0 16 16"
                   fill="none"
                 >
-                  <g clip-path="url(#clip0_4762_1863)">
+                  <g clipPath="url(#clip0_4762_1863)">
                     <circle
                       cx="7.66671"
                       cy="7.66659"
                       r="6.33333"
                       stroke="#B9B9B9"
-                      stroke-width="1.5"
+                      strokeWidth="1.5"
                     />
                     <path
                       d="M13.3334 13.3333L14.6667 14.6666"
                       stroke="#B9B9B9"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
                     />
                   </g>
                   <defs>
@@ -373,8 +373,8 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
                         fill="none"
                       >
                         <path
-                          fill-rule="evenodd"
-                          clip-rule="evenodd"
+                          fillRule="evenodd"
+                          clipRule="evenodd"
                           d="M5.67461 2.95363C5.88428 2.77392 6.19993 2.7982 6.37964 3.00787L10.3796 7.67453C10.5401 7.86178 10.5401 8.13808 10.3796 8.32532L6.37964 12.992C6.19993 13.2017 5.88428 13.2259 5.67461 13.0462C5.46495 12.8665 5.44067 12.5509 5.62038 12.3412L9.34147 7.99993L5.62038 3.65866C5.44067 3.44899 5.46495 3.13334 5.67461 2.95363Z"
                           fill="#B9B9B9"
                         />
@@ -462,11 +462,11 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
             ...styleConfig?.Home?.Card,
             borderColor: themeConfig?.borderColor,
           }}
+          onClick={() => setSelectedSection("Tasks")}
         >
           {/* one */}
           <div
             className="q-helphub-compProfile-heading-cont"
-            onClick={() => setSelectedSection("Tasks")}
           >
             <div
               className="q-helphub-compProfile-heading-text"
@@ -485,8 +485,8 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
               fill="none"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M5.67461 2.95363C5.88428 2.77392 6.19993 2.7982 6.37964 3.00787L10.3796 7.67453C10.5401 7.86178 10.5401 8.13808 10.3796 8.32532L6.37964 12.992C6.19993 13.2017 5.88428 13.2259 5.67461 13.0462C5.46495 12.8665 5.44067 12.5509 5.62038 12.3412L9.34147 7.99993L5.62038 3.65866C5.44067 3.44899 5.46495 3.13334 5.67461 2.95363Z"
                 fill="#B9B9B9"
               />

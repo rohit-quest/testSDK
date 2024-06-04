@@ -9,8 +9,10 @@ import HelpHubChat from "./HelpHubChat";
 import HelpHubHelp from "./HelpHubHelp";
 import HelpHubTasks from "./HelpHubTasks";
 import HelpHubUpdates from "./HelpHubUpdates";
+import arrow_forward from "../../assets/images/arrow_forward.svg"
 import {
   HelpHubProps,
+  MessageTypes,
   QuestCriteriaWithStatusType,
   QuestTypes,
 } from "./HelpHub.type";
@@ -18,12 +20,14 @@ import {
   createDefaultQuest,
   getDefaultQuest,
   getEntityDetails,
+  getMessages,
 } from "./Helphub.service";
 import config from "../../config";
 import messagesIcon from "../../assets/images/messages.svg";
 import addIcon from "../../assets/images/add.svg";
 import resize from "../../assets/images/resize.png";
 import resize2 from "../../assets/images/resize2.png";
+import quest_white from "../../assets/images/quest_white.svg";
 
 const HelpHub = (props: HelpHubProps) => {
   const {
@@ -36,7 +40,10 @@ const HelpHub = (props: HelpHubProps) => {
     contentConfig,
     showFooter,
     helphubPosition = "USER_CHOICE",
-    variation
+    variation,
+    entityLogo,
+    defaultAutoPopupMessages = [],
+    popupOpenDelay = 2,
   } = props;
 
   const { apiKey, entityId, featureFlags, apiType, themeConfig } = useContext(
@@ -48,7 +55,7 @@ const HelpHub = (props: HelpHubProps) => {
   const [prevSelectedSection, setPrevSelectedSection] = useState("");
 
   const [helpHub, setHelpHub] = useState(false);
-  const [parentQuest, setParentQuest] = useState<any>();
+  const [parentQuest, setParentQuest] = useState<QuestTypes>();
   const [chieldQuestCriteria, setChieldQuestCriteria] = useState<
     QuestCriteriaWithStatusType[][]
   >([]);
@@ -62,9 +69,46 @@ const HelpHub = (props: HelpHubProps) => {
   const [updateData, setUpdateData] = useState<QuestCriteriaWithStatusType[]>(
     []
   );
+  const [chat, setChat] = useState<MessageTypes[]>([]);
+  const [filterChat, setFilterChat] = useState<MessageTypes[]>([]);
+  const [fetchData, setFetchData] = useState<boolean>(false);
   const [entityImage, setEntityImage] = useState<string>("");
   const [entityName, setEntityName] = useState<string>("");
   const [position, setPosition] = useState<string>("SIDEBAR");
+  const [autoPopupMessage, setAutoPopupMessage] = useState<boolean>(false);
+  const [sendAutoMessage, setSendAutoMessage] = useState<string>("");
+  const helpHubRef = useRef(helpHub);
+
+
+  useEffect(() => {
+    if (helpHub == true) {
+      helpHubRef.current = helpHub;
+    }
+  }, [helpHub]);
+
+  useEffect(() => {
+    if (!!defaultAutoPopupMessages.length) {
+      const timer = setTimeout(() => {
+        if (helpHubRef.current === false) {
+          setAutoPopupMessage(true);
+        }
+      }, popupOpenDelay * 1000 );
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (helpHub == true) {
+      setAutoPopupMessage(false);
+    }
+  }, [helpHub])
+
+  useEffect(() => {
+    if (sendAutoMessage != "") {
+      setHelpHub(true);
+      setSelectedSection("Chat");
+    }
+  }, [sendAutoMessage])
 
 
   const getPositionInLocal = async () => {
@@ -98,9 +142,6 @@ const HelpHub = (props: HelpHubProps) => {
     );
   }, [claimStatusTasks]);
 
-  useEffect(() => {
-    // console.log(showBottomNavigation);
-  }, [showBottomNavigation]);
 
   const getOrCreateQuest = async () => {
     let qId = questId || "q-default-helphub";
@@ -116,7 +157,6 @@ const HelpHub = (props: HelpHubProps) => {
       apiType,
       variation
     );
-
     if (!getResult?.success) {
       // let createQuest = await createDefaultQuest(
       //   BACKEND_URL,
@@ -209,6 +249,36 @@ const HelpHub = (props: HelpHubProps) => {
     }
   };
 
+  const filterByLastMessage = (chatData: MessageTypes[]) => {
+    let data = chatData.sort((a, b) => {
+      return new Date(b?.conversations?.timestamp).getTime() - new Date(a?.conversations?.timestamp).getTime();
+    });
+
+    return data;
+  }
+
+  const fetchChat = async () => {
+    setFetchData(true);
+    let getResult: { data: MessageTypes[] } = await getMessages(
+      BACKEND_URL,
+      entityId,
+      userId,
+      token,
+      apiKey,
+      "",
+      uniqueUserId,
+      uniqueEmailId,
+      apiType
+    );
+    setChat(filterByLastMessage(getResult?.data));
+    setFilterChat(filterByLastMessage(getResult?.data));
+    setFetchData(false);
+  }
+
+  useEffect(() => {
+    fetchChat();
+  }, [])
+
   const entityDetails = async () => {
     let qId = questId || "q-default-helphub";
     let { data } = await getEntityDetails(
@@ -287,7 +357,7 @@ const HelpHub = (props: HelpHubProps) => {
             className={`helphub-open-addIcon ${helpHub ? "show-icon" : ""}`}
           />
           <img
-            src={messagesIcon}
+            src={quest_white}
             className={`helphub-open-messagesIcon ${
               !helpHub ? "show-icon" : ""
             }`}
@@ -297,6 +367,29 @@ const HelpHub = (props: HelpHubProps) => {
           // <div className="helphub-open-resizeIcon" onClick={() => setPositionInLocal(position == "POPUP" ? "SIDEBAR" : "POPUP")}>
             <img src={position == "POPUP" ? resize2 : resize} alt="" className="helphub-open-resizeIcon" onClick={() => setPositionInLocal(position == "POPUP" ? "SIDEBAR" : "POPUP")}/>
           // </div>
+        }
+
+        {
+          !!defaultAutoPopupMessages.length?
+          <div className={`helpHubMainCont-default-popup ${autoPopupMessage ? "helpHubMainCont-default-popup-animated" : ""}`}>
+            <div className="home-back-btn">
+              <img src={arrow_forward} alt="" onClick={() => setAutoPopupMessage(false)}/>
+            </div>
+            <div className="home-assistant-msg">
+              <img src={entityLogo || entityImage} alt="" />
+              <p>Hello there👋, How can I help you?</p>
+            </div>
+            <div className="home-user-msg">
+              {
+                defaultAutoPopupMessages.map((ele, index) => {
+                  return (
+                    <p key={index} onClick={() => setSendAutoMessage(ele)}>{ele}</p>
+                  )
+                })
+              }
+            </div>
+          </div>
+          : ""
         }
 
         {/* {helpHub && ( */}
@@ -324,7 +417,7 @@ const HelpHub = (props: HelpHubProps) => {
               onlineComponent={true}
               showFeedback={showFeedback}
               setShowFeedback={setShowFeedback}
-              entityImage={entityImage}
+              entityImage={entityLogo || entityImage}
               uniqueUserId={uniqueUserId}
               uniqueEmailId={uniqueEmailId}
             />
@@ -348,6 +441,14 @@ const HelpHub = (props: HelpHubProps) => {
               uniqueUserId={uniqueUserId}
               uniqueEmailId={uniqueEmailId}
               position={position}
+              sendAutoMessage={sendAutoMessage}
+              setSendAutoMessage={setSendAutoMessage}
+              chat={chat}
+              setChat={setChat}
+              filterChat={filterChat}
+              setFilterChat={setFilterChat}
+              fetchData={fetchData}
+              setFetchData={setFetchData}
             />
           ) : (
             ""

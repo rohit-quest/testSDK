@@ -2,23 +2,17 @@ import { useContext, useEffect, useRef, useState } from "react";
 import OpenSectionButton from "../../assets/images/OpenSectionButton.svg";
 import InfoButton from "../../assets/images/InfoButton.svg";
 import NoConversation from "../../assets/images/NoConversation.png";
-import SendMessageEmojiIcon from "../../assets/images/SendMessageEmojiIcon.svg";
 import SendMessageAttachIcon from "../../assets/images/SendMessageAttachIcon.svg";
-import SendMessageSendIcon from "../../assets/images/SendMessageSendIcon.svg";
 import SendMessageAero from "../../assets/images/SendMessageAero.svg";
-import ChatWoman from "../../assets/images/ChatWoman.svg";
 import CancelButton from "../../assets/images/CancelButton.svg";
 import SearchIcons from "../../assets/images/SearchIcons.svg";
 import DeleteIcon from "../../assets/images/DeleteIcon.svg";
 import ImageUploadIcon from "../../assets/images/ImageUploadIcon.svg";
-import Modal1 from "../../assets/images/HelpHubModal1.jpeg";
 import QuestWhiteLogo from "../../assets/images/QuestWhiteLogo.svg";
-import Mic from "../../assets/images/Mic.svg";
-import Modal3 from "../../assets/images/HelpHubModal3.jpeg";
 import HelphubSvg from "./HelphubSvg";
 import { Conversation, HelpHubChatTypes, MessageTypes } from "./HelpHub.type";
 import QuestContext from "../QuestWrapper";
-import { closeChat, getMessages, satisfyOrNot, sendMessage } from "./Helphub.service";
+import { closeChat, getMessages, getUserData, satisfyOrNot, sendMessage, submitEmail } from "./Helphub.service";
 import config from "../../config";
 import { uploadImageToBackend } from "../../general";
 import likeImg from "../../assets/images/like_color.svg";
@@ -29,10 +23,6 @@ import userIcon from "../../assets/images/userIcon.svg";
 let SenderImg =
   "https://s3-alpha-sig.figma.com/img/c73b/ede1/44dae2a681a58d566da9f69147cc690d?Expires=1713744000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=XJcQc8XNhFza8CJhDAyWRNg9DCoXlrD4E2wn1JDTXS4GFD3XmwsrPggispX-rCLfIw~LJAZGJVvog4bAZ7y5T2UHfn7SkPWSqTZrCftSeZzVjMTej3u5y3ZL28S3tIekwU9BZ3fzSe1HgprPHdZNCxMgOlqyhA6pb9tCSQ6Vu0Z7W8z9Hh6OmCJje68iaAro9DsHtu~wvstZjyfEENlhWWG4wMK5tZTw3hRBYKAmSExdiFb25DjhBUG~cHoXYV6A5286pwskNTO0QrPHULje839o8TdBKsvI4CC2v7yCiYC1V7Qlcd-h6GH-P0DL2qfttlIlZD3frTKsnW1EA-0PHQ__";
 
-type ChatMessage = {
-  sender?: string;
-  receiver?: string;
-};
 
 const HelpHubChat = (props: HelpHubChatTypes) => {
   const {
@@ -51,6 +41,14 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     uniqueUserId,
     uniqueEmailId,
     position,
+    sendAutoMessage,
+    setSendAutoMessage,
+    chat,
+    setChat,
+    filterChat,
+    setFilterChat,
+    fetchData,
+    setFetchData,
   } = props;
 
   const { themeConfig } = useContext(QuestContext.Context);
@@ -65,8 +63,6 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   let BACKEND_URL =
     apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL;
 
-  const [chat, setChat] = useState<MessageTypes[]>([]);
-  const [filterChat, setFilterChat] = useState<MessageTypes[]>([]);
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState<string>("");
@@ -77,14 +73,88 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   const [notSatisfiedQuestion, setNotSatisfiedQuestion] = useState<boolean>(false);
   const [onlyAdminReply, setOnlyAdminReply] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [fetchData, setFetchData] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
   const [adminMsg, setAdminMsg] = useState<boolean>(false);
   const [ifSatisfied, setIfSatisfied] = useState<boolean>(false);
   const [searchData, setSearchData] = useState<string | number>("");
   const [disableSendMessageBtn,setDisableSendMessageBtn]=useState<boolean>(false);
   const messageInputRef = useRef<HTMLInputElement>(null);
+  const [chatEmail, setChatEmail] = useState<string>("");
+  const [openEmailCollection, setOpenEmailCollection] = useState<boolean>(false);
+  const [emailSubmitted, setEmailSubmitted] = useState<boolean>(false);
 
+
+  const sendAutoMessageFromUser = async () => {
+    if (sendAutoMessage != "") {
+      setUpdateOutAnimation(true);
+      setScrollWidthSet((prev) => !prev);
+      setTimeout(() => {
+        setData([]);
+        setSelectedConversationId("");
+        setShowPersonalChat((prev) => !prev);
+        setShowBottomNavigation((prev) => !prev);
+        setUpdateOneOutAnimation(false);
+        setScrollWidthSet((prev) => !prev);
+        sendMessageFunc(sendAutoMessage || "");
+      }, 100);
+      setAutoPopupMessage("");
+    }
+  }
+
+  useEffect(() => {
+    sendAutoMessageFromUser()
+  }, [sendAutoMessage]);
+
+
+  const emailCollectingFunction = async () => {
+    if (emailSubmitted == false && data.length != 0 && (data.length == 2 || data.length % 9 == 0)) {
+      let userData = await getUserData(
+        BACKEND_URL,
+        entityId,
+        userId,
+        token,
+        apiKey,
+        uniqueUserId,
+        uniqueEmailId,
+        apiType
+      )
+      if (userData?.success) {
+        if (!!userData?.data?.emails?.length) {
+          setEmailSubmitted(true);
+          setOpenEmailCollection(false);
+        } else {
+          setOpenEmailCollection(true);
+        }
+      }
+    }
+  }
+
+  const submitCollectionEmail = async () => {
+    setOpenEmailCollection(false);
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (emailRegex.test(chatEmail)) {
+      let submitEmailResponse = await submitEmail(
+        BACKEND_URL,
+        entityId,
+        userId,
+        token,
+        apiKey,
+        uniqueUserId,
+        uniqueEmailId,
+        apiType,
+        chatEmail
+      );
+
+      if (submitEmailResponse?.success) {
+        setEmailSubmitted(true);
+      }
+    }
+  }
+
+
+  useEffect(() => {
+    emailCollectingFunction();
+  }, [data])
 
   useEffect(() => {
     messageInputRef.current?.focus();
@@ -147,7 +217,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
       uniqueEmailId,
       apiType
     );
-    if (closeChatResponse?.success) {
+    if (closeChatResponse?.success && selectedConversationId != "") {
       let updateChat =
         chat?.map((ele) => {
           if (ele.conversationId == selectedConversationId) {
@@ -168,6 +238,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
       setTitle("");
       setAdminMsg(false);
       setIfSatisfied(false);
+      setOpenEmailCollection(false);
       setScrollWidthSet((prev) => !prev);
       setUpdateOneOutAnimation((prev) => !prev);
       setUpdateOutTempAnimation(true);
@@ -226,6 +297,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     setSenderMessageLoading(true);
     setDisableSendMessageBtn(true);
     setAskSatisfaction(false);
+    setOpenEmailCollection(false);
     setNotSatisfiedQuestion(false);
     setAdminMsg(false);
     setIfSatisfied(false);
@@ -297,21 +369,6 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
         updateLastChat = [...updateLastChat, newChat];
       }
     }
-
-    // if (!!sendMessageResponse?.data?.conversationData?.title && !title) {
-    //   setTitle(sendMessageResponse?.data?.conversationData?.title);
-    //   updateLastChat =
-    //     chat?.map((ele) => {
-    //       if (ele.conversationId == selectedConversationId) {
-    //         return {
-    //           ...ele,
-    //           title: sendMessageResponse?.data?.conversationData?.title,
-    //         };
-    //       } else {
-    //         return ele;
-    //       }
-    //     }) || [];
-    // }
 
     setChat(filterByLastMessage(updateLastChat));
     setFilterChat(filterByLastMessage(updateLastChat));
@@ -414,28 +471,11 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
       if (!!getResult?.data?.title && !title) {
         setTitle(getResult?.data?.title);
       }
-    } else {
-      setFetchData(true);
-      let getResult: { data: MessageTypes[] } = await getMessages(
-        BACKEND_URL,
-        entityId,
-        userId,
-        token,
-        apiKey,
-        conversationId || "",
-        uniqueUserId,
-        uniqueEmailId,
-        apiType
-      );
-      setChat(filterByLastMessage(getResult?.data));
-      setFilterChat(filterByLastMessage(getResult?.data));
-      setFetchData(false);
     }
   };
-
-  useEffect(() => {
-    getMessagesHistory("");
-  }, []);
+  // useEffect(() => {
+  //   getMessagesHistory("");
+  // }, []);
 
   const [updateOutAnimation, setUpdateOutAnimation] = useState<boolean | null>(null);
   const [updateOneoutAnimation, setUpdateOneOutAnimation] = useState<boolean | null>(null);
@@ -459,7 +499,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     const options: { [key: string]: string } = { month: 'short', day: '2-digit', hour: '2-digit', minute: '2-digit' };
     const date = new Date(dateString);
     const formattedDate = date.toLocaleDateString('en-US', options);
-    const formattedTime = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    // const formattedTime = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
     return formattedDate;
   }
 
@@ -515,13 +555,11 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
           </div>
           {/* heading ends here  */}
 
-          {/*  */}
           <div className="q-helphub-chatpage-lower-container">
             {/* search and chats container */}
             {!fetchData &&
-              (!!chat?.length ? (
+              (
                 <div className="q-helphub-search-chats-container">
-                  {/* search  */}
                   <div className="search-outer-div">
                     <div
                       className="q-helphub-search-container-search"
@@ -542,8 +580,8 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                   {/* chats  */}
                   <div className="q-helphub-chats-section">
                     {/* only one chat */}
-
-                    {filterChat?.map((value: MessageTypes, index: number) => {
+                    {!!chat?.length ? (
+                    filterChat?.map((value: MessageTypes, index: number) => {
                       return (
                         <div
                           className="q-helphub-chat-detail"
@@ -597,31 +635,66 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                           }
                           <button
                             className="q-helphub-chat-btn"
-                            style={{opacity: value?.isClosed == true ? 0.5 : 1}}
+                            style={{display: value?.isClosed == true ? "none" : ""}}
                           >
                             <img src={OpenSectionButton} alt="" />
                           </button>
                         </div>
                       );
-                    })}
-                  </div>
-                </div>
-              ) : (
-                <div className="no-conversation">
-                  <div>
-                    <img src={NoConversation} alt="" />
-                  </div>
+                    })
+                  ) : (
+                  <div
+                    className="q-helphub-chat-detail"
+                    onClick={() => {
+                        setUpdateOutAnimation(true);
+                        setScrollWidthSet((prev) => !prev);
+                        setTimeout(() => {
+                          setShowPersonalChat((prev) => !prev);
+                          setShowBottomNavigation((prev) => !prev);
+                          setUpdateOneOutAnimation(false);
+                          setScrollWidthSet((prev) => !prev);
+                        }, 100);
+                    }}
+                    style={{cursor: "pointer"}}
+                  >
+                    <img
+                      src={entityImage || SenderImg}
+                      alt=""
+                      className="q-helphub-chat-sender-profile"
+                      style={{opacity: 1}}
+                    />
 
-                  <div className="q-no-conversation-avail-text-cont">
-                    <p className="q-no-conversation-avail-head"> 
-                      No conversation is available
-                    </p>
-                    <p className="q-no-conversation-avail-desc">
-                      Start your new conversation
-                    </p>
+                    <div className="q-helphub-chat-message" style={{opacity: 1}}>
+                      <div
+                        className="q-helphub-chat-sender-name"
+                        style={{
+                          color: themeConfig?.primaryColor,
+                          ...styleConfig?.Chat?.Card?.Heading,
+                        }}
+                      >
+                        Assistance Request
+                      </div>
+                      <div
+                        className="q-helphub-chat-sender-message"
+                        style={{
+                          color: themeConfig?.primaryColor,
+                          ...styleConfig?.Chat?.Card?.SubHeading,
+                        }}
+                      >
+                        Hello there👋, I am Quest's new AI bot, I am here to help you?
+                      </div>
+                    </div>
+                    <button
+                      className="q-helphub-chat-btn"
+                      style={{opacity: 1}}
+                    >
+                      <img src={OpenSectionButton} alt="" />
+                    </button>
+                  </div>
+                  )}
                   </div>
                 </div>
-              ))}
+              )}
 
             {/*send button container */}
             <div
@@ -884,6 +957,24 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                   Something went wrong. PLease try again...
                 </div>
               )}
+              { openEmailCollection ?
+                <div className="q-helphub-satisfied q-helphub-satisfied-email">
+                  <p>Provide your email ID to receive notifications from the admin.</p>
+                  <div>
+                    <input 
+                      type="text"
+                      name="chatEmail"
+                      value={chatEmail}
+                      id=""
+                      placeholder="Enter Email ID"
+                      onChange={(e) => setChatEmail(e.target.value)}
+                    />
+                    <button onClick={submitCollectionEmail}>Submit</button>
+                  </div>
+                </div>
+                :
+                <></>
+              }
             </div>
           </div>
 

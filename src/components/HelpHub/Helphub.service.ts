@@ -554,3 +554,86 @@ export const closeChat = async (
     return err?.response.data;
   }
 };
+
+export const getUserData = async (
+  backend_url: string,
+  entityId: string | undefined,
+  userId: string | undefined,
+  token: string | undefined,
+  apikey: string | undefined,
+  uniqueUserId?: string,
+  uniqueEmailId?: string,
+  apiType?: string
+) => {
+  try {
+    if (uniqueUserId || uniqueEmailId) {
+      let generalFunction = new General("", apiType);
+      let userData = await generalFunction.getExternalLogin({
+        apiType: apiType,
+        uniqueUserId,
+        entityId,
+        userId,
+        apiKey: apikey,
+        apiSecret: "",
+        token,
+        uniqueEmailId,
+      });
+      if (userData?.userId) {
+        userId = userData?.userId;
+        token = userData?.token;
+      }
+    }
+
+    let headers = {
+      userId,
+      token,
+      entityId,
+      apikey,
+    };
+
+    let request = `${backend_url}api/entities/${entityId}/users/${userId}/connected-socials`;
+
+    let response = await axios(request, { headers });
+
+    return response.data;
+
+  } catch (err) {
+    return err?.response.data;
+  }
+};
+
+export const submitEmail = async (
+  backend_url: string,
+  entityId: string | undefined,
+  userId: string | undefined,
+  token: string | undefined,
+  apikey: string | undefined,
+  uniqueUserId?: string,
+  uniqueEmailId?: string,
+  apiType?: string,
+  email?: string
+) => {
+  try {
+    let headers = {
+      userId,
+      token,
+      entityId,
+      apikey,
+    };
+
+    const body = {
+      externalUserId: !!uniqueUserId && uniqueUserId,
+      entityId: entityId,
+      email: email,
+    };
+
+    let request = `${backend_url}api/users/external/login`;
+
+    let response = await axios.post(request, body, { headers });
+
+    return response.data;
+
+  } catch (err) {
+    return err?.response.data;
+  }
+};
