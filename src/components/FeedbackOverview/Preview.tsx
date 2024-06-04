@@ -3,11 +3,11 @@ import { QuestProvider } from "../QuestWrapper";
 import FeedbackWorkflow from "./FeedbackOverview";
 
 import FeedbackWorkflowOffline from "./OfflineComponent.tsx";
-export const apiKey = "k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be";
+export const apiKey = "k-fe5a805c-77ed-4cae-bd33-9591ebed2805";
 export const apiSecret =
   "s-3c35ebcb-c752-4c3c-8ce3-e6460ebbc9d479a7e122-d06b-4243-bbfa-e0889987f6c0";
-export const entityId = "e-0000000000";
-export const questId =  "c-edc00cdf-9cb9-4fb1-896e-bc6ab7518c04";
+export const entityId = "e-9850377b-f88f-4426-a2ac-56206c74655a";
+export const questId =  "c-92289b7a-259c-4904-8f41-6087efed1215";
 export const userId = "u-8268f5e1-f5a1-440c-a333-0f5578a73847";
 export const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxNjcxODQ5MCwiZXhwIjoxNzE3MzIzMjkwfQ.7hnsMvPAbAWaC2JTSoMJ5jtOWXxFJaPlNgw0juQPqsA";
@@ -39,6 +39,7 @@ export default function FeedbackWorkflowPreview({
           userId={userId}
           token={token}
           showFooter={true}
+          variation="test"
           // questIds={[
           //   'c-e840fb8f-7e8f-4a4f-938e-b6104068071e','c-17a9c049-dad6-4178-afba-ef07728906c7','c-c6077469-e457-4b23-8799-953409d326eb','c-09413b00-7f94-4353-b22b-1c7f9d43d8ce'
           // ]}
@@ -51,6 +52,16 @@ export default function FeedbackWorkflowPreview({
             formDescription: "Welcome back,sdfsdf Please complete your details",
             iconUrl:
               "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
+              styleConfig:{
+                Input:{
+                 border:'1px solid red',
+    
+                 
+                },
+                PrimaryButton:{
+                  color:'red'
+                }
+              }
           }}
           RequestFeature={{
             heading: "Request a Featureqwqewqewqe",
@@ -75,6 +86,7 @@ export default function FeedbackWorkflowPreview({
           }}
           contactUrl="https://calendly.com/sriya-persana/30min"
           // showPoweredBy={false}
+         
           styleConfig={{
             Form: {},
             listHover: {
@@ -84,18 +96,23 @@ export default function FeedbackWorkflowPreview({
               // Heading:'green',
               // Description:'red'
             },
+            Input: {
+              border:'1px solid red'
+             },
             //  ThanksPopup:{Icon:{backgroundColor:'red'}},
             // Description: { color: 'red' },
             // listDescription:{color:'yellow'}
             // Heading: { color: 'red' },
             // listHeading: { color: 'blue' }
           }}
+          
           // // footerBackgroundColor='red'
           // contactUrl="https://calendly.com/sriya-persana/30min"
           isOpen={true}
           onClose={() => setIsOpen((prev) => !prev)}
           // uniqueUserId="soumitra.petbindhi+25@gmail.com"
           // uniqueEmailId="soumitra.petbindhi+25@gmail.com"
+          
         />
       </QuestProvider>
     );
@@ -142,6 +159,12 @@ export default function FeedbackWorkflowPreview({
         description: "Give general feedsdasdasdback on this page",
         formHeading: "General Feedbackasddffd",
         formDescription: "Welcome back,sdfsdf Please complete your details",
+        styleConfig: {
+          Form: {
+            color: 'red',
+            background: 'blue'
+          }
+        }
         // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
       }}
       RequestFeature={{
@@ -162,6 +185,7 @@ export default function FeedbackWorkflowPreview({
         description: "Invite oasasdasdher admins and moderators",
         // iconUrl: "https://images.pexels.com/photos/1767434/pexels-photo-1767434.jpeg?auto=compress&cs=tinysrgb&w=800",
       }}
+      starBorderColor="red"
       offlineFormData={[
         [
           {

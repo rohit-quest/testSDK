@@ -33,7 +33,8 @@ export default function InlineFeedback({
   styleConfig,
   onChange,
   onRequestClose,
-  initialState
+  initialState,
+  variation
 }: FeedbackProps) {
   const [questData, setQuestData] = useState<any | null>(null);
   const [isLoading, setLoading] = useState<boolean>(true);
@@ -68,7 +69,10 @@ export default function InlineFeedback({
     };
     async function fetchData() {
       try {
-        const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}`;
+        const params = new URLSearchParams()
+        if(variation) params.set('variation', variation)
+
+        const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}?${params.toString()}`;
         const response = await axios.get(request, { headers });
         if (response.status != 200) throw new Error("Invalid quest request");
         setQuestData(response.data);

@@ -116,6 +116,7 @@ interface QuestThemeData {
   images: string[];
 }
 
+
 function OnBoarding(props: QuestLoginProps) {
   const {
     headingScreen,
@@ -181,6 +182,7 @@ function OnBoarding(props: QuestLoginProps) {
 
   let GeneralFunctions = new General("mixpanel", apiType);
 
+
   const templateDesign = () => {
     switch (template) {
       case "multi-question": {
@@ -220,33 +222,47 @@ function OnBoarding(props: QuestLoginProps) {
   };
 
 
-  const getTheme = async (theme: string) => {
-    try {
-      const request = `${BACKEND_URL}api/entities/${entityId}?userId=${userId}`;
-      const response = await axios.get(request, {
-        headers: { apiKey, userId, token },
-      });
-      setBrandTheme(response.data.data.theme.BrandTheme[theme]);
-    } catch (error) {
-      GeneralFunctions.captureSentryException(error);
+  const metricApi = (headers: any, body?: {[key: string]: any}) => {
+    const api = async (page: string) => {
+      const url = `${BACKEND_URL}api/entities/${entityId}/metrics/${page}/campaign`
+      const response = await axios.post(url, {campaignId, campaignVariationId, ...body}, {headers})
+      if(response.status && response.data.success) return response
+      throw response.statusText
     }
-  };
+  
+    return {
+      async view(){
+        return api(`onboarding-view`)
+      },
+      async page(pageNumber: number){
+        return api(`onboarding-complete-page-${pageNumber}`)
+      },
+      async complete(){
+        return api(`onboarding-complete`)
+      }
+    }
+  }
+
+  // const getTheme = async (theme: string) => {
+  //   try {
+  //     const request = `${BACKEND_URL}api/entities/${entityId}?userId=${userId}`;
+  //     const response = await axios.get(request, {
+  //       headers: { apiKey, userId, token },
+  //     });
+  //     setBrandTheme(response.data.data.theme.BrandTheme[theme]);
+  //   } catch (error) {
+  //     GeneralFunctions.captureSentryException(error);
+  //   }
+  // };
 
   useEffect(() => {
     GeneralFunctions.fireTrackingEvent("quest_onboarding_loaded", "onboarding");
 
-    if (entityId) {
+    const initialize = async () => {
       let externalUserId = cookies.get("externalUserId");
       let questUserId = cookies.get("questUserId");
       let questUserToken = cookies.get("questUserToken");
       // let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
-
-      const headers = {
-        apiKey: apiKey,
-        apisecret: apiSecret,
-        userId: userId,
-        token: token, // Replace with your actual token
-      };
 
       const body = {
         externalUserId: !!uniqueUserId && uniqueUserId,
@@ -254,7 +270,12 @@ function OnBoarding(props: QuestLoginProps) {
         email: uniqueEmailId,
       };
 
-      getQuestData(userId, headers);
+      let headers = {
+        apiKey: apiKey,
+        apisecret: apiSecret,
+        userId, 
+        token
+      }
 
       if (
         !!externalUserId &&
@@ -262,52 +283,38 @@ function OnBoarding(props: QuestLoginProps) {
         !!questUserToken &&
         externalUserId == uniqueUserId
       ) {
-        let header = { ...headers, ...{ questUserId, questUserToken } };
-        axios.post(
-          `${BACKEND_URL}api/entities/${entityId}/users/${questUserId}/metrics/onboarding-view?userId=${questUserId}&campaignId=${campaignId}`,
-          { count: 1 },
-          { headers: header }
-        );
-      } else if (!!uniqueUserId) {
-        axios
-          .post(`${BACKEND_URL}api/users/external/login`, body, { headers })
-          .then((res) => {
-            let { userId, token } = res.data;
-            let header = { ...headers, ...{ userId, token } };
+        headers.userId = questUserId
+        headers.token = questUserToken
+      }else if(uniqueUserId){
+        const res = await axios.post(`${BACKEND_URL}api/users/external/login`, body, { headers })
+        
+        let { userId, token } = res.data;
 
-            const date = new Date();
-            date.setHours(date.getHours() + 12);
-            cookies.set("externalUserId", uniqueUserId, {
-              path: "/",
-              expires: date,
-            });
-            cookies.set("questUserId", userId, { path: "/", expires: date });
-            cookies.set("questUserToken", token, { path: "/", expires: date });
-            try {
-              axios.post(
-                `${BACKEND_URL}api/entities/${entityId}/users/${userId}/metrics/onboarding-view?userId=${userId}&campaignId=${campaignId}`,
-                { count: 1 },
-                { headers: header }
-              );
-            } catch (error) {
-              GeneralFunctions.captureSentryException(error);
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-            GeneralFunctions.captureSentryException(error);
-          });
+        const date = new Date();
+        date.setHours(date.getHours() + 12);
+        cookies.set("externalUserId", uniqueUserId, {
+          path: "/",
+          expires: date,
+        });
+        cookies.set("questUserId", userId, { path: "/", expires: date });
+        cookies.set("questUserToken", token, { path: "/", expires: date });
+          
+        headers.userId = userId
+        headers.token = token
       }
 
+      const response = await getQuestData(userId, headers)
+      metricApi(headers, {campaignVariationId: response.data.campaignVariationId}).view()
+
       // API updated to v2
-      async function getQuestData(userId: string, headers: object) {
+      async function getQuestData(userId: string, headers: object): Promise<any> {
         loadingTracker && setLoading(true);
         const params = new URLSearchParams();
         params.set('platform', 'REACT')
         if(variation) params.set('variation', variation)
 
         const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}?${params.toString()}`;
-        await axios
+        return await axios
           .get(request, { headers: headers })
           .then((res) => {
             let response = res.data;
@@ -353,6 +360,8 @@ function OnBoarding(props: QuestLoginProps) {
               }
             });
             setAnswer({ ...answer, ...ansArray });
+
+            return response
           })
           .catch((error) => {
             GeneralFunctions.captureSentryException(error);
@@ -360,6 +369,8 @@ function OnBoarding(props: QuestLoginProps) {
         loadingTracker && setLoading(false);
       }
     }
+
+    if (entityId) initialize()
   }, []);
 
   useEffect(() => {
@@ -409,36 +420,44 @@ function OnBoarding(props: QuestLoginProps) {
     }
 
     if (currentQuestions.length > 0 && c == currentQuestions.length) {
-      let questUserId = cookies.get("questUserId");
-      let questUserToken = cookies.get("questUserToken");
+      // let questUserId = cookies.get("questUserId");
+      // let questUserToken = cookies.get("questUserToken");
 
-      let headers = {
-        apikey: apiKey,
-        apisecret: apiSecret,
-        userId: questUserId ? questUserId : userId,
-        token: questUserToken ? questUserToken : token,
-      };
-      if (!!designState && Number(currentPage) + 1 != designState?.length) {
-        try {
-          axios.post(
-            `${BACKEND_URL}api/entities/${entityId}/users/${
-              headers.userId
-            }/metrics/onboarding-complete-page-${
-              Number(currentPage) + 1
-            }?userId=${headers.userId}&campaignId=${campaignId}`,
-            { count: 1 },
-            { headers }
-          );
-        } catch (error) {
-          GeneralFunctions.captureSentryException(error);
-        }
-      }
+      // let headers = {
+      //   apikey: apiKey,
+      //   apisecret: apiSecret,
+      //   userId: questUserId ? questUserId : userId,
+      //   token: questUserToken ? questUserToken : token,
+      // };
+      // if (!!designState && Number(currentPage) + 1 != designState?.length) {
+      //   try {
+      //     metricApi(headers).page(+currentPage + 1)
+      //   } catch (error) {
+      //     GeneralFunctions.captureSentryException(error);
+      //   }
+      // }
 
       setButtonFlag(true);
     } else {
       setButtonFlag(false);
     }
   }, [answer, formdata, currentPage]);
+
+  useEffect(() => {
+    let questUserId = cookies.get("questUserId");
+    let questUserToken = cookies.get("questUserToken");
+
+    let headers = {
+      apikey: apiKey,
+      apisecret: apiSecret,
+      userId: questUserId ? questUserId : userId,
+      token: questUserToken ? questUserToken : token,
+    };
+
+    if(currentPage > 0 && currentPage < designState?.length){
+      metricApi(headers).page(currentPage)
+    }
+  }, [currentPage])
 
   useEffect(() => {
     if (btnFlag == true) {
@@ -1015,16 +1034,13 @@ function OnBoarding(props: QuestLoginProps) {
       }
 
       try {
-        axios.post(
-          `${BACKEND_URL}api/entities/${entityId}/users/${headers.userId}/metrics/onboarding-complete?userId=${headers.userId}&campaignId=${campaignId}`,
-          { count: 1 },
-          { headers }
-        );
+        metricApi(headers).complete()
       } catch (error) {
         GeneralFunctions.captureSentryException(error);
       }
     }
   }
+
 
   if (
     featureFlags[config.FLAG_CONSTRAINTS.OnboardingFlag]?.isEnabled == false

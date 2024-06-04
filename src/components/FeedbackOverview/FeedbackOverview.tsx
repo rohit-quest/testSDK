@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import GeneralFeedbackContent from "./GenralFb";
+import GeneralFeedbackContent, { GeneralFeedbackContentStyleConfig } from "./GenralFb";
 import BugContent from "./Bug";
 import FeatureContent from "./Feature";
 import { useContext } from "react";
@@ -47,6 +47,7 @@ interface feedbackCompProps {
     formHeading?: string;
     formDescription?: string;
     iconUrl?: string;
+    styleConfig?: GeneralFeedbackContentStyleConfig
   };
   ReportBug?: {
     heading?: string;
@@ -115,6 +116,7 @@ interface feedbackCompProps {
       Description?: string;
       IconSize?: string;
       Icon?: React.CSSProperties;
+      defaultIconBackground ?: string;
     };
     ThanksPopup?: {
       Style?: React.CSSProperties;
@@ -238,6 +240,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     }
   };
   const uploadFileToBackend: any = async (file: any) => {
+    setShowLoader(true);
     if (file?.size > 1000000) {
       try {
         // Resize the image to below 1MB
@@ -248,7 +251,6 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
           initialQuality: 1,
         });
 
-        // Call the uploadImageToBackend function recursively with the compressed image
         return await uploadFileToBackend(compressedImage);
       } catch (error) {
         return null;
@@ -278,10 +280,14 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
       ) {
         console.log(null);
       } else {
+        setShowLoader(false);
         return res.data.imageUrl;
       }
+
+      setShowLoader(false);
     } catch (error) {
       console.log(error);
+      setShowLoader(false);
     }
   };
 
@@ -406,7 +412,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     let questUserToken = cookies.get("questUserToken");
     if (Object.keys(answer).length !== 0) {
       const ansArr = formdata[index].map((ans: any) => ({
-        answers: [String(answer[ans?.criteriaId]) || ""],
+        answers: Array.isArray(answer[ans?.criteriaId]) ? answer[ans?.criteriaId] : [String(answer[ans?.criteriaId]) || ""],
         actionId: ans?.criteriaId || "",
       }));
       if (
@@ -673,31 +679,30 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
     return <div></div>;
   }
 
-  const handleScreenCapture = async (capture: string) => {
-    setIsVisible(true);
-    const now = new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const seconds = now.getSeconds();
-    const time = hours + ":" + minutes + ":" + seconds;
-    let fileName = "screenshot" + time + ".jpg"; // Ensure file name has proper format
-
-    try {
-      const response = await axios.get(capture, { responseType: "blob" });
-
-      // Create a Blob from the response data
-      const blob = new Blob([response.data], { type: "image/jpeg" });
-
-      // Create a File object from the Blob
-      const file = new File([blob], fileName, { type: "image/jpeg" });
-
-      // If you need to update state with the new file object
-      setScreenshot(file);
-    } catch (error) {
-      console.error("An error occurred while fetching the image:", error);
-    }
-  };
-
+    const handleScreenCapture = async (capture: string) => {
+      setIsVisible(true);
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+      const time = hours + ":" + minutes + ":" + seconds;
+      let fileName = "screenshot" + time + ".jpg"; // Ensure file name has proper format
+  
+      try {
+        const response = await axios.get(capture, { responseType: 'blob' });
+  
+        // Create a Blob from the response data
+        const blob = new Blob([response.data], { type: 'image/jpeg' });
+  
+        // Create a File object from the Blob
+        const file = new File([blob], fileName, { type: 'image/jpeg' });
+  
+        // If you need to update state with the new file object
+        setScreenshot(file);
+      } catch (error) {
+        console.error('An error occurred while fetching the image:', error);
+      }
+    };
 
   return (
     <Modal
@@ -733,6 +738,10 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                   background: "transparent",
                   opacity: isVisible ? 1 : 0,
                   ...styleConfig.Modal,
+                  borderRadius:
+                    styleConfig?.Form?.borderRadius ||
+                    questThemeData?.borderRadius ||
+                    BrandTheme?.borderRadius,
                 }}
               >
                 {showLoader && <Loader />}
@@ -844,6 +853,7 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
                             inputRef={inputRef}
                             file={file}
                             setFile={setFile}
+                            styleConfig={GeneralFeedback?.styleConfig}
                           />
                         )}
                         {selectedOption === "ReportBug" && (

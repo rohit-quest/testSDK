@@ -46,6 +46,15 @@ import showToast from "./components/toast/toastService";
 import Toast from "./components/toast2/Toast";
 import InlineFeedbackPreview from "./components/InlineFeedback/Preview";
 import ModularPreview from "./components/Modules/ModulePreview/Preview";
+import { Challenges } from "./components/Challenges/Challenges";
+import Survey from "./components/Survey/Survey";
+import Search from "./components/Search/Search";
+import InlineFeedback from "./components/InlineFeedback/InlineFeedback";
+import LeaderBoard from "./components/Leaderboard/LeaderBoard";
+import { Referral } from './components/expansion/ReferEarn'
+import GamifiedQuiz from "./components/GamifiedQuiz/GamifiedQuiz";
+import { CrossSelling } from "./components/expansion/CrossSelling";
+import Test from './Test'
 
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-9986f82d-cbd0-4923-bf9a-ea01b4795fa1";
@@ -107,6 +116,10 @@ function App() {
   const [answer, setAnswer] = useState([]);
 
   // const CSGetstarted = new
+
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTA2ZDY1NDYxLTdjNWYtNDczNy05NDZkLWM4YWI4YzgwZWIyNSIsImlhdCI6MTcxNzEzMjkwMCwiZXhwIjoxNzE3NzM3NzAwfQ.THZ7lCmk2G9AdCjKSUljw3sJjm8CJTXmY4Jf3UN49SQ'
+  const userId = 'u-06d65461-7c5f-4737-946d-c8ab8c80eb25'
+
   return (
     <div
     // style={{  alignItems: "center", justifyContent: "center", gap: "20px",background: "black",height: "100vh" }}
@@ -128,6 +141,519 @@ function App() {
           }
         }
       >
+        <Test />
+        
+        {/* ------------------- API v2 Test Started -------------------  */}
+        {/* <Survey
+          questId="c-91e2258c-a3e0-4ea1-97d0-184a74153547"
+          token={token}
+          userId={userId}
+          heading="How was your experience?"
+          subHeading="Welcome back, Please complete your details"
+          itemsPerPage={2}
+          ratingType="emoji"
+          showFooter={true}
+          styleConfig={{
+            Heading: {},
+            Description: {},
+            Form: {},
+            Label: {},
+            Input: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            Footer: {},
+            TopBar: {},
+            Rating: { LeftRatingText: '', RightRatingText: '' },
+            EmailError: { text: '' },
+            MultiChoice: { style: {}, selectedStyle: {} },
+          }}
+          uniqueUserId="vivek-test-alerts"
+        /> */}
+        {/* <Survey
+          questId="c-885da464-9539-48ad-9aca-ddadfc8a3ee6"
+          token={token}
+          userId={userId}
+          bgColor="white"
+          heading="How was your experience?"
+          subHeading="Welcome back, Please complete your details"
+          itemsPerPage={2}
+          ratingType="number"
+          showFooter={true}
+          styleConfig={{
+            Heading: {},
+            Description: {},
+            Form: {},
+            Label: {},
+            Input: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            Footer: {},
+            TopBar: {},
+            Rating: {
+              RatingContainer: {},
+              SingleRating: {},
+              RatingText: {},
+              Hover: {},
+              LeftRatingText: '',
+              RightRatingText: '',
+            },
+            EmailError: { text: '', errorStyle: {} },
+            MultiChoice: { style: {}, selectedStyle: {} },
+          }}
+        /> */}
+          {/* <Survey
+            questId="c-0855c2a2-0bb1-4ab4-8e4e-299f074af2c1"
+            token={token}
+            userId={userId}
+            heading="How was your experience?"
+            subHeading="Welcome back, Please complete your details"
+            itemsPerPage={2}
+            ratingType="colored"
+            showFooter={true}
+            styleConfig={{
+              Heading: {},
+              Description: {},
+              Form: {},
+              Label: {},
+              Input: {},
+              PrimaryButton: {},
+              SecondaryButton: {},
+              Footer: {},
+              TopBar: {},
+              Rating: { LeftRatingText: '', RightRatingText: '' },
+              EmailError: { text: '' },
+              MultiChoice: { style: {}, selectedStyle: {} },
+            }}
+        /> */}
+          {/* <Survey
+            questId="c-244b0ae9-bf87-4bd6-a980-8235b5041a2b"
+            token={token}
+            userId={userId}
+            heading="How was your experience?"
+            subHeading="Welcome back, Please complete your details"
+            itemsPerPage={5}
+            ratingType="star"
+            showFooter={true}
+            styleConfig={{
+              Heading: {},
+              Description: {},
+              Form: {},
+              Label: {},
+              Input: {},
+              PrimaryButton: {},
+              SecondaryButton: {},
+              Footer: {},
+              TopBar: {},
+              Rating: { LeftRatingText: '', RightRatingText: '' },
+              EmailError: { text: '' },
+              MultiChoice: { style: {}, selectedStyle: {} },
+            }}
+          /> */}
+
+          {/* <Survey
+            questId="c-348f74bf-0392-46ab-8dd3-9dfc1d0d0f73"
+            token={token}
+            userId={userId}
+            heading="How was your experience?"
+            subHeading="Welcome back, Please complete your details"
+            itemsPerPage={2}
+            ratingType="star"
+            showFooter={true}
+            styleConfig={{
+              Heading: {},
+              Description: {},
+              Form: {},
+              Label: {},
+              Input: {},
+              PrimaryButton: {},
+              SecondaryButton: {},
+              Footer: {},
+              TopBar: {},
+              Rating: { LeftRatingText: '', RightRatingText: '' },
+              EmailError: { text: '' },
+              MultiChoice: { style: {}, selectedStyle: {} },
+            }}
+          /> */}
+          {/* <Search
+            userId={userId}
+            token={token}
+            questId="c-3b63adc6-4778-4dc9-8279-faa3c6ebba3d"
+            open={true}
+            showFooter={true}
+            styleConfig={{
+              Form: {},
+              Heading: {},
+              Description: {},
+              Input: {},
+              Label: {},
+              Footer: {},
+              Icon: {},
+              listHover: {
+                background: '',
+                iconBackground: '',
+                Heading: '',
+                Description: '',
+              },
+            }}
+          /> */}
+
+        {/* <InlineFeedback
+            questId="c-80b9ed47-b008-46f5-bbe6-2f556fcee503"
+            userId={userId}
+            token={token}
+            type="emoji"
+            styleConfig={{
+              ActionButton: {},
+              ActionContainer: {},
+              ActionSelectedButton: {},
+              Description: {},
+              Footer: {},
+              Form: {},
+              Heading: {},
+              IconStyle: {},
+              MainHeading: {},
+              SelectedIconStyle: {},
+            }}
+          /> */}
+          {/* <Survey
+            questId="c-73a6117c-ea29-4e25-8ea8-7ab38238e9d1"
+            userId={userId}
+            token={token}
+            heading="Interactive Feedback Hub"
+            subHeading="Empowering Seamless Communication"
+            itemsPerPage={4}
+            ratingType="star"
+            showFooter={true}
+            styleConfig={{
+              Heading: {},
+              Description: {},
+              Form: {},
+              Label: {},
+              Input: {},
+              PrimaryButton: {},
+              SecondaryButton: {},
+              Footer: {},
+              TopBar: {},
+              Rating: { LeftRatingText: '', RightRatingText: '' },
+              EmailError: { text: '' },
+              MultiChoice: { style: {}, selectedStyle: {} },
+            }}
+          /> */}
+          {/* <DailyStreak
+            userId={userId}
+            token={token}
+            pendingStreakImg=""
+            filledStreakImg=""
+            styleConfig={{ Heading: {}, Description: {}, Footer: {} }}
+            stepDetails={[
+              {
+                  description: 'This is the longest streak you’ve ever head1',
+                  title: 'Confident reader',
+                  range: 3,
+              },
+              {
+                  description: 'This is the longest streak you’ve ever head2',
+                  title: 'Responsible reader',
+                  range: 2,
+              },
+              {
+                  description: 'This is the longest streak you’ve ever head3',
+                  title: 'Serious learner',
+                  range: 5,
+              },
+              {
+                  description: 'This is the longest streak you’ve ever head4',
+                  title: 'Absolute reader',
+                  range: 3,
+              },
+            ]}
+        /> */}
+        {/* <LeaderBoard
+          token={token}
+          userId={userId}
+          styleConfig={{
+            Description: {},
+            Footer: {},
+            Form: {},
+            Heading: {},
+            IconStyle: {},
+            IndexBackground: {},
+            IndexColor: {},
+            InnerBackground: {},
+            MainHeading: {},
+            PointsBackground: {},
+            PointsColor: {},
+            ProgressBarColor: {},
+          }}
+        /> */}
+        {/* <ReferEarn_
+          questId="c-3a4276f6-fb60-47e8-9e60-092329c23b2e"
+          token={token}
+          userId={userId}
+          // To run below props run on the local react app
+          isOpen={isOpen}
+          heading="Copy"
+      /> */}
+      {/* <Referral
+        questId="c-3a4276f6-fb60-47e8-9e60-092329c23b2e"
+        token={token}
+        userId={userId}
+        showFooter={true}
+        styleConfig={{
+          Form: {},
+          Heading: {},
+          Description: {},
+          Input: {},
+          Label: {},
+          TextArea: {},
+          PrimaryButton: {},
+          SecondaryButton: {},
+          Modal: {},
+          Footer: {},
+          Icon: {},
+        }}
+      /> */}
+      {/* <ShareArticle
+          questId="c-b0578d03-a8ab-49a4-a234-110eae19f305"
+          token={token}
+          userId={userId}
+          description="If you like this article share it with your friends"
+          heading="Share this article"
+        /> */}
+
+        {/* <GetStarted
+          userId={userId}
+          token={token}
+          questId="c-f43d309e-f6ed-483c-8872-bdb7b41548fd"
+          template={1}
+          headingText="Quickstart Guide"
+          descriptionText="Get started with Quest and explore how Quest can take you to the next level"
+          showProgressBar={true}
+          arrowColor=""
+          showFooter={true}
+          ButtonType="Arrow"
+          styleConfig={{
+            Form: {},
+            Heading: {},
+            Description: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            Footer: {},
+            Card: {},
+            ProgressBar: { barColor: '', barParentColor: '' },
+            CardContainer: {},
+            Icon: {},
+            Arrow: {
+              Background: '',
+              IconColor: '',
+              CompletedBackground: '',
+              CompletedIconColor: '',
+            },
+          }}
+        /> */}
+
+      {/* <OnBoarding
+          questId="c-e3fbaae2-16ca-423f-8cec-69689a17934f"
+          userId={userId}
+          token={token}
+          progress={['Personal Details']}
+          controlBtnType="Buttons"
+          headingScreen={[
+            { name: 'Identity Insights', desc: 'Revealing dimensions beyond words' },
+          ]}
+          template="single-page"
+          design={[
+            [1, 2, 3],
+          ]}
+          singleChoose="modal1"
+          multiChoice="modal2"
+          styleConfig={{
+            Form: {},
+            Topbar: {},
+            Heading: {},
+            Description: {},
+            Input: {},
+            Label: {},
+            TextArea: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            SingleChoice: { style: {}, selectedStyle: {} },
+            MultiChoice: { style: {}, selectedStyle: {} },
+            ProgressBar: {
+              completeTabColor: '',
+              currentTabColor: '',
+              pendingTabColor: '',
+            },
+            Footer: {},
+          }}
+          getAnswers={() => {}}
+          setAnswer={setAnswer}
+          answer={answer}
+          nextBtnText="Submit"
+        /> */}
+
+      {/* <OnBoarding
+          questId="c-056d8d29-2623-41c6-b2c1-2db4375d644e"
+          userId={userId}
+          token={token}
+          controlBtnType="Buttons"
+          headingScreen={[
+            {
+              name: 'Identity Insightssss',
+              desc: 'Revealing dimensions beyond words',
+            },
+          ]}
+          singleChoose="modal1"
+          multiChoice="modal2"
+          styleConfig={{
+            Form: {},
+            Topbar: {},
+            Heading: {},
+            Description: {},
+            Input: {},
+            Label: {},
+            TextArea: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            SingleChoice: { style: {}, selectedStyle: {} },
+            MultiChoice: { style: {}, selectedStyle: {} },
+            ProgressBar: {
+              completeTabColor: '',
+              currentTabColor: '',
+              pendingTabColor: '',
+            },
+            Footer: {},
+          }}
+          getAnswers={() => {}}
+          setAnswer={setAnswer}
+          answer={answer}
+        /> */}
+
+      {/* <Tutorial
+          userId={userId}
+          token={token}
+          questId="c-88a2b4bf-2a0e-4956-8cf8-04a7c0e1bd78"
+          heading="Quest List"
+          subheading="Discover our key features"
+          styleConfig={{
+            Form: {},
+            TopBar: {},
+            Heading: {},
+            Description: {},
+            Footer: {},
+          }}
+        /> */}
+
+      {/* <GamifiedQuiz
+          questId="c-c17a650f-c0e0-44da-985f-f2278a015be7"
+          userId={userId}
+          token={token}
+          questionsPerSection={2}
+          sectionSubHeading={['', 'Fill the details']}
+          sectionHeading={['Fill the details', 'Fill the details']}
+          showFooter={true}
+          thanksPopUpFooter={true}
+          styleConfig={{
+            Heading: {},
+            Input: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            Footer: {},
+            FormContainer: {},
+            Question: {},
+            ThanksPopup: {},
+            ThanksPopupHeading: {},
+            ThanksPopupDescription: {},
+            OptionsSelectedColor: {},
+          }}
+          gamifiedQuiz={true}
+          questions={questions}
+          setQuestions={setQuestions}
+          functionOnSubmit={() => alert('submited')}
+        /> */}
+        
+        {/* <CrossSelling
+          questId="c-80398e9e-fbcf-492d-9fdb-c0e0cdda642d"
+          token={token}
+          userId={userId}
+          expiryDate={0}
+          showDays
+          showFooter={true}
+          gradientBackground={true}
+          styleConfig={{
+            BackgroundWrapper: {},
+            Description: {},
+            Footer: {},
+            Form: {},
+            Heading: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            Timer: { backgroundColor: '', primaryColor: '', secondaryColor: '' },
+          }}
+        /> */}
+
+      {/* <FeedbackWorkflow
+          isOpen
+          userId={userId}
+          token={token}
+          questId='c-4004eb02-cc56-4c02-bb5a-3c4d42c8f432'
+          GeneralFeedback={{
+            heading: '',
+            description: '',
+            formHeading: '',
+            formDescription: '',
+          }}
+          ReportBug={{
+            heading: '',
+            description: '',
+            formHeading: '',
+            formDescription: '',
+          }}
+          RequestFeature={{
+            heading: '',
+            description: '',
+            formHeading: '',
+            formDescription: '',
+          }}
+          ContactUs={{ heading: '', description: '', iconUrl: '' }}
+          styleConfig={{
+            Heading: {},
+            Description: {},
+            Form: { },
+            Label: {},
+            Input: {},
+            PrimaryButton: {},
+            SecondaryButton: {},
+            Footer: {},
+            listHeading: {},
+            listDescription: {},
+            Card: {},
+            EmailError: { text: '' },
+            listHover: {
+              background: '',
+              iconBackground: '',
+              iconColor: '',
+              Heading: '',
+              Description: '',
+              IconSize: '16px',
+            },
+            ThanksPopup: { ShowFooter: true },
+          }}
+          contactUrl="https://calendly.com/shubham-quest/chat"
+          variation="test"
+        /> */}
+
+    {/* <HelpHub
+      userId={userId}
+      token={token}
+      questId="c-a2b5782e-f3a1-4a33-bbca-8c6601a8ca62"
+      styleConfig={{
+      }}
+      variation="test"
+    /> */}
+
+        {/* ------------------- API v2 Test Ended -------------------  */}
+
         {/* <ModularPreview /> */}
 
         {/* <TutorialPreview online={true} /> */}
