@@ -26,7 +26,7 @@ import "./src/components/Leaderboard/leaderboard.css"
 import "./src/components/HelpHub/HelpHub.css"
 import "./src/components/UserProfile/userProfile.css"
 import "./src/components/Challenges/challenges.css"
-import "./src/components/GamifiedQuiz/gamifiedQuiz.css"
+import "./src/components/GamifiedQuiz/GamifiedQuiz.css"
 import "./src/components/Walkthrough/tourHelper.css"
 import "./src/components/InlineFeedback/style.css"
 import QuestLogin from "./src/components/Login/Login";
