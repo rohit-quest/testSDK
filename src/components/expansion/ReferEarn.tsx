@@ -107,10 +107,9 @@ export const Referral = ({
     }
   ) => {
     try {
-      const request = `${BACKEND_URL}api/entities/${headers.entityId}/quests/${questId}/users/${headers.userid}/referralcode`;
-      const { data }: { data: { success: boolean; referralCode?: string } } =
-        await axios.get(request, { headers });
-      return data;
+      const request = `${BACKEND_URL}api/v2/entities/${headers.entityId}/campaigns/${questId}`;
+      const {data} = await axios.get(request, { headers });
+      return data?.data || {};
     } catch (error) {
       GeneralFunctions.captureSentryException(error);
       return { success: false };
