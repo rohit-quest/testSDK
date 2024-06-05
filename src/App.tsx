@@ -697,7 +697,7 @@ function App() {
           userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
           /> */}
 
-        <HelpHubPreview online={true} />
+        {/* <HelpHubPreview online={true} /> */}
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
         {/* <GamifiedQuizPreview online={true} /> */}
@@ -872,20 +872,31 @@ function App() {
         {/* <SreakPreview online /> */}
         {/* <InlineFeedbackPreview online={false} /> */}
 
-        {/* <Walkthrough
+        <h1 className="h1" style={{width: 100}}>
+              Hello
+        </h1>
+        <p className="p">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias id assumenda sit quas? Reiciendis, et, corporis natus expedita vitae porro rem soluta ipsam facere corrupti voluptates quis laborum accusamus minus.
+        </p>
+        <button className="button" style={{position: 'absolute', right: '50%', top: 1000}}>
+          NEXT
+        </button>
+
+        <Walkthrough
             isOpen={isOpen}
             id="app"
             steps={[
               {
-                selector: '.gs-single-card-dropDown',
+                selector: '.h1',
                 data: {title: 'First Tab', description: 'Click on this'},
-                // position: Position.RIGHT,
-                // align: Align.END
               },
               {
-                selector: '.gs-heading-div',
+                selector: '.p',
                 data: {title: 'Second Tab', description: 'Click on this'},
-                // align: Align.CENTER
+              },
+              {
+                selector: '.button',
+                data: {title: 'Second Tab', description: 'Click on this'},
               }
             ]}
             styleConfig={{
@@ -897,9 +908,8 @@ function App() {
             onRequestClose={() => setIsOpen(false)}
             onAfterOpen={() => document.documentElement.style.overflow = 'hidden'}
             onBeforeClose={() => document.documentElement.style.overflow = ''}
-
-        />  */}
-
+            tooltip
+        /> 
       </QuestProvider>
       {/* < div style={{height: 1999}}/> */}
     </div>
