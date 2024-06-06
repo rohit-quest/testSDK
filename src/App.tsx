@@ -889,7 +889,6 @@ function App() {
               {
                 selector: '.h1',
                 data: {title: 'First Tab', description: 'Click on this'},
-                position: Position.BOTTOM
               },
               {
                 selector: '.p',
