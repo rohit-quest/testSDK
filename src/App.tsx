@@ -899,11 +899,6 @@ function App() {
                 data: {title: 'Second Tab', description: 'Click on this'},
               }
             ]}
-            styleConfig={{
-              Form: {background: 'green'},
-              Background: {background: 'red'}, 
-              Footer: {background: 'blue'}
-            }}
             onComplete={() => {alert('Welcome to the page'); setIsOpen(false)}}
             onRequestClose={() => setIsOpen(false)}
             onAfterOpen={() => document.documentElement.style.overflow = 'hidden'}

@@ -2664,10 +2664,10 @@ muggle-string@^0.3.1:
   resolved "https://registry.npmjs.org/muggle-string/-/muggle-string-0.3.1.tgz"
   integrity sha512-ckmWDJjphvd/FvZawgygcUeQCxzvohjFO5RxTjj4eq8kw359gFF3E1brjfI+viLMxss5JrHTDRHZvu2/tuy0Qg==
 
-multiroute-tour-navigator@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.npmjs.org/multiroute-tour-navigator/-/multiroute-tour-navigator-1.0.7.tgz"
-  integrity sha512-HmZLyUk/9QxgoovLjaNibgL45EyRRWoejGoNJq/VYg9UJX3DoTd4WRcYXxlcYknOvC5BXUWGWjQWTfaQ6AwQ6Q==
+multiroute-tour-navigator@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.npmjs.org/multiroute-tour-navigator/-/multiroute-tour-navigator-1.0.9.tgz"
+  integrity sha512-u5NYAw8gXWFGs8fqv78arUdZLIALkO7QzlF75DCED1AnKRLMgnfeFlJYLWu6XMPAe+D3vA/11XUAwjKRZCPTiw==
   dependencies:
     react "^18.2.0"
     react-dom "^18.2.0"
