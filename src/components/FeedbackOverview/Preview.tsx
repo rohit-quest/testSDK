@@ -7,10 +7,10 @@ export const apiKey = "k-fe5a805c-77ed-4cae-bd33-9591ebed2805";
 export const apiSecret =
   "s-3c35ebcb-c752-4c3c-8ce3-e6460ebbc9d479a7e122-d06b-4243-bbfa-e0889987f6c0";
 export const entityId = "e-9850377b-f88f-4426-a2ac-56206c74655a";
-export const questId =  "c-92289b7a-259c-4904-8f41-6087efed1215";
+export const questId =  "c-b4c17cd2-b47e-4d98-8253-246caff3b983";
 export const userId = "u-8268f5e1-f5a1-440c-a333-0f5578a73847";
 export const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxNjcxODQ5MCwiZXhwIjoxNzE3MzIzMjkwfQ.7hnsMvPAbAWaC2JTSoMJ5jtOWXxFJaPlNgw0juQPqsA";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxNzY3NDI2NCwiZXhwIjoxNzE4Mjc5MDY0fQ.EJl05X7NIf_c89aT-UgqnGXPBVMzceUx2cPOyO5WPDM";
 
 export default function FeedbackWorkflowPreview({
   online = false,
@@ -44,6 +44,7 @@ export default function FeedbackWorkflowPreview({
           //   'c-e840fb8f-7e8f-4a4f-938e-b6104068071e','c-17a9c049-dad6-4178-afba-ef07728906c7','c-c6077469-e457-4b23-8799-953409d326eb','c-09413b00-7f94-4353-b22b-1c7f9d43d8ce'
           // ]}
           questId={questId}
+        
           // questIds={}
           GeneralFeedback={{
             heading: "General Fee",
@@ -63,6 +64,8 @@ export default function FeedbackWorkflowPreview({
                 }
               }
           }}
+          uniqueUserId="1212"
+          uniqueEmailId="1212"
           RequestFeature={{
             heading: "Request a Featureqwqewqewqe",
             description: "How can we msdsfdsdfake it better",
@@ -95,6 +98,11 @@ export default function FeedbackWorkflowPreview({
               // background:'yellow',
               // Heading:'green',
               // Description:'red'
+            },
+            Footer: {
+             FooterStyle:{
+                backgroundColor:'blue'
+             },
             },
             Input: {
               border:'1px solid red'
