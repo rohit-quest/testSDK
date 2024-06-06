@@ -5,14 +5,14 @@ import { QuestProvider } from "../QuestWrapper";
 import { answer } from "../QuestForm/response";
 import Toast from "../toast2/Toast";
 
-export const apiKey = "k-fe5a805c-77ed-4cae-bd33-9591ebed2805";
+export const apiKey = "k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be";
 export const apiSecret =
   "s-3c35ebcb-c752-4c3c-8ce3-e6460ebbc9d479a7e122-d06b-4243-bbfa-e0889987f6c0";
-export const entityId = "e-9850377b-f88f-4426-a2ac-56206c74655a";
-export const questId = "q-9814f7b2-87ad-469a-9435-3882da0fd30f";
+export const entityId = "e-0000000000";
+export const questId = "c-8e9e5ccf-9fde-46e0-bac7-1eec4524d80d";
 export const userId = "u-8268f5e1-f5a1-440c-a333-0f5578a73847";
 export const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxNjUyOTUzOCwiZXhwIjoxNzE3MTM0MzM4fQ.djErOnXcPMuzhhYnq0vLw-JKFZ8lSyI9rRJ4MFVzdp4";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxNzYyMTcwNywiZXhwIjoxNzE4MjI2NTA3fQ.9jl54rhfpBv6noypbc_4aRIl05mCCJRFUZF9r5i4DQQ";
 
 export default function OnBoardingPreview({
   online = true,
@@ -44,7 +44,7 @@ export default function OnBoardingPreview({
         placeholder: "",
       },
       {
-        type: "USER_INPUT_SINGLE_CHOICE",
+        type: "USER_INPUT_MULTI_CHOICE",
         question: "Your hobbies?",
         options: ["Playing", "Coding", "Gaming"],
         criteriaId: "ec-87fb0e54-c0e3-4fad-a865-37da2f9d68fb",
@@ -87,7 +87,7 @@ export default function OnBoardingPreview({
         manualInput: false,
         placeholder: "",
       },
-     
+
       {
         type: "USER_INPUT_TEXT",
         question: "What is your role in the company?",
@@ -127,6 +127,7 @@ export default function OnBoardingPreview({
           answer={answer}
           setAnswer={setAnswer}
           token={token}
+          
           // uniqueUserId={Date.now().toString()}
           // uniqueEmailId={Date.now().toString()}
           // answerFontSize="14px"
@@ -167,6 +168,12 @@ export default function OnBoardingPreview({
               desc: "Tell us more about your company",
             },
           ]}
+          styleConfig={{
+            MultiChoice:{
+              isLabel:false
+            }
+          }}
+          
           template='single-page'
           // template="single-question"
           singleChoose="modal3"
@@ -177,9 +184,9 @@ export default function OnBoardingPreview({
           controlBtnType="Buttons"
           customComponents={<CustomButton />}
           getAnswers={printAnswer}
-          // screenHeight=""
-          // progressBarType="modal1"
-          // styleConfig={{ Form: {background:'red'}, Footer: {FooterStyle:{background: 'blue'},FooterIcon:{color: 'green'},FooterText:{color: 'yellow'}} }}
+        // screenHeight=""
+        // progressBarType="modal1"
+        // styleConfig={{ Form: {background:'red'}, Footer: {FooterStyle:{background: 'blue'},FooterIcon:{color: 'green'},FooterText:{color: 'yellow'}} }}
         />
       </QuestProvider>
     );
@@ -230,10 +237,13 @@ export default function OnBoardingPreview({
       // progressBarType="modal1"
       offlineFormData={state.offlineFormData}
       styleConfig={{
-      
-        SingleChoice:{
-          selectedStyle:{background:'blue'},
-          hoverBackground:'red'
+        MultiChoice: {
+          selectedStyle: { borderColor: 'blue', color: 'red', accentColor: 'green' },
+          // isLabel: false,
+        },
+        SingleChoice: {
+          // selectedStyle:{background:'blue'},
+          hoverBackground: 'red'
         }
       }}
     />

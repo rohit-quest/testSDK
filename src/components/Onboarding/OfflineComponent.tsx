@@ -86,7 +86,7 @@ interface QuestLoginProps {
     TextArea?: CSSProperties;
     PrimaryButton?: CSSProperties;
     SecondaryButton?: CSSProperties;
-    Footer?:{
+    Footer?: {
       FooterStyle?: CSSProperties;
       FooterText?: CSSProperties;
       FooterIcon?: CSSProperties;
@@ -94,11 +94,12 @@ interface QuestLoginProps {
     SingleChoice?: {
       style?: CSSProperties;
       selectedStyle?: CSSProperties;
-      hoverBackground?:string
+      hoverBackground?: string
     };
     MultiChoice?: {
       style?: CSSProperties;
       selectedStyle?: CSSProperties;
+      isLabel?: boolean;
     };
     ProgressBar?: {
       completeTabColor?: string;
@@ -137,7 +138,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
     token,
     questId,
     loadingTracker,
-    setLoading = () => {},
+    setLoading = () => { },
     nextBtnText,
     progressBarMultiLine,
     controlBtnType,
@@ -165,7 +166,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
   const templateDesign = () => {
     switch (template) {
       case "multi-question": {
-        if(design.length > 0){
+        if (design.length > 0) {
           setDesign([...design]);
         }
         break;
@@ -180,7 +181,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
         break;
       }
       case 'single-page': {
-       let arr = [];
+        let arr = [];
         for (let i = 1; i <= offlineFormData.length; i++) {
           arr.push(i);
         }
@@ -197,7 +198,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
         break;
       }
     }
-   
+
   };
 
   useEffect(() => {
@@ -420,10 +421,9 @@ function OnBoardingOffline(props: QuestLoginProps) {
                   >
                     <div
                       style={{
-                        maxWidth: `${
-                          (wd - (progress.length - 1) * 15) / progress.length -
+                        maxWidth: `${(wd - (progress.length - 1) * 15) / progress.length -
                           32
-                        }px`,
+                          }px`,
                         whiteSpace: progressBarMultiLine ? "normal" : "nowrap",
                         overflow: progressBarMultiLine ? "" : "hidden",
                         textOverflow: progressBarMultiLine ? "" : "ellipsis",
@@ -465,10 +465,9 @@ function OnBoardingOffline(props: QuestLoginProps) {
                   >
                     <div
                       style={{
-                        maxWidth: `${
-                          (wd - (progress.length - 1) * 15) / progress.length -
+                        maxWidth: `${(wd - (progress.length - 1) * 15) / progress.length -
                           32
-                        }px`,
+                          }px`,
                         whiteSpace: progressBarMultiLine ? "normal" : "nowrap",
                         overflow: progressBarMultiLine ? "" : "hidden",
                         textOverflow: progressBarMultiLine ? "" : "ellipsis",
@@ -497,10 +496,9 @@ function OnBoardingOffline(props: QuestLoginProps) {
                   >
                     <div
                       style={{
-                        maxWidth: `${
-                          (wd - (progress.length - 1) * 15) / progress.length -
+                        maxWidth: `${(wd - (progress.length - 1) * 15) / progress.length -
                           32
-                        }px`,
+                          }px`,
                         whiteSpace: progressBarMultiLine ? "normal" : "nowrap",
                         overflow: progressBarMultiLine ? "" : "hidden",
                         textOverflow: progressBarMultiLine ? "" : "ellipsis",
@@ -689,7 +687,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
             ...styleConfig?.Label,
           }}
         >
-         {`${question} ${required ? "*" : ''}`}
+          {`${question} ${required ? "*" : ''}`}
         </Label>
         <SingleChoice
           options={options}
@@ -709,7 +707,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
               BrandTheme?.primaryColor ||
               themeConfig?.secondaryColor,
             ...styleConfig?.SingleChoice?.style,
-          
+
           }}
           hoverBackground={styleConfig?.SingleChoice?.hoverBackground}
           selectedStyle={{
@@ -719,7 +717,7 @@ function OnBoardingOffline(props: QuestLoginProps) {
               BrandTheme?.primaryColor ||
               themeConfig?.primaryColor,
             ...styleConfig?.SingleChoice?.selectedStyle,
-            
+
           }}
         />
         {manualInput != false && answer[criteriaId] == manualInput && (
@@ -755,18 +753,20 @@ function OnBoardingOffline(props: QuestLoginProps) {
         {customComponentPositions == index + 1 && (
           <div style={{ paddingBottom: "12px" }}>{customComponents}</div>
         )}
-        <Label
-          htmlFor="textAreaInput"
-          style={{
-            color:
-              styleConfig?.Label?.color ||
-              BrandTheme?.primaryColor ||
-              themeConfig?.primaryColor,
-            ...styleConfig?.Label,
-          }}
-        >
-          {`${question} ${required ? "*" : ''}`}
-        </Label>
+        {(styleConfig?.MultiChoice?.isLabel !== false) &&
+          <Label
+            htmlFor="textAreaInput"
+            style={{
+              color:
+                styleConfig?.Label?.color ||
+                BrandTheme?.primaryColor ||
+                themeConfig?.primaryColor,
+              ...styleConfig?.Label,
+            }}
+          >
+            {`${question} ${required ? "*" : ''}`}
+          </Label>
+        }
         <MultiChoice
           options={options}
           checked={answer[criteriaId]}
@@ -782,10 +782,15 @@ function OnBoardingOffline(props: QuestLoginProps) {
             ...styleConfig?.MultiChoice?.style,
           }}
           selectedStyle={{
+            borderColor:
+              styleConfig?.MultiChoice?.selectedStyle?.borderColor,
             color:
-              styleConfig?.SingleChoice?.selectedStyle?.color ||
+              styleConfig?.MultiChoice?.selectedStyle?.color ||
               BrandTheme?.primaryColor ||
               themeConfig?.primaryColor,
+            accentColor:
+              styleConfig?.MultiChoice?.selectedStyle?.accentColor ||
+              QuestThemeData?.accentColor,
             ...styleConfig?.SingleChoice?.selectedStyle,
           }}
         />
@@ -805,18 +810,20 @@ function OnBoardingOffline(props: QuestLoginProps) {
         {customComponentPositions == index + 1 && (
           <div style={{ paddingBottom: "12px" }}>{customComponents}</div>
         )}
-        <Label
-          htmlFor="textAreaInput"
-          style={{
-            color:
-              styleConfig?.Label?.color ||
-              BrandTheme?.primaryColor ||
-              themeConfig?.primaryColor,
-            ...styleConfig?.Label,
-          }}
-        >
-         {`${question} ${required ? "*" : ''}`}
-        </Label>
+        {(styleConfig?.MultiChoice?.isLabel !== false) &&
+          <Label
+            htmlFor="textAreaInput"
+            style={{
+              color:
+                styleConfig?.Label?.color ||
+                BrandTheme?.primaryColor ||
+                themeConfig?.primaryColor,
+              ...styleConfig?.Label,
+            }}
+          >
+            {`${question} ${required ? "*" : ''}`}
+          </Label>
+        }
         <MultiChoiceTwo
           options={options}
           checked={!!answer[criteriaId] && answer[criteriaId]}
@@ -1033,111 +1040,111 @@ function OnBoardingOffline(props: QuestLoginProps) {
               !!progress?.length && <ProgressBar />}
             {!!designState && designState.length > 0
               ? designState[currentPage].map((num: number) =>
-                  offlineFormData[num - 1]?.type == "USER_INPUT_TEXT"
+                offlineFormData[num - 1]?.type == "USER_INPUT_TEXT"
+                  ? normalInput(
+                    offlineFormData[num - 1]?.question || "",
+                    offlineFormData[num - 1]?.required || false,
+                    offlineFormData[num - 1].criteriaId || "",
+                    num - 1,
+                    offlineFormData[num - 1]?.placeholder ||
+                    offlineFormData[num - 1]?.question ||
+                    "",
+                    "text"
+                  )
+                  : offlineFormData[num - 1]?.type == "USER_INPUT_EMAIL"
                     ? normalInput(
-                        offlineFormData[num - 1]?.question || "",
-                        offlineFormData[num - 1]?.required || false,
-                        offlineFormData[num - 1].criteriaId || "",
-                        num - 1,
-                        offlineFormData[num - 1]?.placeholder ||
-                          offlineFormData[num - 1]?.question ||
-                          "",
-                        "text"
-                      )
-                    : offlineFormData[num - 1]?.type == "USER_INPUT_EMAIL"
-                    ? normalInput(
-                        offlineFormData[num - 1]?.question || "",
-                        offlineFormData[num - 1]?.required || false,
-                        offlineFormData[num - 1].criteriaId || "",
-                        num - 1,
-                        offlineFormData[num - 1]?.placeholder ||
-                          offlineFormData[num - 1]?.question ||
-                          "",
-                        "email"
-                      )
+                      offlineFormData[num - 1]?.question || "",
+                      offlineFormData[num - 1]?.required || false,
+                      offlineFormData[num - 1].criteriaId || "",
+                      num - 1,
+                      offlineFormData[num - 1]?.placeholder ||
+                      offlineFormData[num - 1]?.question ||
+                      "",
+                      "email"
+                    )
                     : offlineFormData[num - 1]?.type == "USER_INPUT_PHONE"
-                    ? normalInput(
+                      ? normalInput(
                         offlineFormData[num - 1]?.question || "",
                         offlineFormData[num - 1]?.required || false,
                         offlineFormData[num - 1].criteriaId || "",
                         num - 1,
                         offlineFormData[num - 1]?.placeholder ||
-                          offlineFormData[num - 1]?.question ||
-                          "",
+                        offlineFormData[num - 1]?.question ||
+                        "",
                         "number"
                       )
-                    : offlineFormData[num - 1]?.type == "USER_INPUT_TEXTAREA"
-                    ? textAreaInput(
-                        offlineFormData[num - 1]?.question || "",
-                        offlineFormData[num - 1]?.required || false,
-                        offlineFormData[num - 1].criteriaId || "",
-                        num - 1,
-                        offlineFormData[num - 1]?.placeholder ||
-                          offlineFormData[num - 1]?.question ||
-                          ""
-                      )
-                    : offlineFormData[num - 1]?.type == "USER_INPUT_DATE"
-                    ? dateInput(
-                        offlineFormData[num - 1]?.question || "",
-                        offlineFormData[num - 1]?.required || false,
-                        offlineFormData[num - 1].criteriaId || "",
-                        num - 1,
-                        offlineFormData[num - 1]?.placeholder ||
-                          offlineFormData[num - 1]?.question ||
-                          ""
-                      )
-                    : offlineFormData[num - 1]?.type ==
-                      "USER_INPUT_SINGLE_CHOICE"
-                    ? !!singleChoose &&
-                      singleChoiceTwo(
-                        offlineFormData[num - 1].options || [],
-                        offlineFormData[num - 1]?.question || "",
-                        offlineFormData[num - 1]?.required || false,
-                        offlineFormData[num - 1].criteriaId || "",
-                        num - 1,
-                        offlineFormData[num - 1]?.manualInput,
-                        singleChoose
-                      )
-                    : offlineFormData[num - 1]?.type ==
-                      "USER_INPUT_MULTI_CHOICE"
-                    ? !!multiChoice && multiChoice == "modal2"
-                      ? multiChoiceTwo(
-                          offlineFormData[num - 1]?.options || [],
+                      : offlineFormData[num - 1]?.type == "USER_INPUT_TEXTAREA"
+                        ? textAreaInput(
                           offlineFormData[num - 1]?.question || "",
                           offlineFormData[num - 1]?.required || false,
                           offlineFormData[num - 1].criteriaId || "",
-                          num - 1
+                          num - 1,
+                          offlineFormData[num - 1]?.placeholder ||
+                          offlineFormData[num - 1]?.question ||
+                          ""
                         )
-                      : multiChoiceOne(
-                          offlineFormData[num - 1]?.options || [],
-                          offlineFormData[num - 1]?.question || "",
-                          offlineFormData[num - 1]?.required || false,
-                          offlineFormData[num - 1].criteriaId || "",
-                          num - 1
-                        )
-                    : null
-                )
+                        : offlineFormData[num - 1]?.type == "USER_INPUT_DATE"
+                          ? dateInput(
+                            offlineFormData[num - 1]?.question || "",
+                            offlineFormData[num - 1]?.required || false,
+                            offlineFormData[num - 1].criteriaId || "",
+                            num - 1,
+                            offlineFormData[num - 1]?.placeholder ||
+                            offlineFormData[num - 1]?.question ||
+                            ""
+                          )
+                          : offlineFormData[num - 1]?.type ==
+                            "USER_INPUT_SINGLE_CHOICE"
+                            ? !!singleChoose &&
+                            singleChoiceTwo(
+                              offlineFormData[num - 1].options || [],
+                              offlineFormData[num - 1]?.question || "",
+                              offlineFormData[num - 1]?.required || false,
+                              offlineFormData[num - 1].criteriaId || "",
+                              num - 1,
+                              offlineFormData[num - 1]?.manualInput,
+                              singleChoose
+                            )
+                            : offlineFormData[num - 1]?.type ==
+                              "USER_INPUT_MULTI_CHOICE"
+                              ? !!multiChoice && multiChoice == "modal2"
+                                ? multiChoiceTwo(
+                                  offlineFormData[num - 1]?.options || [],
+                                  offlineFormData[num - 1]?.question || "",
+                                  offlineFormData[num - 1]?.required || false,
+                                  offlineFormData[num - 1].criteriaId || "",
+                                  num - 1
+                                )
+                                : multiChoiceOne(
+                                  offlineFormData[num - 1]?.options || [],
+                                  offlineFormData[num - 1]?.question || "",
+                                  offlineFormData[num - 1]?.required || false,
+                                  offlineFormData[num - 1].criteriaId || "",
+                                  num - 1
+                                )
+                              : null
+              )
               : offlineFormData?.map((data, index) =>
-                  data.type == "USER_INPUT_TEXT"
+                data.type == "USER_INPUT_TEXT"
+                  ? normalInput(
+                    data?.question || "",
+                    data?.required || false,
+                    data.criteriaId || "",
+                    index,
+                    data?.placeholder || data?.question || "",
+                    "text"
+                  )
+                  : data.type == "USER_INPUT_EMAIL"
                     ? normalInput(
-                        data?.question || "",
-                        data?.required || false,
-                        data.criteriaId || "",
-                        index,
-                        data?.placeholder || data?.question || "",
-                        "text"
-                      )
-                    : data.type == "USER_INPUT_EMAIL"
-                    ? normalInput(
-                        data?.question || "",
-                        data?.required || false,
-                        data.criteriaId || "",
-                        index,
-                        data?.placeholder || data?.question || "",
-                        "email"
-                      )
+                      data?.question || "",
+                      data?.required || false,
+                      data.criteriaId || "",
+                      index,
+                      data?.placeholder || data?.question || "",
+                      "email"
+                    )
                     : data.type == "USER_INPUT_PHONE"
-                    ? normalInput(
+                      ? normalInput(
                         data?.question || "",
                         data?.required || false,
                         data.criteriaId || "",
@@ -1145,51 +1152,51 @@ function OnBoardingOffline(props: QuestLoginProps) {
                         data?.placeholder || data?.question || "",
                         "number"
                       )
-                    : data.type == "USER_INPUT_TEXTAREA"
-                    ? textAreaInput(
-                        data?.question || "",
-                        data?.required || false,
-                        data.criteriaId || "",
-                        index,
-                        data?.placeholder || data?.question || ""
-                      )
-                    : data.type == "USER_INPUT_DATE"
-                    ? dateInput(
-                        data?.question || "",
-                        data?.required || false,
-                        data.criteriaId || "",
-                        index,
-                        data?.placeholder || data?.question || ""
-                      )
-                    : data.type == "USER_INPUT_SINGLE_CHOICE"
-                    ? !!singleChoose &&
-                      singleChoiceTwo(
-                        data.options || [],
-                        data?.question || "",
-                        data?.required || false,
-                        data.criteriaId || "",
-                        index,
-                        data?.manualInput,
-                        singleChoose
-                      )
-                    : data.type == "USER_INPUT_MULTI_CHOICE"
-                    ? !!multiChoice && multiChoice == "modal2"
-                      ? multiChoiceTwo(
-                          data.options || [],
+                      : data.type == "USER_INPUT_TEXTAREA"
+                        ? textAreaInput(
                           data?.question || "",
                           data?.required || false,
                           data.criteriaId || "",
-                          index
+                          index,
+                          data?.placeholder || data?.question || ""
                         )
-                      : multiChoiceOne(
-                          data.options || [],
-                          data?.question || "",
-                          data?.required || false,
-                          data.criteriaId || "",
-                          index
-                        )
-                    : null
-                )}
+                        : data.type == "USER_INPUT_DATE"
+                          ? dateInput(
+                            data?.question || "",
+                            data?.required || false,
+                            data.criteriaId || "",
+                            index,
+                            data?.placeholder || data?.question || ""
+                          )
+                          : data.type == "USER_INPUT_SINGLE_CHOICE"
+                            ? !!singleChoose &&
+                            singleChoiceTwo(
+                              data.options || [],
+                              data?.question || "",
+                              data?.required || false,
+                              data.criteriaId || "",
+                              index,
+                              data?.manualInput,
+                              singleChoose
+                            )
+                            : data.type == "USER_INPUT_MULTI_CHOICE"
+                              ? !!multiChoice && multiChoice == "modal2"
+                                ? multiChoiceTwo(
+                                  data.options || [],
+                                  data?.question || "",
+                                  data?.required || false,
+                                  data.criteriaId || "",
+                                  index
+                                )
+                                : multiChoiceOne(
+                                  data.options || [],
+                                  data?.question || "",
+                                  data?.required || false,
+                                  data.criteriaId || "",
+                                  index
+                                )
+                              : null
+              )}
 
             {offlineFormData.length > 0 &&
               (!!designState && designState.length > 1 ? (
@@ -1354,21 +1361,21 @@ function OnBoardingOffline(props: QuestLoginProps) {
           </div>
           {offlineFormData && showFooter && (
             <QuestLabs
-            style={{
-            ...{
-              background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
-                styleConfig?.Form?.backgroundColor || 
-                styleConfig?.Form?.background ||
-                BrandTheme?.background ||
-                themeConfig?.backgroundColor,
-            },
-            ...styleConfig?.Footer?.FooterStyle,
+              style={{
+                ...{
+                  background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                    styleConfig?.Form?.backgroundColor ||
+                    styleConfig?.Form?.background ||
+                    BrandTheme?.background ||
+                    themeConfig?.backgroundColor,
+                },
+                ...styleConfig?.Footer?.FooterStyle,
 
-            }}
-            textStyle={styleConfig?.Footer?.FooterText}
-            iconStyle={styleConfig?.Footer?.FooterIcon}
-          />
-        )}
+              }}
+              textStyle={styleConfig?.Footer?.FooterText}
+              iconStyle={styleConfig?.Footer?.FooterIcon}
+            />
+          )}
         </div>
       </div>
     )

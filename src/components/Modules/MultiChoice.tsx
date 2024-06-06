@@ -17,10 +17,11 @@ interface propTypeTwo {
 }
 
 const CheckBoxImg = ({ backgroundColor = "#6525B3", color = 'white' }) => (
-    <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22Z" fill={backgroundColor} />
-      <path d="M16.0303 8.96967C16.3232 9.26256 16.3232 9.73744 16.0303 10.0303L11.0303 15.0303C10.7374 15.3232 10.2626 15.3232 9.96967 15.0303L7.96967 13.0303C7.67678 12.7374 7.67678 12.2626 7.96967 11.9697C8.26256 11.6768 8.73744 11.6768 9.03033 11.9697L10.5 13.4393L14.9697 8.96967C15.2626 8.67678 15.7374 8.67678 16.0303 8.96967Z" fill={color} />
-    </svg>
+  <svg height="18px" width="18px" viewBox="0 0 453 453" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"   fill="#000000">
+    <g id="SVGRepo_bgCarrier" stroke-width="0" />
+    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+    <g id="SVGRepo_iconCarrier"> <g> <g> <g> <path fill={backgroundColor} d="M0,0v452.986h452.986V0H0z M156.669,361.354L56.019,209.495l27.222-13.59l71.356,92.905 l224.315-197.2l18.874,22.649L156.669,361.354z" /> </g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </g> </g>
+  </svg>
 )
 
 
@@ -28,9 +29,9 @@ const CheckBoxImg = ({ backgroundColor = "#6525B3", color = 'white' }) => (
 export const MultiChoice = ({
   options,
   checked,
-  selectedStyle =  { color: "#6525B3"},
+  selectedStyle = { color: "#6525B3" },
   style,
-  onChange=()=>{},
+  onChange = () => { },
 }: propType
 ) => {
   const onClick = (option: number) => {
@@ -48,12 +49,14 @@ export const MultiChoice = ({
 
   const [checkedState, setCheckedState] = useState(checked || []);
 
+  console.log(selectedStyle)
+
   return (
     <div className="q_multi_choice_box">
       {options.map((option: string, id: number) => (
-        <div style={style} className="q_mult_choice_option" key={id} onClick={() => {onClick(id); onChange({target: {value: option, checked: !checkedState.includes(option)}})}}>
+        <div style={{ ...style, borderColor: checkedState?.includes(option) && selectedStyle?.borderColor || style?.borderColor }} className="q_mult_choice_option" key={id} onClick={() => { onClick(id); onChange({ target: { value: option, checked: !checkedState.includes(option) } }) }}>
           {checkedState?.includes(option) ?
-            (<CheckBoxImg backgroundColor={selectedStyle?.accentColor}/>)
+            (<CheckBoxImg backgroundColor={selectedStyle?.accentColor} />)
             : (<div className='q_check_box_off'></div>)}
           <p className='q_mult_choice_option_selected' style={checkedState?.includes(option) ? selectedStyle : style}>{option}</p>
         </div>
@@ -67,7 +70,7 @@ export const MultiChoiceTwo = ({
   checked,
   style,
   selectedStyle,
-  onChange=()=>{}
+  onChange = () => { }
 }: propTypeTwo
 ) => {
   const onClick = (option: number) => {
@@ -88,9 +91,9 @@ export const MultiChoiceTwo = ({
   return (
     <div className="q_multi_choice_box_2">
       {options.map((option: string, id: number) => (
-        <div style={{...checkedState?.includes(option) ? selectedStyle : style}}
+        <div style={{ ...checkedState?.includes(option) ? selectedStyle : style }}
           className={checkedState?.includes(option) ? "q_mult_choice_option_2_select" : "q_mult_choice_option_2"}
-          key={id} onClick={() => {onClick(id); onChange({target: {value: option, checked: !checkedState.includes(option)}})}}>
+          key={id} onClick={() => { onClick(id); onChange({ target: { value: option, checked: !checkedState.includes(option) } }) }}>
           {option}
         </div>
       ))}
