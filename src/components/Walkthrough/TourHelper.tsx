@@ -71,9 +71,9 @@ export default function TourHelper({
             </p>
             <div className='tour-content-actions'>
                 {
-                    isFirst ? null:<button onClick={prev} style={{...firstButtonStyle}}>Back</button>
+                    isFirst ? null:<button onClick={prev} style={{...firstButtonStyle}}><span>Back</span></button>
                 }
-                <button onClick={handleNext} className='tour-helper-button' style={{...lastButtonStyle}}>{isLast ? 'Get Started':'Continue'}</button>
+                <button onClick={handleNext} className='tour-helper-button' style={{...lastButtonStyle}}><span>{isLast ? 'Get Started':'Continue'}</span></button>
             </div>
         </div>
         <div className='tour-watermark' style={footerStyle}>

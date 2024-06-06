@@ -897,6 +897,8 @@ function App() {
               {
                 selector: '.button',
                 data: {title: 'Second Tab', description: 'Click on this'},
+                align: Align.END,
+                position: Position.LEFT
               }
             ]}
             onComplete={() => {alert('Welcome to the page'); setIsOpen(false)}}

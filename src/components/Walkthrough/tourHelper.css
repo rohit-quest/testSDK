@@ -159,20 +159,21 @@
   justify-content: flex-end;
   width: 100%;
   gap: 8px;
+  background-color: inherit;
 }
 
 .tour-helper-button{
   height: fit-content;
   width: fit-content;
   padding: 6px 10px;
-  box-sizing: border-box;
-  color: var(--color-premitive-grey-5);
+  box-sizing: border-box;  
+  color: var(--primaryColor, white);
+
   border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 4px;
-  font-size: 14px;
   position: relative;
   cursor: pointer;
   background-image: url('../../assets/images/Gradient.png');
@@ -181,7 +182,6 @@
   background-position: 0 0;
   background-repeat: no-repeat;
   --border-width: 1px;
-  color: var(--primaryColor, white);
   white-space: nowrap;
   border: none;
   outline: none;
@@ -191,6 +191,7 @@
   font-style: normal;
   font-weight: 600;
   line-height: 16px;
+  background-color: inherit;
 }
 .tour-helper-button{
   background-position: 0 0;
@@ -200,12 +201,12 @@
 .tour-helper-button.outline {
   color: var(--primaryColor, white);
 }
-.tour-helper-button::before{
+.tour-helper-button.outline::before{
   content: '';
   position: absolute;
   inset: var(--border-width);
   border-radius: inherit;
-  background-color: var(--buttonColor, var(--background, #181818));
+  background-color: var(--buttonColor, var(--background, inherit));
 }
 .tour-helper-button > *{
   position: relative;
@@ -220,4 +221,53 @@
   background-color: var(--borderColor, #9035FF);
   position: absolute; 
   transition: opacity .5s;
+  rotate: 45deg;
+  left: 50%;
+  right: 50%;
+  translate: var(--transX, -50%) var(--transY, -50%);
+}
+
+.__tourNavigator-helper[data-position=left] .tour-helper-tooltip-pointer{
+  left: 100%;
+}
+.__tourNavigator-helper[data-position=right] .tour-helper-tooltip-pointer{
+  left: 0%;
+}
+.__tourNavigator-helper[data-position=top] .tour-helper-tooltip-pointer{
+  top: 100%;
+}
+.__tourNavigator-helper[data-position=bottom] .tour-helper-tooltip-pointer{
+  top: 0%;
+}
+
+.__tourNavigator-helper:is([data-position=left], [data-position=right])[data-align=start]  
+.tour-helper-tooltip-pointer{
+  top: 0%;
+  --transY: 100%
+}
+.__tourNavigator-helper:is([data-position=left], [data-position=right])[data-align=center]  
+.tour-helper-tooltip-pointer{
+  top: 50%;
+  --transY: -50%
+}
+.__tourNavigator-helper:is([data-position=left], [data-position=right])[data-align=end]  
+.tour-helper-tooltip-pointer{
+  top: 100%;
+  --transY: -200%
+}
+
+.__tourNavigator-helper:is([data-position=top], [data-position=bottom])[data-align=start]  
+.tour-helper-tooltip-pointer{
+  left: 0%;
+  --transX: 100%
+}
+.__tourNavigator-helper:is([data-position=top], [data-position=bottom])[data-align=center]  
+.tour-helper-tooltip-pointer{
+  left: 50%;
+  --transX: -50%
+}
+.__tourNavigator-helper:is([data-position=top], [data-position=bottom])[data-align=end]  
+.tour-helper-tooltip-pointer{
+  left: 100%;
+  --transX: -200%
 }

@@ -7,7 +7,6 @@ import TourNavigator from "tour-navigator";
 import { CSSProperties, useContext } from "react";
 import Overlay from "./Overlay";
 import QuestWrapper from "../QuestWrapper";
-import { NavigateFunction } from "react-router-dom";
 
 type WalkThroughType = 'singlepage' | 'multipage'
 
