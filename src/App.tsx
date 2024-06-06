@@ -41,7 +41,7 @@ import DailyStreak from "./components/Streak/DailyStreak";
 import ChallengesPreview from "./components/Challenges/ChallengesPreview";
 import GamifiedQuizPreview from "./components/GamifiedQuiz/GamifiedQuizPreview";
 import { HelpChat } from "./components/HelpCenter/HelpChat";
-import Walkthrough from "./components/Walkthrough/Walkthrough";
+import Walkthrough, { Align, Position } from "./components/Walkthrough/Walkthrough";
 import showToast from "./components/toast/toastService";
 import Toast from "./components/toast2/Toast";
 import InlineFeedbackPreview from "./components/InlineFeedback/Preview";
@@ -872,7 +872,7 @@ function App() {
         {/* <SreakPreview online /> */}
         {/* <InlineFeedbackPreview online={false} /> */}
 
-        <h1 className="h1" style={{width: 100}}>
+        <h1 className="h1" style={{width: 100, margin: 200, marginLeft: 400}}>
               Hello
         </h1>
         <p className="p">
@@ -889,6 +889,7 @@ function App() {
               {
                 selector: '.h1',
                 data: {title: 'First Tab', description: 'Click on this'},
+                position: Position.BOTTOM
               },
               {
                 selector: '.p',
