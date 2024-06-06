@@ -20,12 +20,14 @@ type StyleConfig = {
     FirstButton?: CSSProperties;
     LastButton?: CSSProperties;
     Image?: CSSProperties;
-    Overlay?: CSSProperties
+    Overlay?: CSSProperties;
+    ArrowStyle: CSSProperties;
 }
 
 interface WalkThroughProps extends MultiRouteTourProps, TourNavigatorProps {
     type?: WalkThroughType;
     tooltip?: boolean;
+    hideArrow?: boolean;
     onComplete?: () => void;
     styleConfig?: StyleConfig;
 }
@@ -34,6 +36,7 @@ export default function Walkthrough({
     type = 'singlepage',
     tooltip = false,
     onComplete,
+    hideArrow,
     styleConfig,
     ...props 
 }: WalkThroughProps): JSX.Element {
@@ -67,6 +70,8 @@ export default function Walkthrough({
                     ...themeConfigCSS,
                     ...styleConfig?.Form
                 }}
+                hideArrow={hideArrow}
+                arrowStyle={styleConfig?.ArrowStyle}
                 headerStyle={styleConfig?.Heading}
                 descriptionStyle={styleConfig?.Description}
                 helperBackgroundStyle={styleConfig?.Background}

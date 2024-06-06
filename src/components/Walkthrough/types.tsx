@@ -9,6 +9,8 @@ export interface TourHelperProps extends HelperProps {
     footerStyle?: CSSProperties;
     firstButtonStyle?: CSSProperties;
     lastButtonStyle?: CSSProperties;
-    imgStyle?: CSSProperties,
+    imgStyle?: CSSProperties;
+    hideArrow?: boolean;
+    arrowStyle?: CSSProperties;
     onComplete?: () => void
 }

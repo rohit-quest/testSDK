@@ -1,13 +1,16 @@
-import React, { CSSProperties, useEffect, useMemo, useRef, useState } from 'react'
+import { CSSProperties, useEffect, useRef, useState } from 'react'
 import { TourHelperProps } from './types'
-import { Align, Position } from './Walkthrough';
+import { Align } from './Walkthrough';
 
 export default function TourHelperTooltip({
   currentStep,
+  hideArrow,
+  arrowStyle,
   onRequestClose,
   next,
 }: TourHelperProps) {
   const [target, setTarget] = useState<Element | null>(null)
+  const [showArrow, setShowArrow] = useState(false)
   const [tooltipBoundingRect, setTooltipBoundingRect] = useState<DOMRect>()
 
   const tooltip = useRef<HTMLDivElement>(null)
@@ -24,6 +27,7 @@ export default function TourHelperTooltip({
 
     const updateRect = () => {
       setTooltipBoundingRect(mainTourHelper?.getBoundingClientRect())
+      setShowArrow(true)
     }
 
     mainTourHelper?.addEventListener('transitionend', updateRect)
@@ -34,7 +38,10 @@ export default function TourHelperTooltip({
   }, [])
 
 
-  const style: CSSProperties = {}
+  const style: CSSProperties = {
+    opacity: showArrow ? 1:0,
+    ...arrowStyle
+  }
 
   if (target && tooltip.current && tooltipBoundingRect) {
     let targetBoundingRect = target.getBoundingClientRect()
@@ -93,11 +100,18 @@ export default function TourHelperTooltip({
   }
 
 
+  const handleMove = () => {
+    setShowArrow(false)
+    next()
+  }
 
 
   return (
     <div className='tour-helper-tooltip' ref={tooltip}>
-      <div className='tour-helper-tooltip-pointer' style={style} />
+      {
+        hideArrow ? null:<div className='tour-helper-tooltip-pointer' style={style} />
+      }
+      
       <div className='tour-helper-content'>
         <div className='tour-helper-tooltip-details'>
           <h1>{currentStep?.data?.title}</h1>
@@ -105,7 +119,7 @@ export default function TourHelperTooltip({
         </div>
         <div className="tour-helper-tooltip-button">
           <button className='tour-helper-button transparent' onClick={(e: unknown) => onRequestClose?.({ event: e as MouseEvent, isMask: false, isOverlay: false })}>Skip</button>
-          <button className='tour-helper-button outline' onClick={next}>Next</button>
+          <button className='tour-helper-button outline' onClick={handleMove}>Next</button>
         </div>
       </div>
     </div>

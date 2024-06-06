@@ -216,5 +216,5 @@
   width: 10px;
   background-color: var(--borderColor, #9035FF);
   position: absolute; 
-  transition: all .2s;
+  transition: opacity .5s;
 }
