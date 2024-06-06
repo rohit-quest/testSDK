@@ -8,6 +8,9 @@ export default function TourHelperTooltip({
   arrowStyle,
   onRequestClose,
   next,
+  onComplete,
+  currentStepIndex,
+  steps
 }: TourHelperProps) {
   const [target, setTarget] = useState<Element | null>(null)
   const [showArrow, setShowArrow] = useState(false)
@@ -100,7 +103,12 @@ export default function TourHelperTooltip({
   }
 
 
-  const handleMove = () => {
+
+  const isFirst = currentStepIndex == 0
+  const isLast = currentStepIndex == (steps.length - 1)
+
+  const handleNext = () => {
+    if(isLast) return onComplete?.()
     setShowArrow(false)
     next()
   }
@@ -118,8 +126,12 @@ export default function TourHelperTooltip({
           <p>{currentStep?.data?.description}</p>
         </div>
         <div className="tour-helper-tooltip-button">
-          <button className='tour-helper-button transparent' onClick={(e: unknown) => onRequestClose?.({ event: e as MouseEvent, isMask: false, isOverlay: false })}>Skip</button>
-          <button className='tour-helper-button outline' onClick={handleMove}>Next</button>
+          <button className='tour-helper-button transparent' onClick={(e: unknown) => onRequestClose?.({ event: e as MouseEvent, isMask: false, isOverlay: false })}>
+            <span>Skip</span>
+          </button>
+          <button className='tour-helper-button outline' onClick={handleNext}>
+              <span>{isLast ? 'Get Started':'Next'}</span>
+          </button>
         </div>
       </div>
     </div>

@@ -205,7 +205,10 @@
   position: absolute;
   inset: var(--border-width);
   border-radius: inherit;
-  background-color: var(--buttonColor);
+  background-color: var(--buttonColor, var(--background, #181818));
+}
+.tour-helper-button > *{
+  position: relative;
 }
 .tour-helper-button.transparent{
   background-image: none;

@@ -2664,10 +2664,10 @@ muggle-string@^0.3.1:
   resolved "https://registry.npmjs.org/muggle-string/-/muggle-string-0.3.1.tgz"
   integrity sha512-ckmWDJjphvd/FvZawgygcUeQCxzvohjFO5RxTjj4eq8kw359gFF3E1brjfI+viLMxss5JrHTDRHZvu2/tuy0Qg==
 
-multiroute-tour-navigator@^1.0.9:
-  version "1.0.9"
-  resolved "https://registry.npmjs.org/multiroute-tour-navigator/-/multiroute-tour-navigator-1.0.9.tgz"
-  integrity sha512-u5NYAw8gXWFGs8fqv78arUdZLIALkO7QzlF75DCED1AnKRLMgnfeFlJYLWu6XMPAe+D3vA/11XUAwjKRZCPTiw==
+multiroute-tour-navigator@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.npmjs.org/multiroute-tour-navigator/-/multiroute-tour-navigator-1.0.11.tgz"
+  integrity sha512-PdW4D7UUIxiHDYpK7pQFsRrQXrxG3w0QreAwA6+qIpgI1cFnsGOSE9X+OGPX6l49Bmj314kJ5RapVo+pwNM/Xg==
   dependencies:
     react "^18.2.0"
     react-dom "^18.2.0"
@@ -2978,7 +2978,7 @@ react-otp-input@^3.0.4:
 react-refresh@^0.14.0:
   version "0.14.0"
 
-react-router-dom@^6.22.3, react-router-dom@^6.23.1:
+react-router-dom@^6.23.1:
   version "6.23.1"
   resolved "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.23.1.tgz"
   integrity sha512-utP+K+aSTtEdbWpC+4gxhdlPFwuEfDKq8ZrPFU65bbRJY+l706qjR7yaidBpo3MSeA/fzwbXWbKBI6ftOnP3OQ==

@@ -37,7 +37,7 @@
     "axios": "^1.6.8",
     "browser-image-compression": "^2.0.2",
     "mixpanel-browser": "^2.48.1",
-    "multiroute-tour-navigator": "^1.0.9",
+    "multiroute-tour-navigator": "^1.0.11",
     "query-string": "^8.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
