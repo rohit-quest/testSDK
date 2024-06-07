@@ -4,6 +4,7 @@ import { TourHelperProps } from './types'
 export default function TourHelperTooltip({
   currentStep,
   hideArrow,
+  arrowStyle,
   onRequestClose,
   next,
   onComplete,
@@ -24,7 +25,7 @@ export default function TourHelperTooltip({
   return (
     <div className='tour-helper-tooltip'>
       {
-        hideArrow ? null:<div className='tour-helper-tooltip-pointer' />
+        hideArrow ? null:<div className='tour-helper-tooltip-pointer' style={arrowStyle}/>
       }
       <div className='tour-helper-content'>
         <div className={`tour-helper-tooltip-details ${showArrow ? 'show':'hide'}`} >
