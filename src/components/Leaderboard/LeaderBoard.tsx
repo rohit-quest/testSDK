@@ -110,7 +110,7 @@ const LeaderBoard: React.FC<LeaderBoardProps> = ({
     getLeaderBoard();
   }, []);
   return (
-    <div>
+    <div style={{ background: 'white', borderRadius: styleConfig?.Form?.borderRadius }}>
       {leaderboardData && (
         <LeaderBoardShow
           leaderboardUserData={leaderboardData}

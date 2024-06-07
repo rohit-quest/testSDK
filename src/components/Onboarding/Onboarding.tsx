@@ -75,11 +75,12 @@ interface QuestLoginProps {
     SingleChoice?: {
       style?: CSSProperties;
       selectedStyle?: CSSProperties;
-      hoverBackground?:string
+      hoverBackground?: string
     };
     MultiChoice?: {
       style?: CSSProperties;
       selectedStyle?: CSSProperties;
+      isLabel?: boolean;
     };
     ProgressBar?: {
       completeTabColor?: string;
@@ -132,7 +133,7 @@ function OnBoarding(props: QuestLoginProps) {
     token,
     questId: campaignId,
     loadingTracker,
-    setLoading = () => {},
+    setLoading = () => { },
     nextBtnText,
     progressBarMultiLine,
     controlBtnType,
@@ -186,7 +187,7 @@ function OnBoarding(props: QuestLoginProps) {
   const templateDesign = () => {
     switch (template) {
       case "multi-question": {
-        if(design.length > 0){
+        if (design.length > 0) {
           setDesign([...design]);
         }
         break;
@@ -201,7 +202,7 @@ function OnBoarding(props: QuestLoginProps) {
         break;
       }
       case 'single-page': {
-       let arr = [];
+        let arr = [];
         for (let i = 1; i <= formdata.length; i++) {
           arr.push(i);
         }
@@ -218,7 +219,7 @@ function OnBoarding(props: QuestLoginProps) {
         break;
       }
     }
-   
+
   };
 
 
@@ -311,7 +312,7 @@ function OnBoarding(props: QuestLoginProps) {
         loadingTracker && setLoading(true);
         const params = new URLSearchParams();
         params.set('platform', 'REACT')
-        if(variation) params.set('variation', variation)
+        if (variation) params.set('variation', variation)
 
         const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}?${params.toString()}`;
         return await axios
@@ -531,10 +532,9 @@ function OnBoarding(props: QuestLoginProps) {
                   >
                     <div
                       style={{
-                        maxWidth: `${
-                          (wd - (progress.length - 1) * 15) / progress.length -
+                        maxWidth: `${(wd - (progress.length - 1) * 15) / progress.length -
                           32
-                        }px`,
+                          }px`,
                         whiteSpace: progressBarMultiLine ? "normal" : "nowrap",
                         overflow: progressBarMultiLine ? "" : "hidden",
                         textOverflow: progressBarMultiLine ? "" : "ellipsis",
@@ -576,10 +576,9 @@ function OnBoarding(props: QuestLoginProps) {
                   >
                     <div
                       style={{
-                        maxWidth: `${
-                          (wd - (progress.length - 1) * 15) / progress.length -
+                        maxWidth: `${(wd - (progress.length - 1) * 15) / progress.length -
                           32
-                        }px`,
+                          }px`,
                         whiteSpace: progressBarMultiLine ? "normal" : "nowrap",
                         overflow: progressBarMultiLine ? "" : "hidden",
                         textOverflow: progressBarMultiLine ? "" : "ellipsis",
@@ -601,10 +600,9 @@ function OnBoarding(props: QuestLoginProps) {
                   >
                     <div
                       style={{
-                        maxWidth: `${
-                          (wd - (progress.length - 1) * 15) / progress.length -
+                        maxWidth: `${(wd - (progress.length - 1) * 15) / progress.length -
                           32
-                        }px`,
+                          }px`,
                         whiteSpace: progressBarMultiLine ? "normal" : "nowrap",
                         overflow: progressBarMultiLine ? "" : "hidden",
                         textOverflow: progressBarMultiLine ? "" : "ellipsis",
@@ -853,15 +851,17 @@ function OnBoarding(props: QuestLoginProps) {
         {customComponentPositions == index + 1 && (
           <div style={{ paddingBottom: "12px" }}>{customComponents}</div>
         )}
-        <Label
-          htmlFor="textAreaInput"
-          style={{
-            color: styleConfig?.Label?.color || themeConfig?.primaryColor,
-            ...styleConfig?.Label,
-          }}
-        >
-          {`${question} ${!!required ? "*" : ""}`}
-        </Label>
+        {(styleConfig?.MultiChoice?.isLabel !== false) &&
+          <Label
+            htmlFor="textAreaInput"
+            style={{
+              color: styleConfig?.Label?.color || themeConfig?.primaryColor,
+              ...styleConfig?.Label,
+            }}
+          >
+            {`${question} ${!!required ? "*" : ""}`}
+          </Label>
+        }
         <MultiChoice
           options={options}
           checked={answer[actionId]}
@@ -873,16 +873,20 @@ function OnBoarding(props: QuestLoginProps) {
             color:
               styleConfig?.MultiChoice?.style?.color ||
               BrandTheme?.primaryColor ||
-              themeConfig?.primaryColor,
+              themeConfig?.secondaryColor,
             ...styleConfig?.MultiChoice?.style,
           }}
           selectedStyle={{
+            borderColor:
+              styleConfig?.MultiChoice?.selectedStyle?.borderColor,
             color:
               styleConfig?.MultiChoice?.selectedStyle?.color ||
-              questThemeData?.accentColor ||
-              BrandTheme?.accentColor ||
+              BrandTheme?.primaryColor ||
               themeConfig?.primaryColor,
-            ...styleConfig?.MultiChoice?.selectedStyle,
+            accentColor:
+              styleConfig?.MultiChoice?.selectedStyle?.accentColor ||
+              questThemeData?.accentColor,
+            ...styleConfig?.SingleChoice?.selectedStyle,
           }}
         />
       </div>
@@ -901,18 +905,20 @@ function OnBoarding(props: QuestLoginProps) {
         {customComponentPositions == index + 1 && (
           <div style={{ paddingBottom: "12px" }}>{customComponents}</div>
         )}
-        <Label
-          htmlFor="textAreaInput"
-          style={{
-            color:
-              styleConfig?.Label?.color ||
-              BrandTheme?.primaryColor ||
-              themeConfig?.primaryColor,
-            ...styleConfig?.Label,
-          }}
-        >
-          {`${question} ${!!required ? "*" : ""}`}
-        </Label>
+        {(styleConfig?.MultiChoice?.isLabel !== false) &&
+          <Label
+            htmlFor="textAreaInput"
+            style={{
+              color:
+                styleConfig?.Label?.color ||
+                BrandTheme?.primaryColor ||
+                themeConfig?.primaryColor,
+              ...styleConfig?.Label,
+            }}
+          >
+            {`${question} ${!!required ? "*" : ""}`}
+          </Label>
+        }
         <MultiChoiceTwo
           options={options}
           checked={!!answer[actionId] && answer[actionId]}
@@ -1006,16 +1012,16 @@ function OnBoarding(props: QuestLoginProps) {
         apisecret: apiSecret,
         userId:
           !!externalUserId &&
-          !!questUserId &&
-          !!questUserToken &&
-          externalUserId == uniqueUserId
+            !!questUserId &&
+            !!questUserToken &&
+            externalUserId == uniqueUserId
             ? questUserId
             : userId,
         token:
           !!externalUserId &&
-          !!questUserId &&
-          !!questUserToken &&
-          externalUserId == uniqueUserId
+            !!questUserId &&
+            !!questUserToken &&
+            externalUserId == uniqueUserId
             ? questUserToken
             : token,
       };
@@ -1166,109 +1172,109 @@ function OnBoarding(props: QuestLoginProps) {
 
             {!!designState && designState.length > 0
               ? designState[currentPage].map((num: number) =>
-                  formdata[num - 1]?.type == "USER_INPUT_TEXT"
+                formdata[num - 1]?.type == "USER_INPUT_TEXT"
+                  ? normalInput(
+                    formdata[num - 1]?.question || "",
+                    formdata[num - 1]?.required || false,
+                    formdata[num - 1].actionId || "",
+                    num - 1,
+                    formdata[num - 1]?.placeholder ||
+                    formdata[num - 1]?.question ||
+                    "",
+                    "text"
+                  )
+                  : formdata[num - 1]?.type == "USER_INPUT_EMAIL"
                     ? normalInput(
-                        formdata[num - 1]?.question || "",
-                        formdata[num - 1]?.required || false,
-                        formdata[num - 1].actionId || "",
-                        num - 1,
-                        formdata[num - 1]?.placeholder ||
-                          formdata[num - 1]?.question ||
-                          "",
-                        "text"
-                      )
-                    : formdata[num - 1]?.type == "USER_INPUT_EMAIL"
-                    ? normalInput(
-                        formdata[num - 1]?.question || "",
-                        formdata[num - 1]?.required || false,
-                        formdata[num - 1].actionId || "",
-                        num - 1,
-                        formdata[num - 1]?.placeholder ||
-                          formdata[num - 1]?.question ||
-                          "",
-                        "email"
-                      )
+                      formdata[num - 1]?.question || "",
+                      formdata[num - 1]?.required || false,
+                      formdata[num - 1].actionId || "",
+                      num - 1,
+                      formdata[num - 1]?.placeholder ||
+                      formdata[num - 1]?.question ||
+                      "",
+                      "email"
+                    )
                     : formdata[num - 1]?.type == "USER_INPUT_PHONE"
-                    ? normalInput(
+                      ? normalInput(
                         formdata[num - 1]?.question || "",
                         formdata[num - 1]?.required || false,
                         formdata[num - 1].actionId || "",
                         num - 1,
                         formdata[num - 1]?.placeholder ||
-                          formdata[num - 1]?.question ||
-                          "",
+                        formdata[num - 1]?.question ||
+                        "",
                         "number"
                       )
-                    : formdata[num - 1]?.type == "USER_INPUT_TEXTAREA"
-                    ? textAreaInput(
-                        formdata[num - 1]?.question || "",
-                        formdata[num - 1]?.required || false,
-                        formdata[num - 1].actionId || "",
-                        num - 1,
-                        formdata[num - 1]?.placeholder ||
-                          formdata[num - 1]?.question ||
-                          ""
-                      )
-                    : formdata[num - 1]?.type == "USER_INPUT_DATE"
-                    ? dateInput(
-                        formdata[num - 1]?.question || "",
-                        formdata[num - 1]?.required || false,
-                        formdata[num - 1].actionId || "",
-                        num - 1,
-                        formdata[num - 1]?.placeholder ||
-                          formdata[num - 1]?.question ||
-                          ""
-                      )
-                    : formdata[num - 1]?.type == "USER_INPUT_SINGLE_CHOICE"
-                    ? !!singleChoose &&
-                      singleChoiceTwo(
-                        formdata[num - 1].options || [],
-                        formdata[num - 1]?.question || "",
-                        formdata[num - 1]?.required || false,
-                        formdata[num - 1].actionId || "",
-                        num - 1,
-                        formdata[num - 1]?.manualInput,
-                        singleChoose
-                      )
-                    : formdata[num - 1]?.type == "USER_INPUT_MULTI_CHOICE"
-                    ? !!multiChoice && multiChoice == "modal2"
-                      ? multiChoiceTwo(
-                          formdata[num - 1].options || [],
+                      : formdata[num - 1]?.type == "USER_INPUT_TEXTAREA"
+                        ? textAreaInput(
                           formdata[num - 1]?.question || "",
                           formdata[num - 1]?.required || false,
                           formdata[num - 1].actionId || "",
-                          num - 1
+                          num - 1,
+                          formdata[num - 1]?.placeholder ||
+                          formdata[num - 1]?.question ||
+                          ""
                         )
-                      : multiChoiceOne(
-                          formdata[num - 1].options || [],
-                          formdata[num - 1]?.question || "",
-                          formdata[num - 1]?.required || false,
-                          formdata[num - 1].actionId || "",
-                          num - 1
-                        )
-                    : null
-                )
+                        : formdata[num - 1]?.type == "USER_INPUT_DATE"
+                          ? dateInput(
+                            formdata[num - 1]?.question || "",
+                            formdata[num - 1]?.required || false,
+                            formdata[num - 1].actionId || "",
+                            num - 1,
+                            formdata[num - 1]?.placeholder ||
+                            formdata[num - 1]?.question ||
+                            ""
+                          )
+                          : formdata[num - 1]?.type == "USER_INPUT_SINGLE_CHOICE"
+                            ? !!singleChoose &&
+                            singleChoiceTwo(
+                              formdata[num - 1].options || [],
+                              formdata[num - 1]?.question || "",
+                              formdata[num - 1]?.required || false,
+                              formdata[num - 1].actionId || "",
+                              num - 1,
+                              formdata[num - 1]?.manualInput,
+                              singleChoose
+                            )
+                            : formdata[num - 1]?.type == "USER_INPUT_MULTI_CHOICE"
+                              ? !!multiChoice && multiChoice == "modal2"
+                                ? multiChoiceTwo(
+                                  formdata[num - 1].options || [],
+                                  formdata[num - 1]?.question || "",
+                                  formdata[num - 1]?.required || false,
+                                  formdata[num - 1].actionId || "",
+                                  num - 1
+                                )
+                                : multiChoiceOne(
+                                  formdata[num - 1].options || [],
+                                  formdata[num - 1]?.question || "",
+                                  formdata[num - 1]?.required || false,
+                                  formdata[num - 1].actionId || "",
+                                  num - 1
+                                )
+                              : null
+              )
               : formdata?.map((data, index) =>
-                  data.type == "USER_INPUT_TEXT"
+                data.type == "USER_INPUT_TEXT"
+                  ? normalInput(
+                    data?.question || "",
+                    data?.required || false,
+                    data.actionId || "",
+                    index,
+                    data?.placeholder || data?.question || "",
+                    "text"
+                  )
+                  : data.type == "USER_INPUT_EMAIL"
                     ? normalInput(
-                        data?.question || "",
-                        data?.required || false,
-                        data.actionId || "",
-                        index,
-                        data?.placeholder || data?.question || "",
-                        "text"
-                      )
-                    : data.type == "USER_INPUT_EMAIL"
-                    ? normalInput(
-                        data?.question || "",
-                        data?.required || false,
-                        data.actionId || "",
-                        index,
-                        data?.placeholder || data?.question || "",
-                        "email"
-                      )
+                      data?.question || "",
+                      data?.required || false,
+                      data.actionId || "",
+                      index,
+                      data?.placeholder || data?.question || "",
+                      "email"
+                    )
                     : data.type == "USER_INPUT_PHONE"
-                    ? normalInput(
+                      ? normalInput(
                         data?.question || "",
                         data?.required || false,
                         data.actionId || "",
@@ -1276,51 +1282,51 @@ function OnBoarding(props: QuestLoginProps) {
                         data?.placeholder || data?.question || "",
                         "number"
                       )
-                    : data.type == "USER_INPUT_TEXTAREA"
-                    ? textAreaInput(
-                        data?.question || "",
-                        data?.required || false,
-                        data.actionId || "",
-                        index,
-                        data?.placeholder || data?.question || ""
-                      )
-                    : data.type == "USER_INPUT_DATE"
-                    ? dateInput(
-                        data?.question || "",
-                        data?.required || false,
-                        data.actionId || "",
-                        index,
-                        data?.placeholder || data?.question || ""
-                      )
-                    : data.type == "USER_INPUT_SINGLE_CHOICE"
-                    ? !!singleChoose &&
-                      singleChoiceTwo(
-                        data.options || [],
-                        data?.question || "",
-                        data?.required || false,
-                        data.actionId || "",
-                        index,
-                        data?.manualInput,
-                        singleChoose
-                      )
-                    : data.type == "USER_INPUT_MULTI_CHOICE"
-                    ? !!multiChoice && multiChoice == "modal2"
-                      ? multiChoiceTwo(
-                          data.options || [],
+                      : data.type == "USER_INPUT_TEXTAREA"
+                        ? textAreaInput(
                           data?.question || "",
                           data?.required || false,
                           data.actionId || "",
-                          index
+                          index,
+                          data?.placeholder || data?.question || ""
                         )
-                      : multiChoiceOne(
-                          data.options || [],
-                          data?.question || "",
-                          data?.required || false,
-                          data.actionId || "",
-                          index
-                        )
-                    : null
-                )}
+                        : data.type == "USER_INPUT_DATE"
+                          ? dateInput(
+                            data?.question || "",
+                            data?.required || false,
+                            data.actionId || "",
+                            index,
+                            data?.placeholder || data?.question || ""
+                          )
+                          : data.type == "USER_INPUT_SINGLE_CHOICE"
+                            ? !!singleChoose &&
+                            singleChoiceTwo(
+                              data.options || [],
+                              data?.question || "",
+                              data?.required || false,
+                              data.actionId || "",
+                              index,
+                              data?.manualInput,
+                              singleChoose
+                            )
+                            : data.type == "USER_INPUT_MULTI_CHOICE"
+                              ? !!multiChoice && multiChoice == "modal2"
+                                ? multiChoiceTwo(
+                                  data.options || [],
+                                  data?.question || "",
+                                  data?.required || false,
+                                  data.actionId || "",
+                                  index
+                                )
+                                : multiChoiceOne(
+                                  data.options || [],
+                                  data?.question || "",
+                                  data?.required || false,
+                                  data.actionId || "",
+                                  index
+                                )
+                              : null
+              )}
             {formdata.length > 0 &&
               (!!designState && designState.length > 1 ? (
                 controlBtnType == "Buttons" ? (
@@ -1486,14 +1492,14 @@ function OnBoarding(props: QuestLoginProps) {
           {formdata && showFooter && (
             <QuestLabs
               style={{
-              ...{
-                background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
-                  styleConfig?.Form?.backgroundColor || 
-                  styleConfig?.Form?.background ||
-                  BrandTheme?.background ||
-                  themeConfig?.backgroundColor,
-              },
-              ...styleConfig?.Footer?.FooterStyle,
+                ...{
+                  background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                    styleConfig?.Form?.backgroundColor ||
+                    styleConfig?.Form?.background ||
+                    BrandTheme?.background ||
+                    themeConfig?.backgroundColor,
+                },
+                ...styleConfig?.Footer?.FooterStyle,
 
               }}
               textStyle={styleConfig?.Footer?.FooterText}

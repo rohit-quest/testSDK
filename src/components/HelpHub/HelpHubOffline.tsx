@@ -52,6 +52,9 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
   );
   const [entityImage, setEntityImage]=useState<string>("");
   const [entityName, setEntityName]=useState<string>("");
+  const [chat, setChat] = useState<any>([])
+  const [filterChat, setFilterChat] = useState<any>([])
+  const [sendAutoMessage, setSendAutoMessage] = useState<string>()
 
   useEffect(() => {
     setTaskStatus(
@@ -152,6 +155,12 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
                 setShowBottomNavigation={setShowBottomNavigation}
                 entityImage={entityImage || entityLogo}
                 entityName={entityName}
+                chat={chat}
+                setChat={setChat}
+                filterChat={filterChat}
+                setFilterChat={setFilterChat}
+                sendAutoMessage={sendAutoMessage}
+                setSendAutoMessage={setSendAutoMessage}
               />
             ) : (
               ""

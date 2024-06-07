@@ -72,7 +72,8 @@ interface GamifiedQuizProps {
   questions?: number;
   setQuestions?: any;
   questionsPerSection?: number;
-  variation?: string
+  variation?: string;
+  isButtonDisabled?: boolean;
 }
 
 interface FormData {
@@ -106,7 +107,8 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
   questionsPerSection = 2,
   functionOnSubmit,
   feedbackContent,
-  variation
+  variation,
+  isButtonDisabled
 }) => {
   const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(
     QuestContext.Context
@@ -359,7 +361,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
 
   const MultiChoice = ({ value }: { value: FormData }) => {
     return (
-      <div className="gamified-quiz-header-ques-options">
+      <div className="gamified-quiz-header-ques-options multi-option">
         {value?.options.map((option, index) => {
           const SelectedBorder = {
             border: `2px solid ${styleConfig?.OptionsSelectedColor?.color}`,
@@ -1050,7 +1052,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                             formSubmitHandler();
                           }
                         }}
-                        disabled={!goToNextSection}
+                        disabled={isButtonDisabled ? false : !goToNextSection}
                         className="q-onb-main-btn2"
                         style={{
                           font: "",
@@ -1135,7 +1137,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                             formSubmitHandler();
                           }
                         }}
-                        disabled={!goToNextSection}
+                        disabled={isButtonDisabled ? false : !goToNextSection}
                         className="q-onb-main-btn2"
                         style={{
                           font: "",

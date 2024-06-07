@@ -690,8 +690,6 @@ const FeedbackWorkflow: React.FC<feedbackCompProps> = ({
   
       try {
         const response = await axios.get(capture, { responseType: 'blob' });
-  
-        // Create a Blob from the response data
         const blob = new Blob([response.data], { type: 'image/jpeg' });
   
         // Create a File object from the Blob
