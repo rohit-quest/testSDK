@@ -55,6 +55,7 @@ import WalkThrough from './src/components/Walkthrough/Walkthrough';
 import SpinTheWheel from './src/components/SpinTheWheel/SpinTheWheel';
 import DailyStreak from './src/components/Streak/DailyStreak';
 import { CrossSelling } from "./src/components/expansion/CrossSelling"
+import { CrossSellingOffline } from "./src/components/expansion/CrossSellingOffline"
 import QuestMOdal from './src/components/Modals/Modal';
 import TutorialScreen from "./src/components/TutorialScreen/Tutorial";
 import { Referral } from "./src/components/expansion/ReferEarn";
@@ -108,6 +109,7 @@ export {
     SpinTheWheel,
     DailyStreak,
     CrossSelling,
+    CrossSellingOffline,
     QuestMOdal,
     TutorialScreen,
     OfflineComponent as TutorialScreenOffline,
