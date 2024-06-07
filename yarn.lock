@@ -2664,10 +2664,10 @@ muggle-string@^0.3.1:
   resolved "https://registry.npmjs.org/muggle-string/-/muggle-string-0.3.1.tgz"
   integrity sha512-ckmWDJjphvd/FvZawgygcUeQCxzvohjFO5RxTjj4eq8kw359gFF3E1brjfI+viLMxss5JrHTDRHZvu2/tuy0Qg==
 
-multiroute-tour-navigator@^1.0.12:
-  version "1.0.12"
-  resolved "https://registry.npmjs.org/multiroute-tour-navigator/-/multiroute-tour-navigator-1.0.12.tgz"
-  integrity sha512-lq+y+yqGjhbq2dX/6JIGL2fCqUs0TQFDk12ARCLZd3zymNFglstVT3eKFrrXbveiIJrovcr10QcLYwUFPLoQDg==
+multiroute-tour-navigator@^1.0.13:
+  version "1.0.13"
+  resolved "https://registry.npmjs.org/multiroute-tour-navigator/-/multiroute-tour-navigator-1.0.13.tgz"
+  integrity sha512-yBYifMju8u9rGFbx/Ggb2EmsOTlwOp5YSRcQgBVhGrPukDz3cfakaKVzICjwXLg/euriaMvefs6mk/Ifr1qTSA==
   dependencies:
     react "^18.2.0"
     react-dom "^18.2.0"
@@ -3505,10 +3505,10 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-tour-navigator@^1.0.12, tour-navigator@^1.0.13:
-  version "1.0.13"
-  resolved "https://registry.npmjs.org/tour-navigator/-/tour-navigator-1.0.13.tgz"
-  integrity sha512-NJTamKRQsVwrQUJp4Ukczk6Jq6h0MSXKQX2e6cZk1G1vVaRBsl8aYrHg1VdIemYBOIhR4rVamingT6hyf9sTMg==
+tour-navigator@^1.0.14:
+  version "1.0.14"
+  resolved "https://registry.npmjs.org/tour-navigator/-/tour-navigator-1.0.14.tgz"
+  integrity sha512-Hwyf0L6k9NwGo8gwB0e+1+4Q2n5zXkMU/TzzjDHkSfj/LKe8wQtAOWg6IIN7DLUotcJhSpe2sQrdqWDALkOEuw==
   dependencies:
     react "^18.3.1"
     react-dom "^18.3.1"
