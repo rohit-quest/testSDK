@@ -3505,10 +3505,10 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-tour-navigator@^1.0.14, tour-navigator@^1.0.15:
-  version "1.0.15"
-  resolved "https://registry.npmjs.org/tour-navigator/-/tour-navigator-1.0.15.tgz"
-  integrity sha512-aena0GfCmVtlSc+jKGK1wTqFcAWfV3NWVn1xAlU3MZM73tAcJHppvrT+snVkWkTvhu8NmG6/I9vfNAQv2AxViA==
+tour-navigator@^1.0.14, tour-navigator@^1.0.16:
+  version "1.0.16"
+  resolved "https://registry.npmjs.org/tour-navigator/-/tour-navigator-1.0.16.tgz"
+  integrity sha512-1qgiDfkbrzRUzS09giZeAzl/Z35uJ2eecpBpQn0XDI51x5AgGLkTXA6PbKCo8ETfYZXkQbSlUaov3lTCYxsj5Q==
   dependencies:
     react "^18.3.1"
     react-dom "^18.3.1"
