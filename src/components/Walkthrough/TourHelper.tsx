@@ -1,23 +1,12 @@
 import './tourHelper.css'
 import { CSSProperties } from 'react'
 import { WalkthroughHelperProps } from './Walkthrough';
-
-interface TourHelperProps extends WalkthroughHelperProps {
-    headerStyle?: CSSProperties;
-    descriptionStyle?: CSSProperties;
-    helperBackgroundStyle?: CSSProperties;
-    helperStyle?: CSSProperties;
-    footerStyle?: CSSProperties;
-    firstButtonStyle?: CSSProperties;
-    lastButtonStyle?: CSSProperties;
-    imgStyle?: CSSProperties,
-    onComplete?: () => void
-}
+import { TourHelperProps } from './types';
 
 export default function TourHelper({
     steps, 
     currentStep, 
-    currentStepIndex, 
+    currentStepIndex,
     prev, 
     next,
     headerStyle,
@@ -82,9 +71,9 @@ export default function TourHelper({
             </p>
             <div className='tour-content-actions'>
                 {
-                    isFirst ? null:<button onClick={prev} style={{...firstButtonStyle}}>Back</button>
+                    isFirst ? null:<button onClick={prev} style={{...firstButtonStyle}}><span>Back</span></button>
                 }
-                <button onClick={handleNext} style={{...lastButtonStyle}}>{isLast ? 'Get Started':'Continue'}</button>
+                <button onClick={handleNext} className='tour-helper-button' style={{...lastButtonStyle}}><span>{isLast ? 'Get Started':'Continue'}</span></button>
             </div>
         </div>
         <div className='tour-watermark' style={footerStyle}>

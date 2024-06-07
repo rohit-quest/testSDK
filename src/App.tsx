@@ -41,7 +41,7 @@ import DailyStreak from "./components/Streak/DailyStreak";
 import ChallengesPreview from "./components/Challenges/ChallengesPreview";
 import GamifiedQuizPreview from "./components/GamifiedQuiz/GamifiedQuizPreview";
 import { HelpChat } from "./components/HelpCenter/HelpChat";
-import Walkthrough from "./components/Walkthrough/Walkthrough";
+import Walkthrough, { Align, Position } from "./components/Walkthrough/Walkthrough";
 import showToast from "./components/toast/toastService";
 import Toast from "./components/toast2/Toast";
 import InlineFeedbackPreview from "./components/InlineFeedback/Preview";
@@ -872,34 +872,41 @@ function App() {
         {/* <SreakPreview online /> */}
         {/* <InlineFeedbackPreview online={false} /> */}
 
-        {/* <Walkthrough
+        <h1 className="h1" style={{width: 100, margin: 200, marginLeft: 400}}>
+              Hello
+        </h1>
+        <p className="p">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias id assumenda sit quas? Reiciendis, et, corporis natus expedita vitae porro rem soluta ipsam facere corrupti voluptates quis laborum accusamus minus.
+        </p>
+        <button className="button" style={{position: 'absolute', right: '50%', top: 1000}}>
+          NEXT
+        </button>
+
+        <Walkthrough
             isOpen={isOpen}
             id="app"
             steps={[
               {
-                selector: '.gs-single-card-dropDown',
+                selector: '.h1',
                 data: {title: 'First Tab', description: 'Click on this'},
-                // position: Position.RIGHT,
-                // align: Align.END
               },
               {
-                selector: '.gs-heading-div',
+                selector: '.p',
                 data: {title: 'Second Tab', description: 'Click on this'},
-                // align: Align.CENTER
+              },
+              {
+                selector: '.button',
+                data: {title: 'Second Tab', description: 'Click on this'},
+                align: Align.END,
+                position: Position.LEFT
               }
             ]}
-            styleConfig={{
-              Form: {background: 'green'},
-              Background: {background: 'red'}, 
-              Footer: {background: 'blue'}
-            }}
             onComplete={() => {alert('Welcome to the page'); setIsOpen(false)}}
             onRequestClose={() => setIsOpen(false)}
             onAfterOpen={() => document.documentElement.style.overflow = 'hidden'}
             onBeforeClose={() => document.documentElement.style.overflow = ''}
-
-        />  */}
-
+            tooltip
+        /> 
       </QuestProvider>
       {/* < div style={{height: 1999}}/> */}
     </div>

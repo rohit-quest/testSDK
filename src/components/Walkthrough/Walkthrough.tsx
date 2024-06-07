@@ -2,16 +2,15 @@ import MultiRouteTour from "multiroute-tour-navigator";
 import { MultiRouteTourProps } from "multiroute-tour-navigator/lib/MultiRouteTour";
 import { Align, ClientBoundingRect, HelperProps, Position, TourNavigatorProps, OverlayProps } from "tour-navigator/lib/TourNavigator/types";
 import TourHelper from "./TourHelper";
+import TourHelperTooltip from "./TourHelperTooltip";
 import TourNavigator from "tour-navigator";
 import { CSSProperties, useContext } from "react";
 import Overlay from "./Overlay";
 import QuestWrapper from "../QuestWrapper";
 
-export enum WalkThroughType {
-    SINGLEPAGE = 'singlepage',
-    MULTIPAGE = 'multipage'
-}
-  
+type WalkThroughType = 'singlepage' | 'multipage'
+
+
 type StyleConfig = {
     Form?: CSSProperties;
     Background?: CSSProperties;
@@ -21,18 +20,23 @@ type StyleConfig = {
     FirstButton?: CSSProperties;
     LastButton?: CSSProperties;
     Image?: CSSProperties;
-    Overlay?: CSSProperties
+    Overlay?: CSSProperties;
+    ArrowStyle: CSSProperties;
 }
 
 interface WalkThroughProps extends MultiRouteTourProps, TourNavigatorProps {
     type?: WalkThroughType;
+    tooltip?: boolean;
+    hideArrow?: boolean;
     onComplete?: () => void;
     styleConfig?: StyleConfig;
 }
 
 export default function Walkthrough({ 
-    type = WalkThroughType.SINGLEPAGE,
+    type = 'singlepage',
+    tooltip = false,
     onComplete,
+    hideArrow,
     styleConfig,
     ...props 
 }: WalkThroughProps): JSX.Element {
@@ -56,25 +60,31 @@ export default function Walkthrough({
         />
     ):undefined
 
-    const CustomTourHelper = (helperProps: HelperProps) => (
-        <TourHelper
-            {...helperProps}
-            helperStyle={{
-                ...themeConfigCSS,
-                ...styleConfig?.Form
-            }}
-            headerStyle={styleConfig?.Heading}
-            descriptionStyle={styleConfig?.Description}
-            helperBackgroundStyle={styleConfig?.Background}
-            footerStyle={styleConfig?.Footer}
-            firstButtonStyle={styleConfig?.FirstButton}
-            lastButtonStyle={styleConfig?.LastButton}
-            imgStyle={styleConfig?.Image}
-            onComplete={onComplete}
-        />
-    )
+    const CustomTourHelper = (helperProps: HelperProps) => {
+        const TourHelperComponent = tooltip ? TourHelperTooltip:TourHelper
+    
+        return (
+            <TourHelperComponent
+                {...helperProps}
+                helperStyle={{
+                    ...themeConfigCSS,
+                    ...styleConfig?.Form
+                }}
+                hideArrow={hideArrow}
+                arrowStyle={styleConfig?.ArrowStyle}
+                headerStyle={styleConfig?.Heading}
+                descriptionStyle={styleConfig?.Description}
+                helperBackgroundStyle={styleConfig?.Background}
+                footerStyle={styleConfig?.Footer}
+                firstButtonStyle={styleConfig?.FirstButton}
+                lastButtonStyle={styleConfig?.LastButton}
+                imgStyle={styleConfig?.Image}
+                onComplete={onComplete}
+            />
+        )
+    }
 
-    if (type == WalkThroughType.SINGLEPAGE) {
+    if (type == 'singlepage') {
         return (
             <TourNavigator
                 {...props}
