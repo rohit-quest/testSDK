@@ -697,10 +697,10 @@ function App() {
           userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
           /> */}
 
-        <HelpHubPreview online={false} />
+        {/* <HelpHubPreview online={false} /> */}
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
-        {/* <GamifiedQuizPreview online={true} /> */}
+        {/* <GamifiedQuizPreview online={false} /> */}
         {/* <GamifiedQuizPreview online={true} /> */}
         {/* <SurveyPreview online={false}/> */}
         {/* 
@@ -784,7 +784,7 @@ function App() {
 
         {/* <ReferEarnPreview/> */}
 
-        {/* <CrossSellingPreview/> */}
+        <CrossSellingPreview online={true}/>
 
         {/* <TourPreview /> */}
 
@@ -872,7 +872,7 @@ function App() {
         {/* <SreakPreview online /> */}
         {/* <InlineFeedbackPreview online={false} /> */}
 
-        <h1 className="h1" style={{width: 100, margin: 200, marginLeft: 400}}>
+        {/* <h1 className="h1" style={{width: 100, margin: 200, marginLeft: 400}}>
               Hello
         </h1>
         <p className="p">
@@ -880,9 +880,9 @@ function App() {
         </p>
         <button className="button" style={{position: 'absolute', right: '50%', top: 1000}}>
           NEXT
-        </button>
+        </button> */}
 
-        <Walkthrough
+        {/* <Walkthrough
             isOpen={isOpen}
             id="app"
             steps={[
@@ -906,7 +906,7 @@ function App() {
             onAfterOpen={() => document.documentElement.style.overflow = 'hidden'}
             onBeforeClose={() => document.documentElement.style.overflow = ''}
             tooltip
-        /> 
+        />  */}
       </QuestProvider>
       {/* < div style={{height: 1999}}/> */}
     </div>

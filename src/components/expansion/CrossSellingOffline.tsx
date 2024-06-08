@@ -61,6 +61,7 @@ export interface referProp {
     BrandTheme?: BrandTheme;
     QuestThemeData?: QuestThemeData;
     Icon?: 'gift' | 'percentage';
+    isEmail?: boolean;
     styleConfig?: {
         Form?: CSSProperties,
         BackgroundWrapper?: CSSProperties,
@@ -115,6 +116,7 @@ export const CrossSellingOffline = ({
     QuestThemeData,
     showFooter = true,
     variation,
+    isEmail = false,
     Icon = 'gift'
 }: referProp) => {
     const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(QuestContext.Context);
@@ -163,14 +165,14 @@ export const CrossSellingOffline = ({
             setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
             return;
         }
-    
+
         const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
         const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-    
+
         setTimeLeft({ days, hours, minutes, seconds });
-    
+
         requestAnimationFrame(animate);
     };
     let GeneralFunctions = new General('mixpanel', apiType);
@@ -190,6 +192,18 @@ export const CrossSellingOffline = ({
         claimRewardHandler(email)
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+    const validateEmail = (inputValue: string) => {
+        if (inputValue) {
+            let value = inputValue.trim();
+            return emailRegex.test(value);
+        }
+        else {
+            return false
+        }
+    };
 
 
     const jsx = (
@@ -223,23 +237,25 @@ export const CrossSellingOffline = ({
                         <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor || BrandTheme?.secondaryColor }}>Seconds</div>
                     </div>
                 </div>
-                <div style={{ width: "100%" }}>
-                    <Label
-                        htmlFor={"normalInput"}
-                        children={'Email Address'}
-                        style={styleConfig?.Label}
-                    />
-                    <Input
-                        type="email"
-                        style={styleConfig?.Input}
-                        placeholder={'Enter your email address'}
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        emailtext={styleConfig?.EmailError?.text == undefined ? "This is not a valid email" : styleConfig?.EmailError?.text}
-                        emailErrorStyle={styleConfig?.EmailError?.errorStyle}
+                {isEmail &&
+                    <div style={{ width: "100%" }}>
+                        <Label
+                            htmlFor={"normalInput"}
+                            children={'Email Address'}
+                            style={styleConfig?.Label}
+                        />
+                        <Input
+                            type="email"
+                            style={styleConfig?.Input}
+                            placeholder={'Enter your email address'}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            emailtext={styleConfig?.EmailError?.text == undefined ? "This is not a valid email" : styleConfig?.EmailError?.text}
+                            emailErrorStyle={styleConfig?.EmailError?.errorStyle}
 
-                    />
-                </div>
+                        />
+                    </div>
+                }
                 <PrimaryButton
                     style={{
                         background: styleConfig?.PrimaryButton?.background || questThemeData?.buttonColor || brandTheme?.buttonColor || themeConfig?.buttonColor,
@@ -250,7 +266,7 @@ export const CrossSellingOffline = ({
                         handleEmail(email)
                     }}
                     className="q_share_link_button"
-                    disabled={!email}
+                    disabled={isEmail == false ? false : !validateEmail(email)}
                 >
                     {shareButtonText}
                 </PrimaryButton>
@@ -292,33 +308,35 @@ export const CrossSellingOffline = ({
         </div>
     );
 
-    if (gradientBackground) return <div className="q_gradient_background" style={{
-        fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
-        ...styleConfig?.BackgroundWrapper
-    }}>
-        <div className="q_gradient_head">
-            <div className="q_gradient_heading">{primaryHeading}</div>
-            <div className="q_gradient_description">{primaryDescription}</div>
-        </div>
-        {jsx}
-        <div className="q_gradient_quest_powered">
-            {showFooter &&
-                <QuestLabs
-                    style={{
-                        ...{
-                            background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
-                                styleConfig?.Form?.backgroundColor ||
-                                styleConfig?.Form?.background ||
-                                BrandTheme?.background ||
-                                themeConfig?.backgroundColor,
-                        },
-                        ...styleConfig?.Footer?.FooterStyle,
+    if (gradientBackground) return <div style={{ background: 'white',borderRadius: styleConfig?.Form?.borderRadius || questThemeData?.borderRadius || BrandTheme?.borderRadius || '10px' }}>
+        <div className="q_gradient_background" style={{
+            fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+            ...styleConfig?.BackgroundWrapper
+        }}>
+            <div className="q_gradient_head">
+                <div className="q_gradient_heading">{primaryHeading}</div>
+                <div className="q_gradient_description">{primaryDescription}</div>
+            </div>
+            {jsx}
+            <div className="q_gradient_quest_powered">
+                {showFooter &&
+                    <QuestLabs
+                        style={{
+                            ...{
+                                background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                                    styleConfig?.Form?.backgroundColor ||
+                                    styleConfig?.Form?.background ||
+                                    BrandTheme?.background ||
+                                    themeConfig?.backgroundColor,
+                            },
+                            ...styleConfig?.Footer?.FooterStyle,
 
-                    }}
-                    textStyle={styleConfig?.Footer?.FooterText}
-                    iconStyle={styleConfig?.Footer?.FooterIcon}
-                />
-            }
+                        }}
+                        textStyle={styleConfig?.Footer?.FooterText}
+                        iconStyle={styleConfig?.Footer?.FooterIcon}
+                    />
+                }
+            </div>
         </div>
     </div>
     return jsx;

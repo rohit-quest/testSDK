@@ -869,8 +869,8 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                           ? sectionSubHeading[sectionNo]
                           : "Fill out the Details"}
                       </div>
-                      {sectionHeading?.length > 0 &&
-                      sectionHeading[sectionNo] ? (
+                      {(sectionHeading?.length > 0 &&
+                      sectionHeading[sectionNo]) && (
                         <div
                           className="question"
                           style={{
@@ -882,18 +882,20 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                         >
                           {sectionHeading[sectionNo] || "Fill out the Details"}
                         </div>
-                      ) : (
-                        <div
-                          className="question"
-                          style={{
-                            color:
-                              styleConfig?.Question?.color ||
-                              themeConfig?.primaryColor,
-                            fontFamily: themeConfig?.fontFamily,
-                          }}
-                        >
-                          {sectionHeading[sectionNo] || "Fill out the Details"}
-                        </div>
+                      // ) : (
+                      //   <div
+                      //     className="question"
+                      //     style={{
+                      //       color:
+                      //         styleConfig?.Question?.color ||
+                      //         themeConfig?.primaryColor,
+                      //       fontFamily: themeConfig?.fontFamily,
+                      //     }}
+                      //   >
+                      //     {sectionHeading[sectionNo] || "Fill out the Details"}
+                      //   </div>
+                      // )
+                      
                       )}
                     </div>
 
