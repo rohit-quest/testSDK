@@ -263,6 +263,7 @@ function GetStarted({
         };
         fetchData(header);
 
+      } else if (!!uniqueUserId) {
         axios
           .post(`${BACKEND_URL}api/users/external/login`, body, { headers })
           .then((res) => {
@@ -277,6 +278,7 @@ function GetStarted({
             });
             cookies.set("questUserId", userId, { path: "/", expires: date });
             cookies.set("questUserToken", token, { path: "/", expires: date });
+            fetchData(header);
           })
           .catch((error) => {
             GeneralFunctions.captureSentryException(error);

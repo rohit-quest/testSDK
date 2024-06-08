@@ -107,6 +107,25 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
     }, 100);
   };
 
+  const wrapLinksInText = (text: string) => {
+    const urlRegex = /(\bhttps?:\/\/[^\s/$.?#].[^\s]*)/gi;
+    
+    const parts = text.split(urlRegex);
+  
+    const wrappedText = parts.map((part, index) => {
+      if (urlRegex.test(part)) {
+        return (
+          <a key={index} href={part} target="_blank">
+            {part}
+          </a>
+        );
+      }
+      return part;
+    });
+  
+    return <>{wrappedText}</>;
+  };
+
   return (
     <>
       {!showOneUpdate && (
@@ -220,7 +239,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                               ...styleConfig?.Updates?.Card?.SubHeading,
                             }}
                           >
-                            {value?.description}
+                            {wrapLinksInText(value?.description)}
                           </div>
                         </div>
                       </div>
@@ -283,7 +302,7 @@ const HelpHubUpdates = (props: HelpHubUpdatesTypes) => {
                               // ...styleConfig?.Home?.Heading,
                             }}
                           >
-                            {value?.description}
+                            {wrapLinksInText(value?.description)}
                           </div>
                         </div>
                       </div>

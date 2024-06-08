@@ -3,7 +3,7 @@ import helpIcon from "../../assets/images/helphubMessge.svg";
 import "./HelpHub.css";
 import QuestContext from "../QuestWrapper";
 import HelphubSvg from "./HelphubSvg";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import HelpHubHome from "./HelpHubHome";
 import HelpHubChat from "./HelpHubChat";
 import HelpHubHelp from "./HelpHubHelp";
@@ -11,9 +11,10 @@ import HelpHubTasks from "./HelpHubTasks";
 import HelpHubUpdates from "./HelpHubUpdates";
 import {
   HelpHubPropsOffline,
+  MessageTypes,
   QuestCriteriaWithStatusType,
 } from "./HelpHub.type";
-import { getEntityDetails } from "./Helphub.service";
+import { getEntityDetails, getMessages } from "./Helphub.service";
 import config from "../../config";
 
 const HelpHubOffline = (props: HelpHubPropsOffline) => {
@@ -26,7 +27,9 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
     showFooter,
     ChildQuest = [],
     ParentQuest,
-    entityLogo
+    entityLogo,
+    defaultAutoPopupMessages,
+    popupOpenDelay = 2,
   } = props;
 
   const { apiKey, entityId, featureFlags, apiType, themeConfig } = useContext(
@@ -50,11 +53,75 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
   const [updateData, setUpdateData] = useState<QuestCriteriaWithStatusType[]>(
     []
   );
+  const [chat, setChat] = useState<MessageTypes[]>([]);
+  const [filterChat, setFilterChat] = useState<MessageTypes[]>([]);
+  const [fetchData, setFetchData] = useState<boolean>(false);
   const [entityImage, setEntityImage]=useState<string>("");
   const [entityName, setEntityName]=useState<string>("");
-  const [chat, setChat] = useState<any>([])
-  const [filterChat, setFilterChat] = useState<any>([])
-  const [sendAutoMessage, setSendAutoMessage] = useState<string>()
+  const [sendAutoMessage, setSendAutoMessage] = useState<string>("")
+  const [autoPopupMessage, setAutoPopupMessage] = useState<boolean>(false);
+  const helpHubRef = useRef(helpHub);
+
+  useEffect(() => {
+    if (helpHub == true) {
+      helpHubRef.current = helpHub;
+    }
+  }, [helpHub]);
+
+  useEffect(() => {
+    if (!!defaultAutoPopupMessages?.length) {
+      const timer = setTimeout(() => {
+        if (helpHubRef.current === false) {
+          setAutoPopupMessage(true);
+        }
+      }, popupOpenDelay * 1000 );
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (helpHub == true) {
+      setAutoPopupMessage(false);
+    }
+  }, [helpHub])
+
+  useEffect(() => {
+    if (sendAutoMessage != "") {
+      setHelpHub(true);
+      setSelectedSection("Chat");
+    }
+  }, [sendAutoMessage])
+
+  const filterByLastMessage = (chatData: MessageTypes[]) => {
+    let data = chatData.sort((a, b) => {
+      return new Date(b?.conversations?.timestamp).getTime() - new Date(a?.conversations?.timestamp).getTime();
+    });
+
+    return data;
+  }
+
+  const fetchChat = async () => {
+    setFetchData(true);
+    let getResult: { data: MessageTypes[] } = await getMessages(
+      BACKEND_URL,
+      entityId,
+      userId,
+      token,
+      apiKey,
+      "",
+      "",
+      "",
+      apiType
+    );
+    setChat(filterByLastMessage(getResult?.data));
+    setFilterChat(filterByLastMessage(getResult?.data));
+    setFetchData(false);
+  }
+
+  useEffect(() => {
+    fetchChat();
+  }, [])
+
 
   useEffect(() => {
     setTaskStatus(
@@ -153,14 +220,15 @@ const HelpHubOffline = (props: HelpHubPropsOffline) => {
                 styleConfig={styleConfig}
                 showBottomNavigation={showBottomNavigation}
                 setShowBottomNavigation={setShowBottomNavigation}
-                entityImage={entityImage || entityLogo}
+                entityImage={entityLogo || entityImage}
                 entityName={entityName}
                 chat={chat}
                 setChat={setChat}
                 filterChat={filterChat}
                 setFilterChat={setFilterChat}
                 sendAutoMessage={sendAutoMessage}
-                setSendAutoMessage={setSendAutoMessage}
+                fetchData={fetchData}
+                setFetchData={setFetchData}
               />
             ) : (
               ""

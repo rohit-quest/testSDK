@@ -20,6 +20,7 @@ import TextArea from "../Modules/TextArea.tsx";
 import { SecondaryButton } from "../Modules/SecondaryButton.tsx";
 import { PrimaryButton } from "../Modules/PrimaryButton.tsx";
 import QuestLabs from "../QuestLabs.tsx";
+import General from "../../general.ts";
 
 const Tick = ({fillColor="#6525B3",isActive=false,borderColor="#B9B9B9"}) => isActive?(<svg
     width="16"
@@ -86,19 +87,29 @@ interface QuestLoginProps {
             selectedStyle?: CSSProperties
         },
         Footer? : CSSProperties
-    }
+    },
+    variation?: string;
 }
 
 interface FormData {
     type: string;
     question: string;
     options: Array<string>;
-    criteriaId: string;
+    actionId: string;
+    actionId: string;
     required: boolean;
     placeholder: string;
     linkTitle: string;
     linkUrl: string;
     manualInput: string | boolean;
+}
+
+interface QuestThemeData {
+    accentColor: string;
+    theme: string;
+    borderRadius: string;
+    buttonColor: string;
+    images: string[];
 }
 
 interface Answer {
@@ -115,95 +126,247 @@ function UserProfile(props: QuestLoginProps) {
         customComponentPositions,
         userId,
         token,
-        questId,
+        questId: campaignId,
         loadingTracker,
         setLoading=()=>{},
         uniqueUserId,
         uniqueEmailId,
         styleConfig,
+        variation
     } = props;
 
     // let { design =[] } = props;
     const [formdata, setFormdata] = useState<FormData[] | []>([]);
     const [alreadyFilled, setAlreadyFilled] = useState<boolean>(false);
     const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(QuestContext.Context);
+    const [campaignVariationId, setCampaignVariationId] = useState("");
+    const [questThemeData, setQuestThemeData] = useState<QuestThemeData>({
+        accentColor: "",
+        theme: "",
+        borderRadius: "",
+        buttonColor: "",
+        images: [],
+    });
     const cookies = new Cookies()
 
     let BACKEND_URL = apiType == "STAGING" ? config.BACKEND_URL_STAGING : config.BACKEND_URL
+    let GeneralFunctions = new General("mixpanel", apiType);
+
+    // useEffect(() => {
+    //     if (entityId) {
+    //         // let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
+            
+    //         const headers = {
+    //             apiKey: apiKey,
+    //             apisecret: apiSecret,
+    //             userId: userId,
+    //             token: token, // Replace with your actual token
+    //         };
+            
+    //         getQuestData(userId, headers)
+            
+
+    //         async function getQuestData(userId: string, headers: object) {
+    //             (loadingTracker && setLoading(true));
+    //             const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/summary?userId=${userId}&singleUserReport=true`;
+    //             await axios.get(request, { headers: headers }).then((res: any) => {
+    //                 let response = res.data.summary;
+    //                 let criterias = response?.quest?.eligibilityData?.map(
+    //                     (criteria: {
+    //                         criteriaType: string;
+    //                         metadata: { title: string; options: string[], isOptional: string, placeholder: string, linkActionName: string, linkActionUrl: string, manualInput: string};
+    //                         actionId: string;
+    //                     }) => {
+    //                         return {
+    //                             type: criteria?.criteriaType,
+    //                             question: criteria?.metadata?.title,
+    //                             options: criteria?.metadata?.options || [],
+    //                             actionId: criteria?.actionId,
+    //                             required: !criteria?.metadata?.isOptional,
+    //                             placeholder: criteria?.metadata?.placeholder,
+    //                             linkTitle: criteria?.metadata?.linkActionName || "",
+    //                             linkUrl: criteria?.metadata?.linkActionUrl || "",
+    //                             manualInput: criteria?.metadata?.manualInput || false,
+    //                         };
+    //                     }
+    //                 );
+    //                 setFormdata([...criterias]);
+                    
+    //                 let ansArray: any = {};
+    //                 let userAnswers = !!response?.answers?.length ? response?.answers[0].answers : [];
+    //                 const getAns = (actionId: string) => {
+    //                     let ans = userAnswers.filter((ans: any) => ans.actionId == actionId )
+    //                     if (ans.length > 0) {
+    //                         return ans[0].userAnswer;
+    //                     } else {
+    //                         return false;
+    //                     }
+    //                 }
+    //                 criterias.forEach((criteria: any) => {
+    //                     if (criteria.type == "USER_INPUT_MULTI_CHOICE") {
+    //                         if (!answer[criteria.actionId]) {
+    //                             ansArray[criteria.actionId] = getAns(criteria.actionId) || [];
+    //                         }
+    //                         return;
+    //                     } else {
+    //                         if (!answer[criteria.actionId]) {
+    //                             ansArray[criteria.actionId] = getAns(criteria.actionId) ? getAns(criteria.actionId)[0] : "" || "";
+    //                         }
+    //                         return;
+    //                     }
+    //                 });
+    //                 if (userAnswers.length) {
+    //                     setAlreadyFilled(true);
+    //                 }
+    //                 setAnswer({ ...answer, ...ansArray });
+    //             });
+    //             (loadingTracker && setLoading(false))
+    //         }
+    //     }
+    // }, []);
+
+    const metricApi = (headers: any, body?: {[key: string]: any}) => {
+        const api = async (page: string) => {
+          const url = `${BACKEND_URL}api/entities/${entityId}/metrics/${page}/campaign`
+          const response = await axios.post(url, {campaignId, campaignVariationId, ...body}, {headers})
+          if(response.status && response.data.success) return response
+          throw response.statusText
+        }
+      
+        return {
+          async view(){
+            return api(`onboarding-view`)
+          },
+          async page(pageNumber: number){
+            return api(`onboarding-complete-page-${pageNumber}`)
+          },
+          async complete(){
+            return api(`onboarding-complete`)
+          }
+        }
+      }
 
     useEffect(() => {
-        if (entityId) {
-            // let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
+        GeneralFunctions.fireTrackingEvent("quest_onboarding_loaded", "onboarding");
+    
+        const initialize = async () => {
+          let externalUserId = cookies.get("externalUserId");
+          let questUserId = cookies.get("questUserId");
+          let questUserToken = cookies.get("questUserToken");
+          // let personalUserId = JSON.parse(localStorage.getItem("persana-user") || "{}");
+    
+          const body = {
+            externalUserId: !!uniqueUserId && uniqueUserId,
+            entityId: entityId,
+            email: uniqueEmailId,
+          };
+    
+          let headers = {
+            apiKey: apiKey,
+            apisecret: apiSecret,
+            userId, 
+            token
+          }
+    
+          if (
+            !!externalUserId &&
+            !!questUserId &&
+            !!questUserToken &&
+            externalUserId == uniqueUserId
+          ) {
+            headers.userId = questUserId
+            headers.token = questUserToken
+          }else if(uniqueUserId){
+            const res = await axios.post(`${BACKEND_URL}api/users/external/login`, body, { headers })
             
-            const headers = {
-                apiKey: apiKey,
-                apisecret: apiSecret,
-                userId: userId,
-                token: token, // Replace with your actual token
-            };
-            
-            getQuestData(userId, headers)
-            
-
-            async function getQuestData(userId: string, headers: object) {
-                (loadingTracker && setLoading(true));
-                const request = `${BACKEND_URL}api/entities/${entityId}/quests/${questId}/summary?userId=${userId}&singleUserReport=true`;
-                await axios.get(request, { headers: headers }).then((res: any) => {
-                    let response = res.data.summary;
-                    let criterias = response?.quest?.eligibilityData?.map(
-                        (criteria: {
-                            criteriaType: string;
-                            metadata: { title: string; options: string[], isOptional: string, placeholder: string, linkActionName: string, linkActionUrl: string, manualInput: string};
-                            criteriaId: string;
-                        }) => {
-                            return {
-                                type: criteria?.criteriaType,
-                                question: criteria?.metadata?.title,
-                                options: criteria?.metadata?.options || [],
-                                criteriaId: criteria?.criteriaId,
-                                required: !criteria?.metadata?.isOptional,
-                                placeholder: criteria?.metadata?.placeholder,
-                                linkTitle: criteria?.metadata?.linkActionName || "",
-                                linkUrl: criteria?.metadata?.linkActionUrl || "",
-                                manualInput: criteria?.metadata?.manualInput || false,
-                            };
-                        }
-                    );
-                    setFormdata([...criterias]);
-                    
-                    let ansArray: any = {};
-                    let userAnswers = !!response?.answers?.length ? response?.answers[0].answers : [];
-                    const getAns = (criteriaId: string) => {
-                        let ans = userAnswers.filter((ans: any) => ans.criteriaId == criteriaId )
-                        if (ans.length > 0) {
-                            return ans[0].userAnswer;
-                        } else {
-                            return false;
-                        }
+            let { userId, token } = res.data;
+    
+            const date = new Date();
+            date.setHours(date.getHours() + 12);
+            cookies.set("externalUserId", uniqueUserId, {
+              path: "/",
+              expires: date,
+            });
+            cookies.set("questUserId", userId, { path: "/", expires: date });
+            cookies.set("questUserToken", token, { path: "/", expires: date });
+              
+            headers.userId = userId
+            headers.token = token
+          }
+    
+          const response = await getQuestData(userId, headers)
+          metricApi(headers, {campaignVariationId: response.data.campaignVariationId}).view()
+    
+          // API updated to v2
+          async function getQuestData(userId: string, headers: object): Promise<any> {
+            loadingTracker && setLoading(true);
+            const params = new URLSearchParams();
+            params.set('platform', 'REACT')
+            if(variation) params.set('variation', variation)
+    
+            const request = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}?${params.toString()}`;
+            return await axios
+              .get(request, { headers: headers })
+              .then((res) => {
+                let response = res.data;
+    
+                if (response.data.sdkConfig?.uiProps?.questThemeData) {
+                  setQuestThemeData(response?.data?.sdkConfig?.uiProps?.questThemeData);
+                  if (response.data.sdkConfig?.uiProps?.questThemeData.theme) {
+                    // getTheme(response.data.uiProps.questThemeData.theme) disabled for now
+                  }
+                }
+    
+                setCampaignVariationId(response?.data?.campaignVariationId)
+                let actions = response?.data?.actions?.map(
+                  (action: any) => {
+                    return {
+                      type: action?.actionType,
+                      question: action?.title,
+                      options: action?.options || [],
+                      actionId: action?.actionId,
+                      campaignVariationId: action?.campaignVariationId,
+                      required: action?.isRequired,
+                      placeholder: action?.metadata?.placeholder,
+                      linkTitle: action?.title || "",
+                      linkUrl: action?.metadata?.link || "",
+                      manualInput: Boolean(action?.metadata?.manualInput),
+                      answer: action?.answers || "",
+                    };
+                  }
+                );
+    
+                setFormdata([...actions]);
+                let ansArray: any = {};
+                actions.forEach((action: any) => {
+                    console.log(action)
+                  if (action.type == "USER_INPUT_MULTI_CHOICE") {
+                    if (!answer[action.actionId]) {
+                      ansArray[action.actionId] = action?.answer?.length > 0 ? action.answer : [];
                     }
-                    criterias.forEach((criteria: any) => {
-                        if (criteria.type == "USER_INPUT_MULTI_CHOICE") {
-                            if (!answer[criteria.criteriaId]) {
-                                ansArray[criteria.criteriaId] = getAns(criteria.criteriaId) || [];
-                            }
-                            return;
-                        } else {
-                            if (!answer[criteria.criteriaId]) {
-                                ansArray[criteria.criteriaId] = getAns(criteria.criteriaId) ? getAns(criteria.criteriaId)[0] : "" || "";
-                            }
-                            return;
-                        }
-                    });
-                    if (userAnswers.length) {
-                        setAlreadyFilled(true);
+                    return;
+                  } else {
+                    if (!answer[action.actionId]) {
+                      ansArray[action.actionId] = action?.answer?.length > 0 ? action.answer[0] : "";
                     }
-                    setAnswer({ ...answer, ...ansArray });
+                    return;
+                  }
                 });
-                (loadingTracker && setLoading(false))
-            }
+                console.log(ansArray)
+                setAnswer({ ...answer, ...ansArray });
+    
+                return response
+              })
+              .catch((error) => {
+                GeneralFunctions.captureSentryException(error);
+              });
+            loadingTracker && setLoading(false);
+          }
         }
-    }, []);
-
+    
+        if (entityId) initialize()
+      }, []);
+console.log(answer)
     const handleUpdate = (e: any, id: string, j: string, ) => {
         if (e.target.checked == true && j == "check") {
             let ans = answer[id] || [];
@@ -237,13 +400,13 @@ function UserProfile(props: QuestLoginProps) {
     const normalInput = (
         question: string,
         required: boolean,
-        criteriaId: string,
+        actionId: string,
         index: number,
         placeholder: string,
         inputType: logoType,
     ) => {
         return (
-            <div key={criteriaId}>
+            <div key={actionId}>
                 {
                     (customComponentPositions == index + 1) &&
                     <div style={{paddingBottom: "12px"}}>
@@ -256,9 +419,9 @@ function UserProfile(props: QuestLoginProps) {
                 <Input 
                     type={inputType} 
                     placeholder={placeholder} 
-                    value={answer[criteriaId]} 
+                    value={answer[actionId]} 
                     iconColor={styleConfig?.Input?.color || themeConfig?.primaryColor || "#B9B9B9"}
-                    onChange={(e)=>handleUpdate(e, criteriaId, "")} 
+                    onChange={(e)=>handleUpdate(e, actionId, "")} 
                     style={{ 
                         borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
                         color: styleConfig?.Input?.color || themeConfig?.primaryColor,
@@ -272,12 +435,12 @@ function UserProfile(props: QuestLoginProps) {
     const dateInput = (
         question: string,
         required: boolean,
-        criteriaId: string,
+        actionId: string,
         index: number,
         placeholder: string,
     ) => {
         return (
-            <div key={criteriaId}>
+            <div key={actionId}>
                 {
                     (customComponentPositions == index + 1) &&
                     <div style={{paddingBottom: "12px"}}>
@@ -290,8 +453,8 @@ function UserProfile(props: QuestLoginProps) {
                 <Input 
                     type={"date"} 
                     placeholder={placeholder} 
-                    value={answer[criteriaId]} 
-                    onChange={(e)=>handleUpdate(e, criteriaId, "")}
+                    value={answer[actionId]} 
+                    onChange={(e)=>handleUpdate(e, actionId, "")}
                     style={{ 
                         borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
                         color: styleConfig?.Input?.color || themeConfig?.primaryColor,
@@ -305,12 +468,12 @@ function UserProfile(props: QuestLoginProps) {
     const textAreaInput = (
         question: string,
         required: boolean,
-        criteriaId: string,
+        actionId: string,
         index: number,
         placeholder: string,
     ) => {
         return (
-            <div key={criteriaId}>
+            <div key={actionId}>
                 {
                     (customComponentPositions == index + 1) &&
                     <div style={{paddingBottom: "12px"}}>
@@ -321,9 +484,9 @@ function UserProfile(props: QuestLoginProps) {
                     {`${question} ${!!required && "*"}`}
                 </Label>
                 <TextArea
-                    onChange={(e) => handleUpdate(e, criteriaId, "")}
+                    onChange={(e) => handleUpdate(e, actionId, "")}
                     placeholder={placeholder}
-                    value={answer[criteriaId]}
+                    value={answer[actionId]}
                     style={{ 
                         borderColor: styleConfig?.TextArea?.borderColor || themeConfig?.borderColor,
                         color: styleConfig?.TextArea?.color || themeConfig?.primaryColor,
@@ -338,14 +501,14 @@ function UserProfile(props: QuestLoginProps) {
         options: string[] | [],
         question: string,
         required: boolean,
-        criteriaId: string,
+        actionId: string,
         index: number,
         manualInput: string | boolean,
         singleChoose?: "modal1" | "modal2" | "modal3"
     ) => {
 
         return (
-            <div key={criteriaId}>
+            <div key={actionId}>
                 {
                     (customComponentPositions == index + 1) &&
                     <div style={{paddingBottom: "12px"}}>
@@ -358,8 +521,8 @@ function UserProfile(props: QuestLoginProps) {
                 <SingleChoice
                     options={options}
                     type={singleChoose}
-                    onChange={(e) => singleChoose == "modal3" ? handleUpdate({target: e}, criteriaId, "") : handleUpdate(e, criteriaId, "radio")}
-                    checked={answer[criteriaId]}
+                    onChange={(e) => singleChoose == "modal3" ? handleUpdate({target: e}, actionId, "") : handleUpdate(e, actionId, "radio")}
+                    checked={answer[actionId]}
                     style={{
                         borderColor: styleConfig?.SingleChoice?.style?.borderColor || themeConfig?.borderColor, 
                         color: styleConfig?.SingleChoice?.style?.color || themeConfig?.secondaryColor, 
@@ -371,11 +534,11 @@ function UserProfile(props: QuestLoginProps) {
                     }}
                     
                 />
-                {manualInput != false && answer[criteriaId] == manualInput &&
+                {manualInput != false && answer[actionId] == manualInput &&
                     <Input
                         type="text"
-                        onChange={(e) => handleUpdate(e, (criteriaId + "/manual"), "")}
-                        value={answer[criteriaId + "/manual"]}
+                        onChange={(e) => handleUpdate(e, (actionId + "/manual"), "")}
+                        value={answer[actionId + "/manual"]}
                         placeholder="Please fill manually"
                         style={{ 
                             borderColor: styleConfig?.Input?.borderColor || themeConfig?.borderColor,
@@ -392,11 +555,11 @@ function UserProfile(props: QuestLoginProps) {
         options: string[] | [],
         question: string,
         required: boolean,
-        criteriaId: string,
+        actionId: string,
         index: number
     ) => {
         return (
-            <div key={criteriaId}>
+            <div key={actionId}>
                 {
                     (customComponentPositions == index + 1) &&
                     <div style={{paddingBottom: "12px"}}>
@@ -408,8 +571,8 @@ function UserProfile(props: QuestLoginProps) {
                 </Label>
                 <MultiChoiceTwo
                     options={options}
-                    checked={!!answer[criteriaId] && answer[criteriaId]}
-                    onChange={(e) => handleUpdate(e, criteriaId, "check")}
+                    checked={!!answer[actionId] && answer[actionId]}
+                    onChange={(e) => handleUpdate(e, actionId, "check")}
                     style={{borderColor: styleConfig?.MultiChoice?.style?.borderColor  || themeConfig?.borderColor, ...styleConfig?.MultiChoice?.style,
                         color: styleConfig?.MultiChoice?.style?.color || themeConfig?.primaryColor,
                         ...styleConfig?.MultiChoice?.style
@@ -425,41 +588,73 @@ function UserProfile(props: QuestLoginProps) {
 
 
     function returnAnswers() {
-        let crt: any = {...answer};
+        GeneralFunctions.fireTrackingEvent(
+          "quest_onboarding_submit_btn_clicked",
+          "onboarding"
+        );
+    
+        let crt: any = { ...answer };
         for (let i of Object.keys(crt)) {
             if (i.includes("/manual") && crt[i] != "") {
                 let id: string = i.split("/manual")[0];
-                let criteriaDetails: FormData[] = formdata.filter((item) => item.criteriaId == id)
+                let criteriaDetails: FormData[] = formdata.filter(
+                    (item) => item.actionId == id
+                );
                 if (criteriaDetails[0].manualInput == crt[id]) {
                     crt[id] = crt[i];
                 }
             }
         }
-        
-        let criterias = Object.keys(crt)
+
+        let actions = Object.keys(crt)
         .filter((key: string) => !key.includes("/manual"))
         .map((key: string) => ({
-            criteriaId: key,
-            answer: typeof crt[key] === "object" ? crt[key] : [crt[key]],
-            question: formdata[formdata.findIndex(ele => ele.criteriaId == key)].question
+            actionId: key,
+            answers: typeof crt[key] === "object" ? crt[key] : [crt[key]]
         }));
 
-        
+        let questUserId = cookies.get("questUserId");
+        let questUserToken = cookies.get("questUserToken");
+        let externalUserId = cookies.get("externalUserId");
 
         let headers = {
-            apikey: apiKey,
-            apisecret: apiSecret,
-            userId: userId,
-            token: token
-        }
+        apikey: apiKey,
+        apisecret: apiSecret,
+        userId:
+            !!externalUserId &&
+            !!questUserId &&
+            !!questUserToken &&
+            externalUserId == uniqueUserId
+            ? questUserId
+            : userId,
+        token:
+            !!externalUserId &&
+            !!questUserId &&
+            !!questUserToken &&
+            externalUserId == uniqueUserId
+            ? questUserToken
+            : token,
+        };
 
         getAnswers && getAnswers(crt);
-        
-        (loadingTracker && setLoading(true))
-        axios.post(`${BACKEND_URL}api/entities/${entityId}/quests/${questId}/verify-all?userId=${headers.userId}&editSubmissionCriteria=true`, {criterias, userId: headers.userId}, {headers})
-        .then(() => (loadingTracker && setLoading(false)))
+
+
+        try {
+            axios.post(
+                `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}/verify?editSubmissionCriteria=true`,
+                { actions, campaignVariationId },
+                { headers }
+            );
+        } catch (error) {
+            GeneralFunctions.captureSentryException(error);
+        }
+
+        try {
+            metricApi(headers).complete()
+        } catch (error) {
+            GeneralFunctions.captureSentryException(error);
+        }
     }
-    
 
 
     return (
@@ -477,7 +672,7 @@ function UserProfile(props: QuestLoginProps) {
                             ? normalInput(
                                 data?.question || "",
                                 data?.required || false,
-                                data.criteriaId || "",
+                                data.actionId || "",
                                 index,
                                 data?.placeholder || data?.question || "",
                                 "text"
@@ -486,7 +681,7 @@ function UserProfile(props: QuestLoginProps) {
                             ? normalInput(
                                 data?.question || "",
                                 data?.required || false,
-                                data.criteriaId || "",
+                                data.actionId || "",
                                 index,
                                 data?.placeholder || data?.question || "",
                                 "email"
@@ -495,7 +690,7 @@ function UserProfile(props: QuestLoginProps) {
                             ? normalInput(
                                 data?.question || "",
                                 data?.required || false,
-                                data.criteriaId || "",
+                                data.actionId || "",
                                 index,
                                 data?.placeholder || data?.question || "",
                                 "number"
@@ -504,7 +699,7 @@ function UserProfile(props: QuestLoginProps) {
                                 ? dateInput(
                                     data?.question || "",
                                     data?.required || false,
-                                    data.criteriaId || "",
+                                    data.actionId || "",
                                     index,
                                     data?.placeholder || data?.question || "",
                                 )
@@ -513,7 +708,7 @@ function UserProfile(props: QuestLoginProps) {
                                             data.options || [],
                                             data?.question || "",
                                             data?.required || false,
-                                            data.criteriaId || "",
+                                            data.actionId || "",
                                             index,
                                             data?.manualInput,
                                             "modal3"
@@ -530,7 +725,7 @@ function UserProfile(props: QuestLoginProps) {
                                     data.options || [],
                                     data?.question || "",
                                     data?.required || false,
-                                    data.criteriaId || "",
+                                    data.actionId || "",
                                     index
                                 )
                                 : null
@@ -542,7 +737,7 @@ function UserProfile(props: QuestLoginProps) {
                                 ? textAreaInput(
                                     data?.question || "",
                                     data?.required || false,
-                                    data.criteriaId || "",
+                                    data.actionId || "",
                                     index,
                                     data?.placeholder || data?.question || "",
                                 )
