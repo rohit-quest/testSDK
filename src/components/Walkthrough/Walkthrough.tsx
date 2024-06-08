@@ -21,7 +21,8 @@ type StyleConfig = {
     LastButton?: CSSProperties;
     Image?: CSSProperties;
     Overlay?: CSSProperties;
-    ArrowStyle: CSSProperties;
+    Arrow: CSSProperties;
+    Highlighter?: CSSProperties;
 }
 
 interface WalkThroughProps extends MultiRouteTourProps, TourNavigatorProps {
@@ -52,13 +53,14 @@ export default function Walkthrough({
         '--secondaryColor': themeConfig?.secondaryColor,
     } as CSSProperties
 
-    const CustomOverlay = styleConfig?.Overlay ? (overlayProps: ClientBoundingRect) => (
+    const CustomOverlay = (overlayProps: ClientBoundingRect) => (
         <Overlay
             id={props.id}
             style={styleConfig?.Overlay}
+            
             {...overlayProps}
         />
-    ):undefined
+    )
 
     const CustomTourHelper = (helperProps: HelperProps) => {
         const TourHelperComponent = tooltip ? TourHelperTooltip:TourHelper
@@ -71,7 +73,7 @@ export default function Walkthrough({
                     ...styleConfig?.Form
                 }}
                 hideArrow={hideArrow}
-                arrowStyle={styleConfig?.ArrowStyle}
+                arrowStyle={styleConfig?.Arrow}
                 headerStyle={styleConfig?.Heading}
                 descriptionStyle={styleConfig?.Description}
                 helperBackgroundStyle={styleConfig?.Background}
