@@ -184,7 +184,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: var(--Gradient-1, linear-gradient(265deg, #3378FF 4.66%, #9442FE 85.05%));
+    background: linear-gradient(13deg, rgba(255, 255, 255, 0.00) 38.24%, #9035FF 59.39%, #0065FF 70.7%);
 }
 
 .q_gradient_head {

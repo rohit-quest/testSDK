@@ -60,6 +60,7 @@ export interface referProp {
     uniqueUserId?: string;
     BrandTheme?: BrandTheme;
     QuestThemeData?: QuestThemeData;
+    isEmail?: boolean;
     Icon?: 'gift' | 'percentage';
     styleConfig?: {
         Form?: CSSProperties,
@@ -89,8 +90,8 @@ export interface referProp {
             errorStyle?: CSSProperties
         }
     };
-    showFooter?:boolean,
-    variation?:string
+    showFooter?: boolean,
+    variation?: string
 
 }
 
@@ -106,6 +107,7 @@ export const CrossSelling = ({
     primaryDescription = 'Welcome back, Please complete your details',
     showDays = false,
     expiryDate = 0,
+    isEmail = false,
     claimRewardHandler = (email?: string) => { },
     backButtonTrigger = () => { },
     uniqueEmailId,
@@ -155,9 +157,22 @@ export const CrossSelling = ({
         }
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+    const validateEmail = (inputValue: string) => {
+        if (inputValue) {
+            let value = inputValue.trim();
+            return emailRegex.test(value);
+        }
+        else {
+            return false
+        }
+    };
 
     const animate = () => {
         const currentTime = Date.now();
+        // console.log(requestRef.current)
         const remainingTime = requestRef.current - currentTime;
         if (remainingTime <= 0) {
             setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -173,6 +188,8 @@ export const CrossSelling = ({
 
         requestAnimationFrame(animate);
     };
+
+    
     let GeneralFunctions = new General('mixpanel', apiType);
     useEffect(() => {
         GeneralFunctions.fireTrackingEvent("quest_cross_selling_loaded", "cross_selling");
@@ -180,13 +197,11 @@ export const CrossSelling = ({
         getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL)
             .then((r) => {
                 if (isMounted && r) {
-                    if(r.sdkConfig?.uiProps?.questThemeData){
+                    if (r.sdkConfig?.uiProps?.questThemeData) {
                         setQuestThemeData(r.sdkConfig?.uiProps?.questThemeData)
                         // getTheme(r.uiProps?.questThemeData.theme) // disable for now
                     }
-
-                    requestRef.current =  +(Date.parse(r.endsAt) || r.endsAt);
-
+                    requestRef.current = +(Date.parse(r.endsAt) || r.endsAt);
                     animate();
                 } else {
                     requestRef.current = expiryDate;
@@ -247,7 +262,7 @@ export const CrossSelling = ({
                         <div className="q_time_left_text" style={{ color: styleConfig?.Timer?.secondaryColor || BrandTheme?.secondaryColor }}>Seconds</div>
                     </div>
                 </div>
-                <div style={{ width: "100%" }}>
+                {isEmail && <div style={{ width: "100%" }}>
                     <Label
                         htmlFor={"normalInput"}
                         children={'Email Address'}
@@ -264,6 +279,7 @@ export const CrossSelling = ({
 
                     />
                 </div>
+                }
                 <PrimaryButton
                     style={{
                         background: styleConfig?.PrimaryButton?.background || questThemeData?.buttonColor || brandTheme?.buttonColor || themeConfig?.buttonColor,
@@ -274,7 +290,7 @@ export const CrossSelling = ({
                         handleEmail(email)
                     }}
                     className="q_share_link_button"
-                    disabled={!email}
+                    disabled={isEmail == false ? false : !validateEmail(email)}
                 >
                     {shareButtonText}
                 </PrimaryButton>
@@ -316,33 +332,36 @@ export const CrossSelling = ({
         </div>
     );
 
-    if (gradientBackground) return <div className="q_gradient_background" style={{
-        fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
-        ...styleConfig?.BackgroundWrapper
-    }}>
-        <div className="q_gradient_head">
-            <div className="q_gradient_heading">{primaryHeading}</div>
-            <div className="q_gradient_description">{primaryDescription}</div>
-        </div>
-        {jsx}
-        <div className="q_gradient_quest_powered">
-            {showFooter &&
-                <QuestLabs
-                    style={{
-                        ...{
-                            background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
-                                styleConfig?.Form?.backgroundColor ||
-                                styleConfig?.Form?.background ||
-                                BrandTheme?.background ||
-                                themeConfig?.backgroundColor,
-                        },
-                        ...styleConfig?.Footer?.FooterStyle,
+    if (gradientBackground) return <div style={{ background: 'white' }}>
 
-                    }}
-                    textStyle={styleConfig?.Footer?.FooterText}
-                    iconStyle={styleConfig?.Footer?.FooterIcon}
-                />
-            }
+        <div className="q_gradient_background" style={{
+            fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
+            ...styleConfig?.BackgroundWrapper
+        }}>
+            <div className="q_gradient_head">
+                <div className="q_gradient_heading">{primaryHeading}</div>
+                <div className="q_gradient_description">{primaryDescription}</div>
+            </div>
+            {jsx}
+            <div className="q_gradient_quest_powered">
+                {showFooter &&
+                    <QuestLabs
+                        style={{
+                            ...{
+                                background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                                    styleConfig?.Form?.backgroundColor ||
+                                    styleConfig?.Form?.background ||
+                                    BrandTheme?.background ||
+                                    themeConfig?.backgroundColor,
+                            },
+                            ...styleConfig?.Footer?.FooterStyle,
+
+                        }}
+                        textStyle={styleConfig?.Footer?.FooterText}
+                        iconStyle={styleConfig?.Footer?.FooterIcon}
+                    />
+                }
+            </div>
         </div>
     </div>
     return jsx;
