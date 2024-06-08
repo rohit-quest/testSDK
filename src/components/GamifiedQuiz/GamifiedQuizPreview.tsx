@@ -206,10 +206,10 @@ export default function GamifiedQuizPreviewNew({
               // questionSections={[[1], [5, 6], [7, 8], [9, 10]]}
               sectionSubHeading={
                 [
-                  // "Section 1",
-                  // "Srction 2",
-                  // "section 3",
-                  // "Section 4",
+                  "Section 1asasd",
+                  "Srction 2",
+                  "section 3",
+                  "Section 4",
                 ]
               }
               // sectionSubHeading={["", "", "", ""]}
@@ -372,13 +372,14 @@ export default function GamifiedQuizPreviewNew({
               [8, 9, 10],
             ]}
             sectionSubHeading={[
-              "Section 1",
+              // "Section 1vbhsd",
+              '',
               "Srction 2",
               "section 3",
               "Section 4",
             ]}
             sectionHeading={[
-              "Section Head 1",
+              "",
               "",
               "section Head 3",
               "Section Head 4",
