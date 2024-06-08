@@ -308,7 +308,7 @@ export const CrossSellingOffline = ({
         </div>
     );
 
-    if (gradientBackground) return <div style={{ background: 'white' }}>
+    if (gradientBackground) return <div style={{ background: 'white',borderRadius: styleConfig?.Form?.borderRadius || questThemeData?.borderRadius || BrandTheme?.borderRadius || '10px' }}>
         <div className="q_gradient_background" style={{
             fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif",
             ...styleConfig?.BackgroundWrapper
