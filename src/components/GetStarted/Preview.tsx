@@ -70,6 +70,14 @@ export default function GetStartedPreview({
     },
   ]);
 
+  const handleCallback = (action: any) => {
+    if (action=='https://www.youtube.com/') {
+      console.log(action)
+    } else {
+     window.open(action, '_blank')
+    }
+  }
+
   if (online)
     return (
       <QuestProvider
@@ -78,7 +86,7 @@ export default function GetStartedPreview({
         entityId={entityId}
         featureFlags={{}}
         apiType="STAGING"
-        // themeConfig={{ fontFamily: "cursive" }}
+      // themeConfig={{ fontFamily: "cursive" }}
       >
         <GetStarted
           questId={questId}
@@ -105,7 +113,7 @@ export default function GetStartedPreview({
           showLoadingIndicator={true}
           // showDropDown
           //   uniqueUserId="soumitra.petbindhi+1@gmail.com"
-          
+         
           showProgressBar
           showFooter={false}
           styleConfig={{
@@ -206,6 +214,7 @@ export default function GetStartedPreview({
       onCompleteAllStatus={() => {
         // showToast.success({ text: "completed successfully" })
       }}
+      onLinkTrigger={handleCallback}
       // onLinkTrigger = {()=>{
 
       // }}

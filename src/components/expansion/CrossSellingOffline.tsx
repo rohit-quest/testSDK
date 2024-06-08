@@ -89,12 +89,12 @@ export interface referProp {
             errorStyle?: CSSProperties
         }
     };
-    showFooter?:boolean,
-    variation?:string
+    showFooter?: boolean,
+    variation?: string
 
 }
 
-export const CrossSelling = ({
+export const CrossSellingOffline = ({
     questId = "",
     userId = "",
     token = "",
@@ -163,51 +163,27 @@ export const CrossSelling = ({
             setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
             return;
         }
-
+    
         const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
         const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-
+    
         setTimeLeft({ days, hours, minutes, seconds });
-
+    
         requestAnimationFrame(animate);
     };
     let GeneralFunctions = new General('mixpanel', apiType);
+
     useEffect(() => {
-        GeneralFunctions.fireTrackingEvent("quest_cross_selling_loaded", "cross_selling");
         let isMounted = true;
-        getResponse({ apiKey, token, userId }, entityId, questId, BACKEND_URL)
-            .then((r) => {
-                if (isMounted && r) {
-                    if(r.sdkConfig?.uiProps?.questThemeData){
-                        setQuestThemeData(r.sdkConfig?.uiProps?.questThemeData)
-                        // getTheme(r.uiProps?.questThemeData.theme) // disable for now
-                    }
-
-                    requestRef.current =  +(Date.parse(r.endsAt) || r.endsAt);
-
-                    animate();
-                } else {
-                    requestRef.current = expiryDate;
-                    animate();
-                }
-            })
-            .catch((error) => {
-                GeneralFunctions.captureSentryException(error);
-                console.log('Error fetching expiryDate:', expiryDate);
-                requestRef.current = expiryDate;
-            });
-        if (entityId && uniqueUserId) {
-            const functions = new General('')
-            functions.getExternalLogin({ apiType, uniqueUserId, entityId, userId, apiKey, apiSecret, token, uniqueEmailId })
-        }
-
+        requestRef.current = expiryDate;
+        animate();
         return () => {
             isMounted = false;
             cancelAnimationFrame(requestRef.current);
         };
-    }, []);
+    }, [expiryDate]);
 
 
     const handleEmail = (email: string) => {

@@ -74,6 +74,7 @@ interface GamifiedQuizProps {
   setQuestions?: Dispatch<SetStateAction<number>> | undefined;
   questionsPerSection?: number;
   formDataOffline: FormData[] | [];
+  isButtonDisabled?: boolean;
 }
 interface FormData {
   type: string;
@@ -102,6 +103,7 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
   functionOnSubmit,
   formDataOffline,
   setOfflineAnswer,
+  isButtonDisabled
 }) => {
   const { apiKey, apiSecret, entityId, featureFlags, apiType, themeConfig } =
     useContext(QuestContext.Context);
@@ -317,7 +319,6 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
         }
       }
     } else {
-      console.log("336");
       for (let i = 0; i < questionsPerSection; i++) {
         let queNo = currentSection * questionsPerSection + i;
         if (formdata[queNo]?.type === "USER_INPUT_MULTI_CHOICE") {
@@ -353,7 +354,7 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
 
   const MultiChoice = ({ value }: { value: FormData }) => {
     return (
-      <div className="gamified-quiz-header-ques-options">
+      <div className="gamified-quiz-header-ques-options multi-option">
         {value?.options.map((option, index) => {
           const SelectedBorder = {
             border: `2px solid ${styleConfig?.OptionsSelectedColor?.color}`,
@@ -1046,7 +1047,7 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                             formSubmitHandler();
                           }
                         }}
-                        disabled={!goToNextSection}
+                        disabled={isButtonDisabled ? false : !goToNextSection}
                         className="q-onb-main-btn2"
                         style={{
                           font: "",
@@ -1131,7 +1132,7 @@ const GamifiedQuizOffline: React.FC<GamifiedQuizProps> = ({
                             formSubmitHandler();
                           }
                         }}
-                        disabled={!goToNextSection}
+                        disabled={isButtonDisabled ? false : !goToNextSection}
                         className="q-onb-main-btn2"
                         style={{
                           font: "",

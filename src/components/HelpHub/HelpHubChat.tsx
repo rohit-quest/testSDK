@@ -83,7 +83,6 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   const [openEmailCollection, setOpenEmailCollection] = useState<boolean>(false);
   const [emailSubmitted, setEmailSubmitted] = useState<boolean>(false);
 
-
   const sendAutoMessageFromUser = async () => {
     if (sendAutoMessage != "") {
       setUpdateOutAnimation(true);
@@ -97,7 +96,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
         setScrollWidthSet((prev) => !prev);
         sendMessageFunc(sendAutoMessage || "");
       }, 100);
-      setAutoPopupMessage("");
+      setSendAutoMessage("");
     }
   }
 
