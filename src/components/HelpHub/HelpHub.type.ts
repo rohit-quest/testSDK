@@ -65,21 +65,22 @@ type HelphubStyleConfig = {
 type HelpHubHomeContentTypes = {
   heading?: string;
   chatButton?: {
-    heading: string;
-    subHeading: string;
+    heading?: string;
+    subHeading?: string;
   };
-  box1: {
-    heading: string;
-    subHeading: string;
-    image: string;
+  box1?: {
+    heading?: string;
+    subHeading?: string;
+    image?: string;
+    link?: string;
   };
-  box4: {
-    heading: string;
-    subHeading: string;
+  box4?: {
+    heading?: string;
+    subHeading?: string;
   };
-  box5: {
-    heading: string;
-    subHeading: string;
+  box5?: {
+    heading?: string;
+    subHeading?: string;
   };
 };
 

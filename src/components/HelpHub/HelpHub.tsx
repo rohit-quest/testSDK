@@ -91,7 +91,6 @@ const HelpHub = (props: HelpHubProps) => {
     let lastPopupOpen: string | null = localStorage.getItem("lastPopupOpen");
     let difference = new Date().getTime() - (lastPopupOpen ? new Date(lastPopupOpen).getTime() : new Date().getTime());
     let delayCriteria = !lastPopupOpen ? true : autoPopupOpenAfter == "ONE_DAY" ? difference >= 86400000 : autoPopupOpenAfter == "EVERY_TIME" ? true : !lastPopupOpen;
-    console.log("delayCriteria", delayCriteria, difference, lastPopupOpen, new Date(1717859481678).getTime());
     if (!!defaultAutoPopupMessages.length && delayCriteria) {
       const timer = setTimeout(() => {
         if (helpHubRef.current === false) {

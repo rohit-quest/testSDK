@@ -698,7 +698,7 @@ function App() {
           userId="u-88350caa-4080-4505-a169-09f3f15e83b7"
           /> */}
 
-        {/* <HelpHubPreview online={false} /> */}
+        <HelpHubPreview online={true} />
 
         {/* <VisitStreak color={'white'} backgroundColor={'black'}/> */}
         {/* <GamifiedQuizPreview online={false} /> */}
@@ -873,7 +873,7 @@ function App() {
         {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
         {/* <SreakPreview online /> */}
         {/* <InlineFeedbackPreview online={false} /> */}
-        <WalkthroughPreview />
+        {/* <WalkthroughPreview /> */}
       </QuestProvider>
       {/* < div style={{height: 1999}}/> */}
     </div>

@@ -311,9 +311,16 @@ export default function HelpHubPreview({ online = true }) {
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTRjYzUxMGE0LWU2NzAtNGVkMy1hYmUzLWMzNTFjMTliYjk5MiIsImlhdCI6MTcxNzc2MDIzMiwiZXhwIjoxNzE4MzY1MDMyfQ.zGDbjiKnPakxAwTb61q310rqA20UklqvtB95Ff4ZIuU"
           }
           userId="u-4cc510a4-e670-4ed3-abe3-c351c19bb992"
-          questId="c-13cd83b3-59df-4a5d-9765-9fb9d5aa1981"
+          questId="c-f96c93b7-8ccc-44ff-b5e9-29c5e6a734c7"
         defaultAutoPopupMessages={["Hello there👋, How can I help youasdad dadas d a das dasd adsaa s ?"]}
-        autoPopupOpenAfter="ONCE"
+        autoPopupOpenAfter="EVERY_TIME"
+        contentConfig={{
+          Home: {
+            box1: {
+              // link: "https://staging.questlabs.ai/admin/",
+            }
+          }
+        }}
           // uniqueUserId="741852101s@gmail.com"
           // uniqueUserId="741852101"
           // helphubPosition="USER_CHOICE"
