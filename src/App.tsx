@@ -783,8 +783,9 @@ function App() {
         {/* <FeedbackWorkflowPreview online={true} /> */}
         {/* <ChallengesPreview online={true} /> */}
 
-        {/* <ReferEarnPreview/> */}
+        <ReferEarnPreview/>
 
+        {/* <CrossSellingPreview online={true}/> */}
         {/* <CrossSellingPreview online={true}/> */}
 
         {/* <TourPreview /> */}
