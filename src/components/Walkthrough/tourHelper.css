@@ -114,8 +114,11 @@
 .tour-helper .tour-watermark svg path{
   fill: var(--secondaryColor, gray);
 }
-.tour-helper-tooltip{
 
+/* tooltip style */
+
+.tour-helper-tooltip{
+  
 }
 .tour-helper-content{
   display: flex;

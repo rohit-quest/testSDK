@@ -1,17 +1,35 @@
 import { useState } from 'react'
 import { TourHelperProps } from './types'
+import { HelperProps } from 'tour-navigator/lib/TourNavigator/types'
 
 export default function TourHelperTooltip({
-  currentStep,
   hideArrow,
   arrowStyle,
+  helperStyle,
+  helperBackgroundStyle,
+  firstButtonStyle,
+  lastButtonStyle,
+  headerStyle,
+  descriptionStyle,
+  onComplete,
+  handleFirstButtonClick,
+  handleLastButtonClick,
+  currentStep,
   onRequestClose,
   next,
-  onComplete,
   currentStepIndex,
-  steps
+  steps,
+  ...props
 }: TourHelperProps) {
-  const [showArrow, setShowArrow] = useState(false)
+
+  const helperProps: HelperProps = {
+    currentStep,
+    onRequestClose,
+    next,
+    currentStepIndex,
+    steps,
+    ...props
+  }
 
   const isFirst = currentStepIndex == 0
   const isLast = currentStepIndex == (steps.length - 1)
@@ -21,26 +39,25 @@ export default function TourHelperTooltip({
     next()
   }
 
-
   return (
     <div className='tour-helper-tooltip'>
       {
         hideArrow ? null:<div className='tour-helper-tooltip-pointer' style={arrowStyle}/>
       }
-      <div className='tour-helper-content'>
-        <div className={`tour-helper-tooltip-details ${showArrow ? 'show':'hide'}`} >
-          <h1>{currentStep?.data?.title}</h1>
-          <p>{currentStep?.data?.description}</p>
+      <div className='tour-helper-content' style={{...helperBackgroundStyle, ...helperStyle}}>
+        <div className={`tour-helper-tooltip-details`} >
+          <h1 style={headerStyle}>{currentStep?.data?.title}</h1>
+          <p style={descriptionStyle}>{currentStep?.data?.description}</p>
         </div>
         <div className="tour-helper-tooltip-button">
           {
             !isLast && (
-              <button className='tour-helper-button transparent' onClick={(e: unknown) => onRequestClose?.({ event: e as MouseEvent, isMask: false, isOverlay: false })}>
+              <button className='tour-helper-button transparent' style={firstButtonStyle} onClick={(e: unknown) => handleFirstButtonClick ? handleFirstButtonClick(helperProps) : onRequestClose?.({ event: e as MouseEvent, isMask: false, isOverlay: false })}>
                 <span>Skip</span>
               </button>
             )
           }
-          <button className='tour-helper-button outline' onClick={handleNext}>
+          <button className='tour-helper-button outline' style={lastButtonStyle} onClick={() => handleLastButtonClick ? handleLastButtonClick(helperProps) : handleNext()}>
               <span>{isLast ? 'Get Started':'Next'}</span>
           </button>
         </div>
