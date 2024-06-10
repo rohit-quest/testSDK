@@ -91,12 +91,12 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
         setData([]);
         setSelectedConversationId("");
         setShowPersonalChat((prev) => !prev);
-        setShowBottomNavigation((prev) => !prev);
+        setShowBottomNavigation && setShowBottomNavigation((prev) => !prev);
         setUpdateOneOutAnimation(false);
         setScrollWidthSet((prev) => !prev);
         sendMessageFunc(sendAutoMessage || "");
       }, 100);
-      setSendAutoMessage("");
+      setSendAutoMessage && setSendAutoMessage("");
     }
   }
 
@@ -481,7 +481,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   const [updateOutTempAnimation, setUpdateOutTempAnimation] = useState<boolean | null>(null);
 
   const formatMessage = (message: string) => {
-    const messageParagraphs = message.split('\n').map((line, index) => <p key={index}>{line}</p>);
+    const messageParagraphs = message.split('\n').map((line, index) => wrapLinksInText(line, index));
     return messageParagraphs;
   }
 
@@ -501,6 +501,27 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
     // const formattedTime = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
     return formattedDate;
   }
+
+  const wrapLinksInText = (text: string, index: number) => {
+    const urlRegex = /(\bhttps?:\/\/[^\s/$.?#].[^\s]*)/gi;
+    
+    const parts = text.split(urlRegex);
+  
+    const wrappedText = parts.map((part, index) => {
+      if (urlRegex.test(part)) {
+        return (
+          <a key={index} href={part} target="_blank" style={{fontSize: styleConfig?.Chat?.Form?.fontSize || "14px"}}>
+            {part}
+          </a>
+        );
+      }
+      return part;
+    });
+
+    return <p key={index}>{wrappedText}</p>;
+  };
+  
+
 
   return (
     <>

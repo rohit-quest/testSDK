@@ -6,10 +6,10 @@ import { QuestCriteriaWithStatusType, QuestTypes } from "./HelpHub.type";
 // import Survey from './Survey';
 // import SurveyOffline from './OfflineComponent';
 
-export const apiKey = "k-036784ba-8308-44d1-80f5-c094c5b39767";
+export const apiKey = "k-6fe7e7dc-ac8f-44a1-8bbf-a1754ddf88be";
 export const apiSecret =
   "s-1719a62c-5ca6-418f-8d29-f1b2328936d2ff1db443-9ee5-4eee-99f0-3532bd2e7893";
-export const entityId = "e-5a4a908f-47fb-4f73-93a5-3cfb962b5750";
+export const entityId = "e-0000000000";
 
 export default function HelpHubPreview({ online = true }) {
   const [state, setState] = useState([
@@ -308,11 +308,13 @@ export default function HelpHubPreview({ online = true }) {
       >
         <HelpHub
           token={
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTRjYzUxMGE0LWU2NzAtNGVkMy1hYmUzLWMzNTFjMTliYjk5MiIsImlhdCI6MTcxNjM3ODc4NiwiZXhwIjoxNzE2OTgzNTg2fQ.erYh8kpMpdoOxftIdvglRAzMNKh3Qyg9DwSZQ8aWqkE"
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTRjYzUxMGE0LWU2NzAtNGVkMy1hYmUzLWMzNTFjMTliYjk5MiIsImlhdCI6MTcxNzc2MDIzMiwiZXhwIjoxNzE4MzY1MDMyfQ.zGDbjiKnPakxAwTb61q310rqA20UklqvtB95Ff4ZIuU"
           }
           userId="u-4cc510a4-e670-4ed3-abe3-c351c19bb992"
           questId="c-13cd83b3-59df-4a5d-9765-9fb9d5aa1981"
-          uniqueUserId="741852101s@gmail.com"
+        defaultAutoPopupMessages={["Hello there👋, How can I help youasdad dadas d a das dasd adsaa s ?"]}
+        autoPopupOpenAfter="ONCE"
+          // uniqueUserId="741852101s@gmail.com"
           // uniqueUserId="741852101"
           // helphubPosition="USER_CHOICE"
           // onlineComponent={online}

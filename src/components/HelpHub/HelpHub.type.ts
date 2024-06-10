@@ -111,6 +111,7 @@ export interface HelpHubProps {
   entityLogo?: string;
   defaultAutoPopupMessages? : string[];
   popupOpenDelay?: number;
+  autoPopupOpenAfter?: "ONE_DAY" | "EVERY_TIME" | "ONCE";
 }
 export interface HelpHubPropsOffline {
   Main?: {
@@ -137,6 +138,8 @@ export interface HelpHubPropsOffline {
   claimStatusUpdates?: string[] | [];
   setClaimStatusUpdates?: Dispatch<SetStateAction<string[][]>>;
   entityLogo?: string;
+  defaultAutoPopupMessages? : string[];
+  popupOpenDelay?: number;
 }
 
 export interface HelpHubHomeTypes {

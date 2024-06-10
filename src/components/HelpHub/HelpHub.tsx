@@ -44,6 +44,7 @@ const HelpHub = (props: HelpHubProps) => {
     entityLogo,
     defaultAutoPopupMessages = [],
     popupOpenDelay = 2,
+    autoPopupOpenAfter = "ONE_DAY",
   } = props;
 
   const { apiKey, entityId, featureFlags, apiType, themeConfig } = useContext(
@@ -87,10 +88,15 @@ const HelpHub = (props: HelpHubProps) => {
   }, [helpHub]);
 
   useEffect(() => {
-    if (!!defaultAutoPopupMessages.length) {
+    let lastPopupOpen: string | null = localStorage.getItem("lastPopupOpen");
+    let difference = new Date().getTime() - (lastPopupOpen ? new Date(lastPopupOpen).getTime() : new Date().getTime());
+    let delayCriteria = !lastPopupOpen ? true : autoPopupOpenAfter == "ONE_DAY" ? difference >= 86400000 : autoPopupOpenAfter == "EVERY_TIME" ? true : !lastPopupOpen;
+    console.log("delayCriteria", delayCriteria, difference, lastPopupOpen, new Date(1717859481678).getTime());
+    if (!!defaultAutoPopupMessages.length && delayCriteria) {
       const timer = setTimeout(() => {
         if (helpHubRef.current === false) {
           setAutoPopupMessage(true);
+          localStorage.setItem("lastPopupOpen", new Date().toString());
         }
       }, popupOpenDelay * 1000 );
       return () => clearTimeout(timer);
@@ -372,8 +378,11 @@ const HelpHub = (props: HelpHubProps) => {
         {
           !!defaultAutoPopupMessages.length?
           <div className={`helpHubMainCont-default-popup ${autoPopupMessage ? "helpHubMainCont-default-popup-animated" : ""}`}>
-            <div className="home-back-btn">
-              <img src={arrow_forward} alt="" onClick={() => setAutoPopupMessage(false)}/>
+            <div className="home-back-btn"  onClick={() => setAutoPopupMessage(false)}>
+              {/* <img src={arrow_forward} alt="" onClick={() => setAutoPopupMessage(false)}/> */}
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M5.63184 14.3697L10.001 10.0005L14.3702 14.3697M14.3702 5.63135L10.0002 10.0005L5.63184 5.63135" stroke="#696969" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             </div>
             <div className="home-assistant-msg">
               <img src={entityLogo || entityImage} alt="" />
