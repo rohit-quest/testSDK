@@ -108,7 +108,7 @@ export const Referral = ({
   ) => {
     try {
       const request = `${BACKEND_URL}api/v2/entities/${headers.entityId}/campaigns/${questId}`;
-      const {data} = await axios.get(request, { headers });
+      const { data } = await axios.get(request, { headers });
       return data?.data || {};
     } catch (error) {
       GeneralFunctions.captureSentryException(error);
@@ -259,31 +259,33 @@ export const Referral = ({
     </div>
   );
 
-  if (gradientBackground) return <div className="q_gradient_background" style={{
-    fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", background: gradientBackgroundColor
-  }}>
-    <div className="q_gradient_head">
-      <div className="q_gradient_heading" style={styleConfig?.Heading}>{primaryHeading}</div>
-      <div className="q_gradient_description" style={styleConfig?.Description}>{primaryDescription}</div>
-    </div>
-    {jsx}
-    <div className="q_gradient_quest_powered">
-      {showFooter && <QuestLabs
-                  style={{
-                    ...{
-                      background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
-                        styleConfig?.Form?.backgroundColor ||
-                        styleConfig?.Form?.background ||
-                        themeConfig?.backgroundColor,
-                    },
-                    ...styleConfig?.Footer?.FooterStyle,
+  if (gradientBackground) return <div style={{ background: 'white', width:'fit-content',borderRadius: styleConfig?.Form?.borderRadius  || '10px' }}>
+    <div className="q_gradient_background" style={{
+      fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif", background: gradientBackgroundColor
+    }}>
+      <div className="q_gradient_head">
+        <div className="q_gradient_heading" style={styleConfig?.Heading}>{primaryHeading}</div>
+        <div className="q_gradient_description" style={styleConfig?.Description}>{primaryDescription}</div>
+      </div>
+      {jsx}
+      <div className="q_gradient_quest_powered">
+        {showFooter && <QuestLabs
+          style={{
+            ...{
+              background: styleConfig?.Footer?.FooterStyle?.backgroundColor ||
+                styleConfig?.Form?.backgroundColor ||
+                styleConfig?.Form?.background ||
+                themeConfig?.backgroundColor,
+            },
+            ...styleConfig?.Footer?.FooterStyle,
 
-                  }}
-                  textStyle={styleConfig?.Footer?.FooterText}
-                  iconStyle={styleConfig?.Footer?.FooterIcon}
-                />
-            
-      }
+          }}
+          textStyle={styleConfig?.Footer?.FooterText}
+          iconStyle={styleConfig?.Footer?.FooterIcon}
+        />
+
+        }
+      </div>
     </div>
   </div>
   return jsx;

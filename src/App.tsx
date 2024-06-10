@@ -782,9 +782,9 @@ function App() {
         {/* <FeedbackWorkflowPreview online={true} /> */}
         {/* <ChallengesPreview online={true} /> */}
 
-        {/* <ReferEarnPreview/> */}
+        <ReferEarnPreview/>
 
-        <CrossSellingPreview online={true}/>
+        {/* <CrossSellingPreview online={true}/> */}
 
         {/* <TourPreview /> */}
 
@@ -880,9 +880,9 @@ function App() {
         </p>
         <button className="button" style={{position: 'absolute', right: '50%', top: 1000}}>
           NEXT
-        </button> */}
+        </button>
 
-        {/* <Walkthrough
+        <Walkthrough
             isOpen={isOpen}
             id="app"
             steps={[
