@@ -12,5 +12,7 @@ export interface TourHelperProps extends HelperProps {
     imgStyle?: CSSProperties;
     hideArrow?: boolean;
     arrowStyle?: CSSProperties;
-    onComplete?: () => void
+    onComplete?: () => void;
+    handleFirstButtonClick?: (props: HelperProps) => void;
+    handleLastButtonClick?: (props: HelperProps) => void;
 }

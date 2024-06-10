@@ -720,7 +720,7 @@ function App() {
 
         {/* <OnBoardingPreview online={false} /> */}
 
-        <GetStartedPreview online={false} />
+        {/* <GetStartedPreview online={false} /> */}
 
         {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
@@ -783,7 +783,7 @@ function App() {
         {/* <FeedbackWorkflowPreview online={true} /> */}
         {/* <ChallengesPreview online={true} /> */}
 
-        <ReferEarnPreview/>
+        {/* <ReferEarnPreview/> */}
 
         {/* <CrossSellingPreview online={true}/> */}
         {/* <CrossSellingPreview online={true}/> */}
@@ -873,7 +873,7 @@ function App() {
         {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
         {/* <SreakPreview online /> */}
         {/* <InlineFeedbackPreview online={false} /> */}
-        {/* <WalkthroughPreview /> */}
+        <WalkthroughPreview />
       </QuestProvider>
       {/* < div style={{height: 1999}}/> */}
     </div>

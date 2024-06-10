@@ -7,6 +7,7 @@ import TourNavigator from "tour-navigator";
 import { CSSProperties, useContext } from "react";
 import Overlay from "./Overlay";
 import QuestWrapper from "../QuestWrapper";
+import { TourHelperProps } from "./types";
 
 type WalkThroughType = 'singlepage' | 'multipage'
 
@@ -21,7 +22,7 @@ type StyleConfig = {
     LastButton?: CSSProperties;
     Image?: CSSProperties;
     Overlay?: CSSProperties;
-    Arrow: CSSProperties;
+    Arrow?: CSSProperties;
     Highlighter?: CSSProperties;
 }
 
@@ -31,6 +32,8 @@ interface WalkThroughProps extends MultiRouteTourProps, TourNavigatorProps {
     hideArrow?: boolean;
     onComplete?: () => void;
     styleConfig?: StyleConfig;
+    handleFirstButtonClick?: (props: HelperProps) => void
+    handleLastButtonClick?: (props: HelperProps) => void
 }
 
 export default function Walkthrough({ 
@@ -39,6 +42,8 @@ export default function Walkthrough({
     onComplete,
     hideArrow,
     styleConfig,
+    handleFirstButtonClick,
+    handleLastButtonClick,
     ...props 
 }: WalkThroughProps): JSX.Element {
 
@@ -55,7 +60,7 @@ export default function Walkthrough({
 
     const CustomOverlay = (overlayProps: ClientBoundingRect) => (
         <Overlay
-            id={props.id}
+            id={props.id || ''}
             style={styleConfig?.Overlay}
             
             {...overlayProps}
@@ -82,6 +87,8 @@ export default function Walkthrough({
                 lastButtonStyle={styleConfig?.LastButton}
                 imgStyle={styleConfig?.Image}
                 onComplete={onComplete}
+                handleFirstButtonClick={handleFirstButtonClick}
+                handleLastButtonClick={handleLastButtonClick}
             />
         )
     }
