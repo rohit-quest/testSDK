@@ -10,17 +10,18 @@ interface buttonType {
   disabled?: boolean;
   className?: string;
   type?: "button" | "submit" | "reset";
+  attr?: string
 }
 
 
-export const PrimaryButton = ({ disabled, children, style, onClick, className, type }: buttonType) => {
+export const PrimaryButton = ({ disabled, children, style, onClick, className, type, attr = '' }: buttonType) => {
   const { themeConfig } = useContext(QuestContext.Context);
 
   return (
     <button className={` ${className} q_next_button_main_cont`} type={type} style={{
       background: themeConfig.buttonColor, ...style,
       fontFamily: themeConfig.fontFamily || "'Figtree', sans-serif"
-    }} onClick={onClick} disabled={disabled}>
+    }} onClick={onClick} disabled={disabled} data-primary-button={attr}>
       {children}
     </button>
   );
