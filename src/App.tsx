@@ -55,6 +55,7 @@ import { Referral } from './components/expansion/ReferEarn'
 import GamifiedQuiz from "./components/GamifiedQuiz/GamifiedQuiz";
 import { CrossSelling } from "./components/expansion/CrossSelling";
 import Test from './Test'
+import WalkthroughPreview from './components/Walkthrough/Preview'
 
 export const questId = "q-2b37975b-30f7-4572-a5f4-c354439b3970";
 export const apiKey = "k-9986f82d-cbd0-4923-bf9a-ea01b4795fa1";
@@ -719,7 +720,7 @@ function App() {
 
         {/* <OnBoardingPreview online={false} /> */}
 
-        {/* <GetStartedPreview online={false} /> */}
+        <GetStartedPreview online={false} />
 
         {/* <Modal isOpen={isOpen} onClose={()=> setIsOpen(false)}>
   <h1>ddddddddd</h1>
@@ -784,7 +785,7 @@ function App() {
 
         {/* <ReferEarnPreview/> */}
 
-        <CrossSellingPreview online={true}/>
+        {/* <CrossSellingPreview online={true}/> */}
 
         {/* <TourPreview /> */}
 
@@ -871,42 +872,7 @@ function App() {
         {/* <NormalInput  type='text' placeholder ='god' iconColor="blue" />   */}
         {/* <SreakPreview online /> */}
         {/* <InlineFeedbackPreview online={false} /> */}
-
-        {/* <h1 className="h1" style={{width: 100, margin: 200, marginLeft: 400}}>
-              Hello
-        </h1>
-        <p className="p">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias id assumenda sit quas? Reiciendis, et, corporis natus expedita vitae porro rem soluta ipsam facere corrupti voluptates quis laborum accusamus minus.
-        </p>
-        <button className="button" style={{position: 'absolute', right: '50%', top: 1000}}>
-          NEXT
-        </button> */}
-
-        {/* <Walkthrough
-            isOpen={isOpen}
-            id="app"
-            steps={[
-              {
-                selector: '.h1',
-                data: {title: 'First Tab', description: 'Click on this'},
-              },
-              {
-                selector: '.p',
-                data: {title: 'Second Tab', description: 'Click on this'},
-              },
-              {
-                selector: '.button',
-                data: {title: 'Second Tab', description: 'Click on this'},
-                align: Align.END,
-                position: Position.LEFT
-              }
-            ]}
-            onComplete={() => {alert('Welcome to the page'); setIsOpen(false)}}
-            onRequestClose={() => setIsOpen(false)}
-            onAfterOpen={() => document.documentElement.style.overflow = 'hidden'}
-            onBeforeClose={() => document.documentElement.style.overflow = ''}
-            tooltip
-        />  */}
+        {/* <WalkthroughPreview /> */}
       </QuestProvider>
       {/* < div style={{height: 1999}}/> */}
     </div>

@@ -35,7 +35,7 @@ type GetStartedProps = {
   allowMultiClick?: boolean;
   ButtonType?: "Arrow" | "Buttons";
   showFooter?: boolean;
-  onLinkTrigger?: (url: string, index: number) => void;
+  onLinkTrigger?: (url: string, index: number) => void | boolean;
   template?: 1 | 2;
   isImageOpen?: boolean;
   styleConfig?: {
@@ -72,7 +72,7 @@ type GetStartedProps = {
       };
     };
   };
-
+  onLoad?: () => void;
   variation?: string;
 };
 
@@ -135,6 +135,7 @@ function GetStarted({
   showFooter = true,
   styleConfig,
   isImageOpen = false,
+  onLoad,
   variation
 }: GetStartedProps) {
   const [formdata, setFormdata] = useState<TutorialStep[]>([]);
@@ -192,7 +193,7 @@ function GetStarted({
     }
   };
 
-  const handleCriteriaClick = (id: any, url: string) => {
+  const handleCriteriaClick  = (id: any, url: string) => {
     if (showLoader) return;
     const headers = {
       apiKey: apiKey,
@@ -200,6 +201,10 @@ function GetStarted({
       userId: uniqueUserId ? questUserId : userId,
       token: uniqueUserId ? questUserToken : token,
     };
+
+    if(url.indexOf('walkthrough:') == 0){
+      if(onLinkTrigger(url, id.actionId)) return
+    }
 
     if (showAnnouncement) return onLinkTrigger(url, id.actionId);
     let action = []
@@ -419,6 +424,10 @@ function GetStarted({
     }
   }, [allActionCompleted]);
 
+  useEffect(() => {
+    if(formdata.length > 0) onLoad?.()
+  }, [formdata])
+
   if (
     featureFlags[config.FLAG_CONSTRAINTS.GetStartedFlag]?.isEnabled == false
   ) {
@@ -427,6 +436,7 @@ function GetStarted({
   if (showLoadingIndicator && showLoader) {
     return <Loader />;
   }
+
   return (
     formdata.length > 0 && (
       <div
@@ -696,6 +706,7 @@ function GetStarted({
                       </div>
                       <div className="gs_drop_btns">
                         <PrimaryButton
+                          attr={e.url}
                           className={"gs_start_btn"}
                           children={e.btn2 || "Start Now"}
                           onClick={(event) => {
@@ -814,6 +825,7 @@ function GetStarted({
                             children={e.btn1 || "Visit Website"}
                           />
                           <PrimaryButton
+                            attr={e.url}
                             className={"gs_start_btn"}
                             children={e.btn2 || "Start Now"}
                             onClick={(event) => {
