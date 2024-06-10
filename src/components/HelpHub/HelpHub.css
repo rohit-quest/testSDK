@@ -197,6 +197,7 @@
   background: #F5F5F5;
   padding: 12px;
   box-sizing: border-box;
+  box-shadow: 4px 10px 36px 0px rgba(105, 105, 105, 0.20);
 }
 
 .home-user-msg {
@@ -219,6 +220,7 @@
   border-radius: 12px;
   background: var(--Primary-Grape-100, #F4EBFF);
   cursor: pointer;
+  box-shadow: 4px 10px 36px 0px rgba(105, 105, 105, 0.20);
 }
 
 /* Help Hub Home  */

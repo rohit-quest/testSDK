@@ -23,7 +23,7 @@ const HelpHubTasks = (props: HelpHubFaqTypes) => {
     });
     setFilterData(data);
   }, [faqData, searchData]);
-console.log(faqData)
+
   return (
     <div
       className={"helpHubHelpCont animatedDissolve"}

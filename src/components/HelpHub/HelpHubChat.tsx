@@ -56,6 +56,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
   const [message, setMessage] = useState("");
   const [data, setData] = useState<Conversation[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [senderMessageLoading, setSenderMessageLoading] = useState(false);
   const [messageFailed, setMessageFailed] = useState(false);
@@ -413,6 +414,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
         setScrollWidthSet((prev) => !prev);
       };
       uploadFile();
+      fileInputRef.current.value = null;
     }
 
     if (message.length > 0) {
@@ -1078,6 +1080,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                       onClick={() => {
                         setSelectedFile(null);
                         setSelectedFileName("");
+                        fileInputRef.current.value = null;
                       }}
                     />
                   )}
@@ -1087,6 +1090,7 @@ const HelpHubChat = (props: HelpHubChatTypes) => {
                     type="file"
                     accept="image/*"
                     // className=""
+                    ref={fileInputRef} 
                     disabled={disableSendMessageBtn}
                     className={`${disableSendMessageBtn?"send-message-aero-dsable":""} hidden` }
                   />

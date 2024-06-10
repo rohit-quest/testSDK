@@ -252,6 +252,7 @@ const HelpHubHome = (props: HelpHubHomeTypes) => {
             ...styleConfig?.Home?.Card,
             borderColor: themeConfig?.borderColor,
           }}
+          onClick={() => {contentConfig?.box1?.link && window.open(contentConfig?.box1.link, "_blank")}}
         >
           <div className="q-helphub-quest-community-imageCont">
             <img src={contentConfig?.box1?.image || QuestImage} />
