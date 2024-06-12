@@ -15,7 +15,7 @@ export const questId = "c-1c273d0a-c864-411b-b3a4-67dda274df05";
 export const apiKey = "k-73a1c03f-fd50-415b-a3fb-df5e7965dcde";
 export const apiSecret =
   "s-772ea55b-1f58-4f1a-bcb1-5ba5e1cc8e4f9edf825c-bdf9-4b2d-a182-bdbef8c071d4";
-export const entityId = "e-2959e609-38d3-426b-94f1-f46d1458955b";
+export const entityId = "e-be49f63a-aa4d-414b-9ebf-f015cf866e9c";
 export const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTdiM2E2MzAxLTcxMWMtNGMwZC1hZTYzLWQ5M2RiZTJjZWVlOSIsImlhdCI6MTcxODE2OTYxNCwiZXhwIjoxNzE4Nzc0NDE0fQ.70kzTOejydMYtRerbwcgD6p-P0n5Lut0m093C20gqs0";
 export const userId = "u-7b3a6301-711c-4c0d-ae63-d93dbe2ceee9";
@@ -166,7 +166,7 @@ export default function GamifiedQuizPreviewNew({
           // backgroundColor: "yellow", //done
           // borderColor: "green", //done
           // buttonColor: "red", //done
-          fontFamily: "cursive", //done
+          // fontFamily: "cursive", //done
           // primaryColor: "red", //
           // secondaryColor: "yellow",
         }}
@@ -194,17 +194,14 @@ export default function GamifiedQuizPreviewNew({
               setGamifiedQuiz={closeme}
               gamifiedQuiz={gamifiedQuiz}
               userId={userId}
-              questId={"q-200de103-b1da-4e28-8f68-4eed0daf3638"}
+              questId={questId}
               // answer={answer}
               // setAnswer={setAnswer}
               functionOnSubmit={functionOnSubmit}
               token={token}
               heading="Heading Online"
-              isV1Api={true}
+              isV1Api={false}
               // questionSections={[[1, 2, 3, 4], [5, 6], [7, 8], [9, 10]]}
-              // questionsPerSection={5}
-              questionSections={[[1, 2, 3, 4], [5, 6], [7]]}
-              // questionSections={[[1], [5, 6], [7, 8], [9, 10]]}
               sectionSubHeading={
                 [
                   "Section 1asasd",
@@ -224,6 +221,7 @@ export default function GamifiedQuizPreviewNew({
                   // color: "yellow",
                   // fontSize: "58px",
                   // background: "red", //done
+                  // fontFamily: "fantasy"
                 },
                 IconColor: {
                   // color: "red",
@@ -297,10 +295,10 @@ export default function GamifiedQuizPreviewNew({
                 },
               }}
 
-              // customComponents={<CustomButton />}
-              // getAnswers={printAnswer}
-              // screenHeight=""
-              // progressBarType="modal1"
+            // customComponents={<CustomButton />}
+            // getAnswers={printAnswer}
+            // screenHeight=""
+            // progressBarType="modal1"
             />
           </div>
         )}
@@ -467,10 +465,10 @@ export default function GamifiedQuizPreviewNew({
             }}
             formDataOffline={formDataOffline}
 
-            // customComponents={<CustomButton />}
-            // getAnswers={printAnswer}
-            // screenHeight=""
-            // progressBarType="modal1"
+          // customComponents={<CustomButton />}
+          // getAnswers={printAnswer}
+          // screenHeight=""
+          // progressBarType="modal1"
           />
         </div>
       )}
