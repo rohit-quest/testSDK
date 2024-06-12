@@ -73,7 +73,7 @@ interface GamifiedQuizProps {
   setQuestions?: any;
   questionsPerSection?: number;
   variation?: string;
-  isButtonDisabled?: boolean;
+  isV1Api?: boolean;
 }
 
 interface FormData {
@@ -81,6 +81,7 @@ interface FormData {
   question: string;
   options: Array<string>;
   actionId: string;
+  criteriaId: string;
   required: boolean;
   placeholder: string;
   linkTitle: string;
@@ -108,7 +109,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
   functionOnSubmit,
   feedbackContent,
   variation,
-  isButtonDisabled
+  isV1Api
 }) => {
   const { apiKey, apiSecret, entityId, apiType, themeConfig } = useContext(
     QuestContext.Context
@@ -207,7 +208,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
       ) {
         let params = new URLSearchParams()
         params.set('platform', 'REACT')
-        if(variation) params.set('variation', variation)
+        if (variation) params.set('variation', variation)
 
         const url = `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}?${params.toString()}`;
 
@@ -248,7 +249,57 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           GeneralFunctions.captureSentryException(error);
         }
       };
-      getQuestData(userId, headers);
+
+      const getQuestDataV1 = async function getQuestData(
+        userId: string,
+        headers: object
+      ) {
+        const url = `${BACKEND_URL}api/entities/${entityId}/quests/${campaignId}/criterias?userId=${userId}&getVariation=${variation || false}`;
+        const { data } = await axios.get(url, { headers: headers });
+        setQuestions(data.data.eligibilityCriterias.length);
+        let criterias = data?.data?.eligibilityData.map(
+          (criteria: {
+            criteriaType: string;
+            metadata: {
+              title: string;
+              options: string[];
+              isRequired: string;
+              placeholder: string;
+              linkActionName: string;
+              linkActionUrl: string;
+              manualInput: string;
+            };
+            criteriaId: string;
+          }) => {
+            return {
+              type: criteria?.criteriaType,
+              question: criteria?.metadata?.title,
+              options: criteria?.metadata?.options || [],
+              criteriaId: criteria?.criteriaId,
+              required: criteria?.metadata?.isRequired,
+              placeholder: criteria?.metadata?.placeholder,
+            };
+          }
+        );
+        if (questionsPerSection > 0) {
+          setTotalSectionsPerSectionQuestion(
+            Math.ceil(
+              data.data.eligibilityCriterias.length / questionsPerSection
+            )
+          );
+        }
+        if (criterias?.length > 0) {
+          setFormdata([...criterias]);
+        } else {
+          setFormdata([]);
+        }
+
+      }
+      if (isV1Api) {
+        getQuestDataV1(userId, headers)
+      } else {
+        getQuestData(userId, headers);
+      }
     }
   }, []);
 
@@ -301,7 +352,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
         ) {
           const ansOptions =
             selectedOptions[
-              formdata[questionSections[sectionNo][i] - 1]?.actionId
+            isV1Api ? formdata[questionSections[sectionNo][i] - 1]?.criteriaId : formdata[questionSections[sectionNo][i] - 1]?.actionId
             ];
           if (!formdata[questionSections[sectionNo][i] - 1]?.required) {
           } else if (
@@ -315,7 +366,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           }
         } else if (!formdata[questionSections[sectionNo][i] - 1]?.required) {
         } else if (
-          answer[formdata[questionSections[sectionNo][i] - 1]?.actionId]
+          answer[isV1Api ? formdata[questionSections[sectionNo][i] - 1]?.criteriaId : formdata[questionSections[sectionNo][i] - 1]?.actionId]
             ?.length > 0 &&
           formdata[questionSections[sectionNo][i] - 1]?.required
         ) {
@@ -329,7 +380,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
       for (let i = 0; i < questionsPerSection; i++) {
         let queNo = currentSection * questionsPerSection + i;
         if (formdata[queNo]?.type === "USER_INPUT_MULTI_CHOICE") {
-          const ansOptions = selectedOptions[formdata[queNo]?.actionId];
+          const ansOptions = selectedOptions[isV1Api ? formdata[queNo]?.criteriaId : formdata[queNo]?.actionId];
           if (!formdata[queNo]?.required) {
           } else if (ansOptions?.length > 0 && formdata[queNo]?.required) {
             setGoToNextSection(true);
@@ -339,7 +390,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           }
         } else if (!formdata[queNo]?.required) {
         } else if (
-          answer[formdata[queNo]?.actionId]?.length > 0 &&
+          answer[isV1Api ? formdata[queNo]?.criteriaId : formdata[queNo]?.actionId]?.length > 0 &&
           formdata[queNo]?.required
         ) {
           setGoToNextSection(true);
@@ -374,31 +425,30 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           return (
             <div
               key={index}
-              onClick={() => handleCheckboxChange(option, value.actionId)}
-              className={`${
-                selectedOptions[value?.actionId]?.includes(option)
-                  ? "selected-option"
-                  : "not-selected"
-              }`}
+              onClick={() => handleCheckboxChange(option, isV1Api ? value?.criteriaId : value?.actionId)}
+              className={`${selectedOptions[isV1Api ? value?.criteriaId : value?.actionId]?.includes(option)
+                ? "selected-option"
+                : "not-selected"
+                }`}
               style={
-                selectedOptions[value?.actionId]?.includes(option)
+                selectedOptions[isV1Api ? value?.criteriaId : value?.actionId]?.includes(option)
                   ? SelectedBorder
                   : { borderColor: themeConfig?.borderColor }
               }
             >
-              {selectedOptions[value?.actionId]?.includes(option)
+              {selectedOptions[isV1Api ? value?.criteriaId : value?.actionId]?.includes(option)
                 ? MultiChoiceSelectedSVG(
-                    styleConfig?.OptionsSelectedColor?.color
-                  )
+                  styleConfig?.OptionsSelectedColor?.color
+                )
                 : MultiChoiceSVG(themeConfig?.borderColor)}
               <p
                 style={
-                  selectedOptions[value?.actionId]?.includes(option)
+                  selectedOptions[isV1Api ? value?.criteriaId : value?.actionId]?.includes(option)
                     ? SelectedOptionColor
                     : {
-                        color: themeConfig?.primaryColor,
-                        fontFamily: themeConfig?.fontFamily,
-                      }
+                      color: themeConfig?.primaryColor,
+                      fontFamily: themeConfig?.fontFamily,
+                    }
                 }
               >
                 {option}
@@ -425,33 +475,32 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           return (
             <div
               key={index}
-              onClick={() => handleRadioChange(option, value.actionId)}
-              className={`${
-                answer[value?.actionId]?.includes(option)
-                  ? "selected-option"
-                  : "not-selected"
-              }`}
+              onClick={() => handleRadioChange(option, isV1Api ? value?.criteriaId : value?.actionId)}
+              className={`${answer[isV1Api ? value?.criteriaId : value?.actionId]?.includes(option)
+                ? "selected-option"
+                : "not-selected"
+                }`}
               style={
-                answer[value?.actionId]?.includes(option)
+                answer[isV1Api ? value?.criteriaId : value?.actionId]?.includes(option)
                   ? SelectedBorder
                   : {
-                      borderColor: themeConfig?.borderColor,
-                    }
+                    borderColor: themeConfig?.borderColor,
+                  }
               }
             >
-              {answer[value?.actionId]?.includes(option)
+              {answer[isV1Api ? value?.criteriaId : value?.actionId]?.includes(option)
                 ? SingleChoiceSelectedSVG(
-                    styleConfig?.OptionsSelectedColor?.color
-                  )
+                  styleConfig?.OptionsSelectedColor?.color
+                )
                 : SingleChoiceSVG(themeConfig?.borderColor)}
               <p
                 style={
-                  answer[value?.actionId]?.includes(option)
+                  answer[isV1Api ? value?.criteriaId : value?.actionId]?.includes(option)
                     ? SelectedOptionColor
                     : {
-                        color: themeConfig?.primaryColor,
-                        fontFamily: themeConfig?.fontFamily,
-                      }
+                      color: themeConfig?.primaryColor,
+                      fontFamily: themeConfig?.fontFamily,
+                    }
                 }
               >
                 {" "}
@@ -480,39 +529,78 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
         answer[key] = selectedOptions[key];
       }
     }
-    let actions = Object.keys(answer).map((key: string) => ({
-      actionId: key,
-      answers: Array.isArray(answer[key]) ? answer[key]:[answer[key]],
-    }));
+    if (!isV1Api) {
 
-    let headers = {
-      apikey: apiKey,
-      apisecret: apiSecret,
-      userId: uniqueUserId || userId,
-      token: token,
-    };
+      let actions = Object.keys(answer).map((key: string) => ({
+        actionId: key,
+        answers: Array.isArray(answer[key]) ? answer[key] : [answer[key]],
+      }));
 
-    const data = axios
-      .post(
-        `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}/verify`,
-        { actions, campaignVariationId },
-        { headers }
-      )
-      .then((res) => {
-        functionOnSubmit?.();
-        setThanksPopup(res.data.success);
-        if (res.data.success) {
+      let headers = {
+        apikey: apiKey,
+        apisecret: apiSecret,
+        userId: uniqueUserId || userId,
+        token: token,
+      };
+
+      const data = axios
+        .post(
+          `${BACKEND_URL}api/v2/entities/${entityId}/campaigns/${campaignId}/verify`,
+          { actions, campaignVariationId },
+          { headers }
+        )
+        .then((res) => {
+          functionOnSubmit?.();
           setThanksPopup(res.data.success);
-        } else {
-          setPopUpHead("Feedback Not Submitted");
-          setPopUpMessage(res.data.error);
-          setThanksPopup(true);
-        }
-      })
-      .catch((error) => {
-        GeneralFunctions.captureSentryException(error);
-        console.log("error", error);
-      });
+          if (res.data.success) {
+            setThanksPopup(res.data.success);
+          } else {
+            setPopUpHead("Feedback Not Submitted");
+            setPopUpMessage(res.data.error);
+            setThanksPopup(true);
+          }
+        })
+        .catch((error) => {
+          GeneralFunctions.captureSentryException(error);
+          console.log("error", error);
+        });
+    }
+    else {
+      let criterias = Object.keys(answer).map((key: string) => ({
+        criteriaId: key,
+        answer: typeof answer[key] === "object" ? answer[key] : [answer[key]],
+        question:
+          formdata[formdata.findIndex((ele) => ele.criteriaId == key)].question,
+      }));
+
+      let headers = {
+        apikey: apiKey,
+        apisecret: apiSecret,
+        userId: uniqueUserId || userId,
+        token: token,
+      };
+      const data = axios
+        .post(
+          `${BACKEND_URL}api/entities/${entityId}/quests/${campaignId}/verify-all?userId=${headers.userId}`,
+          { criterias, userId: headers.userId },
+          { headers }
+        )
+        .then((res) => {
+          functionOnSubmit?.();
+          setThanksPopup(res.data.success);
+          if (res.data.success) {
+            setThanksPopup(res.data.success);
+          } else {
+            setPopUpHead("Feedback Not Submitted");
+            setPopUpMessage(res.data.error);
+            setThanksPopup(true);
+          }
+        })
+        .catch((error) => {
+          GeneralFunctions.captureSentryException(error);
+          console.log("error", error);
+        });
+    }
   };
 
   const handleUpdate = (e: any, actionId: string, j: string) => {
@@ -630,7 +718,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
     );
   };
 
-  useEffect(() => {}, [gamifiedQuiz]);
+  useEffect(() => { }, [gamifiedQuiz]);
 
   const QuestionArray = [];
 
@@ -644,7 +732,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
         <div className="gamified-quiz-header-ques-title-cont">
           <div className="question-input-cont">
             {formdata[question]?.type === "USER_INPUT_SINGLE_CHOICE" ||
-            formdata[question]?.type === "USER_INPUT_MULTI_CHOICE" ? (
+              formdata[question]?.type === "USER_INPUT_MULTI_CHOICE" ? (
               <div
                 className="question"
                 style={{
@@ -663,7 +751,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               normalInput(
                 value.question,
                 value.required || false,
-                value.actionId,
+                isV1Api ? value.criteriaId : value.actionId,
                 index,
                 value.placeholder || value.question,
                 "text"
@@ -672,7 +760,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               normalInput(
                 value.question,
                 value.required || false,
-                value.actionId,
+                isV1Api ? value.criteriaId : value.actionId,
                 index,
                 value.placeholder || value.question,
                 "email"
@@ -681,7 +769,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               normalInput(
                 value.question,
                 value.required || false,
-                value.actionId,
+                isV1Api ? value.criteriaId : value.actionId,
                 index,
                 value.placeholder || value.question,
                 "number"
@@ -690,7 +778,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               dateInput(
                 value.question,
                 value.required || false,
-                value.actionId,
+                isV1Api ? value.criteriaId : value.actionId,
                 index,
                 value.placeholder || value.question
               )
@@ -698,7 +786,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               textAreaInput(
                 value.question,
                 value.required || false,
-                value.actionId,
+                isV1Api ? value.criteriaId : value.actionId,
                 index,
                 value.placeholder || value.question
               )
@@ -875,131 +963,130 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                           : "Fill out the Details"}
                       </div>
                       {(sectionHeading?.length > 0 &&
-                      sectionHeading[sectionNo]) && (
-                        <div
-                          className="question"
-                          style={{
-                            color:
-                              styleConfig?.Question?.color ||
-                              themeConfig?.primaryColor,
-                            fontFamily: themeConfig?.fontFamily,
-                          }}
-                        >
-                          {sectionHeading[sectionNo] || "Fill out the Details"}
-                        </div>
-                      // ) : (
-                      //   <div
-                      //     className="question"
-                      //     style={{
-                      //       color:
-                      //         styleConfig?.Question?.color ||
-                      //         themeConfig?.primaryColor,
-                      //       fontFamily: themeConfig?.fontFamily,
-                      //     }}
-                      //   >
-                      //     {sectionHeading[sectionNo] || "Fill out the Details"}
-                      //   </div>
-                      )}
+                        sectionHeading[sectionNo]) && (
+                          <div
+                            className="question"
+                            style={{
+                              color:
+                                styleConfig?.Question?.color ||
+                                themeConfig?.primaryColor,
+                              fontFamily: themeConfig?.fontFamily,
+                            }}
+                          >
+                            {sectionHeading[sectionNo] || "Fill out the Details"}
+                          </div>
+                          // ) : (
+                          //   <div
+                          //     className="question"
+                          //     style={{
+                          //       color:
+                          //         styleConfig?.Question?.color ||
+                          //         themeConfig?.primaryColor,
+                          //       fontFamily: themeConfig?.fontFamily,
+                          //     }}
+                          //   >
+                          //     {sectionHeading[sectionNo] || "Fill out the Details"}
+                          //   </div>
+                        )}
                     </div>
 
                     {questionSections?.length > 0
                       ? questionSections[sectionNo].map((question) => {
-                          question = question - 1;
-                          const value: FormData = formdata[question];
-                          const index: number = question;
+                        question = question - 1;
+                        const value: FormData = formdata[question];
+                        const index: number = question;
 
-                          return (
-                            <div
-                              className="gamified-quiz-action-div"
-                              key={index}
-                            >
-                              <div className="gamified-quiz-header-ques-title-cont">
-                                <div className="question-input-cont">
-                                  {formdata[question]?.type ===
-                                    "USER_INPUT_SINGLE_CHOICE" ||
+                        return (
+                          <div
+                            className="gamified-quiz-action-div"
+                            key={index}
+                          >
+                            <div className="gamified-quiz-header-ques-title-cont">
+                              <div className="question-input-cont">
+                                {formdata[question]?.type ===
+                                  "USER_INPUT_SINGLE_CHOICE" ||
                                   formdata[question]?.type ===
-                                    "USER_INPUT_MULTI_CHOICE" ? (
-                                    <div
-                                      className="question"
-                                      style={{
-                                        color:
-                                          styleConfig?.Question?.color ||
-                                          themeConfig?.primaryColor,
-                                        fontFamily: themeConfig?.fontFamily,
-                                      }}
-                                    >
-                                      {formdata[question]?.question}
-                                      {`${
-                                        formdata[question]?.required ? "*" : ""
+                                  "USER_INPUT_MULTI_CHOICE" ? (
+                                  <div
+                                    className="question"
+                                    style={{
+                                      color:
+                                        styleConfig?.Question?.color ||
+                                        themeConfig?.primaryColor,
+                                      fontFamily: themeConfig?.fontFamily,
+                                    }}
+                                  >
+                                    {formdata[question]?.question}
+                                    {`${formdata[question]?.required ? "*" : ""
                                       }`}
-                                    </div>
-                                  ) : null}
+                                  </div>
+                                ) : null}
 
-                                  {formdata[question]?.type ===
+                                {formdata[question]?.type ===
                                   "USER_INPUT_TEXT" ? (
-                                    normalInput(
-                                      value.question,
-                                      value.required || false,
-                                      value.actionId,
-                                      index,
-                                      value.placeholder || value.question,
-                                      "text"
-                                    )
-                                  ) : formdata[question]?.type ===
-                                    "USER_INPUT_EMAIL" ? (
-                                    normalInput(
-                                      value.question,
-                                      value.required || false,
-                                      value.actionId,
-                                      index,
-                                      value.placeholder || value.question,
-                                      "email"
-                                    )
-                                  ) : formdata[question]?.type ===
-                                    "USER_INPUT_PHONE" ? (
-                                    normalInput(
-                                      value.question,
-                                      value.required || false,
-                                      value.actionId,
-                                      index,
-                                      value.placeholder || value.question,
-                                      "number"
-                                    )
-                                  ) : formdata[question]?.type ===
-                                    "USER_INPUT_DATE" ? (
-                                    dateInput(
-                                      value.question,
-                                      value.required || false,
-                                      value.actionId,
-                                      index,
-                                      value.placeholder || value.question
-                                    )
-                                  ) : formdata[question]?.type ===
-                                    "USER_INPUT_TEXTAREA" ? (
-                                    textAreaInput(
-                                      value.question,
-                                      value.required || false,
-                                      value.actionId,
-                                      index,
-                                      value.placeholder || value.question
-                                    )
-                                  ) : formdata[question]?.type ===
-                                    "USER_INPUT_MULTI_CHOICE" ? (
-                                    <MultiChoice value={value} />
-                                  ) : formdata[question]?.type ===
-                                    "USER_INPUT_SINGLE_CHOICE" ? (
-                                    <SingleChoice value={value} />
-                                  ) : (
-                                    ""
-                                  )}
-                                </div>
+                                  normalInput(
+                                    value.question,
+                                    value.required || false,
+                                    isV1Api ? value.criteriaId : value.actionId,
+                                    index,
+                                    value.placeholder || value.question,
+                                    "text"
+                                  )
+                                ) : formdata[question]?.type ===
+                                  "USER_INPUT_EMAIL" ? (
+                                  normalInput(
+                                    value.question,
+                                    value.required || false,
+                                    isV1Api ? value.criteriaId : value.actionId,
+                                    index,
+                                    value.placeholder || value.question,
+                                    "email"
+                                  )
+                                ) : formdata[question]?.type ===
+                                  "USER_INPUT_PHONE" ? (
+                                  normalInput(
+                                    value.question,
+                                    value.required || false,
+                                    isV1Api ? value.criteriaId : value.actionId,
+                                    index,
+                                    value.placeholder || value.question,
+                                    "number"
+                                  )
+                                ) : formdata[question]?.type ===
+                                  "USER_INPUT_DATE" ? (
+                                  dateInput(
+                                    value.question,
+                                    value.required || false,
+                                    isV1Api ? value.criteriaId : value.actionId,
+                                    index,
+                                    value.placeholder || value.question
+                                  )
+                                ) : formdata[question]?.type ===
+                                  "USER_INPUT_TEXTAREA" ? (
+                                  textAreaInput(
+                                    value.question,
+                                    value.required || false,
+                                    isV1Api ? value.criteriaId : value.actionId,
+                                    index,
+                                    value.placeholder || value.question
+                                  )
+                                ) : formdata[question]?.type ===
+                                  "USER_INPUT_MULTI_CHOICE" ? (
+                                  <MultiChoice value={value} />
+                                ) : formdata[question]?.type ===
+                                  "USER_INPUT_SINGLE_CHOICE" ? (
+                                  <SingleChoice value={value} />
+                                ) : (
+                                  ""
+                                )}
                               </div>
                             </div>
-                          );
-                        })
+                          </div>
+                        );
+                      })
                       : QuestionArray}
 
-                    {}
+                    { }
                   </div>
 
                   {questionSections?.length > 0 ? (
@@ -1052,7 +1139,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                             formSubmitHandler();
                           }
                         }}
-                        disabled={isButtonDisabled ? false : !goToNextSection}
+                        disabled={!goToNextSection}
                         className="q-onb-main-btn2"
                         style={{
                           font: "",
@@ -1065,13 +1152,12 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                             styleConfig?.PrimaryButton?.color ||
                             "var(--Neutral-White-100, #FFF)",
 
-                          border: `1.5px solid ${
-                            styleConfig?.PrimaryButton?.borderColor
-                              ? styleConfig?.PrimaryButton?.borderColor
-                              : themeConfig?.buttonColor
+                          border: `1.5px solid ${styleConfig?.PrimaryButton?.borderColor
+                            ? styleConfig?.PrimaryButton?.borderColor
+                            : themeConfig?.buttonColor
                               ? themeConfig?.buttonColor
                               : "#D1ACFF"
-                          }`,
+                            }`,
                           fontStyle: "normal",
                           fontWeight: "600",
                           lineHeight: "20px",
@@ -1137,7 +1223,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                             formSubmitHandler();
                           }
                         }}
-                        disabled={isButtonDisabled ? false : !goToNextSection}
+                        disabled={!goToNextSection}
                         className="q-onb-main-btn2"
                         style={{
                           font: "",
@@ -1150,13 +1236,12 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                             styleConfig?.PrimaryButton?.color ||
                             "var(--Neutral-White-100, #FFF)",
 
-                          border: `1.5px solid ${
-                            styleConfig?.PrimaryButton?.borderColor
-                              ? styleConfig?.PrimaryButton?.borderColor
-                              : themeConfig?.buttonColor
+                          border: `1.5px solid ${styleConfig?.PrimaryButton?.borderColor
+                            ? styleConfig?.PrimaryButton?.borderColor
+                            : themeConfig?.buttonColor
                               ? themeConfig?.buttonColor
                               : "#D1ACFF"
-                          }`,
+                            }`,
                           fontStyle: "normal",
                           fontWeight: "600",
                           lineHeight: "20px",

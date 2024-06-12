@@ -11,14 +11,14 @@ import GamifiedQuizOffline from "./GamifiedQuizOffline";
 //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTgyNjhmNWUxLWY1YTEtNDQwYy1hMzMzLTBmNTU3OGE3Mzg0NyIsImlhdCI6MTcxMjgyMDkyOSwiZXhwIjoxNzEzNDI1NzI5fQ.RQXNgNM83WfWhgHRFnRilFaXqmx0x-cvVhaL1TvhlBc";
 // export const userId = "u-8268f5e1-f5a1-440c-a333-0f5578a73847";
 
-export const questId = "q-89aee979-b16f-4575-868a-c8714c632302";
-export const apiKey = "k-e6ec8094-6eef-4e80-a804-112a63607bf5";
+export const questId = "c-1c273d0a-c864-411b-b3a4-67dda274df05";
+export const apiKey = "k-73a1c03f-fd50-415b-a3fb-df5e7965dcde";
 export const apiSecret =
   "s-772ea55b-1f58-4f1a-bcb1-5ba5e1cc8e4f9edf825c-bdf9-4b2d-a182-bdbef8c071d4";
-export const entityId = "e-5768fd26-d226-4ac1-81e6-3c99427f3fb3";
+export const entityId = "e-2959e609-38d3-426b-94f1-f46d1458955b";
 export const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTg4MzUwY2FhLTQwODAtNDUwNS1hMTY5LTA5ZjNmMTVlODNiNyIsImlhdCI6MTcxMzE2NDEzOCwiZXhwIjoxNzEzNzY4OTM4fQ.tZENNsLVFUkWOMcmoOqKEVvAx97PLBZKDZGzhARP_tc";
-export const userId = "u-88350caa-4080-4505-a169-09f3f15e83b7";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1LTdiM2E2MzAxLTcxMWMtNGMwZC1hZTYzLWQ5M2RiZTJjZWVlOSIsImlhdCI6MTcxODE2OTYxNCwiZXhwIjoxNzE4Nzc0NDE0fQ.70kzTOejydMYtRerbwcgD6p-P0n5Lut0m093C20gqs0";
+export const userId = "u-7b3a6301-711c-4c0d-ae63-d93dbe2ceee9";
 
 export default function GamifiedQuizPreviewNew({
   online = false,
@@ -194,12 +194,13 @@ export default function GamifiedQuizPreviewNew({
               setGamifiedQuiz={closeme}
               gamifiedQuiz={gamifiedQuiz}
               userId={userId}
-              questId={questId}
+              questId={"q-200de103-b1da-4e28-8f68-4eed0daf3638"}
               // answer={answer}
               // setAnswer={setAnswer}
               functionOnSubmit={functionOnSubmit}
               token={token}
               heading="Heading Online"
+              isV1Api={true}
               // questionSections={[[1, 2, 3, 4], [5, 6], [7, 8], [9, 10]]}
               // questionsPerSection={5}
               questionSections={[[1, 2, 3, 4], [5, 6], [7]]}
