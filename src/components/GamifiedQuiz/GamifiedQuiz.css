@@ -209,6 +209,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 10px;
 }
 
 .question {
@@ -331,6 +332,7 @@
     align-items: flex-start;
     gap: 8px;
     align-self: stretch;
+    margin-top: 16px;
 }
 
 .gamified-quiz-header-ques-cancel-next>button {
