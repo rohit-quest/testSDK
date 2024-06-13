@@ -115,6 +115,8 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
     QuestContext.Context
   );
 
+  const newId = isV1Api ? "criteriaId" : "actionId";
+
   const cookies = new Cookies();
   const [formdata, setFormdata] = useState<FormData[] | []>([]);
   const [answer, setAnswer] = useState<Record<string, string | Array<string>>>(
@@ -352,7 +354,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
         ) {
           const ansOptions =
             selectedOptions[
-            isV1Api ? formdata[questionSections[sectionNo][i] - 1]?.criteriaId : formdata[questionSections[sectionNo][i] - 1]?.actionId
+            formdata[questionSections[sectionNo][i] - 1][newId]
             ];
           if (!formdata[questionSections[sectionNo][i] - 1]?.required) {
           } else if (
@@ -366,7 +368,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           }
         } else if (!formdata[questionSections[sectionNo][i] - 1]?.required) {
         } else if (
-          answer[isV1Api ? formdata[questionSections[sectionNo][i] - 1]?.criteriaId : formdata[questionSections[sectionNo][i] - 1]?.actionId]
+          answer[formdata[questionSections[sectionNo][i] - 1][newId]]
             ?.length > 0 &&
           formdata[questionSections[sectionNo][i] - 1]?.required
         ) {
@@ -380,7 +382,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
       for (let i = 0; i < questionsPerSection; i++) {
         let queNo = currentSection * questionsPerSection + i;
         if (formdata[queNo]?.type === "USER_INPUT_MULTI_CHOICE") {
-          const ansOptions = selectedOptions[isV1Api ? formdata[queNo]?.criteriaId : formdata[queNo]?.actionId];
+          const ansOptions = selectedOptions[formdata[queNo][newId]];
           if (!formdata[queNo]?.required) {
           } else if (ansOptions?.length > 0 && formdata[queNo]?.required) {
             setGoToNextSection(true);
@@ -390,7 +392,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           }
         } else if (!formdata[queNo]?.required) {
         } else if (
-          answer[isV1Api ? formdata[queNo]?.criteriaId : formdata[queNo]?.actionId]?.length > 0 &&
+          answer[formdata[queNo][newId]]?.length > 0 &&
           formdata[queNo]?.required
         ) {
           setGoToNextSection(true);
@@ -425,25 +427,25 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           return (
             <div
               key={index}
-              onClick={() => handleCheckboxChange(option, isV1Api ? value?.criteriaId : value?.actionId)}
-              className={`${selectedOptions[isV1Api ? value?.criteriaId : value?.actionId]?.includes(option)
+              onClick={() => handleCheckboxChange(option, value[newId])}
+              className={`${selectedOptions[value[newId]]?.includes(option)
                 ? "selected-option"
                 : "not-selected"
                 }`}
               style={
-                selectedOptions[isV1Api ? value?.criteriaId : value?.actionId]?.includes(option)
+                selectedOptions[value[newId]]?.includes(option)
                   ? SelectedBorder
                   : { borderColor: themeConfig?.borderColor }
               }
             >
-              {selectedOptions[isV1Api ? value?.criteriaId : value?.actionId]?.includes(option)
+              {selectedOptions[value[newId]]?.includes(option)
                 ? MultiChoiceSelectedSVG(
                   styleConfig?.OptionsSelectedColor?.color
                 )
                 : MultiChoiceSVG(themeConfig?.borderColor)}
               <p
                 style={
-                  selectedOptions[isV1Api ? value?.criteriaId : value?.actionId]?.includes(option)
+                  selectedOptions[value[newId]]?.includes(option)
                     ? SelectedOptionColor
                     : {
                       color: themeConfig?.primaryColor,
@@ -455,8 +457,9 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               </p>
             </div>
           );
-        })}
-      </div>
+        })
+        }
+      </div >
     );
   };
 
@@ -475,27 +478,27 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
           return (
             <div
               key={index}
-              onClick={() => handleRadioChange(option, isV1Api ? value?.criteriaId : value?.actionId)}
-              className={`${answer[isV1Api ? value?.criteriaId : value?.actionId]?.includes(option)
+              onClick={() => handleRadioChange(option, value[newId])}
+              className={`${answer[value[newId]]?.includes(option)
                 ? "selected-option"
                 : "not-selected"
                 }`}
               style={
-                answer[isV1Api ? value?.criteriaId : value?.actionId]?.includes(option)
+                answer[value[newId]]?.includes(option)
                   ? SelectedBorder
                   : {
                     borderColor: themeConfig?.borderColor,
                   }
               }
             >
-              {answer[isV1Api ? value?.criteriaId : value?.actionId]?.includes(option)
+              {answer[value[newId]]?.includes(option)
                 ? SingleChoiceSelectedSVG(
                   styleConfig?.OptionsSelectedColor?.color
                 )
                 : SingleChoiceSVG(themeConfig?.borderColor)}
               <p
                 style={
-                  answer[isV1Api ? value?.criteriaId : value?.actionId]?.includes(option)
+                  answer[value[newId]]?.includes(option)
                     ? SelectedOptionColor
                     : {
                       color: themeConfig?.primaryColor,
@@ -508,8 +511,9 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               </p>
             </div>
           );
-        })}
-      </div>
+        })
+        }
+      </div >
     );
   };
 
@@ -751,7 +755,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               normalInput(
                 value.question,
                 value.required || false,
-                isV1Api ? value.criteriaId : value.actionId,
+                value[newId],
                 index,
                 value.placeholder || value.question,
                 "text"
@@ -760,16 +764,16 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               normalInput(
                 value.question,
                 value.required || false,
-                isV1Api ? value.criteriaId : value.actionId,
+                value[newId],
                 index,
                 value.placeholder || value.question,
                 "email"
               )
-            ) : formdata[question]?.type === "USER_INPUT_PHONE" ? (
+            ) : (formdata[question]?.type === "USER_INPUT_PHONE") || (formdata[question]?.type === "USER_INPUT_NUMBER") ? (
               normalInput(
                 value.question,
                 value.required || false,
-                isV1Api ? value.criteriaId : value.actionId,
+                value[newId],
                 index,
                 value.placeholder || value.question,
                 "number"
@@ -778,7 +782,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               dateInput(
                 value.question,
                 value.required || false,
-                isV1Api ? value.criteriaId : value.actionId,
+                value[newId],
                 index,
                 value.placeholder || value.question
               )
@@ -786,7 +790,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
               textAreaInput(
                 value.question,
                 value.required || false,
-                isV1Api ? value.criteriaId : value.actionId,
+                value[newId],
                 index,
                 value.placeholder || value.question
               )
@@ -1027,7 +1031,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                                   normalInput(
                                     value.question,
                                     value.required || false,
-                                    isV1Api ? value.criteriaId : value.actionId,
+                                    value[newId],
                                     index,
                                     value.placeholder || value.question,
                                     "text"
@@ -1037,17 +1041,16 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                                   normalInput(
                                     value.question,
                                     value.required || false,
-                                    isV1Api ? value.criteriaId : value.actionId,
+                                    value[newId],
                                     index,
                                     value.placeholder || value.question,
                                     "email"
                                   )
-                                ) : formdata[question]?.type ===
-                                  "USER_INPUT_PHONE" ? (
+                                ) : (formdata[question]?.type === "USER_INPUT_PHONE") || (formdata[question]?.type === "USER_INPUT_NUMBER") ? (
                                   normalInput(
                                     value.question,
                                     value.required || false,
-                                    isV1Api ? value.criteriaId : value.actionId,
+                                    value[newId],
                                     index,
                                     value.placeholder || value.question,
                                     "number"
@@ -1057,7 +1060,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                                   dateInput(
                                     value.question,
                                     value.required || false,
-                                    isV1Api ? value.criteriaId : value.actionId,
+                                    value[newId],
                                     index,
                                     value.placeholder || value.question
                                   )
@@ -1066,7 +1069,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                                   textAreaInput(
                                     value.question,
                                     value.required || false,
-                                    isV1Api ? value.criteriaId : value.actionId,
+                                    value[newId],
                                     index,
                                     value.placeholder || value.question
                                   )
