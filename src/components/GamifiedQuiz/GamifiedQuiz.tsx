@@ -769,7 +769,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                 value.placeholder || value.question,
                 "email"
               )
-            ) : formdata[question]?.type === "USER_INPUT_PHONE" ? (
+            ) : (formdata[question]?.type === "USER_INPUT_PHONE") || (formdata[question]?.type === "USER_INPUT_NUMBER") ? (
               normalInput(
                 value.question,
                 value.required || false,
@@ -1046,8 +1046,7 @@ const GamifiedQuiz: React.FC<GamifiedQuizProps> = ({
                                     value.placeholder || value.question,
                                     "email"
                                   )
-                                ) : formdata[question]?.type ===
-                                  "USER_INPUT_PHONE" ? (
+                                ) : (formdata[question]?.type === "USER_INPUT_PHONE") || (formdata[question]?.type === "USER_INPUT_NUMBER") ? (
                                   normalInput(
                                     value.question,
                                     value.required || false,
