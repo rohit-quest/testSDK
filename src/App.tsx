@@ -143,7 +143,7 @@ function App() {
         }
       >
         <Test />
-        
+
         {/* ------------------- API v2 Test Started -------------------  */}
         {/* <Survey
           questId="c-91e2258c-a3e0-4ea1-97d0-184a74153547"
@@ -202,7 +202,7 @@ function App() {
             MultiChoice: { style: {}, selectedStyle: {} },
           }}
         /> */}
-          {/* <Survey
+        {/* <Survey
             questId="c-0855c2a2-0bb1-4ab4-8e4e-299f074af2c1"
             token={token}
             userId={userId}
@@ -226,7 +226,7 @@ function App() {
               MultiChoice: { style: {}, selectedStyle: {} },
             }}
         /> */}
-          {/* <Survey
+        {/* <Survey
             questId="c-244b0ae9-bf87-4bd6-a980-8235b5041a2b"
             token={token}
             userId={userId}
@@ -251,7 +251,7 @@ function App() {
             }}
           /> */}
 
-          {/* <Survey
+        {/* <Survey
             questId="c-348f74bf-0392-46ab-8dd3-9dfc1d0d0f73"
             token={token}
             userId={userId}
@@ -275,7 +275,7 @@ function App() {
               MultiChoice: { style: {}, selectedStyle: {} },
             }}
           /> */}
-          {/* <Search
+        {/* <Search
             userId={userId}
             token={token}
             questId="c-3b63adc6-4778-4dc9-8279-faa3c6ebba3d"
@@ -316,7 +316,7 @@ function App() {
               SelectedIconStyle: {},
             }}
           /> */}
-          {/* <Survey
+        {/* <Survey
             questId="c-73a6117c-ea29-4e25-8ea8-7ab38238e9d1"
             userId={userId}
             token={token}
@@ -340,7 +340,7 @@ function App() {
               MultiChoice: { style: {}, selectedStyle: {} },
             }}
           /> */}
-          {/* <DailyStreak
+        {/* <DailyStreak
             userId={userId}
             token={token}
             pendingStreakImg=""
@@ -395,7 +395,7 @@ function App() {
           isOpen={isOpen}
           heading="Copy"
       /> */}
-      {/* <Referral
+        {/* <Referral
         questId="c-3a4276f6-fb60-47e8-9e60-092329c23b2e"
         token={token}
         userId={userId}
@@ -414,7 +414,7 @@ function App() {
           Icon: {},
         }}
       /> */}
-      {/* <ShareArticle
+        {/* <ShareArticle
           questId="c-b0578d03-a8ab-49a4-a234-110eae19f305"
           token={token}
           userId={userId}
@@ -453,7 +453,7 @@ function App() {
           }}
         /> */}
 
-      {/* <OnBoarding
+        {/* <OnBoarding
           questId="c-e3fbaae2-16ca-423f-8cec-69689a17934f"
           userId={userId}
           token={token}
@@ -493,7 +493,7 @@ function App() {
           nextBtnText="Submit"
         /> */}
 
-      {/* <OnBoarding
+        {/* <OnBoarding
           questId="c-056d8d29-2623-41c6-b2c1-2db4375d644e"
           userId={userId}
           token={token}
@@ -530,7 +530,7 @@ function App() {
           answer={answer}
         /> */}
 
-      {/* <Tutorial
+        {/* <Tutorial
           userId={userId}
           token={token}
           questId="c-88a2b4bf-2a0e-4956-8cf8-04a7c0e1bd78"
@@ -545,7 +545,7 @@ function App() {
           }}
         /> */}
 
-      {/* <GamifiedQuiz
+        {/* <GamifiedQuiz
           questId="c-c17a650f-c0e0-44da-985f-f2278a015be7"
           userId={userId}
           token={token}
@@ -572,7 +572,7 @@ function App() {
           setQuestions={setQuestions}
           functionOnSubmit={() => alert('submited')}
         /> */}
-        
+
         {/* <CrossSelling
           questId="c-80398e9e-fbcf-492d-9fdb-c0e0cdda642d"
           token={token}
@@ -593,7 +593,7 @@ function App() {
           }}
         /> */}
 
-      {/* <FeedbackWorkflow
+        {/* <FeedbackWorkflow
           isOpen
           userId={userId}
           token={token}
@@ -644,7 +644,7 @@ function App() {
           variation="test"
         /> */}
 
-    {/* <HelpHub
+        {/* <HelpHub
       userId={userId}
       token={token}
       questId="c-a2b5782e-f3a1-4a33-bbca-8c6601a8ca62"
@@ -783,7 +783,7 @@ function App() {
         {/* <FeedbackWorkflowPreview online={true} /> */}
         {/* <ChallengesPreview online={true} /> */}
 
-        {/* <ReferEarnPreview/> */}
+        <ReferEarnPreview />
 
         {/* <CrossSellingPreview online={true}/> */}
         {/* <CrossSellingPreview online={true}/> */}
